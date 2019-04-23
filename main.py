@@ -4,6 +4,9 @@ Created on Wed Apr 17 08:23:42 2019
 
 @author: Annette Stellema
 """
+import numpy as np
+from parcels import FieldSet, ParticleSet, JITParticle, AdvectionRK4, ErrorCode
+from parcels import plotTrajectoriesFile, AdvectionRK4_3D, ScipyParticle, Variable
 
 def DeleteParticle(particle, fieldset, time):
     particle.delete()
@@ -60,3 +63,32 @@ def ArgoVerticalMovement(particle, fieldset, time):
 
     particle.cycle_age += particle.dt  # update cycle_age
 
+def idx_1d(array, value, greater=False, less=False):
+    """ Finds index of a closet value in 1D array.
+
+    Parameters
+    ----------
+    array : np.array (ndim = 1)
+        The array to search for the value
+    value: number
+    greater : bool, optional
+        Find index closest to, but greater than (default is False)
+    less : bool, optional
+        Find index closest to, but less than (default is False)
+
+    Returns
+    -------
+    idx : int
+        The index of the closest element to value in array
+    """
+
+    idx = int(np.abs(array - value).argmin())
+    if greater == True:
+        if (np.abs(array[idx]) > np.abs(value)):
+            # if linearly increasing array add one otherwise minus one.
+            idx += (1 if array[0] <= array[-1] else -1)
+    if less == True:
+        if (np.abs(array[idx]) > np.abs(value)):
+            # if linearly increasing array add one otherwise minus one.
+            idx += (-1 if array[0] <= array[-1] else +1)
+    return idx

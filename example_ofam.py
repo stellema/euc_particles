@@ -5,7 +5,7 @@ import xarray as xr
 import numpy as np
 from os import path
 
-
+path  = 'E:/GitHub/OFAM/'
 ptype = {'scipy': ScipyParticle, 'jit': JITParticle}
 
 
@@ -61,7 +61,8 @@ def test_ofam_particles(mode, use_xarray):
     assert(abs(pset[0].lon - 173) < 1)
     assert(abs(pset[0].lat - 11) < 1)
 
-
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
 mode='jit'
 fieldset = set_ofam_fieldset(use_xarray=1)
 
@@ -69,8 +70,42 @@ lonstart = [180]
 latstart = [10]
 depstart = [2.5]  # the depth of the first layer in OFAM
 
-pset = ParticleSet(fieldset, pclass=ptype[mode], lon=lonstart, lat=latstart, depth=depstart)
+p = 5
+#pset = ParticleSet(fieldset, pclass=ptype[mode],
+#                   lon=lonstart, lat=latstart, depth=depstart, time=[-1])
+pset = ParticleSet.from_line(fieldset=fieldset, size=p, pclass=JITParticle,
+                             start=(140, 5), finish=(140, -5))
 
-pset.execute(AdvectionRK4, runtime=delta(days=10), dt=delta(minutes=5))
+pset.execute(AdvectionRK4, runtime=delta(days=10), dt=-delta(minutes=30),
+             output_file=pset.ParticleFile("test3", outputdt=delta(minutes=60)))
 
-pset.show(field='vector', vmax=3.0, domain={'N':-31, 'S':-39, 'E':33, 'W':18}, land=True, savefile='particles')
+#pset.show(field='vector', vmax=3.0, domain={'N':-31, 'S':-39, 'E':33, 'W':18},
+#          land=True, savefile=path+'particles')
+#fieldset.write(path + 'test.nc')
+
+c = ['b', 'crimson', 'seagreen', 'k', 'darkorchid', 'palevioletred']
+ds = xr.open_dataset(path + 'test3.nc', decode_times=False)
+
+
+x = ds.lon
+y = ds.lat
+z = ds.z
+fig = plt.figure(figsize=(13,10))
+ax = plt.axes(projection='3d')
+#ax = plt.axes()
+cmap = plt.cm.tab10
+c = [cmap(i) for i in range(p)]
+for i in range(5):
+    cb = ax.scatter(x[i], y[i], z[i], s=20, marker="o", c=c[i])
+ax.set_xlabel("Longitude")
+ax.set_ylabel("Latitude")
+ax.set_zlabel("Depth (m)")
+ax.set_zlim(np.max(z),0)
+plt.savefig(path + 'test3.tiff')
+plt.show()
+
+
+
+dv = xr.open_dataset('C:/Users/Annette/parcels_examples/OFAM_example_data/OFAM_simple_U.nc')
+dv.close()
+ds.close()

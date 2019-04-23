@@ -10,45 +10,65 @@ qsub -I -l walltime=04:00:00,mem=80GB -P e14 -q express -X
 
 import xarray as xr
 import numpy as np
-import math
 import pandas as pd
-from main import ArgoParticle, ArgoVerticalMovement, set_ofam_fieldset
+from main import ArgoParticle, ArgoVerticalMovement
+from parcels import FieldSet, ParticleSet, JITParticle, AdvectionRK4, ErrorCode
+from parcels import plotTrajectoriesFile, AdvectionRK4_3D, ScipyParticle, Variable
 
-
-from parcels import FieldSet, ParticleSet, JITParticle, AdvectionRK4, ErrorCode, Variable
-from parcels import plotTrajectoriesFile, AdvectionRK4_3D
 import matplotlib.pyplot as plt
 import cartopy.crs as ccrs
 from datetime import timedelta, datetime, date
 from glob import glob
-
-# Plotting
-import netCDF4
 from mpl_toolkits.mplot3d import Axes3D
-from parcels import FieldSet, ParticleSet, JITParticle, AdvectionRK4, ErrorCode, Variable
-from parcels import plotTrajectoriesFile, AdvectionRK4_3D
+
+import time
+
+def set_ofam_fieldset(deferred_load=True, use_xarray=False):
+    times_tmp = pd.date_range('2010-01-01', periods=12, freq='D')
+    start = pd.datetime(1900, 1, 1)
+    times = [(pd.to_datetime(x) - start) for x in times_tmp]
+    data_path = '/g/data/e14/as3189/OFAM/OFAM3_BGC_SPINUP_03/daily/'
+#    data_path = 'E:/model_output/OFAM/OFAM3_BGC_SPINUP_03/daily/'
+    ufiles = data_path + 'ocean_u_2010_01.nc'
+    vfiles = data_path + 'ocean_v_2010_01.nc'
+
+    filenames = {'U': ufiles,
+                 'V': vfiles}
+    variables = {'U': 'u',
+                 'V': 'v'}
+    dimensions = {'lat': 'yu_ocean', 'lon': 'xu_ocean',
+                  'time': times, 'depth':'st_ocean'}
+
+    if use_xarray:
+        ds = xr.open_mfdataset([filenames['U'], filenames['V']])
+#        # (e.g. 65N-55S, 120E-65W),
+#        tmp = [-55, 65, 120, 300]
+#        i = [idx_1d(ds.xu_ocean, tmp[2]), idx_1d(ds.xu_ocean, tmp[3])]
+#        j = [idx_1d(ds.yu_ocean, tmp[0]), idx_1d(ds.yu_ocean, tmp[1])]
+#        ds = ds.isel(yu_ocean=slice(j[0], j[1]+1), xu_ocean=slice(i[0], i[1]+1))
+
+        return FieldSet.from_xarray_dataset(ds, variables, dimensions,
+                                            allow_time_extrapolation=True,
+                                            deferred_load=deferred_load)
+    else:
+        return FieldSet.from_netcdf(filenames, variables, dimensions,
+                                    allow_time_extrapolation=True,
+                                    deferred_load=deferred_load)
 
 ptype = {'scipy': ScipyParticle, 'jit': JITParticle}
-# Xarray
-times_tmp = pd.date_range('2010-01-01', periods=12, freq='D')
-start = pd.datetime(1900, 1, 1)
-times = [(pd.to_datetime(x) - start) for x in times_tmp]
+depstart = [2.5]  # the depth of the first layer in OFAM
+mode='jit'
+start = time.time()
+fieldset = set_ofam_fieldset(use_xarray=True)
 
-data_path = '/g/data/e14/as3189/OFAM/OFAM3_BGC_SPINUP_03/daily/'
-ufiles = data_path + 'ocean_u_2010_01.nc'
-vfiles = data_path + 'ocean_v_2010_01.nc'
+#fieldset.mindepth = fieldset.U.depth[0]  # uppermost layer in the hydrodynamic data
+print('Load time: {:.2f} minutes'.format((start - time.time())/60))
 
-filenames = {'U': ufiles,
-             'V': vfiles}
-variables = {'U': 'u',
-             'V': 'v'}
-dimensions = {'lat': 'yu_ocean', 'lon': 'xu_ocean', 'time': times, 'depth':'st_ocean'}
-fieldset = FieldSet.from_netcdf(filenames, variables, dimensions)
-fieldset.mindepth = fieldset.U.depth[0]  # uppermost layer in the hydrodynamic data
-print('loaded!')
-# Initiate one Argo float in the Agulhas Current
-time = np.arange(0, 5) * timedelta(hours=1).total_seconds()
-pset = ParticleSet.from_line(fieldset=fieldset, size=5, pclass=JITParticle,
-                             start=(200, 5), finish=(200, -5), time=datetime(2010, 1, 1))
+depstart = [2.5]  # the depth of the first layer in OFAM
 
-pset.execute(AdvectionRK4, runtime=timedelta(days=7), dt=timedelta(minutes=5))
+pset = ParticleSet.from_line(fieldset=fieldset, size=10, pclass=JITParticle,
+                             start=(140, 5), finish=(140, -5), depth=[10, 14])
+
+pset.execute(AdvectionRK4, runtime=timedelta(days=20), dt=-timedelta(minutes=30),
+             output_file=pset.ParticleFile("parcel_test", outputdt=timedelta(minutes=60)))
+print('Execution time: {:.2f} minutes'.format((start - time.time())/60))
