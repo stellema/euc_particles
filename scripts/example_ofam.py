@@ -69,8 +69,8 @@ fieldset = set_ofam_fieldset(use_xarray=1)
 lonstart = [180]
 latstart = [10]
 depstart = [2.5]  # the depth of the first layer in OFAM
+p=5
 
-p = 5
 #pset = ParticleSet(fieldset, pclass=ptype[mode],
 #                   lon=lonstart, lat=latstart, depth=depstart, time=[-1])
 pset = ParticleSet.from_line(fieldset=fieldset, size=p, pclass=JITParticle,
@@ -84,9 +84,10 @@ pset.execute(AdvectionRK4, runtime=delta(days=10), dt=-delta(minutes=30),
 #fieldset.write(path + 'test.nc')
 
 c = ['b', 'crimson', 'seagreen', 'k', 'darkorchid', 'palevioletred']
-ds = xr.open_dataset(path + 'test3.nc', decode_times=False)
+#ds = xr.open_dataset(path + 'test3.nc', decode_times=False)
 
-
+ds = xr.open_dataset(path + 'parcel_test.nc', decode_times=False)
+p = 10
 x = ds.lon
 y = ds.lat
 z = ds.z
@@ -95,7 +96,7 @@ ax = plt.axes(projection='3d')
 #ax = plt.axes()
 cmap = plt.cm.tab10
 c = [cmap(i) for i in range(p)]
-for i in range(5):
+for i in range(p):
     cb = ax.scatter(x[i], y[i], z[i], s=20, marker="o", c=c[i])
 ax.set_xlabel("Longitude")
 ax.set_ylabel("Latitude")

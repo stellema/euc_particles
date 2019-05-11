@@ -8,6 +8,8 @@ import numpy as np
 from parcels import FieldSet, ParticleSet, JITParticle, AdvectionRK4, ErrorCode
 from parcels import plotTrajectoriesFile, AdvectionRK4_3D, ScipyParticle, Variable
 
+
+
 def DeleteParticle(particle, fieldset, time):
     particle.delete()
 
