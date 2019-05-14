@@ -3,12 +3,35 @@
 Created on Wed Apr 17 08:23:42 2019
 
 @author: Annette Stellema
+
+
+
 """
 import numpy as np
-from parcels import FieldSet, ParticleSet, JITParticle, AdvectionRK4, ErrorCode
-from parcels import plotTrajectoriesFile, AdvectionRK4_3D, ScipyParticle, Variable
+from parcels import FieldSet, ParticleSet, JITParticle, AdvectionRK4
+from parcels import ErrorCode, Variable
+from parcels import plotTrajectoriesFile, AdvectionRK4_3D, ScipyParticle
 
+im_ext = '.tiff'
 
+def paths():
+    from os.path import expanduser
+    home = expanduser("~")
+    # Windows Paths.
+    if home[:10] == 'C:\\Users\\A':
+        spath = 'E:/GitHub/OFAM/scripts/'
+        fpath = 'E:/GitHub/OFAM/figures/'
+        dpath = 'E:/GitHub/OFAM/data/'
+        vpath = 'E:/model_output/OFAM/OFAM3_BGC_SPINUP_03/daily/'
+
+    # Raijin Paths.
+    else:
+        spath = '/g/data/e14/as3189/OFAM/scripts/'
+        fpath = '/g/data/e14/as3189/OFAM/figures/'
+        dpath = '/g/data/e14/as3189/OFAM/data/'
+        vpath = '/g/data/e14/as3189/OFAM/OFAM3_BGC_SPINUP_03/daily/'
+
+    return spath, fpath, dpath, vpath
 
 def DeleteParticle(particle, fieldset, time):
     particle.delete()
