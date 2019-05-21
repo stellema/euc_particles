@@ -21,6 +21,7 @@ from datetime import timedelta, datetime, date
 from glob import glob
 from mpl_toolkits.mplot3d import Axes3D
 import time
+import math
 
 spath, fpath, dpath, data_path = paths()
 
@@ -29,10 +30,20 @@ fieldset = FieldSet.from_parcels(dpath + 'ofam_fieldset_2010_',
                                  allow_time_extrapolation=True,
                                  deferred_load=True)
 
+
+class ForamParticle(JITParticle):
+    transport = Variable('transport', dtype=np.float32, initial=0.)
+
+
+
+def transport(particle, fieldset, time):
+    print(time)
+#    if time == 0:
+#        particle.transport = fieldset.U
 start = time.time()
 ptype = {'scipy': ScipyParticle, 'jit': JITParticle}
 mode = 'jit'
-depth = 150
+depth =250
 save_name = 'test_' + str(depth)
 print('Executing:', save_name)
 
@@ -41,35 +52,36 @@ print('Executing:', save_name)
 x = idx_1d(fieldset.U.depth, depth)
 size = 90
 depths = np.linspace(fieldset.U.depth[x], fieldset.U.depth[x], size)
-pset = ParticleSet.from_line(fieldset=fieldset, size=size, pclass=JITParticle,
-                             start=(160, 4), finish=(160, -4),
+pset = ParticleSet.from_line(fieldset=fieldset, size=size, pclass=ForamParticle,
+                             start=(179, 4), finish=(179, -4),
                              depth=depths)
-
-pset.execute(AdvectionRK4, runtime=timedelta(days=182),
+kernals = transport + pset.Kernel(AdvectionRK4)
+pset.execute(kernals, runtime=timedelta(days=182),
              dt=-timedelta(minutes=30),
              output_file=pset.ParticleFile(dpath + save_name,
                                            outputdt=timedelta(minutes=60)))
 print('Execution time: {:.2f} minutes'.format((start - time.time())/60))
 
-
-fig = plt.figure(figsize=(13, 10))
-ax = plt.axes(projection='3d')
-c = plt.cm.jet(np.linspace(0, 1, size))
-for depth in [150]:
-
-    ds = xr.open_dataset('{}test_{}.nc'.format(dpath, str(depth)), decode_times=False)
-    x = ds.lon
-    y = ds.lat
-    z = ds.z
-
-    for i in range(size):
-        cb = ax.scatter(x[i], y[i], z[i], s=5, marker="o", c=[c[i]])
-    ds.close()
-
-ax.set_xlabel("Longitude")
-ax.set_ylabel("Latitude")
-ax.set_zlabel("Depth (m)")
-ax.set_zlim(np.max(z), 0)
-plt.savefig('{}test_{}{}'.format(fpath, depth, im_ext))
-plt.show()
-ds.close()
+#
+#
+#fig = plt.figure(figsize=(13, 10))
+#ax = plt.axes(projection='3d')
+#c = plt.cm.jet(np.linspace(0, 1, size))
+#for depth in [300]:
+#
+#    ds = xr.open_dataset('{}test_{}.nc'.format(dpath, str(depth)), decode_times=False)
+#    x = ds.lon
+#    y = ds.lat
+#    z = ds.z
+#
+#    for i in range(size):
+#        cb = ax.scatter(x[i], y[i], z[i], s=5, marker="o", c=[c[i]])
+#    ds.close()
+#
+#ax.set_xlabel("Longitude")
+#ax.set_ylabel("Latitude")
+#ax.set_zlabel("Depth (m)")
+#ax.set_zlim(np.max(z), 0)
+#plt.savefig('{}test_{}{}'.format(fpath, depth, im_ext))
+#plt.show()
+#ds.close()

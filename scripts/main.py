@@ -7,7 +7,9 @@ Created on Wed Apr 17 08:23:42 2019
 
 
 """
+import xarray as xr
 import numpy as np
+from datetime import timedelta, datetime, date
 from parcels import FieldSet, ParticleSet, JITParticle, AdvectionRK4
 from parcels import ErrorCode, Variable
 from parcels import plotTrajectoriesFile, AdvectionRK4_3D, ScipyParticle
@@ -22,16 +24,50 @@ def paths():
         spath = 'E:/GitHub/OFAM/scripts/'
         fpath = 'E:/GitHub/OFAM/figures/'
         dpath = 'E:/GitHub/OFAM/data/'
-        vpath = 'E:/model_output/OFAM/OFAM3_BGC_SPINUP_03/daily/'
+        data_path = 'E:/model_output/OFAM/OFAM3_BGC_SPINUP_03/daily/'
 
     # Raijin Paths.
     else:
         spath = '/g/data/e14/as3189/OFAM/scripts/'
         fpath = '/g/data/e14/as3189/OFAM/figures/'
         dpath = '/g/data/e14/as3189/OFAM/data/'
-        vpath = '/g/data/e14/as3189/OFAM/OFAM3_BGC_SPINUP_03/daily/'
+        data_path = '/g/data/e14/as3189/OFAM/OFAM3_BGC_SPINUP_03/daily/'
 
-    return spath, fpath, dpath, vpath
+    return spath, fpath, dpath, data_path
+
+def print_time():
+    """ Print the current time.
+    """
+
+    currentDT = datetime.now()
+    h = currentDT.hour if currentDT.hour <= 12 else currentDT.hour - 12
+    mrdm = 'pm' if currentDT.hour > 12 else 'am'
+    print('Current time is {}:{} {}'.format(h, currentDT.minute, mrdm))
+
+def ofam_fieldset(time, slice_data=True, deferred_load=False):
+    year = 2010
+    filenames = []
+    for t in range(time[0], time[1] + 1):
+        for var in ['v', 'u']:
+            filenames.append('{}ocean_{}_{}_{}.nc'.format(paths()[-1],
+                             var, str(year), str(t).zfill(2)))
+
+    variables = {'U': 'u', 'V': 'v'}
+    dimensions = {'lat': 'yu_ocean', 'lon': 'xu_ocean',
+                  'time': 'Time', 'depth':'st_ocean'}
+
+    ds = xr.open_mfdataset(filenames)
+    if slice_data:
+        # (e.g. 65N-55S, 120E-65W)
+        s = [-55, 65, 120, 300]
+        i = [idx_1d(ds.xu_ocean, s[2]), idx_1d(ds.xu_ocean, s[3])]
+        j = [idx_1d(ds.yu_ocean, s[0]), idx_1d(ds.yu_ocean, s[1])]
+        ds = ds.isel(yu_ocean=slice(j[0], j[1]+1),
+                     xu_ocean=slice(i[0], i[1]+1))
+
+    return FieldSet.from_xarray_dataset(ds, variables, dimensions,
+                                     allow_time_extrapolation=True,
+                                     deferred_load=deferred_load)
 
 def DeleteParticle(particle, fieldset, time):
     particle.delete()
