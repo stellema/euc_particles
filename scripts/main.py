@@ -44,7 +44,7 @@ def print_time():
     mrdm = 'pm' if currentDT.hour > 12 else 'am'
     print('Current time is {}:{} {}'.format(h, currentDT.minute, mrdm))
 
-def ofam_fieldset(time, slice_data=True, deferred_load=False):
+def ofam_fieldset(time, slice_data=True, deferred_load=False, use_xarray=False):
     year = 2010
     filenames = []
     for t in range(time[0], time[1] + 1):
@@ -65,9 +65,14 @@ def ofam_fieldset(time, slice_data=True, deferred_load=False):
         ds = ds.isel(yu_ocean=slice(j[0], j[1]+1),
                      xu_ocean=slice(i[0], i[1]+1))
 
-    return FieldSet.from_xarray_dataset(ds, variables, dimensions,
-                                     allow_time_extrapolation=True,
-                                     deferred_load=deferred_load)
+
+    if use_xarray:
+        return ds
+    else:
+
+        return FieldSet.from_xarray_dataset(ds, variables, dimensions,
+                                            time_periodic=True,
+                                            deferred_load=deferred_load)
 
 def DeleteParticle(particle, fieldset, time):
     particle.delete()

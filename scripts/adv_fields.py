@@ -25,7 +25,7 @@ start = time.time()
 print_time()
 
 # Create the fieldset.
-fieldset = ofam_fieldset(time=[0, 12])
+fieldset = ofam_fieldset(time=[1, 12])
 
 lon = 179
 lat = [-4, 4]
@@ -39,11 +39,14 @@ repeatdt = timedelta(days=6)
 pset = ParticleSet.from_line(fieldset=fieldset, size=size, pclass=JITParticle,
                              start=(lon, lat[0]), finish=(lon, lat[-1]),
                              depth=depths, repeatdt=repeatdt)
+
 print('Field time: {:.2f} mins'.format((start - time.time())/60))
 
-save_name = dpath + 'test_' + str(depth)
+save_name = dpath + 'partcileset_' + str(depth)
 output_file = pset.ParticleFile(name=save_name, outputdt=timedelta(hours=6))
-pset.execute(AdvectionRK4, runtime=timedelta(days=360),
+
+
+pset.execute(AdvectionRK4, runtime=timedelta(days=365),
              dt=-timedelta(hours=6), output_file=output_file)
 print_time()
 print('Execution time: {:.2f} mins'.format((start - time.time())/60))
