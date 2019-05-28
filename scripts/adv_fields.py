@@ -51,3 +51,4 @@ pset.execute(AdvectionRK4, runtime=timedelta(days=365),
 print_time()
 print('Execution time: {:.2f} mins'.format((start - time.time())/60))
 
+scp -r as3189@raijin.nci.org.au:/g/data/e14/as3189/OFAM/OFAM3_BGC_SPINUP_03/daily/*u*_02.nc C:\Users\Annette\model_output\OFAM\OFAM3_BGC_SPINUP_03\daily\

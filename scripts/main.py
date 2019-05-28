@@ -17,23 +17,27 @@ from parcels import plotTrajectoriesFile, AdvectionRK4_3D, ScipyParticle
 im_ext = '.tiff'
 
 def paths():
+    unsw = True # True if at unsw PC.
     from os.path import expanduser
     home = expanduser("~")
     # Windows Paths.
     if home[:10] == 'C:\\Users\\A':
-        spath = 'E:/GitHub/OFAM/scripts/'
-        fpath = 'E:/GitHub/OFAM/figures/'
-        dpath = 'E:/GitHub/OFAM/data/'
-        data_path = 'E:/model_output/OFAM/OFAM3_BGC_SPINUP_03/daily/'
+        path = 'C:/Users/Annette/' if unsw else 'E:/'
+        spath = path + 'GitHub/OFAM/scripts/'
+        fpath = path + 'GitHub/OFAM/fields/'
+        xpath = path + 'GitHub/OFAM/figures/'
+        dpath = path + 'GitHub/OFAM/data/'
+        data_path = path + 'model_output/OFAM/OFAM3_BGC_SPINUP_03/daily/'            
 
     # Raijin Paths.
     else:
         spath = '/g/data/e14/as3189/OFAM/scripts/'
-        fpath = '/g/data/e14/as3189/OFAM/figures/'
+        fpath = '/g/data/e14/as3189/OFAM/fields/'
+        xpath = '/g/data/e14/as3189/OFAM/figures/'
         dpath = '/g/data/e14/as3189/OFAM/data/'
         data_path = '/g/data/e14/as3189/OFAM/OFAM3_BGC_SPINUP_03/daily/'
 
-    return spath, fpath, dpath, data_path
+    return path, spath, fpath, xpath, dpath, data_path
 
 def print_time():
     """ Print the current time.
