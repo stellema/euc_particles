@@ -62,7 +62,7 @@ print('Executing:', save_name)
 x = idx_1d(fieldset.U.depth, depth)
 size = 90
 depths = np.linspace(fieldset.U.depth[x], fieldset.U.depth[x], size)
-pset = ParticleSet.from_line(fieldset=fieldset, size=size, 
+pset = ParticleSet.from_line(fieldset=fieldset, size=size,
                              pclass=ForamParticle,
                              start=(179, 4), finish=(179, -4),
                              depth=depths)
@@ -79,7 +79,7 @@ print('Execution time: {:.2f} minutes'.format((start - time.time())/60))
 #c = plt.cm.jet(np.linspace(0, 1, size))
 #for depth in [300]:
 #
-#    ds = xr.open_dataset('{}test_{}.nc'.format(dpath, str(depth)), 
+#    ds = xr.open_dataset('{}test_{}.nc'.format(dpath, str(depth)),
 #decode_times=False)
 #    x = ds.lon
 #    y = ds.lat
@@ -99,9 +99,9 @@ print('Execution time: {:.2f} minutes'.format((start - time.time())/60))
 
 """ Plot map """
 cmap = plt.cm.seismic
-dv = ofam_fieldset([1, 1], slice_data=True, deferred_load=False, 
+dv = ofam_fieldset([1, 1], slice_data=True, deferred_load=False,
                    use_xarray=True)
-ds = xr.open_dataset('{}test_{}.nc'.format(dpath, str(depth)), 
+ds = xr.open_dataset('{}partcileset_300.nc'.format(dpath),
                      decode_times=False)
 x = ds.lon
 y = ds.lat
@@ -115,7 +115,7 @@ for t in [0, -1]:
 
     Lon, Lat = np.meshgrid(dv.xu_ocean, dv.yu_ocean)
     clevs = np.arange(-0.6, 0.61, 0.01)
-    cs = ax.contourf(Lon, Lat, dv.u.isel(Time=t, st_ocean=28).load(), clevs, 
+    cs = ax.contourf(Lon, Lat, dv.u.isel(Time=t, st_ocean=28).load(), clevs,
                      cmap=cmap, extend='both', zorder=0)
     for i in range(size):
         cb = ax.scatter(x[:, t], y[:, t], s=5, marker="o", c=['k'])

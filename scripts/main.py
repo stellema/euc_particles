@@ -14,10 +14,10 @@ from parcels import FieldSet, ParticleSet, JITParticle, AdvectionRK4
 from parcels import ErrorCode, Variable
 from parcels import plotTrajectoriesFile, AdvectionRK4_3D, ScipyParticle
 
-im_ext = '.tiff'
+im_ext = '.png'
 
 def paths():
-    unsw = True # True if at unsw PC.
+    unsw = 0 # True if at unsw PC.
     from os.path import expanduser
     home = expanduser("~")
     # Windows Paths.
@@ -27,10 +27,11 @@ def paths():
         fpath = path + 'GitHub/OFAM/fields/'
         xpath = path + 'GitHub/OFAM/figures/'
         dpath = path + 'GitHub/OFAM/data/'
-        data_path = path + 'model_output/OFAM/OFAM3_BGC_SPINUP_03/daily/'            
+        data_path = path + 'model_output/OFAM/OFAM3_BGC_SPINUP_03/daily/'
 
     # Raijin Paths.
     else:
+        path = '/g/data/e14/as3189/'
         spath = '/g/data/e14/as3189/OFAM/scripts/'
         fpath = '/g/data/e14/as3189/OFAM/fields/'
         xpath = '/g/data/e14/as3189/OFAM/figures/'

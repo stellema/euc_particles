@@ -19,7 +19,7 @@ from parcels import ScipyParticle, AdvectionRK4, ErrorCode
 import time
 from datetime import timedelta, datetime, date
 
-spath, fpath, dpath, data_path = paths()
+path, spath, fpath, xpath, dpath, data_path = paths()
 
 start = time.time()
 print_time()
@@ -30,7 +30,7 @@ fieldset = ofam_fieldset(time=[1, 12])
 lon = 179
 lat = [-4, 4]
 size = (abs(lat[0] - lat[-1]) + 1)*10
-depth = 300
+depth = 250
 x = fieldset.U.depth_index(depth, 0, lon)
 depths = np.linspace(fieldset.U.depth[x], fieldset.U.depth[x], size)
 # Release from the same set of locations every 6 days.
@@ -42,13 +42,12 @@ pset = ParticleSet.from_line(fieldset=fieldset, size=size, pclass=JITParticle,
 
 print('Field time: {:.2f} mins'.format((start - time.time())/60))
 
-save_name = dpath + 'partcileset_' + str(depth)
-output_file = pset.ParticleFile(name=save_name, outputdt=timedelta(hours=6))
+save_name = dpath + 'particleset_' + str(depth)
+output_file = pset.ParticleFile(name=save_name, outputdt=timedelta(hours=1))
 
 
-pset.execute(AdvectionRK4, runtime=timedelta(days=365),
-             dt=-timedelta(hours=6), output_file=output_file)
+pset.execute(AdvectionRK4, runtime=timedelta(days=365*5),
+             dt=-timedelta(hours=1), output_file=output_file)
 print_time()
 print('Execution time: {:.2f} mins'.format((start - time.time())/60))
 
-scp -r as3189@raijin.nci.org.au:/g/data/e14/as3189/OFAM/OFAM3_BGC_SPINUP_03/daily/*u*_02.nc C:\Users\Annette\model_output\OFAM\OFAM3_BGC_SPINUP_03\daily\
