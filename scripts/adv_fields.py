@@ -46,7 +46,7 @@ save_name = dpath + 'particleset_' + str(depth)
 output_file = pset.ParticleFile(name=save_name, outputdt=timedelta(hours=1))
 
 
-pset.execute(AdvectionRK4, runtime=timedelta(days=365*5),
+pset.execute(AdvectionRK4, runtime=timedelta(days=365*20),
              dt=-timedelta(hours=1), output_file=output_file)
 print_time()
 print('Execution time: {:.2f} mins'.format((start - time.time())/60))
