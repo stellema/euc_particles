@@ -40,7 +40,7 @@ def ofam_fields(month, slice_data=True, deferred_load=False):
                      xu_ocean=slice(i[0], i[1]+1)).load()
 
     f = FieldSet.from_xarray_dataset(ds.load(), variables, dimensions,
-                                     allow_time_extrapolation=True,
+                                     time_periodic=True,
                                      deferred_load=deferred_load)
 
     return f

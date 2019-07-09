@@ -20,6 +20,24 @@ im_ext = '.png'
 # Radius of Earth [m].
 EARTH_RADIUS = 6378137
 
+# Metres in 1/10th degree of latitude [m].
+LAT_DEG = 111111/10
+
+def dxdydz(data_path):
+    
+    data = xr.open_dataset(data_path + 'ocean_u_2010_01.nc')
+    
+    # The width of latitude and longitude grid cells [degees].
+    dx, dy = 0.1, 0.1
+
+    # The vertical length [m] of each grid cell.
+    dz = np.array([data.st_edges_ocean[n + 1] - data.st_edges_ocean[n] \
+                   for n in range(len(data.st_ocean))])
+    data.close()
+    
+    return dx, dy, dz
+
+
 def paths():
     unsw = 0 # True if at unsw PC.
     from os.path import expanduser
@@ -86,57 +104,25 @@ def ofam_fieldset(time, slice_data=True, deferred_load=False, use_xarray=False):
 def DeleteParticle(particle, fieldset, time):
     particle.delete()
 
-# Define a new Particle type including extra Variables
-class ArgoParticle(JITParticle):
-    # Phase of cycle: init_descend=0, drift=1, profile_descend=2, profile_ascend=3, transmit=4
-    cycle_phase = Variable('cycle_phase', dtype=np.int32, initial=0.)
-    cycle_age = Variable('cycle_age', dtype=np.float32, initial=0.)
-    drift_age = Variable('drift_age', dtype=np.float32, initial=0.)
-    #temp = Variable('temp', dtype=np.float32, initial=np.nan)  # if fieldset has temperature
-
-# Define the new Kernel that mimics Argo vertical movement
-def ArgoVerticalMovement(particle, fieldset, time):
-    driftdepth = 1000  # maximum depth in m
-    maxdepth = 2000  # maximum depth in m
-    vertical_speed = 0.10  # sink and rise speed in m/s
-    cycletime = 10 * 86400  # total time of cycle in seconds
-    drifttime = 9 * 86400  # time of deep drift in seconds
-
-    if particle.cycle_phase == 0:
-        # Phase 0: Sinking with vertical_speed until depth is driftdepth
-        particle.depth += vertical_speed * particle.dt
-        if particle.depth >= driftdepth:
-            particle.cycle_phase = 1
-
-    elif particle.cycle_phase == 1:
-        # Phase 1: Drifting at depth for drifttime seconds
-        particle.drift_age += particle.dt
-        if particle.drift_age >= drifttime:
-            particle.drift_age = 0  # reset drift_age for next cycle
-            particle.cycle_phase = 2
-
-    elif particle.cycle_phase == 2:
-        # Phase 2: Sinking further to maxdepth
-        particle.depth += vertical_speed * particle.dt
-        if particle.depth >= maxdepth:
-            particle.cycle_phase = 3
-
-    elif particle.cycle_phase == 3:
-        # Phase 3: Rising with vertical_speed until at surface
-        particle.depth -= vertical_speed * particle.dt
-        #particle.temp = fieldset.temp[time, particle.lon, particle.lat, particle.depth]  # if fieldset has temperature
-        if particle.depth <= fieldset.mindepth:
-            particle.depth = fieldset.mindepth
-            #particle.temp = 0./0.  # reset temperature to NaN at end of sampling cycle
-            particle.cycle_phase = 4
-
-    elif particle.cycle_phase == 4:
-        # Phase 4: Transmitting at surface until cycletime is reached
-        if particle.cycle_age > cycletime:
-            particle.cycle_phase = 0
-            particle.cycle_age = 0
-
-    particle.cycle_age += particle.dt  # update cycle_age
+def mld(t, s):
+    """ Finds the mixed layer depth (Millero and Poisson, 1981).
+    Mixed layer depth:
+         - depth at which the temperature change from the surface 
+         temperature is 0.5 °C.
+         - depth at which a change from the surface sigma-t of 
+         0.125 has occurred.
+    """
+    
+    A = 8.24493e10-1 - 4.0899e10-3*t - 9.095290e10-3*t**2 + 1.001685e10-4*t**3
+    B = -5.72466e10-3 + 1.0227e10-4*t -1.6546e10-6*t**2
+    C = 4.8314e10-4
+    
+    rho_0 = (999.842594 + 6.793952e10-2*t - 9.095290e10-3*t**2 + 
+             1.001685e10-4*t**3 - 1.120083e10-6*t**4 + 6.536332e10-9*t**5)
+    
+    rho = A*s + B*s**(3/2) + C*s**2 + rho_0
+    
+    return rho
 
 def idx_1d(array, value, greater=False, less=False):
     """ Finds index of a closet value in 1D array.
