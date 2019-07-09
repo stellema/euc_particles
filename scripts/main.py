@@ -9,12 +9,16 @@ Created on Wed Apr 17 08:23:42 2019
 """
 import xarray as xr
 import numpy as np
+import math
 from datetime import timedelta, datetime, date
 from parcels import FieldSet, ParticleSet, JITParticle, AdvectionRK4
 from parcels import ErrorCode, Variable
 from parcels import plotTrajectoriesFile, AdvectionRK4_3D, ScipyParticle
 
 im_ext = '.png'
+# Constants.
+# Radius of Earth [m].
+EARTH_RADIUS = 6378137
 
 def paths():
     unsw = 0 # True if at unsw PC.
@@ -163,3 +167,45 @@ def idx_1d(array, value, greater=False, less=False):
             # if linearly increasing array add one otherwise minus one.
             idx += (-1 if array[0] <= array[-1] else +1)
     return idx
+
+def distance(lat1, lon1, lat2, lon2):
+    """ Finds distance in metres between two lat/lon points.
+
+    Parameters
+    ----------
+    lat1
+        Latitude of point 1.
+    lon1
+        Longitude of point 1.
+    lat2
+        Latitude of point 2.
+    lon2
+        Longitude of point 2.
+
+    Returns
+    -------
+    Distance [m] between the two points.
+    """
+
+    # Convert latitude and longitude to spherical coordinates in radians.
+    degrees_to_radians = math.pi/180.0
+
+    # phi = 90 - latitude
+    phi1 = (90.0 - lat1)*degrees_to_radians
+    phi2 = (90.0 - lat2)*degrees_to_radians
+
+    # Fix for GFDL models:
+    if (lon1 or lon2) < -180:
+        lon1 = 360 + lon1
+        lon2 = 360 + lon2
+
+    # theta = longitude
+    theta1 = lon1*degrees_to_radians
+    theta2 = lon2*degrees_to_radians
+
+    # Compute spherical dst from spherical coordinates.
+    cos = (math.sin(phi1)*math.sin(phi2)*math.cos(theta1 - theta2) +
+           math.cos(phi1)*math.cos(phi2))
+    arc = math.acos(cos)
+
+    return arc*EARTH_RADIUS

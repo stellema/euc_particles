@@ -11,7 +11,7 @@ qsub -I -l walltime=04:00:00,mem=80GB -P e14 -q express -X
 import xarray as xr
 import numpy as np
 import pandas as pd
-from main import ArgoParticle, ArgoVerticalMovement, idx_1d, paths,im_ext, ofam_fieldset
+from main import ArgoParticle, ArgoVerticalMovement, idx_1d, paths,im_ext, ofam_fieldset, distance
 from parcels import FieldSet, ParticleSet, JITParticle, AdvectionRK4, ErrorCode
 from parcels import plotTrajectoriesFile, AdvectionRK4_3D, ScipyParticle, Variable
 import random
@@ -24,6 +24,7 @@ import time
 import math
 import cartopy as crs
 import cartopy.crs as ccrs
+from operator import attrgetter
 # Workaround to import Basemap.
 #import os
 #import conda
@@ -34,28 +35,41 @@ import cartopy.crs as ccrs
 #from mpl_toolkits.basemap import Basemap
 
 path, spath, fpath, xpath, dpath, data_path = paths()
-
-
+start = time.time()
+ptype = {'scipy': ScipyParticle, 'jit': JITParticle}
+mode = 'scipy'
+depth = 294.4
+save_name = 'test_' + str(depth)
+print('Executing:', save_name)
+#ds = xr.open_dataset(data_path + 'ocean_u_2010_01.nc')
 fieldset = FieldSet.from_parcels(fpath + 'ofam_fieldset_2010_',
                                  allow_time_extrapolation=True,
                                  deferred_load=True)
 
+#fieldset.add_constant('latdist', 11132)
+#fieldset.add_constant('depthidx', fieldset.U.depth_index(depth))
 
-class ForamParticle(JITParticle):
-    transport = Variable('transport', dtype=np.float32, initial=0.)
+
+
+class TParticle(ptype[mode]):
+
+    print(fieldset.U.cell_areas())
+    
+#    u = fieldset.U
+#    i = fieldset.U.depth_index(fieldset.U.depth, fieldset.U.lat, fieldset.U.lon)
+#    t = u*11132*(fieldset.U.depth[i + 1]-fieldset.U.depth[i])
+##    
+    transport = Variable('transport', dtype=np.float32)
 
 
 
 def transport(particle, fieldset, time):
-    print(time)
-#    if time == 0:
-#        particle.transport = fieldset.U
-start = time.time()
-ptype = {'scipy': ScipyParticle, 'jit': JITParticle}
-mode = 'jit'
-depth = 250
-save_name = 'test_' + str(depth)
-print('Executing:', save_name)
+    
+    u = fieldset.U[time, particle.depth, particle.lat, particle.lon]
+    i = fieldset.U.depth_index(particle.depth, particle.lat, particle.lon)
+    particle.transport = u*11132*(fieldset.U.depth[i+1]-fieldset.U.depth[i])
+#    print(fieldset.U.depth[i])
+
 
 # Number of particles = number of depths times number of latitude points
 # where the latitude resolution is 0.01 degrees.
@@ -63,31 +77,31 @@ x = idx_1d(fieldset.U.depth, depth)
 size = 90
 depths = np.linspace(fieldset.U.depth[x], fieldset.U.depth[x], size)
 pset = ParticleSet.from_line(fieldset=fieldset, size=size,
-                             pclass=ForamParticle,
-                             start=(179, 4), finish=(179, -4),
-                             depth=depths)
+                             pclass=ptype[mode],
+                             start=(179, 1), finish=(179, -1),
+                             depth=depths, time=fieldset.U.grid.time[-1])
 kernals = transport + pset.Kernel(AdvectionRK4)
-pset.execute(kernals, runtime=timedelta(days=182),
+pset.execute(AdvectionRK4, runtime=timedelta(days=2),
              dt=-timedelta(minutes=30),
              output_file=pset.ParticleFile(dpath + save_name,
                                            outputdt=timedelta(minutes=60)))
 print('Execution time: {:.2f} minutes'.format((start - time.time())/60))
 
-""" Plot 3D """
+#""" Plot 3D """
 #fig = plt.figure(figsize=(13, 10))
 #ax = plt.axes(projection='3d')
 #c = plt.cm.jet(np.linspace(0, 1, size))
-#for depth in [300]:
+##for depth in [300]:
 #
-#    ds = xr.open_dataset('{}test_{}.nc'.format(dpath, str(depth)),
-#decode_times=False)
-#    x = ds.lon
-#    y = ds.lat
-#    z = ds.z
+ds = xr.open_dataset('{}test_{}.nc'.format(dpath, str(depth)),
+decode_times=False)
+#x = ds.lon
+#y = ds.lat
+#z = ds.z
 #
-#    for i in range(size):
-#        cb = ax.scatter(x[i], y[i], z[i], s=5, marker="o", c=[c[i]])
-#    ds.close()
+#for i in range(size):
+#    cb = ax.scatter(x[i], y[i], z[i], s=5, marker="o", c=[c[i]])
+#ds.close()
 #
 #ax.set_xlabel("Longitude")
 #ax.set_ylabel("Latitude")
@@ -96,30 +110,38 @@ print('Execution time: {:.2f} minutes'.format((start - time.time())/60))
 #plt.savefig('{}test_{}{}'.format(fpath, depth, im_ext))
 #plt.show()
 #ds.close()
+#
+##""" Plot map """
+##cmap = plt.cm.seismic
+##dv = ofam_fieldset([1, 1], slice_data=True, deferred_load=False,
+##                   use_xarray=True)
+##ds = xr.open_dataset('{}partcileset_300.nc'.format(dpath),
+##                     decode_times=False)
+##x = ds.lon
+##y = ds.lat
+##z = ds.z
+##projection = ccrs.Mercator(central_longitude=-180,
+##                           min_latitude=-80.0, max_latitude=84.0,
+##                           false_easting=125.0, false_northing=-100.0)
+##for t in [0, -1]:
+##    fig = plt.figure(figsize=(13, 10))
+##    ax = plt.axes(projection=projection)
+##
+##    Lon, Lat = np.meshgrid(dv.xu_ocean, dv.yu_ocean)
+##    clevs = np.arange(-0.6, 0.61, 0.01)
+##    cs = ax.contourf(Lon, Lat, dv.u.isel(Time=t, st_ocean=28).load(), clevs,
+##                     cmap=cmap, extend='both', zorder=0)
+##    for i in range(size):
+##        cb = ax.scatter(x[:, t], y[:, t], s=5, marker="o", c=['k'])
+##    ax.coastlines().set_visible(True)
+##    ax.background_patch.set_visible(False)
+##    ax.add_feature(crs.feature.COASTLINE)
+##    plt.show()
 
-""" Plot map """
-cmap = plt.cm.seismic
-dv = ofam_fieldset([1, 1], slice_data=True, deferred_load=False,
-                   use_xarray=True)
-ds = xr.open_dataset('{}partcileset_300.nc'.format(dpath),
-                     decode_times=False)
-x = ds.lon
-y = ds.lat
-z = ds.z
-projection = ccrs.Mercator(central_longitude=-180,
-                           min_latitude=-80.0, max_latitude=84.0,
-                           false_easting=125.0, false_northing=-100.0)
-for t in [0, -1]:
-    fig = plt.figure(figsize=(13, 10))
-    ax = plt.axes(projection=projection)
-
-    Lon, Lat = np.meshgrid(dv.xu_ocean, dv.yu_ocean)
-    clevs = np.arange(-0.6, 0.61, 0.01)
-    cs = ax.contourf(Lon, Lat, dv.u.isel(Time=t, st_ocean=28).load(), clevs,
-                     cmap=cmap, extend='both', zorder=0)
-    for i in range(size):
-        cb = ax.scatter(x[:, t], y[:, t], s=5, marker="o", c=['k'])
-    ax.coastlines().set_visible(True)
-    ax.background_patch.set_visible(False)
-    ax.add_feature(crs.feature.COASTLINE)
-    plt.show()
+transport = np.zeros(len(ds.obs))
+for obs in range(len(ds.obs)):
+    t = ds.isel(traj=0, obs=obs)
+    d = fieldset.U.depth_index(t.z.item(), t.lat.item(), t.lon.item())
+    transport[obs] = (fieldset.U[t.time.item(), t.z.item(), 
+             t.lat.item(), t.lon.item()]*11132*(fieldset.U.depth[d+1] - fieldset.U.depth[d]))
+    
