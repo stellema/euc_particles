@@ -11,5 +11,4 @@
 module use /g/data3/hh5/public/modules
 module load conda/analysis3
 
-python /g/data/e14/as3189/OFAM/scripts/adv_fields.py
-
+python /g/data/e14/as3189/OFAM/scripts/qtest.py

@@ -18,28 +18,23 @@ import random
 from datetime import timedelta, datetime, date
 spath, fpath, dpath, data_path = paths()
 
-def ofam_fields(month, slice_data=True, deferred_load=False):
-    year = 2010
-    filenames = []
-    for t in range(1, month+1):
-        for v in ['v', 'u']:
-            filenames.append('{}ocean_{}_{}_{}.nc'.format(data_path, v,
-                             str(year), str(t).zfill(2)))
+def ofam_fields(year=[1984, 2014], month=[1, 12], deferred_load=False):
 
-    variables = {'U': 'u', 'V': 'v'}
+    files = []
+    var = ['v', 'u', 'w']
+    years = range(year[0], year[1] + 1)
+    months = range(month[0], month[1] + 1)
+    for y, m, v in zip(years, months, var):
+        files.append('{}ocean_{}_{}_{}.nc'.format(data_path, v, str(y), 
+                     str(m).zfill(2)))
+
+    variables = {'U': 'u', 'V': 'v', 'W': 'w'}
     dimensions = {'lat': 'yu_ocean', 'lon': 'xu_ocean',
                   'time': 'Time', 'depth':'st_ocean'}
 
-    ds = xr.open_mfdataset(filenames)
-    if slice_data:
-        # (e.g. 65N-55S, 120E-65W)
-        s = [-55, 65, 120, 300]
-        i = [idx_1d(ds.xu_ocean, s[2]), idx_1d(ds.xu_ocean, s[3])]
-        j = [idx_1d(ds.yu_ocean, s[0]), idx_1d(ds.yu_ocean, s[1])]
-        ds = ds.isel(yu_ocean=slice(j[0], j[1]+1),
-                     xu_ocean=slice(i[0], i[1]+1)).load()
+    ds = xr.open_mfdataset(files)
 
-    f = FieldSet.from_xarray_dataset(ds.load(), variables, dimensions,
+    f = FieldSet.from_xarray_dataset(ds, variables, dimensions,
                                      time_periodic=True,
                                      deferred_load=deferred_load)
 
@@ -47,7 +42,7 @@ def ofam_fields(month, slice_data=True, deferred_load=False):
 
 start = time.time()
 # Create the fieldset.
-f = ofam_fields(month=3)
+f = ofam_fields(year=[1994, 2014])
 
 print('Field time: {:.2f} mins'.format((start - time.time())/60))
 

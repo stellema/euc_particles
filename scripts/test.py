@@ -5,163 +5,137 @@ Created on Wed Jul 10 00:39:35 2019
 @author: Annette Stellema
 """
 
-
+import time
+import math
+import warnings
 import xarray as xr
 import numpy as np
-from main import LAT_DEG, distance, dxdydz, idx_1d, paths, im_ext, ofam_fieldset
-from main import DeleteParticle
-from parcels import FieldSet, ParticleSet, JITParticle, AdvectionRK4, ErrorCode
-from parcels import plotTrajectoriesFile, AdvectionRK4_3D, ScipyParticle, Variable
-import matplotlib.pyplot as plt
-import cartopy.crs as ccrs
-from datetime import timedelta, datetime, date
-import time
-from mpl_toolkits.mplot3d import Axes3D
+from operator import attrgetter
+from datetime import timedelta, datetime
+from main import LAT_DEG, paths, particle_vars, remove_particles
+from main import DeleteParticle, plot3D
+from parcels import FieldSet, ParticleSet, JITParticle, ScipyParticle
+from parcels import AdvectionRK4, AdvectionRK4_3D, Variable, ErrorCode
+
+
 start = time.time()
 path, spath, fpath, xpath, dpath, data_path = paths()
 
-
 ptype = {'scipy': ScipyParticle, 'jit': JITParticle}
 mode = 'jit'
-#mode = 'scipy'
 
-dx, dy, dz = dxdydz(data_path)
+dx, dy, dz = 0.1, 0.1, 25
+particle_depths = np.arange(25, 300 + dz, dz)
+lats = np.arange(-2.0, 2.0 + dy, dy, dtype=np.float32)
+particle_lons = [165, 190, 220]
+dt = -timedelta(minutes=60)
+repeatdt = timedelta(days=6)
+runtime = timedelta(days=6)
+outputdt = timedelta(minutes=60)
 
 
+fieldset = FieldSet.from_parcels(fpath + 'ofam_fieldset_2010_',
+                                 allow_time_extrapolation=True,
+                                 deferred_load=True)
+class tparticle(JITParticle):   
+    # Define a new particle class.
+    
+    # The age of the particle.
+    age = Variable('age', dtype=np.float32, initial=0.)
+    # The velocity of the particle.
+    u = Variable('u', dtype=np.float32, initial=fieldset.U)
+    # The distance travelled by the particle.
+    distance = Variable('distance', initial=0., dtype=np.float32)
+    # The previous longitude and latitude (for distance calculation).
+    prev_lon = Variable('prev_lon', dtype=np.float32, to_write=False,
+                        initial=attrgetter('lon'))
+    prev_lat = Variable('prev_lat', dtype=np.float32, to_write=False,
+                        initial=attrgetter('lat'))
 
-
-depth = 300
 
 # Getting around overwriting permission errors (looking for unsaved filename).
+test_int = 1
 err = True
-while err is not False:
+while err:
     try:
-        ds = xr.open_dataset('{}test_{}.nc'.format(dpath, str(depth)))
+        ds = xr.open_dataset('{}ParticleFile_x{}.nc'.format(dpath, 
+                             str(test_int)))
         ds.close()
-        depth += 1
+        test_int += 1
     except FileNotFoundError:
         err = False
-    
 
-save_name = 'test_' + str(depth)
+save_name = 'ParticleFile_x' + str(test_int)
 print('Executing:', save_name)
 
-
-fs = FieldSet.from_parcels(fpath + 'ofam_fieldset_2010_',
-                           allow_time_extrapolation=True,
-                           deferred_load=True)
-#def DeleteWestward(particle, fieldset, time):
-#
-##    if particle.age == 0.:
-##        if fieldset.U[particle.time, particle.depth, particle.lat, particle.lon] <= 0:
-###        if particle.prev_u[] <0:
-##            
-##            particle.delete()
-#            
-#    particle.age += particle.dt  # update cycle_age
-    
-#class TParticle(ptype[mode]):         # Define a new particle class
-#    age = Variable('age', dtype=np.float32, initial=0.) 
-##    u = Variable('u', dtype=np.float32, initial=fieldset.U)
-##    prev_u = Variable('prev_lon', dtype=np.float32, to_write=False,
-##                        initial=p.time)  # the previous longitude
-
-    
-# TODO: Ensure lats are correctly distributed.
-lats = np.arange(-2.6, 2.6 + dy, dy)
-
-z_start = idx_1d(fs.U.depth, 25)
-z_end = idx_1d(fs.U.depth, 300)
-
-# TODO: Calculate mixed layer depth.
-# TODO: Add alternative release point.
+""" Initialise Particle set """     
 
 # Release particles at 165E, 170W and 140W.
-#for x in [165, 360-170, 360-140]:
-for x in [360-140, 360-139]:
+for x in particle_lons:
     lons = np.full(len(lats), x)
-    # Release particles every 25m from  surface to 300m.
-    for z in range(z_start, z_end + 1):
-        # TODO: Add check for eastward flow.
-        
-        depths = np.full(len(lats), fs.U.depth[z])
     
-        pset_tmp = ParticleSet.from_list(fieldset=fs, pclass=ptype[mode],
+    # Release particles every 25m from 25m to 300m.
+    for z in particle_depths:
+        # Create array of depth values (same size as lats).
+        depths = np.full(len(lats), z)
+        
+        # Create the particle set.
+        pset_tmp = ParticleSet.from_list(fieldset=fieldset, pclass=tparticle,
                                          lon=lons, lat=lats, depth=depths, 
-                                         time=fs.U.grid.time[-1], 
-                                         repeatdt=timedelta(days=1))
-        if z == z_start:
+                                         time=fieldset.U.grid.time[-1], 
+                                         repeatdt=repeatdt)
+        
+        # Define the initial particle set or add partciles to pset.
+        if x == particle_lons[0] and z == particle_depths[0]:
             pset = pset_tmp
         else:
             pset.add(pset_tmp)
-n = 0
+            
+""" Remove particles based on definition """   
+remove_particles(pset)
 
-while any(fs.U[p.time, p.depth, p.lat, p.lon] <= 0. for p in pset):
-    for i, p in enumerate(pset):
-        if fs.U[p.time, p.depth, p.lat, p.lon] <= 0.:
-            pset.remove(i)
-    n += 1
-print(n)
-        
+""" Execute Particle set """        
 # Output partcile file name and time steps to save.
-output_file = pset.ParticleFile(dpath + save_name, 
-                                outputdt=timedelta(minutes=60))
-
-#kernals = AdvectionRK4 + pset.Kernel(DeleteWestward)
-pset.execute(AdvectionRK4 , runtime=timedelta(days=32),
-             dt=-timedelta(minutes=60), output_file=output_file, 
+output_file = pset.ParticleFile(dpath + save_name, outputdt=outputdt)
+kernels = AdvectionRK4 + pset.Kernel(particle_vars)
+pset.execute(kernels, runtime=runtime, dt=dt, output_file=output_file, 
              recovery={ErrorCode.ErrorOutOfBounds: DeleteParticle})
 
 print('Execution time: {:.2f} minutes'.format((time.time() - start)/60))
 
 
+""" Remove particles based on definition x2 """   
+remove_particles(pset)
 
+# TODO: make sure time is correct.
+output_file.write(pset, fieldset.U.grid.time[0])
 
-
-
-
-
-
-
-
+""" Clean dataset and add transport """
 # Open the output Particle File.
-ds = xr.open_dataset('{}test_{}.nc'.format(dpath, str(depth)), 
-                     decode_times=False)
+ds = xr.open_dataset(dpath + save_name, decode_times=False)
+
+# Remove the last lot of trajectories that are westward (possible bug).
+wrong = np.argwhere(ds.isel(obs=0).u.values < 0).flatten()
+check = tmp = np.arange(wrong[0], len(ds.traj))
+if not all(wrong == check):
+    warnings.warn('Potential particle slicing issue.')
+    
+ds = ds.isel(traj=slice(0, wrong[0]))
+N = len(ds.traj)
+
+# Add transport to the dataset.
 ds['uvo'] = (['traj'], np.zeros(len(ds.traj)))
 
-for traj in range(len(ds.traj)):
-    
-    # Select the particle.
-    p = ds.isel(traj=traj, obs=0)
-    
-    # Depth index
-    idx_d = fs.U.depth_index(p.z.item(), p.lat.item(), p.lon.item())
-    
-    # Fixes problem with zero represented as a very small number.
-    v = np.array([p.time.item(), p.z.item(), p.lat.item(), p.lon.item()])
-    v = [0 if abs(v[i]) < 1e-5 else v[i] for i in range(len(v))]
-    
+for traj in range(N):
     # Zonal transport (velocity x lat width x depth width).
-    ds.uvo[traj] = fs.U[v[0], v[1], v[2], v[3]]* LAT_DEG * dz[idx_d]
+    ds.uvo[traj] = ds.u.isel(traj=traj, obs=0).item() * LAT_DEG * dy * dz
     
-""" Plot 3D """
-fig = plt.figure(figsize=(13, 10))
-ax = plt.axes(projection='3d')
-c = plt.cm.jet(np.linspace(0, 1, len(ds.traj)))
+# Add transport metadata.    
+ds['uvo'].attrs['long_name'] = 'Initial zonal volume transport of particle'
+ds['uvo'].attrs['units'] = 'm3/sec'
 
-x = ds.lon
-y = ds.lat
-z = ds.z
+ds.to_netcdf('{}ParticleFile_v{}.nc'.format(dpath, str(test_int)))
 
-for i in range(len(ds.traj)):
-    cb = ax.scatter(x[i], y[i], z[i], s=5, marker="o", c=[c[i]])
+""" Print picture """
+plot3D(ds, N, test_int, xpath)
 ds.close()
-
-ax.set_xlabel("Longitude")
-ax.set_ylabel("Latitude")
-ax.set_zlabel("Depth (m)")
-ax.set_zlim(np.max(z), np.min(z))
-plt.savefig('{}test_{}{}'.format(xpath, depth, im_ext))
-plt.show()
-ds.close()
-

@@ -4,12 +4,22 @@ Created on Wed Apr 17 08:23:42 2019
 
 @author: Annette Stellema
 
-
+TODO:
+    - Clean Partcile file output
+    - Convert velocity to transport (initial only)
+    - Unzip and figure out where to store data
+    - Figure out how to spin up
+    - Find "normal" years for spinup
+    - Interpolate TAU/TRITON data
 
 """
 import xarray as xr
 import numpy as np
 import math
+import calendar
+import warnings
+from operator import attrgetter
+import matplotlib.pyplot as plt
 from datetime import timedelta, datetime, date
 from parcels import FieldSet, ParticleSet, JITParticle, AdvectionRK4
 from parcels import ErrorCode, Variable
@@ -20,22 +30,22 @@ im_ext = '.png'
 # Radius of Earth [m].
 EARTH_RADIUS = 6378137
 
-# Metres in 1/10th degree of latitude [m].
-LAT_DEG = 111111/10
+# Metres in 1 degree of latitude [m].
+LAT_DEG = 111111
 
-def dxdydz(data_path):
-    
-    data = xr.open_dataset(data_path + 'ocean_u_2010_01.nc')
-    
-    # The width of latitude and longitude grid cells [degees].
-    dx, dy = 0.1, 0.1
-
-    # The vertical length [m] of each grid cell.
-    dz = np.array([data.st_edges_ocean[n + 1] - data.st_edges_ocean[n] \
-                   for n in range(len(data.st_ocean))])
-    data.close()
-    
-    return dx, dy, dz
+#def dxdydz(data_path):
+#    
+##    data = xr.open_dataset(data_path + 'ocean_u_2010_01.nc')
+#    
+#    # The width of latitude and longitude grid cells [degees].
+#    dx, dy, dz = 0.1, 0.1, 25
+#
+##    # The vertical length [m] of each grid cell.
+##    dz = np.array([data.st_edges_ocean[n + 1] - data.st_edges_ocean[n] \
+##                   for n in range(len(data.st_ocean))])
+##    data.close()
+#    
+#    return dx, dy, dz
 
 
 def paths():
@@ -58,9 +68,11 @@ def paths():
         fpath = '/g/data/e14/as3189/OFAM/fields/'
         xpath = '/g/data/e14/as3189/OFAM/figures/'
         dpath = '/g/data/e14/as3189/OFAM/data/'
-        data_path = '/g/data/e14/as3189/OFAM/OFAM3_BGC_SPINUP_03/daily/'
+        data_path = '/g/data/e14/as3189/OFAM/hist/'
 
     return path, spath, fpath, xpath, dpath, data_path
+
+path, spath, fpath, xpath, dpath, data_path = paths()
 
 def print_time():
     """ Print the current time.
@@ -71,35 +83,48 @@ def print_time():
     mrdm = 'pm' if currentDT.hour > 12 else 'am'
     print('Current time is {}:{} {}'.format(h, currentDT.minute, mrdm))
 
-def ofam_fieldset(time, slice_data=True, deferred_load=False, use_xarray=False):
-    year = 2010
-    filenames = []
-    for t in range(time[0], time[1] + 1):
-        for var in ['v', 'u']:
-            filenames.append('{}ocean_{}_{}_{}.nc'.format(paths()[-1],
-                             var, str(year), str(t).zfill(2)))
+def ofam_fields(years=[1984, 2014], months=[1, 12], deferred_load=False):
 
-    variables = {'U': 'u', 'V': 'v'}
-    dimensions = {'lat': 'yu_ocean', 'lon': 'xu_ocean',
-                  'time': 'Time', 'depth':'st_ocean'}
+    ufiles = []
+    vfiles = []
+    wfiles = []
+    
+    for y in range(years[0], years[1] + 1):
+        for m in range(months[0], months[1] + 1):
+            ufiles.append('{}ocean_u_{}_{}.nc'.format(data_path, str(y), 
+                          str(m).zfill(2)))
+            vfiles.append('{}ocean_v_{}_{}.nc'.format(data_path, str(y), 
+                          str(m).zfill(2)))
+            wfiles.append('{}ocean_w_{}_{}.nc'.format(data_path, str(y), 
+                          str(m).zfill(2)))
+            
+    filenames = {'U': {'lon': ufiles[0], 'lat': ufiles[0], 
+                       'depth': wfiles[0], 'data': ufiles},
+                 'V': {'lon': vfiles[0], 'lat': vfiles[0], 
+                       'depth': wfiles[0], 'data': vfiles},
+                 'W': {'lon': wfiles[0], 'lat': wfiles[0], 
+                       'depth': wfiles[0], 'data': wfiles}}
 
-    ds = xr.open_mfdataset(filenames)
-    if slice_data:
-        # (e.g. 65N-55S, 120E-65W)
-        s = [-55, 65, 120, 300]
-        i = [idx_1d(ds.xu_ocean, s[2]), idx_1d(ds.xu_ocean, s[3])]
-        j = [idx_1d(ds.yu_ocean, s[0]), idx_1d(ds.yu_ocean, s[1])]
-        ds = ds.isel(yu_ocean=slice(j[0], j[1]+1),
-                     xu_ocean=slice(i[0], i[1]+1))
+    variables = {'U': 'u',
+                 'V': 'v',
+                 'W': 'w'}
+    
+    dimensions = {'U': {'lon': 'xu_ocean', 'lat': 'yu_ocean', 
+                        'depth': 'sw_ocean', 'time': 'Time'},
+                  'V': {'lon': 'xu_ocean', 'lat': 'yu_ocean', 
+                        'depth': 'sw_ocean', 'time': 'Time'},
+                  'W': {'lon': 'xu_ocean', 'lat': 'yu_ocean', 
+                        'depth': 'sw_ocean', 'time': 'Time'}}            
+#    variables = {'U': 'u', 'V': 'v', 'W': 'w'}
+#    dimensions = {'lat': 'yu_ocean', 'lon': 'xu_ocean',
+#                  'time': 'Time', 'depth':'sw_ocean'}
 
 
-    if use_xarray:
-        return ds
-    else:
+    f = FieldSet.from_netcdf(filenames, variables, dimensions, 
+                             time_periodic=True,
+                             deferred_load=deferred_load)
 
-        return FieldSet.from_xarray_dataset(ds, variables, dimensions,
-                                            time_periodic=True,
-                                            deferred_load=deferred_load)
+    return f
 
 def DeleteParticle(particle, fieldset, time):
     particle.delete()
@@ -195,3 +220,79 @@ def distance(lat1, lon1, lat2, lon2):
     arc = math.acos(cos)
 
     return arc*EARTH_RADIUS
+
+""" Plot 3D """
+def plot3D(ds, N, depth, xpath):
+    plt.figure(figsize=(13, 10))
+    ax = plt.axes(projection='3d')
+    c = plt.cm.jet(np.linspace(0, 1, N))
+    
+    x = ds.lon
+    y = ds.lat
+    z = ds.z
+    
+    for i in range(N):
+        ax.scatter(x[i], y[i], z[i], s=5, marker="o", c=[c[i]])
+    ds.close()
+    
+    ax.set_xlabel("Longitude")
+    ax.set_ylabel("Latitude")
+    ax.set_zlabel("Depth (m)")
+    ax.set_zlim(np.max(z), np.min(z))
+    plt.savefig('{}test_{}{}'.format(xpath, depth, im_ext))
+    plt.show()
+    
+def years_to_days(years, months):
+    date1 = date(years[0], months[0], 1)
+    date2 = date(years[1], months[1], 31) # might cause error if days < 31
+    
+    days_in_first_year = (date(years[0], 12, 31) - date1).days
+    days_in_last_year = (date2 - date(years[1], 1, 1)).days
+    if years[0] != years[1]:
+        n_days_list = [days_in_first_year]
+        for y in range(years[0] + 1, years[1]): 
+            n_days_list.append(365 + (1*calendar.isleap(y)))
+        n_days_list.append(days_in_last_year)
+    else: 
+        n_days_list = [days_in_first_year + days_in_last_year]
+        
+    return sum(n_days_list)
+
+
+    
+def particle_vars(particle, fieldset, time):
+
+    # Delete particle if the initial zonal velocity is westward (negative).
+    if particle.age == 0. and particle.u < 0:
+        particle.delete()
+            
+    # Update particle age.
+    particle.age += particle.dt  
+    
+    # Calculate the distance in latitudinal direction, 
+    # using 1.11e2 kilometer per degree latitude).
+    lat_dist = (particle.lat - particle.prev_lat) * 111111
+    # Calculate the distance in longitudinal direction, 
+    # using cosine(latitude) - spherical earth.
+    lon_dist = ((particle.lon - particle.prev_lon) * 111111 * 
+                math.cos(particle.lat * math.pi / 180))
+    # Calculate the total Euclidean distance travelled by the particle.
+    particle.distance += math.sqrt(math.pow(lon_dist, 2) + 
+                                   math.pow(lat_dist, 2))
+    
+    # Set the stored values for next iteration.
+    particle.prev_lon = particle.lon  
+    particle.prev_lat = particle.lat
+    
+
+def remove_particles(pset):
+    idx = []
+    for p in pset:
+        if p.u < 0. and p.age == 0.:
+            idx.append(np.where([pi.id == p.id for pi in pset])[0][0])
+    pset.remove(idx)
+    # Check there aren't any westward particles.
+    if any([p.u < 0 and p.age == 0 for p in pset]): 
+        warnings.warn('Particles travelling in the wrong direction')
+        
+    return
