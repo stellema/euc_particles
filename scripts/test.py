@@ -10,31 +10,33 @@ import math
 import warnings
 import xarray as xr
 import numpy as np
+import os.path
 from operator import attrgetter
+from collections import OrderedDict
 from datetime import timedelta, datetime
 from main import LAT_DEG, paths, particle_vars, remove_particles
-from main import DeleteParticle, plot3D
+from main import DeleteParticle, plot3D, timer, config_ParticleFile
 from parcels import FieldSet, ParticleSet, JITParticle, ScipyParticle
 from parcels import AdvectionRK4, AdvectionRK4_3D, Variable, ErrorCode
 
+timer_start_total = time.time()
+timer_start = time.time()
+fpath, dpath, xpath = paths()
 
-start = time.time()
-path, spath, fpath, xpath, dpath, data_path = paths()
-
-ptype = {'scipy': ScipyParticle, 'jit': JITParticle}
-mode = 'jit'
+years = [2010, 2010]
+months = [1, 12]
 
 dx, dy, dz = 0.1, 0.1, 25
 particle_depths = np.arange(25, 300 + dz, dz)
 lats = np.arange(-2.0, 2.0 + dy, dy, dtype=np.float32)
 particle_lons = [165, 190, 220]
 dt = -timedelta(minutes=60)
-repeatdt = timedelta(days=6)
-runtime = timedelta(days=6)
+repeatdt = timedelta(days=2)
+runtime = timedelta(days=30)
 outputdt = timedelta(minutes=60)
 
 
-fieldset = FieldSet.from_parcels(fpath + 'ofam_fieldset_2010_',
+fieldset = FieldSet.from_parcels(dpath + 'lge/ofam_fieldset_2010_',
                                  allow_time_extrapolation=True,
                                  deferred_load=True)
 class tparticle(JITParticle):   
@@ -52,24 +54,16 @@ class tparticle(JITParticle):
     prev_lat = Variable('prev_lat', dtype=np.float32, to_write=False,
                         initial=attrgetter('lat'))
 
-
 # Getting around overwriting permission errors (looking for unsaved filename).
-test_int = 1
-err = True
-while err:
-    try:
-        ds = xr.open_dataset('{}ParticleFile_x{}.nc'.format(dpath, 
-                             str(test_int)))
-        ds.close()
-        test_int += 1
-    except FileNotFoundError:
-        err = False
+test_int = years[1] - years[0]
+if os.path.exists('{}ParticleFile_vi{}.nc'.format(dpath, test_int)):
+    test_int += 1
 
-save_name = 'ParticleFile_x' + str(test_int)
-print('Executing:', save_name)
+pset_name = 'ParticleFile_vi' + str(test_int) + '.nc'
+print('Executing:', pset_name)
 
 """ Initialise Particle set """     
-
+timer_start = time.time()
 # Release particles at 165E, 170W and 140W.
 for x in particle_lons:
     lons = np.full(len(lats), x)
@@ -93,49 +87,37 @@ for x in particle_lons:
             
 """ Remove particles based on definition """   
 remove_particles(pset)
+timer(timer_start, 'init pset')
 
-""" Execute Particle set """        
-# Output partcile file name and time steps to save.
-output_file = pset.ParticleFile(dpath + save_name, outputdt=outputdt)
-kernels = AdvectionRK4 + pset.Kernel(particle_vars)
+""" Execute Particle set """
+timer_start = time.time()  
+# Output partcile file pset_name and time steps to save.
+output_file = pset.ParticleFile(dpath + pset_name, outputdt=outputdt)
+kernels = AdvectionRK4_3D + pset.Kernel(particle_vars)
 pset.execute(kernels, runtime=runtime, dt=dt, output_file=output_file, 
              recovery={ErrorCode.ErrorOutOfBounds: DeleteParticle})
 
-print('Execution time: {:.2f} minutes'.format((time.time() - start)/60))
-
-
-""" Remove particles based on definition x2 """   
+timer(timer_start, 'execute pset')
+""" Remove particles based on definition x2 """  
+timer_start = time.time()
 remove_particles(pset)
+timer(timer_start, 'remove particles')
 
 # TODO: make sure time is correct.
+timer_start = time.time()
 output_file.write(pset, fieldset.U.grid.time[0])
+timer(timer_start, 'write pset')
 
 """ Clean dataset and add transport """
-# Open the output Particle File.
-ds = xr.open_dataset(dpath + save_name, decode_times=False)
-
-# Remove the last lot of trajectories that are westward (possible bug).
-wrong = np.argwhere(ds.isel(obs=0).u.values < 0).flatten()
-check = tmp = np.arange(wrong[0], len(ds.traj))
-if not all(wrong == check):
-    warnings.warn('Potential particle slicing issue.')
-    
-ds = ds.isel(traj=slice(0, wrong[0]))
-N = len(ds.traj)
-
-# Add transport to the dataset.
-ds['uvo'] = (['traj'], np.zeros(len(ds.traj)))
-
-for traj in range(N):
-    # Zonal transport (velocity x lat width x depth width).
-    ds.uvo[traj] = ds.u.isel(traj=traj, obs=0).item() * LAT_DEG * dy * dz
-    
-# Add transport metadata.    
-ds['uvo'].attrs['long_name'] = 'Initial zonal volume transport of particle'
-ds['uvo'].attrs['units'] = 'm3/sec'
-
-ds.to_netcdf('{}ParticleFile_v{}.nc'.format(dpath, str(test_int)))
+timer_start = time.time()
+df = config_ParticleFile(pset_name, save=True)
+timer(timer_start, 'config_PartcileFile')
 
 """ Print picture """
-plot3D(ds, N, test_int, xpath)
-ds.close()
+plot3D(df, len(df.traj), test_int)
+df.close()
+
+# Save the fieldset to netCDF.
+timer_start = time.time()
+fieldset.write(dpath + 'fieldset_ofam_3D_{}-{}'.format(*years))
+timer(timer_start, 'write fieldset')

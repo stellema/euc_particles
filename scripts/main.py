@@ -13,17 +13,21 @@ TODO:
     - Interpolate TAU/TRITON data
 
 """
+import time
 import xarray as xr
 import numpy as np
 import math
 import calendar
 import warnings
+import os.path
 from operator import attrgetter
 import matplotlib.pyplot as plt
+from collections import OrderedDict
 from datetime import timedelta, datetime, date
-from parcels import FieldSet, ParticleSet, JITParticle, AdvectionRK4
+from parcels import FieldSet, ParticleSet, JITParticle, ScipyParticle
 from parcels import ErrorCode, Variable
-from parcels import plotTrajectoriesFile, AdvectionRK4_3D, ScipyParticle
+from parcels import plotTrajectoriesFile, AdvectionRK4_3D, AdvectionRK4
+from mpl_toolkits.mplot3d import Axes3D
 
 im_ext = '.png'
 # Constants.
@@ -33,47 +37,40 @@ EARTH_RADIUS = 6378137
 # Metres in 1 degree of latitude [m].
 LAT_DEG = 111111
 
-#def dxdydz(data_path):
-#    
-##    data = xr.open_dataset(data_path + 'ocean_u_2010_01.nc')
-#    
-#    # The width of latitude and longitude grid cells [degees].
-#    dx, dy, dz = 0.1, 0.1, 25
-#
-##    # The vertical length [m] of each grid cell.
-##    dz = np.array([data.st_edges_ocean[n + 1] - data.st_edges_ocean[n] \
-##                   for n in range(len(data.st_ocean))])
-##    data.close()
-#    
-#    return dx, dy, dz
-
+ptype = {'scipy': ScipyParticle, 'jit': JITParticle}
+#data = xr.open_dataset(xpath + 'ocean_u_2010_01.nc')
+#data.close()
 
 def paths():
-    unsw = 0 # True if at unsw PC.
-    from os.path import expanduser
-    home = expanduser("~")
+    os_path = os.path.expanduser("~")
+    
     # Windows Paths.
-    if home[:10] == 'C:\\Users\\A':
-        path = 'C:/Users/Annette/' if unsw else 'E:/'
-        spath = path + 'GitHub/OFAM/scripts/'
-        fpath = path + 'GitHub/OFAM/fields/'
-        xpath = path + 'GitHub/OFAM/figures/'
-        dpath = path + 'GitHub/OFAM/data/'
-        data_path = path + 'model_output/OFAM/OFAM3_BGC_SPINUP_03/daily/'
+    if os_path[:2] == 'C:':
+        # Change to E drive if at home.
+        home = os_path if os.path.exists(os_path + 'GitHub/OFAM/') else 'E:/'
+        fpath = home + 'GitHub/OFAM/figures/'
+        dpath = home + 'GitHub/OFAM/data/'
+        xpath = home + 'model_output/OFAM/trop_pac/'
 
     # Raijin Paths.
     else:
-        path = '/g/data/e14/as3189/'
-        spath = '/g/data/e14/as3189/OFAM/scripts/'
-        fpath = '/g/data/e14/as3189/OFAM/fields/'
-        xpath = '/g/data/e14/as3189/OFAM/figures/'
-        dpath = '/g/data/e14/as3189/OFAM/data/'
-        data_path = '/g/data/e14/as3189/OFAM/hist/'
+        home = '/g/data/e14/as3189/OFAM/'
+        fpath = home + 'figures/'
+        dpath = home + 'data/'
+        xpath = home + 'trop_pac/'
 
-    return path, spath, fpath, xpath, dpath, data_path
+    return fpath, dpath, xpath
 
-path, spath, fpath, xpath, dpath, data_path = paths()
+fpath, dpath, xpath = paths()
 
+def timer(timer_start, string=None):
+    timer_end = time.time()
+    h, rem = divmod(timer_end - timer_start, 3600)
+    m, s = divmod(rem, 60)
+    arg = '' if string is None else ' ({})'.format(string)
+    print('Timer{}: {:} hours, {:0>2} mins, {:05.2f} secs'\
+          .format(arg, int(h), int(m), s))
+   
 def print_time():
     """ Print the current time.
     """
@@ -83,46 +80,36 @@ def print_time():
     mrdm = 'pm' if currentDT.hour > 12 else 'am'
     print('Current time is {}:{} {}'.format(h, currentDT.minute, mrdm))
 
-def ofam_fields(years=[1984, 2014], months=[1, 12], deferred_load=False):
+def ofam_fields(years=[1984, 2014], months=[1, 12], deferred_load=True):
 
-    ufiles = []
-    vfiles = []
-    wfiles = []
-    
+    uf, vf, wf = [], [], []
+ 
     for y in range(years[0], years[1] + 1):
         for m in range(months[0], months[1] + 1):
-            ufiles.append('{}ocean_u_{}_{}.nc'.format(data_path, str(y), 
-                          str(m).zfill(2)))
-            vfiles.append('{}ocean_v_{}_{}.nc'.format(data_path, str(y), 
-                          str(m).zfill(2)))
-            wfiles.append('{}ocean_w_{}_{}.nc'.format(data_path, str(y), 
-                          str(m).zfill(2)))
+            uf.append('{}ocean_u_{}_{:02d}.nc'.format(xpath, y, m))
+            vf.append('{}ocean_v_{}_{:02d}.nc'.format(xpath, y, m))
+            wf.append('{}ocean_w_{}_{:02d}.nc'.format(xpath, y, m))
             
-    filenames = {'U': {'lon': ufiles[0], 'lat': ufiles[0], 
-                       'depth': wfiles[0], 'data': ufiles},
-                 'V': {'lon': vfiles[0], 'lat': vfiles[0], 
-                       'depth': wfiles[0], 'data': vfiles},
-                 'W': {'lon': wfiles[0], 'lat': wfiles[0], 
-                       'depth': wfiles[0], 'data': wfiles}}
-
-    variables = {'U': 'u',
-                 'V': 'v',
+    filenames = {'U': {'lon': uf[0], 'lat': uf[0], 'depth': wf[0], 'data': uf},
+                 'V': {'lon': uf[0], 'lat': uf[0], 'depth': wf[0], 'data': vf},
+                 'W': {'lon': uf[0], 'lat': uf[0], 'depth': wf[0], 'data': wf}}
+    
+    variables = {'U': 'u', 
+                 'V': 'v', 
                  'W': 'w'}
     
-    dimensions = {'U': {'lon': 'xu_ocean', 'lat': 'yu_ocean', 
-                        'depth': 'sw_ocean', 'time': 'Time'},
-                  'V': {'lon': 'xu_ocean', 'lat': 'yu_ocean', 
-                        'depth': 'sw_ocean', 'time': 'Time'},
-                  'W': {'lon': 'xu_ocean', 'lat': 'yu_ocean', 
-                        'depth': 'sw_ocean', 'time': 'Time'}}            
-#    variables = {'U': 'u', 'V': 'v', 'W': 'w'}
-#    dimensions = {'lat': 'yu_ocean', 'lon': 'xu_ocean',
-#                  'time': 'Time', 'depth':'sw_ocean'}
+    dims = {'lon': 'xu_ocean', 
+            'lat': 'yu_ocean', 
+            'depth': 'sw_ocean', 
+            'time': 'Time'}
+    
+    dimensions = {'U': dims, 
+                  'V': dims, 
+                  'W': dims}            
 
-
-    f = FieldSet.from_netcdf(filenames, variables, dimensions, 
-                             time_periodic=True,
-                             deferred_load=deferred_load)
+    f = FieldSet.from_b_grid_dataset(filenames, variables, dimensions, 
+                                     mesh='flat', time_periodic=True, 
+                                     deferred_load=deferred_load)
 
     return f
 
@@ -222,7 +209,7 @@ def distance(lat1, lon1, lat2, lon2):
     return arc*EARTH_RADIUS
 
 """ Plot 3D """
-def plot3D(ds, N, depth, xpath):
+def plot3D(ds, N, depth):
     plt.figure(figsize=(13, 10))
     ax = plt.axes(projection='3d')
     c = plt.cm.jet(np.linspace(0, 1, N))
@@ -233,13 +220,12 @@ def plot3D(ds, N, depth, xpath):
     
     for i in range(N):
         ax.scatter(x[i], y[i], z[i], s=5, marker="o", c=[c[i]])
-    ds.close()
     
     ax.set_xlabel("Longitude")
     ax.set_ylabel("Latitude")
     ax.set_zlabel("Depth (m)")
     ax.set_zlim(np.max(z), np.min(z))
-    plt.savefig('{}test_{}{}'.format(xpath, depth, im_ext))
+    plt.savefig('{}test_{}{}'.format(fpath, depth, im_ext))
     plt.show()
     
 def years_to_days(years, months):
@@ -296,3 +282,43 @@ def remove_particles(pset):
         warnings.warn('Particles travelling in the wrong direction')
         
     return
+
+def config_ParticleFile(pset_name, save=True):
+    # Open the output Particle File.
+    ds = xr.open_dataset(dpath + pset_name, decode_times=False)
+
+    # Remove the last lot of trajectories that are westward.
+    df = xr.Dataset()
+    df.attrs = ds.attrs
+    wrong = np.argwhere(ds.isel(obs=0).u.values < 0).flatten().tolist()
+    
+    for v in ds.variables:
+        df[v] = (('traj', 'obs'), np.delete(ds[v].values, wrong, axis=0))
+        df[v].attrs = ds[v].attrs
+        
+    N = len(df.traj)
+    
+    # Add transport to the dataset.
+    df['uvo'] = (['traj'], np.zeros(len(df.traj)))
+    
+    for traj in range(N):
+        # Zonal transport (velocity x lat width x depth width).
+        df.uvo[traj] = df.u.isel(traj=traj, obs=0).item() * LAT_DEG * dy * dz
+        
+    # Add transport metadata.    
+    df['uvo'].attrs = OrderedDict([('long_name', 'Initial zonal volume transport'), 
+                                   ('units', 'm3/sec'), 
+                                   ('standard_name', 'sea_water_x_transport')])
+    
+    # Adding missing zonal velocity attributes (copied from data).
+    df['u'].attrs = OrderedDict([('long_name', 'i-current'),
+                                 ('units', 'm/sec'),
+                                 ('valid_range', [-32767, 32767]),
+                                 ('packing', 4),
+                                 ('cell_methods', 'time: mean'),
+                                 ('coordinates', 'geolon_c geolat_c'),
+                                 ('standard_pset_name', 'sea_water_x_velocity')])
+    if save:
+        df.to_netcdf('{}ParticleFile_v{}.nc'.format(dpath, test_int))
+    ds.close()
+    return df
