@@ -5,7 +5,7 @@ Created on Wed Apr 17 08:23:42 2019
 @author: Annette Stellema
 
 TODO:
-    - Clean Partcile file output
+    - Clean particle file output
     - Convert velocity to transport (initial only)
     - Unzip and figure out where to store data
     - Figure out how to spin up
@@ -63,29 +63,51 @@ def paths():
 
 fpath, dpath, xpath = paths()
 
-def timer(timer_start, string=None):
-    timer_end = time.time()
-    h, rem = divmod(timer_end - timer_start, 3600)
-    m, s = divmod(rem, 60)
-    arg = '' if string is None else ' ({})'.format(string)
-    print('Timer{}: {:} hours, {:0>2} mins, {:05.2f} secs'\
-          .format(arg, int(h), int(m), s))
-   
-def print_time():
+def current_time(print_time=False):
     """ Print the current time.
     """
 
     currentDT = datetime.now()
     h = currentDT.hour if currentDT.hour <= 12 else currentDT.hour - 12
     mrdm = 'pm' if currentDT.hour > 12 else 'am'
-    print('Current time is {}:{} {}'.format(h, currentDT.minute, mrdm))
+    if print_time:
+        print('Current time: {:0>2d}:{:0>2d}{}'.format(h, currentDT.minute, mrdm))
 
-def ofam_fields(years=[1984, 2014], months=[1, 12], deferred_load=True):
+    return '{:0>2d}:{:0>2d}{}'.format(h, currentDT.minute, mrdm)
+    
+  
+#def timer(timer_start, string=None):
+#    timer_end = time.time()
+#    h, rem = divmod(timer_end - timer_start, 3600)
+#    m, s = divmod(rem, 60)
+#    arg = '' if string is None else ' ({})'.format(string)
+#    print('Timer{}: {:} hours, {:} mins, {:05.2f} secs ()'\
+#          .format(arg, int(h), int(m), s, current_time(False)))
+#    
+def timeit(method):
+    def timed(*args, **kw):
+        ts = time.time()
+        result = method(*args, **kw)
+        te = time.time()
+        h, rem = divmod(te - ts, 3600)
+        m, s = divmod(rem, 60)
+        
+        if 'log_time' in kw:
+            name = kw.get('log_name', method.__name__.upper())
+            kw['log_time'][name] = int((te - ts) * 1000)
+        else:
+            print('{}: {:} hours, {:} mins, {:05.2f} secs ({:})'.format(
+                    method.__name__, int(h), int(m), s, current_time(False)))
+        return result    
+    return timed
+
+@timeit
+def ofam_fields(year=[1984, 2014], month=[1, 12], deferred_load=True):
 
     uf, vf, wf = [], [], []
  
-    for y in range(years[0], years[1] + 1):
-        for m in range(months[0], months[1] + 1):
+    for y in range(year[0], year[1] + 1):
+        for m in range(month[0], month[1] + 1):
             uf.append('{}ocean_u_{}_{:02d}.nc'.format(xpath, y, m))
             vf.append('{}ocean_v_{}_{:02d}.nc'.format(xpath, y, m))
             wf.append('{}ocean_w_{}_{:02d}.nc'.format(xpath, y, m))
@@ -107,34 +129,36 @@ def ofam_fields(years=[1984, 2014], months=[1, 12], deferred_load=True):
                   'V': dims, 
                   'W': dims}            
 
-    f = FieldSet.from_b_grid_dataset(filenames, variables, dimensions, 
-                                     mesh='flat', time_periodic=True, 
-                                     deferred_load=deferred_load)
+    fieldset = FieldSet.from_b_grid_dataset(filenames, variables, dimensions, 
+                                            mesh='flat', time_periodic=True, 
+                                            deferred_load=deferred_load)
 
-    return f
+    return fieldset
 
 def DeleteParticle(particle, fieldset, time):
     particle.delete()
+    
 
-def mld(t, s):
-    """ Finds the mixed layer depth (Millero and Poisson, 1981).
-    Mixed layer depth:
-         - depth at which the temperature change from the surface 
-         temperature is 0.5 °C.
-         - depth at which a change from the surface sigma-t of 
-         0.125 has occurred.
-    """
-    
-    A = 8.24493e10-1 - 4.0899e10-3*t - 9.095290e10-3*t**2 + 1.001685e10-4*t**3
-    B = -5.72466e10-3 + 1.0227e10-4*t -1.6546e10-6*t**2
-    C = 4.8314e10-4
-    
-    rho_0 = (999.842594 + 6.793952e10-2*t - 9.095290e10-3*t**2 + 
-             1.001685e10-4*t**3 - 1.120083e10-6*t**4 + 6.536332e10-9*t**5)
-    
-    rho = A*s + B*s**(3/2) + C*s**2 + rho_0
-    
-    return rho
+
+#def mld(t, s):
+#    """ Finds the mixed layer depth (Millero and Poisson, 1981).
+#    Mixed layer depth:
+#         - depth at which the temperature change from the surface 
+#         temperature is 0.5 °C.
+#         - depth at which a change from the surface sigma-t of 
+#         0.125 has occurred.
+#    """
+#    
+#    A = 8.24493e10-1 - 4.0899e10-3*t - 9.095290e10-3*t**2 + 1.001685e10-4*t**3
+#    B = -5.72466e10-3 + 1.0227e10-4*t -1.6546e10-6*t**2
+#    C = 4.8314e10-4
+#    
+#    rho_0 = (999.842594 + 6.793952e10-2*t - 9.095290e10-3*t**2 + 
+#             1.001685e10-4*t**3 - 1.120083e10-6*t**4 + 6.536332e10-9*t**5)
+#    
+#    rho = A*s + B*s**(3/2) + C*s**2 + rho_0
+#    
+#    return rho
 
 def idx_1d(array, value, greater=False, less=False):
     """ Finds index of a closet value in 1D array.
@@ -166,50 +190,10 @@ def idx_1d(array, value, greater=False, less=False):
             idx += (-1 if array[0] <= array[-1] else +1)
     return idx
 
-def distance(lat1, lon1, lat2, lon2):
-    """ Finds distance in metres between two lat/lon points.
-
-    Parameters
-    ----------
-    lat1
-        Latitude of point 1.
-    lon1
-        Longitude of point 1.
-    lat2
-        Latitude of point 2.
-    lon2
-        Longitude of point 2.
-
-    Returns
-    -------
-    Distance [m] between the two points.
-    """
-
-    # Convert latitude and longitude to spherical coordinates in radians.
-    degrees_to_radians = math.pi/180.0
-
-    # phi = 90 - latitude
-    phi1 = (90.0 - lat1)*degrees_to_radians
-    phi2 = (90.0 - lat2)*degrees_to_radians
-
-    # Fix for GFDL models:
-    if (lon1 or lon2) < -180:
-        lon1 = 360 + lon1
-        lon2 = 360 + lon2
-
-    # theta = longitude
-    theta1 = lon1*degrees_to_radians
-    theta2 = lon2*degrees_to_radians
-
-    # Compute spherical dst from spherical coordinates.
-    cos = (math.sin(phi1)*math.sin(phi2)*math.cos(theta1 - theta2) +
-           math.cos(phi1)*math.cos(phi2))
-    arc = math.acos(cos)
-
-    return arc*EARTH_RADIUS
 
 """ Plot 3D """
-def plot3D(ds, N, depth):
+def plot3D(ds, p_name):
+    N = len(ds.traj)
     plt.figure(figsize=(13, 10))
     ax = plt.axes(projection='3d')
     c = plt.cm.jet(np.linspace(0, 1, N))
@@ -223,92 +207,68 @@ def plot3D(ds, N, depth):
     
     ax.set_xlabel("Longitude")
     ax.set_ylabel("Latitude")
-    ax.set_zlabel("Depth (m)")
+    ax.set_zlabel("Depth [m]")
     ax.set_zlim(np.max(z), np.min(z))
-    plt.savefig('{}test_{}{}'.format(fpath, depth, im_ext))
+    plt.savefig('{}{}.{}'.format(fpath, p_name.replace('_vi', '_v'), im_ext))
     plt.show()
     
-def years_to_days(years, months):
-    date1 = date(years[0], months[0], 1)
-    date2 = date(years[1], months[1], 31) # might cause error if days < 31
-    
-    days_in_first_year = (date(years[0], 12, 31) - date1).days
-    days_in_last_year = (date2 - date(years[1], 1, 1)).days
-    if years[0] != years[1]:
-        n_days_list = [days_in_first_year]
-        for y in range(years[0] + 1, years[1]): 
-            n_days_list.append(365 + (1*calendar.isleap(y)))
-        n_days_list.append(days_in_last_year)
-    else: 
-        n_days_list = [days_in_first_year + days_in_last_year]
-        
-    return sum(n_days_list)
 
 
-    
+
 def particle_vars(particle, fieldset, time):
 
-    # Delete particle if the initial zonal velocity is westward (negative).
-    if particle.age == 0. and particle.u < 0:
-        particle.delete()
+#    # Delete particle if the initial zonal velocity is westward (negative).
+#    if particle.age == 0. and particle.u < 0:
+#        particle.delete()
             
     # Update particle age.
     particle.age += particle.dt  
     
-    # Calculate the distance in latitudinal direction, 
-    # using 1.11e2 kilometer per degree latitude).
-    lat_dist = (particle.lat - particle.prev_lat) * 111111
-    # Calculate the distance in longitudinal direction, 
-    # using cosine(latitude) - spherical earth.
-    lon_dist = ((particle.lon - particle.prev_lon) * 111111 * 
-                math.cos(particle.lat * math.pi / 180))
-    # Calculate the total Euclidean distance travelled by the particle.
-    particle.distance += math.sqrt(math.pow(lon_dist, 2) + 
-                                   math.pow(lat_dist, 2))
-    
-    # Set the stored values for next iteration.
-    particle.prev_lon = particle.lon  
-    particle.prev_lat = particle.lat
-    
+#    # Calculate the distance in latitudinal direction, 
+#    # using 1.11e2 kilometer per degree latitude).
+#    lat_dist = (particle.lat - particle.prev_lat) * 111111
+#    # Calculate the distance in longitudinal direction, 
+#    # using cosine(latitude) - spherical earth.
+#    lon_dist = ((particle.lon - particle.prev_lon) * 111111 * 
+#                math.cos(particle.lat * math.pi / 180))
+#    # Calculate the total Euclidean distance travelled by the particle.
+#    particle.distance += math.sqrt(math.pow(lon_dist, 2) + 
+#                                   math.pow(lat_dist, 2))
+#    
+#    # Set the stored values for next iteration.
+#    particle.prev_lon = particle.lon  
+#    particle.prev_lat = particle.lat
 
-def remove_particles(pset):
-    idx = []
-    for p in pset:
-        if p.u < 0. and p.age == 0.:
-            idx.append(np.where([pi.id == p.id for pi in pset])[0][0])
-    pset.remove(idx)
-    # Check there aren't any westward particles.
-    if any([p.u < 0 and p.age == 0 for p in pset]): 
-        warnings.warn('Particles travelling in the wrong direction')
-        
-    return
-
-def config_ParticleFile(pset_name, save=True):
+@timeit
+def config_ParticleFile(p_name, dy, dz, save=True):
     # Open the output Particle File.
-    ds = xr.open_dataset(dpath + pset_name, decode_times=False)
+    ds = xr.open_dataset('{}{}.nc'.format(dpath, p_name), decode_times=False)
 
     # Remove the last lot of trajectories that are westward.
     df = xr.Dataset()
     df.attrs = ds.attrs
-    wrong = np.argwhere(ds.isel(obs=0).u.values < 0).flatten().tolist()
+    idx = np.argwhere(ds.isel(obs=0).u.values < 0).flatten().tolist()
     
     for v in ds.variables:
-        df[v] = (('traj', 'obs'), np.delete(ds[v].values, wrong, axis=0))
+        df[v] = (('traj', 'obs'), np.delete(ds[v].values, idx, axis=0))
         df[v].attrs = ds[v].attrs
-        
+    ds.close()    
+    print('Particles removed (final):', len(idx))        
     N = len(df.traj)
     
     # Add transport to the dataset.
-    df['uvo'] = (['traj'], np.zeros(len(df.traj)))
+    df['uvo'] = (['traj'], np.zeros(N))
     
     for traj in range(N):
         # Zonal transport (velocity x lat width x depth width).
         df.uvo[traj] = df.u.isel(traj=traj, obs=0).item() * LAT_DEG * dy * dz
         
     # Add transport metadata.    
-    df['uvo'].attrs = OrderedDict([('long_name', 'Initial zonal volume transport'), 
+    df['uvo'].attrs = OrderedDict([('long_name', 
+                                    'Initial zonal volume transport'), 
                                    ('units', 'm3/sec'), 
-                                   ('standard_name', 'sea_water_x_transport')])
+                                   ('standard_name', 
+                                    'sea_water_x_transport')])
     
     # Adding missing zonal velocity attributes (copied from data).
     df['u'].attrs = OrderedDict([('long_name', 'i-current'),
@@ -317,8 +277,112 @@ def config_ParticleFile(pset_name, save=True):
                                  ('packing', 4),
                                  ('cell_methods', 'time: mean'),
                                  ('coordinates', 'geolon_c geolat_c'),
-                                 ('standard_pset_name', 'sea_water_x_velocity')])
+                                 ('standard_name', 
+                                  'sea_water_x_velocity')])
     if save:
-        df.to_netcdf('{}ParticleFile_v{}.nc'.format(dpath, test_int))
-    ds.close()
+        df.to_netcdf('{}{}.nc'.format(dpath, p_name[:-1]))
+    
     return df
+
+@timeit
+def remove_particles(pset):
+    idx = []
+    for p in pset:
+        if p.u < 0. and p.age == 0.:
+            idx.append(np.where([pi.id == p.id for pi in pset])[0][0])
+    pset.remove(idx)
+    
+    print('Particles removed:', len(idx))
+    # Check there aren't any westward particles .
+    if any([p.u < 0 and p.age == 0 for p in pset]): 
+        warnings.warn('Particles travelling in the wrong direction')
+        
+@timeit
+def execute_particles(fieldset, year, month, dy, dz, 
+                      lats, particle_depths, particle_lons, 
+                      dt, repeatdt, runtime, outputdt, dim3=True,
+                      plot_3d=True, write_fieldset=True):
+    
+    class tparticle(JITParticle):   
+        # Define a new particle class.
+        
+        # The age of the particle.
+        age = Variable('age', dtype=np.float32, initial=0.)
+        # The velocity of the particle.
+        u = Variable('u', dtype=np.float32, initial=fieldset.U)
+#        # The distance travelled by the particle.
+#        distance = Variable('distance', initial=0., dtype=np.float32)
+#        # The previous longitude and latitude (for distance calculation).
+#        prev_lon = Variable('prev_lon', dtype=np.float32, to_write=False,
+#                            initial=attrgetter('lon'))
+#        prev_lat = Variable('prev_lat', dtype=np.float32, to_write=False,
+#                            initial=attrgetter('lat'))
+        
+    @timeit
+    def init_pset(): # 3 hours for 1 year.
+        """ Initialise Particle set """ 
+        # Release particles at 165E, 170W and 140W.
+        for x in particle_lons:
+            lons = np.full(len(lats), x)
+            
+            # Release particles every 25m from 25m to 300m.
+            for z in particle_depths:
+                # Create array of depth values (same size as lats).
+                depths = np.full(len(lats), z)
+                
+                # Create the particle set.
+                pset_tmp = ParticleSet.from_list(fieldset=fieldset, 
+                                                 pclass=tparticle,
+                                                 lon=lons, lat=lats, 
+                                                 depth=depths, 
+                                                 time=fieldset.U.grid.time[-1], 
+                                                 repeatdt=repeatdt)
+                
+                # Define the initial particle set or add particles to pset.
+                if x == particle_lons[0] and z == particle_depths[0]:
+                    pset = pset_tmp
+                else:
+                    pset.add(pset_tmp)
+        return pset
+
+        
+    # Getting around overwriting permission errors (looking for unsaved filename).
+    version = 0
+    while os.path.exists('{}ParticleFile_{}-{}_v{}i.nc'.format(dpath, 
+                         *year, version)):
+        version += 1
+    
+    p_name = 'ParticleFile_{}-{}_v{}i'.format(*year, version)
+    print('Executing:', p_name)  
+              
+    pset = init_pset()
+    remove_particles(pset)
+    # Output particle file p_name and time steps to save.
+    output_file = pset.ParticleFile(dpath + p_name, outputdt=outputdt)
+    if dim3:
+        kernels = AdvectionRK4_3D + pset.Kernel(particle_vars)
+    else:
+        kernels = AdvectionRK4 + pset.Kernel(particle_vars)
+        
+    pset.execute(kernels, runtime=runtime, dt=dt, output_file=output_file, 
+                 recovery={ErrorCode.ErrorOutOfBounds: DeleteParticle})
+    remove_particles(pset)
+
+    # TODO: make sure time is correct.
+    output_file.write(pset, fieldset.U.grid.time[0])
+    
+    # Clean dataset and add transport.
+    df = config_ParticleFile(p_name, dy, dz, save=True)
+    
+    # Plot the particle set.
+    if plot_3d:
+        plot3D(df, p_name)
+    df.close()
+    
+    # Save the fieldset to netCDF.
+    if write_fieldset:
+        timeit(fieldset.write('{}fieldset_ofam_3D_{}-{}_{}-{}'.format(dpath, 
+                              sum(zip(year, month), ()))))
+        
+    return df
+    
