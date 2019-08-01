@@ -33,10 +33,11 @@ if test:
     repeatdt = timedelta(days=2)
     runtime = timedelta(days=2)
     outputdt = timedelta(minutes=60)
-
+    config = True
     # Define other function variables.
     dim3 = False
     write_fieldset = False
+    plot_3d = True
     
 else:
     # Define field and particle set variables.
@@ -52,10 +53,11 @@ else:
     repeatdt = timedelta(days=6)
     runtime = timedelta(days=(date1 - date0).days)
     outputdt = timedelta(minutes=60*4)
-    
+    config = False
     # Define other function variables.
     dim3 = True
     write_fieldset = True
+    plot_3d = False
     
     
 # Create the fieldset.
@@ -68,5 +70,5 @@ else: # Create a fieldset.
 
 df = execute_particles(fieldset, year, month, dy, dz, 
                       lats, particle_depths, particle_lons, 
-                      dt, repeatdt, runtime, outputdt, dim3=dim3,
-                      plot_3d=True, write_fieldset=write_fieldset)
+                      dt, repeatdt, runtime, outputdt, config=config, 
+                      dim3=dim3, plot_3d=plot_3d, write_fieldset=write_fieldset)

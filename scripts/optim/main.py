@@ -20,7 +20,7 @@ Optimisation:
     - time gained by usinging less particles
     - time loss of particle vars and kernels
     - 
-
+/g/data3/hh5/tmp/as3189/OFAM/
 """
 import time
 import xarray as xr
@@ -84,15 +84,7 @@ def current_time(print_time=False):
 
     return '{:0>2d}:{:0>2d}{}'.format(h, currentDT.minute, mrdm)
     
-  
-#def timer(timer_start, string=None):
-#    timer_end = time.time()
-#    h, rem = divmod(timer_end - timer_start, 3600)
-#    m, s = divmod(rem, 60)
-#    arg = '' if string is None else ' ({})'.format(string)
-#    print('Timer{}: {:} hours, {:} mins, {:05.2f} secs ()'\
-#          .format(arg, int(h), int(m), s, current_time(False)))
-#    
+ 
 def timeit(method):
     def timed(*args, **kw):
         ts = time.time()
@@ -100,12 +92,7 @@ def timeit(method):
         te = time.time()
         h, rem = divmod(te - ts, 3600)
         m, s = divmod(rem, 60)
-        
-        if 'log_time' in kw:
-            name = kw.get('log_name', method.__name__.upper())
-            kw['log_time'][name] = int((te - ts) * 1000)
-        else:
-            print('{}: {:} hours, {:} mins, {:05.2f} secs ({:})'.format(
+        print('{}: {:} hours, {:} mins, {:05.2f} secs ({:})'.format(
                     method.__name__, int(h), int(m), s, current_time(False)))
         return result    
     return timed
@@ -146,28 +133,6 @@ def ofam_fields(year=[1984, 2014], month=[1, 12], deferred_load=True):
 
 def DeleteParticle(particle, fieldset, time):
     particle.delete()
-    
-
-
-#def mld(t, s):
-#    """ Finds the mixed layer depth (Millero and Poisson, 1981).
-#    Mixed layer depth:
-#         - depth at which the temperature change from the surface 
-#         temperature is 0.5 °C.
-#         - depth at which a change from the surface sigma-t of 
-#         0.125 has occurred.
-#    """
-#    
-#    A = 8.24493e10-1 - 4.0899e10-3*t - 9.095290e10-3*t**2 + 1.001685e10-4*t**3
-#    B = -5.72466e10-3 + 1.0227e10-4*t -1.6546e10-6*t**2
-#    C = 4.8314e10-4
-#    
-#    rho_0 = (999.842594 + 6.793952e10-2*t - 9.095290e10-3*t**2 + 
-#             1.001685e10-4*t**3 - 1.120083e10-6*t**4 + 6.536332e10-9*t**5)
-#    
-#    rho = A*s + B*s**(3/2) + C*s**2 + rho_0
-#    
-#    return rho
 
 def idx_1d(array, value, greater=False, less=False):
     """ Finds index of a closet value in 1D array.
@@ -220,33 +185,10 @@ def plot3D(ds, p_name):
     ax.set_zlim(np.max(z), np.min(z))
     plt.savefig('{}{}.{}'.format(fpath, p_name.replace('_vi', '_v'), im_ext))
     plt.show()
-    
-
-
 
 def particle_vars(particle, fieldset, time):
-
-#    # Delete particle if the initial zonal velocity is westward (negative).
-#    if particle.age == 0. and particle.u < 0:
-#        particle.delete()
-            
     # Update particle age.
     particle.age += particle.dt  
-    
-#    # Calculate the distance in latitudinal direction, 
-#    # using 1.11e2 kilometer per degree latitude).
-#    lat_dist = (particle.lat - particle.prev_lat) * 111111
-#    # Calculate the distance in longitudinal direction, 
-#    # using cosine(latitude) - spherical earth.
-#    lon_dist = ((particle.lon - particle.prev_lon) * 111111 * 
-#                math.cos(particle.lat * math.pi / 180))
-#    # Calculate the total Euclidean distance travelled by the particle.
-#    particle.distance += math.sqrt(math.pow(lon_dist, 2) + 
-#                                   math.pow(lat_dist, 2))
-#    
-#    # Set the stored values for next iteration.
-#    particle.prev_lon = particle.lon  
-#    particle.prev_lat = particle.lat
 
 @timeit
 def config_ParticleFile(p_name, dy, dz, save=True):
@@ -309,8 +251,8 @@ def remove_particles(pset):
 @timeit
 def execute_particles(fieldset, year, month, dy, dz, 
                       lats, particle_depths, particle_lons, 
-                      dt, repeatdt, runtime, outputdt, dim3=True,
-                      config=True, plot_3d=True, write_fieldset=True):
+                      dt, repeatdt, runtime, outputdt, config=True, dim3=True,
+                      plot_3d=True, write_fieldset=True):
     
     class tparticle(JITParticle):   
         # Define a new particle class.
@@ -319,13 +261,6 @@ def execute_particles(fieldset, year, month, dy, dz,
         age = Variable('age', dtype=np.float32, initial=0.)
         # The velocity of the particle.
         u = Variable('u', dtype=np.float32, initial=fieldset.U)
-#        # The distance travelled by the particle.
-#        distance = Variable('distance', initial=0., dtype=np.float32)
-#        # The previous longitude and latitude (for distance calculation).
-#        prev_lon = Variable('prev_lon', dtype=np.float32, to_write=False,
-#                            initial=attrgetter('lon'))
-#        prev_lat = Variable('prev_lat', dtype=np.float32, to_write=False,
-#                            initial=attrgetter('lat'))
         
     @timeit
     def init_pset(): # 3 hours for 1 year.
