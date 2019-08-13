@@ -25,7 +25,7 @@ year = [1979, 1979]
 month = [1, 1]
 date0 = date(year[0], month[0], 1)
 date1 = date(year[1], month[1], calendar.monthrange(year[1], month[1])[1])
-dy, dz = 0.2, 25
+dy, dz = 0.4, 25
 lats = np.round(np.arange(-2.4, 2.4 + dy, dy, dtype=np.float32), 2)
 particle_depths = np.arange(25, 300 + dz, dz)
 particle_lons = [165]

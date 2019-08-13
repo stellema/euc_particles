@@ -62,7 +62,7 @@ else:
     
 # Create the fieldset.
 if test: # Load a fieldset.
-    fieldset = FieldSet.from_parcels(dpath + 'lge/ofam_fieldset_2010_',
+    fieldset = FieldSet.from_parcels(dpath.joinpath('lge', 'ofam_fieldset_2010_'),
                                      allow_time_extrapolation=True)
 else: # Create a fieldset.
     fieldset = ofam_fields(year=year, month=month)

@@ -21,6 +21,11 @@ Optimisation:
     - time loss of particle vars and kernels
     - 
 
+
+u - st_ocean, yu_ocean, xu_ocean
+w - sw_ocean, yt_ocean, xt_ocean
+salt - st_ocean, yt_ocean, xt_ocean
+temp - st_ocean, yt_ocean, xt_ocean
 """
 import time
 import xarray as xr
@@ -29,6 +34,7 @@ import math
 import calendar
 import warnings
 import os.path
+import sys
 from operator import attrgetter
 import matplotlib.pyplot as plt
 from collections import OrderedDict
@@ -37,7 +43,7 @@ from parcels import FieldSet, ParticleSet, JITParticle, ScipyParticle
 from parcels import ErrorCode, Variable
 from parcels import plotTrajectoriesFile, AdvectionRK4_3D, AdvectionRK4
 from mpl_toolkits.mplot3d import Axes3D
-
+from pathlib import Path
 im_ext = '.png'
 # Constants.
 # Radius of Earth [m].
@@ -51,49 +57,79 @@ ptype = {'scipy': ScipyParticle, 'jit': JITParticle}
 #data.close()
 
 def paths():
-    os_path = os.path.expanduser("~")
+    """Return paths to figures, data and model output. 
+    This function will determine and return paths depending on which 
+    machine is being used.
+
+    Returns:
+        fpath (pathlib.Path): Path to save figures.
+        dpath (pathlib.Path): Path to save data.
+        xpath (pathlib.Path): path to get model output.
+        
+    """
+    home = Path.home()
     
     # Windows Paths.
-    if os_path[:2] == 'C:':
+    if home.drive == 'C:':
         # Change to E drive if at home.
-        home = os_path if os.path.exists(os_path + 'GitHub/OFAM/') else 'E:/'
-        fpath = home + 'GitHub/OFAM/figures/'
-        dpath = home + 'GitHub/OFAM/data/'
-        xpath = home + 'model_output/OFAM/trop_pac/'
+        if not home.joinpath('GitHub', 'OFAM').exists(): home = Path('E:/')
+        fpath = home.joinpath('GitHub', 'OFAM', 'figures')
+        dpath = home.joinpath('GitHub', 'OFAM', 'data')
+        xpath = home.joinpath('model_output', 'OFAM', 'trop_pac')
 
     # Raijin Paths.
     else:
-        home = '/g/data/e14/as3189/OFAM/'
-        fpath = home + 'figures/'
-        dpath = home + 'data/'
-        xpath = home + 'trop_pac/'
-
+        home = Path('/g', 'data', 'e14', 'as3189', 'OFAM')
+        fpath = home.joinpath('figures')
+        dpath = home.joinpath('data')
+        xpath = home.joinpath('trop_pac')
     return fpath, dpath, xpath
 
 fpath, dpath, xpath = paths()
 
 def current_time(print_time=False):
-    """ Print the current time.
+    """Return and/or print the current time in AM/PM format (e.g. 9:00am).
+    
+    Args:
+        print_time (bool, optional): Print the current time. Defaults is False.
+        
+    Returns:
+        time (str): A string indicating the current time.
+        
     """
-
     currentDT = datetime.now()
     h = currentDT.hour if currentDT.hour <= 12 else currentDT.hour - 12
     mrdm = 'pm' if currentDT.hour > 12 else 'am'
+    time = '{:0>2d}:{:0>2d}{}'.format(h, currentDT.minute, mrdm)
     if print_time:
-        print('Current time: {:0>2d}:{:0>2d}{}'.format(h, currentDT.minute, mrdm))
-
-    return '{:0>2d}:{:0>2d}{}'.format(h, currentDT.minute, mrdm)
+        print(time)
+    return time
     
-  
-#def timer(timer_start, string=None):
-#    timer_end = time.time()
-#    h, rem = divmod(timer_end - timer_start, 3600)
-#    m, s = divmod(rem, 60)
-#    arg = '' if string is None else ' ({})'.format(string)
-#    print('Timer{}: {:} hours, {:} mins, {:05.2f} secs ()'\
-#          .format(arg, int(h), int(m), s, current_time(False)))
-#    
+def timer(ts, method=None):
+    """ 
+    Parameters
+    ----------
+
+    Returns
+    -------
+
+    """
+    te = time.time()
+    h, rem = divmod(te - ts, 3600)
+    m, s = divmod(rem, 60)
+    arg = '' if method is None else ' ({})'.format(method)
+    print('Timer{}: {:} hours, {:} mins, {:05.2f} secs'\
+          .format(arg, int(h), int(m), s, current_time(False)))
+    
 def timeit(method):
+    """ 
+    Parameters
+    ----------
+
+    Returns
+    -------
+
+    """
     def timed(*args, **kw):
         ts = time.time()
         result = method(*args, **kw)
@@ -109,65 +145,6 @@ def timeit(method):
                     method.__name__, int(h), int(m), s, current_time(False)))
         return result    
     return timed
-
-@timeit
-def ofam_fields(year=[1984, 2014], month=[1, 12], deferred_load=True):
-
-    uf, vf, wf = [], [], []
- 
-    for y in range(year[0], year[1] + 1):
-        for m in range(month[0], month[1] + 1):
-            uf.append('{}ocean_u_{}_{:02d}.nc'.format(xpath, y, m))
-            vf.append('{}ocean_v_{}_{:02d}.nc'.format(xpath, y, m))
-            wf.append('{}ocean_w_{}_{:02d}.nc'.format(xpath, y, m))
-            
-    filenames = {'U': {'lon': uf[0], 'lat': uf[0], 'depth': wf[0], 'data': uf},
-                 'V': {'lon': uf[0], 'lat': uf[0], 'depth': wf[0], 'data': vf},
-                 'W': {'lon': uf[0], 'lat': uf[0], 'depth': wf[0], 'data': wf}}
-    
-    variables = {'U': 'u', 
-                 'V': 'v', 
-                 'W': 'w'}
-    
-    dims = {'lon': 'xu_ocean', 
-            'lat': 'yu_ocean', 
-            'depth': 'sw_ocean', 
-            'time': 'Time'}
-    
-    dimensions = {'U': dims, 
-                  'V': dims, 
-                  'W': dims}            
-
-    fieldset = FieldSet.from_b_grid_dataset(filenames, variables, dimensions, 
-                                            mesh='flat', time_periodic=True, 
-                                            deferred_load=deferred_load)
-
-    return fieldset
-
-def DeleteParticle(particle, fieldset, time):
-    particle.delete()
-    
-
-
-#def mld(t, s):
-#    """ Finds the mixed layer depth (Millero and Poisson, 1981).
-#    Mixed layer depth:
-#         - depth at which the temperature change from the surface 
-#         temperature is 0.5 °C.
-#         - depth at which a change from the surface sigma-t of 
-#         0.125 has occurred.
-#    """
-#    
-#    A = 8.24493e10-1 - 4.0899e10-3*t - 9.095290e10-3*t**2 + 1.001685e10-4*t**3
-#    B = -5.72466e10-3 + 1.0227e10-4*t -1.6546e10-6*t**2
-#    C = 4.8314e10-4
-#    
-#    rho_0 = (999.842594 + 6.793952e10-2*t - 9.095290e10-3*t**2 + 
-#             1.001685e10-4*t**3 - 1.120083e10-6*t**4 + 6.536332e10-9*t**5)
-#    
-#    rho = A*s + B*s**(3/2) + C*s**2 + rho_0
-#    
-#    return rho
 
 def idx_1d(array, value, greater=False, less=False):
     """ Finds index of a closet value in 1D array.
@@ -196,12 +173,49 @@ def idx_1d(array, value, greater=False, less=False):
     if less == True:
         if (np.abs(array[idx]) > np.abs(value)):
             # if linearly increasing array add one otherwise minus one.
-            idx += (-1 if array[0] <= array[-1] else +1)
+            idx += (-1 if array[0] <= array[-1] else 1)
     return idx
 
+def get_date(year, month, day='max'):
+    """ 
+    """
+    if day == 'max':
+        return datetime(year, month, calendar.monthrange(year, month)[1])
+    else:
+        return datetime(year, month, day)
+    
+def ofam_fieldset(date_bnds, deferred_load=True):
+    """ 
+    """
+    u, v, w = [], [], []
+ 
+    for y in range(date_bnds[0].year, date_bnds[1].year + 1):
+        for m in range(date_bnds[0].month, date_bnds[1].month + 1):
+            u.append(str(xpath.joinpath('ocean_u_{}_{:02d}.nc'.format(y, m))))
+            v.append(str(xpath.joinpath('ocean_v_{}_{:02d}.nc'.format(y, m))))
+            w.append(str(xpath.joinpath('ocean_w_{}_{:02d}.nc'.format(y, m))))
+            
+    filenames = {'U': {'lon': u[0], 'lat': u[0], 'depth': w[0], 'data': u},
+                 'V': {'lon': u[0], 'lat': u[0], 'depth': w[0], 'data': v},
+                 'W': {'lon': u[0], 'lat': u[0], 'depth': w[0], 'data': w}}
+    
+    dims = {'time': 'Time',
+            'lon': 'xu_ocean', 
+            'lat': 'yu_ocean', 
+            'depth': 'sw_ocean'}
+    
+    variables = {'U': 'u', 'V': 'v', 'W': 'w'}
+    dimensions = {'U': dims, 'V': dims, 'W': dims}            
 
-""" Plot 3D """
+    fieldset = FieldSet.from_b_grid_dataset(filenames, variables, dimensions, 
+                                            mesh='flat', time_periodic=False,
+                                            deferred_load=deferred_load)
+
+    return fieldset
+
+
 def plot3D(ds, p_name):
+    """ Plot 3D """
     N = len(ds.traj)
     plt.figure(figsize=(13, 10))
     ax = plt.axes(projection='3d')
@@ -218,40 +232,44 @@ def plot3D(ds, p_name):
     ax.set_ylabel("Latitude")
     ax.set_zlabel("Depth [m]")
     ax.set_zlim(np.max(z), np.min(z))
-    plt.savefig('{}{}.{}'.format(fpath, p_name.replace('_vi', '_v'), im_ext))
+    plt.savefig(fpath.joinpath(p_name.replace('_vi', '_v') + im_ext))
     plt.show()
     
 
+def DeleteParticle(particle, fieldset, time):
+    particle.delete()
 
-
-def particle_vars(particle, fieldset, time):
-
-#    # Delete particle if the initial zonal velocity is westward (negative).
-#    if particle.age == 0. and particle.u < 0:
-#        particle.delete()
-            
+def Age(particle, fieldset, time):
     # Update particle age.
-    particle.age += particle.dt  
+    particle.age = particle.age + math.fabs(particle.dt)  
     
-#    # Calculate the distance in latitudinal direction, 
-#    # using 1.11e2 kilometer per degree latitude).
-#    lat_dist = (particle.lat - particle.prev_lat) * 111111
-#    # Calculate the distance in longitudinal direction, 
-#    # using cosine(latitude) - spherical earth.
-#    lon_dist = ((particle.lon - particle.prev_lon) * 111111 * 
-#                math.cos(particle.lat * math.pi / 180))
-#    # Calculate the total Euclidean distance travelled by the particle.
-#    particle.distance += math.sqrt(math.pow(lon_dist, 2) + 
-#                                   math.pow(lat_dist, 2))
-#    
-#    # Set the stored values for next iteration.
-#    particle.prev_lon = particle.lon  
-#    particle.prev_lat = particle.lat
+def Distance(particle, fieldset, time):
+    # Calculate the distance in latitudinal direction, 
+    # using 1.11e2 kilometer per degree latitude).
+    lat_dist = (particle.lat - particle.prev_lat) * 111111
+    # Calculate the distance in longitudinal direction, 
+    # using cosine(latitude) - spherical earth.
+    lon_dist = ((particle.lon - particle.prev_lon) * 111111 * 
+                math.cos(particle.lat * math.pi / 180))
+    # Calculate the total Euclidean distance travelled by the particle.
+    particle.distance += math.sqrt(math.pow(lon_dist, 2) + 
+                                   math.pow(lat_dist, 2))
+    
+    # Set the stored values for next iteration.
+    particle.prev_lon = particle.lon  
+    particle.prev_lat = particle.lat
 
-@timeit
+def DeleteWestward(particle, fieldset, time):
+    # Delete particle if the initial zonal velocity is westward (negative).
+    if particle.age == 0. and particle.u < 0:
+        particle.delete()
+        
+        
+#@timeit
 def config_ParticleFile(p_name, dy, dz, save=True):
+    ts = time.time()
     # Open the output Particle File.
-    ds = xr.open_dataset('{}{}.nc'.format(dpath, p_name), decode_times=False)
+    ds = xr.open_dataset(dpath.joinpath(p_name + '.nc'), decode_times=False)
 
     # Remove the last lot of trajectories that are westward.
     df = xr.Dataset()
@@ -289,12 +307,13 @@ def config_ParticleFile(p_name, dy, dz, save=True):
                                  ('standard_name', 
                                   'sea_water_x_velocity')])
     if save:
-        df.to_netcdf('{}{}.nc'.format(dpath, p_name[:-1]))
-    
+        df.to_netcdf(dpath.joinpath(p_name[:-1] + '.nc'))
+    timer(ts, method=sys._getframe().f_code.co_name)
     return df
 
-@timeit
+#@timeit
 def remove_particles(pset):
+    ts = time.time()
     idx = []
     for p in pset:
         if p.u < 0. and p.age == 0.:
@@ -305,13 +324,40 @@ def remove_particles(pset):
     # Check there aren't any westward particles .
     if any([p.u < 0 and p.age == 0 for p in pset]): 
         warnings.warn('Particles travelling in the wrong direction')
-        
-@timeit
-def execute_particles(fieldset, year, month, dy, dz, 
-                      lats, particle_depths, particle_lons, 
+    timer(ts, method=sys._getframe().f_code.co_name)
+
+
+
+#@timeit
+def execute_particles(fieldset, date_bnds,
+                      p_lats, p_depths, p_lons, 
                       dt, repeatdt, runtime, outputdt, dim3=True,
-                      config=True, plot_3d=True, write_fieldset=True):
-    
+                      remove_westward=False):
+    """
+    Parameters
+    ----------
+    fieldset : parcels.fieldset.FieldSet
+    year : list (len=2)
+    month : list (len=2)
+    dy : float
+    dz : float 
+    lats : array
+    particle_depths : array
+    particle_lons : array
+    dt : datetime.timedelta
+    repeatdt : datetime.timedelta
+    outputdt : datetime.timedelta
+    dim3 : bool, optional
+    config : bool, optional
+    plot_3d : bool, optional
+    write_fieldset : bool, optional
+    remove_westward : bool, optional
+
+    Returns
+    -------
+    None
+    """
+    ts = time.time()
     class tparticle(JITParticle):   
         # Define a new particle class.
         
@@ -327,72 +373,76 @@ def execute_particles(fieldset, year, month, dy, dz,
 #        prev_lat = Variable('prev_lat', dtype=np.float32, to_write=False,
 #                            initial=attrgetter('lat'))
         
-    @timeit
-    def init_pset(): # 3 hours for 1 year.
+#    @timeit
+    def init_pset():
         """ Initialise Particle set """ 
-        # Release particles at 165E, 170W and 140W.
-        for x in particle_lons:
-            lons = np.full(len(lats), x)
-            
-            # Release particles every 25m from 25m to 300m.
-            for z in particle_depths:
-                # Create array of depth values (same size as lats).
-                depths = np.full(len(lats), z)
+        tx = time.time()
+        # Number of particle release times.
+        nperloc = math.floor(runtime.days/repeatdt.days)
+        p_dates = (np.arange(0, nperloc) *-1*dt.total_seconds())[::-1]
+        lats = p_lats
+        for t in p_dates:
+            times = np.full(len(p_lats), t)
                 
-                # Create the particle set.
-                pset_tmp = ParticleSet.from_list(fieldset=fieldset, 
-                                                 pclass=tparticle,
-                                                 lon=lons, lat=lats, 
-                                                 depth=depths, 
-                                                 time=fieldset.U.grid.time[-1], 
-                                                 repeatdt=repeatdt)
+            # Release particles at 165E, 170W and 140W.
+            for x in p_lons:
+                lons = np.full(len(p_lats), x)
                 
-                # Define the initial particle set or add particles to pset.
-                if x == particle_lons[0] and z == particle_depths[0]:
-                    pset = pset_tmp
-                else:
-                    pset.add(pset_tmp)
+                # Release particles every 25m from 25m to 300m.
+                for z in p_depths:
+                    # Create array of depth values (same size as lats).
+                    depths = np.full(len(p_lats), z)
+    
+                    # Create the particle set.
+                    pset_tmp = ParticleSet.from_list(fieldset=fieldset, 
+                                                     pclass=tparticle,
+                                                     lon=lons, 
+                                                     lat=lats, 
+                                                     depth=depths, 
+                                                     time=times)
+                    
+                    # Define the initial particle set or add particles to pset.
+                    if x == p_lons[0] and z == p_depths[0] and t == p_dates[0]:
+                        pset = pset_tmp
+                    else:
+                        pset.add(pset_tmp)
+        timer(tx, method=sys._getframe().f_code.co_name)
         return pset
 
         
-    # Getting around overwriting permission errors (looking for unsaved filename).
-    version = 0
-    while os.path.exists('{}ParticleFile_{}-{}_v{}i.nc'.format(dpath, 
-                         *year, version)):
-        version += 1
+    # Looking for unsaved filename.
+    i = 0
+    while dpath.joinpath('ParticleFile_{}-{}_v{}i.nc'.format(*[d.year 
+                         for d in date_bnds], i)).exists():
+        i += 1
     
-    p_name = 'ParticleFile_{}-{}_v{}i'.format(*year, version)
-    print('Executing:', p_name)  
+    file = dpath.joinpath('ParticleFile_{}-{}_v{}i.nc'.format(*[d.year 
+                          for d in date_bnds], i))
+    print('Executing:', file.stem)  
               
     pset = init_pset()
-    remove_particles(pset)
+    
+    if remove_westward:
+        remove_particles(pset)
+        
     # Output particle file p_name and time steps to save.
-    output_file = pset.ParticleFile(dpath + p_name, outputdt=outputdt)
+    output_file = pset.ParticleFile(dpath.joinpath(file.stem), 
+                                    outputdt=outputdt)
     if dim3:
-        kernels = AdvectionRK4_3D + pset.Kernel(particle_vars)
+        kernels = AdvectionRK4_3D + pset.Kernel(Age)
     else:
-        kernels = AdvectionRK4 + pset.Kernel(particle_vars)
+        kernels = AdvectionRK4 + pset.Kernel(Age)
         
     pset.execute(kernels, runtime=runtime, dt=dt, output_file=output_file, 
-                 recovery={ErrorCode.ErrorOutOfBounds: DeleteParticle})
-    remove_particles(pset)
+                 recovery={ErrorCode.ErrorOutOfBounds: DeleteParticle}, 
+                 verbose_progress=True)
+    
+    if remove_westward:
+        remove_particles(pset)
 
     # TODO: make sure time is correct.
-    output_file.write(pset, fieldset.U.grid.time[0])
-    
-    if config:
-        # Clean dataset and add transport.
-        df = config_ParticleFile(p_name, dy, dz, save=True)
-        
-        # Plot the particle set.
-        if plot_3d:
-            plot3D(df, p_name)
-        df.close()
-    
-    # Save the fieldset to netCDF.
-    if write_fieldset:
-        timeit(fieldset.write('{}fieldset_ofam_3D_{}-{}_{}-{}'.format(dpath, 
-                              sum(zip(year, month), ()))))
-        
-    return df
+#    output_file.write(pset, fieldset.U.grid.time[0])
+
+    timer(ts, method=sys._getframe().f_code.co_name)
+    return file
     
