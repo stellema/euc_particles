@@ -1,39 +1,0 @@
-WARNING: Casting lon data to np.float32
-WARNING: Casting lat data to np.float32
-WARNING: Casting depth data to np.float32
-INFO: Compiled tparticleAdvectionRK4_3Dparticle_vars ==> /jobfs/local/1070988.r-man2/parcels-12904/914235bda280626b0ca11c08604d1dc0.so
-WARNING: ParticleSet is empty on writing as array at time 2.5056e+06
-WARNING: ParticleSet is empty on writing as array at time 2.4192e+06
-WARNING: ParticleSet is empty on writing as array at time 2.3328e+06
-WARNING: ParticleSet is empty on writing as array at time 2.2464e+06
-                                                                               N/A% (0 of 2592000.0) |                  | Elapsed Time: 0:00:00 ETA:  --:--:--WARNING: ParticleSet is empty on writing as array at time 2.16e+06
-                                                                                16% (432000.0 of 2592000.0) |#          | Elapsed Time: 0:00:02 ETA:   0:00:12                                                                                20% (518400.0 of 2592000.0) |##         | Elapsed Time: 0:00:06 ETA:   0:01:39WARNING: ParticleSet is empty on writing as array at time 1.9872e+06
-                                                                                23% (604800.0 of 2592000.0) |##         | Elapsed Time: 0:00:10 ETA:   0:01:19WARNING: ParticleSet is empty on writing as array at time 1.9008e+06
-                                                                                26% (691200.0 of 2592000.0) |##         | Elapsed Time: 0:00:12 ETA:   0:00:55WARNING: ParticleSet is empty on writing as array at time 1.8144e+06
-                                                                                30% (777600.0 of 2592000.0) |###        | Elapsed Time: 0:00:15 ETA:   0:01:00WARNING: ParticleSet is empty on writing as array at time 1.728e+06
-                                                                                33% (864000.0 of 2592000.0) |###        | Elapsed Time: 0:00:17 ETA:   0:00:49WARNING: ParticleSet is empty on writing as array at time 1.6416e+06
-                                                                                36% (950400.0 of 2592000.0) |####       | Elapsed Time: 0:00:20 ETA:   0:00:47                                                                                40% (1036800.0 of 2592000.0) |####      | Elapsed Time: 0:00:23 ETA:   0:00:51WARNING: ParticleSet is empty on writing as array at time 1.4688e+06
-                                                                                43% (1123200.0 of 2592000.0) |####      | Elapsed Time: 0:00:25 ETA:   0:00:43WARNING: ParticleSet is empty on writing as array at time 1.3824e+06
-                                                                                46% (1209600.0 of 2592000.0) |####      | Elapsed Time: 0:00:28 ETA:   0:00:41WARNING: ParticleSet is empty on writing as array at time 1.296e+06
-                                                                                50% (1296000.0 of 2592000.0) |#####     | Elapsed Time: 0:00:31 ETA:   0:00:45WARNING: ParticleSet is empty on writing as array at time 1.2096e+06
-                                                                                53% (1382400.0 of 2592000.0) |#####     | Elapsed Time: 0:00:34 ETA:   0:00:42WARNING: ParticleSet is empty on writing as array at time 1.1232e+06
-                                                                                56% (1468800.0 of 2592000.0) |#####     | Elapsed Time: 0:00:36 ETA:   0:00:31                                                                                60% (1555200.0 of 2592000.0) |######    | Elapsed Time: 0:00:39 ETA:   0:00:31WARNING: ParticleSet is empty on writing as array at time 950400
-                                                                                63% (1641600.0 of 2592000.0) |######    | Elapsed Time: 0:00:42 ETA:   0:00:29WARNING: ParticleSet is empty on writing as array at time 864000
-                                                                                66% (1728000.0 of 2592000.0) |######    | Elapsed Time: 0:00:45 ETA:   0:00:29WARNING: ParticleSet is empty on writing as array at time 777600
-                                                                                70% (1814400.0 of 2592000.0) |#######   | Elapsed Time: 0:00:47 ETA:   0:00:25WARNING: ParticleSet is empty on writing as array at time 691200
-                                                                                73% (1900800.0 of 2592000.0) |#######   | Elapsed Time: 0:00:50 ETA:   0:00:20WARNING: ParticleSet is empty on writing as array at time 604800
-                                                                                76% (1987200.0 of 2592000.0) |#######   | Elapsed Time: 0:00:52 ETA:   0:00:17                                                                                80% (2073600.0 of 2592000.0) |########  | Elapsed Time: 0:00:55 ETA:   0:00:15WARNING: ParticleSet is empty on writing as array at time 432000
-                                                                                83% (2160000.0 of 2592000.0) |########  | Elapsed Time: 0:00:58 ETA:   0:00:12WARNING: ParticleSet is empty on writing as array at time 345600
-                                                                                86% (2246400.0 of 2592000.0) |########  | Elapsed Time: 0:01:00 ETA:   0:00:11WARNING: ParticleSet is empty on writing as array at time 259200
-                                                                                90% (2332800.0 of 2592000.0) |######### | Elapsed Time: 0:01:03 ETA:   0:00:07WARNING: ParticleSet is empty on writing as array at time 172800
-                                                                                93% (2419200.0 of 2592000.0) |######### | Elapsed Time: 0:01:05 ETA:   0:00:04WARNING: ParticleSet is empty on writing as array at time 86400
-                                                                                96% (2505600.0 of 2592000.0) |######### | Elapsed Time: 0:01:08 ETA:   0:00:02                                                                               100% (2592000.0 of 2592000.0) |##########| Elapsed Time: 0:01:08 Time:  0:01:08
-INFO: Generating NEMO FieldSet output with basename: /g/data/e14/as3189/OFAM/data/fieldset_ofam_3D_1979-1_1979-1
-Traceback (most recent call last):
-  File "/g/data/e14/as3189/OFAM/scripts/base.py", line 55, in <module>
-    write_fieldset=write_fieldset)
-  File "/g/data1a/e14/as3189/OFAM/scripts/main.py", line 384, in execute_particles
-    year[0], month[0], year[1], month[1]))
-  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-19.07/lib/python3.6/site-packages/parcels/fieldset.py", line 705, in write
-    v.write(filename)
-AttributeError: 'VectorField' object has no attribute 'write'
