@@ -1,0 +1,22 @@
+Executing: 2 months of 1979
+Release longitudes: 2
+Repeat release: 6 days
+Timestep (dt): 120 minutes
+Set particles released: 156
+Time decorator used.
+Executing: ParticleFile_1979-1979_v4i
+Timer (init_pset): 0 hours, 23 mins, 21.99 secs
+Timer (execute_particles): 0 hours, 26 mins, 12.34 secs
+
+======================================================================================
+                  Resource Usage on 2019-08-08 18:50:41:
+   Job Id:             1072599.r-man2
+   Project:            e14
+   Exit Status:        1
+   Service Units:      3.86
+   NCPUs Requested:    7                      NCPUs Used: 7               
+                                           CPU Time Used: 00:25:21                                   
+   Memory Requested:   500.0GB               Memory Used: 1.33GB          
+   Walltime requested: 95:00:00            Walltime Used: 00:26:29        
+   JobFS requested:    100.0MB                JobFS used: 161.78KB        
+======================================================================================

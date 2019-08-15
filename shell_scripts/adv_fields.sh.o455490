@@ -1,0 +1,13 @@
+
+======================================================================================
+                  Resource Usage on 2019-07-21 14:48:20:
+   Job Id:             455490.r-man2
+   Project:            e14
+   Exit Status:        271 (Linux Signal 15 SIGTERM Termination)
+   Service Units:      350.06
+   NCPUs Requested:    7                      NCPUs Used: 7               
+                                           CPU Time Used: 39:57:23                                   
+   Memory Requested:   400.0GB               Memory Used: 76.83GB         
+   Walltime requested: 40:00:00            Walltime Used: 40:00:25        
+   JobFS requested:    100.0MB                JobFS used: 162.93KB        
+======================================================================================

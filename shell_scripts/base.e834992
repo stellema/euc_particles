@@ -1,0 +1,4 @@
+conda/analysis3-19.04(11):ERROR:150: Module 'conda/analysis3-19.04' conflicts with the currently loaded module(s) 'conda/analysis3-19.07'
+conda/analysis3-19.04(11):ERROR:102: Tcl command execution failed: conflict conda
+
+python: can't open file './base.py': [Errno 2] No such file or directory
