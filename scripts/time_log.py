@@ -137,13 +137,14 @@ Test 4 (double runtime; % increase in time):
 _______________________________________________________________________________
 Executing: 1979-01-01 00:00:00 to 1980-12-31 00:00:00
 
+Executing: 1979-01-01 00:00:00 to 1980-12-31 00:00:00
 Runtime: 730 days
 Timestep (dt): 120 minutes
 Output (dt): 1 days
 Repeat release: 6 days
 Depths: 6 dz=50 [50 to 300]
 Latitudes: 7 dy=0.8 [-2.4 to 2.4]
-Longitudes: 1 [165]
+Longitudes: #1 [165]
 Particles (/repeatdt): 42
 Particles (total): 5082
 Time decorator used.
@@ -153,6 +154,10 @@ Executing: ParticleFile_1979-1980_v0i
 EUC_pset: 0 hours, 3 mins, 10.03 secs (07:45am)
 Particles removed: 20
 remove_westward_particles: 0 hours, 0 mins, 00.00 secs (07:45am)
-INFO: Compiled tparticleDeleteWestwardAgeAdvectionRK4_3D ==>
-31% (19699200.0 of 63072000.0) |##      | Elapsed Time: 0:14:12 ETA:   0:36:35
+INFO: Compiled tparticleDeleteWestwardAgeAdvectionRK4_3D ==> /jobfs/local/1251721.r-man2/parcels-12904/128bbc9f9e59759197ba0db253efcb78.so
+100% (63072000.0 of 63072000.0) |########| Elapsed Time: 1:08:49 Time:  1:08:49
+EUC_particles: 1 hours, 12 mins, 07.96 secs (08:54am)
+Particles removed (final): 1689
+ParticleFile_transport: 0 hours, 0 mins, 12.88 secs (08:54am)
+Timer (base): 1 hours, 12 mins, 22.82 secs
 """
