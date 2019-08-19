@@ -28,7 +28,7 @@ fpath, dpath, xpath = paths()
 
 # Define Fieldset and ParticleSet parameters.
 # Start and end dates.
-date_bnds = [get_date(1979, 1, 1), get_date(1980, 12, 'max')]
+date_bnds = [get_date(1979, 1, 1), get_date(1979, 12, 'max')]
 # Meridional and vertical distance between particles to release.
 dy, dz = 0.8, 50
 p_lats = np.round(np.arange(-2.4, 2.4 + dy, dy), 2)

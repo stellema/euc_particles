@@ -82,6 +82,5 @@ for y in range(2070, 2101 + 1):
         ds.close()
         ds0.close()
         ds1.close()
-    plt.savefig(fpath.joinpath('file_check', 
-                               'check_{}_{}{}'.format(fpath, var, y, im_ext)))
+    plt.savefig(fpath.joinpath('file_check', 'check_{}_{}{}'.format(var, y, im_ext)))
     plt.close()
