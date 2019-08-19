@@ -12,6 +12,8 @@ OFAM variable coordinates:
 
 TODO: Find "normal" years for spinup (based on nino3.4 index).
 TODO: Interpolate TAU/TRITON observation data.
+
+git pull git@github.com:stellema/OFAM.git master
 """
 
 import time
