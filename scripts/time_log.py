@@ -39,7 +39,6 @@ Timer (base): 0 hours, 29 mins, 15.85 secs
 
 
 Executing: 1979-01-01 00:00:00 to 1979-12-31 00:00:00
-
 Runtime: 364 days
 Timestep (dt): 120 minutes
 Output (dt): 1 days
@@ -50,13 +49,15 @@ Longitudes: 1 [165]
 Particles (/repeatdt): 42
 Particles (total): 2520
 Time decorator used.
-
-ofam_fieldset: 0 hours, 0 mins, 00.79 secs (01:15am)
+WARNING: Casting lon data to np.float32
+WARNING: Casting lat data to np.float32
+WARNING: Casting depth data to np.float32
+ofam_fieldset: 0 hours, 0 mins, 01.41 secs (02:18am)
 Executing: ParticleFile_1979-1979_v0i
-EUC_pset: 0 hours, 3 mins, 15.10 secs (01:18am)
+EUC_pset: 0 hours, 3 mins, 17.66 secs (02:21am)
 Particles removed: 19
-remove_westward_particles: 0 hours, 0 mins, 00.00 secs (01:18am)
-INFO: Compiled tparticleDeleteWestwardAgeAdvectionRK4_3D ==> 
+remove_westward_particles: 0 hours, 0 mins, 00.00 secs (02:21am)
+INFO: Compiled tparticleDeleteWestwardAgeAdvectionRK4_3D ==>
 
 _______________________________________________________________________________
 

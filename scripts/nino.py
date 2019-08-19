@@ -19,8 +19,6 @@ Index in count: 66
 Index in nino34: 7037
 Start date: 2089-04-08 12:00:00
 End date: 2091-01-05 12:00:00
-
-
 """
 
 import warnings
