@@ -7,6 +7,11 @@ Created on Mon Aug 19 15:53:01 2019
 Similar to nino_test.ipynb
 
 Historical:
+Longest event: 725 days
+Index in count: 108
+Index in nino34: 8856
+Start date: 2003-04-01 12:00:00
+End date: 2005-03-26 12:00:00
 
 RCP8.5:
 Longest event: 637 days
