@@ -20,45 +20,20 @@ Latitudes: 7 dy=0.8 [-2.4 to 2.4]
 Longitudes: 1 [165]
 Particles (/repeatdt): 42
 Particles (total): 2520
-Time decorator used. 
-
-ofam_fieldset: 0 hours, 0 mins, 00.85 secs (03:43am)
-
-Executing: ParticleFile_1979-1979_v0i
-EUC_pset: 0 hours, 3 mins, 10.67 secs (03:46am)
-Particles removed: 19
-remove_westward_particles: 0 hours, 0 mins, 00.00 secs (03:46am)
-INFO: Compiled tparticleDeleteWestwardAgeAdvectionRK4_3D ==> 
-100% (31449600.0 of 31449600.0) |########| Elapsed Time: 0:25:44 Time:  0:25:44
-Particles removed: 0
-remove_westward_particles: 0 hours, 0 mins, 00.02 secs (04:12am)
-EUC_particles: 0 hours, 29 mins, 08.66 secs (04:12am)
-
-Timer (base): 0 hours, 29 mins, 15.85 secs
-
-
-
-Executing: 1979-01-01 00:00:00 to 1979-12-31 00:00:00
-Runtime: 364 days
-Timestep (dt): 120 minutes
-Output (dt): 1 days
-Repeat release: 6 days
-Depths: 6 dz=50 [50 to 300]
-Latitudes: 7 dy=0.8 [-2.4 to 2.4]
-Longitudes: 1 [165]
-Particles (/repeatdt): 42
-Particles (total): 2520
 Time decorator used.
-WARNING: Casting lon data to np.float32
-WARNING: Casting lat data to np.float32
-WARNING: Casting depth data to np.float32
+
 ofam_fieldset: 0 hours, 0 mins, 01.41 secs (02:18am)
 Executing: ParticleFile_1979-1979_v0i
 EUC_pset: 0 hours, 3 mins, 17.66 secs (02:21am)
 Particles removed: 19
 remove_westward_particles: 0 hours, 0 mins, 00.00 secs (02:21am)
 INFO: Compiled tparticleDeleteWestwardAgeAdvectionRK4_3D ==>
+100% (31449600.0 of 31449600.0) |#################| Elapsed Time: 0:25:48 Time:  0:25:48
+EUC_particles: 0 hours, 29 mins, 14.63 secs (02:47am)
+Particles removed (final): 812
+ParticleFile_transport: 0 hours, 0 mins, 03.81 secs (02:47am)
 
+Timer (base): 0 hours, 29 mins, 19.86 secs
 _______________________________________________________________________________
 
 Test 1 (66.66% increase in particles; 64.74% increase in time):
