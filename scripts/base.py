@@ -12,6 +12,8 @@ qsub -I -l walltime=5:00:00,mem=400GB,ncpus=7 -P e14 -q hugemem -X -l wd
 qsub -I -l walltime=5:00:00,ncpus=3 -P e14 -q normal -X -l wd
 
 TODO: Specifiy specific start date (convert fieldset.U.grid.time[-1])
+
+git pull stellema OFAM
 """
 
 import sys
