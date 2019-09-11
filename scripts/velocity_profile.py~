@@ -4,15 +4,12 @@ Created on Tue Sep 10 18:44:15 2019
 
 @author: Annette Stellema
 """
-import matplotlib
-matplotlib.use('Agg')
 
-import matplotlib.pyplot as plt
 import string
 import numpy as np
 import xarray as xr
+import matplotlib.pyplot as plt
 from main import paths, im_ext, idx_1d
-
 
 # Path to save figures, save data and OFAM model output.
 fpath, dpath, xpath = paths()
@@ -33,7 +30,7 @@ depth = ds.st_ocean[idx_1d(ds.st_ocean, 450)].item()
 du = ds.u.sel(yu_ocean=slice(-4.0, 4.0), st_ocean=slice(2.5, depth))
 Y = du.yu_ocean.values
 Z = du.st_ocean.values
-X = np.arange(180, 300, 10) # Longitudes to plot.
+X = np.arange(150, 300, 10) # Longitudes to plot.
 
 for x in X:
     vmax = 0.6
@@ -52,5 +49,3 @@ for x in X:
     plt.savefig(fpath.joinpath('velocity_profile', 
                                'u_profile_{}-{}_{}E{}'.format(*year, x, 
                                           im_ext)))
-    plt.clf()
-    plt.close()
