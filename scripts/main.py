@@ -154,6 +154,28 @@ def get_date(year, month, day='max'):
         return datetime(year, month, calendar.monthrange(year, month)[1])
     else:
         return datetime(year, month, day)
+    
+def create_mesh_mask():
+    ufiles, sfiles = [], []
+    ufiles.append(xpath.joinpath('ocean_u_1981_01.nc'))
+    sfiles.append(xpath.joinpath('ocean_salt_1981_01.nc'))
+    du = xr.open_mfdataset(ufiles, combine='by_coords')
+    ds = xr.open_mfdataset(sfiles, combine='by_coords')
+
+    # Create copy of particle file with initally westward partciles removed.
+    mask = xr.Dataset()
+    mask['nv'] = du.nv
+    mask['st_edges_ocean'] = du.st_edges_ocean
+    mask['st_ocean'] = du.st_ocean
+    mask['xu_ocean'] = du.xu_ocean
+    mask['yu_ocean'] = du.yu_ocean
+    mask['xt_ocean'] = ds.xt_ocean
+    mask['yt_ocean'] = ds.yt_ocean
+    mask.to_netcdf(xpath.joinpath('ocean_mesh_mask.nc'))
+    du.close()
+    ds.close()
+    mask.close()
+    return
 
 @timeit    
 def ofam_fieldset(date_bnds, time_periodic=False, deferred_load=True):
