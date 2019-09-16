@@ -39,7 +39,7 @@ from pathlib import Path
 EARTH_RADIUS = 6378137
 
 # Metres in 1 degree of latitude [m].
-LAT_DEG = 111111
+LAT_DEG = 110567
 im_ext = '.png'
 
 ptype = {'scipy': ScipyParticle, 'jit': JITParticle}
