@@ -31,6 +31,7 @@ git commit -a -m "added shell_script"
 import sys
 import time
 import math
+import string
 import calendar
 import warnings
 import numpy as np
@@ -50,8 +51,22 @@ EARTH_RADIUS = 6378137
 
 # Metres in 1 degree of latitude [m].
 LAT_DEG = 110567
+
+# Figure extension type.
 im_ext = '.png'
 
+# Width and height of figures.
+width = 7.20472
+height = width / 1.718
+
+# Create dict of various items.
+lx = {'exp': ['Historical', 'RCP85', 'Change'], 
+      'deg': '\u00b0', # Degree symbol.
+      'mon': [i for i in calendar.month_abbr[1:]], # Month abbreviations.
+      'mon_letter': [i[0] for i in calendar.month_abbr[1:]],
+      # Elements of the alphabet with left bracket and space for fig captions.
+      'l': [i + ') ' for i in list(string.ascii_lowercase)]}
+  
 ptype = {'scipy': ScipyParticle, 'jit': JITParticle}
 
 def paths():
