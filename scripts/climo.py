@@ -7,7 +7,7 @@ def create_climo():
     files = []
     for year in [[1981, 2012], [2070, 2101]]:
         print('Executing:', year)
-        for var in ['u', 'v', 'salt', 'temp']:
+        for var in ['v', 'salt', 'temp']:
             print('Executing:', var)
             for y in range(year[0], year[-1] + 1):
                 for i, m in enumerate(range(1, 13)):

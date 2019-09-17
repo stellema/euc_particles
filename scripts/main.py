@@ -1,9 +1,19 @@
 # -*- coding: utf-8 -*-
 """
-Created on Wed Apr 17 08:23:42 2019
+created: Wed Apr 17 08:23:42 2019
 
-@author: Annette Stellema
+author: Annette Stellema (astellemas@gmail.com)
 
+project: OFAM - Lagrangian analysis of tropical Pacific physical 
+and biogeochemical projected changes.
+
+OFAM project main functions, classes and variable definitions.
+
+This file can be imported as a module and contains the following
+functions:
+
+    
+notes:
 OFAM variable coordinates:
     u - st_ocean, yu_ocean, xu_ocean
     w - sw_ocean, yt_ocean, xt_ocean
@@ -15,24 +25,24 @@ TODO: Interpolate TAU/TRITON observation data.
 
 git pull git@github.com:stellema/OFAM.git master
 git commit -a -m "added shell_script"
+
 """
 
+import sys
 import time
-import xarray as xr
-import numpy as np
 import math
 import calendar
 import warnings
-import sys
-from operator import attrgetter
+import numpy as np
+import xarray as xr
+from pathlib import Path
 import matplotlib.pyplot as plt
+from operator import attrgetter
 from collections import OrderedDict
+from mpl_toolkits.mplot3d import Axes3D
 from datetime import timedelta, datetime, date
 from parcels import FieldSet, ParticleSet, JITParticle, ScipyParticle
-from parcels import ErrorCode, Variable
-from parcels import plotTrajectoriesFile, AdvectionRK4_3D, AdvectionRK4
-from mpl_toolkits.mplot3d import Axes3D
-from pathlib import Path
+from parcels import ErrorCode, Variable, AdvectionRK4_3D, AdvectionRK4
 
 # Constants.
 # Radius of Earth [m].
@@ -43,9 +53,6 @@ LAT_DEG = 110567
 im_ext = '.png'
 
 ptype = {'scipy': ScipyParticle, 'jit': JITParticle}
-
-#data = xr.open_dataset(xpath + 'ocean_u_2010_01.nc')
-#data.close()
 
 def paths():
     """ Return paths to figures, data and model output. 
@@ -406,14 +413,14 @@ def ParticleFile_transport(pfile, dy, dz, save=True):
                                     'sea_water_x_transport')])
     
     # Adding missing zonal velocity attributes (copied from data).
-    df['u'].attrs = OrderedDict([('long_name', 'i-current'),
-                                 ('units', 'm/sec'),
-                                 ('valid_range', [-32767, 32767]),
-                                 ('packing', 4),
-                                 ('cell_methods', 'time: mean'),
-                                 ('coordinates', 'geolon_c geolat_c'),
-                                 ('standard_name', 
-                                  'sea_water_x_velocity')])
+    df.u.attrs['long_name'] = 'i-current'
+    df.u.attrs['units'] = 'm/sec'
+    df.u.attrs['valid_range'] = [-32767, 32767]
+    df.u.attrs['packing'] = 4
+    df.u.attrs['cell_methods'] = 'time: mean'
+    df.u.attrs['coordinates'] = 'geolon_c geolat_c'
+    df.u.attrs['standard_name'] = 'sea_water_x_velocity'
+
     if save:
         # Saves with same file name, but with the last 'i' removed.
         # E.g. ParticleFile_2010-2011_v0i.nc -> ParticleFile_2010-2011_v0.nc
