@@ -1,0 +1,52 @@
+Traceback (most recent call last):
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-19.07/lib/python3.6/site-packages/xarray/coding/times.py", line 177, in decode_cf_datetime
+    calendar)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-19.07/lib/python3.6/site-packages/xarray/coding/times.py", line 142, in _decode_datetime_with_pandas
+    pd.to_timedelta(flat_num_dates.min(), delta) + ref_date
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-19.07/lib/python3.6/site-packages/pandas/util/_decorators.py", line 208, in wrapper
+    return func(*args, **kwargs)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-19.07/lib/python3.6/site-packages/pandas/core/tools/timedeltas.py", line 127, in to_timedelta
+    return _coerce_scalar_to_timedelta_type(arg, unit=unit, box=box, errors=errors)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-19.07/lib/python3.6/site-packages/pandas/core/tools/timedeltas.py", line 134, in _coerce_scalar_to_timedelta_type
+    result = Timedelta(r, unit)
+  File "pandas/_libs/tslibs/timedeltas.pyx", line 1277, in pandas._libs.tslibs.timedeltas.Timedelta.__new__
+  File "pandas/_libs/tslibs/timedeltas.pyx", line 181, in pandas._libs.tslibs.timedeltas.convert_to_timedelta64
+  File "pandas/_libs/tslibs/timedeltas.pyx", line 309, in pandas._libs.tslibs.timedeltas.cast_from_unit
+OverflowError: Python int too large to convert to C long
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-19.07/lib/python3.6/site-packages/xarray/coding/times.py", line 95, in _decode_cf_datetime_dtype
+    use_cftime)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-19.07/lib/python3.6/site-packages/xarray/coding/times.py", line 180, in decode_cf_datetime
+    flat_num_dates.astype(np.float), units, calendar)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-19.07/lib/python3.6/site-packages/xarray/coding/times.py", line 114, in _decode_datetime_with_cftime
+    only_use_cftime_datetimes=True))
+  File "cftime/_cftime.pyx", line 267, in cftime._cftime.num2date
+  File "cftime/_cftime.pyx", line 869, in cftime._cftime.utime.num2date
+  File "cftime/_cftime.pyx", line 493, in cftime._cftime.DateFromJulianDay
+  File "cftime/_cftime.pyx", line 472, in cftime._cftime.DateFromJulianDay.getdateinfo
+  File "cftime/_cftime.pyx", line 1935, in cftime._cftime._IntJulianDayToDate
+ValueError: julian day must be a positive integer
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/transport.py", line 46, in <module>
+    .format(*years)))
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-19.07/lib/python3.6/site-packages/xarray/backends/api.py", line 451, in open_dataset
+    ds = maybe_decode_store(store)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-19.07/lib/python3.6/site-packages/xarray/backends/api.py", line 381, in maybe_decode_store
+    drop_variables=drop_variables, use_cftime=use_cftime)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-19.07/lib/python3.6/site-packages/xarray/conventions.py", line 526, in decode_cf
+    decode_coords, drop_variables=drop_variables, use_cftime=use_cftime)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-19.07/lib/python3.6/site-packages/xarray/conventions.py", line 448, in decode_cf_variables
+    stack_char_dim=stack_char_dim, use_cftime=use_cftime)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-19.07/lib/python3.6/site-packages/xarray/conventions.py", line 308, in decode_cf_variable
+    var = coder.decode(var, name=name)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-19.07/lib/python3.6/site-packages/xarray/coding/times.py", line 431, in decode
+    self.use_cftime)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-19.07/lib/python3.6/site-packages/xarray/coding/times.py", line 102, in _decode_cf_datetime_dtype
+    raise ValueError(msg)
+ValueError: unable to decode time units 'days since 2070-01-31 00:00:00' with calendar 'proleptic_gregorian'. Try opening your dataset with decode_times=False.

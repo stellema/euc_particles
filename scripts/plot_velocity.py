@@ -20,11 +20,11 @@ fpath, dpath, xpath = paths()
 plt.rcParams['figure.facecolor'] = 'grey'
 
 
-years = [[1981, 2012], [2070, 2101]]
+years = lx['years']
 
 # Open historical and future climatologies.
-dh = xr.open_dataset(xpath.joinpath('ocean_u_{}-{}_climo.nc'.format(years[0])))
-df = xr.open_dataset(xpath.joinpath('ocean_u_{}-{}_climo.nc'.format(years[1])))
+dh = xr.open_dataset(xpath.joinpath('ocean_u_{}-{}_climo.nc'.format(*years[0])))
+df = xr.open_dataset(xpath.joinpath('ocean_u_{}-{}_climo.nc'.format(*years[1])))
 
 depth = dh.st_ocean[idx_1d(dh.st_ocean, 450)].item()
 
@@ -97,3 +97,5 @@ def plot_EUC_mon_profile(ds, exp=0):
                                    .format(x, im_ext)))
         plt.clf()
         plt.close()
+plot_EUC_annual_profile(dh, df)
+plot_EUC_mon_profile(dh, exp=0)

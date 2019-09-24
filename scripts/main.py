@@ -60,7 +60,9 @@ width = 7.20472
 height = width / 1.718
 
 # Create dict of various items.
-lx = {'exp': ['Historical', 'RCP85', 'Change'], 
+lx = {'exp': ['historical', 'rcp85', 'rcp85_minus_historial'],
+      'years':  [[1981, 2012], [2070, 2101]],
+      'vars': ['u', 'v', 'salt', 'temp'],
       'deg': '\u00b0', # Degree symbol.
       'mon': [i for i in calendar.month_abbr[1:]], # Month abbreviations.
       'mon_letter': [i[0] for i in calendar.month_abbr[1:]],
