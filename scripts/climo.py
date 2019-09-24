@@ -9,28 +9,43 @@ and temp for time periods averaged over 1981 to 2012 and 2070 to 2101.
 
 """
 
+
+import sys
+import os
+
+import warnings
+import numpy as np
+from cdo import Cdo
 import xarray as xr
 import pandas as pd
 from main import paths, lx
 
 # Path to save figures, save data and OFAM model output.
 fpath, dpath, xpath = paths()
-
-for v in lx['vars']:
-    for exp in lx['years']:
-        print('Executing:', v, exp)
-        files = []
-        for y in range(exp[0], exp[-1] + 1):
-            for m in range(1, 13):
-                files.append(xpath.joinpath('ocean_{}_{}_{:02d}.nc'.format(v, y, m)))
-        ds = xr.open_mfdataset(files, combine='by_coords')
-        
-        # Calculate monthly climatology.
-        ds = ds.groupby('Time.month').mean('Time')
-        
-        # Renaming time array and converting to pandas.datetime objects.
-        ds.month.rename('Time')
-        
-        # Save to OFAM/trop_pac
-        ds.to_netcdf(xpath.joinpath('ocean_{}_{}-{}_climo.nc'.format(v, *exp)))
-        ds.close()
+cdo = Cdo()
+i = int(sys.argv[1])
+v = lx['vars'][i]
+for exp in lx['years']:
+    print('Executing:', v, exp)
+    files = []
+    for y in range(exp[0], exp[-1] + 1):
+        for m in range(1, 13):
+            files.append(xpath.joinpath('ocean_{}_{}_{:02d}.nc'.format(v, y, m)))
+    # Name to save merged file.
+    merge = xpath.joinpath('ocean_{}_{}-{}_merged.nc'.format(v, *exp))
+    # Name to save climo.
+    output = xpath.joinpath('ocean_{}_{}-{}_climo.nc'.format(v, *exp))
+           
+    # Merge all the file times into a single file.
+    cdo.mergetime(input= files, output=merge)
+    
+    # Calculate the climatology.
+    cdo.ymonmean('-selyear,{}/{}'.format(*exp), input=merge, output=output)
+    
+    # Remove the temporary merged file.
+    os.remove(merge)
+    
+    # Check the file exits.
+    if not os.path.exists(output):
+        warnings.warn('File does not exist after calculation.') 
+      
