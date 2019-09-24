@@ -24,7 +24,7 @@ from main import paths, lx
 fpath, dpath, xpath = paths()
 cdo = Cdo()
 i = int(sys.argv[1])
-v = lx['vars'][i]
+v = lx['vars'][i - 1]
 for exp in lx['years']:
     print('Executing:', v, exp)
     files = []
