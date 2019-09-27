@@ -1,9 +1,0 @@
-#!/bin/bash
-
-cd /g/data/e14/as3189/OFAM/hist/
-MDSSVERBOSE=1
-
-for f in ocean_w*; do
-	echo "$f"
-	mdss -P e14 put "${f}" "as3189/OFAM";
-done
