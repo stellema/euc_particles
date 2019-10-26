@@ -45,6 +45,9 @@ from datetime import timedelta, datetime, date
 from parcels import FieldSet, ParticleSet, JITParticle, ScipyParticle
 from parcels import ErrorCode, Variable, AdvectionRK4_3D, AdvectionRK4
 
+# Suppress scientific notation when printing.
+np.set_printoptions(suppress=True)
+
 # Constants.
 # Radius of Earth [m].
 EARTH_RADIUS = 6378137
@@ -61,13 +64,15 @@ height = width / 1.718
 
 # Create dict of various items.
 lx = {'exp': ['historical', 'rcp85', 'rcp85_minus_historial'],
+      'exps': ['Historical', 'RCP85', 'Difference'],
       'years':  [[1981, 2012], [2070, 2101]],
       'vars': ['u', 'v', 'w', 'salt', 'temp'],
       'deg': '\u00b0', # Degree symbol.
       'mon': [i for i in calendar.month_abbr[1:]], # Month abbreviations.
       'mon_letter': [i[0] for i in calendar.month_abbr[1:]],
       # Elements of the alphabet with left bracket and space for fig captions.
-      'l': [i + ') ' for i in list(string.ascii_lowercase)]}
+      'l': [i + ') ' for i in list(string.ascii_lowercase)],
+      'lb': [r"$\bf{{{}}}$".format(i) for i in list(string.ascii_lowercase)]}
   
 ptype = {'scipy': ScipyParticle, 'jit': JITParticle}
 
@@ -452,23 +457,35 @@ def plot3D(pfile):
         pfile (pathlib.Path): ParticleFile to plot.
         
     """
-    ds = xr.open_dataset(pfile)
-    N = len(ds.traj)
+    ds = xr.open_dataset(pfile).isel(obs=slice(0, 100))
     plt.figure(figsize=(13, 10))
     ax = plt.axes(projection='3d')
-    c = plt.cm.jet(np.linspace(0, 1, N))
-    
+
+    cmap = plt.cm.Spectral
+    norm = plt.Normalize()
+    colors = cmap(norm(ds.u))
+                         
     x = ds.lon
     y = ds.lat
     z = ds.z
-    
-    for i in range(N):
-        ax.scatter(x[i], y[i], z[i], s=5, marker="o", c=[c[i]])
-    
+    for i in range(len(ds.traj)):
+        ax.scatter(x[i], y[i], z[i], s=5, marker="o", c=colors[i])
+
     ax.set_xlabel("Longitude")
     ax.set_ylabel("Latitude")
     ax.set_zlabel("Depth [m]")
     ax.set_zlim(np.max(z), np.min(z))
+    plt.show()
     plt.savefig(fpath.joinpath(pfile.stem + im_ext))
     plt.close()
+    
+    
     ds.close()
+    
+#    for i in range(N):
+#        ax.scatter(x[i], y[i], z[i], s=5, marker="o", c=cmap(norm(ds.u)))
+##        ax.scatter(x[i], y[i], z[i], s=5, marker="o", c=[c[i]])
+#    
+pfile=dpath.joinpath('ParticleFile_1979-1989_v3.nc')
+filename=dpath.joinpath('ParticleFile_1979-1989_v3.nc')
+pfile=dpath.joinpath('ParticleFile_1979-1989_v3.nc')
