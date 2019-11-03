@@ -53,7 +53,7 @@ np.set_printoptions(suppress=True)
 EARTH_RADIUS = 6378137
 
 # Metres in 1 degree of latitude [m].
-LAT_DEG = 110567
+LAT_DEG = 111320
 
 # Figure extension type.
 im_ext = '.png'
@@ -489,3 +489,38 @@ def plot3D(pfile):
 pfile=dpath.joinpath('ParticleFile_1979-1989_v3.nc')
 filename=dpath.joinpath('ParticleFile_1979-1989_v3.nc')
 pfile=dpath.joinpath('ParticleFile_1979-1989_v3.nc')
+def deg2m(lat1, lon1, lat2, lon2):
+    """ Finds distance in metres between two lat/lon points.
+
+    Parameters:
+        lat1: latitude of point 1
+        lon1: longitude of point 1
+        lat2: latitude of point 2
+        lon2: longitude of point 2
+
+    Returns:
+        distance [m] between the two points
+    """
+    # Convert latitude and longitude to spherical coordinates in radians.
+    degrees_to_radians = math.pi/180.0
+    
+    # phi = 90 - latitude
+    phi1 = (90.0 - lat1)*degrees_to_radians
+    phi2 = (90.0 - lat2)*degrees_to_radians
+
+    # theta = longitude
+    theta1 = lon1*degrees_to_radians
+    theta2 = lon2*degrees_to_radians
+
+    # Compute spherical dst from spherical coordinates.
+    cos = (math.sin(phi1)*math.sin(phi2)*math.cos(theta1 - theta2) +
+           math.cos(phi1)*math.cos(phi2))
+
+    # Cheap way to avoid acos math domain error.
+    if cos > 1:
+        cos = math.floor(cos)
+    elif cos < -1:
+        cos = math.ceil(cos)
+    arc = math.acos(cos)
+
+    return arc*EARTH_RADIUS

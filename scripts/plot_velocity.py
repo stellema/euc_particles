@@ -8,7 +8,7 @@ This script plots
 """
 import gsw
 import matplotlib
-#matplotlib.use('Agg') # Fixes plt error (must be before plt import).
+matplotlib.use('Agg') # Fixes plt error (must be before plt import).
 import matplotlib.pyplot as plt
 import numpy as np
 import xarray as xr
@@ -35,10 +35,10 @@ ds = xr.open_dataset(xpath.joinpath('ocean_salt_{}-{}_climo.nc'.format(*years[0]
 depth = dh.st_ocean[idx_1d(dh.st_ocean, 450)].item()
 
 # Slice data to selected latitudes and lonitudes.
-dh = dh.u.sel(yu_ocean=slice(-4.0, 4.1), st_ocean=slice(2.5, depth))
-df = df.u.sel(yu_ocean=slice(-4.0, 4.1), st_ocean=slice(2.5, depth))
-dt = dt.temp.sel(yt_ocean=slice(-4.0, 4.1), st_ocean=slice(2.5, depth)).mean('Time')
-ds = ds.salt.sel(yt_ocean=slice(-4.0, 4.1), st_ocean=slice(2.5, depth)).mean('Time')
+dh = dh.sel(yu_ocean=slice(-4.0, 4.), st_ocean=slice(2.5, depth))
+df = df.sel(yu_ocean=slice(-4.0, 4.), st_ocean=slice(2.5, depth))
+dt = dt.temp.sel(yt_ocean=slice(-4.0, 4.), st_ocean=slice(2.5, depth)).mean('Time')
+ds = ds.salt.sel(yt_ocean=slice(-4.0, 4.), st_ocean=slice(2.5, depth)).mean('Time')
 
 def plot_EUC_annual_profile(dh, df):
     # Longitudes, latitudes and depths to plot.
@@ -119,6 +119,159 @@ def plot_EUC_mon_profile(ds, exp=0):
         plt.clf()
         plt.close()
 
+
+    
+def plot_EUC_hist_profile(ds):
+    # Longitudes, latitudes and depths to plot.
+    X = [165, 190, 220]
+    XX = ['165\u00b0E', '170\u00b0W', '140\u00b0W']
+    Y = dh.yu_ocean.values
+    Z = dh.st_ocean.values
+#    y, z = np.meshgrid(Y, Z)
+    # Maximum/minimum velocity for plot contour (for each exp)
+    vmax = [0.6, 0.6, 0.6] 
+    cmap = plt.cm.seismic
+    cmap.set_bad('dimgrey')  
+    fig, ax = plt.subplots(1, 3, figsize=(width*1.8, height), sharey=True) # Width, height.
+    for i, x in enumerate(X):
+
+        ax[i].set_title('{} Zonal velocity at {}'.format( lx['lb'][i]
+                     ,XX[i]), loc='left')
+        
+        cs = ax[i].pcolormesh(Y, Z, ds.sel(xu_ocean=x), 
+                            vmin=-vmax[i], vmax=vmax[i] + 0.01, 
+                            cmap=cmap)
+        
+        plt.ylim(depth, 0) # Plot ascending depths.
+        plt.yticks(np.arange(0, depth, 50))
+        xticks = ax[i].get_xticks()
+        tmp = np.empty(len(xticks)).tolist()
+        for r,g in enumerate(xticks):
+            tmp[r] = str(int(abs(g))) + '\u00b0S' if g <= 0 else str(int(g)) + '\u00b0N'
+
+        ax[i].set_xticklabels(tmp)
+    
+    ax[0].set_ylabel('Depth [m]')
+    cbar = plt.colorbar(cs, cax=fig.add_axes([0.925, 0.11, 0.02, 0.77]), 
+                        orientation='vertical', extend='both')
+    cbar.set_label('Velocity [m/s]')
+    # [left, bottom, width, height]
+    cbar.ax.tick_params(labelsize=10, width=0.04)
+        
+    plt.show()
+    plt.savefig(fpath.joinpath('EUC_h_{}E_annual{}'
+                               .format(x, im_ext)), bbox_inches='tight')
+    plt.clf()
+    plt.close()   
+    
+def plot_EUC_temp_profile(dt, dh):
+    # Longitudes, latitudes and depths to plot.
+    z = -dt.st_ocean.values
+    y = dh.yu_ocean.values
+    Y, Z = np.meshgrid(y, z)
+    # Convert depth to pressure [dbar].
+    p = gsw.conversions.p_from_z(Z, Y)
+
+
+    X = [165, 190, 220]
+    XX = ['165\u00b0E', '170\u00b0W', '140\u00b0W']
+    Y = dh.yu_ocean.values
+    Z = dh.st_ocean.values
+
+    # Maximum/minimum velocity for plot contour (for each exp)
+    vmax = 27
+    vmin = 10
+    cmap = plt.cm.Spectral_r
+#    cmap.set_bad('dimgrey')  
+    fig, ax = plt.subplots(1, 3, figsize=(width*1.8, height), sharey=True) # Width, height.
+    for i, x in enumerate(X):
+        lon = x
+        SA = ds.sel(xt_ocean=lon + 0.05, method='nearest')
+        t = dt.sel(xt_ocean=lon + 0.05, method='nearest')
+        rho = gsw.pot_rho_t_exact(SA, t, p, p_ref=0)
+        ax[i].set_title('{} Temperature and density at {}'.format(lx['lb'][i+3]
+                     , XX[i]), loc='left')
+        
+        cs = ax[i].pcolormesh(Y, Z, dt.sel(xt_ocean=x, method='nearest'), 
+               vmin=vmin, vmax=vmax + 0.01, cmap=cmap)
+        cx = ax[i].contour(Y, Z, rho-1000, 8, colors='black')
+        plt.clabel(cx, inline=True, fontsize=8, fmt='%1.1f')        
+        plt.ylim(depth, 0) # Plot ascending depths.
+        plt.yticks(np.arange(0, depth, 50))
+        xticks = ax[i].get_xticks()
+        tmp = np.empty(len(xticks)).tolist()
+        for r,g in enumerate(xticks):
+            tmp[r] = str(int(abs(g))) + '\u00b0S' if g <= 0 else str(int(g)) + '\u00b0N'
+
+        ax[i].set_xticklabels(tmp)
+    
+    ax[0].set_ylabel('Depth [m]')
+    cbar = plt.colorbar(cs, cax=fig.add_axes([0.925, 0.11, 0.02, 0.77]), 
+                        orientation='vertical', extend='both')
+    # [left, bottom, width, height]
+    cbar.ax.tick_params(labelsize=10, width=0.04)
+    cbar.set_label('Temperature [\u00b0C]')
+    plt.savefig(fpath.joinpath('EUC_temp_{}E_annual{}'
+                               .format(x, im_ext)), bbox_inches='tight')
+    plt.clf()
+    plt.close()   
+     
+def plot_EUC_is_profile(dh, ds, dt):
+    # Longitudes, latitudes and depths to plot.
+    z = -dt.st_ocean.values
+    y = dt.yt_ocean.values
+    Y, Z = np.meshgrid(y, z)
+    # Convert depth to pressure [dbar].
+    p = gsw.conversions.p_from_z(Z, Y)
+
+
+    X = [165, 190, 220]
+    XX = ['165\u00b0E', '170\u00b0W', '140\u00b0W']
+    Y = dh.yu_ocean.values
+    Z = dh.st_ocean.values
+
+    # Maximum/minimum velocity for plot contour (for each exp)
+    vmax = 0.7
+    vmin = -0.7
+    cmap = plt.cm.RdBu_r
+
+    fig, ax = plt.subplots(1, 3, figsize=(width*1.8, height), sharey=True)
+    for i, x in enumerate(X):
+        lon = x
+        SA = ds.sel(xt_ocean=lon + 0.05, method='nearest')
+        t = dt.sel(xt_ocean=lon + 0.05, method='nearest')
+        rho = gsw.pot_rho_t_exact(SA, t, p, p_ref=0)
+        ax[i].set_title('{} Zonal velocity at {}'.format( lx['lb'][i]
+                     ,XX[i]), loc='left')
+        clevs = np.arange(21.6, 26.6, 0.2)
+        cs = ax[i].pcolormesh(dh.yu_ocean, dh.st_ocean, dh.sel(xu_ocean=x, method='nearest'), 
+               vmin=vmin, vmax=vmax + 0.01, cmap=cmap)
+        cx = ax[i].contour(dt.yt_ocean, dt.st_ocean, rho-1000, clevs, colors='black', linewidths=1)
+        plt.clabel(cx, cx.levels[::2], inline=True, fontsize=8, fmt='%1.1f')        
+        plt.ylim(380, 0) # Plot ascending depths.
+        plt.yticks(np.arange(0, depth, 50))
+        xticks = ax[i].get_xticks()
+        tmp = np.empty(len(xticks)).tolist()
+        for r,g in enumerate(xticks):
+            tmp[r] = str(int(abs(g))) + '\u00b0S' if g <= 0 else str(int(g)) + '\u00b0N'
+
+        ax[i].set_xticklabels(tmp)
+        ax[i].axhline(y=25, c="darkgrey",linewidth=1)
+        ax[i].axhline(y=300, c="darkgrey",linewidth=1)
+        ax[i].axvline(x=2.6, c="darkgrey",linewidth=1)
+        ax[i].axvline(x=-2.6, c="darkgrey",linewidth=1)
+    
+    ax[0].set_ylabel('Depth [m]')
+    cbar = plt.colorbar(cs, cax=fig.add_axes([0.925, 0.11, 0.02, 0.77]), 
+                        orientation='vertical', extend='both')
+    # [left, bottom, width, height]
+    cbar.ax.tick_params(labelsize=10, width=0.04)
+    cbar.set_label('Velocity [m/s]')
+    plt.savefig(fpath.joinpath('EUC_u_is_{}E_annual{}'
+                               .format(x, im_ext)), bbox_inches='tight')
+    plt.clf()
+    plt.close()  
+    
 def plot_transport(dh, dr):
     depth = dh.st_ocean[idx_1d(dh.st_ocean, 350)].item()
     
@@ -165,100 +318,13 @@ def plot_transport(dh, dr):
     ax[1].set_ylabel('Transport [Sv]')
     plt.show()
     plt.savefig(fpath.joinpath('EUC_transport{}'.format(im_ext)))
-    print(((xpr - xph)/xph)*100)
-    print(((xpr - xph)/xph)[::10]*100)
-    
-def plot_EUC_hist_profile(ds):
-    # Longitudes, latitudes and depths to plot.
-    X = [160, 190, 220]
-    Y = dh.yu_ocean.values
-    Z = dh.st_ocean.values
-#    y, z = np.meshgrid(Y, Z)
-    # Maximum/minimum velocity for plot contour (for each exp)
-    vmax = [0.6, 0.6, 0.6] 
-    cmap = plt.cm.seismic
-    cmap.set_bad('dimgrey')  
-    fig, ax = plt.subplots(1, 3, figsize=(width*1.8, height), sharey=True) # Width, height.
-    for i, x in enumerate(X):
 
-        ax[i].set_title('{} Zonal velocity at {}{}E'.format( lx['lb'][i]
-                     , x, lx['deg']), loc='left')
-        
-        cs = ax[i].pcolormesh(Y, Z, ds.sel(xu_ocean=x), 
-                            vmin=-vmax[i], vmax=vmax[i] + 0.01, 
-                            cmap=cmap)
-        
-        plt.ylim(depth, 0) # Plot ascending depths.
-        plt.yticks(np.arange(0, depth, 50))
-        xticks = ax[i].get_xticks()
-        tmp = np.empty(len(xticks)).tolist()
-        for r,g in enumerate(xticks):
-            tmp[r] = str(int(abs(g))) + '\u00b0S' if g <= 0 else str(int(g)) + '\u00b0N'
-
-        ax[i].set_xticklabels(tmp)
     
-    ax[0].set_ylabel('Depth [m]')
-    cbar = plt.colorbar(cs, cax=fig.add_axes([0.925, 0.11, 0.02, 0.77]), 
-                        orientation='vertical', extend='both')
-    # [left, bottom, width, height]
-    cbar.ax.tick_params(labelsize=10, width=0.04)
-        
-    plt.show()
-    plt.savefig(fpath.joinpath('EUC_h_{}E_annual{}'
-                               .format(x, im_ext)), bbox_inches='tight')
-    plt.clf()
-    plt.close()   
-    
-def plot_EUC_temp_profile(dt):
-    # Longitudes, latitudes and depths to plot.
-    X = [160, 190, 220]
-    Y = dh.yu_ocean.values
-    Z = dh.st_ocean.values
-#    y, z = np.meshgrid(Y, Z)
-    # Maximum/minimum velocity for plot contour (for each exp)
-    vmax = 27
-    vmin = 10
-    cmap = plt.cm.Spectral_r
-#    cmap.set_bad('dimgrey')  
-    fig, ax = plt.subplots(1, 3, figsize=(width*1.8, height), sharey=True) # Width, height.
-    for i, x in enumerate(X):
-
-        ax[i].set_title('{} Temperature at {}{}E'.format( lx['lb'][i]
-                     , x, lx['deg']), loc='left')
-        
-        cs = ax[i].pcolormesh(Y, Z, dt.sel(xt_ocean=x, method='nearest'), 
-               vmin=vmin, vmax=vmax + 0.01, cmap=cmap)
-        
-        plt.ylim(depth, 0) # Plot ascending depths.
-        plt.yticks(np.arange(0, depth, 50))
-        xticks = ax[i].get_xticks()
-        tmp = np.empty(len(xticks)).tolist()
-        for r,g in enumerate(xticks):
-            tmp[r] = str(int(abs(g))) + '\u00b0S' if g <= 0 else str(int(g)) + '\u00b0N'
-
-        ax[i].set_xticklabels(tmp)
-    
-    ax[0].set_ylabel('Depth [m]')
-    cbar = plt.colorbar(cs, cax=fig.add_axes([0.925, 0.11, 0.02, 0.77]), 
-                        orientation='vertical', extend='both')
-    # [left, bottom, width, height]
-    cbar.ax.tick_params(labelsize=10, width=0.04)
-        
-    plt.show()
-    plt.savefig(fpath.joinpath('EUC_temp_{}E_annual{}'
-                               .format(x, im_ext)), bbox_inches='tight')
-    plt.clf()
-    plt.close()    
+#plot_transport(dh, df)
 #plot_EUC_annual_profile(dh=dh.mean('Time'), df=df.mean('month'))
 #plot_EUC_hist_profile(dh.mean('Time'))
 #plot_EUC_mon_profile(dh, exp=0)
 #plot_EUC_temp_profile(dt)
-z = -dh.st_ocean.values
-y = dh.yu_ocean.values
-Y, Z = np.meshgrid(y, z)
-# Convert depth to pressure [dbar].
-p = gsw.conversions.p_from_z(Z, Y)
-lon = 180
-SA = ds.salt.sel(xt_ocean=lon + 0.05, method='nearest')
-t = dt.temp.sel(xt_ocean=lon + 0.05, method='nearest')
-rho = gsw.pot_rho_t_exact(SA, t, p, p_ref=0)
+#plot_EUC_hist_iso(dh, dt, ds)
+#plot_EUC_is_profile(dh.mean('Time'), ds, dt)
+
