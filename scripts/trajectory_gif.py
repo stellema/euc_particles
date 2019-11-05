@@ -25,7 +25,7 @@ os.environ["PROJ_LIB"] = str(Path.home().joinpath('Anaconda3',
           'envs', 'TEST', 'Library', 'share'))
 from mpl_toolkits.basemap import Basemap
 
-fpath, dpath, xpath = paths()
+fpath, dpath, xpath, lpath = paths()
 filename = dpath.joinpath('ParticleFile_1979-1989_v3.nc')
 
 #load particle data and get distribution
@@ -72,7 +72,7 @@ def plot_particle_movie(filename, movie_forward=False, insert_line=False):
     m.fillcontinents(color='dimgrey')
     m.drawmapboundary(fill_color='powderblue')
     if insert_line:
-        x, y = m(np.linspace(165, 165), np.linspace(-2.6, 2.6))
+        x, y = m(np.linspace(165, 165), np.linspace(-2.4, 2.4))
         m.plot(x, y, linewidth=4, color='k', zorder=14)
     savestr = '_black' if insert_line else ''
     
@@ -102,7 +102,7 @@ def plot_particle_movie(filename, movie_forward=False, insert_line=False):
     plt.tight_layout()
     plt.close()
     
-    anim.save(str(fpath.joinpath('demo_traj{}.mp4'.format(savestr))), 
+    anim.save(str(fpath.joinpath('demo_traj_blue{}.mp4'.format(savestr))), 
               writer=writer)
 
-plot_particle_movie(filename, movie_forward=False, insert_line=False)
+plot_particle_movie(filename, movie_forward=False, insert_line=True)
