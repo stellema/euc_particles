@@ -308,7 +308,7 @@ def remove_westward_particles(pset):
             idx.append(np.where([pi.id == p.id for pi in pset])[0][0])
     pset.remove(idx)
     
-    print('Particles removed:', len(idx))
+    logger.debug('Particles removed: {}'.format(len(idx)))
     
     # Warn if there are remaining intial westward particles.
     if any([p.u < 0 and p.age == 0 for p in pset]): 
