@@ -165,13 +165,9 @@ def timeit(method):
         te = time.time()
         h, rem = divmod(te - ts, 3600)
         m, s = divmod(rem, 60)
-        
-        if 'log_time' in kw:
-            name = kw.get('log_name', method.__name__.upper())
-            kw['log_time'][name] = int((te - ts) * 1000)
-        else:
-            logger.debug('{}: {:} hours, {:} mins, {:05.2f} secs'.format(
-                    method.__name__, int(h), int(m), s))
+
+        logger.info('{}: {:}:{:}:{:05.2f} total: {:.2f} seconds.'.format(
+                method.__name__, int(h), int(m), s, te - ts))
         return result    
     return timed
 
