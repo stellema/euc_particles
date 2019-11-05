@@ -1,0 +1,14 @@
+Executing: salt [1981, 2012]
+
+======================================================================================
+                  Resource Usage on 2019-10-26 21:46:34:
+   Job Id:             3047343.r-man2
+   Project:            e14
+   Exit Status:        0
+   Service Units:      3.71
+   NCPUs Requested:    1                      NCPUs Used: 1               
+                                           CPU Time Used: 03:30:55                                   
+   Memory Requested:   30.0GB                Memory Used: 6.14GB          
+   Walltime requested: 15:00:00            Walltime Used: 03:42:33        
+   JobFS requested:    100.0MB                JobFS used: 0B              
+======================================================================================
