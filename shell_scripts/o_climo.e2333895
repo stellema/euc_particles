@@ -1,0 +1,2352 @@
+
+------------------------------------------------------------------------
+Job 2333895.r-man2 has exceeded memory allocation on node r126
+Process "bash", pid 13045, rss 1167360, vmem 109027328
+Process "2333895.r-man2.", pid 13312, rss 1208320, vmem 108683264
+Process "python", pid 13775, rss 14352384, vmem 360165376
+Process "python", pid 13776, rss 15917056, vmem 360161280
+Process "python", pid 13777, rss 15425536, vmem 360157184
+Process "python", pid 13778, rss 14860288, vmem 360165376
+Process "python", pid 13779, rss 13697024, vmem 360161280
+Process "python", pid 13780, rss 14778368, vmem 360161280
+Process "python", pid 13781, rss 15339520, vmem 360165376
+Process "python", pid 13782, rss 14589952, vmem 360161280
+Process "python", pid 13783, rss 13496320, vmem 360165376
+Process "python", pid 13784, rss 13762560, vmem 360161280
+Process "cdo", pid 13926, rss 436629504, vmem 511741952
+Process "cdo", pid 13927, rss 6376435712, vmem 12774846464
+Process "cdo", pid 13928, rss 5831680000, vmem 11765338112
+Process "cdo", pid 13929, rss 6083477504, vmem 12240793600
+Process "cdo", pid 13930, rss 370270208, vmem 441827328
+Process "cdo", pid 13931, rss 423301120, vmem 494813184
+Process "cdo", pid 13932, rss 346685440, vmem 419295232
+Process "cdo", pid 13933, rss 5403643904, vmem 10890784768
+Process "cdo", pid 13934, rss 5399212032, vmem 10857226240
+Process "cdo", pid 13935, rss 425988096, vmem 498348032
+------------------------------------------------------------------------
+For more information visit https://opus.nci.org.au/x/SwGRAQ
+------------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/climo.py", line 42, in <module>
+    cdo.mergetime(input=files, output=merge)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-19.07/lib/python3.6/site-packages/cdo.py", line 432, in get
+    raise CDOException(**retvals)
+cdo.CDOException: (returncode:1) Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_t<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_t<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+HDF5-DIAG: Error detected in HDF5 (1.10.4) thread 139624289126272:
+  #000: H5Dio.c line 199 in H5Dread(): can't read data
+    major: Dataset
+    minor: Read failed
+  #001: H5Dio.c line 601 in H5D__read(): can't read data
+    major: Dataset
+    minor: Read failed
+  #002: H5Dchunk.c line 2201 in H5D__chunk_read(): error looking up chunk address
+    major: Dataset
+    minor: Can't get value
+  #003: H5Dchunk.c line 2931 in H5D__chunk_lookup(): can't query chunk address
+    major: Dataset
+    minor: Can't get value
+  #004: H5Dbtree.c line 1049 in H5D__btree_idx_get_addr(): can't get chunk info
+    major: Dataset
+    minor: Can't get value
+  #005: H5B.c line 335 in H5B_find(): unable to load B-tree node
+    major: B-Tree node
+    minor: Unable to protect metadata
+  #006: H5AC.c line 1625 in H5AC_protect(): H5C_protect() failed
+    major: Object cache
+    minor: Unable to protect metadata
+  #007: H5C.c line 2362 in H5C_protect(): can't load entry
+    major: Object cache
+    minor: Unable to load metadata into cache
+  #008: H5C.c line 6621 in H5C_load_entry(): Can't read image*
+    major: Object cache
+    minor: Read failed
+  #009: H5Fio.c line 118 in H5F_block_read(): read through page buffer failed
+    major: Low-level I/O
+    minor: Read failed
+  #010: H5PB.c line 732 in H5PB_read(): read through metadata accumulator failed
+    major: Page Buffering
+    minor: Read failed
+  #011: H5Faccum.c line 211 in H5F__accum_read(): driver read request failed
+    major: Low-level I/O
+    minor: Read failed
+  #012: H5FDint.c line 205 in H5FD_read(): driver read request failed
+    major: Virtual File Layer
+    minor: Read failed
+  #013: H5FDsec2.c line 716 in H5FD_sec2_read(): file read failed: time = Fri Sep 27 19:29:03 2019
+, filename = '/g/data/e14/as3189/OFAM/trop_pac/ocean_temp_2095_05.nc', file descriptor = 307, errno = 12, error message = 'Cannot allocate memory', buf = 0x561375747400, total read size = 2096, bytes this sub-read = 2096, bytes actually read = 18446744073709551615, offset = 19959
+    major: Low-level I/O
+    minor: Read failed
+Error (cdf_get_var1_double): NetCDF: HDF error
+Error (cdf_close): NetCDF: HDF error
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/climo.py", line 42, in <module>
+    cdo.mergetime(input=files, output=merge)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-19.07/lib/python3.6/site-packages/cdo.py", line 432, in get
+    raise CDOException(**retvals)
+cdo.CDOException: (returncode:1) Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolon_c<
+Warning (cdfScanVarAttr): NetCDF: Variable not found - >geolat_c<
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T1!
+Warning (find_time_vars): Found more than one time variable, skipped variable average_T2!
+HDF5-DIAG: Error detected in HDF5 (1.10.4) thread 140263541086080:
+  #000: H5Dio.c line 199 in H5Dread(): can't read data
+    major: Dataset
+    minor: Read failed
+  #001: H5Dio.c line 601 in H5D__read(): can't read data
+    major: Dataset
+    minor: Read failed
+  #002: H5Dchunk.c line 2201 in H5D__chunk_read(): error looking up chunk address
+    major: Dataset
+    minor: Can't get value
+  #003: H5Dchunk.c line 2931 in H5D__chunk_lookup(): can't query chunk address
+    major: Dataset
+    minor: Can't get value
+  #004: H5Dbtree.c line 1049 in H5D__btree_idx_get_addr(): can't get chunk info
+    major: Dataset
+    minor: Can't get value
+  #005: H5B.c line 335 in H5B_find(): unable to load B-tree node
+    major: B-Tree node
+    minor: Unable to protect metadata
+  #006: H5AC.c line 1625 in H5AC_protect(): H5C_protect() failed
+    major: Object cache
+    minor: Unable to protect metadata
+  #007: H5C.c line 2362 in H5C_protect(): can't load entry
+    major: Object cache
+    minor: Unable to load metadata into cache
+  #008: H5C.c line 6621 in H5C_load_entry(): Can't read image*
+    major: Object cache
+    minor: Read failed
+  #009: H5Fio.c line 118 in H5F_block_read(): read through page buffer failed
+    major: Low-level I/O
+    minor: Read failed
+  #010: H5PB.c line 732 in H5PB_read(): read through metadata accumulator failed
+    major: Page Buffering
+    minor: Read failed
+  #011: H5Faccum.c line 211 in H5F__accum_read(): driver read request failed
+    major: Low-level I/O
+    minor: Read failed
+  #012: H5FDint.c line 205 in H5FD_read(): driver read request failed
+    major: Virtual File Layer
+    minor: Read failed
+  #013: H5FDsec2.c line 716 in H5FD_sec2_read(): file read failed: time = Fri Sep 27 19:29:03 2019
+, filename = '/g/data/e14/as3189/OFAM/trop_pac/ocean_u_2090_08.nc', file descriptor = 250, errno = 12, error message = 'Cannot allocate memory', buf = 0x562794fc9b20, total read size = 2096, bytes this sub-read = 2096, bytes actually read = 18446744073709551615, offset = 20105
+    major: Low-level I/O
+    minor: Read failed
+Error (cdf_get_var1_double): NetCDF: HDF error
+Error (cdf_close): NetCDF: HDF error
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/climo.py", line 45, in <module>
+    cdo.ymonmean('-selyear,{}/{}'.format(*exp), input=merge, output=output)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-19.07/lib/python3.6/site-packages/cdo.py", line 432, in get
+    raise CDOException(**retvals)
+cdo.CDOException: (returncode:1) cdo ymonmean: Open failed on >/g/data/e14/as3189/OFAM/trop_pac/ocean_salt_1981-2012_merged.nc<
+No such file or directory
+
+
+
