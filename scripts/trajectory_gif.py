@@ -30,7 +30,7 @@ filename = dpath.joinpath('ParticleFile_1979-1989_v3.nc')
 
 #load particle data and get distribution
 @timeit
-def plot_particle_movie(filename, movie_forward=False):
+def plot_particle_movie(filename, movie_forward=False, insert_line=False):
     os.environ["HDF5_USE_FILE_LOCKING"] = "FALSE"
     
     recordedvar = None
@@ -71,9 +71,10 @@ def plot_particle_movie(filename, movie_forward=False):
     m.drawcoastlines(linewidth=1.75)
     m.fillcontinents(color='dimgrey')
     m.drawmapboundary(fill_color='powderblue')
-
-#    x, y = m(np.linspace(165, 165), np.linspace(-2.6, 2.6))
-#    m.plot(x, y, linewidth=4, color='k', zorder=14)
+    if insert_line:
+        x, y = m(np.linspace(165, 165), np.linspace(-2.6, 2.6))
+        m.plot(x, y, linewidth=4, color='k', zorder=14)
+    savestr = '_black' if insert_line else ''
     
     t = 0
     b = time == plottimes[t]
@@ -101,6 +102,7 @@ def plot_particle_movie(filename, movie_forward=False):
     plt.tight_layout()
     plt.close()
     
-    anim.save(str(fpath.joinpath('demo_traj_blue.mp4')), writer=writer)
+    anim.save(str(fpath.joinpath('demo_traj{}.mp4'.format(savestr))), 
+              writer=writer)
 
-plot_particle_movie(filename, movie_forward=False)
+plot_particle_movie(filename, movie_forward=False, insert_line=False)
