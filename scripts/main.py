@@ -386,7 +386,7 @@ def EUC_particles(fieldset, date_bnds, p_lats, p_lons, p_depths,
     pset.execute(kernels, runtime=runtime, dt=dt, output_file=output_file, 
                  recovery={ErrorCode.ErrorOutOfBounds: DeleteParticle}, 
                  verbose_progress=True)
-
+    logger.info('Completed: {}'.format(pfile.stem))  
     return pfile
 
 @timeit        
