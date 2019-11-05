@@ -46,6 +46,7 @@ from datetime import timedelta, datetime, date
 from parcels import FieldSet, ParticleSet, JITParticle, ScipyParticle
 from parcels import ErrorCode, Variable, AdvectionRK4_3D, AdvectionRK4
 from parcels import plottrajectoriesfile
+from parcels.tools.loggers import logger
 # Suppress scientific notation when printing.
 np.set_printoptions(suppress=True)
 
@@ -112,21 +113,15 @@ def paths():
 
 fpath, dpath, xpath, lpath = paths()
 
-def myLogger(name):
-    logger = logging.getLogger(__name__)
-    if not logger.handlers:
-        logger.setLevel(logging.DEBUG)
-        now = datetime.now()
-        handler = logging.FileHandler(lpath.joinpath(name + 
-                                    now.strftime("%Y-%m-%d") + '.log'))
-        formatter = logging.Formatter(
-                '%(asctime)s:%(funcName)s:%(message)s')
-        handler.setFormatter(formatter)
-        logger.addHandler(handler)
-        logger.propagate = False
-    return logger
-logger = myLogger('base_')
-
+logger.setLevel(logging.DEBUG)
+now = datetime.now()
+handler = logging.FileHandler(lpath.joinpath('base_' + 
+                            now.strftime("%Y-%m-%d") + '.log'))
+formatter = logging.Formatter(
+        '%(asctime)s:%(funcName)s:%(message)s')
+handler.setFormatter(formatter)
+logger.addHandler(handler)
+logger.propagate = False
 def current_time(print_time=False):
     """ Return and/or print the current time in AM/PM format (e.g. 9:00am).
     
