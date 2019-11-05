@@ -30,13 +30,13 @@ fpath, dpath, xpath, lpath = paths()
 
 # Define Fieldset and ParticleSet parameters.
 # Start and end dates.
-date_bnds = [get_date(1979, 1, 1), get_date(1979, 6, 'max')]
+date_bnds = [get_date(1979, 1, 1), get_date(1989, 12, 'max')]
 # Meridional and vertical distance between particles to release.
 dy, dz = 0.8, 50
 p_lats = np.round(np.arange(-2.4, 2.4 + dy, dy), 2)
 p_depths = np.arange(50, 300 + dz, dz)
 # Longitudes to release particles.
-p_lons = np.array([200]) #, 190, 200
+p_lons = np.array([190]) #, 190, 200
 dt = -timedelta(minutes=120)
 repeatdt = timedelta(days=6)
 # Run for the number of days between date bounds.
