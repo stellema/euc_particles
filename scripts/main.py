@@ -96,14 +96,14 @@ def paths():
         fpath = home.joinpath('GitHub', 'OFAM', 'figures')
         dpath = home.joinpath('GitHub', 'OFAM', 'data')
         xpath = home.joinpath('model_output', 'OFAM', 'trop_pac')
-        lpath = home.joinpath('GitHub', 'OFAM', 'log')
+        lpath = home.joinpath('GitHub', 'OFAM', 'logs')
 
     # Raijin Paths.
     else:
         home = Path('/g', 'data', 'e14', 'as3189', 'OFAM')
         fpath = home.joinpath('figures')
         dpath = home.joinpath('data')
-        lpath = home.joinpath('data')
+        lpath = home.joinpath('logs')
         xpath = home.joinpath('trop_pac')
 
     # Path to temporary hh5 directory of OFAM files.
@@ -125,8 +125,7 @@ def myLogger(name):
         logger.addHandler(handler)
         logger.propagate = False
     return logger
-
-
+logger = myLogger('base_')
 
 def current_time(print_time=False):
     """ Return and/or print the current time in AM/PM format (e.g. 9:00am).
@@ -176,8 +175,8 @@ def timeit(method):
             name = kw.get('log_name', method.__name__.upper())
             kw['log_time'][name] = int((te - ts) * 1000)
         else:
-            print('{}: {:} hours, {:} mins, {:05.2f} secs ({:})'.format(
-                    method.__name__, int(h), int(m), s, current_time(False)))
+            logger.debug('{}: {:} hours, {:} mins, {:05.2f} secs'.format(
+                    method.__name__, int(h), int(m), s))
         return result    
     return timed
 
@@ -318,8 +317,7 @@ def remove_westward_particles(pset):
     
     # Warn if there are remaining intial westward particles.
     if any([p.u < 0 and p.age == 0 for p in pset]): 
-        warnings.warn('Particles travelling in the wrong direction.')
-
+        logger.debug('Particles travelling in the wrong direction.')
 @timeit
 def EUC_pset(fieldset, pclass, p_lats, p_lons, p_depths, 
              pset_start, repeatdt):
@@ -374,8 +372,8 @@ def EUC_particles(fieldset, date_bnds, p_lats, p_lons, p_depths,
     
     pfile = dpath.joinpath('ParticleFile_{}-{}_v{}i.nc'.format(*[d.year 
                           for d in date_bnds], i))
-    print('Executing:', pfile.stem)  
-    
+
+    logger.info('Executing: {}'.format(pfile.stem))    
     # Create particle set.
     pset = EUC_pset(fieldset, tparticle, p_lats, p_lons, p_depths, 
                     pset_start, repeatdt)
@@ -433,8 +431,7 @@ def ParticleFile_transport(pfile, dy, dz, save=True):
     ds.close()
     
     # Print how many initial westward particles were removed.
-    print('Particles removed (final):', len(idx))
-    
+    logger.info('Particles removed (final): {}'.format(len(idx)))
     # Number of particles.
     N = len(df.traj)
     

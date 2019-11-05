@@ -26,7 +26,7 @@ from main import paths, EUC_particles, ofam_fieldset, get_date
 from main import plot3D, ParticleFile_transport, timer, logger
 
 ts = time.time()
-fpath, dpath, xpath = paths()
+fpath, dpath, xpath, lpath = paths()
 
 # Define Fieldset and ParticleSet parameters.
 # Start and end dates.
@@ -71,7 +71,7 @@ pfile = EUC_particles(fieldset, date_bnds, p_lats, p_lons, p_depths,
                       remove_westward=True)
 
 if add_transport:
-    df = ParticleFile_transport(pfile, dy, dz, save=True, logger=logger)
+    df = ParticleFile_transport(pfile, dy, dz, save=True)
     df.close()
 
 if plot_ParticleFile:
