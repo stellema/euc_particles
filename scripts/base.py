@@ -9,7 +9,7 @@ module use /g/data3/hh5/public/modules
 module load conda/analysis3-19.07
 
 qsub -I -l walltime=5:00:00,mem=400GB,ncpus=7 -P e14 -q hugemem -X -l wd
-qsub -I -l walltime=5:00:00,ncpus=3 -P e14 -q normal -X -l wd
+qsub -I -l walltime=7:00:00,ncpus=1,mem=20GB -P e14 -q normal -l wd
 
 TODO: Specifiy specific start date (convert fieldset.U.grid.time[-1])
 
@@ -36,7 +36,7 @@ dy, dz = 0.8, 50
 p_lats = np.round(np.arange(-2.4, 2.4 + dy, dy), 2)
 p_depths = np.arange(50, 300 + dz, dz)
 # Longitudes to release particles.
-p_lons = np.array([165]) #, 190, 200
+p_lons = np.array([165, 190, 200]) #, 190, 200
 dt = -timedelta(minutes=120)
 repeatdt = timedelta(days=6)
 # Run for the number of days between date bounds.

@@ -46,7 +46,7 @@ def plot_particle_movie(filename, movie_forward=False):
     if(recordedvar is not None):
         # This is not implemented yet.
         record = ds.variables[recordedvar]
-    titlestr = ''
+
     #plottimes = np.unique(time)
     plottimes =  np.arange(np.datetime64('1979-01-04T12:00:00.000000000'), 
                            np.datetime64('1990-01-01T12:00:00.000000000'), 
@@ -65,22 +65,22 @@ def plot_particle_movie(filename, movie_forward=False):
     m = Basemap(projection='merc', llcrnrlat=-16, urcrnrlat=16,\
                 llcrnrlon=112, urcrnrlon=235, lat_ts=30, resolution='c')
     
-    m.drawparallels([-15, 0, 15], labels=[1, 0, 0, 1], linewidth=1.25, size=13)
+    m.drawparallels([-15, 0, 15], labels=[1, 0, 0, 1], linewidth=1.25, size=14)
     m.drawmeridians([120, 150, 180, -150, -120, -90], labels=[0, 0, 0, 1], 
-                    linewidth=1.25, size=13)
+                    linewidth=1.25, size=14)
     m.drawcoastlines(linewidth=1.75)
     m.fillcontinents(color='dimgrey')
     m.drawmapboundary(fill_color='powderblue')
 
-    x, y = m(np.linspace(165, 165), np.linspace(-2.6, 2.6))
-    m.plot(x, y, linewidth=4, color='k', zorder=14)
+#    x, y = m(np.linspace(165, 165), np.linspace(-2.6, 2.6))
+#    m.plot(x, y, linewidth=4, color='k', zorder=14)
     
     t = 0
     b = time == plottimes[t]
     X, Y = m(lon[b], lat[b]) 
     graph = m.scatter(X, Y, s=6, marker='o', c='blue')
-    ttl = plt.title('Particles' + titlestr + ' at time ' + str(plottimes[t])[:10])
-    
+    ttl = plt.title('Particles at time ' + str(plottimes[t])[:10], fontsize=18)
+    plt.tight_layout()
     def animate(t, graph):
         b = plottimes[t] == time
         X, Y = m(lon[b], lat[b]) 
@@ -89,7 +89,7 @@ def plot_particle_movie(filename, movie_forward=False):
         if recordedvar is not None:
             # Not implemeneted yet.
             graph.set_array(record[b])
-        ttl.set_text('Particle' + titlestr + ' at time ' + str(plottimes[t])[:10])
+        ttl.set_text('Particles at time ' + str(plottimes[t])[:10])
         fig.canvas.draw()
         return graph,
     
@@ -98,7 +98,9 @@ def plot_particle_movie(filename, movie_forward=False):
     anim = animation.FuncAnimation(fig, animate, fargs=(graph,),
                                    frames=frames, interval=75, 
                                    blit=False, repeat=True)
+    plt.tight_layout()
     plt.close()
-    anim.save(str(fpath.joinpath('demo_traj_blue_black.mp4')), writer=writer)
+    
+    anim.save(str(fpath.joinpath('demo_traj_blue.mp4')), writer=writer)
 
 plot_particle_movie(filename, movie_forward=False)
