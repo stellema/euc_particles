@@ -32,6 +32,7 @@ import sys
 import time
 import math
 import string
+import logging
 import calendar
 import warnings
 import numpy as np
@@ -95,19 +96,37 @@ def paths():
         fpath = home.joinpath('GitHub', 'OFAM', 'figures')
         dpath = home.joinpath('GitHub', 'OFAM', 'data')
         xpath = home.joinpath('model_output', 'OFAM', 'trop_pac')
+        lpath = home.joinpath('GitHub', 'OFAM', 'log')
 
     # Raijin Paths.
     else:
         home = Path('/g', 'data', 'e14', 'as3189', 'OFAM')
         fpath = home.joinpath('figures')
         dpath = home.joinpath('data')
+        lpath = home.joinpath('data')
         xpath = home.joinpath('trop_pac')
 
     # Path to temporary hh5 directory of OFAM files.
 #    tpath = Path('/g', 'data3', 'hh5', 'tmp', 'as3189', 'OFAM')
-    return fpath, dpath, xpath
+    return fpath, dpath, xpath, lpath
 
-fpath, dpath, xpath = paths()
+fpath, dpath, xpath, lpath = paths()
+
+def myLogger(name):
+    logger = logging.getLogger(__name__)
+    if not logger.handlers:
+        logger.setLevel(logging.DEBUG)
+        now = datetime.now()
+        handler = logging.FileHandler(lpath.joinpath(name + 
+                                    now.strftime("%Y-%m-%d") + '.log'))
+        formatter = logging.Formatter(
+                '%(asctime)s:%(funcName)s:%(message)s')
+        handler.setFormatter(formatter)
+        logger.addHandler(handler)
+        logger.propagate = False
+    return logger
+
+
 
 def current_time(print_time=False):
     """ Return and/or print the current time in AM/PM format (e.g. 9:00am).

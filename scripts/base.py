@@ -23,14 +23,14 @@ import numpy as np
 from pathlib import Path
 from datetime import timedelta
 from main import paths, EUC_particles, ofam_fieldset, get_date
-from main import plot3D, ParticleFile_transport, timer
+from main import plot3D, ParticleFile_transport, timer, logger
 
 ts = time.time()
 fpath, dpath, xpath = paths()
 
 # Define Fieldset and ParticleSet parameters.
 # Start and end dates.
-date_bnds = [get_date(1979, 1, 1), get_date(1989, 12, 'max')]
+date_bnds = [get_date(1979, 1, 1), get_date(1979, 12, 'max')]
 # Meridional and vertical distance between particles to release.
 dy, dz = 0.8, 50
 p_lats = np.round(np.arange(-2.4, 2.4 + dy, dy), 2)
@@ -49,17 +49,19 @@ write_fieldset = False
 plot_ParticleFile = False
 
 Z, Y, X = len(p_depths), len(p_lats), len(p_lons)
-print('Executing: {} to {}'.format(date_bnds[0], date_bnds[1]))
-print('Runtime: {} days'.format(runtime.days))
-print('Timestep (dt): {:.0f} minutes'.format(24*60 - dt.seconds/60))
-print('Output (dt): {:.0f} days'.format(outputdt.days))
-print('Repeat release: {} days'.format(repeatdt.days))
-print('Depths: {} dz={} [{} to {}]'.format(Z, dz, p_depths[0], p_depths[-1]))
-print('Latitudes: {} dy={} [{} to {}]'.format(Y, dy, p_lats[0], p_lats[-1]))
-print('Longitudes: {}'.format(X), p_lons)
-print('Particles (/repeatdt):', Z*X*Y)
-print('Particles (total):', Z*X*Y*math.floor(runtime.days/repeatdt.days))
-print('Time decorator used.')
+
+logger.info('Executing: {} to {}'.format(date_bnds[0], date_bnds[1]))
+logger.info('Runtime: {} days'.format(runtime.days))
+logger.info('Timestep (dt): {:.0f} minutes'.format(24*60 - dt.seconds/60))
+logger.info('Output (dt): {:.0f} days'.format(outputdt.days))
+logger.info('Repeat release: {} days'.format(repeatdt.days))
+logger.info('Depths: {} dz={} [{} to {}]'.format(Z, dz, p_depths[0], p_depths[-1]))
+logger.info('Latitudes: {} dy={} [{} to {}]'.format(Y, dy, p_lats[0], p_lats[-1]))
+logger.info('Longitudes: {} '.format(X) + str(p_lons))
+logger.info('Particles (/repeatdt): {}'.format(Z*X*Y))
+logger.info('Particles (total): {}'.format(Z*X*Y*
+            math.floor(runtime.days/repeatdt.days)))
+logger.info('Time decorator used.')
 
 fieldset = ofam_fieldset(date_bnds)
 fieldset.mindepth = fieldset.U.depth[0] 
@@ -69,7 +71,7 @@ pfile = EUC_particles(fieldset, date_bnds, p_lats, p_lons, p_depths,
                       remove_westward=True)
 
 if add_transport:
-    df = ParticleFile_transport(pfile, dy, dz, save=True)
+    df = ParticleFile_transport(pfile, dy, dz, save=True, logger=logger)
     df.close()
 
 if plot_ParticleFile:
