@@ -376,13 +376,9 @@ def EUC_particles(fieldset, date_bnds, p_lats, p_lons, p_depths,
     # Output particle file p_name and time steps to save.
     output_file = pset.ParticleFile(dpath.joinpath(pfile.stem), 
                                     outputdt=outputdt)
-    
-    # Use 3D advection if fieldset has vertical velocity.
-    if hasattr(fieldset, 'W'):
-        kernels = pset.Kernel(DeleteWestward) + pset.Kernel(Age) + AdvectionRK4_3D
-    else:
-        kernels = pset.Kernel(DeleteWestward) + pset.Kernel(Age) + AdvectionRK4
-        
+
+    kernels = pset.Kernel(DeleteWestward) + pset.Kernel(Age) + AdvectionRK4_3D
+
     pset.execute(kernels, runtime=runtime, dt=dt, output_file=output_file, 
                  recovery={ErrorCode.ErrorOutOfBounds: DeleteParticle}, 
                  verbose_progress=True)
