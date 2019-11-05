@@ -44,7 +44,7 @@ from mpl_toolkits.mplot3d import Axes3D
 from datetime import timedelta, datetime, date
 from parcels import FieldSet, ParticleSet, JITParticle, ScipyParticle
 from parcels import ErrorCode, Variable, AdvectionRK4_3D, AdvectionRK4
-
+from parcels import plottrajectoriesfile
 # Suppress scientific notation when printing.
 np.set_printoptions(suppress=True)
 
