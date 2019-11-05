@@ -15,3 +15,26 @@ Particles removed: 23
 INFO: Compiled tparticleDeleteWestwardAgeAdvectionRK4_3D ==> /jobfs/local/3321478.r-man2/parcels-12904/d0a3eff2f4a1a7438a3aa533d08b1a7b.so
 100% (31449600.0 of 31449600.0) |########| Elapsed Time: 0:29:49 Time:  0:29:49
 Timer (base): 0 hours, 33 mins, 37.10 secs
+2019-11-06 06:23:41,309:<module>:Executing: 1979-01-01 00:00:00 to 1979-06-30 00:00:00
+2019-11-06 06:23:41,313:<module>:Runtime: 180 days
+2019-11-06 06:23:41,313:<module>:Timestep (dt): 120 minutes
+2019-11-06 06:23:41,313:<module>:Output (dt): 1 days
+2019-11-06 06:23:41,313:<module>:Repeat release: 6 days
+2019-11-06 06:23:41,313:<module>:Depths: 6 dz=50 [50 to 300]
+2019-11-06 06:23:41,313:<module>:Latitudes: 7 dy=0.8 [-2.4 to 2.4]
+2019-11-06 06:23:41,314:<module>:Longitudes: 1 [200]
+2019-11-06 06:23:41,314:<module>:Particles (/repeatdt): 42
+2019-11-06 06:23:41,314:<module>:Particles (total): 1260
+2019-11-06 06:23:41,314:<module>:Time decorator used.
+2019-11-06 06:23:42,227:__init__:Casting lon data to np.float32
+2019-11-06 06:23:42,227:__init__:Casting lat data to np.float32
+2019-11-06 06:23:42,227:__init__:Casting depth data to np.float32
+2019-11-06 06:23:43,373:timed:ofam_fieldset: 0:0:02.06 total: 2.06 seconds.
+2019-11-06 06:23:43,374:EUC_particles:Executing: ParticleFile_1979-1979_v5i
+2019-11-06 06:27:32,735:timed:EUC_pset: 0:3:49.36 total: 229.36 seconds.
+2019-11-06 06:27:32,740:remove_westward_particles:Particles removed: 18
+2019-11-06 06:27:32,740:timed:remove_westward_particles: 0:0:00.00 total: 0.00 seconds.
+2019-11-06 06:27:35,855:compile:Compiled tparticleDeleteWestwardAgeAdvectionRK4_3D ==> /jobfs/local/3321478.r-man2/parcels-12904/64f9483b526cf3b5c18d86387013973a.so
+2019-11-06 06:38:16,297:timed:EUC_particles: 0:14:32.92 total: 872.92 seconds.
+2019-11-06 06:38:16,828:ParticleFile_transport:Particles removed (final): 502
+2019-11-06 06:38:17,633:timed:ParticleFile_transport: 0:0:01.31 total: 1.31 seconds.
