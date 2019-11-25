@@ -1,0 +1,13 @@
+
+======================================================================================
+                  Resource Usage on 2019-11-07 14:31:22:
+   Job Id:             3368303.r-man2
+   Project:            e14
+   Exit Status:        137 (Linux Signal 9 SIGKILL Kill, unblockable)
+   Service Units:      0.29
+   NCPUs Requested:    1                      NCPUs Used: 1               
+                                           CPU Time Used: 00:10:11                                   
+   Memory Requested:   30.0GB                Memory Used: 30.0GB          
+   Walltime requested: 25:00:00            Walltime Used: 00:17:17        
+   JobFS requested:    100.0MB                JobFS used: 234.45KB        
+======================================================================================
