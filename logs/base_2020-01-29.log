@@ -1,0 +1,22 @@
+2020-01-29 10:32:40,010:<module>:Executing: 1983-01-01 00:00:00 to 1989-12-31 00:00:00
+2020-01-29 10:32:40,011:<module>:Runtime: 2556 days
+2020-01-29 10:32:40,011:<module>:Timestep (dt): 240 minutes
+2020-01-29 10:32:40,011:<module>:Output (dt): 1 days
+2020-01-29 10:32:40,011:<module>:Repeat release: 6 days
+2020-01-29 10:32:40,011:<module>:Depths: 6 dz=50 [50 to 300]
+2020-01-29 10:32:40,011:<module>:Latitudes: 7 dy=0.8 [-2.4 to 2.4]
+2020-01-29 10:32:40,012:<module>:Longitudes: 1 [190]
+2020-01-29 10:32:40,012:<module>:Particles (/repeatdt): 42
+2020-01-29 10:32:40,012:<module>:Particles (total): 17892
+2020-01-29 10:32:40,012:<module>:Time decorator used.
+2020-01-29 10:34:52,372:__init__:Casting lon data to np.float32
+2020-01-29 10:34:52,376:__init__:Casting lat data to np.float32
+2020-01-29 10:34:52,377:__init__:Casting depth data to np.float32
+2020-01-29 10:35:49,416:timed:ofam_fieldset: 0:3:09.40 total: 189.40 seconds.
+2020-01-29 10:35:49,419:EUC_particles:Executing: ParticleFile_1983-1989_v1i
+2020-01-29 10:39:55,174:timed:EUC_pset: 0:4:05.75 total: 245.75 seconds.
+2020-01-29 10:39:55,180:remove_westward_particles:Particles removed: 24
+2020-01-29 10:39:55,180:timed:remove_westward_particles: 0:0:00.00 total: 0.00 seconds.
+2020-01-29 10:39:59,543:compile:Compiled tparticleDeleteWestwardAgeAdvectionRK4_3D ==> /jobfs/1219235.gadi-pbs/parcels-12904/e8a0fed7e8a629ac56fe199ce0fca0cb.so
+2020-01-29 17:17:37,341:EUC_particles:Completed: ParticleFile_1983-1989_v1i
+2020-01-29 17:17:37,438:timed:EUC_particles: 6:41:48.02 total: 24108.02 seconds.
