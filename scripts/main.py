@@ -171,6 +171,27 @@ def timeit(method):
         return result    
     return timed
 
+def tao_data(T=1, z1=50, z2=300):
+    tpath = Path('/g', 'data', 'e14', 'as3189', 'OFAM', 'TAO')
+    freq = ['daily', 'monthy'][T]
+    freqx = ['day', 'mon'][T]
+    fx = ['dy', 'mon'][T]
+    lons = [165, 190, 220]
+
+    # Open data sets at each longitude.
+    dU_165 = xr.open_dataset(tpath.joinpath('adcp0n165e_{}.cdf'.format(fx))).sel(lat=0, lon=165, depth=slice(z1, z2))
+    dU_190 = xr.open_dataset(tpath.joinpath('adcp0n170w_{}.cdf'.format(fx))).sel(lat=0, lon=190, depth=slice(z1, z2))
+    dU_220 = xr.open_dataset(tpath.joinpath('adcp0n140w_{}.cdf'.format(fx))).sel(lat=0, lon=220, depth=slice(z1, z2))
+
+    missing_value = dU_165.missing_value # 1e35
+
+    # Remove empty times?
+    du_165 = dU_165.where(dU_165['u_1205'] != missing_value).resample(time='MS').asfreq()/100
+    du_190 = dU_190.where(dU_190['u_1205'] != missing_value).resample(time='MS').asfreq()/100
+    du_220 = dU_220.where(dU_220['u_1205'] != missing_value).resample(time='MS').asfreq()/100
+    ds = [du_165, du_190, du_220]
+    return ds
+
 def idx_1d(array, value):
     """ Finds index to closet given value in 1D array.
 
