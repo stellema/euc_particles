@@ -69,7 +69,11 @@ lx = {'exp': ['historical', 'rcp85', 'rcp85_minus_historial'],
       'exps': ['Historical', 'RCP85', 'Difference'],
       'years':  [[1981, 2012], [2070, 2101]],
       'vars': ['u', 'v', 'w', 'salt', 'temp'],
+      'lons': [165, 190, 220],
       'deg': '\u00b0', # Degree symbol.
+      'frq': ['day', 'mon'],
+      'frq_short': ['dy', 'mon'],
+      'frq_long': ['daily', 'monthly'],
       'mon': [i for i in calendar.month_abbr[1:]], # Month abbreviations.
       'mon_letter': [i[0] for i in calendar.month_abbr[1:]],
       # Elements of the alphabet with left bracket and space for fig captions.
@@ -87,6 +91,7 @@ def paths():
         fpath (pathlib.Path): Path to save figures.
         dpath (pathlib.Path): Path to save data.
         xpath (pathlib.Path): path to get model output.
+        tpath (pathlib.Path): path to get TAO/TRITION data.
         
     """
     home = Path.home()
@@ -98,6 +103,7 @@ def paths():
         dpath = home.joinpath('GitHub', 'OFAM', 'data')
         xpath = home.joinpath('model_output', 'OFAM', 'trop_pac')
         lpath = home.joinpath('GitHub', 'OFAM', 'logs')
+        tpath = home.joinpath('model_output', 'OFAM', 'TAO')
 
     # Raijin Paths.
     else:
@@ -106,12 +112,13 @@ def paths():
         dpath = home.joinpath('data')
         lpath = home.joinpath('logs')
         xpath = home.joinpath('trop_pac')
+        tpath = home.joinpath('TAO')
 
     # Path to temporary hh5 directory of OFAM files.
 #    tpath = Path('/g', 'data3', 'hh5', 'tmp', 'as3189', 'OFAM')
-    return fpath, dpath, xpath, lpath
+    return fpath, dpath, xpath, lpath, tpath
 
-fpath, dpath, xpath, lpath = paths()
+fpath, dpath, xpath, lpath, tpath = paths()
 
 logger.setLevel(logging.DEBUG)
 now = datetime.now()
@@ -548,3 +555,19 @@ def deg2m(lat1, lon1, lat2, lon2):
     arc = math.acos(cos)
 
     return arc*EARTH_RADIUS
+
+def open_tao_data(frq='mon', dz=slice(10, 355), SI=True):
+    """ 
+    dt: 'mon' for monthly or 'dy' for daily data.
+    """
+    # Open data sets at each longitude.
+    dU_165 = xr.open_dataset(tpath.joinpath('adcp0n165e_{}.cdf'.format(frq))).sel(lat=0, lon=165, depth=dz)
+    dU_190 = xr.open_dataset(tpath.joinpath('adcp0n170w_{}.cdf'.format(frq))).sel(lat=0, lon=190, depth=dz)
+    dU_220 = xr.open_dataset(tpath.joinpath('adcp0n140w_{}.cdf'.format(frq))).sel(lat=0, lon=220, depth=dz)
+    div_unit = 100 if SI else 1
+    # Remove empty values in time.
+    du_165 = dU_165.where(dU_165['u_1205'] != dU_165.missing_value)/div_unit
+    du_190 = dU_190.where(dU_190['u_1205'] != dU_165.missing_value)/div_unit
+    du_220 = dU_220.where(dU_220['u_1205'] != dU_165.missing_value)/div_unit
+
+    return [du_165, du_190, du_220]
