@@ -32,7 +32,7 @@ dh = xr.open_dataset(xpath.joinpath('ocean_u_{}-{}_climo.nc'.format(*years[0])))
 df = xr.open_dataset(xpath.joinpath('ocean_u_{}-{}_climo.nc'.format(*years[1])))
 dt = xr.open_dataset(xpath.joinpath('ocean_temp_{}-{}_climo.nc'.format(*years[0])))
 ds = xr.open_dataset(xpath.joinpath('ocean_salt_{}-{}_climo.nc'.format(*years[0])))
-depth = dh.st_ocean[idx_1d(dh.st_ocean, 450)].item()
+depth = dh.st_ocean[idx_1d(dh.st_ocean, 400)].item()
 
 # Slice data to selected latitudes and lonitudes.
 dh = dh.u.sel(yu_ocean=slice(-4.0, 4.), st_ocean=slice(2.5, depth))
@@ -243,12 +243,13 @@ def plot_EUC_is_profile(dh, ds, dt):
         rho = gsw.pot_rho_t_exact(SA, t, p, p_ref=0)
         ax[i].set_title('{} Zonal velocity at {}'.format( lx['lb'][i]
                      ,XX[i]), loc='left')
-        clevs = np.arange(21.6, 26.6, 0.2)
+#        clevs = np.arange(21.6, 26.6, 0.2)
+        clevs = np.arange(22.4, 26.4, 0.4)
         cs = ax[i].pcolormesh(dh.yu_ocean, dh.st_ocean, dh.sel(xu_ocean=x, method='nearest'), 
                vmin=vmin, vmax=vmax + 0.01, cmap=cmap)
         cx = ax[i].contour(dt.yt_ocean, dt.st_ocean, rho-1000, clevs, colors='black', linewidths=1)
         plt.clabel(cx, cx.levels[::2], inline=True, fontsize=8, fmt='%1.1f')        
-        plt.ylim(380, 0) # Plot ascending depths.
+        plt.ylim(325, 25) # Plot ascending depths.
         plt.yticks(np.arange(0, depth, 50))
         xticks = ax[i].get_xticks()
         tmp = np.empty(len(xticks)).tolist()
@@ -256,10 +257,10 @@ def plot_EUC_is_profile(dh, ds, dt):
             tmp[r] = str(int(abs(g))) + '\u00b0S' if g <= 0 else str(int(g)) + '\u00b0N'
 
         ax[i].set_xticklabels(tmp)
-        ax[i].axhline(y=25, c="darkgrey",linewidth=1)
-        ax[i].axhline(y=300, c="darkgrey",linewidth=1)
-        ax[i].axvline(x=2.6, c="darkgrey",linewidth=1)
-        ax[i].axvline(x=-2.6, c="darkgrey",linewidth=1)
+#        ax[i].axhline(y=25, c="darkgrey",linewidth=1)
+#        ax[i].axhline(y=300, c="darkgrey",linewidth=1)
+#        ax[i].axvline(x=2.6, c="darkgrey",linewidth=1)
+#        ax[i].axvline(x=-2.6, c="darkgrey",linewidth=1)
     
     ax[0].set_ylabel('Depth [m]')
     cbar = plt.colorbar(cs, cax=fig.add_axes([0.925, 0.11, 0.02, 0.77]), 
@@ -381,5 +382,5 @@ def plot_EUC_qin_profile(dh, ds, dt):
 #plot_EUC_mon_profile(dh, exp=0)
 #plot_EUC_temp_profile(dt)
 #plot_EUC_hist_iso(dh, dt, ds)
-#plot_EUC_is_profile(dh.mean('Time'), ds, dt)
-plot_EUC_qin_profile(dh.mean('Time'), ds, dt)
+plot_EUC_is_profile(dh.mean('Time'), ds, dt)
+#plot_EUC_qin_profile(dh.mean('Time'), ds, dt)
