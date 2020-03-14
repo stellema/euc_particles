@@ -37,11 +37,6 @@ T = 1
 # Open dataset of TAO data at the frequency.
 ds = open_tao_data(frq=lx['frq_short'][T], dz=slice(10, 360))
 
-# Plots:
-# Original data (no attempt at data interp),
-# linear interpolation,
-# linear interp with bottom depth NaNs replaced with velocity (zero for top),
-# Nearest neighbour interpolation.
 for interp, new_end_v in zip(['', 'linear', 'linear', 'nearest'],
                              [None, None, -0.1, None]):
     plot_tao_timeseries(ds, interp, T=T, new_end_v=new_end_v)
@@ -117,7 +112,6 @@ for i in range(3):
     ax.axhline(50, color='k')
 save_name = 'ofam3_interp_bounds_{}.png'.format(v_bnd)
 plt.savefig(fpath.joinpath('tao', save_name))
-plt.show()
 
 """Compare TAO/TRITION and OFAM3 equatorial velocity timeseries.
 """
@@ -129,4 +123,41 @@ for i, du in enumerate(ds):
     du = du.isel(time=slice(time_bnds_tao[i][0], time_bnds_tao[i][1]))
     ti = du.time[0]
     tf = du.time[-1]
-    print(lx['lons'][i], ti, tf)
+    # print(lx['lons'][i], ti, tf)
+
+v_bnd = 0.1  # m/s
+eps = 0.5
+fig = plt.figure(figsize=(18, 10))
+add_bounds = True
+
+for i, du in enumerate(ds):
+    # TAO
+    du = du.isel(time=slice(time_bnds_tao[i][0], time_bnds_tao[i][1]))
+    name = '{}TAO/TRITION {} EUC at {}°E'.format(lx['l'][i],
+                                                 lx['frq_long'][T],
+                                                 lx['lons'][i])
+    u = du.u_1205.transpose('depth', 'time')
+    ax = plot_eq_velocity(fig, du.depth, du.time, u, i+1, name, rows=2)
+    if add_bounds:
+        v_max, depth_max, depth_end = EUC_depths(du.u_1205, du.depth, i,
+                                                 v_bnd=v_bnd, eps=eps)
+        ax.plot(du.time, depth_end, 'k')
+        ax.axhline(50, color='k')
+
+    # OFAM3
+    dq = d3.sel(xu_ocean=lx['lons'][i])
+    dq = dq.isel(Time=slice(time_bnds_ofam[i][0], time_bnds_ofam[i][1]))
+    name = '{}OFAM3 {} EUC at {}°E '.format(lx['l'][i+3], lx['frq_long'][T],
+                                            lx['lons'][i])
+    u = dq.u.transpose('st_ocean', 'Time')
+    ax = plot_eq_velocity(fig, dq.st_ocean, dq.Time, u, i+4, name, rows=2)
+    if add_bounds:
+        v_max, depth_max, depth_end = EUC_depths(dq.u, dq.st_ocean, i)
+        ax.plot(dq.Time, depth_end, 'k')
+        ax.axhline(50, color='k')
+
+    if add_bounds:
+        save_name = 'tao_ofam_depth_{}_bnds_{}.png'.format(lx['frq'][T], v_bnd)
+    else:
+        save_name = 'tao_ofam_depth_{}_{}.png'.format(lx['frq'][T], v_bnd)
+plt.savefig(fpath.joinpath('tao', save_name))
