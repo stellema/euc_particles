@@ -16,12 +16,15 @@ from scipy import stats
 from pathlib import Path
 from scipy import interpolate
 import matplotlib.pyplot as plt
+from main import paths, idx_1d, LAT_DEG, lx
 from matplotlib.offsetbox import AnchoredText
 from matplotlib.colors import LinearSegmentedColormap
-
-from main_valid import open_tao_data, plot_tao_timeseries, cor_scatter_plot
 from main_valid import EUC_depths, plot_eq_velocity
-from main import paths, idx_1d, LAT_DEG, lx
+from main_valid import open_tao_data, plot_tao_timeseries, cor_scatter_plot
+
+
+# from pandas.plotting import register_matplotlib_converters
+# register_matplotlib_converters()
 
 # Path to save figures, save data and OFAM model output.
 fpath, dpath, xpath, lpath, tpath = paths()
