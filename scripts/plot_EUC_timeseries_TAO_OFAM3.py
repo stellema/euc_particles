@@ -76,12 +76,57 @@ for i, du in enumerate(ds):
                                                          lx['frq_long'][T],
                                                          lx['lons'][i], v_bnd)
     u = du.u_1205.transpose('depth', 'time')
-    ax = plot_eq_velocity(fig, du.depth, du.time, u, i+1, name)
+    ax = plot_eq_velocity(fig, du.depth, du.time, u, i + 1, name)
     umx, depth_max, depth_end = EUC_depths(du.u_1205, du.depth, i,
-                                           v_bnd=v_bnd, eps=eps, tao=True)
+                                           v_bnd=v_bnd, eps=eps)
 
     ax.plot(du.time, depth_end, 'k')
     ax.axhline(50, color='k')
 save_name = 'tao_original_depths_{}_bounds_{}.png'.format(lx['frq'][T], v_bnd)
 plt.savefig(fpath.joinpath('tao', save_name))
+
+
+"""Plot OFAM3 equatorial velocity climo time series.
+"""
+d3 = xr.open_dataset(dpath.joinpath('ofam_ocean_u_EUC_int_transport.nc'))
+
+fig = plt.figure(figsize=(18, 6))
+for i in range(3):
+    dq = d3.sel(xu_ocean=lx['lons'][i])
+    name = '{}OFAM3 {} EUC at 0°S,{}°E '.format(lx['l'][i], lx['frq_long'][T],
+                                                lx['lons'][i])
+    u = dq.u.transpose('st_ocean', 'Time')
+    plot_eq_velocity(fig, dq.st_ocean, dq.Time, u, i + 1, name, max_depth=355)
+save_name = 'ofam3_interp.png'
+plt.savefig(fpath.joinpath('tao', save_name))
+
+"""Plot OFAM3 equatorial velocity climo time series with boundaries.
+"""
+fig = plt.figure(figsize=(18, 6))
+for i in range(3):
+    dq = d3.sel(xu_ocean=lx['lons'][i])
+    name = '{}OFAM3 {} EUC at 0°N, {}°E vmin={}'.format(lx['l'][i],
+                                                        lx['frq_long'][T],
+                                                        lx['lons'][i], v_bnd)
+    z = dq.st_ocean
+    t = dq.Time
+    u = dq.u.transpose('st_ocean', 'Time')
+    ax = plot_eq_velocity(fig, z, t, u, i+1, name, max_depth=355)
+    v_max, depth_max, depth_end = EUC_depths(dq.u, dq.st_ocean, i)
+    ax.plot(t, depth_end, 'k')
+    ax.axhline(50, color='k')
+save_name = 'ofam3_interp_bounds_{}.png'.format(v_bnd)
+plt.savefig(fpath.joinpath('tao', save_name))
 plt.show()
+
+"""Compare TAO/TRITION and OFAM3 equatorial velocity timeseries.
+"""
+time_bnds_ofam = [[10*12+3, 27*12+1], [7*12+4, -1], [9*12+4, -1]]
+time_bnds_tao = [[0, -1], [0, 24*12+8], [0, 22*12+8]]
+
+print(2014-1990)
+for i, du in enumerate(ds):
+    du = du.isel(time=slice(time_bnds_tao[i][0], time_bnds_tao[i][1]))
+    ti = du.time[0]
+    tf = du.time[-1]
+    print(lx['lons'][i], ti, tf)

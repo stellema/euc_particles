@@ -99,11 +99,10 @@ def plot_eq_velocity(fig, z, t, u, i, name,
 
         else:
             # Add separate colourbar axes (left, bottom, width, height).
-            cbar_ax = fig.add_axes([0.85, 0.2, 0.05, 0.7])
+            cbar_ax = fig.add_axes([0.925, 0.11, 0.019, 0.355])
             # BUG: not sure if first arg is correct or not (was axes[0][0]).
-            plt.colorbar(ax, cax=cbar_ax, shrink=1,
-                         orientation='horizontal', extend='both',
-                         label='Velocity [m/s]')
+            plt.colorbar(im, cax=cbar_ax, shrink=1, orientation='vertical',
+                         extend='both', label='Velocity [m/s]')
 
     if i == 1 or i == 4:
         # Add Depth y label only for the first column of each row.
@@ -170,31 +169,29 @@ def plot_tao_timeseries(ds, interp='', T=1, new_end_v=None):
 
     plt.tight_layout()
     plt.savefig(fpath.joinpath('tao', save_name))
-    plt.show()
 
     return
 
 
-def EUC_depths(u, depths, i, v_bnd=0.05, eps=0.005, tao=True, index=False):
+def EUC_depths(u, depths, i, v_bnd=0.1, eps=0.05, index=False):
     """
 
 
     Parameters
     ----------
-    u : TYPE
-        DESCRIPTION.
-    depths : TYPE
-        DESCRIPTION.
-    i : TYPE
+    u : array-like
+        Zonal velocity.
+    depths : array-like
+        Depth levels.
+    i : int
         DESCRIPTION.
     v_bnd : TYPE, optional
         DESCRIPTION. The default is 0.05.
     eps : TYPE, optional
         DESCRIPTION. The default is 0.005.
-    tao : TYPE, optional
-        DESCRIPTION. The default is True.
-    index : TYPE, optional
-        DESCRIPTION. The default is False.
+
+    index : bool, optional
+        Return the index of depths instead of value. The default is False.
 
     Returns
     -------
@@ -207,7 +204,7 @@ def EUC_depths(u, depths, i, v_bnd=0.05, eps=0.005, tao=True, index=False):
 
     """
 
-    u = np.ma.masked_invalid(u) if tao else u
+    u = np.ma.masked_invalid(u)
     # Maximum and minimum velocity at each time step.
     v_max, v_min = np.nanmax(u, axis=1), np.nanmin(u, axis=1)
 
@@ -231,9 +228,8 @@ def EUC_depths(u, depths, i, v_bnd=0.05, eps=0.005, tao=True, index=False):
             # Find depth of maximum velocity.
             depth_vmax[t] = depths[int(v_imax[t])].item()
 
-            if tao:
-                # Find deepest velocity depth index.
-                end = np.ma.nonzero(u[t])[-1][-1]
+            # Find deepest velocity depth index.
+            end = np.ma.nonzero(u[t])[-1][-1]
 
             for z in np.arange(end, v_imax[t], -1):
                 # Make sure the end value isn't too much larger than v_bnd.
@@ -259,7 +255,7 @@ def EUC_depths(u, depths, i, v_bnd=0.05, eps=0.005, tao=True, index=False):
     if not index:
         return v_max, depth_vmax, depth_bnd
     else:
-        return v_max, vimax, v_ibnd
+        return v_max, v_imax, v_ibnd
 
 
 def cor_scatter_plot(fig, i, v_max, depths, name=None):
