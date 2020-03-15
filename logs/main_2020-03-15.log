@@ -12,3 +12,39 @@
 2020-03-15 12:27:07,600:timed:EUC_depths: 0:0:00.27 total: 0.27 seconds.
 2020-03-15 12:27:10,003:EUC_depths:OFAM3 220: v_bnd=0.1 count=301 tot=384, skipped=83 empty=0 eps=0.05.
 2020-03-15 12:27:10,005:timed:EUC_depths: 0:0:00.33 total: 0.33 seconds.
+2020-03-15 12:30:26,013:EUC_depths:OFAM3 165: v_bnd=0.1 count=305 tot=384, skipped=79 empty=0 eps=0.05.
+2020-03-15 12:30:26,017:timed:EUC_depths: 0:0:00.35 total: 0.35 seconds.
+2020-03-15 12:30:28,641:EUC_depths:OFAM3 190: v_bnd=0.1 count=249 tot=384, skipped=135 empty=0 eps=0.05.
+2020-03-15 12:30:28,642:timed:EUC_depths: 0:0:00.25 total: 0.25 seconds.
+2020-03-15 12:30:30,802:EUC_depths:OFAM3 220: v_bnd=0.1 count=301 tot=384, skipped=83 empty=0 eps=0.05.
+2020-03-15 12:30:30,804:timed:EUC_depths: 0:0:00.28 total: 0.28 seconds.
+2020-03-15 12:35:04,305:EUC_depths:OFAM3 165: v_bnd=0.1 count=305 tot=384, skipped=79 empty=0 eps=0.05.
+2020-03-15 12:35:04,307:timed:EUC_depths: 0:0:00.43 total: 0.43 seconds.
+2020-03-15 12:35:07,025:EUC_depths:OFAM3 190: v_bnd=0.1 count=249 tot=384, skipped=135 empty=0 eps=0.05.
+2020-03-15 12:35:07,027:timed:EUC_depths: 0:0:00.26 total: 0.26 seconds.
+2020-03-15 12:35:09,178:EUC_depths:OFAM3 220: v_bnd=0.1 count=301 tot=384, skipped=83 empty=0 eps=0.05.
+2020-03-15 12:35:09,179:timed:EUC_depths: 0:0:00.27 total: 0.27 seconds.
+2020-03-15 12:40:04,775:EUC_depths:OFAM3 165: v_bnd=0.1 count=305 tot=384, skipped=79 empty=0 eps=0.05.
+2020-03-15 12:40:04,777:timed:EUC_depths: 0:0:00.33 total: 0.33 seconds.
+2020-03-15 12:40:07,382:EUC_depths:OFAM3 190: v_bnd=0.1 count=249 tot=384, skipped=135 empty=0 eps=0.05.
+2020-03-15 12:40:07,383:timed:EUC_depths: 0:0:00.26 total: 0.26 seconds.
+2020-03-15 12:40:09,699:EUC_depths:OFAM3 220: v_bnd=0.1 count=301 tot=384, skipped=83 empty=0 eps=0.05.
+2020-03-15 12:40:09,701:timed:EUC_depths: 0:0:00.34 total: 0.34 seconds.
+2020-03-15 12:49:27,797:timed:EUC_depths: 0:0:00.39 total: 0.39 seconds.
+2020-03-15 12:49:30,465:timed:EUC_depths: 0:0:00.25 total: 0.25 seconds.
+2020-03-15 12:49:32,692:timed:EUC_depths: 0:0:00.28 total: 0.28 seconds.
+2020-03-15 12:49:35,017:cor_scatter_plot:slope=0.45, intercept=0.61, r=0.89, p=0.00, std_err=0.01
+2020-03-15 12:49:35,065:cor_scatter_plot:slope=0.40, intercept=5.07, r=0.85, p=0.00, std_err=0.02
+2020-03-15 12:49:35,104:cor_scatter_plot:slope=0.50, intercept=11.12, r=0.82, p=0.00, std_err=0.02
+2020-03-15 12:50:31,287:timed:EUC_depths: 0:0:00.31 total: 0.31 seconds.
+2020-03-15 12:50:33,874:timed:EUC_depths: 0:0:00.25 total: 0.25 seconds.
+2020-03-15 12:50:36,265:timed:EUC_depths: 0:0:00.27 total: 0.27 seconds.
+2020-03-15 12:50:38,517:cor_scatter_plot:slope=0.45, intercept=0.61, r=0.89, p=0.00, std_err=0.01
+2020-03-15 12:50:38,579:cor_scatter_plot:slope=0.40, intercept=5.07, r=0.85, p=0.00, std_err=0.02
+2020-03-15 12:50:38,624:cor_scatter_plot:slope=0.50, intercept=11.12, r=0.82, p=0.00, std_err=0.02
+2020-03-15 12:54:21,311:cor_scatter_plot:slope=0.45, intercept=0.61, r=0.89, p=0.00, std_err=0.01
+2020-03-15 12:54:21,367:cor_scatter_plot:slope=0.40, intercept=5.07, r=0.85, p=0.00, std_err=0.02
+2020-03-15 12:54:21,406:cor_scatter_plot:slope=0.50, intercept=11.12, r=0.82, p=0.00, std_err=0.02
+2020-03-15 12:54:38,173:cor_scatter_plot:slope=0.45, intercept=0.61, r=0.89, p=0.00, std_err=0.01
+2020-03-15 12:54:38,230:cor_scatter_plot:slope=0.40, intercept=5.07, r=0.85, p=0.00, std_err=0.02
+2020-03-15 12:54:38,289:cor_scatter_plot:slope=0.50, intercept=11.12, r=0.82, p=0.00, std_err=0.02

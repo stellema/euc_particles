@@ -185,8 +185,8 @@ def plot_tao_timeseries(ds, interp='', T=1, new_end_v=None):
 
     return
 
-@timeit
-def EUC_depths(du, depths, i, v_bnd=0.1, eps=0.05, index=False):
+
+def EUC_depths(du, depths, i, v_bnd=0.1, eps=0.05, index=False, log=True):
     """
 
 
@@ -262,19 +262,18 @@ def EUC_depths(du, depths, i, v_bnd=0.1, eps=0.05, index=False):
         else:
             empty += 1
     data_name = 'OFAM3' if hasattr(du, 'st_ocean') else 'TAO/TRITION'
-
-    logger.info('{} {}: v_bnd={} count={} tot={}, skipped={} empty={} eps={}.'
-                .format(data_name, lx['lons'][i], v_bnd, count, u.shape[0],
-                        u.shape[0] - count - empty,  empty, eps))
+    if log:
+        logger.info('{} {}: v_bnd={} count={} tot={}, skipped={} empty={} eps={}.'
+                    .format(data_name, lx['lons'][i], v_bnd, count, u.shape[0],
+                            u.shape[0] - count - empty,  empty, eps))
     if not index:
         return v_max, depth_vmax, depth_bnd
     else:
         return v_max, v_imax, v_ibnd
 
 
-# @timeit
 def cor_scatter_plot(fig, i, v_max, depths,
-                     name=None, xlabel=None, ylabel=None):
+                     name=None, xlabel=None, ylabel=None, log=True, cor_loc=3):
     """
 
 
@@ -296,27 +295,27 @@ def cor_scatter_plot(fig, i, v_max, depths,
     cor = stats.spearmanr(var0, var1)
     print(cor)
     slope, intercept, r_value, p_value, std_err = stats.linregress(var0, var1)
-    print('slope={:.2f}, intercept={:.2f}, r={:.2f}, p={:.2f}, std_err={:.2f}'
-          .format(slope, intercept, r_value, p_value, std_err))
+    if log:
+        logger.info('slope={:.2f}, intercept={:.2f}, r={:.2f}, p={:.2f}, std_err={:.2f}'
+              .format(slope, intercept, r_value, p_value, std_err))
 
     ax = fig.add_subplot(1, 3, i)
     ax.set_title(name, loc='left')
     ax.scatter(v_max, depths, color='b', s=8)
 
     atext = AnchoredText('$\mathregular{r_s}$=' + str(np.around(cor[0], 2))
-                         + ', p=' + str(np.around(cor[1], 3)), loc=3)
+                         + ', p=' + str(np.around(cor[1], 3)), loc=cor_loc)
     ax.add_artist(atext)
     ax.plot(np.unique(var0),
             np.poly1d(np.polyfit(var0, var1, 1))(np.unique(var0)), 'k')
     line = slope*var0 + intercept
     plt.plot(var0, line, 'r', label='y={:.2f}x+{:.2f}'.format(slope,
                                                               intercept))
-    if xlabel and ylabel is None:
-        xlabel, ylabel = 'Maximum velocity [m/s]', 'Depth [m]'
+    if xlabel is None: xlabel = 'Maximum velocity [m/s]'
+    if ylabel is None: ylabel = 'Depth [m]'
     ax.set_xlabel(xlabel)
     ax.set_ylabel(ylabel)
     ax.legend(fontsize=9)
 
-    return
+    return slope, intercept
 
-    return
