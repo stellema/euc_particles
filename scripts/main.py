@@ -38,6 +38,7 @@ import warnings
 import numpy as np
 import xarray as xr
 from pathlib import Path
+from functools import wraps
 import matplotlib.pyplot as plt
 from operator import attrgetter
 from collections import OrderedDict
@@ -47,6 +48,7 @@ from parcels import FieldSet, ParticleSet, JITParticle, ScipyParticle
 from parcels import ErrorCode, Variable, AdvectionRK4_3D, AdvectionRK4
 from parcels import plottrajectoriesfile
 from parcels.tools.loggers import logger
+
 # Suppress scientific notation when printing.
 np.set_printoptions(suppress=True)
 
@@ -122,7 +124,7 @@ fpath, dpath, xpath, lpath, tpath = paths()
 
 logger.setLevel(logging.DEBUG)
 now = datetime.now()
-handler = logging.FileHandler(lpath.joinpath('base_' +
+handler = logging.FileHandler(lpath.joinpath('main_' +
                             now.strftime("%Y-%m-%d") + '.log'))
 formatter = logging.Formatter(
         '%(asctime)s:%(funcName)s:%(message)s')
@@ -148,6 +150,7 @@ def current_time(print_time=False):
         print(time)
     return time
 
+
 def timer(ts, method=None):
     """ Prints the execution time (starting from ts).
 
@@ -164,9 +167,11 @@ def timer(ts, method=None):
     print('Timer{}: {:} hours, {:} mins, {:05.2f} secs'\
           .format(arg, int(h), int(m), s, current_time(False)))
 
-def timeit(method):
+
+def timeit(method, logger=logger):
     """ Wrapper function to time method execution time.
     """
+    @wraps(method)
     def timed(*args, **kw):
         ts = time.time()
         result = method(*args, **kw)
@@ -178,6 +183,7 @@ def timeit(method):
                 method.__name__, int(h), int(m), s, te - ts))
         return result
     return timed
+
 
 def idx_1d(array, value):
     """ Finds index to closet given value in 1D array.
@@ -191,6 +197,7 @@ def idx_1d(array, value):
 
     """
     return int(np.abs(array - value).argmin())
+
 
 def get_date(year, month, day='max'):
     """ Converts a year, month and day to datetime.datetime format.
@@ -223,10 +230,12 @@ def create_mesh_mask():
     mask.close()
     return
 
+
 @timeit
 def ofam_fieldset(date_bnds, time_periodic=False, deferred_load=True):
-    """ Creates a 3D parcels fieldset from OFAM model output between two
-    dates useing FieldSet.from_b_grid_dataset.
+    """ Creates a 3D parcels fieldset from OFAM model output.
+
+    between two dates useing FieldSet.from_b_grid_dataset.
     Note that the files are already subset to the tropical Pacific Ocean.
 
     Args:
@@ -240,6 +249,7 @@ def ofam_fieldset(date_bnds, time_periodic=False, deferred_load=True):
         fieldset (parcels.Fieldset)
 
     """
+
     u, v, w = [], [], []
 
     for y in range(date_bnds[0].year, date_bnds[1].year + 1):
@@ -271,17 +281,21 @@ def ofam_fieldset(date_bnds, time_periodic=False, deferred_load=True):
                                             deferred_load=deferred_load)
     return fieldset
 
+
 def DeleteParticle(particle, fieldset, time):
     particle.delete()
+
 
 def Age(particle, fieldset, time):
     # Update particle age.
     particle.age = particle.age + math.fabs(particle.dt)
 
+
 def DeleteWestward(particle, fieldset, time):
     # Delete particle if the initial zonal velocity is westward (negative).
     if particle.age == 0. and particle.u < 0:
         particle.delete()
+
 
 def Distance(particle, fieldset, time):
     # Calculate the distance in latitudinal direction,
@@ -298,6 +312,7 @@ def Distance(particle, fieldset, time):
     # Set the stored values for next iteration.
     particle.prev_lon = particle.lon
     particle.prev_lat = particle.lat
+
 
 @timeit
 def remove_westward_particles(pset):
@@ -318,6 +333,7 @@ def remove_westward_particles(pset):
     if any([p.u < 0 and p.age == 0 for p in pset]):
         logger.debug('Particles travelling in the wrong direction.')
 
+
 @timeit
 def EUC_pset(fieldset, pclass, p_lats, p_lons, p_depths,
              pset_start, repeatdt):
@@ -332,10 +348,70 @@ def EUC_pset(fieldset, pclass, p_lats, p_lons, p_depths,
                        time=pset_start, repeatdt=repeatdt)
     return pset
 
+
 @timeit
 def EUC_particles(fieldset, date_bnds, p_lats, p_lons, p_depths,
                   dt, pset_start, repeatdt, runtime, outputdt,
                   remove_westward=True):
+    """ THis does this
+
+
+    Parameters
+    ----------
+    fieldset : TYPE
+        DESCRIPTION.
+    date_bnds : TYPE
+        DESCRIPTION.
+    p_lats : TYPE
+        DESCRIPTION.
+    p_lons : TYPE
+        DESCRIPTION.
+    p_depths : TYPE
+        DESCRIPTION.
+    dt : TYPE
+        DESCRIPTION.
+    pset_start : TYPE
+        DESCRIPTION.
+    repeatdt : TYPE
+        DESCRIPTION.
+    runtime : TYPE
+        DESCRIPTION.
+    outputdt : TYPE
+        DESCRIPTION.
+    remove_westward : TYPE, optional
+        DESCRIPTION. The default is True.
+
+    Returns
+    -------
+    pfile : TYPE
+        DESCRIPTION.
+
+    """
+
+
+
+    """
+
+
+    Args:
+        fieldset (TYPE): DESCRIPTION.
+        date_bnds (TYPE): DESCRIPTION.
+        p_lats (TYPE): DESCRIPTION.
+        p_lons (TYPE): DESCRIPTION.
+        p_depths (TYPE): DESCRIPTION.
+        dt (TYPE): DESCRIPTION.
+        pset_start (TYPE): DESCRIPTION.
+        repeatdt (TYPE): DESCRIPTION.
+        runtime (TYPE): DESCRIPTION.
+        outputdt (TYPE): DESCRIPTION.
+        remove_westward (TYPE, optional): DESCRIPTION. Defaults to True.
+
+    Returns:
+        pfile (TYPE): DESCRIPTION.
+
+    """
+
+
     """ Creates and executes a ParticleSet (created using EUC_pset).
 
     Args:
@@ -393,6 +469,7 @@ def EUC_particles(fieldset, date_bnds, p_lats, p_lons, p_depths,
                  verbose_progress=True)
     logger.info('Completed: {}'.format(pfile.stem))
     return pfile
+
 
 @timeit
 def ParticleFile_transport(pfile, dy, dz, save=True):
@@ -460,6 +537,7 @@ def ParticleFile_transport(pfile, dy, dz, save=True):
         # E.g. ParticleFile_2010-2011_v0i.nc -> ParticleFile_2010-2011_v0.nc
         df.to_netcdf(dpath.joinpath(pfile.stem[:-1] + pfile.suffix))
     return df
+
 
 @timeit
 def plot3D(pfile):

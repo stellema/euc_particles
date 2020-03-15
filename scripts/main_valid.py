@@ -9,6 +9,7 @@ author: Annette Stellema (astellemas@gmail.com)
 # import sys
 # sys.path.append('/g/data1a/e14/as3189/OFAM/scripts/')
 import gsw
+import logging
 import numpy as np
 import xarray as xr
 from scipy import stats
@@ -17,11 +18,22 @@ from scipy import interpolate
 import matplotlib.pyplot as plt
 from matplotlib.offsetbox import AnchoredText
 from matplotlib.colors import LinearSegmentedColormap
-from main import paths, idx_1d, LAT_DEG, lx
+from main import paths, idx_1d, LAT_DEG, lx, timeit
+from datetime import timedelta, datetime, date
+from parcels.tools.loggers import logger
 
 # Path to save figures, save data and OFAM model output.
 fpath, dpath, xpath, lpath, tpath = paths()
 
+logger.setLevel(logging.DEBUG)
+now = datetime.now()
+handler = logging.FileHandler(lpath.joinpath('main_valid_' +
+                                             now.strftime("%Y-%m-%d") +
+                                             '.log'))
+formatter = logging.Formatter('%(asctime)s:%(funcName)s:%(message)s')
+handler.setFormatter(formatter)
+logger.addHandler(handler)
+logger.propagate = False
 
 def open_tao_data(frq='mon', dz=slice(10, 355), SI=True):
     """Opens TAO/TRITION ADCP data and returns the xarray dataset
@@ -61,6 +73,7 @@ def open_tao_data(frq='mon', dz=slice(10, 355), SI=True):
     du_190 = dU_190.where(dU_190['u_1205'] != dU_165.missing_value)/div_unit
     du_220 = dU_220.where(dU_220['u_1205'] != dU_165.missing_value)/div_unit
 
+    logger.info('Opening TAO {} data. Depth={}. SI={}'.format(frq, dz, SI))
     return [du_165, du_190, du_220]
 
 
@@ -172,8 +185,8 @@ def plot_tao_timeseries(ds, interp='', T=1, new_end_v=None):
 
     return
 
-
-def EUC_depths(u, depths, i, v_bnd=0.1, eps=0.05, index=False):
+@timeit
+def EUC_depths(du, depths, i, v_bnd=0.1, eps=0.05, index=False):
     """
 
 
@@ -204,7 +217,7 @@ def EUC_depths(u, depths, i, v_bnd=0.1, eps=0.05, index=False):
 
     """
 
-    u = np.ma.masked_invalid(u)
+    u = np.ma.masked_invalid(du)
     # Maximum and minimum velocity at each time step.
     v_max, v_min = np.nanmax(u, axis=1), np.nanmin(u, axis=1)
 
@@ -248,36 +261,31 @@ def EUC_depths(u, depths, i, v_bnd=0.1, eps=0.05, index=False):
                     break
         else:
             empty += 1
+    data_name = 'OFAM3' if hasattr(du, 'st_ocean') else 'TAO/TRITION'
 
-    print('{}: v_min={}, included={}, total={}, skipped={}, Empty={}, eps={}'
-          .format(lx['lons'][i], v_bnd, count, u.shape[0],
-                  u.shape[0] - count - empty,  empty, eps))
+    logger.info('{} {}: v_bnd={} count={} tot={}, skipped={} empty={} eps={}.'
+                .format(data_name, lx['lons'][i], v_bnd, count, u.shape[0],
+                        u.shape[0] - count - empty,  empty, eps))
     if not index:
         return v_max, depth_vmax, depth_bnd
     else:
         return v_max, v_imax, v_ibnd
 
 
+# @timeit
 def cor_scatter_plot(fig, i, v_max, depths, name=None):
     """
 
 
-    Parameters
-    ----------
-    fig : TYPE
-        DESCRIPTION.
-    i : TYPE
-        DESCRIPTION.
-    v_max : TYPE
-        DESCRIPTION.
-    depths : TYPE
-        DESCRIPTION.
-    name : TYPE, optional
-        DESCRIPTION. The default is None.
+    Args:
+        fig (TYPE): DESCRIPTION.
+        i (TYPE): DESCRIPTION.
+        v_max (TYPE): DESCRIPTION.
+        depths (TYPE): DESCRIPTION.
+        name (TYPE, optional): DESCRIPTION. Defaults to None.
 
-    Returns
-    -------
-    None.
+    Returns:
+        None.
 
     """
     var0 = v_max[np.ma.nonzero(depths)]
@@ -305,5 +313,7 @@ def cor_scatter_plot(fig, i, v_max, depths, name=None):
     ax.set_xlabel('Maximum velocity [m/s]')
     ax.set_ylabel('Depth [m]')
     ax.legend(fontsize=9)
+
+    return
 
     return
