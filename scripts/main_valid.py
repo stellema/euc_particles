@@ -187,35 +187,6 @@ def plot_tao_timeseries(ds, interp='', T=1, new_end_v=None):
 
 
 def EUC_depths(du, depths, i, v_bnd=0.1, eps=0.05, index=False, log=True):
-    """
-
-
-    Parameters
-    ----------
-    u : array-like
-        Zonal velocity.
-    depths : array-like
-        Depth levels.
-    i : int
-        DESCRIPTION.
-    v_bnd : TYPE, optional
-        DESCRIPTION. The default is 0.05.
-    eps : TYPE, optional
-        DESCRIPTION. The default is 0.005.
-
-    index : bool, optional
-        Return the index of depths instead of value. The default is False.
-
-    Returns
-    -------
-    v_max : TYPE
-        DESCRIPTION.
-    TYPE
-        DESCRIPTION.
-    TYPE
-        DESCRIPTION.
-
-    """
 
     u = np.ma.masked_invalid(du)
     # Maximum and minimum velocity at each time step.
@@ -235,7 +206,7 @@ def EUC_depths(du, depths, i, v_bnd=0.1, eps=0.05, index=False, log=True):
     # Deepest velocity depth index (recalculated at each t is tao).
     end = len(depths) - 1
 
-    for t in range(u.shape[0]):
+    for t in range(u.shape[0]): #
         # Make sure entire slice isn't all empty.
         if not (u[t] == True).mask.all() and not np.ma.is_masked(v_imax[t]):
             # Find depth of maximum velocity.
@@ -243,22 +214,21 @@ def EUC_depths(du, depths, i, v_bnd=0.1, eps=0.05, index=False, log=True):
 
             # Find deepest velocity depth index.
             end = np.ma.nonzero(u[t])[-1][-1]
+            # Make sure the end value isn't too much larger than v_bnd.
+            if u[t, end] <= v_bnd:
+                # Velocity closest to v_bnd in the subset array.
+                tmp = u[t, idx_1d(u[t, v_imax[t]+2:end+1], v_bnd)+v_imax[t]+2].item()
+                
+                # Depth index of the closet velocity (in the full array).
+                v_ibnd[t] = np.argwhere(u[t] == tmp)[-1][-1]
 
-            for z in np.arange(end, v_imax[t], -1):
-                # Make sure the end value isn't too much larger than v_bnd.
-                if u[t, z] >= v_bnd + eps and z == end:
-                    break
+                # Find that depth.
+                depth_bnd[t] = depths[int(v_ibnd[t])]
+                if depth_bnd[t] < 190: depth_bnd[t] = np.nan
+                count += 1
 
-                # Depth index where velocity starts to be larger than v_bnd.
-                if u[t, z] <= v_bnd:
-                    # Velocity closest to v_bnd in the subset array.
-                    tmp = u[t, idx_1d(u[t, z-1:], v_bnd) + z-1].item()
-                    # Depth index of the closet velocity (in the full array).
-                    v_ibnd[t] = np.argwhere(u[t] == tmp)[-1][-1]
-                    # Find that depth.
-                    depth_bnd[t] = depths[int(v_ibnd[t])]
-                    count += 1
-                    break
+            else:
+                empty += 1
         else:
             empty += 1
     data_name = 'OFAM3' if hasattr(du, 'st_ocean') else 'TAO/TRITION'
