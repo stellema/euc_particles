@@ -250,7 +250,7 @@ def EUC_depths(du, depths, i, v_bnd=0.1, eps=0.05, index=False, log=True):
                     break
 
                 # Depth index where velocity starts to be larger than v_bnd.
-                if u[t, z] >= v_bnd:
+                if u[t, z] <= v_bnd:
                     # Velocity closest to v_bnd in the subset array.
                     tmp = u[t, idx_1d(u[t, z-1:], v_bnd) + z-1].item()
                     # Depth index of the closet velocity (in the full array).

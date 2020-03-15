@@ -22,10 +22,6 @@ from matplotlib.colors import LinearSegmentedColormap
 from main_valid import EUC_depths, plot_eq_velocity
 from main_valid import open_tao_data, plot_tao_timeseries, cor_scatter_plot
 
-
-# from pandas.plotting import register_matplotlib_converters
-# register_matplotlib_converters()
-
 # Path to save figures, save data and OFAM model output.
 fpath, dpath, xpath, lpath, tpath = paths()
 
@@ -39,30 +35,12 @@ T = 1
 
 # Open dataset of TAO data at the frequency.
 ds = open_tao_data(frq=lx['frq_short'][T], dz=slice(10, 360))
+d3 = xr.open_dataset(dpath.joinpath('ofam_ocean_u_EUC_int_transport.nc'))
 
 for interp, new_end_v in zip(['', 'linear', 'linear', 'nearest'],
                              [None, None, -0.1, None]):
     plot_tao_timeseries(ds, interp, T=T, new_end_v=new_end_v)
 
-"""Plot TAO/TRITION maximum velocity correlation with max velocity position
-and bottom depth.
-"""
-for loc in ['max', 'lower']:
-    fig = plt.figure(figsize=(16, 5))
-    for i, du in enumerate(ds):
-        print('{} depth and max velocity at {}°E'.format(loc.capitalize(),
-                                                         lx['lons'][i]))
-        name = 'EUC {} depth and max velocity at {}°E ({})'.format(
-            loc, lx['lons'][i], lx['frq'][T])
-
-        if loc == 'max':
-            v_max, depths, depth_end = EUC_depths(du.u_1205, du.depth, i)
-        elif loc == 'lower':
-            v_max, depth_max, depths = EUC_depths(du.u_1205, du.depth, i)
-
-        cor_scatter_plot(fig, i + 1, v_max, depths, name=name)
-    plt.savefig(fpath.joinpath('tao', 'max_velocity_{}_depth_cor_{}.png'
-                               .format(loc, lx['frq'][T])))
 
 """Plot TAO/TRITION timeseries with depth bound overlay.
 """
@@ -86,7 +64,6 @@ plt.savefig(fpath.joinpath('tao', save_name))
 
 """Plot OFAM3 equatorial velocity climo time series.
 """
-d3 = xr.open_dataset(dpath.joinpath('ofam_ocean_u_EUC_int_transport.nc'))
 
 fig = plt.figure(figsize=(18, 6))
 for i in range(3):
