@@ -273,7 +273,8 @@ def EUC_depths(du, depths, i, v_bnd=0.1, eps=0.05, index=False):
 
 
 # @timeit
-def cor_scatter_plot(fig, i, v_max, depths, name=None):
+def cor_scatter_plot(fig, i, v_max, depths,
+                     name=None, xlabel=None, ylabel=None):
     """
 
 
@@ -310,8 +311,10 @@ def cor_scatter_plot(fig, i, v_max, depths, name=None):
     line = slope*var0 + intercept
     plt.plot(var0, line, 'r', label='y={:.2f}x+{:.2f}'.format(slope,
                                                               intercept))
-    ax.set_xlabel('Maximum velocity [m/s]')
-    ax.set_ylabel('Depth [m]')
+    if xlabel and ylabel is None:
+        xlabel, ylabel = 'Maximum velocity [m/s]', 'Depth [m]'
+    ax.set_xlabel(xlabel)
+    ax.set_ylabel(ylabel)
     ax.legend(fontsize=9)
 
     return
