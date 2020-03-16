@@ -56,6 +56,8 @@ np.set_printoptions(suppress=True)
 # Radius of Earth [m].
 EARTH_RADIUS = 6378137
 
+SV = 1e6
+
 # Metres in 1 degree of latitude [m].
 LAT_DEG = 111320
 

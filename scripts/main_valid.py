@@ -8,19 +8,16 @@ author: Annette Stellema (astellemas@gmail.com)
 """
 # import sys
 # sys.path.append('/g/data1a/e14/as3189/OFAM/scripts/')
-import gsw
 import logging
 import numpy as np
 import xarray as xr
 from scipy import stats
-from pathlib import Path
 from scipy import interpolate
+from datetime import datetime
 import matplotlib.pyplot as plt
-from matplotlib.offsetbox import AnchoredText
-from matplotlib.colors import LinearSegmentedColormap
-from main import paths, idx_1d, LAT_DEG, lx, timeit
-from datetime import timedelta, datetime, date
+from main import paths, idx_1d, lx
 from parcels.tools.loggers import logger
+from matplotlib.offsetbox import AnchoredText
 
 # Path to save figures, save data and OFAM model output.
 fpath, dpath, xpath, lpath, tpath = paths()
@@ -35,24 +32,17 @@ handler.setFormatter(formatter)
 logger.addHandler(handler)
 logger.propagate = False
 
+
 def open_tao_data(frq='mon', dz=slice(10, 355), SI=True):
-    """Opens TAO/TRITION ADCP data and returns the xarray dataset
-    at three longitudes: 165°E, 190°E (170°W) and 220°E (140°W).
+    """Return TAO/TRITION ADCP xarray dataset at: 165°E, 190°E and 220°E.
 
+    Args:
+        frq (str, optional): DESCRIPTION. Defaults to 'mon'.
+        dz (int or slice, optional): Depth levels. Defaults to slice(10, 355).
+        SI (bool, optional): Convert velocity to SI units. Defaults to True.
 
-    Parameters
-    ----------
-    frq : str, optionalOFAM3 and TAO/TRIOFAM3 and TAO/TRITION equatorial velocityTION equatorial velocity
-        Data frequency to open (daily or monthly). The default is 'mon'.
-    dz : int or slice, optional
-       Depth level(s) to select. The default is slice(10, 355).
-    SI : bool, optional
-        Convert velocity to SI units. The default is True.
-
-    Returns
-    -------OFAM3 and TAO/TRITION equatorial velocity
-    list
-        List of of three xarray datasets.
+    Returns:
+        list: List of of three xarray datasets.
 
     """
     # Open data sets at each longitude.
@@ -79,13 +69,12 @@ def open_tao_data(frq='mon', dz=slice(10, 355), SI=True):
 
 def plot_eq_velocity(fig, z, t, u, i, name,
                      max_depth=355, min_depth=10, rows=1):
-    """ Plots velocity as a function of depth and time at a specific
-    latitude and longitude. Assumes there are three columns of subplots.
+    """Plot velocity as a function of depth and time at three longitudes.
 
     Args:
-        fig (plt.figure): Figure
-        z (array): Depth array
-        t (array): Time array
+        fig (plt.figure): Figure.
+        z (array): Depth array.
+        t (array): Time array.
         u (array): Velocity array.
         i (int): Subplot position and letter in title.
         name (str): Figure title.
@@ -125,25 +114,20 @@ def plot_eq_velocity(fig, z, t, u, i, name,
 
 
 def plot_tao_timeseries(ds, interp='', T=1, new_end_v=None):
-    """ Plots TAO/TRITION velocity as a function of depth and time at
-    three longitudes: 165°E, 190°E (170°W) and 220°E (140°W).
-    Original data or interpolated data can be plotted.
+    """Plot TAO/TRITION ADCP as a function of depth/time at three longitudes.
 
-    Parameters
-    ----------
-    ds : list
-        List of three TAO xarray datasets.
-    interp : {'', 'linear', 'nearest'}
-        Interpolation method. The default is '' for no interpolation.
-    T : {0, 1}, optional
-        Data frequency to open (daily or monthly). The default is 1.
-    new_end_v : int, optional
-        Velocity [m/s] to replace deepest missing velocity value
-        (usually 0.1 m/s for linear interp). The default is None.
+    Velocity plots may include methods for interpolation.
 
-    Returns
-    -------
-    None.
+    Args:
+        ds (list): List of TAO velocity datasets at each longitude.
+        interp ({'', 'linear', 'nearest'}, optional): Interpolation method.
+            Defaults to ''.
+        T ({0, 1}, optional): DESCRIPTION. Defaults to 1.
+        new_end_v (float, optional): Replace deepest missing velocity.
+            Defaults to None.
+
+    Returns:
+        None.
 
     """
     fig = plt.figure(figsize=(18, 6))
@@ -186,11 +170,26 @@ def plot_tao_timeseries(ds, interp='', T=1, new_end_v=None):
     return
 
 
-def EUC_depths(du, depths, i, v_bnd=0.3, eps=0.05, index=False, log=True):
+def EUC_depths(du, depths, i, v_bnd=0.3, index=False):
+    """Find EUC max velocity/position and lower EUC depth boundary.
 
+    Args:
+        du (array): Velocity values.
+        depths (array): Depth values.
+        i ({0, 1, 2}): Index of longitude.
+        v_bnd (float, optional): Minimum velocity to include. Defaults to 0.3.
+        index (bool, optional): Return depth index or value. Defaults to False.
+
+    Returns:
+        v_max (array): Maximum velocity at each timestep.
+        array: Depth of maximum velocity at each timestep.
+        array: Deepest EUC depth based on v_bnd at each timestep.
+
+    """
     u = np.ma.masked_invalid(du)
+
     # Maximum and minimum velocity at each time step.
-    v_max, v_min = np.nanmax(u, axis=1), np.nanmin(u, axis=1)
+    v_max = np.nanmax(u, axis=1)
 
     # Index of maximum and minimum velocity at each time.
     v_imax, v_ibnd = np.nanargmax(u, axis=1), np.nanargmax(u, axis=1)
@@ -206,7 +205,7 @@ def EUC_depths(du, depths, i, v_bnd=0.3, eps=0.05, index=False, log=True):
     # Deepest velocity depth index (recalculated at each t is tao).
     end = len(depths) - 1
 
-    for t in range(u.shape[0]): #
+    for t in range(u.shape[0]):
         # Make sure entire slice isn't all empty.
         if not (u[t] == True).mask.all() and not np.ma.is_masked(v_imax[t]):
             # Find depth of maximum velocity.
@@ -217,75 +216,112 @@ def EUC_depths(du, depths, i, v_bnd=0.3, eps=0.05, index=False, log=True):
             # Make sure the end value isn't too much larger than v_bnd.
             if u[t, end] <= v_bnd:
                 # Velocity closest to v_bnd in the subset array.
-                tmp = u[t, idx_1d(u[t, v_imax[t]+2:end+1], v_bnd)+v_imax[t]+2].item()
-                
+                tmp = u[t, idx_1d(u[t, v_imax[t]+2:end + 1], v_bnd) +
+                        v_imax[t] + 2].item()
+
                 # Depth index of the closet velocity (in the full array).
                 v_ibnd[t] = np.argwhere(u[t] == tmp)[-1][-1]
 
                 # Find that depth.
                 depth_bnd[t] = depths[int(v_ibnd[t])]
-                if depth_bnd[t] < 190: depth_bnd[t] = np.nan
+
+                # Remove depth bounds shallower than 190 m.
+                if depth_bnd[t] < 190:
+                    depth_bnd[t] = np.nan
                 count += 1
 
             else:
                 skip += 1
         else:
             empty += 1
+
     data_name = 'OFAM3' if hasattr(du, 'st_ocean') else 'TAO/TRITION'
-    if log:
-        logger.info('{} {}: v_bnd={} count={} tot={}, skipped={} empty={} eps={}.'
-                    .format(data_name, lx['lons'][i], v_bnd, count, u.shape[0],
-                            skip,  empty, eps))
+
+    logger.info('{} {}: v_bnd={} count={} tot={}, skipped={} empty={}.'
+                .format(data_name, lx['lons'][i], v_bnd, count, u.shape[0],
+                        skip,  empty))
     if not index:
         return v_max, depth_vmax, depth_bnd
     else:
         return v_max, v_imax, v_ibnd
 
 
-def cor_scatter_plot(fig, i, v_max, depths,
-                     name=None, xlabel=None, ylabel=None, log=True, cor_loc=3):
-    """
-
+def regress(varx, vary):
+    """Return Spearman R and linregress results.
 
     Args:
-        fig (TYPE): DESCRIPTION.
-        i (TYPE): DESCRIPTION.
-        v_max (TYPE): DESCRIPTION.
-        depths (TYPE): DESCRIPTION.
-        name (TYPE, optional): DESCRIPTION. Defaults to None.
+        varx (array): The x variable.
+        vary (array): The y variable.
 
     Returns:
-        None.
+        cor_r (float): Spearman r-value.
+        cor_p (float): Spearman p-value.
+        slope (float): Linear regression gradient.
+        intercept (float): Linear regression y intercept.
+        r_value (float): Linear regression r-value.
+        p_value (float): Linear regression p-value.
+        std_err (float): Linear regression standard error.
 
     """
-    var0 = v_max[np.ma.nonzero(depths)]
-    var1 = depths[np.ma.nonzero(depths)]
-    var0 = var0[~np.isnan(var1)]
-    var1 = var1[~np.isnan(var1)]
-    cor = stats.spearmanr(var0, var1)
-    print(cor)
-    slope, intercept, r_value, p_value, std_err = stats.linregress(var0, var1)
-    if log:
-        logger.info('slope={:.2f}, intercept={:.2f}, r={:.2f}, p={:.2f}, std_err={:.2f}'
-              .format(slope, intercept, r_value, p_value, std_err))
+    varx = varx[np.ma.nonzero(vary)]
+    vary = vary[np.ma.nonzero(vary)]
+    varx = varx[~np.isnan(vary)]
+    vary = vary[~np.isnan(vary)]
+
+    cor_r, cor_p = stats.spearmanr(varx, vary)
+    slope, intercept, r_value, p_value, std_err = stats.linregress(varx, vary)
+
+    return cor_r, cor_p, slope, intercept, r_value, p_value, std_err
+
+
+def cor_scatter_plot(fig, i, varx, vary,
+                     name=None, xlabel=None, ylabel=None, cor_loc=3):
+    """Scatter plot with linear regression and correlation.
+
+    Args:
+        fig (plt.figure: Matplotlib figure.
+        i (int): Figure subplot position (i>0).
+        varx (array): The x variable.
+        vary (array): The y variable.
+        name (str, optional): Subplot title. Defaults to None.
+        xlabel (str, optional): The x axis label. Defaults to None.
+        ylabel (str, optional): The y axis label. Defaults to None.
+        cor_loc (int, optional): The r/p-value position on fig. Defaults to 3.
+
+    Returns:
+        slope (float): Linear regression gradient.
+        intercept (float): Linear regression y intercept.
+
+    """
+    varx = varx[np.ma.nonzero(vary)]
+    vary = vary[np.ma.nonzero(vary)]
+    varx = varx[~np.isnan(vary)]
+    vary = vary[~np.isnan(vary)]
+    cor_r, cor_p, slope, intercept, r_val, p_val, std_err = regress(varx, vary)
+
+    logger.info('R={:.2f}, p={:.3f} (stats.spearmanr)'.format(cor_r, cor_p))
+    logger.info('Slope={:.2f} Intercept={:.2f} R={:.2f} P={:.3f} stder={:.2f}'
+                .format(slope, intercept, r_val, p_val, std_err))
 
     ax = fig.add_subplot(1, 3, i)
     ax.set_title(name, loc='left')
-    ax.scatter(v_max, depths, color='b', s=8)
+    ax.scatter(varx, vary, color='b', s=8)
 
-    atext = AnchoredText('$\mathregular{r_s}$=' + str(np.around(cor[0], 2))
-                         + ', p=' + str(np.around(cor[1], 3)), loc=cor_loc)
+    atext = AnchoredText('$\mathregular{r_s}$={}, p={}'.format(
+        np.around(cor_r, 2), np.around(cor_p, 3)), loc=cor_loc)
     ax.add_artist(atext)
-    ax.plot(np.unique(var0),
-            np.poly1d(np.polyfit(var0, var1, 1))(np.unique(var0)), 'k')
-    line = slope*var0 + intercept
-    plt.plot(var0, line, 'r', label='y={:.2f}x+{:.2f}'.format(slope,
-                                                              intercept))
-    if xlabel is None: xlabel = 'Maximum velocity [m/s]'
-    if ylabel is None: ylabel = 'Depth [m]'
+    ax.plot(np.unique(varx),
+            np.poly1d(np.polyfit(varx, vary, 1))(np.unique(varx)), 'k')
+
+    # Alternative line of best fit.
+    # plt.plot(varx, slope*varx + intercept, 'r',
+    #          label='y={:.2f}x+{:.2f}'.format(slope, intercept))
+    if xlabel is None:
+        xlabel = 'Maximum velocity [m/s]'
+    if ylabel is None:
+        ylabel = 'Depth [m]'
     ax.set_xlabel(xlabel)
     ax.set_ylabel(ylabel)
     ax.legend(fontsize=9)
 
     return slope, intercept
-
