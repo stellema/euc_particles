@@ -54,10 +54,19 @@ for loc in ['max', 'lower']:
 
 
 """Plot OFAM3  equatorial velocity and transport correlation."""
-z1 = 50
-z2 = 300
+
+z1 = 25
+z2 = 350
 dt = xr.open_dataset(dpath.joinpath('ofam_ocean_u_EUC_int_transport.nc'))
 dt = dt.sel(st_ocean=slice(z1, z2))
+
+# Saved data frequency (1 for monthly and 0 for daily data).
+T = 1
+
+# Open dataset of TAO data at the frequency.
+ds = open_tao_data(frq=lx['frq_short'][T], dz=slice(z1, z2))
+
+dk = 5  # Distance between depth layers [5 m].
 
 # Add transport between depths.
 dtt = dt.uvo.isel(st_ocean=0).copy()*np.nan
@@ -75,23 +84,23 @@ for i in range(3):
             dtt[t, i] = tmp1.where(tmp1 > 0).sel(
                 st_ocean=slice(z1, depth_end[t].item())).sum(
                     dim='st_ocean').item()
+
             # Velocity
             tmp2 = dt.u.isel(xu_ocean=i, Time=t)
-            dv[t, i] = tmp2.where(tmp2 > 0).sel(
+            dv[t, i] = (tmp2*dk).where(tmp2 > 0).sel(
                 st_ocean=slice(z1, depth_end[t].item())).sum(
                     dim='st_ocean').item()
 
-
 """ Equatorial Transport and Velocity correlation."""
 fig = plt.figure(figsize=(18, 5))
-m, b = np.zeros(3), np.zeros(3)  # Slope and intercept of correlations.
+m, b = np.zeros(3), np.zeros(3)
 for i in range(3):
-    m[i], b[i] = cor_scatter_plot(fig, i+1, dtt.isel(xu_ocean=i)/1e6,
-                                  dv.isel(xu_ocean=i),
+    m[i], b[i] = cor_scatter_plot(fig, i+1, dv.isel(xu_ocean=i),
+                                  dtt.isel(xu_ocean=i)/1e6,
                                   name='{}OFAM3 EUC at {}°E'.format(
                                       lx['l'][i], lx['lons'][i]),
-                                  xlabel="Transport [1e6 m3/s]",
-                                  ylabel="Velocity at the equator [m/s]",
+                                  ylabel="Transport [Sv]",
+                                  xlabel="Velocity at the equator [m/s]",
                                   cor_loc=4)
 
 save_name = 'ofam3_eq_transport_velocity_cor.png'
@@ -100,11 +109,52 @@ plt.savefig(fpath.joinpath('tao', save_name))
 """Calculate TAO/TRITION EUC transport based on OFAM3 regression."""
 ds_sum = [ds[i].u_1205.isel(depth=0)*np.nan for i in range(3)]
 for i in range(3):
-    # Find the bottom depths of the EUC.
     depth_end_tao = EUC_depths(ds[i].u_1205, ds[i].depth, i)[2]
     for t in range(len(ds[i].u_1205.time)):
         if not np.isnan(depth_end_tao[t]):
-            tmp = ds[i].u_1205.isel(time=t)
-            # Sum of
-            ds_sum[i][t] = tmp.where(tmp > 0).sel(
-                depth=slice(z1, depth_end_tao[t])).sum(dim='depth').item()
+            tmp = ds[i].u_1205.isel(time=t).sel(depth=slice(z1,
+                                                            depth_end_tao[t]))
+            ds_sum[i][t] = (tmp*dk).where(tmp > 0).sum(dim='depth').item()
+
+"""Plot TAO and OFAM3 transport timeseries.9"""
+# Time index bounds where OFAM and TAO are available.
+time_bnds_ofam = [[10*12+3, 27*12+1], [7*12+4, -1], [9*12+4, -1]]
+time_bnds_tao = [[0, -1], [0, 24*12+8], [0, 22*12+8]]
+
+fig = plt.figure(figsize=(10, 10))
+for i in range(3):
+    # TAO/TRITION slice.
+    du = ds_sum[i].isel(time=slice(time_bnds_tao[i][0], time_bnds_tao[i][1]))
+
+    # Rename TAO time array (so it matches OFAM3).
+    duc = du.rename({'time': 'Time'})
+
+    # Convert TAO time array to monthly, as ofam/tao days are different.
+    duc.coords['Time'] = duc['Time'].values.astype('datetime64[M]')
+
+    # OFAM3 slice.
+    dtx = dtt.sel(xu_ocean=lx['lons'][i])
+    dtx = dtx.isel(Time=slice(time_bnds_ofam[i][0], time_bnds_ofam[i][1]))
+
+    # Mask OFAM3 transport when TAO data is missing (and vise versa).
+    dtc = dtx.where(np.isnan(duc) == False)
+    dtc_nan = dtx.where(np.isnan(duc))  # OFAM3 when TAO missing.
+    dux = duc.where(np.isnan(dtc) == False)
+    dux_nan = duc.where(np.isnan(dtc)) # TAO when OFAM3 missing.
+
+    SV = 1e6
+    ax = fig.add_subplot(3, 1, i+1)
+    ax.set_title('{}Modelled and observed EUC transport at {}°E'.format(
+        lx['l'][i], lx['lons'][i]), loc='left')
+    ax.plot(dux.Time, (dux*m[i] + b[i]), color='blue', label='TAO/TRITION')
+    ax.plot(dtc.Time, dtc/SV, color='red', label='OFAM3')
+
+    # Increase alpha of transport when available, but doesn't match.
+    ax.plot(dux.Time, (dux_nan*m[i] + b[i]), color='blue', alpha=0.3)
+    ax.plot(dtc.Time, dtc_nan/SV, color='red', alpha=0.2)
+
+    ax.set_ylabel('Transport [Sv]')
+    ax.set_ylim(ymin=0)
+    ax.legend(loc=2)
+plt.tight_layout()
+plt.savefig(fpath.joinpath('tao', 'EUC_transport_regression.png'))
