@@ -63,7 +63,7 @@ def open_tao_data(frq='mon', dz=slice(10, 355), SI=True):
     du_190 = dU_190.where(dU_190['u_1205'] != dU_165.missing_value)/div_unit
     du_220 = dU_220.where(dU_220['u_1205'] != dU_165.missing_value)/div_unit
 
-    logger.info('Opening TAO {} data. Depth={}. SI={}'.format(frq, dz, SI))
+    logger.debug('Opening TAO {} data. Depth={}. SI={}'.format(frq, dz, SI))
     return [du_165, du_190, du_220]
 
 
@@ -237,7 +237,7 @@ def EUC_depths(du, depths, i, v_bnd=0.3, index=False):
 
     data_name = 'OFAM3' if hasattr(du, 'st_ocean') else 'TAO/TRITION'
 
-    logger.info('{} {}: v_bnd={} count={} tot={}, skipped={} empty={}.'
+    logger.debug('{} {}: v_bnd={} count={} tot={}, skipped={} empty={}.'
                 .format(data_name, lx['lons'][i], v_bnd, count, u.shape[0],
                         skip,  empty))
     if not index:
@@ -293,29 +293,28 @@ def cor_scatter_plot(fig, i, varx, vary,
         intercept (float): Linear regression y intercept.
 
     """
+    cor_r, cor_p, slope, intercept, r_val, p_val, std_err = regress(varx, vary)
     varx = varx[np.ma.nonzero(vary)]
     vary = vary[np.ma.nonzero(vary)]
     varx = varx[~np.isnan(vary)]
     vary = vary[~np.isnan(vary)]
-    cor_r, cor_p, slope, intercept, r_val, p_val, std_err = regress(varx, vary)
-
-    logger.info('R={:.2f}, p={:.3f} (stats.spearmanr)'.format(cor_r, cor_p))
-    logger.info('Slope={:.2f} Intercept={:.2f} R={:.2f} P={:.3f} stder={:.2f}'
+    logger.debug('R={:.2f}, p={:.3f} (stats.spearmanr)'.format(cor_r, cor_p))
+    logger.debug('Slope={:.2f} Intercept={:.2f} R={:.2f} P={:.3f} stder={:.2f}'
                 .format(slope, intercept, r_val, p_val, std_err))
 
     ax = fig.add_subplot(1, 3, i)
     ax.set_title(name, loc='left')
     ax.scatter(varx, vary, color='b', s=8)
 
-    atext = AnchoredText('$\mathregular{r_s}$={}, p={}'.format(
+    atext = AnchoredText('$\mathregular{r_s}$' + '={}, p={}'.format(
         np.around(cor_r, 2), np.around(cor_p, 3)), loc=cor_loc)
     ax.add_artist(atext)
     ax.plot(np.unique(varx),
             np.poly1d(np.polyfit(varx, vary, 1))(np.unique(varx)), 'k')
 
     # Alternative line of best fit.
-    # plt.plot(varx, slope*varx + intercept, 'r',
-    #          label='y={:.2f}x+{:.2f}'.format(slope, intercept))
+    plt.plot(varx, slope*varx + intercept, 'k',
+             label='y={:.2f}x+{:.2f}'.format(slope, intercept))
     if xlabel is None:
         xlabel = 'Maximum velocity [m/s]'
     if ylabel is None:

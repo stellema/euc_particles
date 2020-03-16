@@ -44,7 +44,7 @@ def plot_tao_max_velocity_correlation():
         plt.savefig(fpath.joinpath('tao', 'max_velocity_{}_depth_cor_{}.png'
                                    .format(loc, lx['frq'][T])))
 
-        return
+    return
 
 
 def eq_velocity_transport_reg(z1=25, z2=350, T=1, dk=5, method='EUC_depths'):
@@ -163,8 +163,8 @@ def plot_tao_ofam_transport_timeseries(z1=25, z2=350, T=1, dk=5,
     m, b = np.zeros(3), np.zeros(3)
 
     fig = plt.figure(figsize=(10, 10))
-    for i in range(3):
-        m[i], b[i] = regress(d3v, d3t)[2:3]
+    for i, lon in enumerate(lx['lons']):
+        m[i], b[i] = regress(d3v.sel(xu_ocean=lon), d3t.sel(xu_ocean=lon)/SV)[2:4]
 
         # TAO/TRITION slice.
         du = dsv[i].isel(time=slice(time_bnds_tao[i][0], time_bnds_tao[i][1]))
@@ -184,8 +184,8 @@ def plot_tao_ofam_transport_timeseries(z1=25, z2=350, T=1, dk=5,
         dtc_nan = dtx.where(np.isnan(duc))  # OFAM3 when TAO missing.
 
         # Mask TAO transport when OFAM3 is missing.
-        dux = (duc*m[i] + b[i]).where(np.isnan(dtc) == False)
-        dux_nan = (duc*m[i] + b[i]).where(np.isnan(dtc))
+        dux = (duc).where(np.isnan(dtc) == False)
+        dux_nan = (duc).where(np.isnan(dtc))
 
         ax = fig.add_subplot(3, 1, i+1)
 
@@ -193,21 +193,22 @@ def plot_tao_ofam_transport_timeseries(z1=25, z2=350, T=1, dk=5,
             dtc = dtc.groupby('Time.month').mean()
             dux = dux.groupby('Time.month').mean()
             time = dtc.month
-            ax.set_xticks(np.arange(1, len(lx['mon'])+1))
-            ax.set_xticklabels(lx['mon'])
-            ax.set_ylim(ymin=5, ymax=45)
+#             ax.set_xticks(np.arange(1, len(lx['mon'])+1))
+#             ax.set_xticklabels(lx['mon'])
+#             ax.set_ylim(ymin=5, ymax=45)
             save_name = 'EUC_transport_regression_mon.png'
 
         elif series == 'all':
             time = dux.Time
             # Increase alpha of transport when available, but doesn't match.
-            ax.plot(time, dux_nan, color='k', alpha=0.3)
-            ax.plot(time, dtc_nan/SV, color='red', alpha=0.3)
-            ax.set_ylim(ymin=0)
+#             ax.plot(time, dux_nan, color='k', alpha=0.3)
+#             ax.plot(time, dtc_nan/SV, color='red', alpha=0.3)
+#             ax.set_ylim(ymin=0)
+            save_name = 'EUC_transport_regression.png'
 
         ax.set_title('{}Modelled and observed EUC transport at {}°E'.format(
             lx['l'][i], lx['lons'][i]), loc='left')
-        ax.plot(time, dux, color='k', label='TAO/TRITION')
+        ax.plot(time, dux*m[i] + b[i], color='k', label='TAO/TRITION')
         ax.plot(time, dtc/SV, color='r', label='OFAM3')
         ax.set_ylabel('Transport [Sv]')
         ax.legend(loc=2)
@@ -217,8 +218,11 @@ def plot_tao_ofam_transport_timeseries(z1=25, z2=350, T=1, dk=5,
     return
 
 
-plot_tao_max_velocity_correlation()
+# print('plot_tao_max_velocity_correlation')
+# plot_tao_max_velocity_correlation()
+print('plot_tao_ofam_transport_timeseries')
 plot_tao_ofam_transport_timeseries(z1=25, z2=350, T=1, dk=5,
                                    method='EUC_depths', series='all')
+print('plot_tao_ofam_transport_timeseries mon')
 plot_tao_ofam_transport_timeseries(z1=25, z2=350, T=1, dk=5,
                                    method='EUC_depths', series='month')
