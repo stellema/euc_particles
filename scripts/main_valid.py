@@ -98,7 +98,7 @@ def plot_eq_velocity(fig, z, t, u, i, name,
 
     """
     cmap = plt.cm.seismic
-    cmap.set_bad('lightgrey')  # Colour NaN values light grey.
+#     cmap.set_bad('lightgrey')  # Colour NaN values light grey.
     ax = fig.add_subplot(rows, 3, i)
     ax.set_title(name, loc='left')
     im = ax.pcolormesh(t, z, u, cmap=cmap, vmax=1.20, vmin=-1.20)
@@ -201,7 +201,7 @@ def EUC_depths(du, depths, i, v_bnd=0.1, eps=0.05, index=False, log=True):
     # Bottom depth levels (based on minimum velocity bound for the EUC).
     depth_bnd = v_imax.copy()*np.nan  # mx_depth
 
-    count, empty = 0, 0
+    count, empty, skip = 0, 0, 0
 
     # Deepest velocity depth index (recalculated at each t is tao).
     end = len(depths) - 1
@@ -228,14 +228,14 @@ def EUC_depths(du, depths, i, v_bnd=0.1, eps=0.05, index=False, log=True):
                 count += 1
 
             else:
-                empty += 1
+                skip += 1
         else:
             empty += 1
     data_name = 'OFAM3' if hasattr(du, 'st_ocean') else 'TAO/TRITION'
     if log:
         logger.info('{} {}: v_bnd={} count={} tot={}, skipped={} empty={} eps={}.'
                     .format(data_name, lx['lons'][i], v_bnd, count, u.shape[0],
-                            u.shape[0] - count - empty,  empty, eps))
+                            skip,  empty, eps))
     if not index:
         return v_max, depth_vmax, depth_bnd
     else:

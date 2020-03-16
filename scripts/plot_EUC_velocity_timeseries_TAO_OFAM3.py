@@ -37,15 +37,14 @@ T = 1
 ds = open_tao_data(frq=lx['frq_short'][T], dz=slice(10, 360))
 d3 = xr.open_dataset(dpath.joinpath('ofam_ocean_u_EUC_int_transport.nc'))
 
-for interp, new_end_v in zip(['', 'linear', 'linear', 'nearest'],
-                             [None, None, -0.1, None]):
-    plot_tao_timeseries(ds, interp, T=T, new_end_v=new_end_v)
+# for interp, new_end_v in zip(['', 'linear', 'linear', 'nearest'],
+#                              [None, None, -0.1, None]):
+#     plot_tao_timeseries(ds, interp, T=T, new_end_v=new_end_v)
 
 
 """Plot TAO/TRITION timeseries with depth bound overlay.
 """
-v_bnd = 0.1  # m/s
-eps = np.round(v_bnd/2, 3)
+v_bnd = 0.1
 fig = plt.figure(figsize=(18, 6))
 for i, du in enumerate(ds):
     name = '{}TAO/TRITION {} EUC at {}°E vmin={}'.format(lx['l'][i],
@@ -53,8 +52,7 @@ for i, du in enumerate(ds):
                                                          lx['lons'][i], v_bnd)
     u = du.u_1205.transpose('depth', 'time')
     ax = plot_eq_velocity(fig, du.depth, du.time, u, i + 1, name)
-    umx, depth_max, depth_end = EUC_depths(du.u_1205, du.depth, i,
-                                           v_bnd=v_bnd, eps=eps)
+    umx, depth_max, depth_end = EUC_depths(du.u_1205, du.depth, i)
 
     ax.plot(du.time, depth_end, 'k')
     ax.axhline(50, color='k')
@@ -65,33 +63,33 @@ plt.savefig(fpath.joinpath('tao', save_name))
 """Plot OFAM3 equatorial velocity climo time series.
 """
 
-fig = plt.figure(figsize=(18, 6))
-for i in range(3):
-    dq = d3.sel(xu_ocean=lx['lons'][i])
-    name = '{}OFAM3 {} EUC at 0°S,{}°E '.format(lx['l'][i], lx['frq_long'][T],
-                                                lx['lons'][i])
-    u = dq.u.transpose('st_ocean', 'Time')
-    plot_eq_velocity(fig, dq.st_ocean, dq.Time, u, i + 1, name, max_depth=355)
-save_name = 'ofam3_interp.png'
-plt.savefig(fpath.joinpath('tao', save_name))
+# fig = plt.figure(figsize=(18, 6))
+# for i in range(3):
+#     dq = d3.sel(xu_ocean=lx['lons'][i])
+#     name = '{}OFAM3 {} EUC at 0°S,{}°E '.format(lx['l'][i], lx['frq_long'][T],
+#                                                 lx['lons'][i])
+#     u = dq.u.transpose('st_ocean', 'Time')
+#     plot_eq_velocity(fig, dq.st_ocean, dq.Time, u, i + 1, name, max_depth=355)
+# save_name = 'ofam3_interp.png'
+# plt.savefig(fpath.joinpath('tao', save_name))
 
 """Plot OFAM3 equatorial velocity climo time series with boundaries.
 """
-fig = plt.figure(figsize=(18, 6))
-for i in range(3):
-    dq = d3.sel(xu_ocean=lx['lons'][i])
-    name = '{}OFAM3 {} EUC at 0°N, {}°E vmin={}'.format(lx['l'][i],
-                                                        lx['frq_long'][T],
-                                                        lx['lons'][i], v_bnd)
-    z = dq.st_ocean
-    t = dq.Time
-    u = dq.u.transpose('st_ocean', 'Time')
-    ax = plot_eq_velocity(fig, z, t, u, i+1, name, max_depth=355)
-    v_max, depth_max, depth_end = EUC_depths(dq.u, dq.st_ocean, i)
-    ax.plot(t, depth_end, 'k')
-    ax.axhline(50, color='k')
-save_name = 'ofam3_interp_bounds_{}.png'.format(v_bnd)
-plt.savefig(fpath.joinpath('tao', save_name))
+# fig = plt.figure(figsize=(18, 6))
+# for i in range(3):
+#     dq = d3.sel(xu_ocean=lx['lons'][i])
+#     name = '{}OFAM3 {} EUC at 0°N, {}°E vmin={}'.format(lx['l'][i],
+#                                                         lx['frq_long'][T],
+#                                                         lx['lons'][i], v_bnd)
+#     z = dq.st_ocean
+#     t = dq.Time
+#     u = dq.u.transpose('st_ocean', 'Time')
+#     ax = plot_eq_velocity(fig, z, t, u, i+1, name, max_depth=355)
+#     v_max, depth_max, depth_end = EUC_depths(dq.u, dq.st_ocean, i)
+#     ax.plot(t, depth_end, 'k')
+#     ax.axhline(50, color='k')
+# save_name = 'ofam3_interp_bounds_{}.png'.format(v_bnd)
+# plt.savefig(fpath.joinpath('tao', save_name))
 
 """Compare TAO/TRITION and OFAM3 equatorial velocity timeseries.
 """
@@ -119,10 +117,14 @@ for i, du in enumerate(ds):
     u = du.u_1205.transpose('depth', 'time')
     ax = plot_eq_velocity(fig, du.depth, du.time, u, i+1, name, rows=2)
     if add_bounds:
-        v_max, depth_max, depth_end = EUC_depths(du.u_1205, du.depth, i,
-                                                 v_bnd=v_bnd, eps=eps)
-        ax.plot(du.time, depth_end, 'k')
+        v_max, depth_max, depth_end = EUC_depths(du.u_1205, du.depth, i)
+#         ax.plot(du.time.where(np.isnan(depth_end)==False), 
+#                 np.where(np.isnan(depth_end)==False), 'k')
+        ax.plot(np.ma.masked_where(np.isnan(depth_end), du.time), 
+                np.ma.masked_where(np.isnan(depth_end), depth_end), 'k')
         ax.axhline(50, color='k')
+        
+        
 
     # OFAM3
     dq = d3.sel(xu_ocean=lx['lons'][i])
