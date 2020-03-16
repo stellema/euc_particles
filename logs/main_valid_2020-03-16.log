@@ -136,3 +136,31 @@
 2020-03-16 11:25:10,071:EUC_depths:TAO/TRITION 165: v_bnd=0.1 count=58 tot=203, skipped=140 empty=5 eps=0.05.
 2020-03-16 11:25:10,451:EUC_depths:TAO/TRITION 190: v_bnd=0.1 count=170 tot=340, skipped=134 empty=36 eps=0.05.
 2020-03-16 11:25:11,054:EUC_depths:TAO/TRITION 220: v_bnd=0.1 count=188 tot=311, skipped=92 empty=31 eps=0.05.
+2020-03-16 11:41:29,773:open_tao_data:Opening TAO mon data. Depth=slice(10, 360, None). SI=True
+2020-03-16 11:41:30,256:EUC_depths:TAO/TRITION 165: v_bnd=0.1 count=58 tot=203, skipped=140 empty=5 eps=0.05.
+2020-03-16 11:41:30,260:cor_scatter_plot:slope=-65.48, intercept=209.25, r=-0.19, p=0.01, std_err=24.50
+2020-03-16 11:41:30,522:EUC_depths:TAO/TRITION 190: v_bnd=0.1 count=170 tot=340, skipped=134 empty=36 eps=0.05.
+2020-03-16 11:41:30,524:cor_scatter_plot:slope=-52.85, intercept=186.74, r=-0.38, p=0.00, std_err=7.37
+2020-03-16 11:41:30,759:EUC_depths:TAO/TRITION 220: v_bnd=0.1 count=188 tot=311, skipped=92 empty=31 eps=0.05.
+2020-03-16 11:41:30,761:cor_scatter_plot:slope=-46.89, intercept=160.57, r=-0.58, p=0.00, std_err=3.92
+2020-03-16 11:41:31,503:EUC_depths:TAO/TRITION 165: v_bnd=0.1 count=58 tot=203, skipped=140 empty=5 eps=0.05.
+2020-03-16 11:41:31,505:cor_scatter_plot:slope=63.29, intercept=228.93, r=0.38, p=0.00, std_err=21.14
+2020-03-16 11:41:31,715:EUC_depths:TAO/TRITION 190: v_bnd=0.1 count=170 tot=340, skipped=134 empty=36 eps=0.05.
+2020-03-16 11:41:31,717:cor_scatter_plot:slope=27.68, intercept=230.00, r=0.29, p=0.00, std_err=7.06
+2020-03-16 11:41:31,930:EUC_depths:TAO/TRITION 220: v_bnd=0.1 count=188 tot=311, skipped=92 empty=31 eps=0.05.
+2020-03-16 11:41:31,931:cor_scatter_plot:slope=16.77, intercept=217.26, r=0.29, p=0.00, std_err=4.07
+2020-03-16 11:41:33,599:open_tao_data:Opening TAO mon data. Depth=slice(25, 350, None). SI=True
+2020-03-16 11:41:41,425:cor_scatter_plot:slope=0.36, intercept=1.44, r=0.88, p=0.00, std_err=0.01
+2020-03-16 11:41:41,460:cor_scatter_plot:slope=0.40, intercept=-6.53, r=0.87, p=0.00, std_err=0.01
+2020-03-16 11:41:41,494:cor_scatter_plot:slope=0.30, intercept=-12.48, r=0.85, p=0.00, std_err=0.01
+2020-03-16 11:41:42,153:EUC_depths:TAO/TRITION 165: v_bnd=0.1 count=58 tot=203, skipped=140 empty=5 eps=0.05.
+2020-03-16 11:41:42,471:EUC_depths:TAO/TRITION 190: v_bnd=0.1 count=170 tot=340, skipped=134 empty=36 eps=0.05.
+2020-03-16 11:41:43,136:EUC_depths:TAO/TRITION 220: v_bnd=0.1 count=188 tot=311, skipped=92 empty=31 eps=0.05.
+2020-03-16 12:20:14,373:open_tao_data:Opening TAO mon data. Depth=slice(10, 360, None). SI=True
+2020-03-16 12:21:01,472:open_tao_data:Opening TAO mon data. Depth=slice(25, 350, None). SI=True
+2020-03-16 12:21:14,400:EUC_depths:TAO/TRITION 165: v_bnd=0.1 count=58 tot=203, skipped=140 empty=5 eps=0.05.
+2020-03-16 12:21:14,743:EUC_depths:TAO/TRITION 190: v_bnd=0.1 count=170 tot=340, skipped=134 empty=36 eps=0.05.
+2020-03-16 12:21:15,361:EUC_depths:TAO/TRITION 220: v_bnd=0.1 count=188 tot=311, skipped=92 empty=31 eps=0.05.
+2020-03-16 12:24:35,893:cor_scatter_plot:slope=0.36, intercept=1.44, r=0.88, p=0.00, std_err=0.01
+2020-03-16 12:24:35,966:cor_scatter_plot:slope=0.40, intercept=-6.53, r=0.87, p=0.00, std_err=0.01
+2020-03-16 12:24:36,006:cor_scatter_plot:slope=0.30, intercept=-12.48, r=0.85, p=0.00, std_err=0.01
