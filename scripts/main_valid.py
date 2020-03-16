@@ -42,7 +42,7 @@ def open_tao_data(frq='mon', dz=slice(10, 355), SI=True):
 
     Parameters
     ----------
-    frq : str, optional
+    frq : str, optionalOFAM3 and TAO/TRIOFAM3 and TAO/TRITION equatorial velocityTION equatorial velocity
         Data frequency to open (daily or monthly). The default is 'mon'.
     dz : int or slice, optional
        Depth level(s) to select. The default is slice(10, 355).
@@ -50,7 +50,7 @@ def open_tao_data(frq='mon', dz=slice(10, 355), SI=True):
         Convert velocity to SI units. The default is True.
 
     Returns
-    -------
+    -------OFAM3 and TAO/TRITION equatorial velocity
     list
         List of of three xarray datasets.
 
@@ -186,7 +186,7 @@ def plot_tao_timeseries(ds, interp='', T=1, new_end_v=None):
     return
 
 
-def EUC_depths(du, depths, i, v_bnd=0.1, eps=0.05, index=False, log=True):
+def EUC_depths(du, depths, i, v_bnd=0.3, eps=0.05, index=False, log=True):
 
     u = np.ma.masked_invalid(du)
     # Maximum and minimum velocity at each time step.
