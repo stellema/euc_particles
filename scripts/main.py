@@ -74,11 +74,11 @@ lx = {'exp': ['historical', 'rcp85', 'rcp85_minus_historial'],
       'years':  [[1981, 2012], [2070, 2101]],
       'vars': ['u', 'v', 'w', 'salt', 'temp'],
       'lons': [165, 190, 220],
-      'deg': '\u00b0', # Degree symbol.
+      'deg': '\u00b0',  # Degree symbol.
       'frq': ['day', 'mon'],
       'frq_short': ['dy', 'mon'],
       'frq_long': ['daily', 'monthly'],
-      'mon': [i for i in calendar.month_abbr[1:]], # Month abbreviations.
+      'mon': [i for i in calendar.month_abbr[1:]],  # Month abbreviations.
       'mon_letter': [i[0] for i in calendar.month_abbr[1:]],
       # Elements of the alphabet with left bracket and space for fig captions.
       'l': [i + ') ' for i in list(string.ascii_lowercase)],
@@ -86,56 +86,47 @@ lx = {'exp': ['historical', 'rcp85', 'rcp85_minus_historial'],
 
 ptype = {'scipy': ScipyParticle, 'jit': JITParticle}
 
+
 def paths():
-    """ Return paths to figures, data and model output.
+    """Return paths to figures, data and model output, logs and TAO data.
+
     This function will determine and return paths depending on which
     machine is being used.
 
     Returns:
         fpath (pathlib.Path): Path to save figures.
         dpath (pathlib.Path): Path to save data.
-        xpath (pathlib.Path): path to get model output.
-        tpath (pathlib.Path): path to get TAO/TRITION data.
+        xpath (pathlib.Path): Path to get model output.
+        lpath (pathlib.Path): Path to save log files.
+        tpath (pathlib.Path): Path to get TAO/TRITION data.
 
     """
     home = Path.home()
 
     if home.drive == 'C:':
         # Change to E drive if at home.
-        if not home.joinpath('GitHub', 'OFAM').exists(): home = Path('E:/')
-        fpath = home.joinpath('GitHub', 'OFAM', 'figures')
-        dpath = home.joinpath('GitHub', 'OFAM', 'data')
-        xpath = home.joinpath('model_output', 'OFAM', 'trop_pac')
-        lpath = home.joinpath('GitHub', 'OFAM', 'logs')
-        tpath = home.joinpath('model_output', 'OFAM', 'TAO')
+        if not home.joinpath('GitHub', 'OFAM').exists():
+            home = Path('E:/')
+        fpath = home/'GitHub/OFAM/figures'
+        dpath = home/'GitHub/OFAM/data'
+        xpath = home/'model_output/OFAM/trop_pac'
+        lpath = home/'GitHub/OFAM/logs'
+        tpath = home/'model_output/OFAM/TAO'
 
     # Raijin Paths.
     else:
-        home = Path('/g', 'data', 'e14', 'as3189', 'OFAM')
-        fpath = home.joinpath('figures')
-        dpath = home.joinpath('data')
-        lpath = home.joinpath('logs')
-        xpath = home.joinpath('trop_pac')
-        tpath = home.joinpath('TAO')
+        home = Path('/g/data/e14/as3189/OFAM')
+        fpath = home/'figures'
+        dpath = home/'data'
+        lpath = home/'logs'
+        xpath = home/'trop_pac'
+        tpath = home/'TAO'
 
-    # Path to temporary hh5 directory of OFAM files.
-#    tpath = Path('/g', 'data3', 'hh5', 'tmp', 'as3189', 'OFAM')
     return fpath, dpath, xpath, lpath, tpath
 
-fpath, dpath, xpath, lpath, tpath = paths()
-
-logger.setLevel(logging.DEBUG)
-now = datetime.now()
-handler = logging.FileHandler(lpath.joinpath('main_' +
-                            now.strftime("%Y-%m-%d") + '.log'))
-formatter = logging.Formatter(
-        '%(asctime)s:%(funcName)s:%(message)s')
-handler.setFormatter(formatter)
-logger.addHandler(handler)
-logger.propagate = False
 
 def current_time(print_time=False):
-    """ Return and/or print the current time in AM/PM format (e.g. 9:00am).
+    """Return and/or print the current time in AM/PM format (e.g. 9:00am).
 
     Args:
         print_time (bool, optional): Print the current time. Defaults is False.
@@ -150,11 +141,12 @@ def current_time(print_time=False):
     time = '{:0>2d}:{:0>2d}{}'.format(h, currentDT.minute, mrdm)
     if print_time:
         print(time)
+
     return time
 
 
 def timer(ts, method=None):
-    """ Prints the execution time (starting from ts).
+    """Print the execution time (starting from ts).
 
     Args:
         ts (int): Start time.
@@ -166,13 +158,14 @@ def timer(ts, method=None):
     m, s = divmod(rem, 60)
     # Print method name if given.
     arg = '' if method is None else ' ({})'.format(method)
-    print('Timer{}: {:} hours, {:} mins, {:05.2f} secs'\
+    print('Timer{}: {:} hours, {:} mins, {:05.2f} secs'
           .format(arg, int(h), int(m), s, current_time(False)))
+
+    return
 
 
 def timeit(method, logger=logger):
-    """ Wrapper function to time method execution time.
-    """
+    """Wrap function to time method execution time."""
     @wraps(method)
     def timed(*args, **kw):
         ts = time.time()
@@ -183,12 +176,14 @@ def timeit(method, logger=logger):
 
         logger.info('{}: {:}:{:}:{:05.2f} total: {:.2f} seconds.'.format(
                 method.__name__, int(h), int(m), s, te - ts))
+
         return result
+
     return timed
 
 
 def idx_1d(array, value):
-    """ Finds index to closet given value in 1D array.
+    """Find index to closet given value in 1D array.
 
     Args:
         array (1D array): The array to search for the closest index of value.
@@ -202,13 +197,16 @@ def idx_1d(array, value):
 
 
 def get_date(year, month, day='max'):
-    """ Converts a year, month and day to datetime.datetime format.
+    """Convert a year, month and day to datetime.datetime format.
+
     N.B. 'max' day will give the last day in the given month.
+
     """
     if day == 'max':
         return datetime(year, month, calendar.monthrange(year, month)[1])
     else:
         return datetime(year, month, day)
+
 
 def create_mesh_mask():
     ufiles, sfiles = [], []
@@ -235,9 +233,9 @@ def create_mesh_mask():
 
 @timeit
 def ofam_fieldset(date_bnds, time_periodic=False, deferred_load=True):
-    """ Creates a 3D parcels fieldset from OFAM model output.
+    """Create a 3D parcels fieldset from OFAM model output.
 
-    between two dates useing FieldSet.from_b_grid_dataset.
+    Between two dates useing FieldSet.from_b_grid_dataset.
     Note that the files are already subset to the tropical Pacific Ocean.
 
     Args:
@@ -251,7 +249,6 @@ def ofam_fieldset(date_bnds, time_periodic=False, deferred_load=True):
         fieldset (parcels.Fieldset)
 
     """
-
     u, v, w = [], [], []
 
     for y in range(date_bnds[0].year, date_bnds[1].year + 1):
@@ -281,25 +278,33 @@ def ofam_fieldset(date_bnds, time_periodic=False, deferred_load=True):
                                             mesh='spherical',
                                             time_periodic=time_periodic,
                                             deferred_load=deferred_load)
+
     return fieldset
 
 
 def DeleteParticle(particle, fieldset, time):
+    """Delete particle."""
     particle.delete()
 
 
 def Age(particle, fieldset, time):
-    # Update particle age.
+    """Update particle age."""
     particle.age = particle.age + math.fabs(particle.dt)
+
+    return
 
 
 def DeleteWestward(particle, fieldset, time):
+    """Delete particles initially travelling westward."""
     # Delete particle if the initial zonal velocity is westward (negative).
     if particle.age == 0. and particle.u < 0:
         particle.delete()
 
+    return
+
 
 def Distance(particle, fieldset, time):
+    """Calculate distance travelled by particle."""
     # Calculate the distance in latitudinal direction,
     # using 1.11e2 kilometer per degree latitude).
     lat_dist = (particle.lat - particle.prev_lat) * 111111
@@ -315,11 +320,13 @@ def Distance(particle, fieldset, time):
     particle.prev_lon = particle.lon
     particle.prev_lat = particle.lat
 
+    return
+
 
 @timeit
 def remove_westward_particles(pset):
-    """ Delete particles from the ParticleSet if the initial zonal velocity
-    is westward (negative).
+    """Delete initially westward particles from the ParticleSet.
+
     Requires zonal velocity 'u' and partcile age in pset.
 
     """
@@ -339,15 +346,14 @@ def remove_westward_particles(pset):
 @timeit
 def EUC_pset(fieldset, pclass, p_lats, p_lons, p_depths,
              pset_start, repeatdt):
-    """ Creates a ParticleSet.
-    """
-
+    """Create a ParticleSet."""
     lats = np.tile(p_lats, len(p_depths)*len(p_lons))
     depths = np.tile(np.repeat(p_depths, len(p_lats)), len(p_lons))
     lons = np.repeat(p_lons, len(p_depths)*len(p_lats))
     pset = ParticleSet(fieldset=fieldset, pclass=pclass,
                        lon=lons, lat=lats, depth=depths,
                        time=pset_start, repeatdt=repeatdt)
+
     return pset
 
 
@@ -355,66 +361,7 @@ def EUC_pset(fieldset, pclass, p_lats, p_lons, p_depths,
 def EUC_particles(fieldset, date_bnds, p_lats, p_lons, p_depths,
                   dt, pset_start, repeatdt, runtime, outputdt,
                   remove_westward=True):
-    """ THis does this
-
-
-    Parameters
-    ----------
-    fieldset : TYPE
-        DESCRIPTION.
-    date_bnds : TYPE
-        DESCRIPTION.
-    p_lats : TYPE
-        DESCRIPTION.
-    p_lons : TYPE
-        DESCRIPTION.
-    p_depths : TYPE
-        DESCRIPTION.
-    dt : TYPE
-        DESCRIPTION.
-    pset_start : TYPE
-        DESCRIPTION.
-    repeatdt : TYPE
-        DESCRIPTION.
-    runtime : TYPE
-        DESCRIPTION.
-    outputdt : TYPE
-        DESCRIPTION.
-    remove_westward : TYPE, optional
-        DESCRIPTION. The default is True.
-
-    Returns
-    -------
-    pfile : TYPE
-        DESCRIPTION.
-
-    """
-
-
-
-    """
-
-
-    Args:
-        fieldset (TYPE): DESCRIPTION.
-        date_bnds (TYPE): DESCRIPTION.
-        p_lats (TYPE): DESCRIPTION.
-        p_lons (TYPE): DESCRIPTION.
-        p_depths (TYPE): DESCRIPTION.
-        dt (TYPE): DESCRIPTION.
-        pset_start (TYPE): DESCRIPTION.
-        repeatdt (TYPE): DESCRIPTION.
-        runtime (TYPE): DESCRIPTION.
-        outputdt (TYPE): DESCRIPTION.
-        remove_westward (TYPE, optional): DESCRIPTION. Defaults to True.
-
-    Returns:
-        pfile (TYPE): DESCRIPTION.
-
-    """
-
-
-    """ Creates and executes a ParticleSet (created using EUC_pset).
+    """Create and execute a ParticleSet (created using EUC_pset).
 
     Args:
         fieldset (parcels.fieldset.FieldSet): Velocity to sample.
@@ -434,9 +381,10 @@ def EUC_particles(fieldset, date_bnds, p_lats, p_lons, p_depths,
         pfile (pathlib.Path): Path to created ParticleFile.
 
     """
+
     class tparticle(JITParticle):
-        """ Particle class that saves particle age and zonal velocity.
-        """
+        """Particle class that saves particle age and zonal velocity."""
+
         # The age of the particle.
         age = Variable('age', dtype=np.float32, initial=0.)
         # The velocity of the particle.
@@ -448,8 +396,8 @@ def EUC_particles(fieldset, date_bnds, p_lats, p_lons, p_depths,
                          for d in date_bnds], i)).exists():
         i += 1
 
-    pfile = dpath.joinpath('ParticleFile_{}-{}_v{}i.nc'.format(*[d.year
-                          for d in date_bnds], i))
+    pfile = dpath/'ParticleFile_{}-{}_v{}i.nc'.format(*[d.year for d in
+                                                        date_bnds], i)
 
     logger.info('Executing: {}'.format(pfile.stem))
     # Create particle set.
@@ -470,12 +418,15 @@ def EUC_particles(fieldset, date_bnds, p_lats, p_lons, p_depths,
                  recovery={ErrorCode.ErrorOutOfBounds: DeleteParticle},
                  verbose_progress=True)
     logger.info('Completed: {}'.format(pfile.stem))
+
     return pfile
 
 
 @timeit
 def ParticleFile_transport(pfile, dy, dz, save=True):
-    """ Removes particles that were intially travellling westward and
+    """Remove westward particles and calculate transport.
+
+    Remove particles that were intially travellling westward and
     calculates the intial volume transport of each particle.
     Requires zonal velocity 'u' to be saved to the particle file.
     Saves new particle file with the same name (minus the 'i').
@@ -496,7 +447,7 @@ def ParticleFile_transport(pfile, dy, dz, save=True):
 
     # Create copy of particle file with initally westward partciles removed.
     df = xr.Dataset()
-    df.attrs = ds.attrs # Copy partcile file attributes.
+    df.attrs = ds.attrs  # Copy partcile file attributes.
     # Indexes of particles that were intially westward.
     idx = np.argwhere(ds.isel(obs=0).u.values < 0).flatten().tolist()
     # Copy particle file variables (without westward) and attributes.
@@ -538,12 +489,13 @@ def ParticleFile_transport(pfile, dy, dz, save=True):
         # Saves with same file name, but with the last 'i' removed.
         # E.g. ParticleFile_2010-2011_v0i.nc -> ParticleFile_2010-2011_v0.nc
         df.to_netcdf(dpath.joinpath(pfile.stem[:-1] + pfile.suffix))
+
     return df
 
 
 @timeit
 def plot3D(pfile):
-    """ Plot 3D figure of particle trajectories over time.
+    """Plot 3D figure of particle trajectories over time.
 
     Args:
         pfile (pathlib.Path): ParticleFile to plot.
@@ -570,29 +522,13 @@ def plot3D(pfile):
     plt.show()
     plt.savefig(fpath.joinpath(pfile.stem + im_ext))
     plt.close()
-
-
     ds.close()
 
-#    for i in range(N):
-#        ax.scatter(x[i], y[i], z[i], s=5, marker="o", c=cmap(norm(ds.u)))
-##        ax.scatter(x[i], y[i], z[i], s=5, marker="o", c=[c[i]])
-#
-pfile=dpath.joinpath('ParticleFile_1979-1989_v3.nc')
-filename=dpath.joinpath('ParticleFile_1979-1989_v3.nc')
-pfile=dpath.joinpath('ParticleFile_1979-1989_v3.nc')
+    return
+
+
 def deg2m(lat1, lon1, lat2, lon2):
-    """ Finds distance in metres between two lat/lon points.
-
-    Parameters:
-        lat1: latitude of point 1
-        lon1: longitude of point 1
-        lat2: latitude of point 2
-        lon2: longitude of point 2
-
-    Returns:
-        distance [m] between the two points
-    """
+    """Find distance in metres between two lat/lon points."""
     # Convert latitude and longitude to spherical coordinates in radians.
     degrees_to_radians = math.pi/180.0
 
@@ -617,3 +553,23 @@ def deg2m(lat1, lon1, lat2, lon2):
 
     return arc*EARTH_RADIUS
 
+
+fpath, dpath, xpath, lpath, tpath = paths()
+
+logger.setLevel(logging.DEBUG)
+now = datetime.now()
+handler = logging.FileHandler(lpath/'main_{}.log'
+                              .format(now.strftime("%Y-%m-%d")))
+formatter = logging.Formatter(
+        '%(asctime)s:%(funcName)s:%(message)s')
+handler.setFormatter(formatter)
+logger.addHandler(handler)
+logger.propagate = False
+
+#    for i in range(N):
+#        ax.scatter(x[i], y[i], z[i], s=5, marker="o", c=cmap(norm(ds.u)))
+#        ax.scatter(x[i], y[i], z[i], s=5, marker="o", c=[c[i]])
+#
+pfile = dpath.joinpath('ParticleFile_1979-1989_v3.nc')
+filename = dpath.joinpath('ParticleFile_1979-1989_v3.nc')
+pfile = dpath.joinpath('ParticleFile_1979-1989_v3.nc')
