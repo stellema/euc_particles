@@ -24,9 +24,8 @@ fpath, dpath, xpath, lpath, tpath = paths()
 
 logger.setLevel(logging.DEBUG)
 now = datetime.now()
-handler = logging.FileHandler(lpath.joinpath('main_valid_' +
-                                             now.strftime("%Y-%m-%d") +
-                                             '.log'))
+handler = logging.FileHandler(lpath/'main_valid_{}.log'
+                              .format(now.strftime("%Y-%m-%d")))
 formatter = logging.Formatter('%(asctime)s:%(funcName)s:%(message)s')
 handler.setFormatter(formatter)
 logger.addHandler(handler)

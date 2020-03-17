@@ -68,12 +68,23 @@ im_ext = '.png'
 width = 7.20472
 height = width / 1.718
 
+plt.rcParams['figure.facecolor'] = 'white'
+plt.rcParams.update({'font.size': 11})
+plt.rcParams['figure.dpi'] = 80
+plt.rcParams['savefig.dpi'] = 500
+plt.rcParams['legend.fontsize'] = 'medium'
+plt.rcParams['figure.titlesize'] = 'medium'
+plt.rcParams['axes.titlesize'] = 'medium'
+plt.rcParams['axes.labelsize'] = 'medium'
+
 # Create dict of various items.
 lx = {'exp': ['historical', 'rcp85', 'rcp85_minus_historial'],
       'exps': ['Historical', 'RCP85', 'Difference'],
+      'exp_abr': ['hist', 'rcp', 'diff'],
       'years':  [[1981, 2012], [2070, 2101]],
       'vars': ['u', 'v', 'w', 'salt', 'temp'],
       'lons': [165, 190, 220],
+      'lonstr': ['165\u00b0E', '170\u00b0W', '140\u00b0W'],
       'deg': '\u00b0',  # Degree symbol.
       'frq': ['day', 'mon'],
       'frq_short': ['dy', 'mon'],
