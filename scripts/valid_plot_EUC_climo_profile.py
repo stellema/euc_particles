@@ -1,14 +1,16 @@
 # -*- coding: utf-8 -*-
 """
-created: Tue Sep 10 18:44:15 2019.
+Plot OFAM3 EUC climatology velocity profile at three release longitudes.
+
+created: Tue Sep 10 18:44:15 2019
 
 author: Annette Stellema (astellemas@gmail.com)
 
-This script plots
 """
 import gsw
 import numpy as np
 import xarray as xr
+import matplotlib.colors
 import matplotlib.pyplot as plt
 from main import paths, im_ext, idx_1d, lx, width, height, LAT_DEG, SV
 
@@ -30,7 +32,7 @@ dsh = xr.open_dataset(xpath/('ocean_salt_{}-{}_climo.nc'.format(*years[0])))
 # dsf = xr.open_dataset(xpath/('ocean_salt_{}-{}_climo.nc'.format(*years[1])))
 
 
-depth = duh.st_ocean[idx_1d(duh.st_ocean, 400)].item()
+depth = duh.st_ocean[idx_1d(duh.st_ocean, 500)].item()
 
 # Slice data to selected latitudes and longitudes.
 duh = duh.sel(yu_ocean=slice(-5.0, 5.), st_ocean=slice(2.5, depth))
@@ -62,9 +64,13 @@ def plot_ofam_EUC_profile(du, exp=0, vmax=1.2, dt=None, ds=None,
     """
     def sub_plot_u(ax, i, exp, lon, du, dt, ds, add_bounds, cmap, tstr=''):
         """Plot velocity and isopycnals."""
-        ax.set_title('{}OFAM3 {} EUC at {} {}'
-                     .format(lx['l'][i], lx['exps'][exp],
-                             lx['lonstr'][ix], tstr), loc='left')
+        # ax.set_title('{}OFAM3 {} EUC at {} {}'
+        #              .format(lx['l'][i], lx['exps'][exp],
+        #                      lx['lonstr'][ix], tstr), loc='left')
+
+        # Title without including scenario.
+        ax.set_title('{}OFAM3 EUC at {} {}'.format(
+            lx['l'][i], lx['lonstr'][ix], tstr), loc='left')
 
         # Plot zonal velocity.
         cs = ax.pcolormesh(du.yu_ocean, du.st_ocean,
@@ -83,14 +89,15 @@ def plot_ofam_EUC_profile(du, exp=0, vmax=1.2, dt=None, ds=None,
             t = dt.sel(xt_ocean=x + 0.05, method='nearest')
             rho = gsw.pot_rho_t_exact(SA, t, p, p_ref=0)
             clevs = np.arange(22, 26.8, 0.4)
+            # colors = 'k' if freq == 'mon' else 'darkred'
             cx = ax.contour(dt.yt_ocean, dt.st_ocean, rho - 1000,
                             clevs, colors='darkred', linewidths=1)
             plt.clabel(cx, cx.levels[::5], inline=True, fontsize=14,
                        fmt='%1.0f', colors='k')
 
         # Plot ascending depths with ticks every 100 m.
-        plt.ylim(350, 2.5)
-        plt.yticks(np.arange(0, depth, 100))
+        ax.set_ylim(450, 2.5)
+        # ax.set_yticks([100, 200, 300])
 
         # Define latitude tick labels that are either North or South.
         xticks = ax.get_xticks()
@@ -103,18 +110,20 @@ def plot_ofam_EUC_profile(du, exp=0, vmax=1.2, dt=None, ds=None,
         if freq == 'annual':
             ax.set_xticks([-5, 0, 5])
             if i == 2:
-
                 ax.set_xticklabels(['5\u00b0S', '0', '5\u00b0N'])
             else:
                 ax.set_xticklabels([])
 
         else:
-            ax.set_xticklabels(tmp)
+            if i >= 9:
+                ax.set_xticklabels(tmp)
+            else:
+                ax.set_xticklabels([])
 
         # Plot EUC integration boundaries.
         if add_bounds:
             ax.axhline(y=25, c="darkgrey", linewidth=1)
-            ax.axhline(y=300, c="darkgrey", linewidth=1)
+            ax.axhline(y=350, c="darkgrey", linewidth=1)
             ax.axvline(x=2.6, c="darkgrey", linewidth=1)
             ax.axvline(x=-2.6, c="darkgrey", linewidth=1)
 
@@ -122,12 +131,19 @@ def plot_ofam_EUC_profile(du, exp=0, vmax=1.2, dt=None, ds=None,
 
     def save_fig(fig, cs, isopycnals, freq, exp, caxes):
         # Colorbar extra axis:[left, bottom, width, height].
-        orientation = 'vertical' if freq == 'mon' else 'horizontal'
-        cbar = plt.colorbar(cs, cax=fig.add_axes(caxes),
-                            orientation=orientation, ticks=[-1, 0, 1])
-        # , extend='both'
+        # orientation = 'vertical' if freq == 'mon' else 'horizontal'
+        orientation = 'horizontal'
+
+        if freq == 'annual':
+            # Colorbar to match Qin thesis.
+            cbar = plt.colorbar(cs, cax=fig.add_axes(caxes),
+                                orientation=orientation, ticks=[-1, 0, 1])
+        else:
+            cbar = plt.colorbar(cs, cax=fig.add_axes(caxes),
+                                orientation=orientation, extend='both')
+
         cbar.ax.tick_params(labelsize=8, width=0.03)
-        cbar.set_label('[m/s]', size=9)
+        cbar.set_label('Zonal velocity [m/s]', size=9)
 
         # Add 'isopyncals' to file name if shown.
         strx = '_isopycnals' if isopycnals else ''
@@ -149,8 +165,9 @@ def plot_ofam_EUC_profile(du, exp=0, vmax=1.2, dt=None, ds=None,
 
     if freq == 'annual':
         # Colorbar extra axis:[left, bottom, width, height].
-        caxes = [0.13, -0.01, 0.815, 0.025] # [0.925, 0.11, 0.02, 0.77]
-        fig, ax = plt.subplots(3, 1, figsize=(width/1.2, height*1.55),
+        # caxes = [0.925, 0.11, 0.02, 0.77]  # Three columns.
+        caxes = [0.13, -0.01, 0.815, 0.025]  # Three rows.
+        fig, ax = plt.subplots(3, 1, figsize=(width/1.3, height*1.55),
                                sharey=True)
         for ix, x in enumerate(lx['lons']):
             ax[ix], cs = sub_plot_u(ax[ix], ix, exp, lx['lonstr'][ix],
@@ -162,8 +179,10 @@ def plot_ofam_EUC_profile(du, exp=0, vmax=1.2, dt=None, ds=None,
 
     elif freq == 'mon':
         for ix, x in enumerate(lx['lons']):
-            caxes = [0.925, 0.12, 0.0175, 0.167]
-            fig, ax = plt.subplots(4, 3, figsize=(width*1.8, height*4),
+            # Colorbar extra axis:[left, bottom, width, height].
+            # caxes = [1, 0.1, 0.0175, 0.17]
+            caxes = [0.33, -0.015, 0.4, 0.0225]
+            fig, ax = plt.subplots(4, 3, figsize=(width*1.4, height*2.25),
                                    sharey=True)
             ax = ax.flatten()
             for i, T in enumerate(lx['mon']):
@@ -234,21 +253,21 @@ def plot_transport(dh, dr):
     plt.savefig(fpath.joinpath('EUC_transport{}'.format(im_ext)))
 
 
-import matplotlib.colors
-
+# Create colourmap to match Qin thesis Fig 3.3.
 norm = matplotlib.colors.Normalize(-1.0, 1.0)
 colors = [[norm(-1.0), "darkblue"],
           [norm(-0.65), "blue"],
-          [norm(-0.2), "cyan"],
-          [norm( 0.0), "white"],
-          [norm( 0.2), "yellow"],
-          [norm( 0.65), "red"],
-          [norm( 1.0), "darkred"]]
-
+          [norm(-0.3), "cyan"],
+          [norm(0.0), "white"],
+          [norm(0.3), "yellow"],
+          [norm(0.65), "red"],
+          [norm(1.0), "darkred"]]
 cmap = matplotlib.colors.LinearSegmentedColormap.from_list("", colors)
 
-# for freq in ['annual', 'mon']:
-freq = 'annual'
-plot_ofam_EUC_profile(duh.u, exp=0, vmax=1.15, dt=dth, ds=dsh,
-                      isopycnals=True, freq=freq, add_bounds=False, cmap=cmap)
+# plot_ofam_EUC_profile(duh.u, exp=0, vmax=1.15, dt=dth, ds=dsh,
+#                       isopycnals=True, freq='annual', add_bounds=False,
+#                       cmap=cmap)
+
+plot_ofam_EUC_profile(duh.u, exp=0, vmax=1, dt=dth, ds=dsh,
+                      isopycnals=True, freq='mon')
 # plot_transport(duh, duf)

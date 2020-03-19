@@ -8,6 +8,7 @@ author: Annette Stellema (astellemas@gmail.com)
 """
 # import sys
 # sys.path.append('/g/data1a/e14/as3189/OFAM/scripts/')
+import gsw
 import logging
 import numpy as np
 import xarray as xr
@@ -323,3 +324,155 @@ def cor_scatter_plot(fig, i, varx, vary,
     ax.legend(fontsize=9)
 
     return slope, intercept
+
+def EUC_bnds_grenier(du, dt, ds, lon):
+    """Apply Grenier EUC definition to zonal velocity at a longitude.
+
+    Grenier et al. (2011) EUC definition:
+        - Equatorial eastward flow (u > 1 m s−1)
+        - Between σθ = 22.4 kg m−3 to 26.8 kg m−3
+        - Between 2.625°S to 2.625°N
+
+    Args:
+        du (Dataset): Zonal velocity dataset.
+        dt (Dataset): Temperature dataset.
+        ds (Dataset): Salinity dataset.
+        lon (float): The EUC longitude examined.
+
+    Returns:
+        du3 (dataset): The zonal velocity in the EUC region.
+
+    """
+    # Grenier
+    lat = 2.625
+    rho1 = 22.4
+    rho2 = 26.8
+
+    # Find exact latitude longitudes to slice dt and ds.
+    lat_i = dt.yt_ocean[idx_1d(dt.yt_ocean, -lat + 0.05)].item()
+    lat_f = dt.yt_ocean[idx_1d(dt.yt_ocean, lat + 0.05)].item()
+    lon_i = dt.xt_ocean[idx_1d(dt.xt_ocean, lon + 0.05)].item()
+
+    du = du.sel(xu_ocean=lon, yu_ocean=slice(-lat, lat))
+    dt = dt.sel(xt_ocean=lon_i, yt_ocean=slice(lat_i, lat_f))
+    ds = ds.sel(xt_ocean=lon_i, yt_ocean=slice(lat_i, lat_f))
+
+    Y, Z = np.meshgrid(dt.yt_ocean.values, -dt.st_ocean.values)
+    p = gsw.conversions.p_from_z(Z, Y)
+
+    SA = ds.salt
+    t = dt.temp
+    rho = gsw.pot_rho_t_exact(SA, t, p, p_ref=0)
+    dr = xr.Dataset({'rho': (['Time', 'st_ocean', 'yu_ocean'],  rho - 1000)},
+                    coords={'Time': du.Time,
+                            'st_ocean': du.st_ocean,
+                            'yu_ocean': du.yu_ocean})
+
+    du1 = du.u.where(dr.rho >= rho1, np.nan)
+    du2 = du1.where(dr.rho <= rho2, np.nan)
+    du_euc = du2.where(du.u > 0.1, np.nan)
+
+    return du_euc
+
+
+def EUC_bnds_izumo(du, dt, ds, lon, interpolated=False):
+    """Apply Izumo (2005) EUC definition to zonal velocity at a longitude.
+
+    Izumo (2005):
+        - Zonal velocity (U): U > 0 m s−1,
+        - Depth: 25 m < z < 300 m.
+        - Temperature (T): T < T(z = 15 m) – 0.1°C and T < 27°C
+
+        - Latitudinal boundaries:
+            - Between +/-2° at 25 m,
+            - which linearly increases to  +/-4° at 200 m
+            -via the function 2° – z/100 < y < 2° + z/100,
+            - and remains constant at  +/-4° below 200 m.
+
+    Args:
+        du (Dataset): Zonal velocity dataset.
+        dt (Dataset): Temperature dataset.
+        ds (Dataset): Salinity dataset.
+        lon (float): The EUC longitude examined.
+
+    Returns:
+        du4 (DataArray): The zonal velocity in the EUC region.
+
+    """
+    # Define depth boundary levels.
+    if interpolated:
+        z_15, z1, z2 = 15, 25, 300
+    else:
+        # Modified because this is the correct level for OFAM3 grid.
+        z_15, z1, z2 = 17, 25, 325
+
+    # Find exact latitude longitudes to slice dt and ds.
+    lon_i = dt.xt_ocean[idx_1d(dt.xt_ocean, lon + 0.05)].item()
+
+    dt_z15 = dt.temp.sel(xt_ocean=lon_i, st_ocean=z_15, method='nearest')
+
+    # Slice depth and longitude.
+    du = du.sel(xu_ocean=lon, st_ocean=slice(z1, z2))
+    dt = dt.sel(xt_ocean=lon_i, st_ocean=slice(z1, z2))
+    ds = ds.sel(xt_ocean=lon_i, st_ocean=slice(z1, z2))
+
+    Z = du.st_ocean.values
+
+    y1 = -2 - Z/100
+    y2 = 2 + Z/100
+
+    du1 = du.u.copy()
+    du2 = du.u.copy()
+
+    for z in range(len(du.st_ocean)):
+        # Remove latitides via function between 25-200 m.
+        if z <= idx_1d(du.st_ocean, 200):
+            du1[:, z, :] = du.u.isel(st_ocean=z).where(du.yu_ocean > y1[z])
+            du1[:, z, :] = du1.isel(st_ocean=z).where(du.yu_ocean < y2[z])
+
+        # Remove latitides greater than 4deg for depths greater than 200 m.
+        else:
+            du1[:, z, :] = du.u.isel(st_ocean=z).where(du.yu_ocean >= -4)
+            du1[:, z, :] = du1.isel(st_ocean=z).where(du.yu_ocean <= 4)
+
+        # Remove temperatures less than t(z=15) - 0.1 at each timestep.
+        du2[:, z, :] = du1.isel(st_ocean=z).where(
+            dt.temp.isel(st_ocean=z).values < dt_z15.values - 0.1)
+
+    # Remove negative/zero velocities.
+    du3 = du2.where(du.u > 0, np.nan)
+
+    # Removed temperatures less than 27C.
+    du4 = du3.where(dt.temp.values < 27)
+
+    return du4
+
+
+def EUC_bnds_static(du, lon=None, z1=25, z2=350, lat=2.6):
+    """Apply static EUC definition to zonal velocity at a longitude.
+
+    Args:
+        du (Dataset): Zonal velocity dataset.
+        lon (float): The EUC longitude examined.
+        z1 (float): First depth level.
+        z2 (float): Final depth level.
+        lat (float): Latitude bounds.
+
+    Returns:
+        du4 (DataArray): The zonal velocity in the EUC region.
+
+    """
+    z1, z2, lat = 25, 350, 2.6
+
+    # Slice depth and longitude.
+    if lon is not None:
+        du = du.sel(st_ocean=slice(z1, z2),
+                    xu_ocean=lon,
+                    yu_ocean=slice(-lat, lat))
+    else:
+        du = du.sel(st_ocean=slice(z1, z2),
+                    yu_ocean=slice(-lat, lat))
+
+    # Remove negative/zero velocities.
+    du = du.u.where(du.u > 0, np.nan)
+    return du
