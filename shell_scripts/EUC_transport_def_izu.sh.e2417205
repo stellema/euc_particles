@@ -1,0 +1,12 @@
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/create_file_EUC_transport_definitions.py", line 54, in <module>
+    dx_165 = EUC_bnds_izumo(du, dt, ds, lon=165)
+  File "/g/data/e14/as3189/OFAM/scripts/main_valid.py", line 430, in EUC_bnds_izumo
+    du1[:, z, :] = du.u.isel(st_ocean=z).where(du.yu_ocean > y1[z])
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.01/lib/python3.7/site-packages/xarray/core/dataarray.py", line 647, in __setitem__
+    self.variable[key] = value
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.01/lib/python3.7/site-packages/xarray/core/variable.py", line 785, in __setitem__
+    indexable[index_tuple] = value
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.01/lib/python3.7/site-packages/xarray/core/indexing.py", line 1336, in __setitem__
+    "this variable's data is stored in a dask array, "
+TypeError: this variable's data is stored in a dask array, which does not support item assignment. To assign to this variable, you must first load it into memory explicitly using the .load() method or accessing its .values attribute.

@@ -24,6 +24,8 @@ exp = int(sys.argv[2])
 
 fpath, dpath, xpath, lpath, tpath = paths()
 
+
+print(method, exp)
 fileu, files, filet = [], [], []
 
 for y in range(lx['years'][exp][0], lx['years'][exp][1]+1):

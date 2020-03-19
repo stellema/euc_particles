@@ -427,17 +427,17 @@ def EUC_bnds_izumo(du, dt, ds, lon, interpolated=False):
     for z in range(len(du.st_ocean)):
         # Remove latitides via function between 25-200 m.
         if z <= idx_1d(du.st_ocean, 200):
-            du1[:, z, :] = du.u.isel(st_ocean=z).where(du.yu_ocean > y1[z]).load()
-            du1[:, z, :] = du1.isel(st_ocean=z).where(du.yu_ocean < y2[z]).load()
+            du1[:, z, :] = du.u.isel(st_ocean=z).where(du.yu_ocean > y1[z])
+            du1[:, z, :] = du1.isel(st_ocean=z).where(du.yu_ocean < y2[z])
 
         # Remove latitides greater than 4deg for depths greater than 200 m.
         else:
-            du1[:, z, :] = du.u.isel(st_ocean=z).where(du.yu_ocean >= -4).load()
-            du1[:, z, :] = du1.isel(st_ocean=z).where(du.yu_ocean <= 4).load()
+            du1[:, z, :] = du.u.isel(st_ocean=z).where(du.yu_ocean >= -4)
+            du1[:, z, :] = du1.isel(st_ocean=z).where(du.yu_ocean <= 4)
 
         # Remove temperatures less than t(z=15) - 0.1 at each timestep.
         du2[:, z, :] = du1.isel(st_ocean=z).where(
-            dt.temp.isel(st_ocean=z).values < dt_z15.values - 0.1).load()
+            dt.temp.isel(st_ocean=z).values < dt_z15.values - 0.1)
 
     # Remove negative/zero velocities.
     du3 = du2.where(du.u > 0, np.nan)
