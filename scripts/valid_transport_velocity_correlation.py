@@ -11,6 +11,7 @@ author: Annette Stellema (astellemas@gmail.com)
 # sys.path.append('/g/data1a/e14/as3189/OFAM/scripts/')
 import numpy as np
 import xarray as xr
+from scipy import stats
 import matplotlib.pyplot as plt
 from main import paths, lx, SV
 from main_valid import EUC_vbounds, regress
@@ -200,7 +201,7 @@ def plot_tao_ofam_transport_timeseries(z1=25, z2=350, T=1, dk=5,
             time = dtc.month
             ax.set_xticks(np.arange(1, len(lx['mon'])+1))
             ax.set_xticklabels(lx['mon'])
-            ax.set_ylim(ymin=5, ymax=45)
+            ax.set_ylim(ymin=0, ymax=45)
             save_name = 'EUC_transport_regression_mon_{}.png'.format(v_bnd)
 
         elif series == 'all':
@@ -208,7 +209,7 @@ def plot_tao_ofam_transport_timeseries(z1=25, z2=350, T=1, dk=5,
             # Increase alpha of transport when available, but doesn't match.
             ax.plot(time, dux_nan, color='k', alpha=0.3)
             ax.plot(time, dtc_nan/SV, color='red', alpha=0.3)
-            ax.set_ylim(ymin=0)
+            ax.set_ylim(ymin=0, ymax=55)
             save_name = 'EUC_transport_regression_{}.png'.format(v_bnd)
 
         ax.set_title('{}Modelled and observed EUC transport at {}°E v={}'
@@ -217,10 +218,13 @@ def plot_tao_ofam_transport_timeseries(z1=25, z2=350, T=1, dk=5,
         ax.plot(time, dtc/SV, color='r', label='OFAM3')
         ax.set_ylabel('Transport [Sv]')
         ax.legend(loc=2)
+        cor_r, cor_p = regress(dux*m[i] + b[i], dtc/SV)[0:2]
+        print('{}: R={:.2f}, p={:.3f} (stats.spearmanr)'.format(lon, cor_r, cor_p))
+
     plt.tight_layout()
     plt.savefig(fpath.joinpath('tao', save_name))
-
-    return
+    
+    return 
 
 
 # print('plot_tao_max_velocity_correlation')

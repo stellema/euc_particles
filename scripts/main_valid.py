@@ -271,8 +271,9 @@ def regress(varx, vary):
     vary = vary[~np.isnan(vary)]
 
     cor_r, cor_p = stats.spearmanr(varx, vary)
+    
     slope, intercept, r_value, p_value, std_err = stats.linregress(varx, vary)
-
+    
     return cor_r, cor_p, slope, intercept, r_value, p_value, std_err
 
 
