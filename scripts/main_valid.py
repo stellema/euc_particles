@@ -170,14 +170,14 @@ def plot_tao_timeseries(ds, interp='', T=1, new_end_v=None):
     return
 
 
-def EUC_depths(du, depths, i, v_bnd=0.3, index=False):
+def EUC_vbounds(du, depths, i, v_bnd=0.3, index=False):
     """Find EUC max velocity/position and lower EUC depth boundary.
 
     Args:
         du (array): Velocity values.
         depths (array): Depth values.
         i ({0, 1, 2}): Index of longitude.
-        v_bnd (float, optional): Minimum velocity to include. Defaults to 0.3.
+        v_bnd (float, str): Minimum velocity to include. Defaults to 0.3.
         index (bool, optional): Return depth index or value. Defaults to False.
 
     Returns:
@@ -186,65 +186,67 @@ def EUC_depths(du, depths, i, v_bnd=0.3, index=False):
         array: Deepest EUC depth based on v_bnd at each timestep.
 
     """
+    du = du.where(du >= 0)
     u = np.ma.masked_invalid(du)
 
     # Maximum and minimum velocity at each time step.
-    v_max = np.nanmax(u, axis=1)
+    v_max = du.max(axis=1, skipna=True)
+    v_max_half = v_max/2
 
     # Index of maximum and minimum velocity at each time.
-    v_imax, v_ibnd = np.nanargmax(u, axis=1), np.nanargmax(u, axis=1)
+    v_imax = np.nanargmax(u, axis=1)
 
-    # Depth of maximum velocity.
-    depth_vmax = v_imax.copy()*np.nan
+    z1i = (v_imax.copy()*np.nan)
+    z2i = (v_imax.copy()*np.nan)
+    z1 = v_imax.copy()*np.nan
+    z2 = v_imax.copy()*np.nan
 
-    # Bottom depth levels (based on minimum velocity bound for the EUC).
-    depth_bnd = v_imax.copy()*np.nan  # mx_depth
+    target = v_bnd if v_bnd == 'half_max' else v_max_half[0]
 
-    count, empty, skip = 0, 0, 0
-
-    # Deepest velocity depth index (recalculated at each t is tao).
-    end = len(depths) - 1
+    count, empty, skip_t, skip_l = 0, 0, 0, 0
 
     for t in range(u.shape[0]):
-        # Make sure entire slice isn't all empty.
+        # Make sure entire slice isn't all empty
         if not (u[t] == True).mask.all() and not np.ma.is_masked(v_imax[t]):
-            # Find depth of maximum velocity.
-            depth_vmax[t] = depths[int(v_imax[t])].item()
 
-            # Find deepest velocity depth index.
-            end = np.ma.nonzero(u[t])[-1][-1]
-            # Make sure the end value isn't too much larger than v_bnd.
-            if u[t, end] <= v_bnd:
-                # Velocity closest to v_bnd in the subset array.
-                tmp = u[t, idx_1d(u[t, v_imax[t]+2:end + 1], v_bnd) +
-                        v_imax[t] + 2].item()
+            # Set target velocity as half the maximum at each timestep.
+            if v_bnd == 'half_max':
+                target = v_max_half[t] + v_max_half[t]/100
 
-                # Depth index of the closet velocity (in the full array).
-                v_ibnd[t] = np.argwhere(u[t] == tmp)[-1][-1]
+            # Subset velocity on either side of the maximum velocity.
+            top = du[t, slice(0, v_imax[t])]
+            low = du[t, slice(v_imax[t], len(depths))]
 
-                # Find that depth.
-                depth_bnd[t] = depths[int(v_ibnd[t])]
+            # Mask velocities that are greater than the maxmimum.
+            top = top.where(top <= target)
+            low = low.where(low <= target)
 
-                # Remove depth bounds shallower than 190 m.
-                if depth_bnd[t] < 190:
-                    depth_bnd[t] = np.nan
+            # Find the closest velocity depth/index if both the
+            # top and lower arrays are not all NaN.
+            if all([not all(np.isnan(top)), not all(np.isnan(low))]):
+                z1i[t] = idx_1d(top, target)
+                z1[t] = depths[int(z1i[t])]
+                z2i[t] = idx_1d(low, target) + v_imax[t]
+                z2[t] = depths[int(z2i[t])]
                 count += 1
 
-            else:
-                skip += 1
+            # Check if skipped steps due to missing top depth (and vice versa).
+            if all(np.isnan(low)) and not all(np.isnan(top)):
+                skip_t += 1
+            elif all(np.isnan(top)) and not all(np.isnan(low)):
+                skip_l += 1
         else:
             empty += 1
 
     data_name = 'OFAM3' if hasattr(du, 'st_ocean') else 'TAO/TRITION'
 
-    logger.debug('{} {}: v_bnd={} count={} tot={}, skipped={} empty={}.'
-                .format(data_name, lx['lons'][i], v_bnd, count, u.shape[0],
-                        skip,  empty))
+    logger.debug('{} {}: v_bnd={} tot={} count={} null={} skip_T={}, skip_L={}'
+                .format(data_name, lx['lons'][i], v_bnd, u.shape[0], count,
+                        empty, skip_t, skip_l))
     if not index:
-        return v_max, depth_vmax, depth_bnd
+        return v_max, z1, z2
     else:
-        return v_max, v_imax, v_ibnd
-
+        return v_max, z1i, z2i
 
 def regress(varx, vary):
     """Return Spearman R and linregress results.
