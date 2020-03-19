@@ -27,15 +27,15 @@ def plot_tao_velocity_timeseries():
         plot_tao_timeseries(ds, interp, T=T, new_end_v=new_end_v)
 
 
-def plot_eq_velocity_timeseries_tao_ofam(ds, d3, v_bnd=0.3,
-                                         hline=50, add_bounds=True):
+def plot_eq_velocity_timeseries_tao_ofam(ds, d3, v_bnd='half_max',
+                                         add_bounds=True):
     """Plot TAO/TRITION and OFAM3 equatorial velocity timeseries.
 
     Args:
         ds (list): List of TAO/TRITION datasets at three longitudes.
         d3 (array): OFAM3 climotology velocity dataset.
-        v_bnd (float): EUC_depths velocity boundary. Defaults to 0.3.
-        hline (int, optional): Depth level line to plot. Defaults to 50.
+        v_bnd (float, str): EUC_vbounds velocity boundary.
+            Defaults to 'half_max.
         add_bounds (bool, optional): Add AUC_depth boundary. Defaults to True.
 
     Returns:
@@ -58,10 +58,11 @@ def plot_eq_velocity_timeseries_tao_ofam(ds, d3, v_bnd=0.3,
 
         # Plot EUC bottom depths.
         if add_bounds:
-            v_max, depth_max, depth_end = EUC_depths(du.u_1205, du.depth, i)
+            v_max, d1, d2 = EUC_vbounds(du.u_1205, du.depth, i, v_bnd=v_bnd)
             ax.plot(np.ma.masked_where(np.isnan(depth_end), du.time),
-                    np.ma.masked_where(np.isnan(depth_end), depth_end), 'k')
-            ax.axhline(hline, color='k')
+                    np.ma.masked_where(np.isnan(depth_end), d1), 'k')
+            ax.plot(np.ma.masked_where(np.isnan(depth_end), du.time),
+                    np.ma.masked_where(np.isnan(depth_end), d2), 'k')
 
         # OFAM3 row.
         dq = d3.sel(xu_ocean=lx['lons'][i])
@@ -74,9 +75,11 @@ def plot_eq_velocity_timeseries_tao_ofam(ds, d3, v_bnd=0.3,
 
         # Plot EUC bottom depths.
         if add_bounds:
-            v_max, depth_max, depth_end = EUC_depths(dq.u, dq.st_ocean, i)
-            ax.plot(dq.Time, depth_end, 'k')
-            ax.axhline(50, color='k')
+            v_max, d1, d2 = EUC_vbounds(dq.u, dq.st_ocean, i,
+                                                      v_bnd=v_bnd)
+            ax.plot(dq.Time, d1, 'k')
+            ax.plot(dq.Time, d2, 'k')
+
 
         if add_bounds:
             save_name = 'tao_ofam_depth_{}_bnds_{}.png'.format(lx['frq'][T],
@@ -95,5 +98,6 @@ T = 1
 ds = open_tao_data(frq=lx['frq_short'][T], dz=slice(10, 360))
 d3 = xr.open_dataset(dpath.joinpath('ofam_ocean_u_EUC_int_transport.nc'))
 
-plot_tao_velocity_timeseries()
-plot_eq_velocity_timeseries_tao_ofam(ds, d3, 0.3, hline=25, add_bounds=True)
+# plot_tao_velocity_timeseries()
+plot_eq_velocity_timeseries_tao_ofam(ds, d3, v_bnd='half_max', add_bounds=True)
+plot_eq_velocity_timeseries_tao_ofam(ds, d3, v_bnd=0.3, add_bounds=True)
