@@ -1,0 +1,35 @@
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+
+------------------------------------------------------------------------
+Job 2424156 has exceeded memory allocation on node gadi-cpu-clx-2632.gadi.nci.org.au
+Process "bash", pid 51881, rss 1966080, vmem 20774912
+Process "2424156.gadi-pb", pid 52102, rss 1781760, vmem 227921920
+Process "python3", pid 52422, rss 494821376, vmem 1596608512
+Process "orted", pid 52448, rss 16732160, vmem 388509696
+------------------------------------------------------------------------
+For more information visit https://opus.nci.org.au/x/SwGRAQ
+------------------------------------------------------------------------
+/local/spool/pbs/mom_priv/jobs/2424156.gadi-pbs.SC: line 13: 52422 Killed                  python3 /g/data/e14/as3189/OFAM/scripts/create_file_EUC_transport_definitions.py 'grenier' 0

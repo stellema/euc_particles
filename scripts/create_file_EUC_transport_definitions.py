@@ -46,8 +46,11 @@ dz = [(du.st_ocean[z+1] - du.st_ocean[z]).item()
 
 if method == 'static':
     z1, z2, lat = 25, 350, 2.6
+    print('{}: 165 started'.format(method))
     dx_165 = EUC_bnds_static(du, lon=165, z1=z1, z2=z2, lat=lat)
+    print('{}: 190 started'.format(method))
     dx_190 = EUC_bnds_static(du, lon=190, z1=z1, z2=z2, lat=lat)
+    print('{}: 220 started'.format(method))
     dx_220 = EUC_bnds_static(du, lon=220, z1=z1, z2=z2, lat=lat)
 
 elif method == 'izumo':
@@ -56,8 +59,11 @@ elif method == 'izumo':
     dx_220 = EUC_bnds_izumo(du, dt, ds, lon=220)
 
 elif method == 'grenier':
+    print('{}: 165 started'.format(method))
     dx_165 = EUC_bnds_grenier(du, dt, ds, lon=165)
+    print('{}: 190 started'.format(method))
     dx_190 = EUC_bnds_grenier(du, dt, ds, lon=190)
+    print('{}: 220 started'.format(method))
     dx_220 = EUC_bnds_grenier(du, dt, ds, lon=220)
 
 dtx = xr.Dataset()
