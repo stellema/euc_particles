@@ -72,9 +72,9 @@ plt.rcParams['figure.facecolor'] = 'white'
 plt.rcParams.update({'font.size': 11})
 plt.rcParams['figure.dpi'] = 80
 plt.rcParams['savefig.dpi'] = 500
-plt.rcParams['legend.fontsize'] = 'medium'
+plt.rcParams['legend.fontsize'] = 'large'
 plt.rcParams['figure.titlesize'] = 'medium'
-plt.rcParams['axes.titlesize'] = 'medium'
+plt.rcParams['axes.titlesize'] = 'large'
 plt.rcParams['axes.labelsize'] = 'medium'
 
 # Create dict of various items.

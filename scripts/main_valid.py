@@ -98,17 +98,16 @@ def plot_eq_velocity(fig, z, t, u, i, name,
         if rows == 1:
             plt.colorbar(im, shrink=1, orientation='horizontal',
                          extend='both', label='Velocity [m/s]')
-
         else:
             # Add separate colourbar axes (left, bottom, width, height).
-            cbar_ax = fig.add_axes([0.925, 0.11, 0.019, 0.355])
+            cbar_ax = fig.add_axes([0.925, 0.11, 0.018, 0.355])
             # BUG: not sure if first arg is correct or not (was axes[0][0]).
             plt.colorbar(im, cax=cbar_ax, shrink=1, orientation='vertical',
                          extend='both', label='Velocity [m/s]')
 
     if i == 1 or i == 4:
         # Add Depth y label only for the first column of each row.
-        ax.set_ylabel('Depth [m]')
+        ax.set_ylabel('Depth [m]', fontsize='large')
 
     return ax
 

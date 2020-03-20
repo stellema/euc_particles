@@ -11,7 +11,7 @@ author: Annette Stellema (astellemas@gmail.com)
 # sys.path.append('/g/data1a/e14/as3189/OFAM/scripts/')
 import numpy as np
 import xarray as xr
-from main import paths, lx
+from main import paths, lx, width, height
 import matplotlib.pyplot as plt
 from main_valid import EUC_vbounds, plot_eq_velocity
 from main_valid import open_tao_data, plot_tao_timeseries
