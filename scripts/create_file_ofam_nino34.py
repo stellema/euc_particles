@@ -16,7 +16,7 @@ np.set_printoptions(suppress=True)
 fpath, dpath, xpath, lpath, tpath = paths()
 
 exp = 1
-year1 = lx['years'][exp][0] - 1 if exp == 1 else lx['years'][exp][0]
+year1 = lx['years'][exp][0] - 1 if exp == 0 else lx['years'][exp][0]
 date_bnds = [get_date(year1, 1, 1),
              get_date(lx['years'][exp][1], 12, 'max')]
 

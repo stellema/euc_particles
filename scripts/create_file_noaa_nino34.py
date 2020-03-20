@@ -13,7 +13,7 @@ from main import paths, lx
 fpath, dpath, xpath, lpath, tpath = paths()
 
 # Directory where NOAA OISST files are saved.
-path = '/g/data1/ua8/NOAA_OISST/AVHRR/v2-0_modified/'
+path = '/g/data/ua8/NOAA_OISST/AVHRR/v2-0_modified/'
 
 # List of file names to import.
 files = ['{}oisst_avhrr_v2_{}.nc'.format(path, year)

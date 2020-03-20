@@ -20,7 +20,7 @@ import pandas as pd
 from main import paths, lx
 
 # Path to save figures, save data and OFAM model output.
-fpath, dpath, xpath = paths()
+fpath, dpath, xpath, lpath, tpath = paths()
 cdo = Cdo()
 i = int(sys.argv[1]) # Variable index (e.g. u or salt) [0-4].
 x = int(sys.argv[2]) # Scenario index (hist or rcp85) [0-1].
