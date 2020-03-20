@@ -50,9 +50,9 @@ def plot_eq_velocity_timeseries_tao_ofam(ds, d3, v_bnd='half_max',
     for i, du in enumerate(ds):
         # TAO/TRITION row.
         du = du.isel(time=slice(time_bnds_tao[i][0], time_bnds_tao[i][1]))
-        name = '{}TAO/TRITION {} EUC at {}°E'.format(lx['l'][i],
+        name = '{}TAO/TRITION {} EUC at {}'.format(lx['l'][i],
                                                      lx['frq_long'][T],
-                                                     lx['lons'][i])
+                                                     lx['lonstr'][i])
         u = du.u_1205.transpose('depth', 'time')
         ax = plot_eq_velocity(fig, du.depth, du.time, u, i+1, name, rows=2)
 
@@ -67,9 +67,9 @@ def plot_eq_velocity_timeseries_tao_ofam(ds, d3, v_bnd='half_max',
         # OFAM3 row.
         dq = d3.sel(xu_ocean=lx['lons'][i])
         dq = dq.isel(Time=slice(time_bnds_ofam[i][0], time_bnds_ofam[i][1]))
-        name = '{}OFAM3 {} EUC at {}°E '.format(lx['l'][i+3],
+        name = '{}OFAM3 {} EUC at {}'.format(lx['l'][i+3],
                                                 lx['frq_long'][T],
-                                                lx['lons'][i])
+                                                lx['lonstr'][i])
         u = dq.u.transpose('st_ocean', 'Time')
         ax = plot_eq_velocity(fig, dq.st_ocean, dq.Time, u, i+4, name, rows=2)
 

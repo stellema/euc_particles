@@ -87,11 +87,12 @@ def plot_eq_velocity(fig, z, t, u, i, name,
 
     """
     cmap = plt.cm.seismic
-#     cmap.set_bad('lightgrey')  # Colour NaN values light grey.
+    cmap.set_bad('lightgrey')  # Colour NaN values light grey.
     ax = fig.add_subplot(rows, 3, i)
     ax.set_title(name, loc='left')
     im = ax.pcolormesh(t, z, u, cmap=cmap, vmax=1.20, vmin=-1.20)
     ax.set_ylim(max_depth, min_depth)
+    ax.set_facecolor('lightgrey')
 
     if rows == 1 or (rows == 2 and i >= 4):
         # Add colorbars at the bottom of each subplot if there is only 1 row.
@@ -134,9 +135,9 @@ def plot_tao_timeseries(ds, interp='', T=1, new_end_v=None):
         interpx = interp + str(new_end_v) if new_end_v else interp
         save_name = 'tao_{}_{}.png'.format(interpx, lx['frq'][T])
         interpx = '({})'.format(interpx) if interp != '' else ''
-        name = '{}TAO/TRITION {} EUC at 0°S,{}°E {}'.format(lx['l'][i],
+        name = '{}TAO/TRITION {} EUC at 0°S,{} {}'.format(lx['l'][i],
                                                             lx['frq_long'][T],
-                                                            lon, interpx)
+                                                            lx['lonstr'][i], interpx)
 
         # Plot TAO/TRITION zonal velocity timeseries without any interpolation.
         if interp == '':
@@ -316,8 +317,9 @@ def cor_scatter_plot(fig, i, varx, vary,
     ax.set_title(name, loc='left')
     ax.scatter(varx, vary, color='b', s=8)
 
-    atext = AnchoredText('$\mathregular{r_s}$' + '={}, p={}'.format(
-        np.around(cor_r, 2), np.around(cor_p, 3)), loc=cor_loc)
+    sig_str = correlation_str([cor_r, cor_p])
+    atext = AnchoredText('$\mathregular{r_s}$' + '={}, {}'.format(
+        np.around(cor_r, 2), sig_str), loc=cor_loc)
     ax.add_artist(atext)
     ax.plot(np.unique(varx),
             np.poly1d(np.polyfit(varx, vary, 1))(np.unique(varx)), 'k')
@@ -486,3 +488,39 @@ def EUC_bnds_static(du, lon=None, z1=25, z2=350, lat=2.6):
     # Remove negative/zero velocities.
     du = du.u.where(du.u > 0, np.nan)
     return du
+
+def correlation_str(cor):
+    """ Create string with the correlation significance with the
+    appropriate number of decimal places.
+
+    p values greater than 0.01 rounded to two decimal places.
+    p values between 0.01 and 0.001 rounded to three decimal places.
+    p values less than 0.001 are just given as 'p>0.001'
+
+    Note that 'p=' will also be included in the string.
+
+    Parameters
+    ----------
+    cor : list
+        The correlation coefficient (cor[0]) and associated
+        significance (cor[1])
+
+    Returns
+    -------
+    sig_str : str
+        The rounded significance in a string
+    """
+
+    if cor[1] <= 0.001:
+        sig_str = 'p<0.001'
+    elif cor[1] <= 0.01 and cor[1] >= 0.001:
+
+        sig_str = 'p=' + str(np.around(cor[1], 3))
+    else:
+        if cor[1] < 0.05:
+            sig_str = 'p<' + str(np.around(cor[1], 2))
+        else:
+            sig_str = 'p=' + str(np.around(cor[1], 2))
+
+    return sig_str
+
