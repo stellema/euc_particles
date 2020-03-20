@@ -229,6 +229,14 @@ def EUC_vbounds(du, depths, i, v_bnd=0.3, index=False):
                 z2i[t] = idx_1d(low, target) + v_imax[t]
                 z2[t] = depths[int(z2i[t])]
                 count += 1
+                if abs(z2[t] - z1[t]) < 50:
+                    z1i[t], z2i[t] = np.nan, np.nan
+                    z1[t], z2[t] = np.nan, np.nan
+                    count -= 1
+                if z2[t] < 125:
+                    z1i[t], z2i[t] = np.nan, np.nan
+                    z1[t], z2[t] = np.nan, np.nan
+                    count -= 1                
 
             # Check if skipped steps due to missing top depth (and vice versa).
             if all(np.isnan(low)) and not all(np.isnan(top)):
