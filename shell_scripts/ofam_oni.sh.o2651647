@@ -1,0 +1,29 @@
+<xarray.DataArray 'nino34' (Time: 384)>
+dask.array<getitem, shape=(384,), dtype=float32, chunksize=(1,), chunktype=numpy.ndarray>
+Coordinates:
+    st_ocean  float64 2.5
+  * Time      (Time) object 2070-01-01 00:00:00 ... 2101-12-01 00:00:00
+    month     (Time) int64 1 2 3 4 5 6 7 8 9 10 11 ... 2 3 4 5 6 7 8 9 10 11 12
+Attributes:
+    long_name:  Monthly Nino 3.4 SST anomalies
+<xarray.DataArray 'oni' (Time: 384)>
+dask.array<where, shape=(384,), dtype=float32, chunksize=(1,), chunktype=numpy.ndarray>
+Coordinates:
+    st_ocean  float64 2.5
+  * Time      (Time) object 2070-01-01 00:00:00 ... 2101-12-01 00:00:00
+    month     (Time) int64 1 2 3 4 5 6 7 8 9 10 11 ... 2 3 4 5 6 7 8 9 10 11 12
+Attributes:
+    long_name:  Three month rolling mean of Nino3.4 SST anomalies
+
+======================================================================================
+                  Resource Usage on 2020-03-21 10:33:16:
+   Job Id:             2651647.gadi-pbs
+   Project:            e14
+   Exit Status:        0
+   Service Units:      0.73
+   NCPUs Requested:    1                      NCPUs Used: 1               
+                                           CPU Time Used: 00:06:26                                   
+   Memory Requested:   6.0GB                 Memory Used: 6.0GB           
+   Walltime requested: 00:15:00            Walltime Used: 00:14:37        
+   JobFS requested:    100.0MB                JobFS used: 0B              
+======================================================================================

@@ -77,7 +77,7 @@ for i, lon, dx in zip(range(3), lx['lons'], [dx_165, dx_190, dx_220]):
     dz_f.append(idx_1d(du.st_ocean, dx.st_ocean[-1]))
 
     dr = (dx*dy).sum(dim='yu_ocean')
-    if method == 'grenier':
+    if method != 'grenier':
         dtx.uvo[:, i] = (dr[:, :]*dz[dz_i[i]:dz_f[i]+1]).sum(dim='st_ocean')
     else:
         dtx.uvo[:, i] = (dr[:, :-1]*dz[dz_i[i]:dz_f[i]]).sum(dim='st_ocean')
