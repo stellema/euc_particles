@@ -1,9 +1,9 @@
 #!/bin/bash
 #PBS -P e14
 #PBS -q normal
-#PBS -l walltime=20:00:00
+#PBS -l walltime=00:15:00
 #PBS -l ncpus=1
-#PBS -l mem=20GB
+#PBS -l mem=6GB
 #PBS -l wd
 #PBS -M astellemas@gmail.com
 #PBS -m abe
@@ -11,4 +11,4 @@
 
 module use /g/data3/hh5/public/modules
 module load conda/analysis3-20.01
-python3 /g/data/e14/as3189/OFAM/scripts/create_file_EUC_transport_definitions.py 'grenier' 1
+python3 /g/data/e14/as3189/OFAM/scripts/create_file_nino34.py

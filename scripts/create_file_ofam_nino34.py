@@ -15,9 +15,9 @@ np.set_printoptions(suppress=True)
 
 fpath, dpath, xpath, lpath, tpath = paths()
 
-exp = 0
-
-date_bnds = [get_date(lx['years'][exp][0] - 1, 1, 1),
+exp = 1
+year1 = lx['years'][exp][0] - 1 if exp == 1 else lx['years'][exp][0]
+date_bnds = [get_date(year1, 1, 1),
              get_date(lx['years'][exp][1], 12, 'max')]
 
 temp = []
@@ -33,7 +33,8 @@ sst = ds.sel(yt_ocean=slice(-5, 5), xt_ocean=slice(190, 240), st_ocean=2.5)
 sst = sst.temp.mean(['yt_ocean', 'xt_ocean'])
 
 # SST monthly climatology.
-sst_clim = xr.open_dataset(xpath/('ocean_temp_1981-2012_climo.nc')).temp
+sst_clim = xr.open_dataset(xpath/('ocean_temp_{}-{}_climo.nc')
+                           .format(lx['years'][exp][0], lx['years'][exp][1])).temp
 sst_clim = sst_clim.sel(st_ocean=2.5,
                         xt_ocean=slice(190, 240),
                         yt_ocean=slice(-5, 5)).mean(['yt_ocean', 'xt_ocean'])
@@ -63,4 +64,4 @@ print(dv.nino34)
 print(dv.oni)
 
 # Save to a netcdf file (may take quite a while to calculate and save).
-dv.to_netcdf(dpath/'ofam_sst_anom_nino34.nc')
+dv.to_netcdf(dpath/'ofam_sst_anom_nino34_{}.nc'.format(lx['exp_abr'][exp]))
