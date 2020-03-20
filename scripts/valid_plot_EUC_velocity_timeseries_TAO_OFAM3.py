@@ -13,7 +13,7 @@ import numpy as np
 import xarray as xr
 from main import paths, lx
 import matplotlib.pyplot as plt
-from main_valid import EUC_depths, plot_eq_velocity
+from main_valid import EUC_vbounds, plot_eq_velocity
 from main_valid import open_tao_data, plot_tao_timeseries
 
 # Path to save figures, save data and OFAM model output.
@@ -59,10 +59,10 @@ def plot_eq_velocity_timeseries_tao_ofam(ds, d3, v_bnd='half_max',
         # Plot EUC bottom depths.
         if add_bounds:
             v_max, d1, d2 = EUC_vbounds(du.u_1205, du.depth, i, v_bnd=v_bnd)
-            ax.plot(np.ma.masked_where(np.isnan(depth_end), du.time),
-                    np.ma.masked_where(np.isnan(depth_end), d1), 'k')
-            ax.plot(np.ma.masked_where(np.isnan(depth_end), du.time),
-                    np.ma.masked_where(np.isnan(depth_end), d2), 'k')
+            ax.plot(np.ma.masked_where(np.isnan(d1), du.time),
+                    np.ma.masked_where(np.isnan(d1), d1), 'k')
+            ax.plot(np.ma.masked_where(np.isnan(d2), du.time),
+                    np.ma.masked_where(np.isnan(d2), d2), 'k')
 
         # OFAM3 row.
         dq = d3.sel(xu_ocean=lx['lons'][i])
