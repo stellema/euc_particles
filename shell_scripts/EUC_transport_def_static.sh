@@ -3,6 +3,7 @@
 #PBS -q normal
 #PBS -l walltime=5:00:00
 #PBS -l ncpus=1
+#PBS -l mem=15GB
 #PBS -l wd
 #PBS -M astellemas@gmail.com
 #PBS -m abe
