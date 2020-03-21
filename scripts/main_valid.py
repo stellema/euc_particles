@@ -100,11 +100,12 @@ def plot_eq_velocity(fig, z, t, u, i, name,
             plt.colorbar(im, shrink=1, orientation='horizontal',
                          extend='both', label='Velocity [m/s]')
         else:
-            # Add separate colourbar axes (left, bottom, width, height).
-            cbar_ax = fig.add_axes([0.925, 0.11, 0.018, 0.355])
-            # BUG: not sure if first arg is correct or not (was axes[0][0]).
-            plt.colorbar(im, cax=cbar_ax, shrink=1, orientation='vertical',
-                         extend='both', label='Velocity [m/s]')
+            if i == 0:
+                # Add separate colourbar axes (left, bottom, width, height).
+                cbar_ax = fig.add_axes([0.925, 0.11, 0.018, 0.355])
+                # BUG: not sure if first arg is correct or not (was axes[0][0]).
+                plt.colorbar(im, cax=cbar_ax, shrink=1, orientation='vertical',
+                             extend='both', label='Velocity [m/s]')
 
     if i == 1 or i == 4:
         # Add Depth y label only for the first column of each row.
@@ -192,6 +193,7 @@ def EUC_vbounds(du, depths, i, v_bnd=0.3, index=False):
     # Maximum and minimum velocity at each time step.
     v_max = du.max(axis=1, skipna=True)
     v_max_half = v_max/2
+    v_max_25 = v_max*0.25
 
     # Index of maximum and minimum velocity at each time.
     v_imax = np.nanargmax(u, axis=1)
@@ -211,8 +213,10 @@ def EUC_vbounds(du, depths, i, v_bnd=0.3, index=False):
 
             # Set target velocity as half the maximum at each timestep.
             if v_bnd == 'half_max':
-                target = v_max_half[t] + v_max_half[t]/100
-
+                target = v_max_half[t] 
+            elif v_bnd == '25_max':
+                target = v_max_25[t] 
+               
             # Subset velocity on either side of the maximum velocity.
             top = du[t, slice(0, v_imax[t])]
             low = du[t, slice(v_imax[t], len(depths))]
@@ -224,6 +228,13 @@ def EUC_vbounds(du, depths, i, v_bnd=0.3, index=False):
             # Find the closest velocity depth/index if both the
             # top and lower arrays are not all NaN.
             if all([not all(np.isnan(top)), not all(np.isnan(low))]):
+                for k in np.arange(len(top)-1, 0, -1):
+                    if not np.isnan(top[k]):
+                        for j in np.arange(k-1, 0, -1):
+                            if np.isnan(top[j]):
+                                top[0:j] = top[0:j]*np.nan
+                            break
+                    
                 z1i[t] = idx_1d(top, target)
                 z1[t] = depths[int(z1i[t])]
                 z2i[t] = idx_1d(low, target) + v_imax[t]
@@ -248,9 +259,9 @@ def EUC_vbounds(du, depths, i, v_bnd=0.3, index=False):
 
     data_name = 'OFAM3' if hasattr(du, 'st_ocean') else 'TAO/TRITION'
 
-    logger.debug('{} {}: v_bnd={} tot={} count={} null={} skip_T={}, skip_L={}'
+    logger.debug('{} {}: v_bnd={} tot={} count={} null={} skip={}(T={},L={}).'
                 .format(data_name, lx['lons'][i], v_bnd, u.shape[0], count,
-                        empty, skip_t, skip_l))
+                        empty, skip_t + skip_l, skip_t, skip_l))
     if not index:
         return v_max, z1, z2
     else:
