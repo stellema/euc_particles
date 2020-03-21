@@ -201,14 +201,16 @@ def plot_tao_ofam_transport_timeseries(z1=25, z2=350, T=1, dk=5,
             time = dtc.month
             ax.set_xticks(np.arange(1, len(lx['mon'])+1))
             ax.set_xticklabels(lx['mon'])
+
 #             ax.set_ylim(ymin=0)
             save_name = 'EUC_transport_regression_mon_{}.png'.format(v_bnd)
 
         elif series == 'all':
             time = dux.Time
             # Increase alpha of transport when available, but doesn't match.
-            ax.plot(time, dux_nan, color='k', alpha=0.2)
-            ax.plot(time, dtc_nan/SV, color='red', alpha=0.2)
+            ax.plot(time, dtc_nan/SV, color='k', alpha=0.2)
+            ax.plot(time, dux_nan, color='red', alpha=0.2)
+
             ax.set_ylim(ymin=0, ymax=72)
             save_name = 'EUC_transport_regression_{}.png'.format(v_bnd)
 
@@ -220,29 +222,29 @@ def plot_tao_ofam_transport_timeseries(z1=25, z2=350, T=1, dk=5,
         if i == 0:
             ax.legend(loc=1)
         cor_r, cor_p = regress(dux*m[i] + b[i], dtc/SV)[0:2]
-        print('{}: R={:.2f}, p={:.3f} (stats.spearmanr)'.format(lon, cor_r, cor_p))
+        print('{}: R={:.2f}, p={:.3f} (stats.spearmanr)'.format(lon, cor_r,
+                                                                cor_p))
 
     plt.tight_layout()
     plt.savefig(fpath.joinpath('tao', save_name))
-    
-    return 
+
+    return
 
 
 # print('plot_tao_max_velocity_correlation')
 # plot_tao_max_velocity_correlation()
-# print('plot_tao_ofam_transport_timeseries')
-# plot_tao_ofam_transport_timeseries(z1=25, z2=350, T=1, dk=5,
-#                                    v_bnd='half_max', series='all')
+print('plot_tao_ofam_transport_timeseries')
+plot_tao_ofam_transport_timeseries(z1=25, z2=350, T=1, dk=5,
+                                   v_bnd='half_max', series='all')
 print('plot_tao_ofam_transport_timeseries mon')
 plot_tao_ofam_transport_timeseries(z1=25, z2=350, T=1, dk=5,
                                    v_bnd='half_max', series='month')
-
-# print('plot_tao_ofam_transport_timeseries vbnd=0.3')
-# plot_tao_ofam_transport_timeseries(z1=25, z2=350, T=1, dk=5,
-#                                    v_bnd=0.3, series='all')
-# print('plot_tao_ofam_transport_timeseries mon vbnd=0.3')
-# plot_tao_ofam_transport_timeseries(z1=25, z2=350, T=1, dk=5,
-#                                    v_bnd=0.3, series='month')
-# print('plot_ofam_transport_correlation v_bnd=half_max')
-# plot_ofam_transport_correlation(z1=25, z2=350, T=1, dk=5,
-#                                     v_bnd='half_max')
+print('plot_tao_ofam_transport_timeseries vbnd=0.3')
+plot_tao_ofam_transport_timeseries(z1=25, z2=350, T=1, dk=5,
+                                   v_bnd=0.3, series='all')
+print('plot_tao_ofam_transport_timeseries mon vbnd=0.3')
+plot_tao_ofam_transport_timeseries(z1=25, z2=350, T=1, dk=5,
+                                   v_bnd=0.3, series='month')
+print('plot_ofam_transport_correlation v_bnd=half_max')
+plot_ofam_transport_correlation(z1=25, z2=350, T=1, dk=5,
+                                v_bnd='half_max')

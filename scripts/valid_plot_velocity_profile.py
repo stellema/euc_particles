@@ -37,14 +37,14 @@ fig = plt.figure(figsize=(width*2.2, height))
 for i in range(3):
     du = ds[i].isel(time=slice(time_bnds_tao[i][0], time_bnds_tao[i][1]))
     dq = dt.isel(Time=slice(time_bnds_ofam[i][0], time_bnds_ofam[i][1]))
-    
+
     ax = fig.add_subplot(1, 3, i+1)
     ax.set_title('{}Equatorial velocity depth profile at {}'
                  .format(lx['l'][i], lx['lonstr'][i]), loc='left')
-    ax.plot(du.u_1205.mean(axis=0), du.depth,
-            label='TAO/TRITION', color='black')
     ax.plot(dq.sel(xu_ocean=lx['lons'][i]).mean(axis=0).u, dq.st_ocean,
-            label='OFAM3', color='red')
+            label='OFAM3', color='k')
+    ax.plot(du.u_1205.mean(axis=0), du.depth,
+            label='TAO/TRITION', color='red')
 
     ax.legend()
     ax.set_xlim(-0.2, 1.1)
