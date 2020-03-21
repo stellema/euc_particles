@@ -168,7 +168,10 @@ def plot_tao_ofam_transport_timeseries(z1=25, z2=350, T=1, dk=5,
 
     m, b = np.zeros(3), np.zeros(3)
 
-    fig = plt.figure(figsize=(10, 8))
+    if series == 'all':
+        fig = plt.figure(figsize=(10, 7))
+    else:
+        fig = plt.figure(figsize=(6, 7))
     for i, lon in enumerate(lx['lons']):
         m[i], b[i] = regress(d3v.sel(xu_ocean=lon),
                              d3t.sel(xu_ocean=lon)/SV)[2:4]
@@ -219,6 +222,7 @@ def plot_tao_ofam_transport_timeseries(z1=25, z2=350, T=1, dk=5,
         ax.plot(time, dtc/SV, color='k', label='OFAM3')
         ax.plot(time, dux*m[i] + b[i], color='r', label='TAO/TRITION')
         ax.set_ylabel('Transport [Sv]')
+        ax.set_xlim(xmin=time[0], xmax=time[-1])
         
         if i == 0:
             ax.legend(loc=1)
@@ -233,14 +237,14 @@ def plot_tao_ofam_transport_timeseries(z1=25, z2=350, T=1, dk=5,
 
 
 # plot_tao_max_velocity_correlation()
-# for v_bnd in ['half_max', 0.3, 0.2, 0.1]:
-for v_bnd in ['25_max']:
+for v_bnd in ['half_max', '25_max', 0.3, 0.2, 0.1]:
+
     print('plot_tao_ofam_transport_timeseries v_bnd=', v_bnd)
     plot_tao_ofam_transport_timeseries(z1=25, z2=350, T=1, dk=5,
                                        v_bnd=v_bnd, series='all')
-    print('plot_tao_max_velocity_correlation')
-    plot_ofam_transport_correlation(z1=25, z2=350, T=1, dk=5,
-                                    v_bnd=v_bnd)
+#     print('plot_tao_max_velocity_correlation')
+#     plot_ofam_transport_correlation(z1=25, z2=350, T=1, dk=5,
+#                                     v_bnd=v_bnd)
     print('plot_tao_ofam_transport_timeseries monthly v_bnd=', v_bnd)
     plot_tao_ofam_transport_timeseries(z1=25, z2=350, T=1, dk=5,
                                        v_bnd=v_bnd, series='month')

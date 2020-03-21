@@ -599,3 +599,130 @@
 2020-03-21 16:54:33,169:EUC_vbounds:TAO/TRITION 165: v_bnd=0.1 tot=203 count=107 null=5 skip=81(T=58,L=23).
 2020-03-21 16:54:42,777:EUC_vbounds:TAO/TRITION 190: v_bnd=0.1 tot=340 count=222 null=36 skip=6(T=1,L=5).
 2020-03-21 16:54:50,282:EUC_vbounds:TAO/TRITION 220: v_bnd=0.1 tot=311 count=225 null=31 skip=41(T=0,L=41).
+2020-03-21 17:05:39,207:open_tao_data:Opening TAO mon data. Depth=slice(10, 360, None). SI=True
+2020-03-21 17:05:49,583:EUC_vbounds:OFAM3 165: v_bnd=25_max tot=384 count=264 null=0 skip=117(T=68,L=49).
+2020-03-21 17:06:02,031:EUC_vbounds:OFAM3 190: v_bnd=25_max tot=384 count=299 null=0 skip=85(T=61,L=24).
+2020-03-21 17:06:13,882:EUC_vbounds:OFAM3 220: v_bnd=25_max tot=384 count=363 null=0 skip=21(T=1,L=20).
+2020-03-21 17:06:16,642:open_tao_data:Opening TAO mon data. Depth=slice(10, 360, None). SI=True
+2020-03-21 17:06:20,534:EUC_vbounds:TAO/TRITION 165: v_bnd=25_max tot=203 count=53 null=5 skip=140(T=118,L=22).
+2020-03-21 17:06:28,168:EUC_vbounds:TAO/TRITION 190: v_bnd=25_max tot=340 count=195 null=36 skip=105(T=71,L=34).
+2020-03-21 17:06:35,140:EUC_vbounds:TAO/TRITION 220: v_bnd=25_max tot=311 count=214 null=31 skip=66(T=5,L=61).
+2020-03-21 17:06:48,018:EUC_vbounds:OFAM3 165: v_bnd=25_max tot=384 count=264 null=0 skip=117(T=68,L=49).
+2020-03-21 17:07:00,352:EUC_vbounds:OFAM3 190: v_bnd=25_max tot=384 count=299 null=0 skip=85(T=61,L=24).
+2020-03-21 17:07:12,534:EUC_vbounds:OFAM3 220: v_bnd=25_max tot=384 count=363 null=0 skip=21(T=1,L=20).
+2020-03-21 17:07:15,098:open_tao_data:Opening TAO mon data. Depth=slice(10, 360, None). SI=True
+2020-03-21 17:07:18,968:EUC_vbounds:TAO/TRITION 165: v_bnd=25_max tot=203 count=53 null=5 skip=140(T=118,L=22).
+2020-03-21 17:07:26,719:EUC_vbounds:TAO/TRITION 190: v_bnd=25_max tot=340 count=195 null=36 skip=105(T=71,L=34).
+2020-03-21 17:07:33,616:EUC_vbounds:TAO/TRITION 220: v_bnd=25_max tot=311 count=214 null=31 skip=66(T=5,L=61).
+2020-03-21 17:07:34,237:cor_scatter_plot:R=0.90, p=0.000 (stats.spearmanr)
+2020-03-21 17:07:34,237:cor_scatter_plot:Slope=0.38 Intercept=2.27 R=0.85 P=0.000 stder=0.01
+2020-03-21 17:07:34,292:cor_scatter_plot:R=0.88, p=0.000 (stats.spearmanr)
+2020-03-21 17:07:34,292:cor_scatter_plot:Slope=0.41 Intercept=-6.65 R=0.89 P=0.000 stder=0.01
+2020-03-21 17:07:34,332:cor_scatter_plot:R=0.84, p=0.000 (stats.spearmanr)
+2020-03-21 17:07:34,332:cor_scatter_plot:Slope=0.32 Intercept=-12.45 R=0.86 P=0.000 stder=0.01
+2020-03-21 17:07:46,792:EUC_vbounds:OFAM3 165: v_bnd=25_max tot=384 count=264 null=0 skip=117(T=68,L=49).
+2020-03-21 17:07:59,102:EUC_vbounds:OFAM3 190: v_bnd=25_max tot=384 count=299 null=0 skip=85(T=61,L=24).
+2020-03-21 17:08:11,296:EUC_vbounds:OFAM3 220: v_bnd=25_max tot=384 count=363 null=0 skip=21(T=1,L=20).
+2020-03-21 17:08:13,863:open_tao_data:Opening TAO mon data. Depth=slice(10, 360, None). SI=True
+2020-03-21 17:08:17,689:EUC_vbounds:TAO/TRITION 165: v_bnd=25_max tot=203 count=53 null=5 skip=140(T=118,L=22).
+2020-03-21 17:08:25,318:EUC_vbounds:TAO/TRITION 190: v_bnd=25_max tot=340 count=195 null=36 skip=105(T=71,L=34).
+2020-03-21 17:08:32,237:EUC_vbounds:TAO/TRITION 220: v_bnd=25_max tot=311 count=214 null=31 skip=66(T=5,L=61).
+2020-03-21 17:12:11,570:open_tao_data:Opening TAO mon data. Depth=slice(10, 360, None). SI=True
+2020-03-21 17:12:22,539:EUC_vbounds:OFAM3 165: v_bnd=25_max tot=384 count=264 null=0 skip=117(T=68,L=49).
+2020-03-21 17:12:35,014:EUC_vbounds:OFAM3 190: v_bnd=25_max tot=384 count=299 null=0 skip=85(T=61,L=24).
+2020-03-21 17:12:46,761:EUC_vbounds:OFAM3 220: v_bnd=25_max tot=384 count=363 null=0 skip=21(T=1,L=20).
+2020-03-21 17:12:49,441:open_tao_data:Opening TAO mon data. Depth=slice(10, 360, None). SI=True
+2020-03-21 17:12:53,283:EUC_vbounds:TAO/TRITION 165: v_bnd=25_max tot=203 count=53 null=5 skip=140(T=118,L=22).
+2020-03-21 17:13:00,985:EUC_vbounds:TAO/TRITION 190: v_bnd=25_max tot=340 count=195 null=36 skip=105(T=71,L=34).
+2020-03-21 17:13:07,707:EUC_vbounds:TAO/TRITION 220: v_bnd=25_max tot=311 count=214 null=31 skip=66(T=5,L=61).
+2020-03-21 17:13:21,747:EUC_vbounds:OFAM3 165: v_bnd=25_max tot=384 count=264 null=0 skip=117(T=68,L=49).
+2020-03-21 17:13:34,161:EUC_vbounds:OFAM3 190: v_bnd=25_max tot=384 count=299 null=0 skip=85(T=61,L=24).
+2020-03-21 17:13:45,994:EUC_vbounds:OFAM3 220: v_bnd=25_max tot=384 count=363 null=0 skip=21(T=1,L=20).
+2020-03-21 17:13:48,523:open_tao_data:Opening TAO mon data. Depth=slice(10, 360, None). SI=True
+2020-03-21 17:13:52,549:EUC_vbounds:TAO/TRITION 165: v_bnd=25_max tot=203 count=53 null=5 skip=140(T=118,L=22).
+2020-03-21 17:14:00,198:EUC_vbounds:TAO/TRITION 190: v_bnd=25_max tot=340 count=195 null=36 skip=105(T=71,L=34).
+2020-03-21 17:14:07,270:EUC_vbounds:TAO/TRITION 220: v_bnd=25_max tot=311 count=214 null=31 skip=66(T=5,L=61).
+2020-03-21 17:14:07,859:cor_scatter_plot:R=0.90, p=0.000 (stats.spearmanr)
+2020-03-21 17:14:07,859:cor_scatter_plot:Slope=0.38 Intercept=2.27 R=0.85 P=0.000 stder=0.01
+2020-03-21 17:14:07,911:cor_scatter_plot:R=0.88, p=0.000 (stats.spearmanr)
+2020-03-21 17:14:07,911:cor_scatter_plot:Slope=0.41 Intercept=-6.65 R=0.89 P=0.000 stder=0.01
+2020-03-21 17:14:07,950:cor_scatter_plot:R=0.84, p=0.000 (stats.spearmanr)
+2020-03-21 17:14:07,951:cor_scatter_plot:Slope=0.32 Intercept=-12.45 R=0.86 P=0.000 stder=0.01
+2020-03-21 17:14:20,659:EUC_vbounds:OFAM3 165: v_bnd=25_max tot=384 count=264 null=0 skip=117(T=68,L=49).
+2020-03-21 17:14:32,968:EUC_vbounds:OFAM3 190: v_bnd=25_max tot=384 count=299 null=0 skip=85(T=61,L=24).
+2020-03-21 17:14:45,021:EUC_vbounds:OFAM3 220: v_bnd=25_max tot=384 count=363 null=0 skip=21(T=1,L=20).
+2020-03-21 17:14:47,622:open_tao_data:Opening TAO mon data. Depth=slice(10, 360, None). SI=True
+2020-03-21 17:14:51,447:EUC_vbounds:TAO/TRITION 165: v_bnd=25_max tot=203 count=53 null=5 skip=140(T=118,L=22).
+2020-03-21 17:14:59,041:EUC_vbounds:TAO/TRITION 190: v_bnd=25_max tot=340 count=195 null=36 skip=105(T=71,L=34).
+2020-03-21 17:15:05,968:EUC_vbounds:TAO/TRITION 220: v_bnd=25_max tot=311 count=214 null=31 skip=66(T=5,L=61).
+2020-03-21 17:20:09,459:open_tao_data:Opening TAO mon data. Depth=slice(10, 360, None). SI=True
+2020-03-21 17:20:21,364:EUC_vbounds:OFAM3 165: v_bnd=half_max tot=384 count=335 null=0 skip=46(T=6,L=40).
+2020-03-21 17:20:35,308:EUC_vbounds:OFAM3 190: v_bnd=half_max tot=384 count=362 null=0 skip=22(T=5,L=17).
+2020-03-21 17:20:47,498:EUC_vbounds:OFAM3 220: v_bnd=half_max tot=384 count=377 null=0 skip=5(T=1,L=4).
+2020-03-21 17:20:50,191:open_tao_data:Opening TAO mon data. Depth=slice(10, 360, None). SI=True
+2020-03-21 17:20:55,120:EUC_vbounds:TAO/TRITION 165: v_bnd=half_max tot=203 count=112 null=5 skip=86(T=63,L=23).
+2020-03-21 17:21:04,539:EUC_vbounds:TAO/TRITION 190: v_bnd=half_max tot=340 count=280 null=36 skip=24(T=13,L=11).
+2020-03-21 17:21:11,993:EUC_vbounds:TAO/TRITION 220: v_bnd=half_max tot=311 count=258 null=31 skip=22(T=0,L=22).
+2020-03-21 17:21:27,750:EUC_vbounds:OFAM3 165: v_bnd=half_max tot=384 count=335 null=0 skip=46(T=6,L=40).
+2020-03-21 17:21:42,111:EUC_vbounds:OFAM3 190: v_bnd=half_max tot=384 count=362 null=0 skip=22(T=5,L=17).
+2020-03-21 17:21:54,702:EUC_vbounds:OFAM3 220: v_bnd=half_max tot=384 count=377 null=0 skip=5(T=1,L=4).
+2020-03-21 17:21:57,449:open_tao_data:Opening TAO mon data. Depth=slice(10, 360, None). SI=True
+2020-03-21 17:22:02,600:EUC_vbounds:TAO/TRITION 165: v_bnd=half_max tot=203 count=112 null=5 skip=86(T=63,L=23).
+2020-03-21 17:22:12,044:EUC_vbounds:TAO/TRITION 190: v_bnd=half_max tot=340 count=280 null=36 skip=24(T=13,L=11).
+2020-03-21 17:22:19,602:EUC_vbounds:TAO/TRITION 220: v_bnd=half_max tot=311 count=258 null=31 skip=22(T=0,L=22).
+2020-03-21 17:22:32,263:EUC_vbounds:OFAM3 165: v_bnd=25_max tot=384 count=264 null=0 skip=117(T=68,L=49).
+2020-03-21 17:22:44,772:EUC_vbounds:OFAM3 190: v_bnd=25_max tot=384 count=299 null=0 skip=85(T=61,L=24).
+2020-03-21 17:22:56,975:EUC_vbounds:OFAM3 220: v_bnd=25_max tot=384 count=363 null=0 skip=21(T=1,L=20).
+2020-03-21 17:22:59,652:open_tao_data:Opening TAO mon data. Depth=slice(10, 360, None). SI=True
+2020-03-21 17:23:03,700:EUC_vbounds:TAO/TRITION 165: v_bnd=25_max tot=203 count=53 null=5 skip=140(T=118,L=22).
+2020-03-21 17:23:11,407:EUC_vbounds:TAO/TRITION 190: v_bnd=25_max tot=340 count=195 null=36 skip=105(T=71,L=34).
+2020-03-21 17:23:18,193:EUC_vbounds:TAO/TRITION 220: v_bnd=25_max tot=311 count=214 null=31 skip=66(T=5,L=61).
+2020-03-21 17:23:30,889:EUC_vbounds:OFAM3 165: v_bnd=25_max tot=384 count=264 null=0 skip=117(T=68,L=49).
+2020-03-21 17:23:43,375:EUC_vbounds:OFAM3 190: v_bnd=25_max tot=384 count=299 null=0 skip=85(T=61,L=24).
+2020-03-21 17:23:55,508:EUC_vbounds:OFAM3 220: v_bnd=25_max tot=384 count=363 null=0 skip=21(T=1,L=20).
+2020-03-21 17:23:58,319:open_tao_data:Opening TAO mon data. Depth=slice(10, 360, None). SI=True
+2020-03-21 17:24:02,192:EUC_vbounds:TAO/TRITION 165: v_bnd=25_max tot=203 count=53 null=5 skip=140(T=118,L=22).
+2020-03-21 17:24:09,959:EUC_vbounds:TAO/TRITION 190: v_bnd=25_max tot=340 count=195 null=36 skip=105(T=71,L=34).
+2020-03-21 17:24:17,007:EUC_vbounds:TAO/TRITION 220: v_bnd=25_max tot=311 count=214 null=31 skip=66(T=5,L=61).
+2020-03-21 17:24:29,785:EUC_vbounds:OFAM3 165: v_bnd=0.3 tot=384 count=271 null=0 skip=104(T=61,L=43).
+2020-03-21 17:24:43,235:EUC_vbounds:OFAM3 190: v_bnd=0.3 tot=384 count=340 null=0 skip=30(T=17,L=13).
+2020-03-21 17:24:55,754:EUC_vbounds:OFAM3 220: v_bnd=0.3 tot=384 count=364 null=0 skip=5(T=0,L=5).
+2020-03-21 17:24:58,496:open_tao_data:Opening TAO mon data. Depth=slice(10, 360, None). SI=True
+2020-03-21 17:25:03,812:EUC_vbounds:TAO/TRITION 165: v_bnd=0.3 tot=203 count=107 null=5 skip=81(T=58,L=23).
+2020-03-21 17:25:13,457:EUC_vbounds:TAO/TRITION 190: v_bnd=0.3 tot=340 count=222 null=36 skip=6(T=1,L=5).
+2020-03-21 17:25:20,706:EUC_vbounds:TAO/TRITION 220: v_bnd=0.3 tot=311 count=225 null=31 skip=41(T=0,L=41).
+2020-03-21 17:25:33,756:EUC_vbounds:OFAM3 165: v_bnd=0.3 tot=384 count=271 null=0 skip=104(T=61,L=43).
+2020-03-21 17:25:47,157:EUC_vbounds:OFAM3 190: v_bnd=0.3 tot=384 count=340 null=0 skip=30(T=17,L=13).
+2020-03-21 17:25:59,597:EUC_vbounds:OFAM3 220: v_bnd=0.3 tot=384 count=364 null=0 skip=5(T=0,L=5).
+2020-03-21 17:26:02,385:open_tao_data:Opening TAO mon data. Depth=slice(10, 360, None). SI=True
+2020-03-21 17:26:07,548:EUC_vbounds:TAO/TRITION 165: v_bnd=0.3 tot=203 count=107 null=5 skip=81(T=58,L=23).
+2020-03-21 17:26:17,317:EUC_vbounds:TAO/TRITION 190: v_bnd=0.3 tot=340 count=222 null=36 skip=6(T=1,L=5).
+2020-03-21 17:26:24,490:EUC_vbounds:TAO/TRITION 220: v_bnd=0.3 tot=311 count=225 null=31 skip=41(T=0,L=41).
+2020-03-21 17:26:37,417:EUC_vbounds:OFAM3 165: v_bnd=0.2 tot=384 count=271 null=0 skip=104(T=61,L=43).
+2020-03-21 17:26:50,805:EUC_vbounds:OFAM3 190: v_bnd=0.2 tot=384 count=340 null=0 skip=30(T=17,L=13).
+2020-03-21 17:27:03,322:EUC_vbounds:OFAM3 220: v_bnd=0.2 tot=384 count=364 null=0 skip=5(T=0,L=5).
+2020-03-21 17:27:06,006:open_tao_data:Opening TAO mon data. Depth=slice(10, 360, None). SI=True
+2020-03-21 17:27:11,130:EUC_vbounds:TAO/TRITION 165: v_bnd=0.2 tot=203 count=107 null=5 skip=81(T=58,L=23).
+2020-03-21 17:27:20,742:EUC_vbounds:TAO/TRITION 190: v_bnd=0.2 tot=340 count=222 null=36 skip=6(T=1,L=5).
+2020-03-21 17:27:28,102:EUC_vbounds:TAO/TRITION 220: v_bnd=0.2 tot=311 count=225 null=31 skip=41(T=0,L=41).
+2020-03-21 17:27:41,131:EUC_vbounds:OFAM3 165: v_bnd=0.2 tot=384 count=271 null=0 skip=104(T=61,L=43).
+2020-03-21 17:27:54,457:EUC_vbounds:OFAM3 190: v_bnd=0.2 tot=384 count=340 null=0 skip=30(T=17,L=13).
+2020-03-21 17:28:06,823:EUC_vbounds:OFAM3 220: v_bnd=0.2 tot=384 count=364 null=0 skip=5(T=0,L=5).
+2020-03-21 17:28:09,423:open_tao_data:Opening TAO mon data. Depth=slice(10, 360, None). SI=True
+2020-03-21 17:28:14,582:EUC_vbounds:TAO/TRITION 165: v_bnd=0.2 tot=203 count=107 null=5 skip=81(T=58,L=23).
+2020-03-21 17:28:24,195:EUC_vbounds:TAO/TRITION 190: v_bnd=0.2 tot=340 count=222 null=36 skip=6(T=1,L=5).
+2020-03-21 17:28:31,463:EUC_vbounds:TAO/TRITION 220: v_bnd=0.2 tot=311 count=225 null=31 skip=41(T=0,L=41).
+2020-03-21 17:28:44,376:EUC_vbounds:OFAM3 165: v_bnd=0.1 tot=384 count=271 null=0 skip=104(T=61,L=43).
+2020-03-21 17:28:57,538:EUC_vbounds:OFAM3 190: v_bnd=0.1 tot=384 count=340 null=0 skip=30(T=17,L=13).
+2020-03-21 17:29:09,940:EUC_vbounds:OFAM3 220: v_bnd=0.1 tot=384 count=364 null=0 skip=5(T=0,L=5).
+2020-03-21 17:29:12,583:open_tao_data:Opening TAO mon data. Depth=slice(10, 360, None). SI=True
+2020-03-21 17:29:17,807:EUC_vbounds:TAO/TRITION 165: v_bnd=0.1 tot=203 count=107 null=5 skip=81(T=58,L=23).
+2020-03-21 17:29:27,417:EUC_vbounds:TAO/TRITION 190: v_bnd=0.1 tot=340 count=222 null=36 skip=6(T=1,L=5).
+2020-03-21 17:29:34,579:EUC_vbounds:TAO/TRITION 220: v_bnd=0.1 tot=311 count=225 null=31 skip=41(T=0,L=41).
+2020-03-21 17:29:48,205:EUC_vbounds:OFAM3 165: v_bnd=0.1 tot=384 count=271 null=0 skip=104(T=61,L=43).
+2020-03-21 17:30:01,495:EUC_vbounds:OFAM3 190: v_bnd=0.1 tot=384 count=340 null=0 skip=30(T=17,L=13).
+2020-03-21 17:30:14,259:EUC_vbounds:OFAM3 220: v_bnd=0.1 tot=384 count=364 null=0 skip=5(T=0,L=5).
+2020-03-21 17:30:16,855:open_tao_data:Opening TAO mon data. Depth=slice(10, 360, None). SI=True
+2020-03-21 17:30:22,086:EUC_vbounds:TAO/TRITION 165: v_bnd=0.1 tot=203 count=107 null=5 skip=81(T=58,L=23).
+2020-03-21 17:30:31,804:EUC_vbounds:TAO/TRITION 190: v_bnd=0.1 tot=340 count=222 null=36 skip=6(T=1,L=5).
+2020-03-21 17:30:39,081:EUC_vbounds:TAO/TRITION 220: v_bnd=0.1 tot=311 count=225 null=31 skip=41(T=0,L=41).
