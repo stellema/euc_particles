@@ -213,10 +213,10 @@ def EUC_vbounds(du, depths, i, v_bnd=0.3, index=False):
 
             # Set target velocity as half the maximum at each timestep.
             if v_bnd == 'half_max':
-                target = v_max_half[t] 
+                target = v_max_half[t]
             elif v_bnd == '25_max':
-                target = v_max_25[t] 
-               
+                target = v_max_25[t]
+
             # Subset velocity on either side of the maximum velocity.
             top = du[t, slice(0, v_imax[t])]
             low = du[t, slice(v_imax[t], len(depths))]
@@ -234,7 +234,7 @@ def EUC_vbounds(du, depths, i, v_bnd=0.3, index=False):
                             if np.isnan(top[j]):
                                 top[0:j] = top[0:j]*np.nan
                             break
-                    
+
                 z1i[t] = idx_1d(top, target)
                 z1[t] = depths[int(z1i[t])]
                 z2i[t] = idx_1d(low, target) + v_imax[t]
@@ -247,7 +247,7 @@ def EUC_vbounds(du, depths, i, v_bnd=0.3, index=False):
                 if z2[t] < 125:
                     z1i[t], z2i[t] = np.nan, np.nan
                     z1[t], z2[t] = np.nan, np.nan
-                    count -= 1                
+                    count -= 1
 
             # Check if skipped steps due to missing top depth (and vice versa).
             if all(np.isnan(low)) and not all(np.isnan(top)):
@@ -290,9 +290,9 @@ def regress(varx, vary):
     vary = vary[~np.isnan(vary)]
 
     cor_r, cor_p = stats.spearmanr(varx, vary)
-    
+
     slope, intercept, r_value, p_value, std_err = stats.linregress(varx, vary)
-    
+
     return cor_r, cor_p, slope, intercept, r_value, p_value, std_err
 
 
