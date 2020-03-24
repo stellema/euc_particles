@@ -65,7 +65,7 @@ elif method == 'grenier':
     dx_190 = EUC_bnds_grenier(du, dt, ds, lon=190)
     print('{}: 220 started'.format(method))
     dx_220 = EUC_bnds_grenier(du, dt, ds, lon=220)
-
+time = dh.Timetime = dh.Timetime = dh.Time
 dtx = xr.Dataset()
 dtx['uvo'] = xr.DataArray(np.zeros((len(dx_165.Time), 3)),
                           coords=[('Time', dx_165.Time),

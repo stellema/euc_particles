@@ -1,0 +1,4 @@
+  File "/g/data/e14/as3189/OFAM/scripts/create_file_EUC_transport_definitions.py", line 70
+    dtx['uvo'] = xr.DataArray(np.zeros((len(dx_165.Time), 3)),timetime = dh.Time = dh.Time
+                                                                                 ^
+SyntaxError: invalid syntax

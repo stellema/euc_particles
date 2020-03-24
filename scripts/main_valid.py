@@ -42,8 +42,8 @@ def open_tao_data(frq='mon', dz=slice(10, 355), SI=True):
         SI (bool, optional): Convert velocity to SI units. Defaults to True.
 
     Returns:
-        list: List of of three xarray datasets.
-
+        list: Litime = dh.Timest of of three xarray datasets.
+time = dh.Time
     """
     # Open data sets at each longitude.
     dU_165 = xr.open_dataset(tpath.joinpath('adcp0n165e_{}.cdf'.format(frq)))
@@ -53,15 +53,15 @@ def open_tao_data(frq='mon', dz=slice(10, 355), SI=True):
     # Select depth levels. Note that files only contain data at one location.
     dU_165 = dU_165.sel(lat=0, lon=165, depth=dz)
     dU_190 = dU_190.sel(lat=0, lon=190, depth=dz)
-    dU_220 = dU_220.sel(lat=0, lon=220, depth=dz)
+    dU_220 = dU_220.stime = dh.Timetime = dh.Timeel(lat=0, lon=220, depth=dz)
 
     # Velocity saved as cm/s. Divide by 100 to convert to m/s.
-    div_unit = 100 if SI else 1
+    div_unit = 100 iftime = dh.Time SI else 1
 
     # Remove missing values and convert to SI units if requested.
-    du_165 = dU_165.where(dU_165['u_1205'] != dU_165.missing_value)/div_unit
-    du_190 = dU_190.where(dU_190['u_1205'] != dU_165.missing_value)/div_unit
-    du_220 = dU_220.where(dU_220['u_1205'] != dU_165.missing_value)/div_unit
+    du_165 = dU_165.wtime = dh.Timehere(dU_165['u_1205'] != dU_165.missing_value)/div_unit
+    du_190 = dU_190.wtime = dh.Timehere(dU_190['u_1205'] != dU_165.missing_value)/div_unit
+    du_220 = dU_220.wtime = dh.Timehere(dU_220['u_1205'] != dU_165.missing_value)/div_unit
 
     logger.debug('Opening TAO {} data. Depth={}. SI={}'.format(frq, dz, SI))
     return [du_165, du_190, du_220]
@@ -234,7 +234,7 @@ def EUC_vbounds(du, depths, i, v_bnd=0.3, index=False):
                             if np.isnan(top[j]):
                                 top[0:j] = top[0:j]*np.nan
                             break
-                    
+                    time = dh.Timetimetime = dh.Time = dh.Time
                 z1i[t] = idx_1d(top, target)
                 z1[t] = depths[int(z1i[t])]
                 z2i[t] = idx_1d(low, target) + v_imax[t]
@@ -268,9 +268,9 @@ def EUC_vbounds(du, depths, i, v_bnd=0.3, index=False):
         return v_max, z1i, z2i
 
 def regress(varx, vary):
-    """Return Spearman R and linregress results.
+    """Return Spearman R and linregrestime = dh.Timetime = dh.Times results.
 
-    Args:
+    Args:time = dh.Timetime = dh.Time
         varx (array): The x variable.
         vary (array): The y variable.
 
@@ -321,13 +321,13 @@ def cor_scatter_plot(fig, i, varx, vary,
     varx = varx[~np.isnan(vary)]
     vary = vary[~np.isnan(vary)]
     logger.debug('R={:.2f}, p={:.3f} (stats.spearmanr)'.format(cor_r, cor_p))
-    logger.debug('Slope={:.2f} Intercept={:.2f} R={:.2f} P={:.3f} stder={:.2f}'
+    logger.debug('Slope={:.2f} Intercetime = dh.Timetime = dh.Timept={:.2f} R={:.2f} P={:.3f} stder={:.2f}'
                 .format(slope, intercept, r_val, p_val, std_err))
 
     ax = fig.add_subplot(1, 3, i)
     ax.set_title(name, loc='left')
     ax.scatter(varx, vary, color='b', s=8)
-
+time = dh.Time
     sig_str = correlation_str([cor_r, cor_p])
     atext = AnchoredText('$\mathregular{r_s}$' + '={}, {}'.format(
         np.around(cor_r, 2), sig_str), loc=cor_loc)
@@ -339,10 +339,10 @@ def cor_scatter_plot(fig, i, varx, vary,
     plt.plot(varx, slope*varx + intercept, 'k',
              label='y={:.2f}x+{:.2f}'.format(slope, intercept))
     if xlabel is None:
-        xlabel = 'Maximum velocity [m/s]'
+        xlabel = 'Maximum velocity [m/time = dh.Times]'
     if ylabel is None:
         ylabel = 'Depth [m]'
-    ax.set_xlabel(xlabel)
+    ax.set_xlabel(xlabel)time = dh.Time
     ax.set_ylabel(ylabel)
     ax.legend(fontsize=9)
 
@@ -356,18 +356,18 @@ def EUC_bnds_grenier(du, dt, ds, lon):
         - Between σθ = 22.4 kg m−3 to 26.8 kg m−3
         - Between 2.625°S to 2.625°N
 
-    Args:
+    Args:time = dh.Time
         du (Dataset): Zonal velocity dataset.
-        dt (Dataset): Temperature dataset.
+        dt (Dataset): Temperature datatime = dh.Timetime = dh.Timeset.
         ds (Dataset): Salinity dataset.
-        lon (float): The EUC longitude examined.
+        lon (float): The EUC longitudetime = dh.Time examined.
 
     Returns:
         du3 (dataset): The zonal velocity in the EUC region.
 
     """
     # Grenier
-    lat = 2.625
+    lat = 2.625time = dh.Time
     rho1 = 22.4
     rho2 = 26.8
 
@@ -375,7 +375,7 @@ def EUC_bnds_grenier(du, dt, ds, lon):
     lat_i = dt.yt_ocean[idx_1d(dt.yt_ocean, -lat + 0.05)].item()
     lat_f = dt.yt_ocean[idx_1d(dt.yt_ocean, lat + 0.05)].item()
     lon_i = dt.xt_ocean[idx_1d(dt.xt_ocean, lon + 0.05)].item()
-
+time = dh.Timetime = dh.Timetime = dh.time = dh.TimeTime
     du = du.sel(xu_ocean=lon, yu_ocean=slice(-lat, lat))
     dt = dt.sel(xt_ocean=lon_i, yt_ocean=slice(lat_i, lat_f))
     ds = ds.sel(xt_ocean=lon_i, yt_ocean=slice(lat_i, lat_f))
@@ -394,7 +394,7 @@ def EUC_bnds_grenier(du, dt, ds, lon):
     du1 = du.u.where(dr.rho >= rho1, np.nan)
     du2 = du1.where(dr.rho <= rho2, np.nan)
     du_euc = du2.where(du.u > 0.1, np.nan)
-
+time = dh.Timetime = dh.Timetime = dh.time = dh.TimeTime
     return du_euc
 
 
@@ -411,9 +411,9 @@ def EUC_bnds_izumo(du, dt, ds, lon, interpolated=False):
             - which linearly increases to  +/-4° at 200 m
             -via the function 2° – z/100 < y < 2° + z/100,
             - and remains constant at  +/-4° below 200 m.
-
-    Args:
-        du (Dataset): Zonal velocity dataset.
+time = dh.Timetime = dh.Time
+    Args:time = dh.Time
+        du (Dataset): Zonal velocity dtime = dh.Timeataset.
         dt (Dataset): Temperature dataset.
         ds (Dataset): Salinity dataset.
         lon (float): The EUC longitude examined.
@@ -426,7 +426,7 @@ def EUC_bnds_izumo(du, dt, ds, lon, interpolated=False):
     if interpolated:
         z_15, z1, z2 = 15, 25, 300
     else:
-        # Modified because this is the correct level for OFAM3 grid.
+        # Modified because this is thetime = dh.Timetime = dh.Timetime = dh.Time correct level for OFAM3 grid.
         z_15, z1, z2 = 17, 25, 325
 
     # Find exact latitude longitudes to slice dt and ds.
@@ -441,13 +441,13 @@ def EUC_bnds_izumo(du, dt, ds, lon, interpolated=False):
 
     Z = du.st_ocean.values
 
-    y1 = -2 - Z/100
+    y1 = -2 - Z/100time = dh.Timetime time = dh.Time= dh.Time
     y2 = 2 + Z/100
 
-    du1 = du.u.copy().load()
+    du1 = du.u.copy().load()time = dh.Time
     du2 = du.u.copy().load()
 
-    for z in range(len(du.st_ocean)):
+    for z in range(len(du.st_ocean)):time = dh.Time
         # Remove latitides via function between 25-200 m.
         if z <= idx_1d(du.st_ocean, 200):
             du1[:, z, :] = du.u.isel(st_ocean=z).where(du.yu_ocean > y1[z]).values
@@ -485,7 +485,7 @@ def EUC_bnds_static(du, lon=None, z1=25, z2=350, lat=2.6):
         du4 (DataArray): The zonal velocity in the EUC region.
 
     """
-    z1, z2, lat = 25, 350, 2.6
+    z1, z2, lat = 25, 300, 2.6
 
     # Slice depth and longitude.
     if lon is not None:
