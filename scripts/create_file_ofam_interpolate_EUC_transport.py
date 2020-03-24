@@ -15,8 +15,7 @@ from main import paths, LAT_DEG, lx
 
 
 # Path to save figures, save data and OFAM model output.
-fpath, dpath, xpath, lpath = paths()
-tpath = Path('/g', 'data', 'e14', 'as3189', 'OFAM', 'TAO')
+fpath, dpath, xpath, lpath, tpath = paths()
 lons = [165, 190, 220]
 # Area = metres in a degree of latitude x cell width x cell depth
 area = LAT_DEG*0.1*5
@@ -29,6 +28,7 @@ for y in range(lx['years'][0][0], lx['years'][0][1]+1):
 ds = xr.open_mfdataset(files, combine='by_coords')
 dss = ds.u.sel(xu_ocean=[165, 190, 220], yu_ocean=slice(-2.6, 2.6), 
               st_ocean=slice(2.5, 610.415649))
+
 # Calculate the monthly mean.
 df = dss.resample(Time="MS").mean()
 # New depth levels to interpolate to.
@@ -37,7 +37,7 @@ di = df.interp(st_ocean=z, method='slinear')
 
 di = di.sel(st_ocean=slice(10, 555))
 # Multiply each grid cell by the constant.
-dt = (di*area).sum(dim='yu_ocean')
+dt = (di.where(di > 0)*area).sum(dim='yu_ocean')
 
 eq = di.sel(yu_ocean=0, method='nearest')
 
