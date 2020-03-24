@@ -65,7 +65,7 @@ def plot_EUC_transport_def_timeseries(exp=0):
             plt.xlim(xmin=time[0], xmax=time[-1])
             plt.ylabel('Transport [Sv]')
             if i == 0:
-                plt.legend(loc=1)
+                plt.legend(loc=4)
             dh.close()
             dr.close()
     plt.tight_layout()
