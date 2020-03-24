@@ -4,7 +4,7 @@ created: Thu Dec  5 03:26:22 2019
 
 author: Annette Stellema (astellemas@gmail.com)
 
-    
+
 """
 import sys
 sys.path.append('/g/data1a/e14/as3189/OFAM/scripts/')
@@ -24,9 +24,9 @@ files = []
 for y in range(lx['years'][0][0], lx['years'][0][1]+1):
     for m in range(1, 13):
         files.append(str(xpath.joinpath('ocean_u_{}_{:02d}.nc'.format(y, m))))
-        
+
 ds = xr.open_mfdataset(files, combine='by_coords')
-dss = ds.u.sel(xu_ocean=[165, 190, 220], yu_ocean=slice(-2.6, 2.6), 
+dss = ds.u.sel(xu_ocean=[165, 190, 220], yu_ocean=slice(-2.6, 2.6),
               st_ocean=slice(2.5, 610.415649))
 
 # Calculate the monthly mean.
@@ -43,11 +43,11 @@ eq = di.sel(yu_ocean=0, method='nearest')
 
 dz = xr.Dataset()
 dz['uvo'] = dt
-dz['uvo']['long_name'] = 'OFAM3 EUC monthly zonal transport slinear with interpolated depth levels'
-dz['uvo']['units'] = 'm3/sec'
+dz['uvo'].attrs['long_name'] = 'OFAM3 EUC monthly zonal transport slinear with interpolated depth levels'
+dz['uvo'].attrs['units'] = 'm3/sec'
 dz['u'] = eq
-dz['u']['long_name'] = 'OFAM3 EUC monthly zonal velocity at the equator with slinear interpolated depth levels'
-dz['u']['units'] = 'm/sec'
+dz['u'].attrs['long_name'] = 'OFAM3 EUC monthly zonal velocity at the equator with slinear interpolated depth levels'
+dz['u'].attrs['units'] = 'm/sec'
 
 # Save to /data as a netcdf file.
 dz.to_netcdf(dpath.joinpath('ofam_EUC_int_transport.nc'))
