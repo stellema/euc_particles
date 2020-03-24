@@ -581,6 +581,6 @@ logger.propagate = False
 #        ax.scatter(x[i], y[i], z[i], s=5, marker="o", c=cmap(norm(ds.u)))
 #        ax.scatter(x[i], y[i], z[i], s=5, marker="o", c=[c[i]])
 #
-pfile = dpath.joinpath('ParticleFile_1979-1989_v3.nc')
-filename = dpath.joinpath('ParticleFile_1979-1989_v3.nc')
-pfile = dpath.joinpath('ParticleFile_1979-1989_v3.nc')
+# pfile = dpath.joinpath('ParticleFile_1979-1989_v3.nc')
+# filename = dpath.joinpath('ParticleFile_1979-1989_v3.nc')
+# pfile = dpath.joinpath('ParticleFile_1979-1989_v3.nc')

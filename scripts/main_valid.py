@@ -103,7 +103,6 @@ def plot_eq_velocity(fig, z, t, u, i, name,
             if i == 0:
                 # Add separate colourbar axes (left, bottom, width, height).
                 cbar_ax = fig.add_axes([0.925, 0.11, 0.018, 0.355])
-                # BUG: not sure if first arg is correct or not (was axes[0][0]).
                 plt.colorbar(im, cax=cbar_ax, shrink=1, orientation='vertical',
                              extend='both', label='Velocity [m/s]')
 
@@ -136,9 +135,9 @@ def plot_tao_timeseries(ds, interp='', T=1, new_end_v=None):
         interpx = interp + str(new_end_v) if new_end_v else interp
         save_name = 'tao_{}_{}.png'.format(interpx, lx['frq'][T])
         interpx = '({})'.format(interpx) if interp != '' else ''
-        name = '{}TAO/TRITION {} EUC at 0°S,{} {}'.format(lx['l'][i],
-                                                            lx['frq_long'][T],
-                                                            lx['lonstr'][i], interpx)
+        name = ('{}TAO/TRITION {} EUC at 0°S,{} {}'
+                .format(lx['l'][i], lx['frq_long'][T],
+                        lx['lonstr'][i], interpx))
 
         # Plot TAO/TRITION zonal velocity timeseries without any interpolation.
         if interp == '':
@@ -260,12 +259,13 @@ def EUC_vbounds(du, depths, i, v_bnd=0.3, index=False):
     data_name = 'OFAM3' if hasattr(du, 'st_ocean') else 'TAO/TRITION'
 
     logger.debug('{} {}: v_bnd={} tot={} count={} null={} skip={}(T={},L={}).'
-                .format(data_name, lx['lons'][i], v_bnd, u.shape[0], count,
-                        empty, skip_t + skip_l, skip_t, skip_l))
+                 .format(data_name, lx['lons'][i], v_bnd, u.shape[0], count,
+                         empty, skip_t + skip_l, skip_t, skip_l))
     if not index:
         return v_max, z1, z2
     else:
         return v_max, z1i, z2i
+
 
 def regress(varx, vary):
     """Return Spearman R and linregress results.
@@ -322,7 +322,7 @@ def cor_scatter_plot(fig, i, varx, vary,
     vary = vary[~np.isnan(vary)]
     logger.debug('R={:.2f}, p={:.3f} (stats.spearmanr)'.format(cor_r, cor_p))
     logger.debug('Slope={:.2f} Intercept={:.2f} R={:.2f} P={:.3f} stder={:.2f}'
-                .format(slope, intercept, r_val, p_val, std_err))
+                 .format(slope, intercept, r_val, p_val, std_err))
 
     ax = fig.add_subplot(1, 3, i)
     ax.set_title(name, loc='left')
@@ -366,7 +366,6 @@ def EUC_bnds_grenier(du, dt, ds, lon):
         du3 (dataset): The zonal velocity in the EUC region.
 
     """
-    # Grenier
     lat = 2.625
     rho1 = 22.4
     rho2 = 26.8
@@ -449,13 +448,13 @@ def EUC_bnds_izumo(du, dt, ds, lon, interpolated=False):
     for z in range(len(du.st_ocean)):
         # Remove latitides via function between 25-200 m.
         if z <= idx_1d(du.st_ocean, 200):
-            du1[:, z, :] = du.u.isel(st_ocean=z).where(du.yu_ocean > y1[z]).values
-            du1[:, z, :] = du1.isel(st_ocean=z).where(du.yu_ocean < y2[z]).values
+            du1[:, z, :] = du.u.isel(st_ocean=z).where(du.yu_ocean > y1[z])
+            du1[:, z, :] = du1.isel(st_ocean=z).where(du.yu_ocean < y2[z])
 
         # Remove latitides greater than 4deg for depths greater than 200 m.
         else:
-            du1[:, z, :] = du.u.isel(st_ocean=z).where(du.yu_ocean >= -4).values
-            du1[:, z, :] = du1.isel(st_ocean=z).where(du.yu_ocean <= 4).values
+            du1[:, z, :] = du.u.isel(st_ocean=z).where(du.yu_ocean >= -4)
+            du1[:, z, :] = du1.isel(st_ocean=z).where(du.yu_ocean <= 4)
 
         # Remove temperatures less than t(z=15) - 0.1 at each timestep.
         du2[:, z, :] = du1.isel(st_ocean=z).where(
@@ -497,30 +496,26 @@ def EUC_bnds_static(du, lon=None, z1=25, z2=350, lat=2.6):
 
     # Remove negative/zero velocities.
     du = du.u.where(du.u > 0, np.nan)
+
     return du
 
+
 def correlation_str(cor):
-    """ Create string with the correlation significance with the
-    appropriate number of decimal places.
+    """Create correlation significance string to correct decimal places.
 
     p values greater than 0.01 rounded to two decimal places.
     p values between 0.01 and 0.001 rounded to three decimal places.
     p values less than 0.001 are just given as 'p>0.001'
-
     Note that 'p=' will also be included in the string.
 
-    Parameters
-    ----------
-    cor : list
-        The correlation coefficient (cor[0]) and associated
-        significance (cor[1])
+    Args:
+        cor (list): The correlation coefficient (cor[0]) and associated
+            significance (cor[1])
 
-    Returns
-    -------
-    sig_str : str
-        The rounded significance in a string
+    Returns:
+        sig_str (str): The rounded significance in a string.
+
     """
-
     if cor[1] <= 0.001:
         sig_str = 'p<0.001'
     elif cor[1] <= 0.01 and cor[1] >= 0.001:
@@ -533,4 +528,3 @@ def correlation_str(cor):
             sig_str = 'p=' + str(np.around(cor[1], 2))
 
     return sig_str
-
