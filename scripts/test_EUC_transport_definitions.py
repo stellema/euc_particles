@@ -16,26 +16,26 @@ from main_valid import EUC_bnds_static, EUC_bnds_grenier, EUC_bnds_izumo
 # Path to save figures, save data and OFAM model output.
 fpath, dpath, xpath, lpath, tpath = paths()
 years = lx['years']
-
+ex = 0
 # Open zonal velocity historical and future climatologies.
-du = xr.open_dataset(xpath/('ocean_u_{}-{}_climo.nc'.format(*years[0])))
+du = xr.open_dataset(xpath/('ocean_u_{}-{}_climo.nc'.format(*years[ex])))
 
 # Open temperature historical and future climatologies.
-dt = xr.open_dataset(xpath/('ocean_temp_{}-{}_climo.nc'.format(*years[0])))
+dt = xr.open_dataset(xpath/('ocean_temp_{}-{}_climo.nc'.format(*years[ex])))
 
 # Open salinity historical and future climatologies.
-ds = xr.open_dataset(xpath/('ocean_salt_{}-{}_climo.nc'.format(*years[0])))
+ds = xr.open_dataset(xpath/('ocean_salt_{}-{}_climo.nc'.format(*years[ex])))
 
 
-# lon = 220
-# dg = EUC_bnds_grenier(du, dt, ds, lon)
-# # # dg.mean('Time').sel(st_ocean=slice(25, 500)).plot()
+lon = 170
+dg = EUC_bnds_grenier(du, dt, ds, lon)
+# # dg.mean('Time').sel(st_ocean=slice(25, 500)).plot()
 
-# di = EUC_bnds_izumo(du, dt, ds, lon)
+di = EUC_bnds_izumo(du, dt, ds, lon)
 
 
-# dx = EUC_bnds_static(du, lon=lon, z1=25, z2=350, lat=2.6)
-# # # dx.mean('Time').plot()
+dx = EUC_bnds_static(du, lon=lon, z1=25, z2=300, lat=2.6)
+# # dx.mean('Time').plot()
 
 # dy = LAT_DEG*0.1
 # dz = [(du.st_ocean[z+1] - du.st_ocean[z]).item()
@@ -62,62 +62,60 @@ ds = xr.open_dataset(xpath/('ocean_salt_{}-{}_climo.nc'.format(*years[0])))
 # drr = (dr[:, :]*dz[xzi:xzf+1]).sum(dim='st_ocean')
 # print(drr/SV)
 
-# cmap = plt.cm.seismic
-# cmap.set_bad('lightgrey')  # Colour NaN values light grey.
-# fig = plt.figure()
-# c1, c2 = 100, 200
-# d = du.u[0].sel(xu_ocean=lon)
-# cs = plt.pcolormesh(du.yu_ocean, du.st_ocean, d,
-#                     vmax=1.1, vmin=-1, cmap=cmap)
 
-# cbar = plt.colorbar(cs)
-# for i, dz, color in zip(range(3), [di, dg, dx], ['k', 'g', 'c']):
-#     dz = dz[0]
 
-#     tmp = d.where(dz != np.nan, c1)
-#     tmp = tmp.where(dz == np.nan, c2)
+du = du.sel(xu_ocean=lon)
+# for t in range(12):
 
-#     plt.contour(d.yu_ocean, d.st_ocean, tmp, [(c2-c1)/2 + c1], colors=color)
-#     plt.ylim(500, 2.5)
-#     plt.xlim(-5, 5)
+cmap = plt.cm.seismic
+cmap.set_bad('lightgrey')  # Colour NaN values light grey.
+fig, ax = plt.subplots(4, 3, figsize=(width*1.4, height*2.25),
+                       sharey=True)
+ax = ax.flatten()
+c1, c2 = 100, 200
+for t in range(12):
+    cs = ax[t].pcolormesh(du.yu_ocean, du.st_ocean, du.u[t],
+                          vmax=1.1, vmin=-1, cmap=cmap)
 
-method = 'izumo'
+
+    for i, dz, color in zip(range(3), [di, dg, dx], ['y', 'g', 'k']):
+        # Static.
+
+        dq = np.ones(du.u[t].shape)*c2
+        iz = [idx_1d(du.st_ocean, dz.st_ocean[0]),
+              idx_1d(du.st_ocean, dz.st_ocean[-1])]
+        iy = [idx_1d(du.yu_ocean, dz.yu_ocean[0]),
+              idx_1d(du.yu_ocean, dz.yu_ocean[-1])]
+        dq[iz[0]:iz[1]+1, iy[0]:iy[1]+1] = dz[t].where(np.isnan(dz[t]) == False, c2)
+        ax[t].contour(du.yu_ocean, du.st_ocean, dq, [190], colors=color)
+
+
+        ax[t].set_ylim(1000, 2.5)
+        ax[t].set_xlim(-4.5, 4.5)
+# cbar = ax[t].colorbar(cs)
+plt.show()
+plt.clf()
+
+
+
+
 dy = LAT_DEG*0.1
-
 dz = [(du.st_ocean[z+1] - du.st_ocean[z]).item()
       for z in range(0, len(du.st_ocean)-1)]
+dtx = xr.Dataset()
+dtx['uvo'] = xr.DataArray(np.zeros((12, 3)),
+                          coords=[('Time', du.Time),
+                                  ('xu_ocean', lx['lons'])])
 
-if method == 'izumo':
-    dx_165 = EUC_bnds_izumo(du, dt, ds, lon=165)
-    dx_190 = EUC_bnds_izumo(du, dt, ds, lon=190)
-    dx_220 = EUC_bnds_izumo(du, dt, ds, lon=220)
+dz_i, dz_f = [],  []
+for i, lon, dx in zip(range(3), lx['lons'], [di, dg, dx]):
+    dz_i.append(idx_1d(du.st_ocean, dx.st_ocean[0]))
+    dz_f.append(idx_1d(du.st_ocean, dx.st_ocean[-1]))
 
+    dr = (dx*dy).sum(dim='yu_ocean')
 
-    dtx = xr.Dataset()
-    dtx['uvo'] = xr.DataArray(np.zeros((len(dx_165.Time), 3)),
-                              coords=[('Time', dx_165.Time),
-                                      ('xu_ocean', lx['lons'])])
+    dtx.uvo[:, i] = (dr[:, :-1]*dz[dz_i[i]:dz_f[i]]).sum(dim='st_ocean')
 
-    dz_i, dz_f = [],  []
-    for i, lon, dx in zip(range(3), lx['lons'], [dx_165, dx_190, dx_220]):
-        dz_i.append(idx_1d(du.st_ocean, dx.st_ocean[0]))
-        dz_f.append(idx_1d(du.st_ocean, dx.st_ocean[-1]))
-
-        dr = (dx*dy).sum(dim='yu_ocean')
-        dtx.uvo[:, i] = (dr[:, :]*dz[dz_i[i]:dz_f[i]+1]).sum(dim='st_ocean')
-
-
-dtx['uvo']['long_name'] = 'OFAM3 EUC daily transport  {} boundaries'.format(method)
-dtx['uvo']['units'] = 'm3/sec'
-
-    # dr = (dx*dy).sum(dim='yu_ocean')
-    # duvo = (dr[:, :]*dz[dz_i[i]:dz_f[i]+1]).sum(dim='st_ocean')
-
-# duv = xr.Dataset()
-# duv['uvo'] = duvo
-# duv['uvo']['long_name'] = 'OFAM3 EUC daily transport  {} boundaries'.format(method)
-# duv['uvo']['units'] = 'm3/sec'
-
-
-# # Save to /data as a netcdf file.
-# duv.to_netcdf(dpath.joinpath('ofam_EUC_int_transport.nc'))
+for i, c, l in zip(range(3), ['y', 'g', 'k'], ['izumo', 'grenier', 'static']):
+    plt.plot(dtx.uvo.Time, dtx.uvo[:, i]/1e6, color=c, label=l)
+plt.legend()

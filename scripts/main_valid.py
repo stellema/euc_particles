@@ -469,7 +469,7 @@ def EUC_bnds_izumo(du, dt, ds, lon, interpolated=False):
     return du4
 
 
-def EUC_bnds_static(du, lon=None, z1=25, z2=350, lat=2.6):
+def EUC_bnds_static(du, lon=None, z1=25, z2=300, lat=2.6):
     """Apply static EUC definition to zonal velocity at a longitude.
 
     Args:
@@ -483,7 +483,7 @@ def EUC_bnds_static(du, lon=None, z1=25, z2=350, lat=2.6):
         du4 (DataArray): The zonal velocity in the EUC region.
 
     """
-    z1, z2, lat = 25, 300, 2.6
+    # z1, z2, lat = 25, 300, 2.6
 
     # Slice depth and longitude.
     if lon is not None:

@@ -143,6 +143,6 @@ def print_EUC_transport_def_correlation():
 
 
 # print_EUC_transport_def_correlation()
-for exp in range(3):
+for exp in range(1):
     plot_EUC_transport_def_timeseries(exp=exp)
     # plot_EUC_transport_def_annual(exp=exp)
