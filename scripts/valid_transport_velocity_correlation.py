@@ -54,7 +54,7 @@ def plot_tao_max_velocity_correlation(v_bnd='half_max'):
     return
 
 
-def eq_velocity_transport_reg(z1=25, z2=350, T=1, dk=5, v_bnd='half_max'):
+def eq_velocity_transport_reg(z1=25, z2=300, T=1, dk=5, v_bnd='half_max'):
     """Return OFAM3 and TAO equatorial velocity sum and transport.
 
     Args:
@@ -78,7 +78,6 @@ def eq_velocity_transport_reg(z1=25, z2=350, T=1, dk=5, v_bnd='half_max'):
     # OFAM3.
     d3 = xr.open_dataset(dpath.joinpath('ofam_ocean_u_EUC_int_transport.nc'))
     d3 = d3.sel(st_ocean=slice(z1, z2))
-    print(d3)
 
     # Add transport between depths.
     d3t = d3.uvo.isel(st_ocean=0).copy()*np.nan
@@ -215,7 +214,7 @@ def plot_tao_ofam_transport_timeseries(z1=25, z2=350, T=1, dk=5,
                 # Increase alpha of transport when available, but doesn't match.
                 ax.plot(time, dtc_nan/SV, color='k', alpha=0.2)
                 ax.plot(time, dux_nan, color='red', alpha=0.2)
-            ax.set_ylim(ymin=0, ymax=72)
+#             ax.set_ylim(ymin=0, ymax=72)
             save_name = 'EUC_transport_regression_{}.png'.format(v_bnd)
 
         ax.set_title('{}Modelled and observed EUC transport at {}'
@@ -238,14 +237,14 @@ def plot_tao_ofam_transport_timeseries(z1=25, z2=350, T=1, dk=5,
 
 
 # plot_tao_max_velocity_correlation()
-for v_bnd in ['half_max', '25_max', 0.3, 0.2, 0.1]:
+for v_bnd in ['half_max', '25_max', 0.1]:
 
     print('plot_tao_ofam_transport_timeseries v_bnd=', v_bnd)
     plot_tao_ofam_transport_timeseries(z1=25, z2=300, T=1, dk=5,
-                                       v_bnd=v_bnd, series='all')
-    print('plot_tao_max_velocity_correlation')
-    plot_ofam_transport_correlation(z1=25, z2=300, T=1, dk=5,
-                                    v_bnd=v_bnd)
-    print('plot_tao_ofam_transport_timeseries monthly v_bnd=', v_bnd)
-    plot_tao_ofam_transport_timeseries(z1=25, z2=300, T=1, dk=5,
-                                       v_bnd=v_bnd, series='month')
+                                       v_bnd=v_bnd, series='all', plot_nan=True)
+#     print('plot_tao_max_velocity_correlation')
+#     plot_ofam_transport_correlation(z1=25, z2=300, T=1, dk=5,
+#                                     v_bnd=v_bnd)
+#     print('plot_tao_ofam_transport_timeseries monthly v_bnd=', v_bnd)
+#     plot_tao_ofam_transport_timeseries(z1=25, z2=300, T=1, dk=5,
+#                                        v_bnd=v_bnd, series='month')

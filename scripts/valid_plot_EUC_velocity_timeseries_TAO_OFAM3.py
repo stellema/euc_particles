@@ -101,5 +101,4 @@ d3 = xr.open_dataset(dpath.joinpath('ofam_ocean_u_EUC_int_transport.nc'))
 
 # plot_tao_velocity_timeseries()
 plot_eq_velocity_timeseries_tao_ofam(ds, d3, v_bnd='half_max', add_bounds=True)
-plot_eq_velocity_timeseries_tao_ofam(ds, d3, v_bnd=0.3, add_bounds=True)
-plot_eq_velocity_timeseries_tao_ofam(ds, d3, v_bnd=0.2, add_bounds=True)
+plot_eq_velocity_timeseries_tao_ofam(ds, d3, v_bnd=0.1, add_bounds=True)
