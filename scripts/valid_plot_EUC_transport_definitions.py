@@ -9,7 +9,9 @@ author: Annette Stellema (astellemas@gmail.com)
 import numpy as np
 import xarray as xr
 import itertools
+import pandas as pd
 from scipy import stats
+from datetime import datetime
 from main import paths, lx, SV
 import matplotlib.pyplot as plt
 from main_valid import plot_eq_velocity, regress, correlation_str
@@ -44,11 +46,11 @@ def plot_EUC_transport_def_timeseries(exp=0):
             if exp == 0:
                 u = (dh.uvo.groupby('Time.month') -
                      dh.uvo.groupby('Time.month').mean())
-                time = dh.Time.to_pandas()
+                time = dh.Time
             else:
                 dr = dr.isel(xu_ocean=i).resample(Time='MS').mean()
 
-                time = dr.Time.to_pandas()
+                time = dr.Time
                 if exp == 1:
                     u = (dr.uvo.groupby('Time.month') -
                          dr.uvo.groupby('Time.month').mean())
@@ -58,13 +60,13 @@ def plot_EUC_transport_def_timeseries(exp=0):
             plt.title('{}OFAM3 {} EUC monthly transport at {}'
                       .format(lx['l'][i], lx['exps'][exp], lx['lonstr'][i]),
                       loc='left')
-            plt.hlines(y=0, xmin=time[0], xmax=time[-1], color='grey')
-            lbs = ['Grenier et al. (2011)', 'Izumo (2005)', 'Fixed']
+            plt.plot(time, np.zeros(len(time)), color='grey')
+            lbs = ['Grenier et al. (2011)', 'Izumo (2005)', 'Fixedi']
             plt.plot(time, u/SV, label=lbs[l], color=c)
             plt.xlim(xmin=time[0], xmax=time[-1])
             plt.ylabel('Transport [Sv]')
             if i == 0:
-                plt.legend(loc=4)
+                plt.legend(loc=1)
             dh.close()
             dr.close()
     plt.tight_layout()
