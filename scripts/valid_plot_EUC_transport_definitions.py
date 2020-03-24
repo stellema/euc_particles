@@ -44,11 +44,11 @@ def plot_EUC_transport_def_timeseries(exp=0):
             if exp == 0:
                 u = (dh.uvo.groupby('Time.month') -
                      dh.uvo.groupby('Time.month').mean())
-                time = dh.Time
+                time = dh.Time.to_pandas()
             else:
                 dr = dr.isel(xu_ocean=i).resample(Time='MS').mean()
 
-                time = dr.Time
+                time = dr.Time.to_pandas()
                 if exp == 1:
                     u = (dr.uvo.groupby('Time.month') -
                          dr.uvo.groupby('Time.month').mean())
