@@ -34,7 +34,7 @@ def plot_EUC_transport_def_timeseries(exp=0):
         ax = fig.add_subplot(3, 1, i+1)
         for l, method, c in zip(range(3),
                                 ['grenier', 'izumo', 'static'],
-                                [ 'r', 'b', 'k']):
+                                ['r', 'b', 'k']):
             dh = xr.open_dataset(dpath/'ofam_EUC_transport_{}_{}.nc'
                                  .format(method, lx['exp_abr'][0]))
             dr = xr.open_dataset(dpath/'ofam_EUC_transport_{}_{}.nc'
@@ -54,7 +54,6 @@ def plot_EUC_transport_def_timeseries(exp=0):
                          dr.uvo.groupby('Time.month').mean())
                 else:
                     u = dr.uvo.values - dh.uvo.values
-
 
             plt.title('{}OFAM3 {} EUC monthly transport at {}'
                       .format(lx['l'][i], lx['exps'][exp], lx['lonstr'][i]),
@@ -80,7 +79,7 @@ def plot_EUC_transport_def_annual(exp=0):
         ax = fig.add_subplot(1, 3, i+1)
         for l, method, c in zip(range(3),
                                 ['grenier', 'izumo', 'static'],
-                                [ 'r', 'b', 'k']):
+                                ['r', 'b', 'k']):
             dh = xr.open_dataset(dpath/'ofam_EUC_transport_{}_{}.nc'
                                  .format(method, lx['exp_abr'][0]))
             dr = xr.open_dataset(dpath/'ofam_EUC_transport_{}_{}.nc'
@@ -121,22 +120,22 @@ def plot_EUC_transport_def_annual(exp=0):
 def print_EUC_transport_def_correlation():
     for m in list(itertools.combinations(['grenier', 'izumo', 'static'], 2)):
         for i in range(3):
-            l = []
+            cor = []
             for exp in range(2):
                 d1 = xr.open_dataset(dpath/'ofam_EUC_transport_{}_{}.nc'
-                                      .format(m[0], lx['exp_abr'][exp]))
+                                     .format(m[0], lx['exp_abr'][exp]))
                 d2 = xr.open_dataset(dpath/'ofam_EUC_transport_{}_{}.nc'
-                                      .format(m[1], lx['exp_abr'][exp]))
+                                     .format(m[1], lx['exp_abr'][exp]))
                 d1x = d1.isel(xu_ocean=i).resample(Time='MS').mean()
                 d2x = d2.isel(xu_ocean=i).resample(Time='MS').mean()
 
                 cor_r, cor_p = regress(d1x.uvo, d2x.uvo)[0:2]
-                l.append(cor_r)
-                l.append(correlation_str([cor_r, cor_p]))
+                cor.append(cor_r)
+                cor.append(correlation_str([cor_r, cor_p]))
                 d1.close()
                 d2.close()
             print('{}/{} {} Hist:R={:.2f} p={} RCP: R={:.2f} p={}'
-                  .format(*m, lx['lonstr'][i], *l))
+                  .format(*m, lx['lonstr'][i], *cor))
 
     return
 
