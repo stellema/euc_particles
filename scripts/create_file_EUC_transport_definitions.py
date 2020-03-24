@@ -82,11 +82,11 @@ for i, lon, dx in zip(range(3), lx['lons'], [dx_165, dx_190, dx_220]):
     else:
         dtx.uvo[:, i] = (dr[:, :-1]*dz[dz_i[i]:dz_f[i]]).sum(dim='st_ocean')
 
-dtx['uvo']['long_name'] = ('OFAM3 EUC daily transport {} boundaries'
+dtx['uvo'].attrs['long_name'] = ('OFAM3 EUC daily transport {} boundaries'
                            .format(method))
-dtx['uvo']['units'] = 'm3/sec'
+dtx['uvo'].attrs['units'] = 'm3/sec'
 if method == 'static':
-    dtx['uvo']['bounds'] = ('Integrated between z=({}, {}) and y=({}, {})'
+    dtx['uvo'].attrs['bounds'] = ('Integrated between z=({}, {}) and y=({}, {})'
                             .format(z1, z2, -lat, lat))
 
 # # Save to /data as a netcdf file.
