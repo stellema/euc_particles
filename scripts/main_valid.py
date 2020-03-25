@@ -168,7 +168,7 @@ def plot_tao_timeseries(ds, interp='', T=1, new_end_v=None):
                              i+1, name)
 
     plt.tight_layout()
-    plt.savefig(fpath.joinpath('tao', save_name))
+    plt.savefig(fpath.joinpath('valid', save_name))
 
     return
 
@@ -530,6 +530,7 @@ def correlation_str(cor):
 
     return sig_str
 
+
 def legend_without_duplicate_labels(ax, loc=False):
     handles, labels = ax.get_legend_handles_labels()
     unique = [(h, l) for i, (h, l) in enumerate(zip(handles, labels))
@@ -540,4 +541,3 @@ def legend_without_duplicate_labels(ax, loc=False):
         ax.legend(*zip(*unique))
 
     return
-

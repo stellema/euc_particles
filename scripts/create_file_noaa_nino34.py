@@ -30,8 +30,12 @@ data = data.drop('ice')
 data = data.drop('err')
 data = data.drop('zlev')
 
-sst_anom_nino34 = data.anom.sel(lat=slice(-5, 5),
-                                lon=slice(190, 240)).mean(['lon', 'lat'])
+sst_nino34 = data.sst.sel(lat=slice(-5, 5),
+                          lon=slice(190, 240)).mean(['lon', 'lat'])
+sst_nino34 = sst_nino34.resample(time='MS').mean()
+
+sst_anom_nino34 = (sst_nino34.groupby('time.month') -
+                   sst_nino34.groupby('time.month').mean())
 
 ds = xr.Dataset()  # Creates an empty xarray dataset.
 
@@ -47,7 +51,7 @@ ds.attrs = data.attrs
 ds.nino34.attrs = data.anom.attrs
 
 
-ds.nino34.attrs['long_name'] = 'Monthly Nino 3.4 SST anomalies'
+ds.nino34.attrs['long_name'] = 'Monthly Nino 3.4 SST anomalies (rel 1981-2012)'
 ds.oni.attrs['long_name'] = 'Three month rolling mean of Nino3.4 SST anomalies'
 
 
@@ -56,4 +60,4 @@ print(ds.nino34)
 print(ds.oni)
 
 # Save to a netcdf file (may take quite a while to calculate and save).
-ds.to_netcdf(dpath/'noaa_sst_anom_nino34.nc')
+d

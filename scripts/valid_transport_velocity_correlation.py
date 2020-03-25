@@ -9,6 +9,7 @@ author: Annette Stellema (astellemas@gmail.com)
 
 # import sys
 # sys.path.append('/g/data1a/e14/as3189/OFAM/scripts/')
+import warnings
 import numpy as np
 import xarray as xr
 from scipy import stats
@@ -17,12 +18,12 @@ from main import paths, lx, SV
 from main_valid import EUC_vbounds, regress, time_bnds_tao, time_bnds_ofam
 from main_valid import open_tao_data, cor_scatter_plot
 from main_valid import legend_without_duplicate_labels
-
+warnings.filterwarnings('ignore')
 # Path to save figures, save data and OFAM model output.
 fpath, dpath, xpath, lpath, tpath = paths()
 
 
-def plot_tao_max_velocity_correlation(v_bnd='half_max'):
+def plot_tao_max_velocity_correlation(ds, v_bnd='half_max'):
     """Plot TAO/TRITION maximum velocity/position/bottom depth correlation.
 
     BUG: not working with EUC_vbounds change (doesnt give max velocity depths).
@@ -48,7 +49,8 @@ def plot_tao_max_velocity_correlation(v_bnd='half_max'):
     return
 
 
-def eq_velocity_transport_reg(z1=25, z2=350, T=1, dk=5, v_bnd='half_max'):
+def eq_velocity_transport_reg(z1=25, z2=350, T=1, dk=5,
+                              v_bnd='half_max'):
     """Return OFAM3 and TAO equatorial velocity sum and transport.
 
     Args:
@@ -71,7 +73,7 @@ def eq_velocity_transport_reg(z1=25, z2=350, T=1, dk=5, v_bnd='half_max'):
     """
     # OFAM3.
     d3 = xr.open_dataset(dpath.joinpath('ofam_EUC_int_transport.nc'))
-    d3 = d3.sel(st_ocean=slice(z1, z2))
+    # d3 = d3.sel(st_ocean=slice(z1, z2))
 
     # Add transport between depths.
     d3t = d3.uvo.isel(st_ocean=0).copy()*np.nan
@@ -84,7 +86,7 @@ def eq_velocity_transport_reg(z1=25, z2=350, T=1, dk=5, v_bnd='half_max'):
         v_max, d1, d2 = EUC_vbounds(dq.u, dq.st_ocean, i, v_bnd=v_bnd)
         for t in range(len(dt.Time)):
             # Transport
-            tmp1 = d3.uvo.isel(xu_ocean=i, Time=t)
+            tmp1 = d3.uvo.isel(xu_ocean=i, Time=t).sel(st_ocean=slice(z1, z2))
             d3t[t, i] = tmp1.where(tmp1 > 0).sum(
                     dim='st_ocean').item()
             if not np.isnan(d1[t]):
@@ -115,7 +117,8 @@ def eq_velocity_transport_reg(z1=25, z2=350, T=1, dk=5, v_bnd='half_max'):
 def plot_ofam_transport_correlation(z1=25, z2=350, T=1, dk=5,
                                     v_bnd='half_max'):
     """Plot OFAM3  equatorial velocity and transport correlation."""
-    d3, d3v, d3t, ds, dsv = eq_velocity_transport_reg(z1, z2, T, dk, v_bnd)
+    d3, d3v, d3t, ds, dsv = eq_velocity_transport_reg(z1, z2,
+                                                      T, dk, v_bnd)
     fig = plt.figure(figsize=(18, 5))
 
     for i, lon in enumerate(lx['lons']):
@@ -194,7 +197,8 @@ def plot_tao_ofam_transport_timeseries(z1=25, z2=350, T=1, dk=5,
             d3xm = d3_clim
             dtaom = dtao_clim
             time = dtaom.month
-            ax.plot(time, dtaom.where(mask)*m[i] + b[i], color='r', label='TAO/TRITION')
+            ax.plot(time, dtaom.where(mask)*m[i] + b[i], color='r',
+                    label='TAO/TRITION')
             ax.plot(time, d3xm.where(mask)/SV, color='k', label='OFAM3')
             ax.set_xticks(np.arange(1, len(lx['mon'])+1))
             ax.set_xticklabels(lx['mon'])
@@ -237,6 +241,7 @@ def plot_tao_ofam_transport_timeseries(z1=25, z2=350, T=1, dk=5,
             # ax.legend(loc=1)
             legend_without_duplicate_labels(ax, loc=1)
         cor_r, cor_p = regress(dtaom*m[i] + b[i], d3xm/SV)[0:2]
+
         print('{}: R={:.2f}, p={:.3f} (stats.spearmanr)'.format(lon, cor_r,
                                                                 cor_p))
 
@@ -248,20 +253,61 @@ def plot_tao_ofam_transport_timeseries(z1=25, z2=350, T=1, dk=5,
     return
 
 
+def print_EUC_reg_transport(z1=25, z2=350, T=1, dk=5, v_bnd='half_max'):
+    d3, d3v, d3t, ds, dsv = eq_velocity_transport_reg(z1, z2, T, dk,
+                                                      v_bnd=v_bnd)
+
+    m, b = np.zeros(3), np.zeros(3)
+    euc = np.zeros((3, 3))
+    for i, lon in enumerate(lx['lons']):
+        m[i], b[i] = regress(d3v.sel(xu_ocean=lon),
+                             d3t.sel(xu_ocean=lon)/SV)[2:4]
+        # TAO/TRITION slice.
+        dtao = dsv[i].isel(time=slice(time_bnds_tao[i][0],
+                                      time_bnds_tao[i][1]))
+
+        # Rename TAO time array (so it matches OFAM3).
+        dtao = dtao.rename({'time': 'Time'})
+
+        # Convert TAO time array to monthly, as ofam/tao days are different.
+        dtao.coords['Time'] = dtao['Time'].values.astype('datetime64[M]')
+
+        # OFAM3 slice.
+        d3x = d3t.sel(xu_ocean=lx['lons'][i])
+        d3x = d3x.isel(Time=slice(time_bnds_ofam[i][0], time_bnds_ofam[i][1]))
+
+        # Mask OFAM3 transport when TAO data is missing (and vise versa).
+        mask = ~np.isnan(dtao) & ~np.isnan(d3x)
+
+        dtaom = dtao.where(mask).mean('Time')
+        d3xm = d3x.where(mask).mean('Time')
+        euc[i, 0] = dtaom.item()*m[i] + b[i]
+        euc[i, 1] = d3x.mean('Time').item()/SV
+        euc[i, 2] = d3xm.mean('Time').item()/SV
+        print('EUC ({}) {}: TAO={:.2f} Sv, OFAM={:.2f} Sv, OFAM_mask= {:.2f}Sv'
+              .format(v_bnd, lx['lonstr'][i], *euc[i]))
+
+    return euc
+
+
 # Saved data frequency (1 for monthly and 0 for daily data).
 T = 1
 
 # Open dataset of TAO data at the frequency.
 ds = open_tao_data(frq=lx['frq_short'][T], dz=slice(10, 360))
 dt = xr.open_dataset(dpath.joinpath('ofam_EUC_int_transport.nc'))
-# plot_tao_max_velocity_correlation()
-for v_bnd in ['half_max', '25_max', 0.1]:
 
+for v_bnd in ['half_max', '25_max', 0.1]:
     print('plot_tao_ofam_transport_timeseries v_bnd=', v_bnd)
     plot_tao_ofam_transport_timeseries(z1=25, z2=350, T=1, dk=5, v_bnd=v_bnd,
-                                        series='all', plot_mask=True)
+                                       series='all', plot_mask=True)
+
     print('plot_tao_max_velocity_correlation')
     plot_ofam_transport_correlation(z1=25, z2=350, T=1, dk=5, v_bnd=v_bnd)
+
     print('plot_tao_ofam_transport_timeseries monthly v_bnd=', v_bnd)
     plot_tao_ofam_transport_timeseries(z1=25, z2=350, T=1, dk=5,
                                        v_bnd=v_bnd, series='month')
+
+for v_bnd in ['half_max', '25_max', 0.1]:
+    print_EUC_reg_transport(z1=25, z2=350, T=1, dk=5, v_bnd=v_bnd)
