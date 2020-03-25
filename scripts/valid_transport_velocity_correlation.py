@@ -25,7 +25,7 @@ T = 1
 
 # Open dataset of TAO data at the frequency.
 ds = open_tao_data(frq=lx['frq_short'][T], dz=slice(10, 360))
-dt = xr.open_dataset(dpath.joinpath('ofam_ocean_u_EUC_int_transport.nc'))
+dt = xr.open_dataset(dpath.joinpath('ofam_EUC_int_transport.nc'))
 
 
 def plot_tao_max_velocity_correlation(v_bnd='half_max'):
@@ -54,7 +54,7 @@ def plot_tao_max_velocity_correlation(v_bnd='half_max'):
     return
 
 
-def eq_velocity_transport_reg(z1=25, z2=300, T=1, dk=5, v_bnd='half_max'):
+def eq_velocity_transport_reg(z1=25, z2=350, T=1, dk=5, v_bnd='half_max'):
     """Return OFAM3 and TAO equatorial velocity sum and transport.
 
     Args:
@@ -76,7 +76,7 @@ def eq_velocity_transport_reg(z1=25, z2=300, T=1, dk=5, v_bnd='half_max'):
 
     """
     # OFAM3.
-    d3 = xr.open_dataset(dpath.joinpath('ofam_ocean_u_EUC_int_transport.nc'))
+    d3 = xr.open_dataset(dpath.joinpath('ofam_EUC_int_transport.nc'))
     d3 = d3.sel(st_ocean=slice(z1, z2))
 
     # Add transport between depths.
@@ -89,11 +89,11 @@ def eq_velocity_transport_reg(z1=25, z2=300, T=1, dk=5, v_bnd='half_max'):
         dq = d3.sel(xu_ocean=lx['lons'][i])
         v_max, d1, d2 = EUC_vbounds(dq.u, dq.st_ocean, i, v_bnd=v_bnd)
         for t in range(len(dt.Time)):
+            # Transport
+            tmp1 = d3.uvo.isel(xu_ocean=i, Time=t)
+            d3t[t, i] = tmp1.where(tmp1 > 0).sum(
+                    dim='st_ocean').item()
             if not np.isnan(d1[t]):
-                # Transport
-                tmp1 = d3.uvo.isel(xu_ocean=i, Time=t)
-                d3t[t, i] = tmp1.where(tmp1 > 0).sum(
-                        dim='st_ocean').item()
 
                 # Velocity
                 tmp2 = d3.u.isel(xu_ocean=i, Time=t)
@@ -240,7 +240,7 @@ def plot_tao_ofam_transport_timeseries(z1=25, z2=350, T=1, dk=5,
 for v_bnd in ['half_max', '25_max', 0.1]:
 
     print('plot_tao_ofam_transport_timeseries v_bnd=', v_bnd)
-    plot_tao_ofam_transport_timeseries(z1=25, z2=300, T=1, dk=5,
+    plot_tao_ofam_transport_timeseries(z1=25, z2=350, T=1, dk=5,
                                        v_bnd=v_bnd, series='all', plot_nan=True)
 #     print('plot_tao_max_velocity_correlation')
 #     plot_ofam_transport_correlation(z1=25, z2=300, T=1, dk=5,

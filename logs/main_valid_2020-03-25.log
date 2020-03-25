@@ -1,0 +1,23 @@
+2020-03-25 11:58:21,443:open_tao_data:Opening TAO mon data. Depth=slice(10, 360, None). SI=True
+2020-03-25 11:59:03,113:open_tao_data:Opening TAO mon data. Depth=slice(10, 360, None). SI=True
+2020-03-25 11:59:15,146:EUC_vbounds:OFAM3 165: v_bnd=half_max tot=384 count=335 null=0 skip=46(T=6,L=40).
+2020-03-25 11:59:29,557:EUC_vbounds:OFAM3 190: v_bnd=half_max tot=384 count=362 null=0 skip=22(T=5,L=17).
+2020-03-25 11:59:42,333:EUC_vbounds:OFAM3 220: v_bnd=half_max tot=384 count=377 null=0 skip=5(T=1,L=4).
+2020-03-25 11:59:45,066:open_tao_data:Opening TAO mon data. Depth=slice(10, 360, None). SI=True
+2020-03-25 11:59:50,292:EUC_vbounds:TAO/TRITION 165: v_bnd=half_max tot=203 count=112 null=5 skip=86(T=63,L=23).
+2020-03-25 11:59:59,681:EUC_vbounds:TAO/TRITION 190: v_bnd=half_max tot=340 count=280 null=36 skip=24(T=13,L=11).
+2020-03-25 12:00:07,205:EUC_vbounds:TAO/TRITION 220: v_bnd=half_max tot=311 count=258 null=31 skip=22(T=0,L=22).
+2020-03-25 12:00:20,705:EUC_vbounds:OFAM3 165: v_bnd=25_max tot=384 count=264 null=0 skip=117(T=68,L=49).
+2020-03-25 12:00:33,909:EUC_vbounds:OFAM3 190: v_bnd=25_max tot=384 count=299 null=0 skip=85(T=61,L=24).
+2020-03-25 12:00:46,680:EUC_vbounds:OFAM3 220: v_bnd=25_max tot=384 count=363 null=0 skip=21(T=1,L=20).
+2020-03-25 12:00:49,530:open_tao_data:Opening TAO mon data. Depth=slice(10, 360, None). SI=True
+2020-03-25 12:00:53,607:EUC_vbounds:TAO/TRITION 165: v_bnd=25_max tot=203 count=53 null=5 skip=140(T=118,L=22).
+2020-03-25 12:01:01,581:EUC_vbounds:TAO/TRITION 190: v_bnd=25_max tot=340 count=195 null=36 skip=105(T=71,L=34).
+2020-03-25 12:01:08,926:EUC_vbounds:TAO/TRITION 220: v_bnd=25_max tot=311 count=214 null=31 skip=66(T=5,L=61).
+2020-03-25 12:01:22,356:EUC_vbounds:OFAM3 165: v_bnd=0.1 tot=384 count=271 null=0 skip=104(T=61,L=43).
+2020-03-25 12:01:36,781:EUC_vbounds:OFAM3 190: v_bnd=0.1 tot=384 count=340 null=0 skip=30(T=17,L=13).
+2020-03-25 12:01:49,856:EUC_vbounds:OFAM3 220: v_bnd=0.1 tot=384 count=364 null=0 skip=5(T=0,L=5).
+2020-03-25 12:01:52,785:open_tao_data:Opening TAO mon data. Depth=slice(10, 360, None). SI=True
+2020-03-25 12:01:58,138:EUC_vbounds:TAO/TRITION 165: v_bnd=0.1 tot=203 count=107 null=5 skip=81(T=58,L=23).
+2020-03-25 12:02:08,505:EUC_vbounds:TAO/TRITION 190: v_bnd=0.1 tot=340 count=222 null=36 skip=6(T=1,L=5).
+2020-03-25 12:02:15,797:EUC_vbounds:TAO/TRITION 220: v_bnd=0.1 tot=311 count=225 null=31 skip=41(T=0,L=41).
