@@ -24,7 +24,7 @@ fpath, dpath, xpath, lpath, tpath = paths()
 T = 1
 
 # Open dataset of TAO data at the frequency.
-ds = open_tao_data(frq=lx['frq_short'][T], dz=slice(10, 360))
+# ds = open_tao_data(frq=lx['frq_short'][T], dz=slice(10, 360))
 dt = xr.open_dataset(dpath.joinpath('ofam_EUC_int_transport.nc'))
 
 
@@ -236,12 +236,12 @@ def plot_tao_ofam_transport_timeseries(z1=25, z2=350, T=1, dk=5,
     return
 
 
-# plot_tao_max_velocity_correlation()
-for v_bnd in ['half_max', '25_max', 0.1]:
+# # plot_tao_max_velocity_correlation()
+# for v_bnd in ['half_max', '25_max', 0.1]:
 
-    print('plot_tao_ofam_transport_timeseries v_bnd=', v_bnd)
-    plot_tao_ofam_transport_timeseries(z1=25, z2=350, T=1, dk=5,
-                                       v_bnd=v_bnd, series='all', plot_nan=True)
+#     print('plot_tao_ofam_transport_timeseries v_bnd=', v_bnd)
+#     plot_tao_ofam_transport_timeseries(z1=25, z2=350, T=1, dk=5,
+#                                        v_bnd=v_bnd, series='all', plot_nan=True)
 #     print('plot_tao_max_velocity_correlation')
 #     plot_ofam_transport_correlation(z1=25, z2=300, T=1, dk=5,
 #                                     v_bnd=v_bnd)

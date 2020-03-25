@@ -284,14 +284,12 @@ def regress(varx, vary):
         std_err (float): Linear regression standard error.
 
     """
-    varx = varx[np.ma.nonzero(vary)]
-    vary = vary[np.ma.nonzero(vary)]
-    varx = varx[~np.isnan(vary)]
-    vary = vary[~np.isnan(vary)]
+    mask = ~np.isnan(varx) & ~np.isnan(vary)
 
-    cor_r, cor_p = stats.spearmanr(varx, vary)
+    cor_r, cor_p = stats.spearmanr(varx[mask], vary[mask])
 
-    slope, intercept, r_value, p_value, std_err = stats.linregress(varx, vary)
+    slope, intercept, r_value, p_value, std_err = stats.linregress(
+        varx[mask], vary[mask])
 
     return cor_r, cor_p, slope, intercept, r_value, p_value, std_err
 
@@ -316,10 +314,10 @@ def cor_scatter_plot(fig, i, varx, vary,
 
     """
     cor_r, cor_p, slope, intercept, r_val, p_val, std_err = regress(varx, vary)
-    varx = varx[np.ma.nonzero(vary)]
-    vary = vary[np.ma.nonzero(vary)]
-    varx = varx[~np.isnan(vary)]
-    vary = vary[~np.isnan(vary)]
+    mask = ~np.isnan(varx) & ~np.isnan(vary)
+    varx = varx[mask]
+    vary = vary[mask]
+
     logger.debug('R={:.2f}, p={:.3f} (stats.spearmanr)'.format(cor_r, cor_p))
     logger.debug('Slope={:.2f} Intercept={:.2f} R={:.2f} P={:.3f} stder={:.2f}'
                  .format(slope, intercept, r_val, p_val, std_err))
