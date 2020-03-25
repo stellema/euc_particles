@@ -149,7 +149,7 @@ def plot_ofam_EUC_profile(du, exp=0, vmax=1.2, dt=None, ds=None,
         strx = '_isopycnals' if isopycnals else ''
         stry = '_{}E'.format(x) if freq == 'mon' else ''
         plt.tight_layout()
-        plt.savefig(fpath/('ofam_profile/ofam_EUC_velocity_{}{}_{}{}{}'
+        plt.savefig(fpath/('valid/ofam_EUC_velocity_{}{}_{}{}{}'
                            .format(freq, stry, lx['exp_abr'][exp],
                                    strx, im_ext)), bbox_inches='tight')
         plt.show()

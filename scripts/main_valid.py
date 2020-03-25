@@ -32,6 +32,9 @@ handler.setFormatter(formatter)
 logger.addHandler(handler)
 logger.propagate = False
 
+# Time index bounds where OFAM and TAO are available.
+time_bnds_ofam = [[10*12+3, 27*12+1], [7*12+4, 384], [9*12+4, 384]]
+time_bnds_tao = [[0, -1], [0, 24*12+8], [0, 22*12+8]]
 
 def open_tao_data(frq='mon', dz=slice(10, 355), SI=True):
     """Return TAO/TRITION ADCP xarray dataset at: 165°E, 190°E and 220°E.
@@ -63,7 +66,7 @@ def open_tao_data(frq='mon', dz=slice(10, 355), SI=True):
     du_190 = dU_190.where(dU_190['u_1205'] != dU_165.missing_value)/div_unit
     du_220 = dU_220.where(dU_220['u_1205'] != dU_165.missing_value)/div_unit
 
-    logger.debug('Opening TAO {} data. Depth={}. SI={}'.format(frq, dz, SI))
+    # logger.debug('Opening TAO {} data. Depth={}. SI={}'.format(frq, dz, SI))
     return [du_165, du_190, du_220]
 
 
@@ -258,9 +261,9 @@ def EUC_vbounds(du, depths, i, v_bnd=0.3, index=False):
 
     data_name = 'OFAM3' if hasattr(du, 'st_ocean') else 'TAO/TRITION'
 
-    logger.debug('{} {}: v_bnd={} tot={} count={} null={} skip={}(T={},L={}).'
-                 .format(data_name, lx['lons'][i], v_bnd, u.shape[0], count,
-                         empty, skip_t + skip_l, skip_t, skip_l))
+    # logger.debug('{} {}: v_bnd={} tot={} count={} null={} skip={}(T={},L={}).'
+    #              .format(data_name, lx['lons'][i], v_bnd, u.shape[0], count,
+    #                      empty, skip_t + skip_l, skip_t, skip_l))
     if not index:
         return v_max, z1, z2
     else:
