@@ -16,16 +16,10 @@ import matplotlib.pyplot as plt
 from main import paths, lx, SV
 from main_valid import EUC_vbounds, regress, time_bnds_tao, time_bnds_ofam
 from main_valid import open_tao_data, cor_scatter_plot
+from main_valid import legend_without_duplicate_labels
 
 # Path to save figures, save data and OFAM model output.
 fpath, dpath, xpath, lpath, tpath = paths()
-
-# Saved data frequency (1 for monthly and 0 for daily data).
-T = 1
-
-# Open dataset of TAO data at the frequency.
-ds = open_tao_data(frq=lx['frq_short'][T], dz=slice(10, 360))
-dt = xr.open_dataset(dpath.joinpath('ofam_EUC_int_transport.nc'))
 
 
 def plot_tao_max_velocity_correlation(v_bnd='half_max'):
@@ -173,7 +167,8 @@ def plot_tao_ofam_transport_timeseries(z1=25, z2=350, T=1, dk=5,
                              d3t.sel(xu_ocean=lon)/SV)[2:4]
         alpha = 0.15
         # TAO/TRITION slice.
-        dtao = dsv[i].isel(time=slice(time_bnds_tao[i][0], time_bnds_tao[i][1]))
+        dtao = dsv[i].isel(time=slice(time_bnds_tao[i][0],
+                                      time_bnds_tao[i][1]))
 
         # Rename TAO time array (so it matches OFAM3).
         dtao = dtao.rename({'time': 'Time'})
@@ -196,9 +191,11 @@ def plot_tao_ofam_transport_timeseries(z1=25, z2=350, T=1, dk=5,
         time = dtaom.Time
 
         if series == 'month':
-            d3x = d3_clim.where(mask)
-            dtao = dtao_clim.where(mask)
-            time = dtao.month
+            d3xm = d3_clim
+            dtaom = dtao_clim
+            time = dtaom.month
+            ax.plot(time, dtaom.where(mask)*m[i] + b[i], color='r', label='TAO/TRITION')
+            ax.plot(time, d3xm.where(mask)/SV, color='k', label='OFAM3')
             ax.set_xticks(np.arange(1, len(lx['mon'])+1))
             ax.set_xticklabels(lx['mon'])
             save_name = 'EUC_transport_regress_mon_{}.png'.format(v_bnd)
@@ -207,28 +204,28 @@ def plot_tao_ofam_transport_timeseries(z1=25, z2=350, T=1, dk=5,
             clim3 = (d3x.groupby('Time.month') - d3_clim)
             climt = (dtao.groupby('Time.month') - dtao_clim)
 
-            ax.plot(time, clim3.where(mask)/SV, color='k', label='OFAM3')
             ax.plot(time, climt.where(mask)*m[i] + b[i], color='r',
                     label='TAO/TRITION')
+            ax.plot(time, clim3.where(mask)/SV, color='k', label='OFAM3')
             ax.axhline(y=0, c="lightgrey", linewidth=1)
             save_name = 'EUC_transport_regress_{}_anom.png'.format(v_bnd)
 
             if plot_mask:
                 # Decrease lijne alpha when data available, but doesn't match.
-                ax.plot(d3x.Time, clim3/SV, color='k', alpha=alpha)
                 ax.plot(dtao.Time, climt*m[i] + b[i], color='red', alpha=alpha)
+                ax.plot(d3x.Time, clim3/SV, color='k', alpha=alpha)
                 save_name = ('EUC_transport_regress_{}_anom_mask.png'
                              .format(v_bnd))
 
         elif series == 'all' and not climo:
-            ax.plot(time, d3xm/SV, color='k', label='OFAM3')
             ax.plot(time, dtaom*m[i] + b[i], color='r', label='TAO/TRITION')
+            ax.plot(time, d3xm/SV, color='k', label='OFAM3')
             save_name = 'EUC_transport_regress_{}.png'.format(v_bnd)
 
             if plot_mask:
                 # Decrease lijne alpha when data available, but doesn't match.
-                ax.plot(d3x.Time, d3x/SV, color='k', alpha=alpha)
                 ax.plot(dtao.Time, dtao*m[i] + b[i], color='red', alpha=alpha)
+                ax.plot(d3x.Time, d3x/SV, color='k', alpha=alpha)
                 save_name = 'EUC_transport_regress_{}_mask.png'.format(v_bnd)
 
         ax.set_title('{}Modelled and observed EUC transport at {}'
@@ -237,23 +234,32 @@ def plot_tao_ofam_transport_timeseries(z1=25, z2=350, T=1, dk=5,
         ax.set_xlim(xmin=time[0], xmax=time[-1])
 
         if i == 0:
-            ax.legend(loc=1)
+            # ax.legend(loc=1)
+            legend_without_duplicate_labels(ax, loc=1)
         cor_r, cor_p = regress(dtaom*m[i] + b[i], d3xm/SV)[0:2]
         print('{}: R={:.2f}, p={:.3f} (stats.spearmanr)'.format(lon, cor_r,
                                                                 cor_p))
 
     plt.tight_layout()
     plt.savefig(fpath.joinpath('valid', save_name))
+    plt.clf()
+    plt.close()
 
     return
 
 
+# Saved data frequency (1 for monthly and 0 for daily data).
+T = 1
+
+# Open dataset of TAO data at the frequency.
+ds = open_tao_data(frq=lx['frq_short'][T], dz=slice(10, 360))
+dt = xr.open_dataset(dpath.joinpath('ofam_EUC_int_transport.nc'))
 # plot_tao_max_velocity_correlation()
 for v_bnd in ['half_max', '25_max', 0.1]:
 
     print('plot_tao_ofam_transport_timeseries v_bnd=', v_bnd)
     plot_tao_ofam_transport_timeseries(z1=25, z2=350, T=1, dk=5, v_bnd=v_bnd,
-                                       series='all', plot_mask=True)
+                                        series='all', plot_mask=True)
     print('plot_tao_max_velocity_correlation')
     plot_ofam_transport_correlation(z1=25, z2=350, T=1, dk=5, v_bnd=v_bnd)
     print('plot_tao_ofam_transport_timeseries monthly v_bnd=', v_bnd)
