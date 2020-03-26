@@ -60,4 +60,4 @@ print(ds.nino34)
 print(ds.oni)
 
 # Save to a netcdf file (may take quite a while to calculate and save).
-d
+ds.to_netcdf(dpath/'noaa_sst_anom_nino34.nc')
