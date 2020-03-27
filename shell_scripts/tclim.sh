@@ -3,7 +3,7 @@
 #PBS -q normal
 #PBS -l walltime=15:00:00
 #PBS -l mem=30GB
-#PBS -l ncpus=1
+#PBS -l ncpus=8
 #PBS -l wd
 #PBS -M astellemas@gmail.com
 #PBS -m abe
@@ -11,4 +11,11 @@
 
 module use /g/data3/hh5/public/modules
 module load conda/analysis3-20.01
-python3 /g/data/e14/as3189/OFAM/scripts/create_file_ofam_climo.py 4 1
+for i in 0 1 2 3; do
+	for j in 3 4; do
+    	python3 /g/data/e14/as3189/OFAM/scripts/create_file_ofam_climo.py $i $j &
+	done
+done
+
+wait
+
