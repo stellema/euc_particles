@@ -66,11 +66,14 @@ def plot_EUC_transport_def_timeseries(exp=0):
             plt.xlim(xmin=time[0], xmax=time[-1])
             plt.ylabel('Transport [Sv]')
             if i == 0:
-                plt.legend(loc=1)
+                if exp == 0:
+                    plt.legend(loc=4)
+                else:
+                    plt.legend(loc=1)
             dh.close()
             dr.close()
     plt.tight_layout()
-    plt.savefig(fpath/'EUC_transport_definitions_{}.png'
+    plt.savefig(fpath/'valid/EUC_transport_definitions_{}.png'
                 .format(lx['exp_abr'][exp]))
 
     return
@@ -114,7 +117,7 @@ def plot_EUC_transport_def_annual(exp=0):
             dh.close()
             dr.close()
     plt.tight_layout()
-    plt.savefig(fpath/'EUC_transport_definitions_annual_{}.png'
+    plt.savefig(fpath/'valid/EUC_transport_definitions_annual_{}.png'
                 .format(lx['exp_abr'][exp]))
 
     return
@@ -143,6 +146,6 @@ def print_EUC_transport_def_correlation():
 
 
 # print_EUC_transport_def_correlation()
-for exp in range(1):
+for exp in range(3):
     plot_EUC_transport_def_timeseries(exp=exp)
-    # plot_EUC_transport_def_annual(exp=exp)
+    plot_EUC_transport_def_annual(exp=exp)
