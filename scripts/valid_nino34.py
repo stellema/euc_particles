@@ -96,7 +96,7 @@ def plot_oni_valid(ds, da, add_obs_ev=False):
     ax.set_xlim(xmax=ds.Time[-1], xmin=ds.Time[0])
     plt.ylabel('Oceanic Niño Index [°C]')
     plt.legend(fontsize=10, loc=1)
-    plt.savefig(fpath/'oni_ofam_noaa.png')
+    plt.savefig(fpath/'valid/oni_ofam_noaa.png')
 
     return
 
