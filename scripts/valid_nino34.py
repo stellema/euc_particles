@@ -9,17 +9,12 @@ author: Annette Stellema (astellemas@gmail.com)
 
 import numpy as np
 import xarray as xr
-from pathlib import Path
-from itertools import groupby
-from datetime import timedelta
 import matplotlib.pyplot as plt
-from main import paths
-from itertools import groupby
+from main import paths, lx
 
 
 def find_runs(x):
     """Find runs of consecutive items in an array."""
-
     # ensure array
     x = np.asanyarray(x)
     if x.ndim != 1:
@@ -47,7 +42,6 @@ def find_runs(x):
 
 
 def nino_events(oni):
-
     dn = xr.full_like(oni, 0)
     dn[oni >= 0.5] = 1
     dn[oni <= -0.5] = 2
@@ -66,11 +60,9 @@ def nino_events(oni):
 
     return nino, nina
 
+
 def plot_oni_valid(ds, da, add_obs_ev=False):
     nino1, nina1 = nino_events(ds.oni)
-
-
-
     fig, ax = plt.subplots(figsize=(10, 5))
     ax.set_title('Observed and modelled ENSO events', loc='left')
 
@@ -81,17 +73,16 @@ def plot_oni_valid(ds, da, add_obs_ev=False):
         plt.hlines(y=y, xmax=ds.Time[-1], xmin=ds.Time[0],
                    linewidth=1, color='blue', linestyle='--')
 
-
     for nin, color in zip([nino1, nina1], ['red', 'blue']):
         for x in range(len(nin)):
             ax.axvspan(np.datetime64(nin[x][0]), np.datetime64(nin[x][1]),
-                        alpha=0.15, color=color)
+                       alpha=0.15, color=color)
     if add_obs_ev:
         nino2, nina2 = nino_events(da.oni)
         for nin, color in zip([nino2, nina2], ['darkred', 'darkblue']):
             for x in range(len(nin)):
                 ax.axvspan(np.datetime64(nin[x][0]), np.datetime64(nin[x][1]),
-                            alpha=0.1, color=color, hatch='/')
+                           alpha=0.1, color=color, hatch='/')
 
     ax.set_xlim(xmax=ds.Time[-1], xmin=ds.Time[0])
     plt.ylabel('Oceanic Niño Index [°C]')
@@ -101,18 +92,45 @@ def plot_oni_valid(ds, da, add_obs_ev=False):
     return
 
 
+def create_file_ofam_u_enso(ds):
+    files = []
+    exp = lx['years'][0]
+    for y in range(exp[0], exp[1] + 1):
+        for m in range(1, 13):
+            files.append(str(xpath/'ocean_u_{}_{:02d}.nc'.format(y, m)))
+    du = xr.open_mfdataset(files, combine='by_coords')
+
+    du = du.sel(st_ocean=slice(2.5, 373), xu_ocean=lx['lons'])
+    du = du.sel(yu_ocean=0, method='nearest')
+    du = du.u.resample(Time='MS').mean()
+
+    nino, nina = nino_events(ds.oni)
+    enso = xr.DataArray(np.empty((2, *du[0].shape)).fill(np.nan),
+                        coords=[('nin', ['nino', 'nina']),
+                                ('st_ocean', du.st_ocean.values),
+                                ('xu_ocean', du.xu_ocean.values)])
+
+    for ix, x in enumerate(lx['lons']):
+        for n, nin in enumerate([nino, nina]):
+            for iz, z in enumerate(du.st_ocean):
+                tmp = []
+                for i in range(len(nin)):
+                    tmp.append(du.sel(Time=slice(nin[i][0], nin[i][1]),
+                                      st_ocean=z, xu_ocean=x).values)
+                enso[n, iz, ix] = np.nanmean(tmp)
+
+    enso.to_netcdf(dpath/'ofam_u_enso_climo.nc')
+
+    return
+
+
 # Path to save figures, save data and OFAM model output.
 fpath, dpath, xpath, lpath, tpath = paths()
 
 ds = xr.open_dataset(dpath/'ofam_sst_anom_nino34_hist.nc')
-da = xr.open_dataset(dpath/'noaa_sst_anom_nino34.nc')
+# da = xr.open_dataset(dpath/'noaa_sst_anom_nino34.nc')
 
-ds = ds.sel(Time=slice('1981-11-01', '2012-12-01'))
-da = da.sel(time=slice('1981-11-01', '2012-12-01')).rename({'time': 'Time'})
-
-
-plot_oni_valid(ds, da)
-
-
-
+# ds = ds.sel(Time=slice('1981-11-01', '2012-12-01'))
+# da = da.sel(time=slice('1981-11-01', '2012-12-01')).rename({'time': 'Time'})
+create_file_ofam_u_enso(ds)
 

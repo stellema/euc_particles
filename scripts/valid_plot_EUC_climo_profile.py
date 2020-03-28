@@ -17,7 +17,7 @@ from main import paths, im_ext, idx_1d, lx, width, height, LAT_DEG, SV
 
 # Path to save figures, save data and OFAM model output.
 fpath, dpath, xpath, lpath, tpath = paths()
-years = [[1985, 2000]]  # lx['years']
+years = lx['years']  # [[1985, 2000]]
 
 # Open zonal velocity historical and future climatologies.
 duh = xr.open_dataset(xpath/('ocean_u_{}-{}_climo.nc'.format(*years[0])))
@@ -25,11 +25,11 @@ duf = xr.open_dataset(xpath/('ocean_u_{}-{}_climo.nc'.format(*years[1])))
 
 # Open temperature historical and future climatologies.
 dth = xr.open_dataset(xpath/('ocean_temp_{}-{}_climo.nc'.format(*years[0])))
-# dtf = xr.open_dataset(xpath/('ocean_temp_{}-{}_climo.nc'.format(*years[1])))
+dtf = xr.open_dataset(xpath/('ocean_temp_{}-{}_climo.nc'.format(*years[1])))
 
 # Open salinity historical and future climatologies.
 dsh = xr.open_dataset(xpath/('ocean_salt_{}-{}_climo.nc'.format(*years[0])))
-# dsf = xr.open_dataset(xpath/('ocean_salt_{}-{}_climo.nc'.format(*years[1])))
+dsf = xr.open_dataset(xpath/('ocean_salt_{}-{}_climo.nc'.format(*years[1])))
 
 
 depth = duh.st_ocean[idx_1d(duh.st_ocean, 500)].item()
@@ -38,7 +38,9 @@ depth = duh.st_ocean[idx_1d(duh.st_ocean, 500)].item()
 duh = duh.sel(yu_ocean=slice(-5.0, 5.), st_ocean=slice(2.5, depth))
 duf = duf.sel(yu_ocean=slice(-5.0, 5.), st_ocean=slice(2.5, depth))
 dth = dth.temp.sel(yt_ocean=slice(-5.0, 5.), st_ocean=slice(2.5, depth))
+dtf = dtf.temp.sel(yt_ocean=slice(-5.0, 5.), st_ocean=slice(2.5, depth))
 dsh = dsh.salt.sel(yt_ocean=slice(-5.0, 5.), st_ocean=slice(2.5, depth))
+dsf = dsf.salt.sel(yt_ocean=slice(-5.0, 5.), st_ocean=slice(2.5, depth))
 
 
 def plot_ofam_EUC_profile(du, exp=0, vmax=1.2, dt=None, ds=None,
@@ -70,7 +72,7 @@ def plot_ofam_EUC_profile(du, exp=0, vmax=1.2, dt=None, ds=None,
 
         # Title without including scenario.
         ax.set_title('{}OFAM3 EUC at {} {}'.format(
-            lx['l'][i], lx['lonstr'][ix], tstr), loc='left')
+            lx['l'][i], lx['lonstr'][ix], tstr), loc='left', fontsize=10)
 
         # Plot zonal velocity.
         cs = ax.pcolormesh(du.yu_ocean, du.st_ocean,
@@ -250,7 +252,9 @@ def plot_transport(dh, dr):
     ax[0].set_ylabel('Transport [Sv]')
     ax[1].set_ylabel('Transport [Sv]')
     plt.show()
-    plt.savefig(fpath.joinpath('EUC_transport{}'.format(im_ext)))
+    plt.savefig(fpath/('valid/EUC_transport{}'.format(im_ext)))
+
+    return
 
 
 # Create colourmap to match Qin thesis Fig 3.3.
@@ -267,7 +271,9 @@ cmap = matplotlib.colors.LinearSegmentedColormap.from_list("", colors)
 # plot_ofam_EUC_profile(duh.u, exp=0, vmax=1.15, dt=dth, ds=dsh,
 #                       isopycnals=True, freq='annual', add_bounds=False,
 #                       cmap=cmap)
-
-plot_ofam_EUC_profile(duh.u, exp=0, vmax=1, dt=dth, ds=dsh,
+cmap = plt.cm.seismic
+# plot_ofam_EUC_profile(duh.u, exp=0, vmax=1, dt=dth, ds=dsh,
+#                       isopycnals=True, freq='mon')
+plot_ofam_EUC_profile(duf.u, exp=1, vmax=1, dt=dtf, ds=dsf,
                       isopycnals=True, freq='mon')
 # plot_transport(duh, duf)

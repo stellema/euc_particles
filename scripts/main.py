@@ -85,7 +85,8 @@ plt.rcParams['axes.labelsize'] = 'medium'
 
 # Create dict of various items.
 lx = {'exp': ['historical', 'rcp85', 'rcp85_minus_historial'],
-      'exps': ['Historical', 'RCP85', 'Projected change'],
+      'exps': ['Historical', 'RCP8.5', 'Projected change'],
+      'expx': ['Historical', 'RCP8.5', 'Change'],
       'exp_abr': ['hist', 'rcp', 'diff'],
       'years':  [[1981, 2012], [2070, 2101]],
       'vars': ['u', 'v', 'w', 'salt', 'temp'],
