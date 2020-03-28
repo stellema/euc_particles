@@ -1,0 +1,21 @@
+Executing: salt [1991, 2000]
+Executing: v [1991, 2000]
+Executing: u [1991, 2000]
+Executing: w [1991, 2000]
+Executing: u [1985, 2000]
+Executing: v [1985, 2000]
+Executing: salt [1985, 2000]
+Executing: w [1985, 2000]
+
+======================================================================================
+                  Resource Usage on 2020-03-27 17:16:27:
+   Job Id:             3050200.gadi-pbs
+   Project:            e14
+   Exit Status:        0
+   Service Units:      38.14
+   NCPUs Requested:    8                      NCPUs Used: 8               
+                                           CPU Time Used: 08:53:18                                   
+   Memory Requested:   30.0GB                Memory Used: 29.76GB         
+   Walltime requested: 15:00:00            Walltime Used: 02:23:01        
+   JobFS requested:    100.0MB                JobFS used: 0B              
+======================================================================================
