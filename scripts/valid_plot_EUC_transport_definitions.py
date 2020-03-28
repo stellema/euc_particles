@@ -61,7 +61,7 @@ def plot_EUC_transport_def_timeseries(exp=0):
                       .format(lx['l'][i], lx['exps'][exp], lx['lonstr'][i]),
                       loc='left')
             plt.plot(time, np.zeros(len(time)), color='grey')
-            lbs = ['Grenier et al. (2011)', 'Izumo (2005)', 'Fixedi']
+            lbs = ['Grenier et al. (2011)', 'Izumo (2005)', 'Fixed']
             plt.plot(time, u/SV, label=lbs[l], color=c)
             plt.xlim(xmin=time[0], xmax=time[-1])
             plt.ylabel('Transport [Sv]')

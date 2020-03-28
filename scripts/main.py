@@ -90,6 +90,7 @@ lx = {'exp': ['historical', 'rcp85', 'rcp85_minus_historial'],
       'frq_short': ['dy', 'mon'],
       'frq_long': ['daily', 'monthly'],
       'mon': [i for i in calendar.month_abbr[1:]],  # Month abbreviations.
+      'mon_name': [i for i in calendar.month_name[1:]],
       'mon_letter': [i[0] for i in calendar.month_abbr[1:]],
       # Elements of the alphabet with left bracket and space for fig captions.
       'l': [i + ') ' for i in list(string.ascii_lowercase)],

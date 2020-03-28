@@ -17,7 +17,7 @@ from main import paths, im_ext, idx_1d, lx, width, height, LAT_DEG, SV
 
 # Path to save figures, save data and OFAM model output.
 fpath, dpath, xpath, lpath, tpath = paths()
-years = lx['years']
+years = [[1985, 2000]]  # lx['years']
 
 # Open zonal velocity historical and future climatologies.
 duh = xr.open_dataset(xpath/('ocean_u_{}-{}_climo.nc'.format(*years[0])))
