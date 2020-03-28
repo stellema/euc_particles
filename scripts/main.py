@@ -26,6 +26,12 @@ TODO: Interpolate TAU/TRITON observation data.
 git pull git@github.com:stellema/OFAM.git master
 git commit -a -m "added shell_script"
 
+exp=1
+du = xr.open_dataset(xpath/'ocean_u_{}-{}_climo.nc'.format(*years[exp]))
+dt = xr.open_dataset(xpath/'ocean_temp_{}-{}_climo.nc'.format(*years[exp]))
+du = du.rename({'month': 'Time'})
+du = du.assign_coords(Time=dt.Time)
+du.to_netcdf(xpath/'ocean_u_{}-{}_climoz.nc'.format(*years[exp]))
 """
 
 import sys

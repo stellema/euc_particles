@@ -466,8 +466,8 @@ def EUC_bnds_izumo(du, dt, ds, lon, interpolated=False):
 
     # Removed temperatures less than 27C.
     du4 = du3.where(dt.temp.values < 27)
-    logger.debug('Izumo depths={:.2f}-{:.2f}'.format(du4.st_ocean[0].item(),
-                                                     du4.st_ocean[-1].item()))
+    # logger.debug('Izumo depths={:.2f}-{:.2f}'.format(du4.st_ocean[0].item(),
+    #                                                  du4.st_ocean[-1].item()))
 
     return du4
 
@@ -501,8 +501,8 @@ def EUC_bnds_static(du, lon=None, z1=25, z2=350, lat=2.6):
 
     # Remove negative/zero velocities.
     du = du.u.where(du.u > 0, np.nan)
-    print('Static z: {:.2f}-{:.2f}'.format(du.st_ocean[0].item(),
-                                           du.st_ocean[-1].item()))
+    # print('Static z: {:.2f}-{:.2f}'.format(du.st_ocean[0].item(),
+    #                                        du.st_ocean[-1].item()))
 
     return du
 

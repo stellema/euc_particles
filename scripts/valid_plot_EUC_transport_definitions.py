@@ -6,16 +6,16 @@ author: Annette Stellema (astellemas@gmail.com)
 
 
 """
+import warnings
+import itertools
 import numpy as np
 import xarray as xr
-import itertools
-import pandas as pd
-from scipy import stats
-from datetime import datetime
-from main import paths, lx, SV
 import matplotlib.pyplot as plt
-from main_valid import plot_eq_velocity, regress, correlation_str
-from main_valid import open_tao_data, plot_tao_timeseries
+from matplotlib.lines import Line2D
+from main_valid import regress, correlation_str
+from main import paths, lx, SV, width, height, idx_1d
+from main_valid import EUC_bnds_static, EUC_bnds_grenier, EUC_bnds_izumo
+warnings.filterwarnings('ignore')
 
 plt.rcParams['legend.fontsize'] = 'small'
 plt.rcParams['figure.facecolor'] = 'white'
@@ -26,17 +26,20 @@ plt.rcParams['legend.fontsize'] = 'medium'
 plt.rcParams['figure.titlesize'] = 'medium'
 plt.rcParams['axes.titlesize'] = 'medium'
 plt.rcParams['axes.labelsize'] = 'medium'
+
 # Path to save figures, save data and OFAM model output.
 fpath, dpath, xpath, lpath, tpath = paths()
+years = lx['years']
 
 
 def plot_EUC_transport_def_timeseries(exp=0):
+    colors = ['r', 'b', 'k']
     fig = plt.figure(figsize=(12, 7))
+
     for i in range(3):
         ax = fig.add_subplot(3, 1, i+1)
-        for l, method, c in zip(range(3),
-                                ['grenier', 'izumo', 'static'],
-                                ['r', 'b', 'k']):
+        for l, method, c in zip(range(3), ['grenier', 'izumo', 'static'],
+                                colors):
             dh = xr.open_dataset(dpath/'ofam_EUC_transport_{}_{}.nc'
                                  .format(method, lx['exp_abr'][0]))
             dr = xr.open_dataset(dpath/'ofam_EUC_transport_{}_{}.nc'
@@ -66,10 +69,13 @@ def plot_EUC_transport_def_timeseries(exp=0):
             plt.xlim(xmin=time[0], xmax=time[-1])
             plt.ylabel('Transport [Sv]')
             if i == 0:
+                lns = [Line2D([0], [0], color=c, linewidth=1) for c in colors]
+
+                handles, labels = ax.get_legend_handles_labels()
                 if exp == 0:
-                    plt.legend(loc=4)
+                    plt.legend(lns[::-1], lbs[::-1], fontsize='small', loc=4)
                 else:
-                    plt.legend(loc=1)
+                    plt.legend(lns[::-1], lbs[::-1], fontsize='small', loc=1)
             dh.close()
             dr.close()
     plt.tight_layout()
@@ -77,6 +83,7 @@ def plot_EUC_transport_def_timeseries(exp=0):
                 .format(lx['exp_abr'][exp]))
 
     return
+
 
 def plot_EUC_transport_def_annual(exp=0):
     fig = plt.figure(figsize=(12, 3))
@@ -145,7 +152,140 @@ def print_EUC_transport_def_correlation():
     return
 
 
-# print_EUC_transport_def_correlation()
-for exp in range(3):
-    plot_EUC_transport_def_timeseries(exp=exp)
-    plot_EUC_transport_def_annual(exp=exp)
+def plot_EUC_def_bounds(du, ds, dt, time='mon', lon=None, depth=450, exp=0):
+    """Plot the EUC with contours indicating EUC boundary definitions.
+
+    Args:
+        du (dataset): Zonal velocity dataset.
+        ds (dataset): Salinity dataset.
+        dt (dataset): Temperature dataset.
+        time (int or str, optional): Mon index or 'mon' for all months.
+            Defaults to 'mon'.
+        lon (float, optional): Longitude to plot or all. Defaults to None.
+        depth (float, optional): Maximum depth to plot. Defaults to 450.
+        exp (int, optional): Experiment index. Defaults to 0.
+
+    Returns:
+        None.
+
+    """
+    const = 200
+    cmap = plt.cm.seismic
+    cmap.set_bad('lightgrey')  # Colour NaN values light grey.
+    colors = ['g', 'm', 'k']  # Contour colours.
+
+    if time == 'mon':
+        rge = range(12)
+        # Colorbar extra axis:[left, bottom, width, height].
+        caxes = [0.33, 0.05, 0.4, 0.0225]
+
+        # Bbox (x, y, width, height).
+        bbox = (0.33, -0.7, 0.5, 0.5)
+        tstr = [' in ' + lx['mon'][t] for t in range(12)]
+        fig, ax = plt.subplots(4, 3, figsize=(width*1.4, height*2.25),
+                               sharey=True)
+
+    else:
+        rge = range(3)
+        # Colorbar extra axis:[left, bottom, width, height].
+        caxes = [0.36, 0.2, 0.333, 0.04]
+
+        # Bbox (x, y, width, height).
+        bbox = (0.33, -0.7, 0.5, 0.5)
+        tstr = [' in ' + lx['mon_name'][time]]*12
+        fig, ax = plt.subplots(1, 3, figsize=(width*1.4, height/1.2),
+                               sharey=True)
+    ax = ax.flatten()
+    for i in rge:
+        lonx = lon if time == 'mon' else lx['lons'][i]
+        x = idx_1d(np.array(lx['lons']), lonx) if time == 'mon' else i
+
+        if time != 'mon' or i == 0:
+            dux = du.sel(xu_ocean=lonx)
+            u = dux.u[i] if time == 'mon' else dux.u[time]
+            dg = EUC_bnds_grenier(du, dt, ds, lonx)
+            di = EUC_bnds_izumo(du, dt, ds, lonx)
+            dx = EUC_bnds_static(du, lon=lonx, z1=25, z2=350, lat=2.6)
+
+        ax[i].set_title('{}OFAM EUC at {}{}'
+                        .format(lx['l'][i], lx['lonstr'][x], tstr[i]),
+                        loc='left', fontsize=12)
+
+        cs = ax[i].pcolormesh(du.yu_ocean, du.st_ocean, u,
+                              vmax=1.1, vmin=-1, cmap=cmap)
+
+        for x, dz, color in zip(range(3), [dg, di, dx], colors):
+            # Create array filled with a random constant value (for a contour).
+            dq = np.ones(u.shape)*const
+            dzt = dz[i] if time == 'mon' else dz[time]
+
+            # Slice lon/depth of du to where EUC definitions are sliced.
+            iz = [idx_1d(du.st_ocean, dz.st_ocean[0]),
+                  idx_1d(du.st_ocean, dz.st_ocean[-1])]
+            iy = [idx_1d(du.yu_ocean, dz.yu_ocean[0]),
+                  idx_1d(du.yu_ocean, dz.yu_ocean[-1])]
+
+            # Fill EUC values from def (with nan values changes to const).
+            dq[iz[0]:iz[1]+1, iy[0]:iy[1]+1] = dzt.where(~np.isnan(dzt), const)
+
+            # Contour line between EUC and outside (filled with const).
+            ax[i].contour(du.yu_ocean, du.st_ocean, dq, [10], colors=color)
+
+            ax[i].set_yticks(np.arange(0, depth + 50, 100))
+            ax[i].set_ylim(depth, 2.5)
+            ax[i].set_xlim(-4.5, 4.5)
+            ax[i].set_xticks(np.arange(-4, 5, 2))
+            ax[i].set_xticklabels(['4°S', '2°S', '0°', '2°N', '4°N'])
+
+            # Add ylabel to first columns.
+            if any(i == n for n in [0, 3, 6, 9]):
+                ax[i].set_ylabel('Depth [m]')
+
+    # Create reordered legend manually.
+    lines = [Line2D([0], [0], color=c, linewidth=3) for c in colors[::-1]]
+    labels = ['Grenier et al. (2011)', 'Izumo (2005)', 'Fixed'][::-1]
+    plt.legend(lines, labels, fontsize='small', bbox_to_anchor=bbox)
+
+    # Add horizontal colorbar.
+    cbar = plt.colorbar(cs, cax=fig.add_axes(caxes),
+                        orientation='horizontal', extend='both')
+    cbar.ax.tick_params(labelsize=8, width=0.03)
+    cbar.set_label('Zonal velocity [m/s]', size=9)
+    plt.tight_layout(w_pad=0.1)
+    st = lon if time == 'mon' else lx['mon'][time]
+    plt.savefig(fpath/'valid/EUC_bounds_{}_{}.png'
+                .format(st, lx['exp_abr'][exp]))
+
+    return
+
+
+# # print_EUC_transport_def_correlation()
+# for exp in range(3):
+#     plot_EUC_transport_def_timeseries(exp=exp)
+#     plot_EUC_transport_def_annual(exp=exp)
+
+# # Plot EUC boundaries:
+ex = 0
+exp = ex if ex != 2 else 0
+du = xr.open_dataset(xpath/'ocean_u_{}-{}_climo.nc'.format(*years[exp]))
+dt = xr.open_dataset(xpath/'ocean_temp_{}-{}_climo.nc'.format(*years[exp]))
+ds = xr.open_dataset(xpath/'ocean_salt_{}-{}_climo.nc'.format(*years[exp]))
+
+if ex == 2:
+    exp = 2
+    dimu = {'Time': 12, 'st_ocean': 51, 'yu_ocean': 300, 'xu_ocean': 1750}
+    dims = {'Time': 12, 'st_ocean': 51, 'yt_ocean': 300, 'xt_ocean': 1750}
+    dur = xr.open_dataset(xpath/'ocean_u_{}-{}_climo.nc'.format(*years[1]))
+    dtr = xr.open_dataset(xpath/'ocean_temp_{}-{}_climo.nc'.format(*years[1]))
+    dsr = xr.open_dataset(xpath/'ocean_salt_{}-{}_climo.nc'.format(*years[1]))
+    du['u'] = (dimu, dur.u.values - du.u.values)
+    ds['salt'] = (dims, dsr.salt.values - ds.salt.values)
+    dt['temp'] = (dims, dtr.temp.values - dt.temp.values)
+
+plot_EUC_def_bounds(du, ds, dt, time=3, lon=None, depth=450, exp=exp)
+for lon in lx['lons']:
+    plot_EUC_def_bounds(du, ds, dt, time='mon', lon=lon, depth=450, exp=exp)
+
+du.close()
+dt.close()
+ds.close()
