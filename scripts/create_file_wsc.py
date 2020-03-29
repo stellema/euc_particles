@@ -63,10 +63,10 @@ def wind_stress_curl(du, dv, w=0.5):
     return phi_ds
 
 
-product = int(sys.argv[1])  # 'jra55-do' or 'erai'.
+product = str(sys.argv[1])  # 'jra55-do' or 'erai'.
 
-lon = [120, 280]
-lat = [-15, 15]
+lon = [110, 290]
+lat = [-25, 20]
 w = 0.5
 
 if product == 'erai':
