@@ -11,6 +11,7 @@ import numpy as np
 import xarray as xr
 import matplotlib.pyplot as plt
 from main import paths, lx
+from main_valid import open_tao_data
 
 
 def find_runs(x):
@@ -92,45 +93,67 @@ def plot_oni_valid(ds, da, add_obs_ev=False):
     return
 
 
-def create_file_ofam_u_enso(ds):
-    files = []
-    exp = lx['years'][0]
-    for y in range(exp[0], exp[1] + 1):
-        for m in range(1, 13):
-            files.append(str(xpath/'ocean_u_{}_{:02d}.nc'.format(y, m)))
-    du = xr.open_mfdataset(files, combine='by_coords')
-
-    du = du.sel(st_ocean=slice(2.5, 373), xu_ocean=lx['lons'])
-    du = du.sel(yu_ocean=0, method='nearest')
-    du = du.u.resample(Time='MS').mean()
-
-    nino, nina = nino_events(ds.oni)
+def enso_u_ofam(oni, du, nino=None, nina=None):
+    if not nino and not nina:
+        nino, nina = nino_events(oni.oni)
     enso = xr.DataArray(np.empty((2, *du[0].shape)).fill(np.nan),
                         coords=[('nin', ['nino', 'nina']),
                                 ('st_ocean', du.st_ocean.values),
-                                ('xu_ocean', du.xu_ocean.values)])
+                                ('xu_ocean', lx['lons'])])
 
     for ix, x in enumerate(lx['lons']):
         for n, nin in enumerate([nino, nina]):
             for iz, z in enumerate(du.st_ocean):
-                tmp = []
+                tmp = np.array(0)*np.nan
                 for i in range(len(nin)):
-                    tmp.append(du.sel(Time=slice(nin[i][0], nin[i][1]),
-                                      st_ocean=z, xu_ocean=x).values)
+                    u = du.sel(Time=slice(nin[i][0], nin[i][1]),
+                               st_ocean=z, xu_ocean=x).values
+                    if len(u) != 0:
+                        tmp = np.append(tmp, u)
+                # print(tmp)
                 enso[n, iz, ix] = np.nanmean(tmp)
+    oni.close()
+    du.close()
+    return enso
 
-    enso.to_netcdf(dpath/'ofam_u_enso_climo.nc')
 
-    return
+def enso_u_tao(oni, ds, nino=None, nina=None):
+    if not nino and not nina:
+        nino, nina = nino_events(oni.oni)
+
+    zimax = np.argmax([len(du.depth) for du in ds])
+    depths = ds[zimax].depth
+    enso = xr.DataArray(np.empty((2, len(depths), 3)).fill(np.nan),
+                        coords=[('nin', ['nino', 'nina']),
+                                ('st_ocean', ds[zimax].depth),
+                                ('xu_ocean', lx['lons'])])
+    skip = 0
+    for ix, x in enumerate(lx['lons']):
+        du = ds[ix].u_1205
+        for n, nin in enumerate([nino, nina]):
+
+            for iz, z in enumerate(du.depth):
+                tmp = np.array(0)*np.nan
+                for i in range(len(nin)):
+                    u = du.sel(time=slice(nin[i][0], nin[i][1]), depth=z).values
+                    if len(u) != 0:
+                        tmp = np.append(tmp, u)
+                if sum(~np.isnan(tmp)) >= 5:
+                    enso[n, iz, ix] = np.nanmean(tmp)
+                elif sum(~np.isnan(tmp)) >= 1:
+                    skip += 1
+    # print(skip)
+    return enso
 
 
 # Path to save figures, save data and OFAM model output.
 fpath, dpath, xpath, lpath, tpath = paths()
 
-ds = xr.open_dataset(dpath/'ofam_sst_anom_nino34_hist.nc')
-# da = xr.open_dataset(dpath/'noaa_sst_anom_nino34.nc')
+oni_mod = xr.open_dataset(dpath/'ofam_sst_anom_nino34_hist.nc')
+oni_obs = xr.open_dataset(dpath/'noaa_sst_anom_nino34.nc')
+du_mod = xr.open_dataset(dpath.joinpath('ofam_EUC_int_transport.nc'))
+du_obs = open_tao_data(frq=lx['frq_short'][1], dz=slice(10, 360))
 
-# ds = ds.sel(Time=slice('1981-11-01', '2012-12-01'))
-# da = da.sel(time=slice('1981-11-01', '2012-12-01')).rename({'time': 'Time'})
-create_file_ofam_u_enso(ds)
+# enso_mod = enso_u_ofam(oni_mod, du_mod.u)
+# enso_obs = enso_u_tao(oni_mod, du_obs)
 
