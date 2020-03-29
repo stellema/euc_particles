@@ -66,7 +66,7 @@ def plot_EUC_transport_def_timeseries(exp=0):
             plt.plot(time, np.zeros(len(time)), color='grey')
             lbs = ['Grenier et al. (2011)', 'Izumo (2005)', 'Fixed']
             plt.plot(time, u/SV, label=lbs[l], color=c)
-            plt.xlim(xmin=time[0], xmax=time[-1])
+            plt.margins(x=0)
             plt.ylabel('Transport [Sv]')
             if i == 0:
                 lns = [Line2D([0], [0], color=c, linewidth=2) for c in colors]
@@ -121,7 +121,7 @@ def plot_EUC_transport_def_annual(exp=0, off=3):
             plt.plot(time, u/SV, label=lbs[l], color=c)
             plt.xlim(xmin=time[0], xmax=time[-1])
             plt.xticks(time, labels=lx['mon'])
-
+            plt.margins(x=0)
             # if i == 2:
             #     plt.legend(loc=1)
             if i == 0:
@@ -299,6 +299,6 @@ for exp in range(3):
     off = 3 if exp == 1 else 0
     plot_EUC_transport_def_timeseries(exp=exp)
     plot_EUC_transport_def_annual(exp=exp, off=3)
-    plot_EUC_def_bounds(time=3, lon=None, depth=450, exp=exp, off=off)
-    for lon in lx['lons']:
-        plot_EUC_def_bounds(time='mon', lon=lon, depth=450, exp=exp)
+    # plot_EUC_def_bounds(time=3, lon=None, depth=450, exp=exp, off=off)
+    # for lon in lx['lons']:
+    #     plot_EUC_def_bounds(time='mon', lon=lon, depth=450, exp=exp)
