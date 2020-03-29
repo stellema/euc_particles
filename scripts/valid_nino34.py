@@ -104,13 +104,12 @@ def enso_u_ofam(oni, du, nino=None, nina=None):
     for ix, x in enumerate(lx['lons']):
         for n, nin in enumerate([nino, nina]):
             for iz, z in enumerate(du.st_ocean):
-                tmp = np.array(0)*np.nan
+                tmp = []
                 for i in range(len(nin)):
                     u = du.sel(Time=slice(nin[i][0], nin[i][1]),
                                st_ocean=z, xu_ocean=x).values
                     if len(u) != 0:
                         tmp = np.append(tmp, u)
-                # print(tmp)
                 enso[n, iz, ix] = np.nanmean(tmp)
     oni.close()
     du.close()
@@ -128,22 +127,26 @@ def enso_u_tao(oni, ds, nino=None, nina=None):
                                 ('st_ocean', ds[zimax].depth),
                                 ('xu_ocean', lx['lons'])])
     skip = 0
+    sm = np.zeros((2, 3, len(nino), len(ds[zimax].depth)))*np.nan
     for ix, x in enumerate(lx['lons']):
         du = ds[ix].u_1205
         for n, nin in enumerate([nino, nina]):
 
             for iz, z in enumerate(du.depth):
-                tmp = np.array(0)*np.nan
+                tmp = []#np.array(0)*np.nan
                 for i in range(len(nin)):
                     u = du.sel(time=slice(nin[i][0], nin[i][1]), depth=z).values
-                    if len(u) != 0:
+                    if len(u) != 0 and not all(np.isnan(u)):
                         tmp = np.append(tmp, u)
-                if sum(~np.isnan(tmp)) >= 5:
+
+                    sm[n, ix, i, iz] = sum(~np.isnan(tmp))
+
+                if sum(~np.isnan(tmp)) >= 10:
                     enso[n, iz, ix] = np.nanmean(tmp)
                 elif sum(~np.isnan(tmp)) >= 1:
                     skip += 1
     # print(skip)
-    return enso
+    return enso#, sm
 
 
 # Path to save figures, save data and OFAM model output.

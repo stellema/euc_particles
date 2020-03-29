@@ -28,6 +28,7 @@ def plot_eq_velocty_profile(z1=25, z2=300, anom=True):
     name = ['Mean equatorial velocity', 'El Niño ' + strx, 'La Niña ' + strx]
     labels = ['TAO/TRITION', 'OFAM3']
     oni_mod = xr.open_dataset(dpath/'ofam_sst_anom_nino34_hist.nc')
+    # oni_obs = xr.open_dataset(dpath/'noaa_sst_anom_nino34.nc').rename({'time': 'Time'})
     du_mod = xr.open_dataset(dpath.joinpath('ofam_EUC_int_transport.nc'))
     du_obs = open_tao_data(frq=lx['frq_short'][1], dz=slice(10, 360))
 
@@ -78,7 +79,7 @@ def plot_eq_velocty_profile(z1=25, z2=300, anom=True):
             if j == 0 or not anom:
                 ax[l].set_xlim(-0.25, 1.25)
             else:
-                ax[l].set_xlim(-0.4, 0.4)
+                ax[l].set_xlim(-0.5, 0.5)
             ax[l].axvline(x=0, c="darkgrey", linewidth=1)
             ax[l].set_ylim(z2, z1)
             ax[l].yaxis.set_ticks_position('both')
