@@ -17,7 +17,8 @@ from main import paths, im_ext, idx_1d, lx, width, height, LAT_DEG, SV
 
 # Path to save figures, save data and OFAM model output.
 fpath, dpath, xpath, lpath, tpath = paths()
-years = lx['years']  # [[1985, 2000]]
+years = [[1985, 2000], [2070, 2101]]
+# years = lx['years']
 
 # Open zonal velocity historical and future climatologies.
 duh = xr.open_dataset(xpath/('ocean_u_{}-{}_climo.nc'.format(*years[0])))
@@ -72,7 +73,7 @@ def plot_ofam_EUC_profile(du, exp=0, vmax=1.2, dt=None, ds=None,
 
         # Title without including scenario.
         ax.set_title('{}OFAM3 EUC at {} {}'.format(
-            lx['l'][i], lx['lonstr'][ix], tstr), loc='left', fontsize=10)
+            lx['l'][i], lx['lonstr'][ix], tstr), loc='left', fontsize=13)
 
         # Plot zonal velocity.
         cs = ax.pcolormesh(du.yu_ocean, du.st_ocean,
@@ -268,12 +269,12 @@ colors = [[norm(-1.0), "darkblue"],
           [norm(1.0), "darkred"]]
 cmap = matplotlib.colors.LinearSegmentedColormap.from_list("", colors)
 
-# plot_ofam_EUC_profile(duh.u, exp=0, vmax=1.15, dt=dth, ds=dsh,
-#                       isopycnals=True, freq='annual', add_bounds=False,
-#                       cmap=cmap)
-cmap = plt.cm.seismic
+plot_ofam_EUC_profile(duh.u, exp=0, vmax=1.15, dt=dth, ds=dsh,
+                      isopycnals=True, freq='annual', add_bounds=False,
+                      cmap=cmap)
+# cmap = plt.cm.seismic
 # plot_ofam_EUC_profile(duh.u, exp=0, vmax=1, dt=dth, ds=dsh,
 #                       isopycnals=True, freq='mon')
-plot_ofam_EUC_profile(duf.u, exp=1, vmax=1, dt=dtf, ds=dsf,
-                      isopycnals=True, freq='mon')
+# plot_ofam_EUC_profile(duf.u, exp=1, vmax=1, dt=dtf, ds=dsf,
+#                       isopycnals=True, freq='mon')
 # plot_transport(duh, duf)
