@@ -86,11 +86,11 @@ if product == 'erai':
                    lat=np.arange(lat[0], lat[1] + w, w))
     dv = dv.interp(lon=np.arange(lon[0], lon[1] + w, w),
                    lat=np.arange(lat[0], lat[1] + w, w))
-    phi = wind_stress_curl(du.uas, dv.vas, annum=False,
-                           EARTH_RADIUS=EARTH_RADIUS, w=w)
-    dp = xr.DataArray(phi.phi.values, coords=[('time', du.time),
-                                              ('lat', du.lat),
-                                              ('lon', du.lon)])
+    # phi = wind_stress_curl(du.uas, dv.vas, annum=False,
+    #                        EARTH_RADIUS=EARTH_RADIUS, w=w)
+    # dp = xr.DataArray(phi.phi.values, coords=[('time', du.time),
+    #                                           ('lat', du.lat),
+    #                                           ('lon', du.lon)])
 
 if product == 'jra55-do':
     u, v = [], []
@@ -110,13 +110,13 @@ if product == 'jra55-do':
                    lat=np.arange(lat[0], lat[1] + w, w))
     dv = dv.interp(lon=np.arange(lon[0], lon[1] + w, w),
                    lat=np.arange(lat[0], lat[1] + w, w))
-    phi = wind_stress_curl(du.uas_10m, dv.vas_10m, annum=False,
-                           EARTH_RADIUS=EARTH_RADIUS, w=w)
+    # phi = wind_stress_curl(du.uas_10m, dv.vas_10m, annum=False,
+    #                        EARTH_RADIUS=EARTH_RADIUS, w=w)
 
-    dp = xr.DataArray(phi.phi.values, coords=[('time', du.time),
-                                              ('lat', du.lat),
-                                              ('lon', du.lon)])
+    # dp = xr.DataArray(phi.phi.values, coords=[('time', du.time),
+    #                                           ('lat', du.lat),
+    #                                           ('lon', du.lon)])
 
 du.to_netcdf(dpath/'uas_{}_climo.nc'.format(product))
 dv.to_netcdf(dpath/'vas_{}_climo.nc'.format(product))
-dp.to_netcdf(dpath/'phi_{}_climo.nc'.format(product))
+# dp.to_netcdf(dpath/'phi_{}_climo.nc'.format(product))

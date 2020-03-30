@@ -291,14 +291,32 @@ def plot_EUC_def_bounds(time='mon', lon=None, depth=450, exp=0, off=0):
 
     return
 
+def print_EUC_transport_defs():
+    for i in range(3):
+        for l, method in zip(range(3), ['grenier', 'izumo', 'static']):
+            dh = xr.open_dataset(dpath/'ofam_EUC_transport_{}_{}.nc'
+                                 .format(method, lx['exp_abr'][0]))
+            dr = xr.open_dataset(dpath/'ofam_EUC_transport_{}_{}.nc'
+                                 .format(method, lx['exp_abr'][1]))
 
+            uh = dh.uvo.isel(xu_ocean=i).groupby('Time.month').mean().mean('month')
+            ur = dr.uvo.isel(xu_ocean=i).groupby('Time.month').mean().mean('month')
+            ud = ur.values - uh.values
+            print('{} {: >7}: h={:.0f} Sv, r={:.1f} Sv, diff={: .2f} Sv'
+                  .format(lx['lonstr'][i], method, uh.item()/SV,
+                          ur.item()/SV, ud.item()/SV))
+    return
+
+
+
+print_EUC_transport_defs()
 # print_EUC_transport_def_correlation()
 
 # # Plot EUC boundaries:
-for exp in range(3):
-    off = 3 if exp == 1 else 0
-    plot_EUC_transport_def_timeseries(exp=exp)
-    plot_EUC_transport_def_annual(exp=exp, off=3)
+# for exp in range(3):
+    # off = 6 if exp == 1 else 6
+    # plot_EUC_transport_def_timeseries(exp=exp)
+    # plot_EUC_transport_def_annual(exp=exp, off=3)
     # plot_EUC_def_bounds(time=3, lon=None, depth=450, exp=exp, off=off)
     # for lon in lx['lons']:
     #     plot_EUC_def_bounds(time='mon', lon=lon, depth=450, exp=exp)
