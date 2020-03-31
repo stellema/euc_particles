@@ -72,8 +72,8 @@ w = 0.5
 if product == 'erai':
     u, v = [], []
     for y in range(lx['years'][0][0], lx['years'][0][1]+1):
-        u.append('/g/data1/rr7/ERA_INT/ERA_INT/ERA_INT_uas_{}.nc'.format(y))
-        v.append('/g/data1/rr7/ERA_INT/ERA_INT/ERA_INT_vas_{}.nc'.format(y))
+        u.append('/g/data/rr7/ERA_INT/ERA_INT/ERA_INT_uas_{}.nc'.format(y))
+        v.append('/g/data/rr7/ERA_INT/ERA_INT/ERA_INT_vas_{}.nc'.format(y))
     du = xr.open_mfdataset(u, combine='by_coords')
     dv = xr.open_mfdataset(v, combine='by_coords')
 
@@ -95,8 +95,8 @@ if product == 'erai':
 if product == 'jra55-do':
     u, v = [], []
     for y in range(lx['years'][0][0], lx['years'][0][1]+1):
-        u.append('/g/data1/ua8/JRA55-do/latest/u_10.{}.nc'.format(y))
-        v.append('/g/data1/ua8/JRA55-do/latest/v_10.{}.nc'.format(y))
+        u.append('/g/data/ua8/JRA55-do/latest/u_10.{}.nc'.format(y))
+        v.append('/g/data/ua8/JRA55-do/latest/v_10.{}.nc'.format(y))
     du = xr.open_mfdataset(u, combine='by_coords')
     dv = xr.open_mfdataset(v, combine='by_coords')
 
