@@ -12,6 +12,7 @@ import numpy as np
 import xarray as xr
 import matplotlib.colors
 from argparse import ArgumentParser
+from datetime import datetime, date
 import matplotlib.pyplot as plt
 from main import paths, im_ext, idx_1d, lx, width, height, LAT_DEG, SV
 from main_valid import EUC_bnds_static, EUC_bnds_grenier, EUC_bnds_izumo
@@ -88,7 +89,8 @@ dtx['uvo'].attrs['units'] = 'm3/sec'
 if method == 'static':
     dtx['uvo'].attrs['bounds'] = ('Integrated between z=({}, {}), y=({}, {})'
                                   .format(z1, z2, -lat, lat))
-
+dtx.attrs['history'] = (datetime.now().strftime('%a %b %d %H:%M:%S %Y') +
+                 ': Depth-integrated velocity (github.com/stellema)\n')
 # # Save to /data as a netcdf file.
 dtx.to_netcdf(dpath/('ofam_EUC_transport_{}_{}.nc'
                      .format(method, lx['exp_abr'][exp])))
