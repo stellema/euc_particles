@@ -46,7 +46,7 @@ dsf = dsf.salt.sel(yt_ocean=slice(-5.0, 5.), st_ocean=slice(2.5, depth))
 
 def plot_ofam_EUC_profile(du, exp=0, vmax=1.2, dt=None, ds=None,
                           isopycnals=False, freq='annual', add_bounds=True,
-                          cmap=plt.cm.seismic):
+                          cmap=plt.cm.seismic, off=0):
     """Plot OFAM3 EUC annual/monthly climatology at lons with isopycnals.
 
     Args:
@@ -73,7 +73,7 @@ def plot_ofam_EUC_profile(du, exp=0, vmax=1.2, dt=None, ds=None,
 
         # Title without including scenario.
         ax.set_title('{}OFAM3 EUC at {} {}'.format(
-            lx['l'][i], lx['lonstr'][ix], tstr), loc='left', fontsize=13)
+            lx['l'][i+off], lx['lonstr'][ix], tstr), loc='left', fontsize=13)
 
         # Plot zonal velocity.
         cs = ax.pcolormesh(du.yu_ocean, du.st_ocean,
@@ -271,7 +271,7 @@ cmap = matplotlib.colors.LinearSegmentedColormap.from_list("", colors)
 
 plot_ofam_EUC_profile(duh.u, exp=0, vmax=1.15, dt=dth, ds=dsh,
                       isopycnals=True, freq='annual', add_bounds=False,
-                      cmap=cmap)
+                      cmap=cmap, off=3)
 # cmap = plt.cm.seismic
 # plot_ofam_EUC_profile(duh.u, exp=0, vmax=1, dt=dth, ds=dsh,
 #                       isopycnals=True, freq='mon')

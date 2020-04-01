@@ -9,16 +9,19 @@ author: Annette Stellema (astellemas@gmail.com)
 # import sys
 # sys.path.append('/g/data1a/e14/as3189/OFAM/scripts/')
 import gsw
+import math
 import logging
 import numpy as np
 import xarray as xr
 from scipy import stats
 from scipy import interpolate
 from datetime import datetime
+from math import radians, cos
 import matplotlib.pyplot as plt
-from main import paths, idx_1d, lx
+from main import paths, idx_1d, lx, EARTH_RADIUS, timeit
 from parcels.tools.loggers import logger
 from matplotlib.offsetbox import AnchoredText
+
 
 # Path to save figures, save data and OFAM model output.
 fpath, dpath, xpath, lpath, tpath = paths()
@@ -35,6 +38,7 @@ logger.propagate = False
 # Time index bounds where OFAM and TAO are available.
 time_bnds_ofam = [[10*12+3, 27*12+1], [7*12+4, 384], [9*12+4, 384]]
 time_bnds_tao = [[0, -1], [0, 24*12+8], [0, 22*12+8]]
+
 
 def open_tao_data(frq='mon', dz=slice(10, 355), SI=True):
     """Return TAO/TRITION ADCP xarray dataset at: 165°E, 190°E and 220°E.
@@ -261,9 +265,9 @@ def EUC_vbounds(du, depths, i, v_bnd=0.3, index=False):
 
     data_name = 'OFAM3' if hasattr(du, 'st_ocean') else 'TAO/TRITION'
 
-    # logger.debug('{} {}: v_bnd={} tot={} count={} null={} skip={}(T={},L={}).'
-    #              .format(data_name, lx['lons'][i], v_bnd, u.shape[0], count,
-    #                      empty, skip_t + skip_l, skip_t, skip_l))
+    logger.debug('{} {}: v_bnd={} tot={} count={} null={} skip={}(T={},L={}).'
+                 .format(data_name, lx['lons'][i], v_bnd, u.shape[0], count,
+                         empty, skip_t + skip_l, skip_t, skip_l))
     if not index:
         return v_max, z1, z2
     else:
@@ -552,3 +556,77 @@ def legend_without_duplicate_labels(ax, loc=False):
         ax.legend(*zip(*unique))
 
     return
+
+
+@timeit
+def wind_stress_curl(du, dv, w=0.5):
+    # The distance between longitude points [m].
+    dx = [(w*((np.pi*EARTH_RADIUS)/180) *
+           cos(radians(du.lat[i].item()))) for i in range(len(du.lat))]
+
+    # Create array and change shape.
+    dx = np.array(dx)
+    dx = dx[:, None]
+    DX = dx
+    # Create DY meshgrid.
+    # Array of the distance between latitude and longitude points [m].
+    DY = np.full((len(du.lat), len(du.lon)), w*((np.pi*EARTH_RADIUS)/180))
+
+    # Create DX mesh grid.
+    for i in range(1, len(du.lon)):
+        DX = np.hstack((DX, dx))
+
+    # Calculate the wind stress curl for each month.
+    if du.ndim == 3:
+        phi = np.zeros((12, len(du.lat), len(du.lon)))
+        # The distance [m] between longitude grid points.
+        for t in range(12):
+            du_dx, du_dy = np.gradient(du[t].values)
+            dv_dx, dv_dy = np.gradient(dv[t].values)
+
+            phi[t] = dv_dy/DX - du_dx/DY
+
+        phi_ds = xr.Dataset({'phi': (('time', 'lat', 'lon'),
+                                     np.ma.masked_array(phi, np.isnan(phi)))},
+                            coords={'time': np.arange(12),
+                                    'lat': du.lat, 'lon': du.lon})
+
+    # Calculate the annual wind stress curl.
+    elif du.ndim == 2:
+        du = du
+        dv = dv
+        du_dx, du_dy = np.gradient(du.values)
+        dv_dx, dv_dy = np.gradient(dv.values)
+        phi = dv_dy/DX - du_dx/DY
+
+        phi_ds = xr.Dataset({'phi': (('lat', 'lon'),
+                                     np.ma.masked_array(phi, np.isnan(phi)))},
+                            coords={'lat': du.lat, 'lon': du.lon})
+
+    return phi_ds
+
+
+@timeit
+def convert_to_wind_stress(u, v):
+    p = 1.225  # Air density [kg/m^3].
+
+    # Computation of Wind Stresses.
+    [nlats, nlons] = u.shape
+    tx = u.copy()*np.nan
+    ty = v.copy()*np.nan
+    for jj in range(nlats):
+        for ii in range(nlons):
+            U = math.sqrt(u[jj, ii]**2 + v[jj, ii]**2)  # Wind speed.
+            if (U <= 1):
+                cd = 0.00218
+            elif (U > 1 or U <= 3):
+                cd = (0.62+1.56/U)*0.001
+            elif (U > 3 or U < 10):
+                cd = 0.00114
+            else:
+                cd = (0.49+0.065*U)*0.001
+
+            tx[jj, ii] = cd*p*U*u[jj, ii]  # kg/m^3*m/s*m/s = N/m^2
+            ty[jj, ii] = cd*p*U*v[jj, ii]
+
+    return tx, ty
