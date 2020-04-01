@@ -99,7 +99,7 @@ def plot_ofam_EUC_profile(du, exp=0, vmax=1.2, dt=None, ds=None,
                        fmt='%1.0f', colors='k')
 
         # Plot ascending depths with ticks every 100 m.
-        ax.set_ylim(450, 2.5)
+        ax.set_ylim(350, 2.5)
         # ax.set_yticks([100, 200, 300])
 
         # Define latitude tick labels that are either North or South.
