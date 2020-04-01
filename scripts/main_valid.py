@@ -426,7 +426,7 @@ def EUC_bnds_izumo(du, dt, ds, lon, interpolated=False):
         z_15, z1, z2 = 15, 25, 300
     else:
         # Modified because this is the correct level for OFAM3 grid.
-        z_15, z1, z2 = 17, 25, 326
+        z_15, z1, z2 = 17, 25, 327
 
     # Find exact latitude longitudes to slice dt and ds.
     lon_i = dt.xt_ocean[idx_1d(dt.xt_ocean, lon + 0.05)].item()
@@ -437,7 +437,12 @@ def EUC_bnds_izumo(du, dt, ds, lon, interpolated=False):
     du = du.sel(xu_ocean=lon, st_ocean=slice(z1, z2))
     dt = dt.sel(xt_ocean=lon_i, st_ocean=slice(z1, z2))
     ds = ds.sel(xt_ocean=lon_i, st_ocean=slice(z1, z2))
-
+    print('izumo: du depth {:.2f}-{:.2f}'.format(du.st_ocean[0].item(),
+                                                 du.st_ocean[-1].item()))
+    print('izumo: dt depth {:.2f}-{:.2f}'.format(dt.st_ocean[0].item(),
+                                                 dt.st_ocean[-1].item()))
+    print('izumo: ds depth {:.2f}-{:.2f}'.format(ds.st_ocean[0].item(),
+                                                 ds.st_ocean[-1].item()))
     Z = du.st_ocean.values
 
     y1 = -2 - Z/100
