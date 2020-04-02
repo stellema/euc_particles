@@ -14,7 +14,7 @@ import cartopy.crs as ccrs
 import matplotlib.pyplot as plt
 import shapely.geometry as sgeom
 import matplotlib.ticker as mticker
-from main import paths, lx
+from main import paths, lx, OMEGA, RHO, EARTH_RADIUS
 from main_valid import wind_stress_curl, convert_to_wind_stress
 from cartopy.mpl.gridliner import LONGITUDE_FORMATTER, LATITUDE_FORMATTER
 # Path to save figures, save data and OFAM model output.
@@ -37,6 +37,7 @@ phi2 = wind_stress_curl(tx2, ty2, w=0.5).phi
 
 
 def plot_winds(varz, var_name, var_name_short, units):
+    """Plot WSC or WS."""
     # Map variables.
     box = sgeom.box(minx=110.5, maxx=290, miny=-20, maxy=20)
     x0, y0, x1, y1 = box.bounds
@@ -49,8 +50,7 @@ def plot_winds(varz, var_name, var_name_short, units):
         labels.append(labels[-1])
         c = 1.3
 
-
-    fig = plt.figure(figsize=(14, 10*c))#, constrained_layout=True)
+    fig = plt.figure(figsize=(14, 10*c))
     for i, v in zip(range(rows), varz):
         ax = fig.add_subplot(rows, 1, i + 1, projection=proj)  # [rows, cols].
         ax.set_extent([x0, x1, y0, y1], box_proj)
@@ -61,7 +61,7 @@ def plot_winds(varz, var_name, var_name_short, units):
             title = '{}{} {}'.format(lx['l'][i], labels[i], var_name.lower())
         else:
             title = '{}{} {}'.format(lx['l'][i], var_name, labels[i])
-        ax.set_title(title, loc='left', fontsize=11)
+        ax.set_title(title, loc='left', fontsize=12)
 
         if var_name_short == 'WSC':
             vmx = 1.5 if i <= 1 else 0.5
@@ -98,12 +98,13 @@ def plot_winds(varz, var_name, var_name_short, units):
 
     return
 
-varz = [phi1*1e7, phi2*1e7, (phi1.values - phi2.values)*1e7,
-        (tx1.values - tx2.values)*1e2]
-var_name = 'Wind stress curl'
-units = '[x10$^{-7}$ N/m$^{3}$]'
-var_name_short = 'WSC_WS'
-plot_winds(varz, var_name, var_name_short, units)
+
+# varz = [phi1*1e7, phi2*1e7, (phi1.values - phi2.values)*1e7,
+#         (tx1.values - tx2.values)*1e2]
+# var_name = 'Wind stress curl'
+# units = '[x10$^{-7}$ N/m$^{3}$]'
+# var_name_short = 'WSC_WS'
+# plot_winds(varz, var_name, var_name_short, units)
 
 # c = 1e2
 # varz = [tx1*c, tx2*c, (tx1.values - tx2.values)*c]
@@ -117,3 +118,21 @@ plot_winds(varz, var_name, var_name_short, units)
 # units = '[x10$^{-7}$ N/m$^{3}$]'
 # var_name_short = 'WSC'
 # plot_winds(varz, var_name, var_name_short, units)
+
+
+# fig = plt.figure(figsize=(6, 8))
+# for tx, phi, c, l in zip([tx1, tx2], [phi1, phi2], ['k', 'r'], ['JRA-55', 'ERA-I']):
+#     plt.plot(np.nanmean(tx, axis=-1)*10, phi.lat, color=c, linestyle='--');
+#     plt.plot(np.nanmean(phi, axis=-1)*1e7, phi.lat, label=l, color=c);
+#     plt.vlines(x=0, ymax=20, ymin=-20)
+#     plt.xlim(xmax=0.6, xmin=-0.6)
+#     plt.ylim(ymax=20, ymin=-20)
+# plt.legend()
+
+fig = plt.figure(figsize=(6, 8))
+plt.plot(np.nanmean((tx1-tx2), axis=-1)*10, phi.lat, 'k', linestyle='--', label='WS');
+plt.plot(np.nanmean(phi1-phi2, axis=-1)*1e7, phi.lat, 'k', label='WSC');
+plt.vlines(x=0, ymax=20, ymin=-20)
+plt.xlim(xmax=0.2, xmin=-0.2)
+plt.ylim(ymax=20, ymin=-20)
+plt.legend()

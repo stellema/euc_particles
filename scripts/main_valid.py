@@ -11,6 +11,7 @@ author: Annette Stellema (astellemas@gmail.com)
 import gsw
 import math
 import logging
+import pandas as pd
 import numpy as np
 import xarray as xr
 from scipy import stats
@@ -547,6 +548,7 @@ def correlation_str(cor):
 
 
 def legend_without_duplicate_labels(ax, loc=False):
+    """Add legend without duplicate labels."""
     handles, labels = ax.get_legend_handles_labels()
     unique = [(h, l) for i, (h, l) in enumerate(zip(handles, labels))
               if l not in labels[:i]]
@@ -560,6 +562,16 @@ def legend_without_duplicate_labels(ax, loc=False):
 
 @timeit
 def wind_stress_curl(du, dv, w=0.5):
+    """Compute wind stress curl from wind stress.
+
+    Args:
+        du (DataArray): Zonal wind stess.
+        dv (DataArray): Meridional wind stress.
+
+    Returns:
+        phi_ds (Datadet): Wind stress curl dataset (variable phi).
+
+    """
     # The distance between longitude points [m].
     dx = [(w*((np.pi*EARTH_RADIUS)/180) *
            cos(radians(du.lat[i].item()))) for i in range(len(du.lat))]
@@ -608,8 +620,24 @@ def wind_stress_curl(du, dv, w=0.5):
 
 @timeit
 def convert_to_wind_stress(u, v):
-    p = 1.225  # Air density [kg/m^3].
+    """Compute wind stress from wind field data Based on Gill (1982).
 
+    Formula and a non-linear drag coefficent based on Large and Pond (1981),
+    modified for low wind speeds (Trenberth et al., 1990).
+    https://
+    au.mathworks.com/matlabcentral/fileexchange/53391-wind-stresses-computation
+
+    Args:
+        u (DataArray): Zonal wind at 10 m.
+        v (DataArray): Meridional wind at 10 m.
+
+    Returns:
+        tx (DataArray): Zonal component of wind stress.
+        ty (DataArray): Meridional component of wind stress.
+
+    """
+    p = 1.225  # Air density [kg/m^3].
+    drag = pd.read_csv(dpath/'cdrag.csv')
     # Computation of Wind Stresses.
     [nlats, nlons] = u.shape
     tx = u.copy()*np.nan
@@ -617,16 +645,36 @@ def convert_to_wind_stress(u, v):
     for jj in range(nlats):
         for ii in range(nlons):
             U = math.sqrt(u[jj, ii]**2 + v[jj, ii]**2)  # Wind speed.
-            if (U <= 1):
-                cd = 0.00218
-            elif (U > 1 or U <= 3):
-                cd = (0.62+1.56/U)*0.001
-            elif (U > 3 or U < 10):
-                cd = 0.00114
-            else:
-                cd = (0.49+0.065*U)*0.001
+            if ~np.isnan(U):
+                # Random method.
+                # if (U <= 1):
+                #     cd = 0.00218
+                # elif (U > 1 or U <= 3):
+                #     cd = (0.62 + 1.56/U)*0.001
+                # elif (U > 3 or U < 10):
+                #     cd = 0.00114
+                # else:
+                #     cd = (0.49 + 0.065*U)*0.001
 
-            tx[jj, ii] = cd*p*U*u[jj, ii]  # kg/m^3*m/s*m/s = N/m^2
-            ty[jj, ii] = cd*p*U*v[jj, ii]
+                # Static method.
+                # cd = 0.0013
+
+                # YEAGER LARGE
+
+                xi = idx_1d(drag['u'].values, U)
+                if drag['u'][xi] != U and xi != 0 and xi != len(drag['u']-1):
+                    x1i = xi if drag['u'][xi] <= U else xi - 1
+                    x2i = xi + 1 if drag['u'][xi] <= U else xi
+                    x1, x2 = drag['u'][x1i], drag['u'][x2i]
+                    y1, y2 = drag['cd'][x1i], drag['cd'][x2i]
+                    b = (x1*y2 - x2*y1)/(x1-x2)
+                    m = (y1-y2)/(x1-x2)
+                    cd = (m*U + b)*0.001
+                else:
+                    cd = drag['cd'][xi]*0.001
+
+                # Equation.
+                tx[jj, ii] = cd*p*U*u[jj, ii]  # kg/m^3*m/s*m/s = N/m^2
+                ty[jj, ii] = cd*p*U*v[jj, ii]
 
     return tx, ty

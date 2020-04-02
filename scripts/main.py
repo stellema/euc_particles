@@ -66,6 +66,11 @@ SV = 1e6
 
 # Metres in 1 degree of latitude [m].
 LAT_DEG = 111320
+# Ocean density [kg/m3].
+RHO = 1025
+
+# Rotation rate of the Earth [rad/s].
+OMEGA = 7.2921*10**(-5)
 
 # Figure extension type.
 im_ext = '.png'
