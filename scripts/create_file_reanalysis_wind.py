@@ -74,19 +74,27 @@ elif product == 'jra55':
                  .format(y, y+1))
         v.append(path + 'vas/v1/vas_6hrPlev_JRA55_{}010100_{}123118..nc'
                  .format(y, y+1))
-    du = xr.open_mfdataset(u, combine='by_coords')
-    dv = xr.open_mfdataset(v, combine='by_coords')
 
-    du = du.rename({'latitude': 'lat', 'longitude': 'lon'})
-    dv = dv.rename({'latitude': 'lat', 'longitude': 'lon'})
-    du = du.sel(lat=slice(lat[0], lat[1]), lon=slice(lon[0], lon[1]))
-    dv = dv.sel(lat=slice(lat[0], lat[1]), lon=slice(lon[0], lon[1]))
+    def slice_vars(ds):
+        if hasattr(ds, 'latitude'):
+            ds = ds.rename({'latitude': 'lat', 'longitude': 'lon'})
+        return ds.sel(lat=slice(lat[0]-1, lat[1]+1),
+                      lon=slice(lon[0]-1, lon[1]+1))
+
+    du = xr.open_mfdataset(u, combine='by_coords', concat_dim="time",
+                           mask_and_scale=False, preprocess=slice_vars)
+    dv = xr.open_mfdataset(v, combine='by_coords', concat_dim="time",
+                           mask_and_scale=False, preprocess=slice_vars)
+
+    # Subset over the Pacific.
     du = du.groupby('time.month').mean().rename({'month': 'time'})
     dv = dv.groupby('time.month').mean().rename({'month': 'time'})
     du = du.interp(lon=np.arange(lon[0], lon[1] + w, w),
                    lat=np.arange(lat[0], lat[1] + w, w))
     dv = dv.interp(lon=np.arange(lon[0], lon[1] + w, w),
                    lat=np.arange(lat[0], lat[1] + w, w))
+    du = du.sel(lat=slice(lat[0], lat[1]), lon=slice(lon[0], lon[1]))
+    dv = dv.sel(lat=slice(lat[0], lat[1]), lon=slice(lon[0], lon[1]))
 
 du.to_netcdf(dpath/'uas_{}_climo.nc'.format(product))
 dv.to_netcdf(dpath/'vas_{}_climo.nc'.format(product))
