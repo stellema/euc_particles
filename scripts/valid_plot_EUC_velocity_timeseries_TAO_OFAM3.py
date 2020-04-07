@@ -15,7 +15,7 @@ from main import paths, lx
 import matplotlib.pyplot as plt
 from main_valid import EUC_vbounds, plot_eq_velocity
 from main_valid import open_tao_data, plot_tao_timeseries
-from main_valid import time_bnds_ofam, time_bnds_tao
+from main_valid import tbnds_ofam, tbnds_tao
 # Path to save figures, save data and OFAM model output.
 fpath, dpath, xpath, lpath, tpath = paths()
 
@@ -46,7 +46,7 @@ def plot_eq_velocity_timeseries_tao_ofam(ds, d3, v_bnd='half_max',
 
     for i, du in enumerate(ds):
         # TAO/TRITION row.
-        du = du.isel(time=slice(time_bnds_tao[i][0], time_bnds_tao[i][1]))
+        du = du.isel(time=slice(tbnds_tao[i][0], tbnds_tao[i][1]))
         name = '{}TAO/TRITION {} EUC at {}'.format(lx['l'][i],
                                                    lx['frq_long'][T],
                                                    lx['lonstr'][i])
@@ -63,7 +63,7 @@ def plot_eq_velocity_timeseries_tao_ofam(ds, d3, v_bnd='half_max',
 
         # OFAM3 row.
         dq = d3.sel(xu_ocean=lx['lons'][i])
-        dq = dq.isel(Time=slice(time_bnds_ofam[i][0], time_bnds_ofam[i][1]))
+        dq = dq.isel(Time=slice(tbnds_ofam[i][0], tbnds_ofam[i][1]))
         name = '{}OFAM3 {} EUC at {}'.format(lx['l'][i+3],
                                              lx['frq_long'][T],
                                              lx['lonstr'][i])

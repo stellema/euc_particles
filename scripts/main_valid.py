@@ -37,8 +37,8 @@ logger.addHandler(handler)
 logger.propagate = False
 
 # Time index bounds where OFAM and TAO are available.
-time_bnds_ofam = [[10*12+3, 27*12+1], [7*12+4, 384], [9*12+4, 384]]
-time_bnds_tao = [[0, -1], [0, 24*12+8], [0, 22*12+8]]
+tbnds_ofam = [[10*12+3, 27*12+1], [7*12+4, 384], [9*12+4, 384]]
+tbnds_tao = [[0, -1], [0, 24*12+8], [0, 22*12+8]]
 
 
 def open_tao_data(frq='mon', dz=slice(10, 355), SI=True):
@@ -442,12 +442,7 @@ def EUC_bnds_izumo(du, dt, ds, lon, interpolated=False):
     du = du.sel(xu_ocean=lon, st_ocean=slice(z1, z2))
     dt = dt.sel(xt_ocean=lon_i, st_ocean=slice(z1, z2))
     ds = ds.sel(xt_ocean=lon_i, st_ocean=slice(z1, z2))
-    print('izumo: du depth {:.2f}-{:.2f}'.format(du.st_ocean[0].item(),
-                                                 du.st_ocean[-1].item()))
-    print('izumo: dt depth {:.2f}-{:.2f}'.format(dt.st_ocean[0].item(),
-                                                 dt.st_ocean[-1].item()))
-    print('izumo: ds depth {:.2f}-{:.2f}'.format(ds.st_ocean[0].item(),
-                                                 ds.st_ocean[-1].item()))
+
     Z = du.st_ocean.values
 
     y1 = -2 - Z/100
@@ -678,3 +673,32 @@ def convert_to_wind_stress(u, v):
                 ty[jj, ii] = cd*p*U*v[jj, ii]
 
     return tx, ty
+
+
+def coord_formatter(array, convert='lat'):
+    array = np.array(array)
+    if convert == 'lon':
+        west = np.where(array <= 180)
+        east = np.where(array > 180)
+        new = np.empty(np.shape(array), dtype=object)
+        est = (360-array[east]).astype(str)
+        est = [s.rstrip('0').rstrip('.') if '.' in s else s for s in est]
+        wst = (array[west]).astype(str)
+        wst = [s.rstrip('0').rstrip('.') if '.' in s else s for s in wst]
+        new[west] = (pd.Series(wst) + '°E').to_numpy()
+        new[east] = (pd.Series(est) + '°W').to_numpy()
+    else:
+        south = np.where(array < 0)
+        north = np.where(array > 0)
+        eq = np.where(array == 0)[0]
+        new = np.empty(np.shape(array), dtype=object)
+        nth = (array[north]).astype(str)
+        nth = [s.rstrip('0').rstrip('.') if '.' in s else s for s in nth]
+        sth = (np.abs(array[south])).astype(str)
+        sth = [s.rstrip('0').rstrip('.') if '.' in s else s for s in sth]
+        new[south] = (pd.Series(sth) + '°S').to_numpy()
+        new[north] = (pd.Series(nth) + '°N').to_numpy()
+        new[eq] = '0°'
+
+    return new
+

@@ -15,7 +15,7 @@ import xarray as xr
 from scipy import stats
 import matplotlib.pyplot as plt
 from main import paths, lx, SV
-from main_valid import EUC_vbounds, regress, time_bnds_tao, time_bnds_ofam
+from main_valid import EUC_vbounds, regress, tbnds_tao, tbnds_ofam
 from main_valid import open_tao_data, cor_scatter_plot
 from main_valid import legend_without_duplicate_labels
 warnings.filterwarnings('ignore')
@@ -170,8 +170,8 @@ def plot_tao_ofam_transport_timeseries(z1=25, z2=350, T=1, dk=5,
                              d3t.sel(xu_ocean=lon)/SV)[2:4]
         alpha = 0.15
         # TAO/TRITION slice.
-        dtao = dsv[i].isel(time=slice(time_bnds_tao[i][0],
-                                      time_bnds_tao[i][1]))
+        dtao = dsv[i].isel(time=slice(tbnds_tao[i][0],
+                                      tbnds_tao[i][1]))
 
         # Rename TAO time array (so it matches OFAM3).
         dtao = dtao.rename({'time': 'Time'})
@@ -181,7 +181,7 @@ def plot_tao_ofam_transport_timeseries(z1=25, z2=350, T=1, dk=5,
 
         # OFAM3 slice.
         d3x = d3t.sel(xu_ocean=lx['lons'][i])
-        d3x = d3x.isel(Time=slice(time_bnds_ofam[i][0], time_bnds_ofam[i][1]))
+        d3x = d3x.isel(Time=slice(tbnds_ofam[i][0], tbnds_ofam[i][1]))
 
         # Mask OFAM3 transport when TAO data is missing (and vise versa).
         mask = ~np.isnan(dtao) & ~np.isnan(d3x)
@@ -263,8 +263,8 @@ def print_EUC_reg_transport(z1=25, z2=350, T=1, dk=5, v_bnd='half_max'):
         m[i], b[i] = regress(d3v.sel(xu_ocean=lon),
                              d3t.sel(xu_ocean=lon)/SV)[2:4]
         # TAO/TRITION slice.
-        dtao = dsv[i].isel(time=slice(time_bnds_tao[i][0],
-                                      time_bnds_tao[i][1]))
+        dtao = dsv[i].isel(time=slice(tbnds_tao[i][0],
+                                      tbnds_tao[i][1]))
 
         # Rename TAO time array (so it matches OFAM3).
         dtao = dtao.rename({'time': 'Time'})
@@ -274,7 +274,7 @@ def print_EUC_reg_transport(z1=25, z2=350, T=1, dk=5, v_bnd='half_max'):
 
         # OFAM3 slice.
         d3x = d3t.sel(xu_ocean=lx['lons'][i])
-        d3x = d3x.isel(Time=slice(time_bnds_ofam[i][0], time_bnds_ofam[i][1]))
+        d3x = d3x.isel(Time=slice(tbnds_ofam[i][0], tbnds_ofam[i][1]))
 
         # Mask OFAM3 transport when TAO data is missing (and vise versa).
         mask = ~np.isnan(dtao) & ~np.isnan(d3x)

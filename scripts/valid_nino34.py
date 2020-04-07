@@ -88,7 +88,10 @@ def plot_oni_valid(ds, da, add_obs_ev=False):
     ax.set_xlim(xmax=ds.Time[-1], xmin=ds.Time[0])
     plt.ylabel('Oceanic Niño Index [°C]')
     plt.legend(fontsize=10, loc=1)
-    plt.savefig(fpath/'valid/oni_ofam_noaa.png')
+    if add_obs_ev:
+        plt.savefig(fpath/'valid/oni_ofam_noaa_hatch.png')
+    else:
+        plt.savefig(fpath/'valid/oni_ofam_noaa.png')
 
     return
 
@@ -131,11 +134,11 @@ def enso_u_tao(oni, ds, nino=None, nina=None):
     for ix, x in enumerate(lx['lons']):
         du = ds[ix].u_1205
         for n, nin in enumerate([nino, nina]):
-
             for iz, z in enumerate(du.depth):
-                tmp = []#np.array(0)*np.nan
+                tmp = []
                 for i in range(len(nin)):
-                    u = du.sel(time=slice(nin[i][0], nin[i][1]), depth=z).values
+                    u = du.sel(time=slice(nin[i][0], nin[i][1]),
+                               depth=z).values
                     if len(u) != 0 and not all(np.isnan(u)):
                         tmp = np.append(tmp, u)
 
@@ -146,17 +149,33 @@ def enso_u_tao(oni, ds, nino=None, nina=None):
                 elif sum(~np.isnan(tmp)) >= 1:
                     skip += 1
     # print(skip)
-    return enso#, sm
+    return enso
+
+
+def print_enso_dates(oni):
+    nino, nina = nino_events(oni)
+    for nin, label in zip([nino, nina], ['El Nino:', 'La Nina:']):
+        print(label, end='')
+        for t in range(len(nin)):
+            end = '\n' if t == len(nin) - 1 else ', '
+            print('{}/{}–{}/{}'.format(lx['mon'][int(nin[t][0][5:7])-1],
+                                       nino[t][0][0:4],
+                                       lx['mon'][int(nin[t][1][5:7])-1],
+                                       nino[t][1][0:4]), end=end)
+    return
 
 
 # Path to save figures, save data and OFAM model output.
 fpath, dpath, xpath, lpath, tpath = paths()
 
 oni_mod = xr.open_dataset(dpath/'ofam_sst_anom_nino34_hist.nc')
-oni_obs = xr.open_dataset(dpath/'noaa_sst_anom_nino34.nc')
+oni_obs = xr.open_dataset(dpath/'noaa_sst_anom_nino34.nc').rename({'time':
+                                                                   'Time'})
 du_mod = xr.open_dataset(dpath.joinpath('ofam_EUC_int_transport.nc'))
 du_obs = open_tao_data(frq=lx['frq_short'][1], dz=slice(10, 360))
 
+
 # enso_mod = enso_u_ofam(oni_mod, du_mod.u)
 # enso_obs = enso_u_tao(oni_mod, du_obs)
-
+# print_enso_dates(oni_mod.oni)
+# plot_oni_valid(oni_mod, oni_obs, add_obs_ev=True)

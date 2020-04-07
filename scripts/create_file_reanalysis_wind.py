@@ -47,7 +47,7 @@ if product == 'erai':
     du = du.sel(lat=slice(lat[0], lat[1]), lon=slice(lon[0], lon[1]))
     dv = dv.sel(lat=slice(lat[0], lat[1]), lon=slice(lon[0], lon[1]))
 
-if product == 'jra55-do':
+elif product == 'jra55-do':
     u, v = [], []
     for y in range(lx['years'][0][0], lx['years'][0][1]+1):
         u.append('/g/data/ua8/JRA55-do/latest/u_10.{}.nc'.format(y))
@@ -66,6 +66,27 @@ if product == 'jra55-do':
     dv = dv.interp(lon=np.arange(lon[0], lon[1] + w, w),
                    lat=np.arange(lat[0], lat[1] + w, w))
 
+elif product == 'jra55':
+    path = '/g/data/rr7/JRA55/6hr/atmos/'
+    u, v = [], []
+    for y in range(lx['years'][0][0], lx['years'][0][1]+1):
+        u.append(path + 'uas/v1/uas_6hrPlev_JRA55_{}010100_{}123118..nc'
+                 .format(y, y+1))
+        v.append(path + 'vas/v1/vas_6hrPlev_JRA55_{}010100_{}123118..nc'
+                 .format(y, y+1))
+    du = xr.open_mfdataset(u, combine='by_coords')
+    dv = xr.open_mfdataset(v, combine='by_coords')
+
+    du = du.rename({'latitude': 'lat', 'longitude': 'lon'})
+    dv = dv.rename({'latitude': 'lat', 'longitude': 'lon'})
+    du = du.sel(lat=slice(lat[0], lat[1]), lon=slice(lon[0], lon[1]))
+    dv = dv.sel(lat=slice(lat[0], lat[1]), lon=slice(lon[0], lon[1]))
+    du = du.groupby('time.month').mean().rename({'month': 'time'})
+    dv = dv.groupby('time.month').mean().rename({'month': 'time'})
+    du = du.interp(lon=np.arange(lon[0], lon[1] + w, w),
+                   lat=np.arange(lat[0], lat[1] + w, w))
+    dv = dv.interp(lon=np.arange(lon[0], lon[1] + w, w),
+                   lat=np.arange(lat[0], lat[1] + w, w))
 
 du.to_netcdf(dpath/'uas_{}_climo.nc'.format(product))
 dv.to_netcdf(dpath/'vas_{}_climo.nc'.format(product))

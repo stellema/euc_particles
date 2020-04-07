@@ -62,7 +62,7 @@ def plot_EUC_transport_def_timeseries(exp=0):
 
             plt.title('{}OFAM3 {} EUC transport at {}'
                       .format(lx['l'][i], lx['exps'][exp], lx['lonstr'][i]),
-                      loc='left')
+                      loc='left', fontsize=10)
             plt.plot(time, np.zeros(len(time)), color='grey')
             lbs = ['Grenier et al. (2011)', 'Izumo (2005)', 'Fixed']
             plt.plot(time, u/SV, label=lbs[l], color=c)
@@ -116,7 +116,7 @@ def plot_EUC_transport_def_annual(exp=0, off=3):
                 title = ('{}OFAM3 EUC {} transport at {}'
                          .format(lx['l'][i+off], lx['expx'][exp].lower(),
                                  lx['lonstr'][i]))
-            plt.title(title, loc='left', fontsize=9)
+            plt.title(title, loc='left', fontsize=10)
             lbs = ['Grenier et al. (2011)', 'Izumo (2005)', 'Fixed']
             plt.plot(time, u/SV, label=lbs[l], color=c)
             plt.xlim(xmin=time[0], xmax=time[-1])
@@ -128,33 +128,11 @@ def plot_EUC_transport_def_annual(exp=0, off=3):
                 plt.ylabel('Transport [Sv]')
             dh.close()
             dr.close()
-    plt.tight_layout()
+    plt.tight_layout(w_pad=0.05)
     plt.savefig(fpath/'valid/EUC_transport_definitions_annual_{}.png'
                 .format(lx['exp_abr'][exp]))
     plt.show()
     plt.close()
-
-    return
-
-def print_EUC_transport_def_correlation():
-    for m in list(itertools.combinations(['grenier', 'izumo', 'static'], 2)):
-        for i in range(3):
-            cor = []
-            for exp in range(2):
-                d1 = xr.open_dataset(dpath/'ofam_EUC_transport_{}_{}.nc'
-                                     .format(m[0], lx['exp_abr'][exp]))
-                d2 = xr.open_dataset(dpath/'ofam_EUC_transport_{}_{}.nc'
-                                     .format(m[1], lx['exp_abr'][exp]))
-                d1x = d1.isel(xu_ocean=i).resample(Time='MS').mean()
-                d2x = d2.isel(xu_ocean=i).resample(Time='MS').mean()
-
-                cor_r, cor_p = regress(d1x.uvo, d2x.uvo)[0:2]
-                cor.append(cor_r)
-                cor.append(correlation_str([cor_r, cor_p]))
-                d1.close()
-                d2.close()
-            print('{}/{} {} Hist:R={:.2f} p={} RCP: R={:.2f} p={}'
-                  .format(*m, lx['lonstr'][i], *cor))
 
     return
 
@@ -212,13 +190,12 @@ def plot_EUC_def_bounds(time='mon', lon=None, depth=450, exp=0, off=0):
     else:
         rge = range(3)
         # Colorbar extra axis:[left, bottom, width, height].
-        caxes = [0.36, 0.2, 0.333, 0.04]
+        caxes = [0.36, 0.15, 0.333, 0.04]
 
         # Bbox (x, y, width, height).
-        bbox = (0.33, -0.7, 0.5, 0.5)
+        bbox = (0.33, -0.6, 0.5, 0.5)
         tstr = [' in ' + lx['mon_name'][time]]*12
-        fig, ax = plt.subplots(1, 3, figsize=(width*1.4, height/1.2),
-                               sharey=True)
+        fig, ax = plt.subplots(1, 3, figsize=(11.9, 3.75))
     ax = ax.flatten()
     for i in rge:
         lonx = lon if time == 'mon' else lx['lons'][i]
@@ -233,7 +210,7 @@ def plot_EUC_def_bounds(time='mon', lon=None, depth=450, exp=0, off=0):
             title = '{}OFAM3 EUC {} at {}{}'.format(lx['l'][i+off],
                                                     lx['expx'][exp].lower(),
                                                     lx['lonstr'][x], tstr[i])
-        ax[i].set_title(title, loc='left', fontsize=9)
+        ax[i].set_title(title, loc='left', fontsize=10)
         cs = ax[i].pcolormesh(du.yu_ocean, du.st_ocean, u,
                               vmax=1, vmin=-1, cmap=cmap)
 
@@ -279,7 +256,7 @@ def plot_EUC_def_bounds(time='mon', lon=None, depth=450, exp=0, off=0):
                         orientation='horizontal', extend='both')
     cbar.ax.tick_params(labelsize=8, width=0.03)
     cbar.set_label('Zonal velocity [m/s]', size=9)
-    plt.tight_layout(w_pad=0.1)
+    plt.tight_layout(w_pad=0.05)
     st = lon if time == 'mon' else lx['mon'][time].lower()
     plt.savefig(fpath/'valid/EUC_def_bounds_{}_{}.png'
                 .format(st, lx['exp_abr'][exp]))
@@ -291,32 +268,55 @@ def plot_EUC_def_bounds(time='mon', lon=None, depth=450, exp=0, off=0):
 
     return
 
+
+def print_EUC_transport_def_correlation():
+    for m in list(itertools.combinations(['grenier', 'izumo', 'static'], 2)):
+        for i in range(3):
+            cor = []
+            for exp in range(2):
+                d1 = xr.open_dataset(dpath/'ofam_EUC_transport_{}_{}.nc'
+                                     .format(m[0], lx['exp_abr'][exp]))
+                d2 = xr.open_dataset(dpath/'ofam_EUC_transport_{}_{}.nc'
+                                     .format(m[1], lx['exp_abr'][exp]))
+                d1x = d1.isel(xu_ocean=i).resample(Time='MS').mean()
+                d2x = d2.isel(xu_ocean=i).resample(Time='MS').mean()
+
+                cor_r, cor_p = regress(d1x.uvo, d2x.uvo)[0:2]
+                cor.append(cor_r)
+                cor.append(correlation_str([cor_r, cor_p]))
+                d1.close()
+                d2.close()
+            print('{}/{} {} Hist:R={:.2f} p={} RCP: R={:.2f} p={}'
+                  .format(*m, lx['lonstr'][i], *cor))
+
+    return
+
+
 def print_EUC_transport_defs():
     for i in range(3):
         for l, method in zip(range(3), ['grenier', 'izumo', 'static']):
             dh = xr.open_dataset(dpath/'ofam_EUC_transport_{}_{}.nc'
-                                 .format(method, lx['exp_abr'][0]))
+                                 .format(method, lx['exp_abr'][0])).uvo
             dr = xr.open_dataset(dpath/'ofam_EUC_transport_{}_{}.nc'
-                                 .format(method, lx['exp_abr'][1]))
+                                 .format(method, lx['exp_abr'][1])).uvo
 
-            uh = dh.uvo.isel(xu_ocean=i).groupby('Time.month').mean().mean('month')
-            ur = dr.uvo.isel(xu_ocean=i).groupby('Time.month').mean().mean('month')
+            uh = dh.isel(xu_ocean=i).groupby('Time.month').mean().mean('month')
+            ur = dr.isel(xu_ocean=i).groupby('Time.month').mean().mean('month')
             ud = ur.values - uh.values
             print('{} {: >7}: h={:.0f} Sv, r={:.1f} Sv, diff={: .2f} Sv'
                   .format(lx['lonstr'][i], method, uh.item()/SV,
                           ur.item()/SV, ud.item()/SV))
     return
 
-
-
-print_EUC_transport_defs()
 # print_EUC_transport_def_correlation()
 
-# # Plot EUC boundaries:
-# for exp in range(3):
-    # off = 6 if exp == 1 else 6
+# Plot EUC boundaries:
+for exp in range(3):
+    off = 6 if exp == 1 else 6
     # plot_EUC_transport_def_timeseries(exp=exp)
-    # plot_EUC_transport_def_annual(exp=exp, off=3)
-    # plot_EUC_def_bounds(time=3, lon=None, depth=450, exp=exp, off=off)
+    plot_EUC_transport_def_annual(exp=exp, off=3)
+    plot_EUC_def_bounds(time=3, lon=None, depth=450, exp=exp, off=off)
     # for lon in lx['lons']:
     #     plot_EUC_def_bounds(time='mon', lon=lon, depth=450, exp=exp)
+
+# print_EUC_transport_defs()
