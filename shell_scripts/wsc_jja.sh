@@ -12,4 +12,4 @@
 module use /g/data3/hh5/public/modules
 module load conda/analysis3-20.01
 
-python3 /g/data/e14/as3189/OFAM/scripts/create_file_wsc.py 'jra55'
+python3 /g/data/e14/as3189/OFAM/scripts/create_file_reanalysis_wind 'jra55-do'

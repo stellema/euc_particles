@@ -71,9 +71,9 @@ elif product == 'jra55':
     u, v = [], []
     for y in range(lx['years'][0][0], lx['years'][0][1]+1):
         u.append(path + 'uas/v1/uas_6hrPlev_JRA55_{}010100_{}123118..nc'
-                 .format(y, y+1))
+                 .format(y, y))
         v.append(path + 'vas/v1/vas_6hrPlev_JRA55_{}010100_{}123118..nc'
-                 .format(y, y+1))
+                 .format(y, y))
 
     def slice_vars(ds):
         if hasattr(ds, 'latitude'):
