@@ -12,15 +12,17 @@ author: Annette Stellema (astellemas@gmail.com)
 import warnings
 import numpy as np
 import xarray as xr
-from scipy import stats
 import matplotlib.pyplot as plt
-from main import paths, lx, SV
+from matplotlib.lines import Line2D
+from main import paths, lx, SV, width, height, idx_1d
 from main_valid import EUC_vbounds, regress, tbnds_tao, tbnds_ofam
 from main_valid import open_tao_data, cor_scatter_plot
+from main_valid import EUC_bnds_grenier, EUC_bnds_izumo, EUC_bnds_static
 from main_valid import legend_without_duplicate_labels
 warnings.filterwarnings('ignore')
 # Path to save figures, save data and OFAM model output.
 fpath, dpath, xpath, lpath, tpath = paths()
+years = lx['years']
 
 
 def plot_tao_max_velocity_correlation(ds, v_bnd='half_max'):
@@ -283,7 +285,7 @@ def print_EUC_reg_transport(z1=25, z2=350, T=1, dk=5, v_bnd='half_max'):
         d3xm = d3x.where(mask).mean('Time')
         euc[i, 0] = dtaom.item()*m[i] + b[i]
         euc[i, 1] = d3x.mean('Time').item()/SV
-        euc[i, 2] = d3xm.mean('Time').item()/SV
+        euc[i, 2] = d3xm.item()/SV
         print('EUC ({}) {}: TAO={:.2f} Sv, OFAM={:.2f} Sv, OFAM_mask= {:.2f}Sv'
               .format(v_bnd, lx['lonstr'][i], *euc[i]))
 
@@ -396,27 +398,6 @@ def plt_EUC_def_bounds(du, ds, dt, time='mon', lon=None, depth=450, exp=0):
     return
 
 
-ex = 0
-exp = ex if ex != 2 else 0
-# Open zonal velocity historical and future climatologies.
-du = xr.open_dataset(xpath/'ocean_u_{}-{}_climo.nc'.format(*years[exp]))
-
-# Open temperature historical and future climatologies.
-dt = xr.open_dataset(xpath/'ocean_temp_{}-{}_climo.nc'.format(*years[exp]))
-
-# Open salinity historical and future climatologies.
-ds = xr.open_dataset(xpath/'ocean_salt_{}-{}_climo.nc'.format(*years[exp]))
-
-if ex == 2:
-    exp = 2
-    dur = xr.open_dataset(xpath/'ocean_u_{}-{}_climo.nc'.format(*years[1]))
-    dtr = xr.open_dataset(xpath/'ocean_temp_{}-{}_climo.nc'.format(*years[1]))
-    dsr = xr.open_dataset(xpath/'ocean_salt_{}-{}_climo.nc'.format(*years[1]))
-    du, ds, dt = dur - du, dsr - ds, dtr - dt
-
-plt_EUC_def_bounds(du, ds, dt, time=3, lon=None, depth=450, exp=ex)
-for lon in lx['lons']:
-    plt_EUC_def_bounds(du, ds, dt, time='mon', lon=lon, depth=450)
 # Saved data frequency (1 for monthly and 0 for daily data).
 T = 1
 
@@ -424,7 +405,8 @@ T = 1
 ds = open_tao_data(frq=lx['frq_short'][T], dz=slice(10, 360))
 dt = xr.open_dataset(dpath.joinpath('ofam_EUC_int_transport.nc'))
 
-for v_bnd in ['half_max', '25_max', 0.1]:
+"""Plot """
+for v_bnd in ['half_max',  0.1]:
     print('plot_tao_ofam_transport_timeseries v_bnd=', v_bnd)
     plot_tao_ofam_transport_timeseries(z1=25, z2=350, T=1, dk=5, v_bnd=v_bnd,
                                        series='all', plot_mask=True)
@@ -436,5 +418,30 @@ for v_bnd in ['half_max', '25_max', 0.1]:
     plot_tao_ofam_transport_timeseries(z1=25, z2=350, T=1, dk=5,
                                        v_bnd=v_bnd, series='month')
 
-for v_bnd in ['half_max', '25_max', 0.1]:
-    print_EUC_reg_transport(z1=25, z2=350, T=1, dk=5, v_bnd=v_bnd)
+# for v_bnd in [0.1, 'half_max']:
+#     print_EUC_reg_transport(z1=25, z2=350, T=1, dk=5, v_bnd=v_bnd)
+
+"""Plot EUC bounds"""
+# ex = 0
+# exp = ex if ex != 2 else 0
+# du = xr.open_dataset(xpath/'ocean_u_{}-{}_climo.nc'.format(*years[exp]))
+
+# # Open temperature historical and future climatologies.
+# dt = xr.open_dataset(xpath/'ocean_temp_{}-{}_climo.nc'.format(*years[exp]))
+
+# # Open salinity historical and future climatologies.
+# ds = xr.open_dataset(xpath/'ocean_salt_{}-{}_climo.nc'.format(*years[exp]))
+
+# if ex == 2:
+#     exp = 2
+#     dur = xr.open_dataset(xpath/'ocean_u_{}-{}_climo.nc'.format(*years[1]))
+#     dtr = xr.open_dataset(xpath/'ocean_temp_{}-{}_climo.nc'.format(*years[1]))
+#     dsr = xr.open_dataset(xpath/'ocean_salt_{}-{}_climo.nc'.format(*years[1]))
+#     du, ds, dt = dur - du, dsr - ds, dtr - dt
+
+# plt_EUC_def_bounds(du, ds, dt, time=3, lon=None, depth=450, exp=ex)
+# for lon in lx['lons']:
+#     plt_EUC_def_bounds(du, ds, dt, time='mon', lon=lon, depth=450)
+
+
+

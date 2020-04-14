@@ -2,3 +2,39 @@
 2020-04-07 15:36:32,484:timed:wind_stress_curl: 0:0:00.02 total: 0.02 seconds.
 2020-04-07 15:37:49,299:timed:convert_to_wind_stress: 0:1:16.81 total: 76.81 seconds.
 2020-04-07 15:37:49,324:timed:wind_stress_curl: 0:0:00.02 total: 0.02 seconds.
+2020-04-08 17:59:55,496:timed:convert_to_wind_stress: 0:1:15.36 total: 75.36 seconds.
+2020-04-08 17:59:55,523:timed:wind_stress_curl: 0:0:00.03 total: 0.03 seconds.
+2020-04-08 18:01:11,551:timed:convert_to_wind_stress: 0:1:16.03 total: 76.03 seconds.
+2020-04-08 18:01:11,577:timed:wind_stress_curl: 0:0:00.02 total: 0.02 seconds.
+2020-04-09 15:26:36,038:EUC_vbounds:OFAM3 165: v_bnd=half_max tot=384 count=335 null=0 skip=46(T=6,L=40).
+2020-04-09 15:26:54,483:EUC_vbounds:OFAM3 165: v_bnd=half_max tot=384 count=335 null=0 skip=46(T=6,L=40).
+2020-04-09 15:27:10,772:EUC_vbounds:OFAM3 190: v_bnd=half_max tot=384 count=363 null=0 skip=21(T=5,L=16).
+2020-04-09 15:27:24,679:EUC_vbounds:OFAM3 220: v_bnd=half_max tot=384 count=377 null=0 skip=5(T=1,L=4).
+2020-04-09 15:27:33,214:EUC_vbounds:TAO/TRITION 165: v_bnd=half_max tot=203 count=112 null=5 skip=86(T=63,L=23).
+2020-04-09 15:27:43,115:EUC_vbounds:TAO/TRITION 190: v_bnd=half_max tot=340 count=280 null=36 skip=24(T=13,L=11).
+2020-04-09 15:27:51,197:EUC_vbounds:TAO/TRITION 220: v_bnd=half_max tot=311 count=258 null=31 skip=22(T=0,L=22).
+2020-04-09 15:28:53,944:EUC_vbounds:OFAM3 165: v_bnd=half_max tot=384 count=335 null=0 skip=46(T=6,L=40).
+2020-04-09 15:29:10,327:EUC_vbounds:OFAM3 190: v_bnd=half_max tot=384 count=363 null=0 skip=21(T=5,L=16).
+2020-04-09 15:29:24,322:EUC_vbounds:OFAM3 220: v_bnd=half_max tot=384 count=377 null=0 skip=5(T=1,L=4).
+2020-04-09 15:29:32,916:EUC_vbounds:TAO/TRITION 165: v_bnd=half_max tot=203 count=112 null=5 skip=86(T=63,L=23).
+2020-04-09 15:29:42,928:EUC_vbounds:TAO/TRITION 190: v_bnd=half_max tot=340 count=280 null=36 skip=24(T=13,L=11).
+2020-04-09 15:29:51,016:EUC_vbounds:TAO/TRITION 220: v_bnd=half_max tot=311 count=258 null=31 skip=22(T=0,L=22).
+2020-04-09 15:37:27,936:EUC_vbounds:OFAM3 165: v_bnd=half_max tot=384 count=335 null=0 skip=46(T=6,L=40).
+2020-04-09 15:38:07,827:EUC_vbounds:OFAM3 165: v_bnd=0.1 tot=384 count=275 null=0 skip=100(T=58,L=42).
+2020-04-09 15:38:23,822:EUC_vbounds:OFAM3 190: v_bnd=0.1 tot=384 count=341 null=0 skip=28(T=16,L=12).
+2020-04-09 15:38:37,804:EUC_vbounds:OFAM3 220: v_bnd=0.1 tot=384 count=367 null=0 skip=2(T=0,L=2).
+2020-04-09 15:38:46,271:EUC_vbounds:TAO/TRITION 165: v_bnd=0.1 tot=203 count=107 null=5 skip=81(T=58,L=23).
+2020-04-09 15:38:55,715:EUC_vbounds:TAO/TRITION 190: v_bnd=0.1 tot=340 count=222 null=36 skip=6(T=1,L=5).
+2020-04-09 15:39:03,616:EUC_vbounds:TAO/TRITION 220: v_bnd=0.1 tot=311 count=225 null=31 skip=41(T=0,L=41).
+2020-04-09 15:39:18,334:EUC_vbounds:OFAM3 165: v_bnd=half_max tot=384 count=335 null=0 skip=46(T=6,L=40).
+2020-04-09 15:39:34,614:EUC_vbounds:OFAM3 190: v_bnd=half_max tot=384 count=363 null=0 skip=21(T=5,L=16).
+2020-04-09 15:39:48,461:EUC_vbounds:OFAM3 220: v_bnd=half_max tot=384 count=377 null=0 skip=5(T=1,L=4).
+2020-04-09 15:39:57,095:EUC_vbounds:TAO/TRITION 165: v_bnd=half_max tot=203 count=112 null=5 skip=86(T=63,L=23).
+2020-04-09 15:40:07,117:EUC_vbounds:TAO/TRITION 190: v_bnd=half_max tot=340 count=280 null=36 skip=24(T=13,L=11).
+2020-04-09 15:40:15,251:EUC_vbounds:TAO/TRITION 220: v_bnd=half_max tot=311 count=258 null=31 skip=22(T=0,L=22).
+2020-04-09 15:40:29,771:EUC_vbounds:OFAM3 165: v_bnd=25_max tot=384 count=270 null=0 skip=111(T=63,L=48).
+2020-04-09 15:40:46,232:EUC_vbounds:OFAM3 190: v_bnd=25_max tot=384 count=304 null=0 skip=80(T=59,L=21).
+2020-04-09 15:41:01,375:EUC_vbounds:OFAM3 220: v_bnd=25_max tot=384 count=371 null=0 skip=13(T=1,L=12).
+2020-04-09 15:41:09,706:EUC_vbounds:TAO/TRITION 165: v_bnd=25_max tot=203 count=53 null=5 skip=140(T=118,L=22).
+2020-04-09 15:41:20,113:EUC_vbounds:TAO/TRITION 190: v_bnd=25_max tot=340 count=195 null=36 skip=105(T=71,L=34).
+2020-04-09 15:41:29,017:EUC_vbounds:TAO/TRITION 220: v_bnd=25_max tot=311 count=214 null=31 skip=66(T=5,L=61).

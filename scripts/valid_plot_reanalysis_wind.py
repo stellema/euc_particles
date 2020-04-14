@@ -20,9 +20,9 @@ from cartopy.mpl.gridliner import LONGITUDE_FORMATTER, LATITUDE_FORMATTER
 # Path to save figures, save data and OFAM model output.
 fpath, dpath, xpath, lpath, tpath = paths()
 
-u1 = xr.open_dataset(dpath/'uas_jra55-do_climo.nc').uas_10m.mean('time').sel(
+u1 = xr.open_dataset(dpath/'uas_jra55_climo.nc').uas.mean('time').sel(
     lat=slice(-20, 20))
-v1 = xr.open_dataset(dpath/'vas_jra55-do_climo.nc').vas_10m.mean('time').sel(
+v1 = xr.open_dataset(dpath/'vas_jra55_climo.nc').vas.mean('time').sel(
     lat=slice(-20, 20))
 
 u2 = xr.open_dataset(dpath/'uas_erai_climo.nc').uas.mean('time').sel(
