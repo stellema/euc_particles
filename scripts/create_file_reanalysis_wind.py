@@ -17,7 +17,7 @@ from main import paths, lx
 fpath, dpath, xpath, lpath, tpath = paths()
 
 product = str(sys.argv[1])  # 'jra55' or 'erai'.
-vari = str(sys.argv[2])  # '0-4.
+vari = int(sys.argv[2])  # '0-4.
 
 lon = [109, 291]
 lat = [-16, 16]
