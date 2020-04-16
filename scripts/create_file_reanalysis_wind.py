@@ -22,7 +22,7 @@ vari = int(sys.argv[2])  # '0-4.
 lon = [109, 291]
 lat = [-16, 16]
 w = 0.1
-var = ['uas', 'vas', 'tas', 'huss', 'slp'][vari]
+var = ['uas', 'vas', 'tas', 'huss', 'psl'][vari]
 
 
 def slice_vars(ds):
@@ -30,7 +30,6 @@ def slice_vars(ds):
         ds = ds.rename({'latitude': 'lat', 'longitude': 'lon'})
     return ds.sel(lat=slice(lat[0]-1, lat[1]+1),
                   lon=slice(lon[0]-1, lon[1]+1))
-
 
 f = []
 if product == 'erai':
