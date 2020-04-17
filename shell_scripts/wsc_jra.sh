@@ -1,9 +1,9 @@
 #!/bin/bash
 #PBS -P e14
 #PBS -q normal
-#PBS -l walltime=22:00:00
+#PBS -l walltime=15:00:00
 #PBS -l mem=30GB
-#PBS -l ncpus=5
+#PBS -l ncpus=20
 #PBS -l wd
 #PBS -M astellemas@gmail.com
 #PBS -m abe
@@ -12,8 +12,10 @@
 module use /g/data3/hh5/public/modules
 module load conda/analysis3-20.01
 
+for r in 0.1 0.5 1 1.5; do
 for i in 0 1 2 3 4; do
-	python3 /g/data/e14/as3189/OFAM/scripts/create_file_reanalysis_wind.py 'jra55' $i 1 &
+	python3 /g/data/e14/as3189/OFAM/scripts/create_file_reanalysis_wind.py 'jra55' $i $r &
+done
 done
 
 wait
