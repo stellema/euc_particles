@@ -47,7 +47,7 @@ fpath, dpath, xpath, lpath, tpath = paths()
 
 logger.setLevel(logging.DEBUG)
 now = datetime.now()
-handler = logging.FileHandler(lpath/'create_file_{}.log'
+handler = logging.FileHandler(lpath/'reanalysis_{}.log'
                               .format(now.strftime("%Y-%m-%d")))
 formatter = logging.Formatter('%(asctime)s:%(funcName)s:%(message)s')
 handler.setFormatter(formatter)
@@ -121,12 +121,15 @@ def reanalysis_wind(product, vari, lon, lat, res):
 
     logger.info('{} OLD coords: {}'.format(fname, old_coords))
     logger.info('{} NEW coords: {}'.format(fname, ds[var].coords))
+    ds.close()
 
-    if np.isnan(ds[var]).all():
+    da = xr.open_dataset(dpath/fname)
+
+    if np.isnan(da[var]).all():
         logger.info('ERROR: {} (all NaN).'.format(fname))
     else:
         logger.info('SUCCESS: {}'.format(fname))
-
+    da.close()
     return
 
 
