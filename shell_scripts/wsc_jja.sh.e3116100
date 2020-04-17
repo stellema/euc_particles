@@ -1,4 +1,0 @@
-Traceback (most recent call last):
-  File "/g/data/e14/as3189/OFAM/scripts/create_file_wsc.py", line 66, in <module>
-    product = int(sys.argv[1])  # 'jra55-do' or 'erai'.
-ValueError: invalid literal for int() with base 10: 'jra55-do'
