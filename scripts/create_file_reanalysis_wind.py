@@ -95,32 +95,36 @@ def reanalysis_wind(product, vari, lon, lat, res):
         for y in range(lx['years'][0][0], lx['years'][0][1]+1):
             f.append(path + '{}/v1/{}_6hrPlev_JRA55_{}010100_{}123118.nc'
                      .format(var, var, y, y))
+    fname = '{}_{}_{:02.0f}_climo.nc'.format(product, var, res*10)
 
-    logger.info('Creating file: {}_{} {} deg interp from {}.'
-                .format(product, var, res, path))
+    logger.info('Creating file: {} from {}.'.format(fname, path))
+
     ds = xr.open_mfdataset(f, combine='by_coords', concat_dim="time",
                            mask_and_scale=False, preprocess=slice_vars)
 
     attrs = ds[var].attrs
     # Subset over the Pacific.
-    logger.info('{}_{} old coords: {}'.format(product, var, ds[var].coords))
+    old_coords = ds[var].coords
+
     ds = ds.groupby('time.month').mean().rename({'month': 'time'})
 
     ds = ds.interp(lon=np.arange(lon[0], lon[1] + res, res),
                    lat=np.arange(lat[0], lat[1] + res, res))
 
     ds = ds.sel(lat=slice(lat[0], lat[1]), lon=slice(lon[0], lon[1]))
-    logger.info('{}_{} new coords: {}'.format(product, var, ds[var].coords))
+    logger.info('{} OLD coords: {}'.format(fname, old_coords))
+    logger.info('{} NEW coords: {}'.format(fname, ds[var].coords))
     ds[var].attrs = attrs
     ds[var].attrs['history'] = ('Modified {} from files e.g. {}'
                                 .format(now.strftime("%Y-%m-%d"), f[0]))
 
-    ds.to_netcdf(dpath/'{}_{}_{:02.0f}_climo.nc'.format(product, var, res*10))
+
+    ds.to_netcdf(dpath/fname)
 
     if np.isnan(ds[var]).all():
-        logger.info('ERROR: {}_{} (all NaN).'.format(product, var))
+        logger.info('ERROR: {} (all NaN).'.format(fname))
     else:
-        logger.info('SUCCESS: {}_{}'.format(product, var))
+        logger.info('SUCCESS: {}'.format(fname))
 
     return
 

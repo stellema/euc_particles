@@ -114,7 +114,7 @@ res = 1
 dx = res*10
 mean_t = True
 dat = ['jra55', 'erai']
-flux = ['bulk', 'static'][0]
+flux = ['bulk', 'static'][1]
 
 for i, data in enumerate(dat):
     if flux == 'bulk':
@@ -126,8 +126,8 @@ for i, data in enumerate(dat):
     else:
         u = xr.open_dataset(dpath/'{}_uas_{:02.0f}_climo.nc'.format(data, dx))
         v = xr.open_dataset(dpath/'{}_vas_{:02.0f}_climo.nc'.format(data, dx))
-        tx2, ty2 = prescribed_momentum(reduce(u, mean_t).uas,
-                                       reduce(v, mean_t).vas, method=flux)
+        tx2, ty2 = prescribed_momentum(reduce(u.uas, mean_t, res),
+                                       reduce(v.vas, mean_t, res), method=flux)
 
     phi2 = wind_stress_curl(tx2, ty2, w=res).phi
 
