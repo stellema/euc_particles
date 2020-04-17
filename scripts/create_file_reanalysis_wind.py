@@ -54,6 +54,8 @@ logger.propagate = False
 
 product = str(sys.argv[1])  # 'jra55' or 'erai'.
 vari = int(sys.argv[2])  # 0-4 for jra55 and 0-5 for erai.
+w = float(sys.argv[3])  # Interpolation width.
+
 
 @timeit
 def reanalysis_wind(product, vari, lon, lat, w):
@@ -93,7 +95,8 @@ def reanalysis_wind(product, vari, lon, lat, w):
             f.append(path + '{}/v1/{}_6hrPlev_JRA55_{}010100_{}123118.nc'
                      .format(var, var, y, y))
 
-    logger.info('Creating file: {}_{} from {}.'.format(product, var, path))
+    logger.info('Creating file: {}_{} {} deg interp from {}.'
+                .format(product, var, w, path))
     ds = xr.open_mfdataset(f, combine='by_coords', concat_dim="time",
                            mask_and_scale=False, preprocess=slice_vars)
 
@@ -110,17 +113,17 @@ def reanalysis_wind(product, vari, lon, lat, w):
     ds[var].attrs = attrs
     ds[var].attrs['history'] = ('Modified {} from files e.g. {}'
                                 .format(now.strftime("%Y-%m-%d"), f[0]))
-    ds.to_netcdf(dpath/'{}_{}_climo.nc'.format(var, product))
+
+    ds.to_netcdf(dpath/'{}_{}_{:.0f}_climo.nc'.format(product, var, w*100))
 
     if np.isnan(ds[var]).all():
-        logger.info('File error: {}_{} (all NaN).'.format(product, var))
+        logger.info('ERROR: {}_{} (all NaN).'.format(product, var))
     else:
-        logger.info('File completed: {}_{}'.format(product, var))
+        logger.info('SUCCESS: {}_{}'.format(product, var))
 
     return
 
 
 lon = [109, 291]
 lat = [-16, 16]
-w = 0.1
 reanalysis_wind(product, vari, lon, lat, w)

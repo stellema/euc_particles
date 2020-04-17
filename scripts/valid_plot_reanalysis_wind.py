@@ -14,32 +14,47 @@ import cartopy.crs as ccrs
 import matplotlib.pyplot as plt
 import shapely.geometry as sgeom
 import matplotlib.ticker as mticker
+from airsea import prescribed_momentum, bulk_fluxes, flux_data, reduce
 from main import paths, lx, OMEGA, RHO, EARTH_RADIUS
-from main_valid import wind_stress_curl, convert_to_wind_stress, coord_formatter
+from main_valid import wind_stress_curl, coord_formatter
 from cartopy.mpl.gridliner import LONGITUDE_FORMATTER, LATITUDE_FORMATTER
+
 # Path to save figures, save data and OFAM model output.
 fpath, dpath, xpath, lpath, tpath = paths()
 
-u1 = xr.open_dataset(dpath/'uas_jra55_climo.nc').uas.mean('time').sel(
-    lat=slice(-20, 20))
-v1 = xr.open_dataset(dpath/'vas_jra55_climo.nc').vas.mean('time').sel(
-    lat=slice(-20, 20))
+time_mean = True
 
-u2 = xr.open_dataset(dpath/'uas_erai_climo.nc').uas.mean('time').sel(
-    lat=slice(-20, 20))
-v2 = xr.open_dataset(dpath/'vas_erai_climo.nc').vas.mean('time').sel(
-    lat=slice(-20, 20))
+flux_type = ['bulk', 'static'][0]
+if flux_type == 'bulk':
+    data = ['jra55', 'erai'][0]
+    U_O, T_O, q_O, SLP, SST, SSU = flux_data(data, time_mean=True)
+    tau1 = bulk_fluxes(U_O, T_O, q_O, SLP, SST, SSU, z_U=10, z_T=2,
+                       z_q=2, N=5, result='TAU')
+    tx1, ty1 = tau1.real, tau1.imag
+    data = ['jra55', 'erai'][1]
+    U_O, T_O, q_O, SLP, SST, SSU = flux_data(data, time_mean=True)
+    tau2 = bulk_fluxes(U_O, T_O, q_O, SLP, SST, SSU, z_U=10, z_T=2,
+                       z_q=2, N=5, result='TAU')
+    tx2, ty2 = tau2.real, tau2.imag
 
-tx1, ty1 = convert_to_wind_stress(u1, v1)
-phi1 = wind_stress_curl(tx1, ty1, w=0.5).phi
-tx2, ty2 = convert_to_wind_stress(u2, v2)
-phi2 = wind_stress_curl(tx2, ty2, w=0.5).phi
+else:
+    data = ['jra55', 'erai'][0]
+    u1 = reduce(xr.open_dataset(dpath/'uas_{}_{:.0f}_climo.nc'.format(data, dx)), time_mean).uas
+    v1 = reduce(xr.open_dataset(dpath/'vas_{}_{:.0f}_climo.nc'.format(data, dx)), time_mean).vas
+    tx1, ty1 = prescribed_momentum(u1, v1, method=flux_type)
+    data = ['jra55', 'erai'][1]
+    u2 = reduce(xr.open_dataset(dpath/'uas_{}_{:.0f}_climo.nc'.format(data, dx)), time_mean).uas
+    v2 = reduce(xr.open_dataset(dpath/'vas_{}_{:.0f}_climo.nc'.format(data, dx)), time_mean).vas
+    tx2, ty2 = prescribed_momentum(u2, v2, method=flux_type)
 
+phi1 = wind_stress_curl(tx1, ty1, w=0.1).phi
+phi2 = wind_stress_curl(tx2, ty2, w=0.1).phi
+            # -15.1, 14.9), lon=slice(119.9, 291
 
 def plot_winds(varz, var_name, var_name_short, units):
     """Plot WSC or WS."""
     # Map variables.
-    box = sgeom.box(minx=110.5, maxx=290, miny=-20, maxy=20)
+    box = sgeom.box(minx=120, maxx=290, miny=-14.9, maxy=14.9)
     x0, y0, x1, y1 = box.bounds
     proj = ccrs.PlateCarree(central_longitude=180)
     box_proj = ccrs.PlateCarree(central_longitude=0)
@@ -106,7 +121,8 @@ def plot_winds(varz, var_name, var_name_short, units):
             # ax.set_extent([x0, x1, y0, y1], box_proj)
             ax.plot(phi1.lon, varz[4], 'k',  label='JRA-55')
             ax.plot(phi1.lon, varz[5], 'r', label='ERA-Interim')
-            xticks = np.arange(120, 300, 40)
+
+            xticks = np.arange(x0, x1+10, 40)
             ax.set_xticks(xticks)
             ax.set_xticklabels(coord_formatter(xticks, convert='lon'))
             ax.set_ylabel(units)
@@ -129,7 +145,7 @@ varz = [phi1*1e7, phi2*1e7, (phi1.values - phi2.values)*1e7,
         tx2.sel(lat=slice(-2, 2)).mean('lat')*1e2]
 var_name = 'Wind stress curl'
 units = '[x10$^{-7}$ N/m$^{3}$]'
-var_name_short = 'WSC_WS2'
+var_name_short = 'WSC_WS2_' + flux_type
 plot_winds(varz, var_name, var_name_short, units)
 
 # varz = [phi1*1e7, phi2*1e7, (phi1.values - phi2.values)*1e7,

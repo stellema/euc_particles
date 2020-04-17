@@ -103,41 +103,41 @@ def specific_humidity_from_p(Td, p):
             (p - ((1 - omega) * vapour_pressure(Td))))
 
 
-def flux_data(data='jra55', time_mean=True):
+def flux_data(data='jra55', time_mean=True, w=0.1):
+    dx = w*100
     annum = time_mean
     # Sea surface temperature, in degrees Celsius.
-    SST = reduce(xr.open_dataset(xpath/'ocean_temp_1981-2012_climo.nc'), annum)
-    SST = SST.temp
+    SST = xr.open_dataset(xpath/'ocean_temp_1981-2012_climo.nc')
+    SST = reduce(SST.temp, annum)
 
     # Surface vector current, in m/s.
-    SSU_u = reduce(xr.open_dataset(xpath/'ocean_u_1981-2012_climo.nc'), annum)
-    SSU_v = reduce(xr.open_dataset(xpath/'ocean_v_1981-2012_climo.nc'), annum)
-    # SSU = np.sqrt(SSU_u.u**2 + SSU_v.v**2)
-    SSU = SSU_u.u + 1j * SSU_v.v
+    SSU_u = xr.open_dataset(xpath/'ocean_u_1981-2012_climo.nc')
+    SSU_v = xr.open_dataset(xpath/'ocean_v_1981-2012_climo.nc')
+    SSU = reduce(SSU_u.u, annum) + 1j * reduce(SSU_v.v, annum)
 
     # Observed vector wind at height z_U, in m/s.
-    u_O = reduce(xr.open_dataset(dpath/'uas_{}_climo.nc'.format(data)), annum)
-    v_O = reduce(xr.open_dataset(dpath/'vas_{}_climo.nc'.format(data)), annum)
-    U_O = np.sqrt(u_O.uas**2 + v_O.vas**2)
+    u_O = xr.open_dataset(dpath/'{}_uas_{:.0f}_climo.nc'.format(data, dx))
+    v_O = xr.open_dataset(dpath/'{}_vas_{:.0f}_climo.nc'.format(data, dx))
+    U_O = reduce(u_O.uas, annum) + 1j * reduce(v_O.vas, annum)
 
     # Observed temperature at height z_T, in degrees Celsius
-    T_O = reduce(xr.open_dataset(dpath/'tas_{}_climo.nc'.format(data)), annum)
-    T_O = T_O.tas
+    T_O = xr.open_dataset(dpath/'{}_tas_{:.0f}_climo.nc'.format(data, dx))
+    T_O = reduce(T_O.tas, annum)
 
     # Observed specific humidity at height z_q, in kg/kg.
     if data == 'jra55':
-        q_O = reduce(xr.open_dataset(dpath/'huss_{}_climo.nc'.format(data)),
-                     annum).huss
+        q_O = xr.open_dataset(dpath/'{}_huss_{:.0f}_climo.nc'.format(data, dx))
+        q_O = reduce(q_O.huss, annum)
     else:
-        ps = reduce(xr.open_dataset(dpath/'ps_{}_climo.nc'.format(data)),
-                    annum)
-        ta2d = reduce(xr.open_dataset(dpath/'ta2d_{}_climo.nc'.format(data)),
-                      annum)
-        q_O = specific_humidity_from_p(ta2d.ta2d, ps.ps)
+        ps = xr.open_dataset(dpath/'{}_ps_{:.0f}_climo.nc'.format(data, dx))
+        ps = reduce(ps.ps, annum)
+        ta2d = xr.open_dataset(dpath/'{}_ta2d_{:.0f}_climo.nc'.format(data, dx))
+        ta2d = reduce(ta2d.ta2d, annum)
+        q_O = specific_humidity_from_p(ta2d, ps)
 
     # Sea level pressure, in hectopascal (hPa). [Original units Pa]
-    SLP = reduce(xr.open_dataset(dpath/'psl_{}_climo.nc'.format(data)), annum)
-    SLP = SLP.psl
+    SLP = xr.open_dataset(dpath/'{}_psl_{:.0f}_climo.nc'.format(data, dx))
+    SLP = reduce(SLP.psl, annum)
 
     # Convert from Kelvin to Celsius.
     if (T_O >= 250).all():
@@ -745,12 +745,16 @@ def prescribed_momentum(u, v, method='static'):
 
     return tx, ty
 
-data = ['jra55', 'erai'][1]
-U_O, T_O, q_O, SLP, SST, SSU = flux_data(data, time_mean=True)
+# time_mean = True
+# data = ['jra55', 'erai'][1]
+# U_O, T_O, q_O, SLP, SST, SSU = flux_data(data, time_mean=True)
 # tau = bulk_fluxes(U_O, T_O, q_O, SLP, SST, SSU, z_U=10, z_T=2,
 #                   z_q=2, N=5, result='TAU')
-# time_mean = True
-# data = 'jra55'
+
 # u = reduce(xr.open_dataset(dpath/'uas_{}_climo.nc'.format(data)), time_mean).uas
 # v = reduce(xr.open_dataset(dpath/'vas_{}_climo.nc'.format(data)), time_mean).vas
-# tx, ty = prescribed_momentum(u, v, method='LARGE_approx')
+# tx, ty = prescribed_momentum(u, v, method='static')
+
+# for var in ['uas', 'vas', 'tas', 'ta2d', 'ps', 'psl']:
+#     ds = xr.open_dataset(dpath/'{}_{}_climo.nc'.format(var, data))
+#     print(ds[var])
