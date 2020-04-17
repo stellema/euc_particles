@@ -112,14 +112,15 @@ def reanalysis_wind(product, vari, lon, lat, res):
                    lat=np.arange(lat[0], lat[1] + res, res))
 
     ds = ds.sel(lat=slice(lat[0], lat[1]), lon=slice(lon[0], lon[1]))
-    logger.info('{} OLD coords: {}'.format(fname, old_coords))
-    logger.info('{} NEW coords: {}'.format(fname, ds[var].coords))
+
     ds[var].attrs = attrs
     ds[var].attrs['history'] = ('Modified {} from files e.g. {}'
                                 .format(now.strftime("%Y-%m-%d"), f[0]))
 
-
     ds.to_netcdf(dpath/fname)
+
+    logger.info('{} OLD coords: {}'.format(fname, old_coords))
+    logger.info('{} NEW coords: {}'.format(fname, ds[var].coords))
 
     if np.isnan(ds[var]).all():
         logger.info('ERROR: {} (all NaN).'.format(fname))
