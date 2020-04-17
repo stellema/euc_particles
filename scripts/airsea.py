@@ -4,7 +4,25 @@ created: Wed Apr 15 11:39:07 2020
 
 author: Annette Stellema (astellemas@gmail.com)
 
+Bulk flux code modified from:
+https://github.com/pyoceans/python-airsea/blob/master/airsea/atmosphere.py
 
+NCI CMS ERA-Interim details:
+http://climate-cms.wikis.unsw.edu.au/ERA_INTERIM
+
+NCI CMS ERA-Interim variables:
+https://docs.google.com/spreadsheets/d/1qnQC_Ki5IAwZPD9viV79tfenemPGoYWKfDa5vEwDl90/pubhtml#
+
+ERA-Interim Specific humidity at surface conversion advice:
+https://confluence.ecmwf.int/display/CKB/ERA-Interim%3A+documentation
+    and
+https://www.ecmwf.int/en/elibrary/9221-part-iv-physical-processes
+
+Vapour pressure constants:
+https://www.eas.ualberta.ca/jdwilson/EAS372_13/Vomel_CIRES_satvpformulae.html
+
+Specific humidity and vapour pressure formulas (specific to dew point temps):
+https://cran.r-project.org/web/packages/humidity/vignettes/humidity-measures.html
 """
 import math
 import numpy as np
@@ -29,6 +47,9 @@ def reduce(ds, time_mean=False):
                         'xt_ocean': 'lon'})
         ds = ds.sel(st_ocean=2.5, lon=slice(120, 291.1))
     else:
+        # Fix error in erai all NaN lats.
+        if all(np.isnan(ds.lat)):
+            ds.coords['lat'] = np.arange(-16, 16.1, 0.1)
         ds = ds.sel(lat=slice(-15.1, 14.9), lon=slice(119.9, 291))
 
     if time_mean:
@@ -37,10 +58,56 @@ def reduce(ds, time_mean=False):
     return ds
 
 
+def vapour_pressure(Td):
+    """Water vapour pressure using Teten's formula.
+
+    Multiplies by 100 to convert millibar to Pa.
+
+    Args:
+        T (array like): Dew point temperature.
+
+    Returns:
+        Water vapour pressure (array like).
+
+    """
+    if (Td <= 250).all():
+        Td = Td + 273.16
+    a1 = 6.1078
+    a3 = 17.2693882
+    a4 = 35.86
+    T0 = 273.16
+
+    return (a1 * np.exp(a3 * ((Td - T0)/(Td - a4))))*100
+
+
+def specific_humidity_from_p(Td, p):
+    """Speciﬁc humidity from water vapour pressure.
+
+    Args:
+        T (array like): Dew point temperature.
+        p (array like): Surface pressure [Pa].
+
+    Returns:
+        Specific humidity [kg/kg] (array like).
+
+    """
+    R_dry = 287 # Gas constant for dry air [J K^-1 kg^-1].
+    R_vap = 461 # Gas constant for water vapour [J K^-1 kg^-1].
+    omega = R_dry/R_vap # Mixing ratio [kg/kg].
+
+    # Convert to Kelvins.
+    if (Td <= 250).all():
+        Td = Td + 273.16
+
+    return ((omega * vapour_pressure(Td)) /
+            (p - ((1 - omega) * vapour_pressure(Td))))
+
+
 def flux_data(data='jra55', time_mean=True):
-    annum =  time_mean
+    annum = time_mean
     # Sea surface temperature, in degrees Celsius.
     SST = reduce(xr.open_dataset(xpath/'ocean_temp_1981-2012_climo.nc'), annum)
+    SST = SST.temp
 
     # Surface vector current, in m/s.
     SSU_u = reduce(xr.open_dataset(xpath/'ocean_u_1981-2012_climo.nc'), annum)
@@ -55,22 +122,32 @@ def flux_data(data='jra55', time_mean=True):
 
     # Observed temperature at height z_T, in degrees Celsius
     T_O = reduce(xr.open_dataset(dpath/'tas_{}_climo.nc'.format(data)), annum)
+    T_O = T_O.tas
 
     # Observed specific humidity at height z_q, in kg/kg.
-    q_O = reduce(xr.open_dataset(dpath/'huss_{}_climo.nc'.format(data)), annum)
+    if data == 'jra55':
+        q_O = reduce(xr.open_dataset(dpath/'huss_{}_climo.nc'.format(data)),
+                     annum).huss
+    else:
+        ps = reduce(xr.open_dataset(dpath/'ps_{}_climo.nc'.format(data)),
+                    annum)
+        ta2d = reduce(xr.open_dataset(dpath/'ta2d_{}_climo.nc'.format(data)),
+                      annum)
+        q_O = specific_humidity_from_p(ta2d.ta2d, ps.ps)
 
     # Sea level pressure, in hectopascal (hPa). [Original units Pa]
     SLP = reduce(xr.open_dataset(dpath/'psl_{}_climo.nc'.format(data)), annum)
+    SLP = SLP.psl
 
     # Convert from Kelvin to Celsius.
-    if (T_O.tas >= 250).all():
-        T_O = T_O.tas - 273.15
+    if (T_O >= 250).all():
+        T_O = T_O - 273.16
 
     # Convert from Pa to hPa.
-    if (SLP.psl > 1e5).all():
-        SLP = SLP.psl*0.01
+    if (SLP > 1e5).all():
+        SLP = SLP*0.01
 
-    dl = (U_O, T_O, q_O.huss, SLP, SST.temp, SSU)
+    dl = (U_O, T_O, q_O, SLP, SST, SSU)
 
     if not all(x.shape == dl[0].shape for x in dl):
         warn('Array shapes unequal (see print out).')
@@ -235,7 +312,7 @@ def bulk_fluxes(U_O, T_O, q_O, SLP, SST, SSU, z_U=10, z_T=2,
 
         if T_unit == 'degC':
             # Converts temperature from degrees Celsius to Kelvin.
-            theta_V = theta_V + 273.15
+            theta_V = theta_V + 273.16
 
         return SLP / (R_gas * theta_V)
 
@@ -262,7 +339,7 @@ def bulk_fluxes(U_O, T_O, q_O, SLP, SST, SSU, z_U=10, z_T=2,
             """
             if SST_unit == 'degC':
                 # Converts SST from degrees Celsius to Kelvin.
-                SST = SST + 273.15
+                SST = SST + 273.16
 
             return q1 * q2 / rho  * np.exp(q3 / SST)
 
@@ -373,7 +450,7 @@ def bulk_fluxes(U_O, T_O, q_O, SLP, SST, SSU, z_U=10, z_T=2,
         http://en.wikipedia.org/wiki/Monin%E2%80%93Obukhov_length
         """
         # Converts virtual potential temperature from degres Celsius to Kelvin
-        theta_V = theta_V + 273.15
+        theta_V = theta_V + 273.16
         B0 = g * (theta_star / theta_V + q_star / (q + 0.608**(-1)))
         return u_star**2 / (KAPPA * B0)
 
@@ -668,12 +745,12 @@ def prescribed_momentum(u, v, method='static'):
 
     return tx, ty
 
-
-U_O, T_O, q_O, SLP, SST, SSU = flux_data(time_mean=True)
-tau = bulk_fluxes(U_O, T_O, q_O, SLP, SST, SSU, z_U=10, z_T=2,
-                  z_q=2, N=5, result='TAU')
-time_mean = True
-data = 'jra55'
-u = reduce(xr.open_dataset(dpath/'uas_{}_climo.nc'.format(data)), time_mean).uas
-v = reduce(xr.open_dataset(dpath/'vas_{}_climo.nc'.format(data)), time_mean).vas
-tx, ty = prescribed_momentum(u, v, method='LARGE_approx')
+data = ['jra55', 'erai'][1]
+U_O, T_O, q_O, SLP, SST, SSU = flux_data(data, time_mean=True)
+# tau = bulk_fluxes(U_O, T_O, q_O, SLP, SST, SSU, z_U=10, z_T=2,
+#                   z_q=2, N=5, result='TAU')
+# time_mean = True
+# data = 'jra55'
+# u = reduce(xr.open_dataset(dpath/'uas_{}_climo.nc'.format(data)), time_mean).uas
+# v = reduce(xr.open_dataset(dpath/'vas_{}_climo.nc'.format(data)), time_mean).vas
+# tx, ty = prescribed_momentum(u, v, method='LARGE_approx')
