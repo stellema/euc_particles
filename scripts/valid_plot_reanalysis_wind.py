@@ -6,50 +6,20 @@ author: Annette Stellema (astellemas@gmail.com)
 
 
 """
-import math
 import cartopy
 import numpy as np
 import xarray as xr
 import cartopy.crs as ccrs
 import matplotlib.pyplot as plt
 import shapely.geometry as sgeom
-import matplotlib.ticker as mticker
 from airsea import prescribed_momentum, bulk_fluxes, flux_data, reduce
-from main import paths, lx, OMEGA, RHO, EARTH_RADIUS
+from main import paths, lx
 from main_valid import wind_stress_curl, coord_formatter
 from cartopy.mpl.gridliner import LONGITUDE_FORMATTER, LATITUDE_FORMATTER
 
 # Path to save figures, save data and OFAM model output.
 fpath, dpath, xpath, lpath, tpath = paths()
 
-time_mean = True
-
-flux_type = ['bulk', 'static'][0]
-if flux_type == 'bulk':
-    data = ['jra55', 'erai'][0]
-    U_O, T_O, q_O, SLP, SST, SSU = flux_data(data, time_mean=True)
-    tau1 = bulk_fluxes(U_O, T_O, q_O, SLP, SST, SSU, z_U=10, z_T=2,
-                       z_q=2, N=5, result='TAU')
-    tx1, ty1 = tau1.real, tau1.imag
-    data = ['jra55', 'erai'][1]
-    U_O, T_O, q_O, SLP, SST, SSU = flux_data(data, time_mean=True)
-    tau2 = bulk_fluxes(U_O, T_O, q_O, SLP, SST, SSU, z_U=10, z_T=2,
-                       z_q=2, N=5, result='TAU')
-    tx2, ty2 = tau2.real, tau2.imag
-
-else:
-    data = ['jra55', 'erai'][0]
-    u1 = reduce(xr.open_dataset(dpath/'uas_{}_{:.0f}_climo.nc'.format(data, dx)), time_mean).uas
-    v1 = reduce(xr.open_dataset(dpath/'vas_{}_{:.0f}_climo.nc'.format(data, dx)), time_mean).vas
-    tx1, ty1 = prescribed_momentum(u1, v1, method=flux_type)
-    data = ['jra55', 'erai'][1]
-    u2 = reduce(xr.open_dataset(dpath/'uas_{}_{:.0f}_climo.nc'.format(data, dx)), time_mean).uas
-    v2 = reduce(xr.open_dataset(dpath/'vas_{}_{:.0f}_climo.nc'.format(data, dx)), time_mean).vas
-    tx2, ty2 = prescribed_momentum(u2, v2, method=flux_type)
-
-phi1 = wind_stress_curl(tx1, ty1, w=0.1).phi
-phi2 = wind_stress_curl(tx2, ty2, w=0.1).phi
-            # -15.1, 14.9), lon=slice(119.9, 291
 
 def plot_winds(varz, var_name, var_name_short, units):
     """Plot WSC or WS."""
@@ -93,7 +63,7 @@ def plot_winds(varz, var_name, var_name_short, units):
         j = i if i <= 1 else 1
 
         if i <= 3:
-            ax = fig.add_subplot(rows, 1, i + 1, projection=proj)  # [rows, cols].
+            ax = fig.add_subplot(rows, 1, i + 1, projection=proj)  # [r, c].
             ax.set_extent([x0, x1, y0, y1], box_proj)
             cs = ax.pcolormesh(varz[j].lon, varz[j].lat, v, vmin=-vmx,
                                vmax=vmx, transform=box_proj,
@@ -117,7 +87,8 @@ def plot_winds(varz, var_name, var_name_short, units):
             ax = fig.add_subplot(rows, 1, i + 1)
             box = ax.get_position()
             # [left, bottom, width, height]
-            ax.set_position([box.x0, box.y0+0.015, box.width*0.828, box.height*0.85])
+            ax.set_position([box.x0, box.y0+0.015, box.width*0.828,
+                             box.height*0.85])
             # ax.set_extent([x0, x1, y0, y1], box_proj)
             ax.plot(phi1.lon, varz[4], 'k',  label='JRA-55')
             ax.plot(phi1.lon, varz[5], 'r', label='ERA-Interim')
@@ -139,13 +110,38 @@ def plot_winds(varz, var_name, var_name_short, units):
     return
 
 
+res = 1
+dx = res*10
+mean_t = True
+dat = ['jra55', 'erai']
+flux = ['bulk', 'static'][0]
+
+for i, data in enumerate(dat):
+    if flux == 'bulk':
+        U_O, T_O, q_O, SLP, SST, SSU = flux_data(data, mean_t=mean_t, res=res)
+        tau = bulk_fluxes(U_O, T_O, q_O, SLP, SST, SSU, z_U=10, z_T=2,
+                          z_q=2, N=5, result='TAU')
+        tx2, ty2 = tau.real, tau.imag
+
+    else:
+        u = xr.open_dataset(dpath/'{}_uas_{:02.0f}_climo.nc'.format(data, dx))
+        v = xr.open_dataset(dpath/'{}_vas_{:02.0f}_climo.nc'.format(data, dx))
+        tx2, ty2 = prescribed_momentum(reduce(u, mean_t).uas,
+                                       reduce(v, mean_t).vas, method=flux)
+
+    phi2 = wind_stress_curl(tx2, ty2, w=res).phi
+
+    if i == 0:
+        tx1, ty1, phi1 = tx2, ty2, phi2
+
+
 varz = [phi1*1e7, phi2*1e7, (phi1.values - phi2.values)*1e7,
         (tx1.values - tx2.values)*1e2,
         tx1.sel(lat=slice(-2, 2)).mean('lat')*1e2,
         tx2.sel(lat=slice(-2, 2)).mean('lat')*1e2]
 var_name = 'Wind stress curl'
 units = '[x10$^{-7}$ N/m$^{3}$]'
-var_name_short = 'WSC_WS2_' + flux_type
+var_name_short = 'WSC_WS2_{}_{:02.0f}'.format(flux, dx)
 plot_winds(varz, var_name, var_name_short, units)
 
 # varz = [phi1*1e7, phi2*1e7, (phi1.values - phi2.values)*1e7,

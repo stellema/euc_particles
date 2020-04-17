@@ -24,7 +24,6 @@ https://www.eas.ualberta.ca/jdwilson/EAS372_13/Vomel_CIRES_satvpformulae.html
 Specific humidity and vapour pressure formulas (specific to dew point temps):
 https://cran.r-project.org/web/packages/humidity/vignettes/humidity-measures.html
 """
-import math
 import numpy as np
 import xarray as xr
 import pandas as pd
@@ -35,9 +34,8 @@ from warnings import warn
 fpath, dpath, xpath, lpath, tpath = paths()
 
 
-def reduce(ds, time_mean=False):
-    """Slice, rename and/or time average datasets.
-    """
+def reduce(ds, mean_t=False):
+    """Slice, rename and/or time average datasets."""
     if hasattr(ds, 'xu_ocean'):
         ds = ds.rename({'Time': 'time', 'yu_ocean': 'lat',
                         'xu_ocean': 'lon'})
@@ -52,7 +50,7 @@ def reduce(ds, time_mean=False):
             ds.coords['lat'] = np.arange(-16, 16.1, 0.1)
         ds = ds.sel(lat=slice(-15.1, 14.9), lon=slice(119.9, 291))
 
-    if time_mean:
+    if mean_t:
         ds = ds.mean('time')
 
     return ds
@@ -91,9 +89,9 @@ def specific_humidity_from_p(Td, p):
         Specific humidity [kg/kg] (array like).
 
     """
-    R_dry = 287 # Gas constant for dry air [J K^-1 kg^-1].
-    R_vap = 461 # Gas constant for water vapour [J K^-1 kg^-1].
-    omega = R_dry/R_vap # Mixing ratio [kg/kg].
+    R_dry = 287  # Gas constant for dry air [J K^-1 kg^-1].
+    R_vap = 461  # Gas constant for water vapour [J K^-1 kg^-1].
+    omega = R_dry/R_vap  # Mixing ratio [kg/kg].
 
     # Convert to Kelvins.
     if (Td <= 250).all():
@@ -103,41 +101,33 @@ def specific_humidity_from_p(Td, p):
             (p - ((1 - omega) * vapour_pressure(Td))))
 
 
-def flux_data(data='jra55', time_mean=True, w=0.1):
-    dx = w*100
-    annum = time_mean
+def flux_data(data='jra55', res=0.1, mean_t=True):
+    dx = res*10
     # Sea surface temperature, in degrees Celsius.
-    SST = xr.open_dataset(xpath/'ocean_temp_1981-2012_climo.nc')
-    SST = reduce(SST.temp, annum)
-
-    # Surface vector current, in m/s.
-    SSU_u = xr.open_dataset(xpath/'ocean_u_1981-2012_climo.nc')
-    SSU_v = xr.open_dataset(xpath/'ocean_v_1981-2012_climo.nc')
-    SSU = reduce(SSU_u.u, annum) + 1j * reduce(SSU_v.v, annum)
 
     # Observed vector wind at height z_U, in m/s.
-    u_O = xr.open_dataset(dpath/'{}_uas_{:.0f}_climo.nc'.format(data, dx))
-    v_O = xr.open_dataset(dpath/'{}_vas_{:.0f}_climo.nc'.format(data, dx))
-    U_O = reduce(u_O.uas, annum) + 1j * reduce(v_O.vas, annum)
+    u_O = xr.open_dataset(dpath/'{}_uas_{:02.0f}_climo.nc'.format(dat, dx))
+    v_O = xr.open_dataset(dpath/'{}_vas_{:02.0f}_climo.nc'.format(dat, dx))
+    U_O = reduce(u_O.uas, mean_t) + 1j * reduce(v_O.vas, mean_t)
 
     # Observed temperature at height z_T, in degrees Celsius
-    T_O = xr.open_dataset(dpath/'{}_tas_{:.0f}_climo.nc'.format(data, dx))
-    T_O = reduce(T_O.tas, annum)
+    T_O = xr.open_dataset(dpath/'{}_tas_{:02.0f}_climo.nc'.format(dat, dx))
+    T_O = reduce(T_O.tas, mean_t)
 
     # Observed specific humidity at height z_q, in kg/kg.
-    if data == 'jra55':
-        q_O = xr.open_dataset(dpath/'{}_huss_{:.0f}_climo.nc'.format(data, dx))
-        q_O = reduce(q_O.huss, annum)
+    if dat == 'jra55':
+        q_ = xr.open_dataset(dpath/'{}_huss_{:02.0f}_climo.nc'.format(dat, dx))
+        q_O = reduce(q_.huss, mean_t)
     else:
-        ps = xr.open_dataset(dpath/'{}_ps_{:.0f}_climo.nc'.format(data, dx))
-        ps = reduce(ps.ps, annum)
-        ta2d = xr.open_dataset(dpath/'{}_ta2d_{:.0f}_climo.nc'.format(data, dx))
-        ta2d = reduce(ta2d.ta2d, annum)
-        q_O = specific_humidity_from_p(ta2d, ps)
+        ps = xr.open_dataset(dpath/'{}_ps_{:02.0f}_climo.nc'.format(dat, dx))
+        ps = reduce(ps.ps, mean_t)
+        td = xr.open_dataset(dpath/'{}_ta2d_{:02.0f}_climo.nc'.format(dat, dx))
+        td = reduce(td.ta2d, mean_t)
+        q_O = specific_humidity_from_p(td, ps)
 
     # Sea level pressure, in hectopascal (hPa). [Original units Pa]
-    SLP = xr.open_dataset(dpath/'{}_psl_{:.0f}_climo.nc'.format(data, dx))
-    SLP = reduce(SLP.psl, annum)
+    SLP = xr.open_dataset(dpath/'{}_psl_{:02.0f}_climo.nc'.format(dat, dx))
+    SLP = reduce(SLP.psl, mean_t)
 
     # Convert from Kelvin to Celsius.
     if (T_O >= 250).all():
@@ -146,6 +136,18 @@ def flux_data(data='jra55', time_mean=True, w=0.1):
     # Convert from Pa to hPa.
     if (SLP > 1e5).all():
         SLP = SLP*0.01
+
+    # OFAM3 SST
+    SST = xr.open_dataset(xpath/'ocean_temp_1981-2012_climo.nc')
+    SST = reduce(SST.temp, mean_t)
+
+    # Surface vector current, in m/s.
+    SSU_u = xr.open_dataset(xpath/'ocean_u_1981-2012_climo.nc')
+    SSU_v = xr.open_dataset(xpath/'ocean_v_1981-2012_climo.nc')
+    SSU = reduce(SSU_u.u, mean_t, res=res) + 1j*reduce(SSU_v.v, mean_t)
+    if res != 0.1:
+        SSU = SSU.interp_like(SLP)
+        SST = SST.interp_like(SLP)
 
     dl = (U_O, T_O, q_O, SLP, SST, SSU)
 
@@ -234,7 +236,6 @@ def bulk_fluxes(U_O, T_O, q_O, SLP, SST, SSU, z_U=10, z_T=2,
     g = 9.816       # Gravitational acceleration [m/s**2].
     cp = 1003.5     # Specific heat capacity of dry air [J/kg/K].
 
-
     ###########################################################################
     # FUNCTIONS
     ###########################################################################
@@ -255,7 +256,6 @@ def bulk_fluxes(U_O, T_O, q_O, SLP, SST, SSU, z_U=10, z_T=2,
         """
         return T + GAMMA * z
 
-
     def virtual_pot_temperature(theta, q):
         """Virtual potential air temperature.
 
@@ -272,7 +272,7 @@ def bulk_fluxes(U_O, T_O, q_O, SLP, SST, SSU, z_U=10, z_T=2,
         """
         return theta * (1 + 0.608 * q)
 
-    def density_air(SLP, theta_V, SLP_unit='hPa', T_unit='degC') :
+    def density_air(SLP, theta_V, SLP_unit='hPa', T_unit='degC'):
         """Density of air.
 
         Parameters
@@ -307,8 +307,6 @@ def bulk_fluxes(U_O, T_O, q_O, SLP, SST, SSU, z_U=10, z_T=2,
             SLP = SLP * 1.01325e5
         elif SLP_unit == 'Pa':
             SLP = SLP * 1.
-        # else:
-        #     raise Warning, 'Pressure unit {} not implemented yet.'.format(SLP_unit)
 
         if T_unit == 'degC':
             # Converts temperature from degrees Celsius to Kelvin.
@@ -316,37 +314,35 @@ def bulk_fluxes(U_O, T_O, q_O, SLP, SST, SSU, z_U=10, z_T=2,
 
         return SLP / (R_gas * theta_V)
 
-
     def humidity_sat(SST, rho, q1=0.98, q2=640380, q3=-5107.4,
                      SST_unit='degC'):
-            """Parameterized saturated humidity.
+        """Parameterized saturated humidity.
 
-            Parameters
-            ----------
-            SST : array like
-                Sea surface temparature.
-            rho : array like
-                Air density, in kg*m**(-3).
-            q1, q2 : float, optional
-                Specicic coefficients for sea-water.
-            SST_unit : string, optional
-                Sets wether sea surface temperature is given in degrees
-                Celsius ('degC', default) or Kelvin ('K').
-            Returns
-            -------
-            q_sat : array like
-                Saturated humidity over seawater, in kg/kg
-            """
-            if SST_unit == 'degC':
-                # Converts SST from degrees Celsius to Kelvin.
-                SST = SST + 273.16
+        Parameters
+        ----------
+        SST : array like
+            Sea surface temparature.
+        rho : array like
+            Air density, in kg*m**(-3).
+        q1, q2 : float, optional
+            Specicic coefficients for sea-water.
+        SST_unit : string, optional
+            Sets wether sea surface temperature is given in degrees
+            Celsius ('degC', default) or Kelvin ('K').
+        Returns
+        -------
+        q_sat : array like
+            Saturated humidity over seawater, in kg/kg
+        """
+        if SST_unit == 'degC':
+            # Converts SST from degrees Celsius to Kelvin.
+            SST = SST + 273.16
 
-            return q1 * q2 / rho  * np.exp(q3 / SST)
-
+        return q1 * q2 / rho * np.exp(q3 / SST)
 
     def u_star(dU, CD):
-        """
-        Calculates friction velocity u*.
+        """Calculate friction velocity u*.
+
         Paramaters
         ----------
         dU : array like
@@ -361,10 +357,9 @@ def bulk_fluxes(U_O, T_O, q_O, SLP, SST, SSU, z_U=10, z_T=2,
         """
         return (CD ** 0.5) * dU
 
-
     def t_star(dtheta, CD, CH):
-        """
-        Calculates turbulent fluctuations of potential temperature.
+        """Calculates turbulent fluctuations of potential temperature.
+
         Parameters
         ----------
         dtheta : array like
@@ -381,10 +376,9 @@ def bulk_fluxes(U_O, T_O, q_O, SLP, SST, SSU, z_U=10, z_T=2,
         """
         return CH / (CD ** 0.5) * dtheta
 
-
     def q_star(dq, CD, CE):
-        """
-        Calculates turbulent fluctuations of specific humidity.
+        """Calculates turbulent fluctuations of specific humidity.
+
         Parameters
         ----------
         dq : array like
@@ -401,10 +395,9 @@ def bulk_fluxes(U_O, T_O, q_O, SLP, SST, SSU, z_U=10, z_T=2,
         """
         return CE / (CD ** 0.5) * dq
 
-
     def stability_atmosphere(z, L):
-        """
-        Atmospheric stability.
+        """Atmospheric stability.
+
         Parameters
         ----------
         z : array like
@@ -418,10 +411,9 @@ def bulk_fluxes(U_O, T_O, q_O, SLP, SST, SSU, z_U=10, z_T=2,
         """
         return z / L
 
-
     def Monin_Obukhov_Length(u_star, theta_star, q_star, theta_V, q):
-        """
-        Calculates the Monin-Obukhov length.
+        """Calculates the Monin-Obukhov length.
+
         The length is used to describe the effects of buoyancy on turbulent
         flows, particularly in the lower tenth of the atmospheric boundary
         layer.
@@ -454,10 +446,9 @@ def bulk_fluxes(U_O, T_O, q_O, SLP, SST, SSU, z_U=10, z_T=2,
         B0 = g * (theta_star / theta_V + q_star / (q + 0.608**(-1)))
         return u_star**2 / (KAPPA * B0)
 
-
     def Psi(zeta, result='both'):
-        """
-        Empirical stability functions.
+        """Empirical stability functions.
+
         The returned values of Psi_M and Psi_S are used to bring
         observational measurements of wind speed, potential temperature and
         humidity from non-netural profiles to neutral profiles. They are the
@@ -506,10 +497,9 @@ def bulk_fluxes(U_O, T_O, q_O, SLP, SST, SSU, z_U=10, z_T=2,
         else:
             raise ValueError('Invalid result type `{}`.'.format(result))
 
-
     def Q_E(E):
-        """
-        Converts evaporation to latent heat of evaporation
+        """Convert evaporation to latent heat of evaporation.
+
         Parameters
         ----------
         E : array like
@@ -521,10 +511,9 @@ def bulk_fluxes(U_O, T_O, q_O, SLP, SST, SSU, z_U=10, z_T=2,
         """
         return LAMBDA * E
 
-
     def law_of_the_wall(u_star, z, z0, Psi=0):
-        """
-        Law of the wall for wind, temperature or humidity profiles.
+        """Law of the wall for wind, temperature or humidity profiles.
+
             DU(z) = (u_star / KAPPA) * ln(z / z0 - Psi)
         Parameters
         ----------
@@ -547,7 +536,6 @@ def bulk_fluxes(U_O, T_O, q_O, SLP, SST, SSU, z_U=10, z_T=2,
         """
         return u_star / KAPPA * (np.log(z / z0) - Psi)
 
-
     def C_D(dU):
         """Calculate the drag coefficient using multiple regression parameters.
 
@@ -567,10 +555,9 @@ def bulk_fluxes(U_O, T_O, q_O, SLP, SST, SSU, z_U=10, z_T=2,
         a3 = 0.0000764
         return a1 / dU + a2 + a3 * dU
 
-
     def C_E(dU):
-        """
-        Calculates the Dalton number.
+        """Calculate the Dalton number.
+
         Parameters
         ----------
         dU : array like
@@ -582,10 +569,9 @@ def bulk_fluxes(U_O, T_O, q_O, SLP, SST, SSU, z_U=10, z_T=2,
         """
         return 0.0346 * C_D(dU) ** 0.5
 
-
     def C_H(dU, zeta=0):
-        """
-        Calculates the Stanton number.
+        """Calculate the Stanton number.
+
         Parameters:
         dU : array like
             Difference between wind and sea surface velocities, in m/s.
@@ -598,15 +584,15 @@ def bulk_fluxes(U_O, T_O, q_O, SLP, SST, SSU, z_U=10, z_T=2,
         """
         return (0.0180 * C_D(dU) ** 0.5 * (zeta >= 0) +
                 0.0327 * C_D(dU) ** 0.5 * (zeta < 0))
+
     if isinstance(U_O, xr.DataArray):
         dims, coords = U_O.dims, U_O.coords
         U_O, T_O, q_O = U_O.values, T_O.values, q_O.values
-        SLP, SST, SSU  = SLP.values, SST.values, SSU.values
+        SLP, SST, SSU = SLP.values, SST.values, SSU.values
 
     # STEP ZERO: Checks for proper units.
     default_units = dict(U_O='m s-1', T_O='degC', q_O='kg kg-1', SLP='hPa',
                          SST='degC', SSU='m s-1', z_U='m', z_T='m', z_q='m')
-    units = default_units
 
     # FIRST STEP: Assume theta(z_u) = theta(z_theta) and q(z_u) = q(z_q),
     # compute potential temperature and virtual potential temperature, sea
@@ -669,6 +655,7 @@ def bulk_fluxes(U_O, T_O, q_O, SLP, SST, SSU, z_U=10, z_T=2,
         return TAU
     elif result == 'all':
         return TAU, QH, QE, dU10, dtheta10, dq10, L, zeta
+
 
 @timeit
 def prescribed_momentum(u, v, method='static'):
@@ -745,16 +732,16 @@ def prescribed_momentum(u, v, method='static'):
 
     return tx, ty
 
-# time_mean = True
-# data = ['jra55', 'erai'][1]
-# U_O, T_O, q_O, SLP, SST, SSU = flux_data(data, time_mean=True)
+
+# mean_t = True
+# res = 1
+# dat = ['jra55', 'erai'][1]
+# U_O, T_O, q_O, SLP, SST, SSU = flux_data(dat, mean_t=mean_t, res=res)
 # tau = bulk_fluxes(U_O, T_O, q_O, SLP, SST, SSU, z_U=10, z_T=2,
 #                   z_q=2, N=5, result='TAU')
 
-# u = reduce(xr.open_dataset(dpath/'uas_{}_climo.nc'.format(data)), time_mean).uas
-# v = reduce(xr.open_dataset(dpath/'vas_{}_climo.nc'.format(data)), time_mean).vas
+# u = xr.open_dataset(dpath/'{}_uas_{:02.0f}_climo.nc'.format(dat, res*10))
+# v = xr.open_dataset(dpath/'{}_vas_{:02.0f}_climo.nc'.format(dat, res*10))
+# u = reduce(u, mean_t).uas
+# v = reduce(v, mean_t).vas
 # tx, ty = prescribed_momentum(u, v, method='static')
-
-# for var in ['uas', 'vas', 'tas', 'ta2d', 'ps', 'psl']:
-#     ds = xr.open_dataset(dpath/'{}_{}_climo.nc'.format(var, data))
-#     print(ds[var])

@@ -4,7 +4,9 @@ created: Sun Mar 29 18:01:37 2020
 
 author: Annette Stellema (astellemas@gmail.com)
 
-
+for f in *_50_*; do mv -i -- "$f" "${f//_50_/_05_}"; done
+for f in *_10_*; do mv -i -- "$f" "${f//_10_/_01_}"; done
+for f in *_100_*; do mv -i -- "$f" "${f//_100_/_10_}"; done
 JRA-55 (jra55):
     - Base folder:
         /g/data/rr7/JRA55/6hr/atmos/
@@ -54,11 +56,11 @@ logger.propagate = False
 
 product = str(sys.argv[1])  # 'jra55' or 'erai'.
 vari = int(sys.argv[2])  # 0-4 for jra55 and 0-5 for erai.
-w = float(sys.argv[3])  # Interpolation width.
+res = float(sys.argv[3])  # Interpolation width.
 
 
 @timeit
-def reanalysis_wind(product, vari, lon, lat, w):
+def reanalysis_wind(product, vari, lon, lat, res):
     def slice_vars(ds):
         """Preprocess slice and rename variables."""
         # Rename erai ta2d variables.
@@ -73,7 +75,6 @@ def reanalysis_wind(product, vari, lon, lat, w):
         ds = ds.sel(lat=slice(lat[0]-1, lat[1]+1),
                     lon=slice(lon[0]-1, lon[1]+1))
         return ds
-
 
     f = []
     if product == 'erai':
@@ -96,7 +97,7 @@ def reanalysis_wind(product, vari, lon, lat, w):
                      .format(var, var, y, y))
 
     logger.info('Creating file: {}_{} {} deg interp from {}.'
-                .format(product, var, w, path))
+                .format(product, var, res, path))
     ds = xr.open_mfdataset(f, combine='by_coords', concat_dim="time",
                            mask_and_scale=False, preprocess=slice_vars)
 
@@ -105,8 +106,8 @@ def reanalysis_wind(product, vari, lon, lat, w):
     logger.info('{}_{} old coords: {}'.format(product, var, ds[var].coords))
     ds = ds.groupby('time.month').mean().rename({'month': 'time'})
 
-    ds = ds.interp(lon=np.arange(lon[0], lon[1] + w, w),
-                   lat=np.arange(lat[0], lat[1] + w, w))
+    ds = ds.interp(lon=np.arange(lon[0], lon[1] + res, res),
+                   lat=np.arange(lat[0], lat[1] + res, res))
 
     ds = ds.sel(lat=slice(lat[0], lat[1]), lon=slice(lon[0], lon[1]))
     logger.info('{}_{} new coords: {}'.format(product, var, ds[var].coords))
@@ -114,7 +115,7 @@ def reanalysis_wind(product, vari, lon, lat, w):
     ds[var].attrs['history'] = ('Modified {} from files e.g. {}'
                                 .format(now.strftime("%Y-%m-%d"), f[0]))
 
-    ds.to_netcdf(dpath/'{}_{}_{:.0f}_climo.nc'.format(product, var, w*100))
+    ds.to_netcdf(dpath/'{}_{}_{:02.0f}_climo.nc'.format(product, var, res*10))
 
     if np.isnan(ds[var]).all():
         logger.info('ERROR: {}_{} (all NaN).'.format(product, var))
@@ -126,4 +127,4 @@ def reanalysis_wind(product, vari, lon, lat, w):
 
 lon = [109, 291]
 lat = [-16, 16]
-reanalysis_wind(product, vari, lon, lat, w)
+reanalysis_wind(product, vari, lon, lat, res)
