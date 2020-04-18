@@ -110,7 +110,7 @@ def plot_winds(varz, var_name, var_name_short, units):
     return
 
 
-res = 1
+res = 0.1
 dx = res*10
 mean_t = True
 dat = ['jra55', 'erai']
