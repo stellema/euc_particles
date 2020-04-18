@@ -57,6 +57,7 @@ def plot_winds(varz, var_name, var_name_short, units):
         elif var_name_short == 'wind_stress':
             vmx = 7 if i <= 1 else 2
         else:
+            # vmx = 7 if i <= 1 else 0.5
             vmx = 1.5 if i <= 1 else 0.5
             if i == 3:
                 vmx = 2
@@ -110,30 +111,32 @@ def plot_winds(varz, var_name, var_name_short, units):
     return
 
 
-res = 0.1
-dx = res*10
-mean_t = True
-dat = ['jra55', 'erai']
-flux = ['bulk', 'static'][1]
-
-for i, data in enumerate(dat):
+def get_wsc(data='jra55', flux='bulk', res=0.1, mean_t=True):
+    dx = res*10
     if flux == 'bulk':
         U_O, T_O, q_O, SLP, SST, SSU = flux_data(data, mean_t=mean_t, res=res)
         tau = bulk_fluxes(U_O, T_O, q_O, SLP, SST, SSU, z_U=10, z_T=2,
                           z_q=2, N=5, result='TAU')
-        tx2, ty2 = tau.real, tau.imag
+        tx, ty = tau.real, tau.imag
 
     else:
         u = xr.open_dataset(dpath/'{}_uas_{:02.0f}_climo.nc'.format(data, dx))
         v = xr.open_dataset(dpath/'{}_vas_{:02.0f}_climo.nc'.format(data, dx))
-        tx2, ty2 = prescribed_momentum(reduce(u.uas, mean_t, res),
-                                       reduce(v.vas, mean_t, res), method=flux)
+        tx, ty = prescribed_momentum(reduce(u.uas, mean_t, res),
+                                     reduce(v.vas, mean_t, res), method=flux)
 
-    phi2 = wind_stress_curl(tx2, ty2, w=res).phi
+    phi = wind_stress_curl(tx, ty, w=res).phi
 
-    if i == 0:
-        tx1, ty1, phi1 = tx2, ty2, phi2
+    return tx, ty, phi
 
+
+mean_t = True
+data = ['jra55', 'erai']
+flux = ['bulk', 'static', 'GILL','LARGE_approx']
+res = 1
+f1, f2 = 0, 1
+tx1, ty1, phi1 = get_wsc(data=data[0], flux=flux[f1], res=res, mean_t=mean_t)
+tx2, ty2, phi2 = get_wsc(data=data[1], flux=flux[f2], res=res, mean_t=mean_t)
 
 varz = [phi1*1e7, phi2*1e7, (phi1.values - phi2.values)*1e7,
         (tx1.values - tx2.values)*1e2,
@@ -141,7 +144,15 @@ varz = [phi1*1e7, phi2*1e7, (phi1.values - phi2.values)*1e7,
         tx2.sel(lat=slice(-2, 2)).mean('lat')*1e2]
 var_name = 'Wind stress curl'
 units = '[x10$^{-7}$ N/m$^{3}$]'
-var_name_short = 'WSC_WS2_{}_{:02.0f}'.format(flux, dx)
+# varz = [tx1*1e2, tx2*1e2, (phi1.values - phi2.values)*1e7,
+#         (tx1.values - tx2.values)*1e2,
+#         tx1.sel(lat=slice(-2, 2)).mean('lat')*1e2,
+#         tx2.sel(lat=slice(-2, 2)).mean('lat')*1e2]
+
+# var_name = 'Zonal wind stress'
+
+units = '[x100 N/m$^{2}$]'
+var_name_short = 'WSC_{}_{}_{:02.0f}'.format(flux[f1], flux[f2], res*10)
 plot_winds(varz, var_name, var_name_short, units)
 
 # varz = [phi1*1e7, phi2*1e7, (phi1.values - phi2.values)*1e7,

@@ -37,14 +37,18 @@ from warnings import warn
 fpath, dpath, xpath, lpath, tpath = paths()
 
 
-def reduce(ds, mean_t=False, res=None):
+def reduce(ds, mean_t=False, res=0.1):
     """Slice, rename and/or time average datasets."""
     if res == 1:
         lats, lons = slice(-15, 15), slice(120, 291)
     elif res == 0.1:
         lats, lons = slice(-15.1, 14.9), slice(119.9, 291)
+    elif res == 0.5:
+        lats, lons = slice(-15, 15), slice(120, 290.5)
+    elif res == 1.5:
+        lats, lons = slice(-14.5, 14.5), slice(119.5, 290.5)
     else:
-        print('error')
+        print('error', res)
 
     if hasattr(ds, 'xu_ocean'):
         ds = ds.rename({'Time': 'time', 'yu_ocean': 'lat',
@@ -685,10 +689,11 @@ def prescribed_momentum(u, v, method='static'):
         ty (DataArray): Meridional component of wind stress.
 
     """
+    import math
     p = 1.225  # Air density [kg/m^3].
-    mask = ~np.isnan(u) & ~np.isnan(v)
-    u = u.where(mask)
-    u = v.where(mask)
+    # mask = ~np.isnan(u) & ~np.isnan(v)
+    # u = u.where(mask)
+    # u = v.where(mask)
     # Computation of Wind Stresses.
     if len(u.shape) == 3:
         [nlats, nlons] = u[0].shape
@@ -702,45 +707,45 @@ def prescribed_momentum(u, v, method='static'):
         tx = cd*p*U*u  # kg/m^3*m/s*m/s = N/m^2.
         ty = cd*p*U*v
     else:
-        cd = U.copy()*np.nan
+        # cd = U.copy()*np.nan
         if method == 'LARGE_approx':
             drag = pd.read_csv(dpath/'cdrag.csv')
         for j in range(nlats):
             for i in range(nlons):
-                # U = math.sqrt(u[j, i]**2 + v[j, i]**2)
-                if ~np.isnan(U[j, i]):
+                U = math.sqrt(u[j, i]**2 + v[j, i]**2)
+                if ~np.isnan(U):
                     if method == 'GILL':
                         # Random method.
-                        if (U[j, i] <= 1):
-                            cd[j, i] = 0.00218
-                        elif (U[j, i] > 1 or U[j, i] <= 3):
-                            cd[j, i] = (0.62 + 1.56/U[j, i])*0.001
-                        elif (U[j, i] > 3 or U[j, i] < 10):
-                            cd[j, i] = 0.00114
+                        if (U <= 1):
+                            cd = 0.00218
+                        elif (U > 1 or U <= 3):
+                            cd = (0.62 + 1.56/U)*0.001
+                        elif (U > 3 or U < 10):
+                            cd = 0.00114
                         else:
-                            cd[j, i] = (0.49 + 0.065*U[j, i])*0.001
+                            cd = (0.49 + 0.065*U)*0.001
 
-                    # YEAGER LARGE (approx).
-                    elif method == 'LARGE_approx':
-                        drag = pd.read_csv(dpath/'cdrag.csv')
-                        xi = idx_1d(drag['u'].values, U[j, i].item())
+                    # # YEAGER LARGE (approx).
+                    # elif method == 'LARGE_approx':
+                    #     drag = pd.read_csv(dpath/'cdrag.csv')
+                    #     xi = idx_1d(drag['u'].values, U.item())
 
-                        # if (drag['u'][xi] != U[j, i] and
-                        #     xi != 0 and xi != len(drag['u']-1)):
+                    #     # if (drag['u'][xi] != U[j, i] and
+                    #     #     xi != 0 and xi != len(drag['u']-1)):
 
-                        #     x1i = xi if drag['u'][xi] <= U[j, i] else xi - 1
-                        #     x2i = xi + 1 if drag['u'][xi] <= U[j, i] else xi
-                        #     x1, x2 = drag['u'][x1i], drag['u'][x2i]
-                        #     y1, y2 = drag['cd'][x1i], drag['cd'][x2i]
-                        #     b = (x1*y2 - x2*y1)/(x1-x2)
-                        #     m = (y1-y2)/(x1-x2)
-                        #     cd[j, i] = (m*U[j, i] + b)*0.001
-                        # else:
-                        cd[j, i] = drag['cd'][xi]*0.001
+                    #     #     x1i = xi if drag['u'][xi] <= U[j, i] else xi - 1
+                    #     #     x2i = xi + 1 if drag['u'][xi] <= U[j, i] else xi
+                    #     #     x1, x2 = drag['u'][x1i], drag['u'][x2i]
+                    #     #     y1, y2 = drag['cd'][x1i], drag['cd'][x2i]
+                    #     #     b = (x1*y2 - x2*y1)/(x1-x2)
+                    #     #     m = (y1-y2)/(x1-x2)
+                    #     #     cd[j, i] = (m*U[j, i] + b)*0.001
+                    #     # else:
+                    #     cd = drag['cd'][xi]*0.001
 
-        # Equation.
-        tx = cd*p*U*u  # kg/m^3*m/s*m/s = N/m^2.
-        ty = cd*p*U*v
+            # Equation.
+            tx[j, i] = cd*p*U*u[j, i]  # kg/m^3*m/s*m/s = N/m^2.
+            ty[j, i] = cd*p*U*v[j, i]
 
     return tx, ty
 

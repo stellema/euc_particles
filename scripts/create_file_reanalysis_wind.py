@@ -40,6 +40,7 @@ import numpy as np
 import xarray as xr
 from datetime import datetime
 from main import paths, lx, timeit
+from scipy.interpolate import griddata
 from parcels.tools.loggers import logger
 
 # Path to save figures, save data and OFAM model output.
@@ -60,7 +61,7 @@ res = float(sys.argv[3])  # Interpolation width.
 
 
 @timeit
-def reanalysis_wind(product, vari, lon, lat, res):
+def reanalysis_wind(product, vari, lon, lat, res, interp='cubic'):
     def slice_vars(ds):
         """Preprocess slice and rename variables."""
         # Rename erai ta2d variables.
@@ -95,7 +96,8 @@ def reanalysis_wind(product, vari, lon, lat, res):
         for y in range(lx['years'][0][0], lx['years'][0][1]+1):
             f.append(path + '{}/v1/{}_6hrPlev_JRA55_{}010100_{}123118.nc'
                      .format(var, var, y, y))
-    fname = '{}_{}_{:02.0f}_climo.nc'.format(product, var, res*10)
+    istr = '' if interp != 'cubic' else 'cubic_'
+    fname = '{}_{}_{:02.0f}_{}climo.nc'.format(product, var, res*10, istr)
 
     logger.info('Creating file: {} from {}.'.format(fname, path))
 
@@ -108,8 +110,25 @@ def reanalysis_wind(product, vari, lon, lat, res):
 
     ds = ds.groupby('time.month').mean().rename({'month': 'time'})
 
-    ds = ds.interp(lon=np.arange(lon[0], lon[1] + res, res),
-                   lat=np.arange(lat[0], lat[1] + res, res))
+    x2 = np.arange(lon[0], lon[1] + res, res)
+    y2 = np.arange(lat[0], lat[1] + res, res)
+
+    if interp == 'linear':
+        ds = ds.interp(lon=x2, lat=y2)
+    else:
+        tmp = np.empty((len(ds[var].time), len(y2), len(x2)))*np.nan
+
+        x1 = ds.lon.values
+        y1 = ds.lat.values
+        X1, Y1 = np.meshgrid(x1, y1)
+        X2, Y2 = np.meshgrid(x2, y2)
+        for t in range(len(ds[var].time)):
+            tmp[t] = griddata((X1.flatten(), Y1.flatten()),
+                              ds[var][t].values.flatten(), (X2, Y2),
+                              method='cubic')
+
+        ds = ds.interp(lon=x2, lat=y2)
+        ds[var] = (ds[var].dims, tmp)
 
     ds = ds.sel(lat=slice(lat[0], lat[1]), lon=slice(lon[0], lon[1]))
 
@@ -135,4 +154,4 @@ def reanalysis_wind(product, vari, lon, lat, res):
 
 lon = [109, 291]
 lat = [-16, 16]
-reanalysis_wind(product, vari, lon, lat, res)
+reanalysis_wind(product, vari, lon, lat, res, interp='cubic')
