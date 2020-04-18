@@ -46,15 +46,6 @@ from parcels.tools.loggers import logger
 # Path to save figures, save data and OFAM model output.
 fpath, dpath, xpath, lpath, tpath = paths()
 
-logger.setLevel(logging.DEBUG)
-now = datetime.now()
-handler = logging.FileHandler(lpath/'reanalysis_{}.log'
-                              .format(now.strftime("%Y-%m-%d")))
-formatter = logging.Formatter('%(asctime)s:%(funcName)s:%(message)s')
-handler.setFormatter(formatter)
-logger.addHandler(handler)
-logger.propagate = False
-
 product = str(sys.argv[1])  # 'jra55' or 'erai'.
 vari = int(sys.argv[2])  # 0-4 for jra55 and 0-5 for erai.
 res = float(sys.argv[3])  # Interpolation width.
@@ -151,6 +142,15 @@ def reanalysis_wind(product, vari, lon, lat, res, interp='cubic'):
     da.close()
     return
 
+
+logger.setLevel(logging.DEBUG)
+now = datetime.now()
+handler = logging.FileHandler(lpath/'reanalysis_{}_{}.log'
+                              .format(product, now.strftime("%Y-%m-%d")))
+formatter = logging.Formatter('%(asctime)s:%(funcName)s:%(message)s')
+handler.setFormatter(formatter)
+logger.addHandler(handler)
+logger.propagate = False
 
 lon = [109, 291]
 lat = [-16, 16]
