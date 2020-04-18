@@ -1,0 +1,64 @@
+INFO: Creating file: erai_tas 1.0 deg interp from /g/data/rr7/ERA_INT/ERA_INT/.
+INFO: Creating file: erai_ps 1.0 deg interp from /g/data/rr7/ERA_INT/ERA_INT/.
+INFO: Creating file: erai_uas 1.0 deg interp from /g/data/rr7/ERA_INT/ERA_INT/.
+INFO: Creating file: erai_psl 1.0 deg interp from /g/data/rr7/ERA_INT/ERA_INT/.
+INFO: Creating file: erai_vas 1.0 deg interp from /g/data/rr7/ERA_INT/ERA_INT/.
+INFO: Creating file: erai_ta2d 1.0 deg interp from /g/data/rr7/ERA_INT/ERA_INT/.
+INFO: erai_tas old coords: Coordinates:
+  * time     (time) datetime64[ns] 1981-01-01 1981-02-01 ... 2012-12-01
+  * lon      (lon) float32 108.0 109.5 111.0 112.5 ... 286.5 288.0 289.5 291.0
+  * lat      (lat) float32 -16.5 -15.0 -13.5 -12.0 -10.5 ... 12.0 13.5 15.0 16.5
+INFO: erai_tas new coords: Coordinates:
+  * time     (time) int64 1 2 3 4 5 6 7 8 9 10 11 12
+  * lon      (lon) float64 109.0 110.0 111.0 112.0 ... 288.0 289.0 290.0 291.0
+  * lat      (lat) float64 -16.0 -15.0 -14.0 -13.0 -12.0 ... 13.0 14.0 15.0 16.0
+INFO: erai_psl old coords: Coordinates:
+  * time     (time) datetime64[ns] 1981-01-01 1981-02-01 ... 2012-12-01
+  * lon      (lon) float32 108.0 109.5 111.0 112.5 ... 286.5 288.0 289.5 291.0
+  * lat      (lat) float32 -16.5 -15.0 -13.5 -12.0 -10.5 ... 12.0 13.5 15.0 16.5
+INFO: erai_psl new coords: Coordinates:
+  * time     (time) int64 1 2 3 4 5 6 7 8 9 10 11 12
+  * lon      (lon) float64 109.0 110.0 111.0 112.0 ... 288.0 289.0 290.0 291.0
+  * lat      (lat) float64 -16.0 -15.0 -14.0 -13.0 -12.0 ... 13.0 14.0 15.0 16.0
+INFO: erai_vas old coords: Coordinates:
+  * time     (time) datetime64[ns] 1981-01-01 1981-02-01 ... 2012-12-01
+  * lon      (lon) float32 108.0 109.5 111.0 112.5 ... 286.5 288.0 289.5 291.0
+  * lat      (lat) float32 -16.5 -15.0 -13.5 -12.0 -10.5 ... 12.0 13.5 15.0 16.5
+INFO: erai_vas new coords: Coordinates:
+  * time     (time) int64 1 2 3 4 5 6 7 8 9 10 11 12
+  * lon      (lon) float64 109.0 110.0 111.0 112.0 ... 288.0 289.0 290.0 291.0
+  * lat      (lat) float64 -16.0 -15.0 -14.0 -13.0 -12.0 ... 13.0 14.0 15.0 16.0
+INFO: erai_uas old coords: Coordinates:
+  * time     (time) datetime64[ns] 1981-01-01 1981-02-01 ... 2012-12-01
+  * lon      (lon) float32 108.0 109.5 111.0 112.5 ... 286.5 288.0 289.5 291.0
+  * lat      (lat) float32 -16.5 -15.0 -13.5 -12.0 -10.5 ... 12.0 13.5 15.0 16.5
+INFO: erai_uas new coords: Coordinates:
+  * time     (time) int64 1 2 3 4 5 6 7 8 9 10 11 12
+  * lon      (lon) float64 109.0 110.0 111.0 112.0 ... 288.0 289.0 290.0 291.0
+  * lat      (lat) float64 -16.0 -15.0 -14.0 -13.0 -12.0 ... 13.0 14.0 15.0 16.0
+INFO: SUCCESS: erai_tas
+INFO: reanalysis_wind: 0:0:03.70 total: 3.70 seconds.
+INFO: SUCCESS: erai_psl
+INFO: reanalysis_wind: 0:0:03.75 total: 3.75 seconds.
+INFO: erai_ps old coords: Coordinates:
+  * time     (time) datetime64[ns] 1981-01-01 1981-02-01 ... 2012-12-01
+  * lon      (lon) float32 108.0 109.5 111.0 112.5 ... 286.5 288.0 289.5 291.0
+  * lat      (lat) float32 -16.5 -15.0 -13.5 -12.0 -10.5 ... 12.0 13.5 15.0 16.5
+INFO: erai_ps new coords: Coordinates:
+  * time     (time) int64 1 2 3 4 5 6 7 8 9 10 11 12
+  * lon      (lon) float64 109.0 110.0 111.0 112.0 ... 288.0 289.0 290.0 291.0
+  * lat      (lat) float64 -16.0 -15.0 -14.0 -13.0 -12.0 ... 13.0 14.0 15.0 16.0
+INFO: SUCCESS: erai_uas
+INFO: reanalysis_wind: 0:0:04.64 total: 4.64 seconds.
+INFO: SUCCESS: erai_ps
+INFO: reanalysis_wind: 0:0:05.71 total: 5.71 seconds.
+INFO: erai_ta2d old coords: Coordinates:
+  * lon      (lon) float32 117.42191 118.12504 118.82816 ... 291.09384 291.79697
+  * lat      (lat) float64 -16.49 -15.79 -15.09 -14.39 ... 15.09 15.79 16.49
+  * time     (time) datetime64[ns] 1981-01-01 1981-02-01 ... 2012-12-01
+INFO: erai_ta2d new coords: Coordinates:
+  * time     (time) int64 1 2 3 4 5 6 7 8 9 10 11 12
+  * lon      (lon) float64 109.0 110.0 111.0 112.0 ... 288.0 289.0 290.0 291.0
+  * lat      (lat) float64 -16.0 -15.0 -14.0 -13.0 -12.0 ... 13.0 14.0 15.0 16.0
+INFO: SUCCESS: erai_ta2d
+INFO: reanalysis_wind: 0:0:21.23 total: 21.23 seconds.

@@ -1,0 +1,195 @@
+INFO: Creating file: erai_uas_15_climo.nc from /g/data/rr7/ERA_INT/ERA_INT/.
+INFO: Creating file: erai_uas_10_climo.nc from /g/data/rr7/ERA_INT/ERA_INT/.
+INFO: Creating file: erai_vas_15_climo.nc from /g/data/rr7/ERA_INT/ERA_INT/.
+INFO: Creating file: erai_psl_01_climo.nc from /g/data/rr7/ERA_INT/ERA_INT/.
+INFO: Creating file: erai_ps_01_climo.nc from /g/data/rr7/ERA_INT/ERA_INT/.
+INFO: Creating file: erai_tas_01_climo.nc from /g/data/rr7/ERA_INT/ERA_INT/.
+INFO: Creating file: erai_psl_10_climo.nc from /g/data/rr7/ERA_INT/ERA_INT/.
+INFO: Creating file: erai_tas_15_climo.nc from /g/data/rr7/ERA_INT/ERA_INT/.
+INFO: Creating file: erai_psl_05_climo.nc from /g/data/rr7/ERA_INT/ERA_INT/.
+INFO: Creating file: erai_tas_05_climo.nc from /g/data/rr7/ERA_INT/ERA_INT/.
+INFO: Creating file: erai_vas_10_climo.nc from /g/data/rr7/ERA_INT/ERA_INT/.
+INFO: Creating file: erai_vas_01_climo.nc from /g/data/rr7/ERA_INT/ERA_INT/.
+INFO: Creating file: erai_uas_01_climo.nc from /g/data/rr7/ERA_INT/ERA_INT/.
+INFO: Creating file: erai_vas_05_climo.nc from /g/data/rr7/ERA_INT/ERA_INT/.
+INFO: Creating file: erai_psl_15_climo.nc from /g/data/rr7/ERA_INT/ERA_INT/.
+INFO: Creating file: erai_ps_05_climo.nc from /g/data/rr7/ERA_INT/ERA_INT/.
+INFO: Creating file: erai_ps_15_climo.nc from /g/data/rr7/ERA_INT/ERA_INT/.
+INFO: Creating file: erai_tas_10_climo.nc from /g/data/rr7/ERA_INT/ERA_INT/.
+INFO: Creating file: erai_uas_05_climo.nc from /g/data/rr7/ERA_INT/ERA_INT/.
+INFO: Creating file: erai_ps_10_climo.nc from /g/data/rr7/ERA_INT/ERA_INT/.
+INFO: Creating file: erai_ta2d_05_climo.nc from /g/data/rr7/ERA_INT/ERA_INT/.
+INFO: Creating file: erai_ta2d_10_climo.nc from /g/data/rr7/ERA_INT/ERA_INT/.
+INFO: Creating file: erai_ta2d_15_climo.nc from /g/data/rr7/ERA_INT/ERA_INT/.
+INFO: Creating file: erai_ta2d_01_climo.nc from /g/data/rr7/ERA_INT/ERA_INT/.
+INFO: erai_tas_15_climo.nc OLD coords: Coordinates:
+  * time     (time) datetime64[ns] 1981-01-01 1981-02-01 ... 2012-12-01
+  * lon      (lon) float32 108.0 109.5 111.0 112.5 ... 286.5 288.0 289.5 291.0
+  * lat      (lat) float32 -16.5 -15.0 -13.5 -12.0 -10.5 ... 12.0 13.5 15.0 16.5
+INFO: erai_tas_15_climo.nc NEW coords: Coordinates:
+  * time     (time) int64 1 2 3 4 5 6 7 8 9 10 11 12
+  * lon      (lon) float64 109.0 110.5 112.0 113.5 ... 286.0 287.5 289.0 290.5
+  * lat      (lat) float64 -16.0 -14.5 -13.0 -11.5 -10.0 ... 11.0 12.5 14.0 15.5
+INFO: SUCCESS: erai_tas_15_climo.nc
+INFO: reanalysis_wind: 0:0:01.79 total: 1.79 seconds.
+INFO: erai_tas_10_climo.nc OLD coords: Coordinates:
+  * time     (time) datetime64[ns] 1981-01-01 1981-02-01 ... 2012-12-01
+  * lat      (lat) float32 -16.5 -15.0 -13.5 -12.0 -10.5 ... 12.0 13.5 15.0 16.5
+  * lon      (lon) float32 108.0 109.5 111.0 112.5 ... 286.5 288.0 289.5 291.0
+INFO: erai_tas_10_climo.nc NEW coords: Coordinates:
+  * time     (time) int64 1 2 3 4 5 6 7 8 9 10 11 12
+  * lon      (lon) float64 109.0 110.0 111.0 112.0 ... 288.0 289.0 290.0 291.0
+  * lat      (lat) float64 -16.0 -15.0 -14.0 -13.0 -12.0 ... 13.0 14.0 15.0 16.0
+INFO: erai_ps_15_climo.nc OLD coords: Coordinates:
+  * time     (time) datetime64[ns] 1981-01-01 1981-02-01 ... 2012-12-01
+  * lat      (lat) float32 -16.5 -15.0 -13.5 -12.0 -10.5 ... 12.0 13.5 15.0 16.5
+  * lon      (lon) float32 108.0 109.5 111.0 112.5 ... 286.5 288.0 289.5 291.0
+INFO: erai_vas_15_climo.nc OLD coords: Coordinates:
+  * time     (time) datetime64[ns] 1981-01-01 1981-02-01 ... 2012-12-01
+  * lon      (lon) float32 108.0 109.5 111.0 112.5 ... 286.5 288.0 289.5 291.0
+  * lat      (lat) float32 -16.5 -15.0 -13.5 -12.0 -10.5 ... 12.0 13.5 15.0 16.5
+INFO: erai_ps_15_climo.nc NEW coords: Coordinates:
+  * time     (time) int64 1 2 3 4 5 6 7 8 9 10 11 12
+  * lon      (lon) float64 109.0 110.5 112.0 113.5 ... 286.0 287.5 289.0 290.5
+  * lat      (lat) float64 -16.0 -14.5 -13.0 -11.5 -10.0 ... 11.0 12.5 14.0 15.5
+INFO: erai_vas_15_climo.nc NEW coords: Coordinates:
+  * time     (time) int64 1 2 3 4 5 6 7 8 9 10 11 12
+  * lon      (lon) float64 109.0 110.5 112.0 113.5 ... 286.0 287.5 289.0 290.5
+  * lat      (lat) float64 -16.0 -14.5 -13.0 -11.5 -10.0 ... 11.0 12.5 14.0 15.5
+INFO: erai_uas_10_climo.nc OLD coords: Coordinates:
+  * time     (time) datetime64[ns] 1981-01-01 1981-02-01 ... 2012-12-01
+  * lat      (lat) float32 -16.5 -15.0 -13.5 -12.0 -10.5 ... 12.0 13.5 15.0 16.5
+  * lon      (lon) float32 108.0 109.5 111.0 112.5 ... 286.5 288.0 289.5 291.0
+INFO: SUCCESS: erai_tas_10_climo.nc
+INFO: erai_uas_10_climo.nc NEW coords: Coordinates:
+  * time     (time) int64 1 2 3 4 5 6 7 8 9 10 11 12
+  * lon      (lon) float64 109.0 110.0 111.0 112.0 ... 288.0 289.0 290.0 291.0
+  * lat      (lat) float64 -16.0 -15.0 -14.0 -13.0 -12.0 ... 13.0 14.0 15.0 16.0
+INFO: SUCCESS: erai_vas_15_climo.nc
+INFO: reanalysis_wind: 0:0:01.81 total: 1.81 seconds.
+INFO: reanalysis_wind: 0:0:01.81 total: 1.81 seconds.
+INFO: SUCCESS: erai_uas_10_climo.nc
+INFO: reanalysis_wind: 0:0:01.83 total: 1.83 seconds.
+INFO: erai_vas_10_climo.nc OLD coords: Coordinates:
+  * time     (time) datetime64[ns] 1981-01-01 1981-02-01 ... 2012-12-01
+  * lat      (lat) float32 -16.5 -15.0 -13.5 -12.0 -10.5 ... 12.0 13.5 15.0 16.5
+  * lon      (lon) float32 108.0 109.5 111.0 112.5 ... 286.5 288.0 289.5 291.0
+INFO: SUCCESS: erai_ps_15_climo.nc
+INFO: erai_vas_10_climo.nc NEW coords: Coordinates:
+  * time     (time) int64 1 2 3 4 5 6 7 8 9 10 11 12
+  * lon      (lon) float64 109.0 110.0 111.0 112.0 ... 288.0 289.0 290.0 291.0
+  * lat      (lat) float64 -16.0 -15.0 -14.0 -13.0 -12.0 ... 13.0 14.0 15.0 16.0
+INFO: reanalysis_wind: 0:0:01.86 total: 1.86 seconds.
+INFO: SUCCESS: erai_vas_10_climo.nc
+INFO: erai_psl_15_climo.nc OLD coords: Coordinates:
+  * time     (time) datetime64[ns] 1981-01-01 1981-02-01 ... 2012-12-01
+  * lat      (lat) float32 -16.5 -15.0 -13.5 -12.0 -10.5 ... 12.0 13.5 15.0 16.5
+  * lon      (lon) float32 108.0 109.5 111.0 112.5 ... 286.5 288.0 289.5 291.0
+INFO: reanalysis_wind: 0:0:01.87 total: 1.87 seconds.
+INFO: erai_psl_15_climo.nc NEW coords: Coordinates:
+  * time     (time) int64 1 2 3 4 5 6 7 8 9 10 11 12
+  * lon      (lon) float64 109.0 110.5 112.0 113.5 ... 286.0 287.5 289.0 290.5
+  * lat      (lat) float64 -16.0 -14.5 -13.0 -11.5 -10.0 ... 11.0 12.5 14.0 15.5
+INFO: SUCCESS: erai_psl_15_climo.nc
+INFO: erai_psl_10_climo.nc OLD coords: Coordinates:
+  * time     (time) datetime64[ns] 1981-01-01 1981-02-01 ... 2012-12-01
+  * lat      (lat) float32 -16.5 -15.0 -13.5 -12.0 -10.5 ... 12.0 13.5 15.0 16.5
+  * lon      (lon) float32 108.0 109.5 111.0 112.5 ... 286.5 288.0 289.5 291.0
+INFO: reanalysis_wind: 0:0:01.88 total: 1.88 seconds.
+INFO: erai_psl_10_climo.nc NEW coords: Coordinates:
+  * time     (time) int64 1 2 3 4 5 6 7 8 9 10 11 12
+  * lon      (lon) float64 109.0 110.0 111.0 112.0 ... 288.0 289.0 290.0 291.0
+  * lat      (lat) float64 -16.0 -15.0 -14.0 -13.0 -12.0 ... 13.0 14.0 15.0 16.0
+INFO: erai_psl_05_climo.nc OLD coords: Coordinates:
+  * time     (time) datetime64[ns] 1981-01-01 1981-02-01 ... 2012-12-01
+  * lat      (lat) float32 -16.5 -15.0 -13.5 -12.0 -10.5 ... 12.0 13.5 15.0 16.5
+  * lon      (lon) float32 108.0 109.5 111.0 112.5 ... 286.5 288.0 289.5 291.0
+INFO: erai_psl_05_climo.nc NEW coords: Coordinates:
+  * time     (time) int64 1 2 3 4 5 6 7 8 9 10 11 12
+  * lon      (lon) float64 109.0 109.5 110.0 110.5 ... 289.5 290.0 290.5 291.0
+  * lat      (lat) float64 -16.0 -15.5 -15.0 -14.5 -14.0 ... 14.5 15.0 15.5 16.0
+INFO: SUCCESS: erai_psl_05_climo.nc
+INFO: reanalysis_wind: 0:0:01.91 total: 1.91 seconds.
+INFO: erai_ps_10_climo.nc OLD coords: Coordinates:
+  * time     (time) datetime64[ns] 1981-01-01 1981-02-01 ... 2012-12-01
+  * lat      (lat) float32 -16.5 -15.0 -13.5 -12.0 -10.5 ... 12.0 13.5 15.0 16.5
+  * lon      (lon) float32 108.0 109.5 111.0 112.5 ... 286.5 288.0 289.5 291.0
+INFO: SUCCESS: erai_psl_10_climo.nc
+INFO: erai_ps_10_climo.nc NEW coords: Coordinates:
+  * time     (time) int64 1 2 3 4 5 6 7 8 9 10 11 12
+  * lon      (lon) float64 109.0 110.0 111.0 112.0 ... 288.0 289.0 290.0 291.0
+  * lat      (lat) float64 -16.0 -15.0 -14.0 -13.0 -12.0 ... 13.0 14.0 15.0 16.0
+INFO: reanalysis_wind: 0:0:01.93 total: 1.93 seconds.
+INFO: SUCCESS: erai_ps_10_climo.nc
+INFO: reanalysis_wind: 0:0:01.94 total: 1.94 seconds.
+INFO: erai_vas_01_climo.nc OLD coords: Coordinates:
+  * time     (time) datetime64[ns] 1981-01-01 1981-02-01 ... 2012-12-01
+  * lon      (lon) float32 108.0 109.5 111.0 112.5 ... 286.5 288.0 289.5 291.0
+  * lat      (lat) float32 -16.5 -15.0 -13.5 -12.0 -10.5 ... 12.0 13.5 15.0 16.5
+INFO: erai_vas_01_climo.nc NEW coords: Coordinates:
+  * time     (time) int64 1 2 3 4 5 6 7 8 9 10 11 12
+  * lon      (lon) float64 109.0 109.1 109.2 109.3 ... 290.7 290.8 290.9 291.0
+  * lat      (lat) float64 -16.0 -15.9 -15.8 -15.7 -15.6 ... 15.7 15.8 15.9 16.0
+INFO: SUCCESS: erai_vas_01_climo.nc
+INFO: reanalysis_wind: 0:0:02.27 total: 2.27 seconds.
+INFO: erai_psl_01_climo.nc OLD coords: Coordinates:
+  * time     (time) datetime64[ns] 1981-01-01 1981-02-01 ... 2012-12-01
+  * lon      (lon) float32 108.0 109.5 111.0 112.5 ... 286.5 288.0 289.5 291.0
+  * lat      (lat) float32 -16.5 -15.0 -13.5 -12.0 -10.5 ... 12.0 13.5 15.0 16.5
+INFO: erai_psl_01_climo.nc NEW coords: Coordinates:
+  * time     (time) int64 1 2 3 4 5 6 7 8 9 10 11 12
+  * lon      (lon) float64 109.0 109.1 109.2 109.3 ... 290.7 290.8 290.9 291.0
+  * lat      (lat) float64 -16.0 -15.9 -15.8 -15.7 -15.6 ... 15.7 15.8 15.9 16.0
+INFO: SUCCESS: erai_psl_01_climo.nc
+INFO: erai_uas_01_climo.nc OLD coords: Coordinates:
+  * time     (time) datetime64[ns] 1981-01-01 1981-02-01 ... 2012-12-01
+  * lat      (lat) float32 -16.5 -15.0 -13.5 -12.0 -10.5 ... 12.0 13.5 15.0 16.5
+  * lon      (lon) float32 108.0 109.5 111.0 112.5 ... 286.5 288.0 289.5 291.0
+INFO: erai_uas_01_climo.nc NEW coords: Coordinates:
+  * time     (time) int64 1 2 3 4 5 6 7 8 9 10 11 12
+  * lon      (lon) float64 109.0 109.1 109.2 109.3 ... 290.7 290.8 290.9 291.0
+  * lat      (lat) float64 -16.0 -15.9 -15.8 -15.7 -15.6 ... 15.7 15.8 15.9 16.0
+INFO: reanalysis_wind: 0:0:02.55 total: 2.55 seconds.
+INFO: SUCCESS: erai_uas_01_climo.nc
+INFO: reanalysis_wind: 0:0:02.59 total: 2.59 seconds.
+INFO: erai_ta2d_01_climo.nc OLD coords: Coordinates:
+  * lat      (lat) float64 -16.49 -15.79 -15.09 -14.39 ... 15.09 15.79 16.49
+  * lon      (lon) float32 117.42191 118.12504 118.82816 ... 291.09384 291.79697
+  * time     (time) datetime64[ns] 1981-01-01 1981-02-01 ... 2012-12-01
+INFO: erai_ta2d_05_climo.nc OLD coords: Coordinates:
+  * lat      (lat) float64 -16.49 -15.79 -15.09 -14.39 ... 15.09 15.79 16.49
+  * lon      (lon) float32 117.42191 118.12504 118.82816 ... 291.09384 291.79697
+  * time     (time) datetime64[ns] 1981-01-01 1981-02-01 ... 2012-12-01
+INFO: erai_ta2d_10_climo.nc OLD coords: Coordinates:
+  * lat      (lat) float64 -16.49 -15.79 -15.09 -14.39 ... 15.09 15.79 16.49
+  * lon      (lon) float32 117.42191 118.12504 118.82816 ... 291.09384 291.79697
+  * time     (time) datetime64[ns] 1981-01-01 1981-02-01 ... 2012-12-01
+INFO: erai_ta2d_15_climo.nc OLD coords: Coordinates:
+  * lat      (lat) float64 -16.49 -15.79 -15.09 -14.39 ... 15.09 15.79 16.49
+  * lon      (lon) float32 117.42191 118.12504 118.82816 ... 291.09384 291.79697
+  * time     (time) datetime64[ns] 1981-01-01 1981-02-01 ... 2012-12-01
+INFO: erai_ta2d_01_climo.nc NEW coords: Coordinates:
+  * time     (time) int64 1 2 3 4 5 6 7 8 9 10 11 12
+  * lon      (lon) float64 109.0 109.1 109.2 109.3 ... 290.7 290.8 290.9 291.0
+  * lat      (lat) float64 -16.0 -15.9 -15.8 -15.7 -15.6 ... 15.7 15.8 15.9 16.0
+INFO: erai_ta2d_05_climo.nc NEW coords: Coordinates:
+  * time     (time) int64 1 2 3 4 5 6 7 8 9 10 11 12
+  * lon      (lon) float64 109.0 109.5 110.0 110.5 ... 289.5 290.0 290.5 291.0
+  * lat      (lat) float64 -16.0 -15.5 -15.0 -14.5 -14.0 ... 14.5 15.0 15.5 16.0
+INFO: erai_ta2d_15_climo.nc NEW coords: Coordinates:
+  * time     (time) int64 1 2 3 4 5 6 7 8 9 10 11 12
+  * lon      (lon) float64 109.0 110.5 112.0 113.5 ... 286.0 287.5 289.0 290.5
+  * lat      (lat) float64 -16.0 -14.5 -13.0 -11.5 -10.0 ... 11.0 12.5 14.0 15.5
+INFO: erai_ta2d_10_climo.nc NEW coords: Coordinates:
+  * time     (time) int64 1 2 3 4 5 6 7 8 9 10 11 12
+  * lon      (lon) float64 109.0 110.0 111.0 112.0 ... 288.0 289.0 290.0 291.0
+  * lat      (lat) float64 -16.0 -15.0 -14.0 -13.0 -12.0 ... 13.0 14.0 15.0 16.0
+INFO: SUCCESS: erai_ta2d_15_climo.nc
+INFO: SUCCESS: erai_ta2d_10_climo.nc
+INFO: SUCCESS: erai_ta2d_05_climo.nc
+INFO: reanalysis_wind: 0:0:09.75 total: 9.75 seconds.
+INFO: reanalysis_wind: 0:0:09.75 total: 9.75 seconds.
+INFO: reanalysis_wind: 0:0:09.75 total: 9.75 seconds.
+INFO: SUCCESS: erai_ta2d_01_climo.nc
+INFO: reanalysis_wind: 0:0:09.81 total: 9.81 seconds.
+=>> PBS: job killed: walltime 36072 exceeded limit 36000

@@ -1,0 +1,160 @@
+INFO: Creating file: jra55_vas_05_climo.nc from /g/data/rr7/JRA55/6hr/atmos/.
+INFO: Creating file: jra55_uas_05_climo.nc from /g/data/rr7/JRA55/6hr/atmos/.
+INFO: Creating file: jra55_vas_15_climo.nc from /g/data/rr7/JRA55/6hr/atmos/.
+INFO: Creating file: jra55_tas_01_climo.nc from /g/data/rr7/JRA55/6hr/atmos/.
+INFO: Creating file: jra55_huss_01_climo.nc from /g/data/rr7/JRA55/6hr/atmos/.
+INFO: Creating file: jra55_tas_15_climo.nc from /g/data/rr7/JRA55/6hr/atmos/.
+INFO: Creating file: jra55_tas_05_climo.nc from /g/data/rr7/JRA55/6hr/atmos/.
+INFO: Creating file: jra55_psl_10_climo.nc from /g/data/rr7/JRA55/6hr/atmos/.
+INFO: Creating file: jra55_vas_01_climo.nc from /g/data/rr7/JRA55/6hr/atmos/.
+INFO: Creating file: jra55_huss_10_climo.nc from /g/data/rr7/JRA55/6hr/atmos/.
+INFO: Creating file: jra55_tas_10_climo.nc from /g/data/rr7/JRA55/6hr/atmos/.
+INFO: Creating file: jra55_uas_10_climo.nc from /g/data/rr7/JRA55/6hr/atmos/.
+INFO: Creating file: jra55_vas_10_climo.nc from /g/data/rr7/JRA55/6hr/atmos/.
+INFO: Creating file: jra55_psl_05_climo.nc from /g/data/rr7/JRA55/6hr/atmos/.
+INFO: Creating file: jra55_huss_15_climo.nc from /g/data/rr7/JRA55/6hr/atmos/.
+INFO: Creating file: jra55_huss_05_climo.nc from /g/data/rr7/JRA55/6hr/atmos/.
+INFO: Creating file: jra55_uas_01_climo.nc from /g/data/rr7/JRA55/6hr/atmos/.
+INFO: Creating file: jra55_psl_15_climo.nc from /g/data/rr7/JRA55/6hr/atmos/.
+INFO: Creating file: jra55_uas_15_climo.nc from /g/data/rr7/JRA55/6hr/atmos/.
+INFO: Creating file: jra55_psl_01_climo.nc from /g/data/rr7/JRA55/6hr/atmos/.
+INFO: jra55_huss_15_climo.nc OLD coords: Coordinates:
+  * lat      (lat) float32 -16.25 -15.0 -13.75 -12.5 ... 12.5 13.75 15.0 16.25
+  * lon      (lon) float32 108.75 110.0 111.25 112.5 ... 288.75 290.0 291.25
+  * time     (time) datetime64[ns] 1981-01-01 ... 2012-12-31T18:00:00
+INFO: jra55_huss_05_climo.nc OLD coords: Coordinates:
+  * lon      (lon) float32 108.75 110.0 111.25 112.5 ... 288.75 290.0 291.25
+  * lat      (lat) float32 -16.25 -15.0 -13.75 -12.5 ... 12.5 13.75 15.0 16.25
+  * time     (time) datetime64[ns] 1981-01-01 ... 2012-12-31T18:00:00
+INFO: jra55_huss_15_climo.nc NEW coords: Coordinates:
+  * time     (time) int64 1 2 3 4 5 6 7 8 9 10 11 12
+  * lon      (lon) float64 109.0 110.5 112.0 113.5 ... 286.0 287.5 289.0 290.5
+  * lat      (lat) float64 -16.0 -14.5 -13.0 -11.5 -10.0 ... 11.0 12.5 14.0 15.5
+INFO: jra55_huss_05_climo.nc NEW coords: Coordinates:
+  * time     (time) int64 1 2 3 4 5 6 7 8 9 10 11 12
+  * lon      (lon) float64 109.0 109.5 110.0 110.5 ... 289.5 290.0 290.5 291.0
+  * lat      (lat) float64 -16.0 -15.5 -15.0 -14.5 -14.0 ... 14.5 15.0 15.5 16.0
+INFO: jra55_uas_15_climo.nc OLD coords: Coordinates:
+  * lon      (lon) float32 108.75 110.0 111.25 112.5 ... 288.75 290.0 291.25
+  * lat      (lat) float32 -16.25 -15.0 -13.75 -12.5 ... 12.5 13.75 15.0 16.25
+  * time     (time) datetime64[ns] 1981-01-01 ... 2012-12-31T18:00:00
+INFO: jra55_uas_15_climo.nc NEW coords: Coordinates:
+  * time     (time) int64 1 2 3 4 5 6 7 8 9 10 11 12
+  * lon      (lon) float64 109.0 110.5 112.0 113.5 ... 286.0 287.5 289.0 290.5
+  * lat      (lat) float64 -16.0 -14.5 -13.0 -11.5 -10.0 ... 11.0 12.5 14.0 15.5
+INFO: jra55_uas_10_climo.nc OLD coords: Coordinates:
+  * lon      (lon) float32 108.75 110.0 111.25 112.5 ... 288.75 290.0 291.25
+  * lat      (lat) float32 -16.25 -15.0 -13.75 -12.5 ... 12.5 13.75 15.0 16.25
+  * time     (time) datetime64[ns] 1981-01-01 ... 2012-12-31T18:00:00
+INFO: jra55_uas_10_climo.nc NEW coords: Coordinates:
+  * time     (time) int64 1 2 3 4 5 6 7 8 9 10 11 12
+  * lon      (lon) float64 109.0 110.0 111.0 112.0 ... 288.0 289.0 290.0 291.0
+  * lat      (lat) float64 -16.0 -15.0 -14.0 -13.0 -12.0 ... 13.0 14.0 15.0 16.0
+INFO: jra55_uas_05_climo.nc OLD coords: Coordinates:
+  * lon      (lon) float32 108.75 110.0 111.25 112.5 ... 288.75 290.0 291.25
+  * lat      (lat) float32 -16.25 -15.0 -13.75 -12.5 ... 12.5 13.75 15.0 16.25
+  * time     (time) datetime64[ns] 1981-01-01 ... 2012-12-31T18:00:00
+INFO: jra55_uas_05_climo.nc NEW coords: Coordinates:
+  * time     (time) int64 1 2 3 4 5 6 7 8 9 10 11 12
+  * lon      (lon) float64 109.0 109.5 110.0 110.5 ... 289.5 290.0 290.5 291.0
+  * lat      (lat) float64 -16.0 -15.5 -15.0 -14.5 -14.0 ... 14.5 15.0 15.5 16.0
+INFO: jra55_uas_01_climo.nc OLD coords: Coordinates:
+  * lon      (lon) float32 108.75 110.0 111.25 112.5 ... 288.75 290.0 291.25
+  * lat      (lat) float32 -16.25 -15.0 -13.75 -12.5 ... 12.5 13.75 15.0 16.25
+  * time     (time) datetime64[ns] 1981-01-01 ... 2012-12-31T18:00:00
+INFO: jra55_uas_01_climo.nc NEW coords: Coordinates:
+  * time     (time) int64 1 2 3 4 5 6 7 8 9 10 11 12
+  * lon      (lon) float64 109.0 109.1 109.2 109.3 ... 290.7 290.8 290.9 291.0
+  * lat      (lat) float64 -16.0 -15.9 -15.8 -15.7 -15.6 ... 15.7 15.8 15.9 16.0
+INFO: jra55_psl_10_climo.nc OLD coords: Coordinates:
+  * lon      (lon) float32 108.75 110.0 111.25 112.5 ... 288.75 290.0 291.25
+  * lat      (lat) float32 -16.25 -15.0 -13.75 -12.5 ... 12.5 13.75 15.0 16.25
+  * time     (time) datetime64[ns] 1981-01-01 ... 2012-12-31T18:00:00
+INFO: jra55_psl_10_climo.nc NEW coords: Coordinates:
+  * time     (time) int64 1 2 3 4 5 6 7 8 9 10 11 12
+  * lon      (lon) float64 109.0 110.0 111.0 112.0 ... 288.0 289.0 290.0 291.0
+  * lat      (lat) float64 -16.0 -15.0 -14.0 -13.0 -12.0 ... 13.0 14.0 15.0 16.0
+INFO: jra55_psl_01_climo.nc OLD coords: Coordinates:
+  * lon      (lon) float32 108.75 110.0 111.25 112.5 ... 288.75 290.0 291.25
+  * lat      (lat) float32 -16.25 -15.0 -13.75 -12.5 ... 12.5 13.75 15.0 16.25
+  * time     (time) datetime64[ns] 1981-01-01 ... 2012-12-31T18:00:00
+INFO: jra55_psl_01_climo.nc NEW coords: Coordinates:
+  * time     (time) int64 1 2 3 4 5 6 7 8 9 10 11 12
+  * lon      (lon) float64 109.0 109.1 109.2 109.3 ... 290.7 290.8 290.9 291.0
+  * lat      (lat) float64 -16.0 -15.9 -15.8 -15.7 -15.6 ... 15.7 15.8 15.9 16.0
+INFO: jra55_tas_10_climo.nc OLD coords: Coordinates:
+  * lat      (lat) float32 -16.25 -15.0 -13.75 -12.5 ... 12.5 13.75 15.0 16.25
+  * lon      (lon) float32 108.75 110.0 111.25 112.5 ... 288.75 290.0 291.25
+  * time     (time) datetime64[ns] 1981-01-01 ... 2012-12-31T18:00:00
+INFO: jra55_tas_10_climo.nc NEW coords: Coordinates:
+  * time     (time) int64 1 2 3 4 5 6 7 8 9 10 11 12
+  * lon      (lon) float64 109.0 110.0 111.0 112.0 ... 288.0 289.0 290.0 291.0
+  * lat      (lat) float64 -16.0 -15.0 -14.0 -13.0 -12.0 ... 13.0 14.0 15.0 16.0
+INFO: jra55_tas_05_climo.nc OLD coords: Coordinates:
+  * lon      (lon) float32 108.75 110.0 111.25 112.5 ... 288.75 290.0 291.25
+  * lat      (lat) float32 -16.25 -15.0 -13.75 -12.5 ... 12.5 13.75 15.0 16.25
+  * time     (time) datetime64[ns] 1981-01-01 ... 2012-12-31T18:00:00
+INFO: jra55_tas_05_climo.nc NEW coords: Coordinates:
+  * time     (time) int64 1 2 3 4 5 6 7 8 9 10 11 12
+  * lon      (lon) float64 109.0 109.5 110.0 110.5 ... 289.5 290.0 290.5 291.0
+  * lat      (lat) float64 -16.0 -15.5 -15.0 -14.5 -14.0 ... 14.5 15.0 15.5 16.0
+INFO: jra55_tas_01_climo.nc OLD coords: Coordinates:
+  * lat      (lat) float32 -16.25 -15.0 -13.75 -12.5 ... 12.5 13.75 15.0 16.25
+  * lon      (lon) float32 108.75 110.0 111.25 112.5 ... 288.75 290.0 291.25
+  * time     (time) datetime64[ns] 1981-01-01 ... 2012-12-31T18:00:00
+INFO: jra55_tas_01_climo.nc NEW coords: Coordinates:
+  * time     (time) int64 1 2 3 4 5 6 7 8 9 10 11 12
+  * lon      (lon) float64 109.0 109.1 109.2 109.3 ... 290.7 290.8 290.9 291.0
+  * lat      (lat) float64 -16.0 -15.9 -15.8 -15.7 -15.6 ... 15.7 15.8 15.9 16.0
+INFO: SUCCESS: jra55_uas_10_climo.nc
+INFO: reanalysis_wind: 0:1:33.33 total: 93.33 seconds.
+INFO: jra55_vas_10_climo.nc OLD coords: Coordinates:
+  * lat      (lat) float32 -16.25 -15.0 -13.75 -12.5 ... 12.5 13.75 15.0 16.25
+  * lon      (lon) float32 108.75 110.0 111.25 112.5 ... 288.75 290.0 291.25
+  * time     (time) datetime64[ns] 1981-01-01 ... 2012-12-31T18:00:00
+INFO: jra55_vas_10_climo.nc NEW coords: Coordinates:
+  * time     (time) int64 1 2 3 4 5 6 7 8 9 10 11 12
+  * lon      (lon) float64 109.0 110.0 111.0 112.0 ... 288.0 289.0 290.0 291.0
+  * lat      (lat) float64 -16.0 -15.0 -14.0 -13.0 -12.0 ... 13.0 14.0 15.0 16.0
+INFO: jra55_vas_05_climo.nc OLD coords: Coordinates:
+  * lon      (lon) float32 108.75 110.0 111.25 112.5 ... 288.75 290.0 291.25
+  * lat      (lat) float32 -16.25 -15.0 -13.75 -12.5 ... 12.5 13.75 15.0 16.25
+  * time     (time) datetime64[ns] 1981-01-01 ... 2012-12-31T18:00:00
+INFO: jra55_vas_05_climo.nc NEW coords: Coordinates:
+  * time     (time) int64 1 2 3 4 5 6 7 8 9 10 11 12
+  * lon      (lon) float64 109.0 109.5 110.0 110.5 ... 289.5 290.0 290.5 291.0
+  * lat      (lat) float64 -16.0 -15.5 -15.0 -14.5 -14.0 ... 14.5 15.0 15.5 16.0
+INFO: jra55_vas_01_climo.nc OLD coords: Coordinates:
+  * lat      (lat) float32 -16.25 -15.0 -13.75 -12.5 ... 12.5 13.75 15.0 16.25
+  * lon      (lon) float32 108.75 110.0 111.25 112.5 ... 288.75 290.0 291.25
+  * time     (time) datetime64[ns] 1981-01-01 ... 2012-12-31T18:00:00
+INFO: jra55_vas_01_climo.nc NEW coords: Coordinates:
+  * time     (time) int64 1 2 3 4 5 6 7 8 9 10 11 12
+  * lon      (lon) float64 109.0 109.1 109.2 109.3 ... 290.7 290.8 290.9 291.0
+  * lat      (lat) float64 -16.0 -15.9 -15.8 -15.7 -15.6 ... 15.7 15.8 15.9 16.0
+INFO: SUCCESS: jra55_huss_15_climo.nc
+INFO: reanalysis_wind: 0:1:36.08 total: 96.08 seconds.
+INFO: SUCCESS: jra55_huss_05_climo.nc
+INFO: reanalysis_wind: 0:1:36.11 total: 96.11 seconds.
+INFO: SUCCESS: jra55_uas_01_climo.nc
+INFO: reanalysis_wind: 0:1:36.38 total: 96.38 seconds.
+INFO: SUCCESS: jra55_uas_15_climo.nc
+INFO: SUCCESS: jra55_uas_05_climo.nc
+INFO: reanalysis_wind: 0:1:36.57 total: 96.57 seconds.
+INFO: reanalysis_wind: 0:1:36.62 total: 96.62 seconds.
+INFO: SUCCESS: jra55_psl_10_climo.nc
+INFO: reanalysis_wind: 0:1:41.92 total: 101.92 seconds.
+INFO: SUCCESS: jra55_psl_01_climo.nc
+INFO: reanalysis_wind: 0:1:42.22 total: 102.22 seconds.
+INFO: SUCCESS: jra55_tas_10_climo.nc
+INFO: reanalysis_wind: 0:1:45.77 total: 105.77 seconds.
+INFO: SUCCESS: jra55_tas_05_climo.nc
+INFO: reanalysis_wind: 0:1:45.84 total: 105.84 seconds.
+INFO: SUCCESS: jra55_tas_01_climo.nc
+INFO: reanalysis_wind: 0:1:46.11 total: 106.11 seconds.
+INFO: SUCCESS: jra55_vas_10_climo.nc
+INFO: reanalysis_wind: 0:1:48.36 total: 108.36 seconds.
+INFO: SUCCESS: jra55_vas_05_climo.nc
+INFO: reanalysis_wind: 0:1:48.41 total: 108.41 seconds.
+INFO: SUCCESS: jra55_vas_01_climo.nc
+INFO: reanalysis_wind: 0:1:48.62 total: 108.62 seconds.
