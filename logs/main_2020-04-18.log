@@ -34,3 +34,74 @@
   * lat      (lat) float64 -16.0 -15.9 -15.8 -15.7 -15.6 ... 15.7 15.8 15.9 16.0
 2020-04-18 09:29:09,208:reanalysis_wind:SUCCESS: erai_tas_01_climo.nc
 2020-04-18 09:29:09,216:timed:reanalysis_wind: 0:0:04.03 total: 4.03 seconds.
+2020-04-18 11:36:43,702:reanalysis_wind:Creating file: jra55_huss_15_climo.nc from /g/data/rr7/JRA55/6hr/atmos/.
+2020-04-18 11:36:43,702:reanalysis_wind:Creating file: jra55_uas_15_climo.nc from /g/data/rr7/JRA55/6hr/atmos/.
+2020-04-18 11:36:43,702:reanalysis_wind:Creating file: jra55_tas_15_climo.nc from /g/data/rr7/JRA55/6hr/atmos/.
+2020-04-18 11:36:43,702:reanalysis_wind:Creating file: jra55_vas_10_climo.nc from /g/data/rr7/JRA55/6hr/atmos/.
+2020-04-18 11:36:43,702:reanalysis_wind:Creating file: jra55_tas_10_climo.nc from /g/data/rr7/JRA55/6hr/atmos/.
+2020-04-18 11:36:43,702:reanalysis_wind:Creating file: jra55_tas_05_climo.nc from /g/data/rr7/JRA55/6hr/atmos/.
+2020-04-18 11:36:43,702:reanalysis_wind:Creating file: jra55_uas_05_climo.nc from /g/data/rr7/JRA55/6hr/atmos/.
+2020-04-18 11:36:43,703:reanalysis_wind:Creating file: jra55_vas_05_climo.nc from /g/data/rr7/JRA55/6hr/atmos/.
+2020-04-18 11:36:43,703:reanalysis_wind:Creating file: jra55_psl_15_climo.nc from /g/data/rr7/JRA55/6hr/atmos/.
+2020-04-18 11:36:43,703:reanalysis_wind:Creating file: jra55_psl_10_climo.nc from /g/data/rr7/JRA55/6hr/atmos/.
+2020-04-18 11:36:43,703:reanalysis_wind:Creating file: jra55_psl_05_climo.nc from /g/data/rr7/JRA55/6hr/atmos/.
+2020-04-18 11:38:13,609:reanalysis_wind:jra55_tas_10_climo.nc OLD coords: Coordinates:
+  * lon      (lon) float32 108.75 110.0 111.25 112.5 ... 288.75 290.0 291.25
+  * lat      (lat) float32 -16.25 -15.0 -13.75 -12.5 ... 12.5 13.75 15.0 16.25
+  * time     (time) datetime64[ns] 1981-01-01 ... 2012-12-31T18:00:00
+2020-04-18 11:38:13,616:reanalysis_wind:jra55_tas_10_climo.nc NEW coords: Coordinates:
+  * time     (time) int64 1 2 3 4 5 6 7 8 9 10 11 12
+  * lon      (lon) float64 109.0 110.0 111.0 112.0 ... 288.0 289.0 290.0 291.0
+  * lat      (lat) float64 -16.0 -15.0 -14.0 -13.0 -12.0 ... 13.0 14.0 15.0 16.0
+2020-04-18 11:38:13,639:reanalysis_wind:SUCCESS: jra55_tas_10_climo.nc
+2020-04-18 11:38:13,668:timed:reanalysis_wind: 0:1:29.97 total: 89.97 seconds.
+2020-04-18 11:38:13,692:reanalysis_wind:jra55_vas_05_climo.nc OLD coords: Coordinates:
+  * lat      (lat) float32 -16.25 -15.0 -13.75 -12.5 ... 12.5 13.75 15.0 16.25
+  * lon      (lon) float32 108.75 110.0 111.25 112.5 ... 288.75 290.0 291.25
+  * time     (time) datetime64[ns] 1981-01-01 ... 2012-12-31T18:00:00
+2020-04-18 11:38:13,695:reanalysis_wind:jra55_vas_05_climo.nc NEW coords: Coordinates:
+  * time     (time) int64 1 2 3 4 5 6 7 8 9 10 11 12
+  * lon      (lon) float64 109.0 109.5 110.0 110.5 ... 289.5 290.0 290.5 291.0
+  * lat      (lat) float64 -16.0 -15.5 -15.0 -14.5 -14.0 ... 14.5 15.0 15.5 16.0
+2020-04-18 11:38:13,708:reanalysis_wind:SUCCESS: jra55_vas_05_climo.nc
+2020-04-18 11:38:13,728:timed:reanalysis_wind: 0:1:30.03 total: 90.03 seconds.
+2020-04-18 11:38:13,962:reanalysis_wind:jra55_huss_15_climo.nc OLD coords: Coordinates:
+  * lon      (lon) float32 108.75 110.0 111.25 112.5 ... 288.75 290.0 291.25
+  * lat      (lat) float32 -16.25 -15.0 -13.75 -12.5 ... 12.5 13.75 15.0 16.25
+  * time     (time) datetime64[ns] 1981-01-01 ... 2012-12-31T18:00:00
+2020-04-18 11:38:13,966:reanalysis_wind:jra55_huss_15_climo.nc NEW coords: Coordinates:
+  * time     (time) int64 1 2 3 4 5 6 7 8 9 10 11 12
+  * lon      (lon) float64 109.0 110.5 112.0 113.5 ... 286.0 287.5 289.0 290.5
+  * lat      (lat) float64 -16.0 -14.5 -13.0 -11.5 -10.0 ... 11.0 12.5 14.0 15.5
+2020-04-18 11:38:13,976:reanalysis_wind:SUCCESS: jra55_huss_15_climo.nc
+2020-04-18 11:38:14,002:timed:reanalysis_wind: 0:1:30.30 total: 90.30 seconds.
+2020-04-18 11:38:21,755:reanalysis_wind:jra55_psl_10_climo.nc OLD coords: Coordinates:
+  * lon      (lon) float32 108.75 110.0 111.25 112.5 ... 288.75 290.0 291.25
+  * lat      (lat) float32 -16.25 -15.0 -13.75 -12.5 ... 12.5 13.75 15.0 16.25
+  * time     (time) datetime64[ns] 1981-01-01 ... 2012-12-31T18:00:00
+2020-04-18 11:38:21,759:reanalysis_wind:jra55_psl_10_climo.nc NEW coords: Coordinates:
+  * time     (time) int64 1 2 3 4 5 6 7 8 9 10 11 12
+  * lon      (lon) float64 109.0 110.0 111.0 112.0 ... 288.0 289.0 290.0 291.0
+  * lat      (lat) float64 -16.0 -15.0 -14.0 -13.0 -12.0 ... 13.0 14.0 15.0 16.0
+2020-04-18 11:38:21,770:reanalysis_wind:SUCCESS: jra55_psl_10_climo.nc
+2020-04-18 11:38:21,804:timed:reanalysis_wind: 0:1:38.10 total: 98.10 seconds.
+2020-04-18 11:38:24,538:reanalysis_wind:jra55_uas_15_climo.nc OLD coords: Coordinates:
+  * lon      (lon) float32 108.75 110.0 111.25 112.5 ... 288.75 290.0 291.25
+  * lat      (lat) float32 -16.25 -15.0 -13.75 -12.5 ... 12.5 13.75 15.0 16.25
+  * time     (time) datetime64[ns] 1981-01-01 ... 2012-12-31T18:00:00
+2020-04-18 11:38:24,542:reanalysis_wind:jra55_uas_15_climo.nc NEW coords: Coordinates:
+  * time     (time) int64 1 2 3 4 5 6 7 8 9 10 11 12
+  * lon      (lon) float64 109.0 110.5 112.0 113.5 ... 286.0 287.5 289.0 290.5
+  * lat      (lat) float64 -16.0 -14.5 -13.0 -11.5 -10.0 ... 11.0 12.5 14.0 15.5
+2020-04-18 11:38:24,550:reanalysis_wind:SUCCESS: jra55_uas_15_climo.nc
+2020-04-18 11:38:24,567:timed:reanalysis_wind: 0:1:40.87 total: 100.87 seconds.
+2020-04-18 11:38:24,586:reanalysis_wind:jra55_uas_05_climo.nc OLD coords: Coordinates:
+  * lon      (lon) float32 108.75 110.0 111.25 112.5 ... 288.75 290.0 291.25
+  * lat      (lat) float32 -16.25 -15.0 -13.75 -12.5 ... 12.5 13.75 15.0 16.25
+  * time     (time) datetime64[ns] 1981-01-01 ... 2012-12-31T18:00:00
+2020-04-18 11:38:24,591:reanalysis_wind:jra55_uas_05_climo.nc NEW coords: Coordinates:
+  * time     (time) int64 1 2 3 4 5 6 7 8 9 10 11 12
+  * lon      (lon) float64 109.0 109.5 110.0 110.5 ... 289.5 290.0 290.5 291.0
+  * lat      (lat) float64 -16.0 -15.5 -15.0 -14.5 -14.0 ... 14.5 15.0 15.5 16.0
+2020-04-18 11:38:24,604:reanalysis_wind:SUCCESS: jra55_uas_05_climo.nc
+2020-04-18 11:38:24,630:timed:reanalysis_wind: 0:1:40.93 total: 100.93 seconds.
