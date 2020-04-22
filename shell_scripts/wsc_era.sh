@@ -12,6 +12,10 @@
 module use /g/data3/hh5/public/modules
 module load conda/analysis3-20.01
 
-for i in 0 1 2 3 4 5; do
-python3 /g/data/e14/as3189/OFAM/scripts/create_file_reanalysis_wind.py 'erai' $i 0.1
-done
+python3 /g/data/e14/as3189/OFAM/scripts/create_file_reanalysis_wind.py 'erai' 0
+python3 /g/data/e14/as3189/OFAM/scripts/create_file_reanalysis_wind.py 'erai' 1
+python3 /g/data/e14/as3189/OFAM/scripts/create_file_reanalysis_wind.py 'erai' 2
+python3 /g/data/e14/as3189/OFAM/scripts/create_file_reanalysis_wind.py 'erai' 3
+python3 /g/data/e14/as3189/OFAM/scripts/create_file_reanalysis_wind.py 'erai' 4
+python3 /g/data/e14/as3189/OFAM/scripts/create_file_reanalysis_wind.py 'erai' 5
+
