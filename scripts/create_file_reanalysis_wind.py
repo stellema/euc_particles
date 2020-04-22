@@ -39,7 +39,7 @@ import logging
 import numpy as np
 import xarray as xr
 from datetime import datetime
-from main import paths, lx, timeit
+from main import paths, lx, timeit, idx_1d
 from scipy.interpolate import griddata
 from parcels.tools.loggers import logger
 
@@ -48,11 +48,11 @@ fpath, dpath, xpath, lpath, tpath = paths()
 
 product = str(sys.argv[1])  # 'jra55' or 'erai'.
 vari = int(sys.argv[2])  # 0-4 for jra55 and 0-5 for erai.
-res = float(sys.argv[3])  # Interpolation width.
+# res = float(sys.argv[3])  # Interpolation width.
 
 
 @timeit
-def reanalysis_wind(product, vari, lon, lat, res, interp='cubic'):
+def reanalysis_wind(product, vari, lon, lat):
     def slice_vars(ds):
         """Preprocess slice and rename variables."""
         # Rename erai ta2d variables.
@@ -64,8 +64,18 @@ def reanalysis_wind(product, vari, lon, lat, res, interp='cubic'):
 
         if hasattr(ds, 'latitude'):
             ds = ds.rename({'latitude': 'lat', 'longitude': 'lon'})
-        ds = ds.sel(lat=slice(lat[0]-1, lat[1]+1),
-                    lon=slice(lon[0]-1, lon[1]+1))
+        x0 = idx_1d(ds.lon.values, lon[0])
+        x0 = x0 - 1 if ds.lon[x0] > lon[0] else x0
+        x1 = idx_1d(ds.lon.values, lon[1])
+        x1 = x1 + 1 if ds.lon[x1] > lon[1] else x1
+
+        y0 = idx_1d(ds.lat.values, lat[0])
+        y0 = y0 - 1 if ds.lat[y0] > lat[0] else y0
+        y1 = idx_1d(ds.lat.values, lat[1])
+        y1 = y1 + 1 if ds.lat[y1] > lat[1] else y1
+
+        ds = ds.isel(lat=slice(y0, y1+1), lon=slice(x0, x1+1))
+
         return ds
 
     f = []
@@ -87,8 +97,8 @@ def reanalysis_wind(product, vari, lon, lat, res, interp='cubic'):
         for y in range(lx['years'][0][0], lx['years'][0][1]+1):
             f.append(path + '{}/v1/{}_6hrPlev_JRA55_{}010100_{}123118.nc'
                      .format(var, var, y, y))
-    istr = '' if interp != 'cubic' else 'cubic_'
-    fname = '{}_{}_{:02.0f}_{}climo.nc'.format(product, var, res*10, istr)
+
+    fname = '{}_{}_climo.nc'.format(product, var)
 
     logger.info('Creating file: {} from {}.'.format(fname, path))
 
@@ -97,31 +107,31 @@ def reanalysis_wind(product, vari, lon, lat, res, interp='cubic'):
 
     attrs = ds[var].attrs
     # Subset over the Pacific.
-    old_coords = ds[var].coords
+    # old_coords = ds[var].coords
 
     ds = ds.groupby('time.month').mean().rename({'month': 'time'})
 
-    x2 = np.arange(lon[0], lon[1] + res, res)
-    y2 = np.arange(lat[0], lat[1] + res, res)
+    # x2 = np.arange(lon[0], lon[1] + res, res)
+    # y2 = np.arange(lat[0], lat[1] + res, res)
 
-    if interp == 'linear':
-        ds = ds.interp(lon=x2, lat=y2)
-    else:
-        tmp = np.empty((len(ds[var].time), len(y2), len(x2)))*np.nan
+    # if interp == 'linear':
+    #     ds = ds.interp(lon=x2, lat=y2)
+    # else:
+    #     tmp = np.empty((len(ds[var].time), len(y2), len(x2)))*np.nan
 
-        x1 = ds.lon.values
-        y1 = ds.lat.values
-        X1, Y1 = np.meshgrid(x1, y1)
-        X2, Y2 = np.meshgrid(x2, y2)
-        for t in range(len(ds[var].time)):
-            tmp[t] = griddata((X1.flatten(), Y1.flatten()),
-                              ds[var][t].values.flatten(), (X2, Y2),
-                              method='cubic')
+    #     x1 = ds.lon.values
+    #     y1 = ds.lat.values
+    #     X1, Y1 = np.meshgrid(x1, y1)
+    #     X2, Y2 = np.meshgrid(x2, y2)
+    #     for t in range(len(ds[var].time)):
+    #         tmp[t] = griddata((X1.flatten(), Y1.flatten()),
+    #                           ds[var][t].values.flatten(), (X2, Y2),
+    #                           method='cubic')
 
-        ds = ds.interp(lon=x2, lat=y2)
-        ds[var] = (ds[var].dims, tmp)
+    #     ds = ds.interp(lon=x2, lat=y2)
+    #     ds[var] = (ds[var].dims, tmp)
 
-    ds = ds.sel(lat=slice(lat[0], lat[1]), lon=slice(lon[0], lon[1]))
+    # ds = ds.sel(lat=slice(lat[0], lat[1]), lon=slice(lon[0], lon[1]))
 
     ds[var].attrs = attrs
     ds[var].attrs['history'] = ('Modified {} from files e.g. {}'
@@ -129,7 +139,7 @@ def reanalysis_wind(product, vari, lon, lat, res, interp='cubic'):
 
     ds.to_netcdf(dpath/fname)
 
-    logger.info('{} OLD coords: {}'.format(fname, old_coords))
+    # logger.info('{} OLD coords: {}'.format(fname, old_coords))
     logger.info('{} NEW coords: {}'.format(fname, ds[var].coords))
     ds.close()
 
@@ -152,6 +162,6 @@ handler.setFormatter(formatter)
 logger.addHandler(handler)
 logger.propagate = False
 
-lon = [109, 291]
-lat = [-16, 16]
-reanalysis_wind(product, vari, lon, lat, res, interp='cubic')
+lon = [120, 295]
+lat = [-15, 15]
+reanalysis_wind(product, vari, lon, lat)

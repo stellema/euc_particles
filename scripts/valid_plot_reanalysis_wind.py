@@ -111,17 +111,20 @@ def plot_winds(varz, var_name, var_name_short, units):
     return
 
 
-def get_wsc(data='jra55', flux='bulk', res=0.1, mean_t=True):
+def get_wsc(data='jra55', flux='bulk', res=0.1, mean_t=True, interp=''):
     dx = res*10
     if flux == 'bulk':
-        U_O, T_O, q_O, SLP, SST, SSU = flux_data(data, mean_t=mean_t, res=res)
+        U_O, T_O, q_O, SLP, SST, SSU = flux_data(data, mean_t=mean_t, res=res,
+                                                 interp=interp)
         tau = bulk_fluxes(U_O, T_O, q_O, SLP, SST, SSU, z_U=10, z_T=2,
                           z_q=2, N=5, result='TAU')
         tx, ty = tau.real, tau.imag
 
     else:
-        u = xr.open_dataset(dpath/'{}_uas_{:02.0f}_climo.nc'.format(data, dx))
-        v = xr.open_dataset(dpath/'{}_vas_{:02.0f}_climo.nc'.format(data, dx))
+        u = xr.open_dataset(dpath/'{}_uas_{:02.0f}_{}climo.nc'.format(data, dx,
+                                                                      interp))
+        v = xr.open_dataset(dpath/'{}_vas_{:02.0f}_{}climo.nc'.format(data, dx,
+                                                                      interp))
         tx, ty = prescribed_momentum(reduce(u.uas, mean_t, res),
                                      reduce(v.vas, mean_t, res), method=flux)
 
@@ -129,14 +132,16 @@ def get_wsc(data='jra55', flux='bulk', res=0.1, mean_t=True):
 
     return tx, ty, phi
 
-
+interp = ''
 mean_t = True
 data = ['jra55', 'erai']
 flux = ['bulk', 'static', 'GILL','LARGE_approx']
 res = 1
 f1, f2 = 0, 1
-tx1, ty1, phi1 = get_wsc(data=data[0], flux=flux[f1], res=res, mean_t=mean_t)
-tx2, ty2, phi2 = get_wsc(data=data[1], flux=flux[f2], res=res, mean_t=mean_t)
+tx1, ty1, phi1 = get_wsc(data=data[0], flux=flux[f1], res=res, mean_t=mean_t,
+                         interp=interp)
+tx2, ty2, phi2 = get_wsc(data=data[1], flux=flux[f2], res=res, mean_t=mean_t,
+                         interp=interp)
 
 varz = [phi1*1e7, phi2*1e7, (phi1.values - phi2.values)*1e7,
         (tx1.values - tx2.values)*1e2,

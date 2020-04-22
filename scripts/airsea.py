@@ -115,32 +115,32 @@ def specific_humidity_from_p(Td, p):
             (p - ((1 - omega) * vapour_pressure(Td))))
 
 
-def flux_data(dat='jra55', res=0.1, mean_t=True):
+def flux_data(dat='jra55', res=0.1, mean_t=True, interp=''):
     dx = res*10
     # Sea surface temperature, in degrees Celsius.
 
     # Observed vector wind at height z_U, in m/s.
-    u_O = xr.open_dataset(dpath/'{}_uas_{:02.0f}_climo.nc'.format(dat, dx))
-    v_O = xr.open_dataset(dpath/'{}_vas_{:02.0f}_climo.nc'.format(dat, dx))
+    u_O = xr.open_dataset(dpath/'{}_uas_{:02.0f}_{}climo.nc'.format(dat, dx, interp))
+    v_O = xr.open_dataset(dpath/'{}_vas_{:02.0f}_{}climo.nc'.format(dat, dx, interp))
     U_O = reduce(u_O.uas, mean_t, res) + 1j * reduce(v_O.vas, mean_t, res)
 
     # Observed temperature at height z_T, in degrees Celsius
-    T_O = xr.open_dataset(dpath/'{}_tas_{:02.0f}_climo.nc'.format(dat, dx))
+    T_O = xr.open_dataset(dpath/'{}_tas_{:02.0f}_{}climo.nc'.format(dat, dx, interp))
     T_O = reduce(T_O.tas, mean_t, res)
 
     # Observed specific humidity at height z_q, in kg/kg.
     if dat == 'jra55':
-        q_ = xr.open_dataset(dpath/'{}_huss_{:02.0f}_climo.nc'.format(dat, dx))
+        q_ = xr.open_dataset(dpath/'{}_huss_{:02.0f}_{}climo.nc'.format(dat, dx, interp))
         q_O = reduce(q_.huss, mean_t, res)
     else:
-        ps = xr.open_dataset(dpath/'{}_ps_{:02.0f}_climo.nc'.format(dat, dx))
+        ps = xr.open_dataset(dpath/'{}_ps_{:02.0f}_{}climo.nc'.format(dat, dx, interp))
         ps = reduce(ps.ps, mean_t, res)
-        td = xr.open_dataset(dpath/'{}_ta2d_{:02.0f}_climo.nc'.format(dat, dx))
+        td = xr.open_dataset(dpath/'{}_ta2d_{:02.0f}_{}climo.nc'.format(dat, dx, interp))
         td = reduce(td.ta2d, mean_t, res)
         q_O = specific_humidity_from_p(td, ps)
 
     # Sea level pressure, in hectopascal (hPa). [Original units Pa]
-    SLP = xr.open_dataset(dpath/'{}_psl_{:02.0f}_climo.nc'.format(dat, dx))
+    SLP = xr.open_dataset(dpath/'{}_psl_{:02.0f}_{}climo.nc'.format(dat, dx, interp))
     SLP = reduce(SLP.psl, mean_t, res)
 
     # Convert from Kelvin to Celsius.
@@ -725,23 +725,23 @@ def prescribed_momentum(u, v, method='static'):
                         else:
                             cd = (0.49 + 0.065*U)*0.001
 
-                    # # YEAGER LARGE (approx).
-                    # elif method == 'LARGE_approx':
-                    #     drag = pd.read_csv(dpath/'cdrag.csv')
-                    #     xi = idx_1d(drag['u'].values, U.item())
+                    # YEAGER LARGE (approx).
+                    elif method == 'LARGE_approx':
+                        drag = pd.read_csv(dpath/'cdrag.csv')
+                        xi = idx_1d(drag['u'].values, U.item())
 
-                    #     # if (drag['u'][xi] != U[j, i] and
-                    #     #     xi != 0 and xi != len(drag['u']-1)):
+                        if (drag['u'][xi] != U[j, i] and
+                            xi != 0 and xi != len(drag['u']-1)):
 
-                    #     #     x1i = xi if drag['u'][xi] <= U[j, i] else xi - 1
-                    #     #     x2i = xi + 1 if drag['u'][xi] <= U[j, i] else xi
-                    #     #     x1, x2 = drag['u'][x1i], drag['u'][x2i]
-                    #     #     y1, y2 = drag['cd'][x1i], drag['cd'][x2i]
-                    #     #     b = (x1*y2 - x2*y1)/(x1-x2)
-                    #     #     m = (y1-y2)/(x1-x2)
-                    #     #     cd[j, i] = (m*U[j, i] + b)*0.001
-                    #     # else:
-                    #     cd = drag['cd'][xi]*0.001
+                            x1i = xi if drag['u'][xi] <= U[j, i] else xi - 1
+                            x2i = xi + 1 if drag['u'][xi] <= U[j, i] else xi
+                            x1, x2 = drag['u'][x1i], drag['u'][x2i]
+                            y1, y2 = drag['cd'][x1i], drag['cd'][x2i]
+                            b = (x1*y2 - x2*y1)/(x1-x2)
+                            m = (y1-y2)/(x1-x2)
+                            cd[j, i] = (m*U[j, i] + b)*0.001
+                        else:
+                            cd = drag['cd'][xi]*0.001
 
             # Equation.
             tx[j, i] = cd*p*U*u[j, i]  # kg/m^3*m/s*m/s = N/m^2.
@@ -763,42 +763,42 @@ def prescribed_momentum(u, v, method='static'):
 # v = reduce(v, mean_t).vas
 # tx, ty = prescribed_momentum(u, v, method='static')
 
-def fix_ws_coords(dat='erai'):
-    if dat == 'jra55':
-        VARS = ['uas', 'vas', 'tas', 'psl']
-    else:
-        VARS = ['uas', 'vas', 'tas', 'ta2d', 'ps', 'psl']
+# def fix_ws_coords(dat='erai'):
+#     if dat == 'jra55':
+#         VARS = ['uas', 'vas', 'tas', 'psl']
+#     else:
+#         VARS = ['uas', 'vas', 'tas', 'ta2d', 'ps', 'psl']
 
-    for res in [0.1, 0.5, 1]:
-        lats, lons = [], []
-        bdy, bdx = [], []
-        for var in VARS:
-            ds = xr.open_dataset(dpath/'{}_{}_{:02.0f}_climo.nc'
-                                 .format(dat, var, res*10))
-            if ~np.isnan(ds.lat).all():
-                lats = ds.lat.values
-            else:
-                bdy.append(var)
-                print(res, var, 'lat', len(lats))
+#     for res in [0.1, 0.5, 1]:
+#         lats, lons = [], []
+#         bdy, bdx = [], []
+#         for var in VARS:
+#             ds = xr.open_dataset(dpath/'{}_{}_{:02.0f}_climo.nc'
+#                                  .format(dat, var, res*10))
+#             if ~np.isnan(ds.lat).all():
+#                 lats = ds.lat.values
+#             else:
+#                 bdy.append(var)
+#                 print(res, var, 'lat', len(lats))
 
-            if ~np.isnan(ds.lon).all():
-                lons = ds.lon.values
-            else:
-                bdx.append(var)
-                print(res, var, 'lon', len(lons))
-        if ((len(lats) == 0 and len(bdy) > 0) or
-            (len(lons) == 0 and len(bdx) > 0)):
-            print('mad error', res)
-        for varz in bdy:
-            ds = xr.open_dataset(dpath/'{}_{}_{:02.0f}_climo.nc'
-                                  .format(dat, varz, res*10))
-            ds.coords['lat'] = lats
-            ds.to_netcdf(dpath/'{}_{}_{:02.0f}_climox.nc'
-                                  .format(dat, varz, res*10))
+#             if ~np.isnan(ds.lon).all():
+#                 lons = ds.lon.values
+#             else:
+#                 bdx.append(var)
+#                 print(res, var, 'lon', len(lons))
+#         if ((len(lats) == 0 and len(bdy) > 0) or
+#             (len(lons) == 0 and len(bdx) > 0)):
+#             print('mad error', res)
+#         for varz in bdy:
+#             ds = xr.open_dataset(dpath/'{}_{}_{:02.0f}_climo.nc'
+#                                   .format(dat, varz, res*10))
+#             ds.coords['lat'] = lats
+#             ds.to_netcdf(dpath/'{}_{}_{:02.0f}_climox.nc'
+#                                   .format(dat, varz, res*10))
 
-        for varz in bdx:
-            ds = xr.open_dataset(dpath/'{}_{}_{:02.0f}_climo.nc'
-                                  .format(dat, varz, res*10))
-            ds.coords['lon'] = lons
-            ds.to_netcdf(dpath/'{}_{}_{:02.0f}_climoy.nc'
-                                  .format(dat, varz, res*10))
+#         for varz in bdx:
+#             ds = xr.open_dataset(dpath/'{}_{}_{:02.0f}_climo.nc'
+#                                   .format(dat, varz, res*10))
+#             ds.coords['lon'] = lons
+#             ds.to_netcdf(dpath/'{}_{}_{:02.0f}_climoy.nc'
+#                                   .format(dat, varz, res*10))
