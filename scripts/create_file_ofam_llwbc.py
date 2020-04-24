@@ -8,14 +8,27 @@ ds= xr.open_dataset(xpath/'ocean_v_1981-2012_climo.nc')
 
 """
 import sys
+import logging
 import numpy as np
 import xarray as xr
 from datetime import datetime
 from main import paths, lx, idx
 from main_valid import deg_m
+from parcels.tools.loggers import logger
 
 # Path to save figures, save data and OFAM model output.
 fpath, dpath, xpath, lpath, tpath = paths()
+
+now = datetime.now()
+
+logger.setLevel(logging.DEBUG)
+now = datetime.now()
+handler = logging.FileHandler(lpath/'transport_{}.log'
+                              .format(now.strftime("%Y-%m-%d")))
+formatter = logging.Formatter('%(asctime)s:%(funcName)s:%(message)s')
+handler.setFormatter(formatter)
+logger.addHandler(handler)
+logger.propagate = False
 
 
 def bnd_idx(ds, lat, lon):
@@ -35,58 +48,26 @@ def bnd_idx(ds, lat, lon):
 
 def transport(var, ds, lat, lon, name, name_short):
     bnds = bnd_idx(ds, lat, lon)
-    ds = ds.isel(yu_ocean=bnds[0], xu_ocean=bnds[1])
+    df = ds.isel(yu_ocean=bnds[0], xu_ocean=bnds[1])
     if var == 'v':
-        ds = ds.assign(vvo=ds[var]*ds.area)
+        df = df.assign(vvo=df[var]*df.area)
     else:
-        ds = ds.assign(uvo=ds[var]*ds.area)
-    ds.attrs['name'] = name
-    ds.attrs['bnds'] = 'lat={}, lon={}'.format(lat, lon)
-    now = datetime.now()
-    ds.attrs['history'] = 'Modified {}. '.format(now.strftime("%Y-%m-%d"))
+        df = df.assign(uvo=df[var]*df.area)
+    df.attrs = ds.attrs
+    df[var].attrs = ds[var].attrs
+    df.attrs['name'] = name
+    df.attrs['bnds'] = 'lat={}, lon={}'.format(lat, lon)
 
-    ds.to_netcdf(dpath/'ofam_{}_transport.nc'.format(name_short))
-    print('{} transport saved on {}.'.format(name, now.strftime("%Y-%m-%d")))
+    df.attrs['history'] = ('Modified {}.'.format(now.strftime("%Y-%m-%d"))+
+                           ds.attrs['history'])
+
+    df.to_netcdf(dpath/'ofam_transport_{}.nc'.format(name_short))
+    logger.info('Finished transport file: {}.'.format(name))
+
     return
 
 
 s = int(sys.argv[1])
-var = 'v'
-
-f = []
-for y in range(lx['years'][0][0], lx['years'][0][1] + 1):
-    for m in range(1, 13):
-        f.append(xpath/'ocean_{}_{}_{:02d}.nc'.format(var, y, m))
-
-ds = xr.open_mfdataset(f, combine='by_coords', concat_dim="Time",
-                       mask_and_scale=False)
-
-# Calculate the monthly means.
-ds = ds.resample(Time="MS").mean()
-
-ds = ds.drop('average_DT')
-
-nlevs = len(ds.st_ocean)
-
-# Calculate depth [m] of grid cells.
-DZ = np.array([(ds.st_ocean[z+1] - ds.st_ocean[z]).item()
-              for z in range(0, nlevs - 1)])
-# Change shape for easier multiplication.
-dz = DZ[:, np.newaxis]
-
-# Remove last depth level.
-# du = du.isel(st_ocean=slice(0, nlevs - 1))
-ds = ds.isel(st_ocean=slice(0, nlevs - 1))
-
-# Convert degrees to metres to multiply velocity
-dx, dy = deg_m(ds.yu_ocean.values, ds.xu_ocean.values)
-
-# Calculate grid edge area.
-if var == 'v':
-    area = (ds[var]*np.nan).fillna(1)*dz[:, np.newaxis]*dx[:, np.newaxis]
-elif var == 'u':
-    area = (ds[var]*np.nan).fillna(1)*dz[:, np.newaxis]*dy
-ds = ds.assign(area=area)
 
 if s == 0:
     # Vitiaz strait.
@@ -112,9 +93,47 @@ elif s == 3:
     name_short = 'mc'
     lat, lon = [6.4, 9], [126.2, 128.2]
 
+
+logger.info('Creating transport file: {}.'.format(name))
+var = 'v'
+
+f = []
+for y in range(lx['years'][0][0], lx['years'][0][1] + 1):
+    for m in range(1, 13):
+        f.append(xpath/'ocean_{}_{}_{:02d}.nc'.format(var, y, m))
+
+ds = xr.open_mfdataset(f, combine='by_coords', concat_dim="Time",
+                       mask_and_scale=False)
+
+# Calculate the monthly means.
+ds = ds.resample(Time="MS").mean()
+
+ds = ds.drop('average_DT')
+
+nlevs = len(ds.st_ocean)
+
+# Calculate depth [m] of grid cells.
+DZ = np.array([(ds.st_ocean[z+1] - ds.st_ocean[z]).item()
+              for z in range(0, nlevs - 1)])
+# Change shape for easier multiplication.
+dz = DZ[:, np.newaxis]
+
+# Remove last depth level.
+ds = ds.isel(st_ocean=slice(0, nlevs - 1))
+
+# Convert degrees to metres to multiply velocity
+dx, dy = deg_m(ds.yu_ocean.values, ds.xu_ocean.values)
+
+# Calculate grid edge area.
+if var == 'v':
+    area = (ds[var]*np.nan).fillna(1)*dz[:, np.newaxis]*dx[:, np.newaxis]
+elif var == 'u':
+    area = (ds[var]*np.nan).fillna(1)*dz[:, np.newaxis]*dy
+ds = ds.assign(area=area)
+
 transport(var, ds, lat, lon, name, name_short)
 
-## Testing MC bounds.
+## Finding MC bounds.
 # sfc = ds.v.isel(yu_ocean=bnds_mc[0], xu_ocean=bnds_mc[1])
 # mx = []
 # z = 0
