@@ -11,6 +11,7 @@ author: Annette Stellema (astellemas@gmail.com)
 import gsw
 import math
 import logging
+import warnings
 import pandas as pd
 import numpy as np
 import xarray as xr
@@ -23,6 +24,7 @@ from main import paths, idx_1d, lx, EARTH_RADIUS, timeit
 from parcels.tools.loggers import logger
 from matplotlib.offsetbox import AnchoredText
 
+warnings.filterwarnings('ignore')
 
 # Path to save figures, save data and OFAM model output.
 fpath, dpath, xpath, lpath, tpath = paths()
@@ -556,7 +558,7 @@ def legend_without_duplicate_labels(ax, loc=False):
 
 
 @timeit
-def wind_stress_curl(du, dv, w=0.5):
+def wind_stress_curl(du, dv, w=0.5, wy=None):
     """Compute wind stress curl from wind stress.
 
     Args:
@@ -567,6 +569,8 @@ def wind_stress_curl(du, dv, w=0.5):
         phi_ds (Datadet): Wind stress curl dataset (variable phi).
 
     """
+    if wy == None:
+        wy = w
     # The distance between longitude points [m].
     dx = [(w*((np.pi*EARTH_RADIUS)/180) *
            cos(radians(du.lat[i].item()))) for i in range(len(du.lat))]
@@ -577,7 +581,7 @@ def wind_stress_curl(du, dv, w=0.5):
     DX = dx
     # Create DY meshgrid.
     # Array of the distance between latitude and longitude points [m].
-    DY = np.full((len(du.lat), len(du.lon)), w*((np.pi*EARTH_RADIUS)/180))
+    DY = np.full((len(du.lat), len(du.lon)), wy*((np.pi*EARTH_RADIUS)/180))
 
     # Create DX mesh grid.
     for i in range(1, len(du.lon)):
@@ -640,3 +644,14 @@ def coord_formatter(array, convert='lat'):
         new[eq] = '0°'
 
     return new
+
+
+def deg_m(lat, lon, deg=0.1):
+    arc = ((np.pi*EARTH_RADIUS)/180)
+
+    dy = deg*arc
+    dx = deg*arc * np.cos(np.radians(lat))
+    if type(lon) != int:
+        dy = np.array([deg*arc for i in lon])
+
+    return dx, dy

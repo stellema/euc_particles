@@ -130,10 +130,6 @@ lx = {'exp': ['historical', 'rcp85', 'rcp85_minus_historial'],
 
 ptype = {'scipy': ScipyParticle, 'jit': JITParticle}
 
-bnds_vs = [[-6.1, 147.7], [-6.1, 149]]
-bnds_sgc = [[-4.4, 152.3], [-4.4, 152.3]]
-bnds_ss = [[-4.1, 153], [-4.1, 153.7]]
-
 
 def paths():
     """Return paths to figures, data and model output, logs and TAO data.
@@ -241,6 +237,10 @@ def idx_1d(array, value):
         (int): The index of the closest element to value in array.
 
     """
+    return int(np.abs(array - value).argmin())
+
+
+def idx(array, value):
     return int(np.abs(array - value).argmin())
 
 

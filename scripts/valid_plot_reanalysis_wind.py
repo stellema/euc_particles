@@ -60,7 +60,7 @@ def plot_winds(varz, var_name, var_name_short, units):
             # vmx = 7 if i <= 1 else 0.5
             vmx = 1.5 if i <= 1 else 0.5
             if i == 3:
-                vmx = 2
+                vmx = 3
         j = i if i <= 1 else 1
 
         if i <= 3:
@@ -92,7 +92,8 @@ def plot_winds(varz, var_name, var_name_short, units):
                              box.height*0.85])
             # ax.set_extent([x0, x1, y0, y1], box_proj)
             ax.plot(phi1.lon, varz[4], 'k',  label='JRA-55')
-            ax.plot(phi1.lon, varz[5], 'r', label='ERA-Interim')
+            ax.plot(phi1.lon, varz[5].where(~np.isnan(varz[4])), 'r',
+                    label='ERA-Interim')
 
             xticks = np.arange(x0, x1+10, 40)
             ax.set_xticks(xticks)
@@ -112,36 +113,56 @@ def plot_winds(varz, var_name, var_name_short, units):
 
 
 def get_wsc(data='jra55', flux='bulk', res=0.1, mean_t=True, interp=''):
-    dx = res*10
+
     if flux == 'bulk':
         U_O, T_O, q_O, SLP, SST, SSU = flux_data(data, mean_t=mean_t, res=res,
                                                  interp=interp)
         tau = bulk_fluxes(U_O, T_O, q_O, SLP, SST, SSU, z_U=10, z_T=2,
                           z_q=2, N=5, result='TAU')
         tx, ty = tau.real, tau.imag
+        phi = wind_stress_curl(tx, ty, w=res, wy=res).phi
+        # phi = wind_stress_curl(reduce(tx, mean_t, 0.5, interp=interp),
+        #                        reduce(ty, mean_t, 0.5, interp=interp), w=res, wy=res).phi
 
+        phi = reduce(phi, mean_t, res, interp='linear')
+    elif flux == 'erai':
+        ds = xr.open_dataset(dpath/'erai_iws_climo.nc').mean('time')
+        tx = reduce(ds.iews, mean_t, res, interp)
+        ty = reduce(ds.inss, mean_t, res, interp)
+        wy = np.median([(ds.lat[i+1] - ds.lat[i]).item()
+                        for i in range(len(ds.lat) - 1)])
+        w = np.median([(ds.lon[i+1] - ds.lon[i]).item()
+                       for i in range(len(ds.lon) - 1)])
+        phi = wind_stress_curl(ds.iews, ds.inss, w=w, wy=wy).phi
+        phi = reduce(phi, mean_t, res, interp=interp)
     else:
-        u = xr.open_dataset(dpath/'{}_uas_{:02.0f}_{}climo.nc'.format(data, dx,
-                                                                      interp))
-        v = xr.open_dataset(dpath/'{}_vas_{:02.0f}_{}climo.nc'.format(data, dx,
-                                                                      interp))
-        tx, ty = prescribed_momentum(reduce(u.uas, mean_t, res),
-                                     reduce(v.vas, mean_t, res), method=flux)
+        u = xr.open_dataset(dpath/'{}_uas_climo.nc'.format(data)).mean('time')
+        v = xr.open_dataset(dpath/'{}_vas_climo.nc'.format(data)).mean('time')
+        wy = np.median([(u.lat[i+1] - u.lat[i]).item()
+                        for i in range(len(u.lat) - 1)])
+        w = np.median([(u.lon[i+1] - u.lon[i]).item()
+                       for i in range(len(u.lon) - 1)])
+        tx, ty = prescribed_momentum(u.uas, v.vas, method=flux)
 
-    phi = wind_stress_curl(tx, ty, w=res).phi
+        phi = reduce(wind_stress_curl(tx, ty, w=w, wy=wy).phi,
+                     mean_t, res, interp=interp)
+        tx = reduce(tx, mean_t, res, interp=interp)
+        ty = reduce(ty, mean_t, res, interp=interp)
 
     return tx, ty, phi
 
-interp = ''
+
+interp = 'cubic'
 mean_t = True
 data = ['jra55', 'erai']
-flux = ['bulk', 'static', 'GILL','LARGE_approx']
-res = 1
+flux = ['bulk', 'erai', 'static', 'GILL', 'LARGE_approx']
+res = 0.1
 f1, f2 = 0, 1
 tx1, ty1, phi1 = get_wsc(data=data[0], flux=flux[f1], res=res, mean_t=mean_t,
                          interp=interp)
 tx2, ty2, phi2 = get_wsc(data=data[1], flux=flux[f2], res=res, mean_t=mean_t,
                          interp=interp)
+
 
 varz = [phi1*1e7, phi2*1e7, (phi1.values - phi2.values)*1e7,
         (tx1.values - tx2.values)*1e2,

@@ -40,7 +40,6 @@ import numpy as np
 import xarray as xr
 from datetime import datetime
 from main import paths, lx, timeit, idx_1d
-from scipy.interpolate import griddata
 from parcels.tools.loggers import logger
 
 # Path to save figures, save data and OFAM model output.
@@ -64,6 +63,17 @@ def reanalysis_wind(product, vari, lon, lat):
 
         if hasattr(ds, 'latitude'):
             ds = ds.rename({'latitude': 'lat', 'longitude': 'lon'})
+        if hasattr(ds, 'EWSS_GDS4_SFC'):
+            ds = ds.rename({'EWSS_GDS4_SFC': 'ewss',
+                            'NSSS_GDS4_SFC': 'nsss',
+                            'initial_time0_hours': 'time',
+                            'g4_lat_1': 'lat',
+                            'g4_lon_2': 'lon'})
+            ds = ds.drop('initial_time0_encoded').drop('initial_time0')
+
+        if hasattr(ds, 'iews'):
+            ds = ds.reindex(lat=ds.lat[::-1])
+
         x0 = idx_1d(ds.lon.values, lon[0])
         x0 = x0 - 1 if ds.lon[x0] > lon[0] else x0
         x1 = idx_1d(ds.lon.values, lon[1])
@@ -80,16 +90,21 @@ def reanalysis_wind(product, vari, lon, lat):
 
     f = []
     if product == 'erai':
-        var = ['uas', 'vas', 'tas', 'ta2d', 'ps', 'psl'][vari]
+        var = ['uas', 'vas', 'tas', 'ta2d', 'ps', 'psl', 'iws'][vari]
         path = '/g/data/rr7/ERA_INT/ERA_INT/'
 
         for y in range(lx['years'][0][0], lx['years'][0][1]+1):
-            if var != 'ta2d':
+            if var != 'ta2d' and var != 'iws':
                 f.append(path + 'ERA_INT_{}_{}.nc'.format(var, y))
-            else:
+            elif var == 'ta2d':
                 for m in range(1, 13):
                     f.append(dpath/'ERA_INT_{}/ERA_INT_{}_{}{:02d}0100.nc'
                              .format(var, var, y, m))
+            elif var == 'ws':
+                f = [dpath/'ERA_INT_wind_stress.nc',
+                     dpath/'ERA_INT_wind_stress_end.nc']
+            elif var == 'iws':
+                f = [dpath/'ERA_INT_iws_mean.nc']
 
     elif product == 'jra55':
         var = ['uas', 'vas', 'tas', 'huss', 'psl'][vari]
@@ -104,43 +119,28 @@ def reanalysis_wind(product, vari, lon, lat):
 
     ds = xr.open_mfdataset(f, combine='by_coords', concat_dim="time",
                            mask_and_scale=False, preprocess=slice_vars)
-
+    if var == 'iws':
+        var = 'iews'
+        var1 = 'inss'
+        # var = 'ewss'
+        # var1 = 'nsss'
     attrs = ds[var].attrs
-    # Subset over the Pacific.
-    # old_coords = ds[var].coords
+    if var == 'iews':
+        attrs1 = ds[var1].attrs
 
     ds = ds.groupby('time.month').mean().rename({'month': 'time'})
-
-    # x2 = np.arange(lon[0], lon[1] + res, res)
-    # y2 = np.arange(lat[0], lat[1] + res, res)
-
-    # if interp == 'linear':
-    #     ds = ds.interp(lon=x2, lat=y2)
-    # else:
-    #     tmp = np.empty((len(ds[var].time), len(y2), len(x2)))*np.nan
-
-    #     x1 = ds.lon.values
-    #     y1 = ds.lat.values
-    #     X1, Y1 = np.meshgrid(x1, y1)
-    #     X2, Y2 = np.meshgrid(x2, y2)
-    #     for t in range(len(ds[var].time)):
-    #         tmp[t] = griddata((X1.flatten(), Y1.flatten()),
-    #                           ds[var][t].values.flatten(), (X2, Y2),
-    #                           method='cubic')
-
-    #     ds = ds.interp(lon=x2, lat=y2)
-    #     ds[var] = (ds[var].dims, tmp)
-
-    # ds = ds.sel(lat=slice(lat[0], lat[1]), lon=slice(lon[0], lon[1]))
 
     ds[var].attrs = attrs
     ds[var].attrs['history'] = ('Modified {} from files e.g. {}'
                                 .format(now.strftime("%Y-%m-%d"), f[0]))
+    if var == 'iews':
+        ds[var1].attrs = attrs1
+        ds[var1].attrs['history'] = ('Modified {} from files e.g. {}'
+                                     .format(now.strftime("%Y-%m-%d"), f[0]))
 
     ds.to_netcdf(dpath/fname)
 
-    # logger.info('{} OLD coords: {}'.format(fname, old_coords))
-    logger.info('{} NEW coords: {}'.format(fname, ds[var].coords))
+    logger.info('{} Coords: {}'.format(fname, ds[var].coords))
     ds.close()
 
     da = xr.open_dataset(dpath/fname)

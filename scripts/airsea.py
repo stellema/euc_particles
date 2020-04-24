@@ -25,47 +25,57 @@ Specific humidity and vapour pressure formulas (specific to dew point temps):
 https://cran.r-project.org/web/packages/humidity/vignettes/humidity-measures.html
 
 
-
+ds = xr.open_dataset(dpath/'{}_uas_climo.nc'.format(data[0])).uas
 """
 import numpy as np
 import xarray as xr
 import pandas as pd
 from main import paths, timeit, idx_1d
 from warnings import warn
+from scipy.interpolate import griddata
 
 # Path to save figures, save data and OFAM model output.
 fpath, dpath, xpath, lpath, tpath = paths()
 
 
-def reduce(ds, mean_t=False, res=0.1):
+def reduce(ds, mean_t=False, res=0.1, interp='', x2=[], y2=[]):
     """Slice, rename and/or time average datasets."""
-    if res == 1:
-        lats, lons = slice(-15, 15), slice(120, 291)
-    elif res == 0.1:
-        lats, lons = slice(-15.1, 14.9), slice(119.9, 291)
-    elif res == 0.5:
-        lats, lons = slice(-15, 15), slice(120, 290.5)
-    elif res == 1.5:
-        lats, lons = slice(-14.5, 14.5), slice(119.5, 290.5)
-    else:
-        print('error', res)
-
     if hasattr(ds, 'xu_ocean'):
         ds = ds.rename({'Time': 'time', 'yu_ocean': 'lat',
                         'xu_ocean': 'lon'})
-        ds = ds.sel(st_ocean=2.5, lon=slice(120, 291))
+        ds = ds.sel(st_ocean=2.5) ##, lon=slice(120, 294.9))
     elif hasattr(ds, 'xt_ocean'):
         ds = ds.rename({'Time': 'time', 'yt_ocean': 'lat',
                         'xt_ocean': 'lon'})
-        ds = ds.sel(st_ocean=2.5, lon=slice(120, 291.1))
-    else:
-        # Fix error in erai all NaN lats.
-        # if all(np.isnan(ds.lat)):
-        #     ds.coords['lat'] = np.arange(-16, 16 + res, res)
-        ds = ds.sel(lat=lats, lon=lons)
+        ds = ds.sel(st_ocean=2.5)  #, lon=slice(120.1, 295))
 
-    if mean_t:
+    if mean_t and hasattr(ds, 'time'):
         ds = ds.mean('time')
+
+    if interp != '':
+        if x2 == []:
+            y2 = np.arange(-15, 14.9 + res, res)
+            x2 = np.arange(120, 294.9 + res, res)
+
+        x1 = ds.lon.values
+        y1 = ds.lat.values
+        X1, Y1 = np.meshgrid(x1, y1)
+        X2, Y2 = np.meshgrid(x2, y2)
+        if ds.ndim == 3:
+            tmp = np.empty((len(ds.time), len(y2), len(x2)))*np.nan
+            for t in range(len(ds.time)):
+                tmp[t] = griddata((X1.flatten(), Y1.flatten()),
+                                  ds[t].values.flatten(), (X2, Y2),
+                                  method=interp)
+        else:
+
+            tmp = griddata((X1.flatten(), Y1.flatten()),
+                           ds.values.flatten(), (X2, Y2),
+                           method=interp)
+
+        coords = [y2, x2] if ds.ndim == 2 else [ds.time, y2, x2]
+        dims = ['lat', 'lon'] if ds.ndim == 2 else ['time', 'lat', 'lon']
+        ds = xr.DataArray(tmp, coords=coords, dims=dims)
 
     return ds
 
@@ -116,32 +126,31 @@ def specific_humidity_from_p(Td, p):
 
 
 def flux_data(dat='jra55', res=0.1, mean_t=True, interp=''):
-    dx = res*10
-    # Sea surface temperature, in degrees Celsius.
 
     # Observed vector wind at height z_U, in m/s.
-    u_O = xr.open_dataset(dpath/'{}_uas_{:02.0f}_{}climo.nc'.format(dat, dx, interp))
-    v_O = xr.open_dataset(dpath/'{}_vas_{:02.0f}_{}climo.nc'.format(dat, dx, interp))
-    U_O = reduce(u_O.uas, mean_t, res) + 1j * reduce(v_O.vas, mean_t, res)
+    u_O = xr.open_dataset(dpath/'{}_uas_climo.nc'.format(dat))
+    v_O = xr.open_dataset(dpath/'{}_vas_climo.nc'.format(dat))
+    U_O = (reduce(u_O.uas, mean_t, res, interp) +
+           1j * reduce(v_O.vas, mean_t, res, interp))
 
     # Observed temperature at height z_T, in degrees Celsius
-    T_O = xr.open_dataset(dpath/'{}_tas_{:02.0f}_{}climo.nc'.format(dat, dx, interp))
-    T_O = reduce(T_O.tas, mean_t, res)
+    T_O = xr.open_dataset(dpath/'{}_tas_climo.nc'.format(dat))
+    T_O = reduce(T_O.tas, mean_t, res, interp)
 
     # Observed specific humidity at height z_q, in kg/kg.
     if dat == 'jra55':
-        q_ = xr.open_dataset(dpath/'{}_huss_{:02.0f}_{}climo.nc'.format(dat, dx, interp))
-        q_O = reduce(q_.huss, mean_t, res)
+        q_ = xr.open_dataset(dpath/'{}_huss_climo.nc'.format(dat))
+        q_O = reduce(q_.huss, mean_t, res, interp)
     else:
-        ps = xr.open_dataset(dpath/'{}_ps_{:02.0f}_{}climo.nc'.format(dat, dx, interp))
-        ps = reduce(ps.ps, mean_t, res)
-        td = xr.open_dataset(dpath/'{}_ta2d_{:02.0f}_{}climo.nc'.format(dat, dx, interp))
-        td = reduce(td.ta2d, mean_t, res)
+        ps = xr.open_dataset(dpath/'{}_ps_climo.nc'.format(dat))
+        ps = reduce(ps.ps, mean_t, res, interp)
+        td = xr.open_dataset(dpath/'{}_ta2d_climo.nc'.format(dat))
+        td = reduce(td.ta2d, mean_t, res, interp)
         q_O = specific_humidity_from_p(td, ps)
 
     # Sea level pressure, in hectopascal (hPa). [Original units Pa]
-    SLP = xr.open_dataset(dpath/'{}_psl_{:02.0f}_{}climo.nc'.format(dat, dx, interp))
-    SLP = reduce(SLP.psl, mean_t, res)
+    SLP = xr.open_dataset(dpath/'{}_psl_climo.nc'.format(dat))
+    SLP = reduce(SLP.psl, mean_t, res, interp)
 
     # Convert from Kelvin to Celsius.
     if (T_O >= 250).all():
@@ -153,15 +162,44 @@ def flux_data(dat='jra55', res=0.1, mean_t=True, interp=''):
 
     # OFAM3 SST
     SST = xr.open_dataset(xpath/'ocean_temp_1981-2012_climo.nc')
-    SST = reduce(SST.temp, mean_t)
 
     # Surface vector current, in m/s.
     SSU_u = xr.open_dataset(xpath/'ocean_u_1981-2012_climo.nc')
     SSU_v = xr.open_dataset(xpath/'ocean_v_1981-2012_climo.nc')
-    SSU = reduce(SSU_u.u, mean_t, res=res) + 1j*reduce(SSU_v.v, mean_t)
-    if res != 0.1:
-        SSU = SSU.interp(lat=SLP.lat.values, lon=SLP.lon.values)
-        SST = SST.interp(lat=SLP.lat.values, lon=SLP.lon.values)
+
+    # if interp != '':
+    SST = reduce(SST.temp, mean_t, res, interp='')
+    SSU = (reduce(SSU_u.u, mean_t, res, interp='') +
+           1j * reduce(SSU_v.v, mean_t, res, interp=''))
+    # else:
+
+    #     lats = np.append(np.arange(-15, 15, 1.25), 14.9)
+    #     lons = np.arange(120, 296, 1.25)
+    #     SSU_u = reduce(SSU_u.u, mean_t=mean_t, res=res, interp='cubic', x2=lons, y2=lats)
+    #     SSU_v = reduce(SSU_v.v, mean_t=mean_t, res=res, interp='cubic', x2=lons, y2=lats)
+    #     # SSU_u = SSU_u.interp(lat=lats, lon=lons)
+    #     # SSU_v = SSU_v.interp(lat=lats, lon=lons)
+    #     SSU = SSU_u + 1j * SSU_v
+    #     lats = np.append(np.arange(-14.95, 15, 1.25), 14.95)
+    #     lons = np.append(np.arange(120.1, 295, 1.25), 295)
+    #     SST = reduce(SST.temp, mean_t=mean_t, res=res, interp='cubic', x2=lons, y2=lats)
+    #     # SST = reduce(SST.temp, mean_t=mean_t, interp='')
+    #     # SST = SST.interp(lat=lats, lon=lons)
+
+    #     SST = SST.assign_coords({'lat': SLP.lat.values, 'lon': SLP.lon.values})
+        # y2 = np.append(SLP.lat[:-1].values, 15)
+        # x2 = np.append(SLP.lon[:-1].values, 294.9)
+        # SSU_u = reduce(SSU_u.u, mean_t=mean_t, interp='cubic',
+        #                 y2=y2, x2=x2)
+        # SSU_v = reduce(SSU_v.v, mean_t=mean_t, interp='cubic',
+        #                 y2=y2, x2=x2)
+        # SSU = SSU_u + 1j * SSU_v
+        # y2 = np.append(SLP.lat[:-1].values, 14.95)
+        # x2 = np.append(SLP.lon[:-1].values, 295)
+        # x2[0]=120.1
+        # y2[0]=-14.95
+        # SST = reduce(SST.temp, mean_t=mean_t, interp='cubic',
+        #               y2=y2, x2=x2)
 
     dl = (U_O, T_O, q_O, SLP, SST, SSU)
 
@@ -691,9 +729,6 @@ def prescribed_momentum(u, v, method='static'):
     """
     import math
     p = 1.225  # Air density [kg/m^3].
-    # mask = ~np.isnan(u) & ~np.isnan(v)
-    # u = u.where(mask)
-    # u = v.where(mask)
     # Computation of Wind Stresses.
     if len(u.shape) == 3:
         [nlats, nlons] = u[0].shape
@@ -748,57 +783,3 @@ def prescribed_momentum(u, v, method='static'):
             ty[j, i] = cd*p*U*v[j, i]
 
     return tx, ty
-
-
-# mean_t = True
-# res = 1
-# dat = ['jra55', 'erai'][1]
-# U_O, T_O, q_O, SLP, SST, SSU = flux_data(dat, mean_t=mean_t, res=res)
-# tau = bulk_fluxes(U_O, T_O, q_O, SLP, SST, SSU, z_U=10, z_T=2,
-#                   z_q=2, N=5, result='TAU')
-
-# u = xr.open_dataset(dpath/'{}_uas_{:02.0f}_climo.nc'.format(dat, res*10))
-# v = xr.open_dataset(dpath/'{}_vas_{:02.0f}_climo.nc'.format(dat, res*10))
-# u = reduce(u, mean_t).uas
-# v = reduce(v, mean_t).vas
-# tx, ty = prescribed_momentum(u, v, method='static')
-
-# def fix_ws_coords(dat='erai'):
-#     if dat == 'jra55':
-#         VARS = ['uas', 'vas', 'tas', 'psl']
-#     else:
-#         VARS = ['uas', 'vas', 'tas', 'ta2d', 'ps', 'psl']
-
-#     for res in [0.1, 0.5, 1]:
-#         lats, lons = [], []
-#         bdy, bdx = [], []
-#         for var in VARS:
-#             ds = xr.open_dataset(dpath/'{}_{}_{:02.0f}_climo.nc'
-#                                  .format(dat, var, res*10))
-#             if ~np.isnan(ds.lat).all():
-#                 lats = ds.lat.values
-#             else:
-#                 bdy.append(var)
-#                 print(res, var, 'lat', len(lats))
-
-#             if ~np.isnan(ds.lon).all():
-#                 lons = ds.lon.values
-#             else:
-#                 bdx.append(var)
-#                 print(res, var, 'lon', len(lons))
-#         if ((len(lats) == 0 and len(bdy) > 0) or
-#             (len(lons) == 0 and len(bdx) > 0)):
-#             print('mad error', res)
-#         for varz in bdy:
-#             ds = xr.open_dataset(dpath/'{}_{}_{:02.0f}_climo.nc'
-#                                   .format(dat, varz, res*10))
-#             ds.coords['lat'] = lats
-#             ds.to_netcdf(dpath/'{}_{}_{:02.0f}_climox.nc'
-#                                   .format(dat, varz, res*10))
-
-#         for varz in bdx:
-#             ds = xr.open_dataset(dpath/'{}_{}_{:02.0f}_climo.nc'
-#                                   .format(dat, varz, res*10))
-#             ds.coords['lon'] = lons
-#             ds.to_netcdf(dpath/'{}_{}_{:02.0f}_climoy.nc'
-#                                   .format(dat, varz, res*10))
