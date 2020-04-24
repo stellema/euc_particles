@@ -4,7 +4,7 @@ created: Thu Apr 23 17:54:09 2020
 
 author: Annette Stellema (astellemas@gmail.com)
 du= xr.open_dataset(xpath/'ocean_u_1981-2012_climo.nc')
-dv= xr.open_dataset(xpath/'ocean_v_1981-2012_climo.nc')
+ds= xr.open_dataset(xpath/'ocean_v_1981-2012_climo.nc')
 
 """
 import sys
@@ -33,7 +33,7 @@ def bnd_idx(ds, lat, lon):
     return bnds
 
 
-def transport(var, ds, lat, lon, name):
+def transport(var, ds, lat, lon, name, name_short):
     bnds = bnd_idx(ds, lat, lon)
     ds = ds.isel(yu_ocean=bnds[0], xu_ocean=bnds[1])
     if var == 'v':
@@ -43,11 +43,9 @@ def transport(var, ds, lat, lon, name):
     ds.attrs['name'] = name
     ds.attrs['bnds'] = 'lat={}, lon={}'.format(lat, lon)
     now = datetime.now()
-    ds.attrs['history'] = ('Modified {}. '.format(now.strftime("%Y-%m-%d")) +
-                           ds.attrs['history'])
+    ds.attrs['history'] = 'Modified {}. '.format(now.strftime("%Y-%m-%d"))
 
-    ds.to_netcdf(dpath/'ofam_{}_transport.nc'
-                 .format(name.replace(' ', '_').lower()))
+    ds.to_netcdf(dpath/'ofam_{}_transport.nc'.format(name_short))
     print('{} transport saved on {}.'.format(name, now.strftime("%Y-%m-%d")))
     return
 
@@ -91,24 +89,28 @@ ds = ds.assign(area=area)
 if s == 0:
     # Vitiaz strait.
     name = 'Vitiaz Strait'
+    name_short = 'vs'
     lat, lon = -6.1, [147.7, 149]
 
 elif s == 1:
     # St.George's Channel.
     name = 'St Georges Channel'
+    name_short = 'sgc'
     lat, lon = -4.4, [152.3, 152.7]
 
 elif s == 2:
     # Solomon Strait (west).
     name = 'Solomon Strait'
+    name_short = 'ss'
     lat, lon = -4.1, [153, 153.7]
 
 elif s == 3:
     # Mindanao Current.
     name = 'Mindanao Current'
+    name_short = 'mc'
     lat, lon = [6.4, 9], [126.2, 128.2]
 
-transport(var, ds, lat, lon, name)
+transport(var, ds, lat, lon, name, name_short)
 
 ## Testing MC bounds.
 # sfc = ds.v.isel(yu_ocean=bnds_mc[0], xu_ocean=bnds_mc[1])
