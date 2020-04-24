@@ -49,6 +49,7 @@ def transport(var, ds, lat, lon, name, name_short):
     print('{} transport saved on {}.'.format(name, now.strftime("%Y-%m-%d")))
     return
 
+
 s = int(sys.argv[1])
 var = 'v'
 
@@ -57,7 +58,8 @@ for y in range(lx['years'][0][0], lx['years'][0][1] + 1):
     for m in range(1, 13):
         f.append(xpath/'ocean_{}_{}_{:02d}.nc'.format(var, y, m))
 
-ds = xr.open_mfdataset(f, combine='by_coords')
+ds = xr.open_mfdataset(f, combine='by_coords', concat_dim="Time",
+                       mask_and_scale=False)
 
 # Calculate the monthly means.
 ds = ds.resample(Time="MS").mean()
