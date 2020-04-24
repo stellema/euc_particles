@@ -58,9 +58,7 @@ def transport(var, ds, lat, lon, name, name_short):
     df.attrs['name'] = name
     df.attrs['bnds'] = 'lat={}, lon={}'.format(lat, lon)
 
-    df.attrs['history'] = ('Modified {}.'.format(now.strftime("%Y-%m-%d"))+
-                           ds.attrs['history'])
-
+    df.attrs['history'] = 'Modified {}.'.format(now.strftime("%Y-%m-%d"))
     logger.info('Saving transport file: {}.'.format(name))
     df.to_netcdf(dpath/'ofam_transport_{}.nc'.format(name_short))
     logger.info('Finished transport file: {}.'.format(name))
