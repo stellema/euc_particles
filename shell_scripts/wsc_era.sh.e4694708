@@ -1,0 +1,42 @@
+INFO: Creating file: erai_uas_climo.nc from /g/data/rr7/ERA_INT/ERA_INT/.
+INFO: erai_uas_climo.nc NEW coords: Coordinates:
+  * lat      (lat) float32 -15.0 -13.5 -12.0 -10.5 -9.0 ... 10.5 12.0 13.5 15.0
+  * lon      (lon) float32 120.0 121.5 123.0 124.5 ... 292.5 294.0 295.5 297.0
+  * time     (time) int64 1 2 3 4 5 6 7 8 9 10 11 12
+INFO: SUCCESS: erai_uas_climo.nc
+INFO: reanalysis_wind: 0:0:05.11 total: 5.11 seconds.
+INFO: Creating file: erai_vas_climo.nc from /g/data/rr7/ERA_INT/ERA_INT/.
+INFO: erai_vas_climo.nc NEW coords: Coordinates:
+  * lat      (lat) float32 -15.0 -13.5 -12.0 -10.5 -9.0 ... 10.5 12.0 13.5 15.0
+  * lon      (lon) float32 120.0 121.5 123.0 124.5 ... 292.5 294.0 295.5 297.0
+  * time     (time) int64 1 2 3 4 5 6 7 8 9 10 11 12
+INFO: SUCCESS: erai_vas_climo.nc
+INFO: reanalysis_wind: 0:0:04.47 total: 4.47 seconds.
+INFO: Creating file: erai_tas_climo.nc from /g/data/rr7/ERA_INT/ERA_INT/.
+INFO: erai_tas_climo.nc NEW coords: Coordinates:
+  * lon      (lon) float32 120.0 121.5 123.0 124.5 ... 292.5 294.0 295.5 297.0
+  * lat      (lat) float32 -15.0 -13.5 -12.0 -10.5 -9.0 ... 10.5 12.0 13.5 15.0
+  * time     (time) int64 1 2 3 4 5 6 7 8 9 10 11 12
+INFO: SUCCESS: erai_tas_climo.nc
+INFO: reanalysis_wind: 0:0:03.61 total: 3.61 seconds.
+INFO: Creating file: erai_ta2d_climo.nc from /g/data/rr7/ERA_INT/ERA_INT/.
+INFO: erai_ta2d_climo.nc NEW coords: Coordinates:
+  * lon      (lon) float32 119.53129 120.23441 ... 293.90634 294.60947
+  * lat      (lat) float64 -15.09 -14.39 -13.68 -12.98 ... 14.39 15.09 15.79
+  * time     (time) int64 1 2 3 4 5 6 7 8 9 10 11 12
+INFO: SUCCESS: erai_ta2d_climo.nc
+INFO: reanalysis_wind: 0:0:19.74 total: 19.74 seconds.
+INFO: Creating file: erai_ps_climo.nc from /g/data/rr7/ERA_INT/ERA_INT/.
+INFO: erai_ps_climo.nc NEW coords: Coordinates:
+  * lat      (lat) float32 -15.0 -13.5 -12.0 -10.5 -9.0 ... 10.5 12.0 13.5 15.0
+  * lon      (lon) float32 120.0 121.5 123.0 124.5 ... 292.5 294.0 295.5 297.0
+  * time     (time) int64 1 2 3 4 5 6 7 8 9 10 11 12
+INFO: SUCCESS: erai_ps_climo.nc
+INFO: reanalysis_wind: 0:0:04.62 total: 4.62 seconds.
+INFO: Creating file: erai_psl_climo.nc from /g/data/rr7/ERA_INT/ERA_INT/.
+INFO: erai_psl_climo.nc NEW coords: Coordinates:
+  * lon      (lon) float32 120.0 121.5 123.0 124.5 ... 292.5 294.0 295.5 297.0
+  * lat      (lat) float32 -15.0 -13.5 -12.0 -10.5 -9.0 ... 10.5 12.0 13.5 15.0
+  * time     (time) int64 1 2 3 4 5 6 7 8 9 10 11 12
+INFO: SUCCESS: erai_psl_climo.nc
+INFO: reanalysis_wind: 0:0:04.27 total: 4.27 seconds.
