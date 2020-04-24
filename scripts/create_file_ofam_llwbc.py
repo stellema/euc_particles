@@ -7,7 +7,7 @@ du= xr.open_dataset(xpath/'ocean_u_1981-2012_climo.nc')
 dv= xr.open_dataset(xpath/'ocean_v_1981-2012_climo.nc')
 
 """
-
+import sys
 import numpy as np
 import xarray as xr
 from datetime import datetime
@@ -16,8 +16,6 @@ from main_valid import deg_m
 
 # Path to save figures, save data and OFAM model output.
 fpath, dpath, xpath, lpath, tpath = paths()
-
-now = datetime.now()
 
 
 def bnd_idx(ds, lat, lon):
@@ -44,6 +42,7 @@ def transport(var, ds, lat, lon, name):
         ds = ds.assign(uvo=ds[var]*ds.area)
     ds.attrs['name'] = name
     ds.attrs['bnds'] = 'lat={}, lon={}'.format(lat, lon)
+    now = datetime.now()
     ds.attrs['history'] = ('Modified {}. '.format(now.strftime("%Y-%m-%d")) +
                            ds.attrs['history'])
 
@@ -52,7 +51,7 @@ def transport(var, ds, lat, lon, name):
     print('{} transport saved on {}.'.format(name, now.strftime("%Y-%m-%d")))
     return
 
-
+s = int(sys.argv[1])
 var = 'v'
 
 f = []
@@ -89,28 +88,29 @@ elif var == 'u':
     area = (ds[var]*np.nan).fillna(1)*dz[:, np.newaxis]*dy
 ds = ds.assign(area=area)
 
+if s == 0:
+    # Vitiaz strait.
+    name = 'Vitiaz Strait'
+    lat, lon = -6.1, [147.7, 149]
 
-# Vitiaz strait.
-lat, lon = -6.1, [147.7, 149]
-name = 'Vitiaz Strait'
+elif s == 1:
+    # St.George's Channel.
+    name = 'St Georges Channel'
+    lat, lon = -4.4, [152.3, 152.7]
+
+elif s == 2:
+    # Solomon Strait (west).
+    name = 'Solomon Strait'
+    lat, lon = -4.1, [153, 153.7]
+
+elif s == 3:
+    # Mindanao Current.
+    name = 'Mindanao Current'
+    lat, lon = [6.4, 9], [126.2, 128.2]
+
 transport(var, ds, lat, lon, name)
 
-# St.George's Channel.
-lat, lon = -4.4, [152.3, 152.7]
-name = 'St Georges Channel'
-transport(var, ds, lat, lon, name)
-
-# Solomon Strait (west).
-lat, lon = -4.1, [153, 153.7]
-name = 'Solomon Strait'
-transport(var, ds, lat, lon, name)
-
-# Mindanao Current.
-lat, lon = [6.4, 9], [126.2, 128.2]
-name = 'Mindanao Current'
-transport(var, ds, lat, lon, name)
-
-
+## Testing MC bounds.
 # sfc = ds.v.isel(yu_ocean=bnds_mc[0], xu_ocean=bnds_mc[1])
 # mx = []
 # z = 0
