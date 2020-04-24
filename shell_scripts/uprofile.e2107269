@@ -1,4 +1,0 @@
-Traceback (most recent call last):
-  File "/g/data/e14/as3189/OFAM/scripts/plot_velocity.py", line 26, in <module>
-    dh = xr.open_dataset(xpath.joinpath('ocean_u_{}-{}_climo.nc'.format(years[0])))
-IndexError: tuple index out of range
