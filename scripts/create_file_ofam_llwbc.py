@@ -99,7 +99,7 @@ s = int(sys.argv[1])
 if s == 0:
     # Vitiaz strait.
     name = 'Vitiaz Strait'
-    name_short = 'vs'
+    name_short = 'vsx'
     lat, lon = -6.1, [147.7, 149]
 
 elif s == 1:
