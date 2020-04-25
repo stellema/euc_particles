@@ -50,16 +50,11 @@ def transport(var, ds, lat, lon, name, name_short):
     bnds = bnd_idx(ds, lat, lon)
     df = ds.isel(yu_ocean=bnds[0], xu_ocean=bnds[1])
 
-    if name_short != 'mc' and var == 'v':
-        exv = df[var].isel(Time=0, st_ocean=5,
-                           xu_ocean=len(df.xu_ocean)//2).load()
-
-    elif name_short == 'mc' and var == 'v':
-        exv = df[var].isel(Time=0, st_ocean=5, yu_ocean=-1,
-                           xu_ocean=len(df.xu_ocean)//2).load()
+    exv = df[var].isel(Time=0, st_ocean=5, xu_ocean=len(df.xu_ocean)//2)
+    if name_short == 'mc' and var == 'v':
+        exv = exv.isel(yu_ocean=-1).load()
     else:
-        logger.info('{} error: var exp not implemeneted yet'.format(name))
-        exv = -99999
+        exv = exv.load()
 
     logger.debug('{} test 1: {:.4f} m/s {} ({:.1f}, {:.2f})'
                  .format(name, exv.item(),
@@ -75,23 +70,17 @@ def transport(var, ds, lat, lon, name, name_short):
     df[var].attrs = ds[var].attrs
     df.attrs['name'] = name
     df.attrs['bnds'] = 'lat={}, lon={}'.format(lat, lon)
-    df['area'] = df.area.isel(Time=0) # CHECK.
+    df['area'] = df.area.isel(Time=0)
     df.attrs['history'] = 'Modified {}.'.format(now.strftime("%Y-%m-%d"))
-    if name_short != 'mc' and var == 'v':
-        exv = df[var].isel(Time=0, st_ocean=5,
-                           xu_ocean=len(df.xu_ocean)//2).load()
 
-        ext = (df.vvo.isel(Time=0, st_ocean=slice(0, 30))
-               .sum(dim='st_ocean').sum(dim='xu_ocean')).load()/1e6
-    elif name_short == 'mc' and var == 'v':
-        exv = df[var].isel(Time=0, st_ocean=5, yu_ocean=-1,
-                           xu_ocean=len(df.xu_ocean)//2).load()
+    exv = df[var].isel(Time=0, st_ocean=5, xu_ocean=len(df.xu_ocean)//2)
 
-        ext = (df.vvo.isel(Time=0, st_ocean=slice(0, 30), yu_ocean=-1)
-               .sum(dim='st_ocean').sum(dim='xu_ocean')).load()/1e6
+    ext = (df.vvo.isel(Time=0, st_ocean=slice(0, 30))
+           .sum(dim='st_ocean').sum(dim='xu_ocean'))/1e6
+    if name_short == 'mc' and var == 'v':
+        exv, ext = exv.isel(yu_ocean=-1).load(), ext.isel(yu_ocean=-1).load()
     else:
-        logger.info('{} error: var exp not implemeneted yet'.format(name))
-        exv, ext = -99999, -99999
+        exv, ext = exv.load(), ext.load()
 
     logger.debug('{} test 2: {:.4f} m/s {:.4f} Sv {} ({:.1f}, {:.2f})'
                  .format(name, exv.item(), ext.item(),
@@ -131,6 +120,7 @@ elif s == 3:
     name_short = 'mc'
     lat, lon = [6.4, 9], [126.2, 128.2]
 
+
 def predrop(ds):
     ds = ds.drop('Time_bounds')
     ds = ds.drop('average_DT')
@@ -138,6 +128,8 @@ def predrop(ds):
     ds = ds.drop('average_T2')
     ds = ds.drop('nv')
     return ds
+
+
 logger.info('Creating transport file: {}.'.format(name))
 var = 'v'
 
@@ -148,8 +140,7 @@ for y in range(lx['years'][0][0], lx['years'][0][1] + 1):
 
 # f = [xpath/'ocean_v_2010_01.nc', xpath/'ocean_v_2010_02.nc']
 ds = xr.open_mfdataset(f, combine='by_coords', concat_dim="Time",
-                        # mask_and_scale=False,
-                        preprocess=predrop)
+                       preprocess=predrop)
 
 # dss = xr.open_dataset(xpath/'ocean_v_1981-2012_climo.nc')
 # dss = xr.open_dataset(f[1])
@@ -175,16 +166,9 @@ elif var == 'u':
     area = (ds[var]*np.nan).fillna(1)*dz[:, np.newaxis]*dy
 ds = ds.assign(area=area)
 
-if name_short != 'mc' and var == 'v':
-    exv = ds[var].isel(Time=0, st_ocean=5, yu_ocean=idx(ds.yu_ocean, lat),
-                       xu_ocean=len(ds.xu_ocean)//2).load()
-
-elif name_short == 'mc' and var == 'v':
-    exv = ds[var].isel(Time=0, st_ocean=5, yu_ocean=lat[0],
-                       xu_ocean=len(ds.xu_ocean)//2).load()
-else:
-    logger.info('{} error: var exp not implemeneted yet'.format(name))
-    exv = -99999
+latx = lat[0] if type(lat) == list else lat
+exv = ds[var].isel(Time=0, st_ocean=5, yu_ocean=idx(ds.yu_ocean, latx),
+                   xu_ocean=idx(ds.xu_ocean, lon[1])+1).load()
 
 logger.debug('{} test 0: {:.4f} m/s {} ({:.1f}, {:.2f})'
              .format(name, exv.item(),
