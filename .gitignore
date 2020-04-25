@@ -10,3 +10,7 @@
 *.pyc
 /scripts/__pycache__/*.pyc
 *.pyc
+*.pyc
+scripts/__pycache__/main.cpython-36.pyc
+scripts/__pycache__/main_valid.cpython-36.pyc
+*.pyc

@@ -131,7 +131,13 @@ elif s == 3:
     name_short = 'mc'
     lat, lon = [6.4, 9], [126.2, 128.2]
 
-
+def predrop(ds):
+    ds = ds.drop('Time_bounds')
+    ds = ds.drop('average_DT')
+    ds = ds.drop('average_T1')
+    ds = ds.drop('average_T2')
+    ds = ds.drop('nv')
+    return ds
 logger.info('Creating transport file: {}.'.format(name))
 var = 'v'
 
@@ -140,26 +146,24 @@ for y in range(lx['years'][0][0], lx['years'][0][1] + 1):
     for m in range(1, 13):
         f.append(xpath/'ocean_{}_{}_{:02d}.nc'.format(var, y, m))
 
-dss = xr.open_mfdataset(f, combine='by_coords', concat_dim="Time",
-                        mask_and_scale=False)
+# f = [xpath/'ocean_v_2010_01.nc', xpath/'ocean_v_2010_02.nc']
+ds = xr.open_mfdataset(f, combine='by_coords', concat_dim="Time",
+                        # mask_and_scale=False,
+                        preprocess=predrop)
 
 # dss = xr.open_dataset(xpath/'ocean_v_1981-2012_climo.nc')
+# dss = xr.open_dataset(f[1])
 
+# datetimeindex = ds.indexes['Time'].to_datetimeindex()
+# ds['Time'] = datetimeindex
 # Calculate the monthly means.
-ds = dss.resample(Time="MS").mean()
-
-ds = ds.drop('average_DT')
-
-nlevs = len(ds.st_ocean)
+ds = ds.resample(Time="M").mean()
 
 # Calculate depth [m] of grid cells.
-DZ = np.array([(ds.st_ocean[z+1] - ds.st_ocean[z]).item()
-              for z in range(0, nlevs - 1)])
+DZ = np.array([(ds.st_edges_ocean[z+1] - ds.st_edges_ocean[z]).item()
+              for z in range(len(ds.st_ocean))])
 # Change shape for easier multiplication.
 dz = DZ[:, np.newaxis]
-
-# Remove last depth level.
-ds = ds.isel(st_ocean=slice(0, nlevs - 1))
 
 # Convert degrees to metres to multiply velocity
 dx, dy = deg_m(ds.yu_ocean.values, ds.xu_ocean.values)
@@ -172,11 +176,11 @@ elif var == 'u':
 ds = ds.assign(area=area)
 
 if name_short != 'mc' and var == 'v':
-    exv = ds[var].isel(Time=0, st_ocean=5,
+    exv = ds[var].isel(Time=0, st_ocean=5, yu_ocean=idx(ds.yu_ocean, lat),
                        xu_ocean=len(ds.xu_ocean)//2).load()
 
 elif name_short == 'mc' and var == 'v':
-    exv = ds[var].isel(Time=0, st_ocean=5, yu_ocean=-1,
+    exv = ds[var].isel(Time=0, st_ocean=5, yu_ocean=lat[0],
                        xu_ocean=len(ds.xu_ocean)//2).load()
 else:
     logger.info('{} error: var exp not implemeneted yet'.format(name))
