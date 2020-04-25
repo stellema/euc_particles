@@ -88,7 +88,7 @@ def transport(var, ds, lat, lon, name, name_short):
                          exv.yu_ocean.item(), exv.xu_ocean.item()))
 
     logger.info('Saving transport file: {}.'.format(name))
-    df.to_netcdf(dpath/'ofam_transport_{}.nc'.format(name_short))
+    df.to_netcdf(dpath/'ofam_transport_{}.nc'.format(name_short), compute=True)
     logger.info('Finished transport file: {}.'.format(name))
 
     return
