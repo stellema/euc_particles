@@ -49,16 +49,55 @@ def bnd_idx(ds, lat, lon):
 def transport(var, ds, lat, lon, name, name_short):
     bnds = bnd_idx(ds, lat, lon)
     df = ds.isel(yu_ocean=bnds[0], xu_ocean=bnds[1])
+
+    if name_short != 'mc' and var == 'v':
+        exv = df[var].isel(Time=0, st_ocean=5,
+                           xu_ocean=len(df.xu_ocean)//2).load()
+
+    elif name_short == 'mc' and var == 'v':
+        exv = df[var].isel(Time=0, st_ocean=5, yu_ocean=-1,
+                           xu_ocean=len(df.xu_ocean)//2).load()
+    else:
+        logger.info('{} error: var exp not implemeneted yet'.format(name))
+        exv = -99999
+
+    logger.debug('{} test 1: {:.4f} m/s {} ({:.1f}, {:.2f})'
+                 .format(name, exv.item(),
+                         exv.Time.dt.strftime('%Y-%m-%d').item(),
+                         exv.yu_ocean.item(), exv.xu_ocean.item()))
+
     if var == 'v':
         df = df.assign(vvo=df[var]*df.area)
     else:
         df = df.assign(uvo=df[var]*df.area)
+
     df.attrs = ds.attrs
     df[var].attrs = ds[var].attrs
     df.attrs['name'] = name
     df.attrs['bnds'] = 'lat={}, lon={}'.format(lat, lon)
-
+    df['area'] = df.area.isel(Time=0) # CHECK.
     df.attrs['history'] = 'Modified {}.'.format(now.strftime("%Y-%m-%d"))
+    if name_short != 'mc' and var == 'v':
+        exv = df[var].isel(Time=0, st_ocean=5,
+                           xu_ocean=len(df.xu_ocean)//2).load()
+
+        ext = (df.vvo.isel(Time=0, st_ocean=slice(0, 30))
+               .sum(dim='st_ocean').sum(dim='xu_ocean')).load()/1e6
+    elif name_short == 'mc' and var == 'v':
+        exv = df[var].isel(Time=0, st_ocean=5, yu_ocean=-1,
+                           xu_ocean=len(df.xu_ocean)//2).load()
+
+        ext = (df.vvo.isel(Time=0, st_ocean=slice(0, 30), yu_ocean=-1)
+               .sum(dim='st_ocean').sum(dim='xu_ocean')).load()/1e6
+    else:
+        logger.info('{} error: var exp not implemeneted yet'.format(name))
+        exv, ext = -99999, -99999
+
+    logger.debug('{} test 2: {:.4f} m/s {:.4f} Sv {} ({:.1f}, {:.2f})'
+                 .format(name, exv.item(), ext.item(),
+                         exv.Time.dt.strftime('%Y-%m-%d').item(),
+                         exv.yu_ocean.item(), exv.xu_ocean.item()))
+
     logger.info('Saving transport file: {}.'.format(name))
     df.to_netcdf(dpath/'ofam_transport_{}.nc'.format(name_short))
     logger.info('Finished transport file: {}.'.format(name))
@@ -101,11 +140,13 @@ for y in range(lx['years'][0][0], lx['years'][0][1] + 1):
     for m in range(1, 13):
         f.append(xpath/'ocean_{}_{}_{:02d}.nc'.format(var, y, m))
 
-ds = xr.open_mfdataset(f, combine='by_coords', concat_dim="Time",
-                       mask_and_scale=False)
+dss = xr.open_mfdataset(f, combine='by_coords', concat_dim="Time",
+                        mask_and_scale=False)
+
+# dss = xr.open_dataset(xpath/'ocean_v_1981-2012_climo.nc')
 
 # Calculate the monthly means.
-ds = ds.resample(Time="MS").mean()
+ds = dss.resample(Time="MS").mean()
 
 ds = ds.drop('average_DT')
 
@@ -130,6 +171,21 @@ elif var == 'u':
     area = (ds[var]*np.nan).fillna(1)*dz[:, np.newaxis]*dy
 ds = ds.assign(area=area)
 
+if name_short != 'mc' and var == 'v':
+    exv = ds[var].isel(Time=0, st_ocean=5,
+                       xu_ocean=len(ds.xu_ocean)//2).load()
+
+elif name_short == 'mc' and var == 'v':
+    exv = ds[var].isel(Time=0, st_ocean=5, yu_ocean=-1,
+                       xu_ocean=len(ds.xu_ocean)//2).load()
+else:
+    logger.info('{} error: var exp not implemeneted yet'.format(name))
+    exv = -99999
+
+logger.debug('{} test 0: {:.4f} m/s {} ({:.1f}, {:.2f})'
+             .format(name, exv.item(),
+                     exv.Time.dt.strftime('%Y-%m-%d').item(),
+                     exv.yu_ocean.item(), exv.xu_ocean.item()))
 transport(var, ds, lat, lon, name, name_short)
 
 ## Finding MC bounds.
