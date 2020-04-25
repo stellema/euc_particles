@@ -148,7 +148,7 @@ ds = xr.open_mfdataset(f, combine='by_coords', concat_dim="Time",
 # datetimeindex = ds.indexes['Time'].to_datetimeindex()
 # ds['Time'] = datetimeindex
 # Calculate the monthly means.
-ds = ds.resample(Time="M").mean()
+ds = ds.resample(Time="MS").mean()
 
 # Calculate depth [m] of grid cells.
 DZ = np.array([(ds.st_edges_ocean[z+1] - ds.st_edges_ocean[z]).item()
