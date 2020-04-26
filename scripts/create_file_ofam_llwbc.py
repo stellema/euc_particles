@@ -78,19 +78,19 @@ if s == 0:
 elif s == 1:
     # St.George's Channel.
     name = 'St Georges Channel'
-    name_short = 'sgz'
+    name_short = 'sgzz'
     lat, lon = -4.4, [152.3, 152.7]
 
 elif s == 2:
     # Solomon Strait (west).
     name = 'Solomon Strait'
-    name_short = 'ssz'
+    name_short = 'sszz'
     lat, lon = -4.1, [153, 153.7]
 
 elif s == 3:
     # Mindanao Current.
     name = 'Mindanao Current'
-    name_short = 'mcz'
+    name_short = 'mczz'
     lat, lon = [6.4, 9], [126.2, 128.2]
 
 

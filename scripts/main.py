@@ -168,6 +168,38 @@ def paths():
 
     return fpath, dpath, xpath, lpath, tpath
 
+loggers = {}
+def mlogger(name):
+
+    lpath = [i for i in [j for j in paths()] if i.name == 'logs'][0]
+
+    global loggers
+    # logger = logging.getLogger(__name__)
+    if loggers.get(name):
+        return loggers.get(name)
+    else:
+        logger = logging.getLogger(name)
+        # Create handlers
+        c_handler = logging.StreamHandler()
+        f_handler = logging.FileHandler(lpath/'{}.log'.format(name))
+        c_handler.setLevel(logging.DEBUG)
+        f_handler.setLevel(logging.DEBUG)
+
+        # Create formatters and add it to handlers
+        c_format = logging.Formatter('%(name)s:%(levelname)s:%(message)s')
+        f_format = logging.Formatter('%(asctime)s:%(funcName)s:%(levelname)s:%(message)s')
+        if len(logger.handlers) != 0:
+            logger.handlers.clear()
+        c_handler.setFormatter(c_format)
+        f_handler.setFormatter(f_format)
+
+        # Add handlers to the logger
+        logger.addHandler(c_handler)
+        logger.addHandler(f_handler)
+        logger.setLevel(logging.DEBUG)
+        # logger.propagate = False
+        loggers[name] = logger
+    return logger
 
 def current_time(print_time=False):
     """Return and/or print the current time in AM/PM format (e.g. 9:00am).

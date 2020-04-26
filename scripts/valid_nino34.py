@@ -99,21 +99,33 @@ def plot_oni_valid(ds, da, add_obs_ev=False):
 def enso_u_ofam(oni, du, nino=None, nina=None):
     if not nino and not nina:
         nino, nina = nino_events(oni.oni)
-    enso = xr.DataArray(np.empty((2, *du[0].shape)).fill(np.nan),
-                        coords=[('nin', ['nino', 'nina']),
-                                ('st_ocean', du.st_ocean.values),
-                                ('xu_ocean', lx['lons'])])
+    if hasattr(du, 'st_ocean'):
+        coords = [('nin', ['nino', 'nina']), ('st_ocean', du.st_ocean.values),
+                  ('xu_ocean', lx['lons'])]
+    else:
+        coords = [('nin', ['nino', 'nina'])]
 
-    for ix, x in enumerate(lx['lons']):
+    enso = xr.DataArray(np.empty((2, *du[0].shape)).fill(np.nan), coords=coords)
+
+    if hasattr(du, 'st_ocean') and hasattr(du, 'xu_ocean'):
+        for ix, x in enumerate(lx['lons']):
+            for n, nin in enumerate([nino, nina]):
+                for iz, z in enumerate(du.st_ocean):
+                    tmp = []
+                    for i in range(len(nin)):
+                        u = du.sel(Time=slice(nin[i][0], nin[i][1]),
+                                   st_ocean=z, xu_ocean=x).values
+                        if len(u) != 0:
+                            tmp = np.append(tmp, u)
+                    enso[n, iz, ix] = np.nanmean(tmp)
+    else:
         for n, nin in enumerate([nino, nina]):
-            for iz, z in enumerate(du.st_ocean):
-                tmp = []
-                for i in range(len(nin)):
-                    u = du.sel(Time=slice(nin[i][0], nin[i][1]),
-                               st_ocean=z, xu_ocean=x).values
-                    if len(u) != 0:
-                        tmp = np.append(tmp, u)
-                enso[n, iz, ix] = np.nanmean(tmp)
+            tmp = []
+            for i in range(len(nin)):
+                u = du.sel(Time=slice(nin[i][0], nin[i][1])).values
+                if len(u) != 0:
+                    tmp = np.append(tmp, u)
+            enso[n] = np.nanmean(tmp)
     oni.close()
     du.close()
     return enso
