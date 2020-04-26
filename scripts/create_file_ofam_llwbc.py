@@ -155,7 +155,7 @@ dv.attrs['history'] = 'Modified {}.'.format(now.strftime("%Y-%m-%d"))
 
 ext = (dv.isel(Time=0, st_ocean=slice(0, 30))
        .sum(dim='st_ocean').sum(dim='xu_ocean'))/1e6
-if ext.shape == () and var == 'v':
+if ext.shape != () and var == 'v':
     ext = ext.isel(yu_ocean=-1).load()
 else:
     ext = ext.load()
