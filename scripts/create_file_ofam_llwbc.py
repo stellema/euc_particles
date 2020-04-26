@@ -161,11 +161,11 @@ else:
     ext = ext.load()
 if test:
     print('{} ({}) test: {:.4f} Sv {} ({:.1f})'
-          .format(name, short_name, ext.item(),
+          .format(name, name_short, ext.item(),
                   ext.Time.dt.strftime('%Y-%m-%d').item(),ext.yu_ocean.item()))
 else:
     logger.debug('{} ({}) test: {:.4f} Sv {} ({:.1f})'
-                 .format(name, short_name, ext.item(),
+                 .format(name, name_short, ext.item(),
                          ext.Time.dt.strftime('%Y-%m-%d').item(),
                          ext.yu_ocean.item()))
 
