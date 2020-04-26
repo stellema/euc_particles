@@ -43,8 +43,7 @@ now = datetime.now()
 
 logger.setLevel(logging.DEBUG)
 now = datetime.now()
-handler = logging.FileHandler(lpath/'Transport_{}.log'
-                              .format(now.strftime("%Y-%m-%d")))
+handler = logging.FileHandler(lpath/'transport_file.log')
 formatter = logging.Formatter('%(asctime)s:%(funcName)s:%(message)s')
 handler.setFormatter(formatter)
 logger.addHandler(handler)
@@ -78,19 +77,19 @@ if s == 0:
 elif s == 1:
     # St.George's Channel.
     name = 'St Georges Channel'
-    name_short = 'sgzz'
+    name_short = 'sgz'
     lat, lon = -4.4, [152.3, 152.7]
 
 elif s == 2:
     # Solomon Strait (west).
     name = 'Solomon Strait'
-    name_short = 'sszz'
+    name_short = 'ssz'
     lat, lon = -4.1, [153, 153.7]
 
 elif s == 3:
     # Mindanao Current.
     name = 'Mindanao Current'
-    name_short = 'mczz'
+    name_short = 'mcz'
     lat, lon = [6.4, 9], [126.2, 128.2]
 
 
@@ -103,7 +102,7 @@ def predrop(ds):
     return ds
 
 if not test:
-    logger.info('Creating transport file: {}.'.format(name))
+    logger.info('Creating transport file: {} ({}).'.format(name, name_short))
 
 f = []
 for y in range(lx['years'][0][0], lx['years'][0][1] + 1):
@@ -161,15 +160,15 @@ if name_short == 'mc' and var == 'v':
 else:
     ext = ext.load()
 if test:
-    print('{} test 2: {:.4f} Sv {} ({:.1f})'
-          .format(name, ext.item(), ext.Time.dt.strftime('%Y-%m-%d').item(),
-                  ext.yu_ocean.item()))
+    print('{} ({}) test: {:.4f} Sv {} ({:.1f})'
+          .format(name, short_name, ext.item(),
+                  ext.Time.dt.strftime('%Y-%m-%d').item(),ext.yu_ocean.item()))
 else:
-    logger.debug('{} test: {:.4f} Sv {} ({:.1f})'
-                 .format(name, ext.item(),
+    logger.debug('{} ({}) test: {:.4f} Sv {} ({:.1f})'
+                 .format(name, short_name, ext.item(),
                          ext.Time.dt.strftime('%Y-%m-%d').item(),
                          ext.yu_ocean.item()))
 
-logger.info('Saving transport file: {}.'.format(name))
+logger.info('Saving transport file: {} ({}).'.format(name, name_short))
 dv.to_netcdf(dpath/'ofam_transport_{}.nc'.format(name_short), compute=True)
-logger.info('Finished transport file: {}.'.format(name))
+logger.info('Finished transport file: {} ({}).'.format(name, name_short))
