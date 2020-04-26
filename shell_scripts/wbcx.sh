@@ -1,9 +1,9 @@
 #!/bin/bash
 #PBS -P e14
 #PBS -q normal
-#PBS -l walltime=10:00:00
-#PBS -l mem=25GB
-#PBS -l ncpus=1
+#PBS -l walltime=24:00:00
+#PBS -l mem=50GB
+#PBS -l ncpus=5
 #PBS -l wd
 #PBS -M astellemas@gmail.com
 #PBS -m abe
@@ -11,5 +11,7 @@
 
 module use /g/data3/hh5/public/modules
 module load conda/analysis3-20.01
-
-python3 /g/data/e14/as3189/OFAM/scripts/create_file_ofam_llwbc.py 0
+for i in 0 1 2 3 4; do
+python3 /g/data/e14/as3189/OFAM/scripts/create_file_ofam_llwbc.py $i &
+done
+wait
