@@ -22,7 +22,7 @@ from datetime import datetime
 from math import radians, cos
 import matplotlib.pyplot as plt
 from main import paths, idx_1d, lx, EARTH_RADIUS, timeit
-# from parcels.tools.loggers import logger
+from parcels.tools.loggers import logger
 from matplotlib.offsetbox import AnchoredText
 
 warnings.filterwarnings('ignore')
