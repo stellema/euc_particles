@@ -604,20 +604,14 @@ def deg2m(lat1, lon1, lat2, lon2):
 
 fpath, dpath, xpath, lpath, tpath = paths()
 
-logger.setLevel(logging.DEBUG)
-now = datetime.now()
-handler = logging.FileHandler(lpath/'main_{}.log'
-                              .format(now.strftime("%Y-%m-%d")))
-formatter = logging.Formatter(
-        '%(asctime)s:%(funcName)s:%(message)s')
-handler.setFormatter(formatter)
-logger.addHandler(handler)
-logger.propagate = False
+if dpath == Path('/g/data/e14/as3189/OFAM/data'):
+    logger.setLevel(logging.DEBUG)
+    now = datetime.now()
+    handler = logging.FileHandler(lpath/'main_{}.log'
+                                  .format(now.strftime("%Y-%m-%d")))
+    formatter = logging.Formatter(
+            '%(asctime)s:%(funcName)s:%(message)s')
+    handler.setFormatter(formatter)
+    logger.addHandler(handler)
+    logger.propagate = False
 
-#    for i in range(N):
-#        ax.scatter(x[i], y[i], z[i], s=5, marker="o", c=cmap(norm(ds.u)))
-#        ax.scatter(x[i], y[i], z[i], s=5, marker="o", c=[c[i]])
-#
-# pfile = dpath.joinpath('ParticleFile_1979-1989_v3.nc')
-# filename = dpath.joinpath('ParticleFile_1979-1989_v3.nc')
-# pfile = dpath.joinpath('ParticleFile_1979-1989_v3.nc')

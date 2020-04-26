@@ -16,6 +16,7 @@ import pandas as pd
 import numpy as np
 import xarray as xr
 from scipy import stats
+from pathlib import Path
 from scipy import interpolate
 from datetime import datetime
 from math import radians, cos
@@ -29,14 +30,15 @@ warnings.filterwarnings('ignore')
 # Path to save figures, save data and OFAM model output.
 fpath, dpath, xpath, lpath, tpath = paths()
 
-logger.setLevel(logging.DEBUG)
-now = datetime.now()
-handler = logging.FileHandler(lpath/'main_valid_{}.log'
-                              .format(now.strftime("%Y-%m-%d")))
-formatter = logging.Formatter('%(asctime)s:%(funcName)s:%(message)s')
-handler.setFormatter(formatter)
-logger.addHandler(handler)
-logger.propagate = False
+if dpath == Path('/g/data/e14/as3189/OFAM/data'):
+    logger.setLevel(logging.DEBUG)
+    now = datetime.now()
+    handler = logging.FileHandler(lpath/'main_valid_{}.log'
+                                  .format(now.strftime("%Y-%m-%d")))
+    formatter = logging.Formatter('%(asctime)s:%(funcName)s:%(message)s')
+    handler.setFormatter(formatter)
+    logger.addHandler(handler)
+    logger.propagate = False
 
 # Time index bounds where OFAM and TAO are available.
 tbnds_ofam = [[10*12+3, 27*12+1], [7*12+4, 384], [9*12+4, 384]]
@@ -651,7 +653,7 @@ def deg_m(lat, lon, deg=0.1):
 
     dy = deg*arc
     dx = deg*arc * np.cos(np.radians(lat))
-    if type(lon) != int:
+    if type(lon) != (int or float):
         dy = np.array([deg*arc for i in lon])
 
     return dx, dy
