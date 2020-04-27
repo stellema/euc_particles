@@ -1,0 +1,23 @@
+INFO: Creating transport file: Vitiaz Strait.
+INFO: Creating transport file: St Georges Channel.
+INFO: Creating transport file: Solomon Strait.
+INFO: Creating transport file: Mindanao Current.
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/create_file_ofam_llwbc.py", line 106, in <module>
+    logger.info('Creating transport file: {}.'.format(name))
+NameError: name 'name' is not defined
+DEBUG: Vitiaz Strait test: 3.0060 Sv 1981-01-01 (-6.1)
+INFO: Saving transport file: Vitiaz Strait.
+DEBUG: St Georges Channel test: -0.4921 Sv 1981-01-01 (-4.4)
+INFO: Saving transport file: St Georges Channel.
+DEBUG: Solomon Strait test: -0.2934 Sv 1981-01-01 (-4.1)
+INFO: Saving transport file: Solomon Strait.
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/create_file_ofam_llwbc.py", line 169, in <module>
+    .format(name, ext.item(),
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.01/lib/python3.7/site-packages/xarray/core/ops.py", line 219, in func
+    return _call_possibly_missing_method(self.data, name, args, kwargs)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.01/lib/python3.7/site-packages/xarray/core/ops.py", line 214, in _call_possibly_missing_method
+    return method(*args, **kwargs)
+ValueError: can only convert an array of size 1 to a Python scalar
+INFO: Finished transport file: Vitiaz Strait.

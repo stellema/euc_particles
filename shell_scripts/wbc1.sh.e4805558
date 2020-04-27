@@ -1,0 +1,5 @@
+INFO: Creating transport file: St Georges Channel (sgz).
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/create_file_ofam_llwbc.py", line 168, in <module>
+    .format(name, short_name, ext.item(),
+NameError: name 'short_name' is not defined

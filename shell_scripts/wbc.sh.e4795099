@@ -1,0 +1,39 @@
+INFO: Creating transport file: Mindanao Current.
+INFO: Creating transport file: St Georges Channel.
+INFO: Creating transport file: Solomon Strait.
+INFO: Creating transport file: Vitiaz Strait.
+DEBUG: St Georges Channel test 0: nan m/s 1981-01-01 (-4.4, 152.80)
+DEBUG: Solomon Strait test 0: -0.0740 m/s 1981-01-01 (-4.1, 153.80)
+DEBUG: Mindanao Current test 0: -0.0148 m/s 1981-01-01 (6.4, 128.30)
+DEBUG: Vitiaz Strait test 0: nan m/s 1981-01-01 (-6.1, 149.10)
+DEBUG: St Georges Channel test 1: -0.3781 m/s 1981-01-01 (-4.4, 152.50)
+DEBUG: Solomon Strait test 1: -0.3241 m/s 1981-01-01 (-4.1, 153.40)
+DEBUG: Mindanao Current test 1: -0.4867 m/s 1981-01-01 (9.0, 127.20)
+DEBUG: Vitiaz Strait test 1: -0.1268 m/s 1981-01-01 (-6.1, 148.40)
+DEBUG: St Georges Channel test 2: -0.3781 m/s -0.4921 Sv 1981-01-01 (-4.4, 152.50)
+INFO: Saving transport file: St Georges Channel.
+DEBUG: Mindanao Current test 2: -0.4867 m/s -23.6715 Sv 1981-01-01 (9.0, 127.20)
+INFO: Saving transport file: Mindanao Current.
+DEBUG: Vitiaz Strait test 2: -0.1268 m/s 3.0060 Sv 1981-01-01 (-6.1, 148.40)
+INFO: Saving transport file: Vitiaz Strait.
+DEBUG: Solomon Strait test 2: -0.3241 m/s -0.2934 Sv 1981-01-01 (-4.1, 153.40)
+INFO: Saving transport file: Solomon Strait.
+
+------------------------------------------------------------------------
+Job 4795099 has exceeded memory allocation on node gadi-cpu-clx-1957.gadi.nci.org.au
+Process "bash", pid 1905, rss 2977792, vmem 238637056
+Process "4795099.gadi-pb", pid 2527, rss 2646016, vmem 228110336
+Process "python3", pid 2538, rss 16957423616, vmem 26028802048
+Process "python3", pid 2539, rss 16108892160, vmem 23243927552
+Process "python3", pid 2540, rss 6450982912, vmem 14488813568
+Process "python3", pid 2541, rss 13970440192, vmem 22708801536
+Process "orted", pid 3107, rss 9543680, vmem 388501504
+Process "orted", pid 3108, rss 9367552, vmem 388517888
+Process "orted", pid 3114, rss 9113600, vmem 388517888
+Process "orted", pid 3115, rss 9375744, vmem 388501504
+------------------------------------------------------------------------
+For more information visit https://opus.nci.org.au/x/SwGRAQ
+------------------------------------------------------------------------
+/local/spool/pbs/mom_priv/jobs/4795099.gadi-pbs.SC: line 18:  2538 Killed                  python3 /g/data/e14/as3189/OFAM/scripts/create_file_ofam_llwbc.py $i
+/local/spool/pbs/mom_priv/jobs/4795099.gadi-pbs.SC: line 18:  2539 Killed                  python3 /g/data/e14/as3189/OFAM/scripts/create_file_ofam_llwbc.py $i
+=>> PBS: job killed: walltime 86437 exceeded limit 86400

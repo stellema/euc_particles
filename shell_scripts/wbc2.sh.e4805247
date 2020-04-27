@@ -1,0 +1,30 @@
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/create_file_ofam_llwbc.py", line 36, in <module>
+    from main_valid import deg_m
+  File "/g/data/e14/as3189/OFAM/scripts/main_valid.py", line 34, in <module>
+    logger.setLevel(logging.DEBUG)
+NameError: name 'logger' is not defined
