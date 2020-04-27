@@ -39,8 +39,7 @@ import logging
 import numpy as np
 import xarray as xr
 from datetime import datetime
-from main import paths, lx, timeit, idx_1d
-from parcels.tools.loggers import logger
+from main import paths, lx, timeit, idx_1d, mlogger
 
 # Path to save figures, save data and OFAM model output.
 fpath, dpath, xpath, lpath, tpath = paths()
@@ -153,14 +152,8 @@ def reanalysis_wind(product, vari, lon, lat):
     return
 
 
-logger.setLevel(logging.DEBUG)
+logger = mlogger('reanalysis')
 now = datetime.now()
-handler = logging.FileHandler(lpath/'reanalysis_{}_{}.log'
-                              .format(product, now.strftime("%Y-%m-%d")))
-formatter = logging.Formatter('%(asctime)s:%(funcName)s:%(message)s')
-handler.setFormatter(formatter)
-logger.addHandler(handler)
-logger.propagate = False
 
 lon = [120, 295]
 lat = [-15, 15]

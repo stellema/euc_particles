@@ -683,3 +683,349 @@
 2020-04-17 19:01:23,962:timed:reanalysis_wind: 0:1:48.41 total: 108.41 seconds.
 2020-04-17 19:01:24,143:reanalysis_wind:SUCCESS: jra55_vas_01_climo.nc
 2020-04-17 19:01:24,172:timed:reanalysis_wind: 0:1:48.62 total: 108.62 seconds.
+2020-04-18 18:11:25,871:reanalysis_wind:Creating file: jra55_vas_10_cubic_climo.nc from /g/data/rr7/JRA55/6hr/atmos/.
+2020-04-18 18:11:25,871:reanalysis_wind:Creating file: jra55_uas_10_cubic_climo.nc from /g/data/rr7/JRA55/6hr/atmos/.
+2020-04-18 18:11:25,871:reanalysis_wind:Creating file: jra55_huss_10_cubic_climo.nc from /g/data/rr7/JRA55/6hr/atmos/.
+2020-04-18 18:11:25,871:reanalysis_wind:Creating file: jra55_tas_10_cubic_climo.nc from /g/data/rr7/JRA55/6hr/atmos/.
+2020-04-18 18:11:25,871:reanalysis_wind:Creating file: jra55_psl_10_cubic_climo.nc from /g/data/rr7/JRA55/6hr/atmos/.
+2020-04-18 18:14:26,219:reanalysis_wind:jra55_vas_10_cubic_climo.nc OLD coords: Coordinates:
+  * lon      (lon) float32 108.75 110.0 111.25 112.5 ... 288.75 290.0 291.25
+  * lat      (lat) float32 -16.25 -15.0 -13.75 -12.5 ... 12.5 13.75 15.0 16.25
+  * time     (time) datetime64[ns] 1981-01-01 ... 2012-12-31T18:00:00
+2020-04-18 18:14:26,227:reanalysis_wind:jra55_vas_10_cubic_climo.nc NEW coords: Coordinates:
+  * time     (time) int64 1 2 3 4 5 6 7 8 9 10 11 12
+  * lon      (lon) float64 109.0 110.0 111.0 112.0 ... 288.0 289.0 290.0 291.0
+  * lat      (lat) float64 -16.0 -15.0 -14.0 -13.0 -12.0 ... 13.0 14.0 15.0 16.0
+2020-04-18 18:14:26,256:reanalysis_wind:SUCCESS: jra55_vas_10_cubic_climo.nc
+2020-04-18 18:14:26,298:timed:reanalysis_wind: 0:3:00.43 total: 180.43 seconds.
+2020-04-18 18:14:34,375:reanalysis_wind:jra55_tas_10_cubic_climo.nc OLD coords: Coordinates:
+  * lon      (lon) float32 108.75 110.0 111.25 112.5 ... 288.75 290.0 291.25
+  * lat      (lat) float32 -16.25 -15.0 -13.75 -12.5 ... 12.5 13.75 15.0 16.25
+  * time     (time) datetime64[ns] 1981-01-01 ... 2012-12-31T18:00:00
+2020-04-18 18:14:34,381:reanalysis_wind:jra55_tas_10_cubic_climo.nc NEW coords: Coordinates:
+  * time     (time) int64 1 2 3 4 5 6 7 8 9 10 11 12
+  * lon      (lon) float64 109.0 110.0 111.0 112.0 ... 288.0 289.0 290.0 291.0
+  * lat      (lat) float64 -16.0 -15.0 -14.0 -13.0 -12.0 ... 13.0 14.0 15.0 16.0
+2020-04-18 18:14:34,401:reanalysis_wind:SUCCESS: jra55_tas_10_cubic_climo.nc
+2020-04-18 18:14:34,435:timed:reanalysis_wind: 0:3:08.56 total: 188.56 seconds.
+2020-04-22 17:15:04,835:reanalysis_wind:Creating file: jra55_uas_climo.nc from /g/data/rr7/JRA55/6hr/atmos/.
+2020-04-22 18:24:09,276:reanalysis_wind:Creating file: jra55_tas_climo.nc from /g/data/rr7/JRA55/6hr/atmos/.
+2020-04-22 18:24:09,276:reanalysis_wind:Creating file: jra55_vas_climo.nc from /g/data/rr7/JRA55/6hr/atmos/.
+2020-04-22 18:24:09,276:reanalysis_wind:Creating file: jra55_huss_climo.nc from /g/data/rr7/JRA55/6hr/atmos/.
+2020-04-22 18:24:09,276:reanalysis_wind:Creating file: jra55_uas_climo.nc from /g/data/rr7/JRA55/6hr/atmos/.
+2020-04-22 18:24:09,276:reanalysis_wind:Creating file: jra55_psl_climo.nc from /g/data/rr7/JRA55/6hr/atmos/.
+2020-04-22 18:24:59,274:reanalysis_wind:jra55_vas_climo.nc NEW coords: Coordinates:
+  * lon      (lon) float32 120.0 121.25 122.5 123.75 ... 292.5 293.75 295.0
+  * lat      (lat) float32 -15.0 -13.75 -12.5 -11.25 ... 11.25 12.5 13.75 15.0
+  * time     (time) int64 1 2 3 4 5 6 7 8 9 10 11 12
+2020-04-22 18:24:59,288:reanalysis_wind:SUCCESS: jra55_vas_climo.nc
+2020-04-22 18:24:59,319:timed:reanalysis_wind: 0:0:50.04 total: 50.04 seconds.
+2020-04-22 18:25:06,081:reanalysis_wind:jra55_tas_climo.nc NEW coords: Coordinates:
+  * lon      (lon) float32 120.0 121.25 122.5 123.75 ... 292.5 293.75 295.0
+  * lat      (lat) float32 -15.0 -13.75 -12.5 -11.25 ... 11.25 12.5 13.75 15.0
+  * time     (time) int64 1 2 3 4 5 6 7 8 9 10 11 12
+2020-04-22 18:25:06,094:reanalysis_wind:SUCCESS: jra55_tas_climo.nc
+2020-04-22 18:25:06,119:timed:reanalysis_wind: 0:0:56.84 total: 56.84 seconds.
+2020-04-22 18:25:09,746:reanalysis_wind:jra55_huss_climo.nc NEW coords: Coordinates:
+  * lat      (lat) float32 -15.0 -13.75 -12.5 -11.25 ... 11.25 12.5 13.75 15.0
+  * lon      (lon) float32 120.0 121.25 122.5 123.75 ... 292.5 293.75 295.0
+  * time     (time) int64 1 2 3 4 5 6 7 8 9 10 11 12
+2020-04-22 18:25:09,758:reanalysis_wind:SUCCESS: jra55_huss_climo.nc
+2020-04-22 18:25:09,785:timed:reanalysis_wind: 0:1:00.51 total: 60.51 seconds.
+2020-04-22 18:25:10,593:reanalysis_wind:jra55_uas_climo.nc NEW coords: Coordinates:
+  * lat      (lat) float32 -15.0 -13.75 -12.5 -11.25 ... 11.25 12.5 13.75 15.0
+  * lon      (lon) float32 120.0 121.25 122.5 123.75 ... 292.5 293.75 295.0
+  * time     (time) int64 1 2 3 4 5 6 7 8 9 10 11 12
+2020-04-22 18:25:10,607:reanalysis_wind:SUCCESS: jra55_uas_climo.nc
+2020-04-22 18:25:10,632:timed:reanalysis_wind: 0:1:01.36 total: 61.36 seconds.
+2020-04-22 18:25:14,811:reanalysis_wind:jra55_psl_climo.nc NEW coords: Coordinates:
+  * lon      (lon) float32 120.0 121.25 122.5 123.75 ... 292.5 293.75 295.0
+  * lat      (lat) float32 -15.0 -13.75 -12.5 -11.25 ... 11.25 12.5 13.75 15.0
+  * time     (time) int64 1 2 3 4 5 6 7 8 9 10 11 12
+2020-04-22 18:25:14,824:reanalysis_wind:SUCCESS: jra55_psl_climo.nc
+2020-04-22 18:25:14,867:timed:reanalysis_wind: 0:1:05.59 total: 65.59 seconds.
+2020-04-22 19:41:52,884:reanalysis_wind:Creating file: erai_ws_climo.nc from /g/data/rr7/ERA_INT/ERA_INT/.
+2020-04-22 19:43:36,409:reanalysis_wind:Creating file: erai_ws_climo.nc from /g/data/rr7/ERA_INT/ERA_INT/.
+2020-04-22 19:43:36,409:reanalysis_wind:Creating file: erai_ws_climo.nc from /g/data/rr7/ERA_INT/ERA_INT/.
+2020-04-22 19:45:10,675:reanalysis_wind:Creating file: erai_ws_climo.nc from /g/data/rr7/ERA_INT/ERA_INT/.
+2020-04-22 19:45:10,675:reanalysis_wind:Creating file: erai_ws_climo.nc from /g/data/rr7/ERA_INT/ERA_INT/.
+2020-04-22 19:45:10,675:reanalysis_wind:Creating file: erai_ws_climo.nc from /g/data/rr7/ERA_INT/ERA_INT/.
+2020-04-22 19:45:19,524:reanalysis_wind:Creating file: erai_ws_climo.nc from /g/data/rr7/ERA_INT/ERA_INT/.
+2020-04-22 19:45:19,524:reanalysis_wind:Creating file: erai_ws_climo.nc from /g/data/rr7/ERA_INT/ERA_INT/.
+2020-04-22 19:45:19,524:reanalysis_wind:Creating file: erai_ws_climo.nc from /g/data/rr7/ERA_INT/ERA_INT/.
+2020-04-22 19:45:19,524:reanalysis_wind:Creating file: erai_ws_climo.nc from /g/data/rr7/ERA_INT/ERA_INT/.
+2020-04-22 20:06:30,806:reanalysis_wind:Creating file: erai_ws_climo.nc from /g/data/rr7/ERA_INT/ERA_INT/.
+2020-04-22 20:06:30,806:reanalysis_wind:Creating file: erai_ws_climo.nc from /g/data/rr7/ERA_INT/ERA_INT/.
+2020-04-22 20:06:30,806:reanalysis_wind:Creating file: erai_ws_climo.nc from /g/data/rr7/ERA_INT/ERA_INT/.
+2020-04-22 20:06:30,806:reanalysis_wind:Creating file: erai_ws_climo.nc from /g/data/rr7/ERA_INT/ERA_INT/.
+2020-04-22 20:06:30,806:reanalysis_wind:Creating file: erai_ws_climo.nc from /g/data/rr7/ERA_INT/ERA_INT/.
+2020-04-22 20:11:30,475:reanalysis_wind:erai_ws_climo.nc NEW coords: Coordinates:
+  * lat      (lat) float64 -15.09 -14.39 -13.68 -12.98 ... 14.39 15.09 15.79
+  * lon      (lon) float32 119.53129 120.23441 120.937546 ... 295.3126 296.01572
+  * time     (time) int64 1 2 3 4 5 6 7 8 9 10 11 12
+2020-04-22 20:11:30,475:reanalysis_wind:erai_ws_climo.nc NEW coords: Coordinates:
+  * lat      (lat) float64 -15.09 -14.39 -13.68 -12.98 ... 14.39 15.09 15.79
+  * lon      (lon) float32 119.53129 120.23441 120.937546 ... 295.3126 296.01572
+  * time     (time) int64 1 2 3 4 5 6 7 8 9 10 11 12
+2020-04-22 20:11:30,475:reanalysis_wind:erai_ws_climo.nc NEW coords: Coordinates:
+  * lat      (lat) float64 -15.09 -14.39 -13.68 -12.98 ... 14.39 15.09 15.79
+  * lon      (lon) float32 119.53129 120.23441 120.937546 ... 295.3126 296.01572
+  * time     (time) int64 1 2 3 4 5 6 7 8 9 10 11 12
+2020-04-22 20:11:30,475:reanalysis_wind:erai_ws_climo.nc NEW coords: Coordinates:
+  * lat      (lat) float64 -15.09 -14.39 -13.68 -12.98 ... 14.39 15.09 15.79
+  * lon      (lon) float32 119.53129 120.23441 120.937546 ... 295.3126 296.01572
+  * time     (time) int64 1 2 3 4 5 6 7 8 9 10 11 12
+2020-04-22 20:11:30,475:reanalysis_wind:erai_ws_climo.nc NEW coords: Coordinates:
+  * lat      (lat) float64 -15.09 -14.39 -13.68 -12.98 ... 14.39 15.09 15.79
+  * lon      (lon) float32 119.53129 120.23441 120.937546 ... 295.3126 296.01572
+  * time     (time) int64 1 2 3 4 5 6 7 8 9 10 11 12
+2020-04-22 20:11:30,489:reanalysis_wind:SUCCESS: erai_ws_climo.nc
+2020-04-22 20:11:30,489:reanalysis_wind:SUCCESS: erai_ws_climo.nc
+2020-04-22 20:11:30,489:reanalysis_wind:SUCCESS: erai_ws_climo.nc
+2020-04-22 20:11:30,489:reanalysis_wind:SUCCESS: erai_ws_climo.nc
+2020-04-22 20:11:30,489:reanalysis_wind:SUCCESS: erai_ws_climo.nc
+2020-04-22 20:11:30,816:timed:reanalysis_wind: 0:5:00.02 total: 300.02 seconds.
+2020-04-22 20:11:30,816:timed:reanalysis_wind: 0:5:00.02 total: 300.02 seconds.
+2020-04-22 20:11:30,816:timed:reanalysis_wind: 0:5:00.02 total: 300.02 seconds.
+2020-04-22 20:11:30,816:timed:reanalysis_wind: 0:5:00.02 total: 300.02 seconds.
+2020-04-22 20:11:30,816:timed:reanalysis_wind: 0:5:00.02 total: 300.02 seconds.
+2020-04-22 20:21:42,898:reanalysis_wind:Creating file: erai_ws_climo.nc from /g/data/rr7/ERA_INT/ERA_INT/.
+2020-04-22 20:25:57,446:reanalysis_wind:erai_ws_climo.nc NEW coords: Coordinates:
+  * lat      (lat) float64 -15.09 -14.39 -13.68 -12.98 ... 14.39 15.09 15.79
+  * lon      (lon) float32 119.53129 120.23441 120.937546 ... 295.3126 296.01572
+  * time     (time) int64 1 2 3 4 5 6 7 8 9 10 11 12
+2020-04-22 20:25:57,455:reanalysis_wind:SUCCESS: erai_ws_climo.nc
+2020-04-22 20:25:57,663:timed:reanalysis_wind: 0:4:14.85 total: 254.85 seconds.
+2020-04-22 22:20:13,268:timed:wind_stress_curl: 0:0:01.18 total: 1.18 seconds.
+2020-04-22 22:20:48,904:timed:wind_stress_curl: 0:0:01.26 total: 1.26 seconds.
+2020-04-22 22:21:07,899:timed:wind_stress_curl: 0:0:01.21 total: 1.21 seconds.
+2020-04-22 22:21:09,899:timed:wind_stress_curl: 0:0:01.19 total: 1.19 seconds.
+2020-04-22 22:25:09,304:timed:wind_stress_curl: 0:0:01.23 total: 1.23 seconds.
+2020-04-22 22:25:10,151:timed:wind_stress_curl: 0:0:00.03 total: 0.03 seconds.
+2020-04-22 22:31:37,913:timed:wind_stress_curl: 0:0:01.19 total: 1.19 seconds.
+2020-04-22 22:32:30,522:timed:wind_stress_curl: 0:0:01.18 total: 1.18 seconds.
+2020-04-22 22:32:30,996:timed:wind_stress_curl: 0:0:00.03 total: 0.03 seconds.
+2020-04-22 22:37:26,077:reanalysis_wind:Creating file: erai_ws_climo.nc from /g/data/rr7/ERA_INT/ERA_INT/.
+2020-04-22 22:37:26,077:reanalysis_wind:Creating file: erai_ws_climo.nc from /g/data/rr7/ERA_INT/ERA_INT/.
+2020-04-22 22:42:18,865:timed:wind_stress_curl: 0:0:01.18 total: 1.18 seconds.
+2020-04-22 22:42:18,865:timed:wind_stress_curl: 0:0:01.18 total: 1.18 seconds.
+2020-04-22 22:43:25,319:timed:wind_stress_curl: 0:0:01.18 total: 1.18 seconds.
+2020-04-22 22:43:25,319:timed:wind_stress_curl: 0:0:01.18 total: 1.18 seconds.
+2020-04-22 22:43:31,707:timed:wind_stress_curl: 0:0:01.17 total: 1.17 seconds.
+2020-04-22 22:43:31,707:timed:wind_stress_curl: 0:0:01.17 total: 1.17 seconds.
+2020-04-22 22:44:09,416:timed:wind_stress_curl: 0:0:01.49 total: 1.49 seconds.
+2020-04-22 22:44:09,416:timed:wind_stress_curl: 0:0:01.49 total: 1.49 seconds.
+2020-04-22 22:44:17,345:timed:wind_stress_curl: 0:0:01.69 total: 1.69 seconds.
+2020-04-22 22:44:17,345:timed:wind_stress_curl: 0:0:01.69 total: 1.69 seconds.
+2020-04-22 22:44:18,704:timed:wind_stress_curl: 0:0:01.36 total: 1.36 seconds.
+2020-04-22 22:44:18,704:timed:wind_stress_curl: 0:0:01.36 total: 1.36 seconds.
+2020-04-22 22:44:53,831:timed:wind_stress_curl: 0:0:01.69 total: 1.69 seconds.
+2020-04-22 22:44:53,831:timed:wind_stress_curl: 0:0:01.69 total: 1.69 seconds.
+2020-04-22 22:45:00,843:timed:wind_stress_curl: 0:0:01.69 total: 1.69 seconds.
+2020-04-22 22:45:00,843:timed:wind_stress_curl: 0:0:01.69 total: 1.69 seconds.
+2020-04-22 22:45:02,596:timed:wind_stress_curl: 0:0:01.75 total: 1.75 seconds.
+2020-04-22 22:45:02,596:timed:wind_stress_curl: 0:0:01.75 total: 1.75 seconds.
+2020-04-22 22:46:40,622:timed:wind_stress_curl: 0:0:01.50 total: 1.50 seconds.
+2020-04-22 22:46:40,622:timed:wind_stress_curl: 0:0:01.50 total: 1.50 seconds.
+2020-04-22 22:46:41,193:timed:wind_stress_curl: 0:0:00.03 total: 0.03 seconds.
+2020-04-22 22:46:41,193:timed:wind_stress_curl: 0:0:00.03 total: 0.03 seconds.
+2020-04-22 22:55:56,550:timed:wind_stress_curl: 0:0:01.54 total: 1.54 seconds.
+2020-04-22 22:55:56,550:timed:wind_stress_curl: 0:0:01.54 total: 1.54 seconds.
+2020-04-22 22:55:57,115:timed:wind_stress_curl: 0:0:00.03 total: 0.03 seconds.
+2020-04-22 22:55:57,115:timed:wind_stress_curl: 0:0:00.03 total: 0.03 seconds.
+2020-04-22 23:04:26,325:timed:wind_stress_curl: 0:0:01.38 total: 1.38 seconds.
+2020-04-22 23:04:26,325:timed:wind_stress_curl: 0:0:01.38 total: 1.38 seconds.
+2020-04-22 23:04:26,869:timed:wind_stress_curl: 0:0:00.03 total: 0.03 seconds.
+2020-04-22 23:04:26,869:timed:wind_stress_curl: 0:0:00.03 total: 0.03 seconds.
+2020-04-22 23:05:39,456:timed:wind_stress_curl: 0:0:01.31 total: 1.31 seconds.
+2020-04-22 23:05:39,456:timed:wind_stress_curl: 0:0:01.31 total: 1.31 seconds.
+2020-04-22 23:05:39,965:timed:wind_stress_curl: 0:0:00.03 total: 0.03 seconds.
+2020-04-22 23:05:39,965:timed:wind_stress_curl: 0:0:00.03 total: 0.03 seconds.
+2020-04-22 23:06:50,325:timed:wind_stress_curl: 0:0:01.53 total: 1.53 seconds.
+2020-04-22 23:06:50,325:timed:wind_stress_curl: 0:0:01.53 total: 1.53 seconds.
+2020-04-22 23:06:52,447:timed:wind_stress_curl: 0:0:01.59 total: 1.59 seconds.
+2020-04-22 23:06:52,447:timed:wind_stress_curl: 0:0:01.59 total: 1.59 seconds.
+2020-04-22 23:06:53,982:timed:wind_stress_curl: 0:0:01.53 total: 1.53 seconds.
+2020-04-22 23:06:53,982:timed:wind_stress_curl: 0:0:01.53 total: 1.53 seconds.
+2020-04-22 23:31:30,180:timed:wind_stress_curl: 0:0:01.33 total: 1.33 seconds.
+2020-04-22 23:31:30,180:timed:wind_stress_curl: 0:0:01.33 total: 1.33 seconds.
+2020-04-22 23:31:30,876:timed:wind_stress_curl: 0:0:00.03 total: 0.03 seconds.
+2020-04-22 23:31:30,876:timed:wind_stress_curl: 0:0:00.03 total: 0.03 seconds.
+2020-04-22 23:33:16,921:timed:wind_stress_curl: 0:0:01.49 total: 1.49 seconds.
+2020-04-22 23:33:16,921:timed:wind_stress_curl: 0:0:01.49 total: 1.49 seconds.
+2020-04-22 23:33:18,031:timed:wind_stress_curl: 0:0:00.01 total: 0.01 seconds.
+2020-04-22 23:33:18,031:timed:wind_stress_curl: 0:0:00.01 total: 0.01 seconds.
+2020-04-22 23:35:02,832:timed:wind_stress_curl: 0:0:01.51 total: 1.51 seconds.
+2020-04-22 23:35:02,832:timed:wind_stress_curl: 0:0:01.51 total: 1.51 seconds.
+2020-04-22 23:35:07,815:timed:wind_stress_curl: 0:0:00.03 total: 0.03 seconds.
+2020-04-22 23:35:07,815:timed:wind_stress_curl: 0:0:00.03 total: 0.03 seconds.
+2020-04-22 23:35:53,740:timed:wind_stress_curl: 0:0:01.66 total: 1.66 seconds.
+2020-04-22 23:35:53,740:timed:wind_stress_curl: 0:0:01.66 total: 1.66 seconds.
+2020-04-22 23:35:59,092:timed:wind_stress_curl: 0:0:00.03 total: 0.03 seconds.
+2020-04-22 23:35:59,092:timed:wind_stress_curl: 0:0:00.03 total: 0.03 seconds.
+2020-04-22 23:40:18,799:timed:wind_stress_curl: 0:0:01.58 total: 1.58 seconds.
+2020-04-22 23:40:18,799:timed:wind_stress_curl: 0:0:01.58 total: 1.58 seconds.
+2020-04-22 23:40:23,744:timed:wind_stress_curl: 0:0:00.02 total: 0.02 seconds.
+2020-04-22 23:40:23,744:timed:wind_stress_curl: 0:0:00.02 total: 0.02 seconds.
+2020-04-22 23:41:55,817:timed:wind_stress_curl: 0:0:01.44 total: 1.44 seconds.
+2020-04-22 23:41:55,817:timed:wind_stress_curl: 0:0:01.44 total: 1.44 seconds.
+2020-04-22 23:42:00,672:timed:wind_stress_curl: 0:0:00.02 total: 0.02 seconds.
+2020-04-22 23:42:00,672:timed:wind_stress_curl: 0:0:00.02 total: 0.02 seconds.
+2020-04-22 23:46:13,187:timed:wind_stress_curl: 0:0:01.65 total: 1.65 seconds.
+2020-04-22 23:46:13,187:timed:wind_stress_curl: 0:0:01.65 total: 1.65 seconds.
+2020-04-22 23:46:18,538:timed:wind_stress_curl: 0:0:00.03 total: 0.03 seconds.
+2020-04-22 23:46:18,538:timed:wind_stress_curl: 0:0:00.03 total: 0.03 seconds.
+2020-04-22 23:46:46,814:timed:wind_stress_curl: 0:0:01.31 total: 1.31 seconds.
+2020-04-22 23:46:46,814:timed:wind_stress_curl: 0:0:01.31 total: 1.31 seconds.
+2020-04-22 23:46:51,196:timed:wind_stress_curl: 0:0:00.04 total: 0.04 seconds.
+2020-04-22 23:46:51,196:timed:wind_stress_curl: 0:0:00.04 total: 0.04 seconds.
+2020-04-22 23:48:04,906:timed:wind_stress_curl: 0:0:01.47 total: 1.47 seconds.
+2020-04-22 23:48:04,906:timed:wind_stress_curl: 0:0:01.47 total: 1.47 seconds.
+2020-04-22 23:48:12,866:timed:wind_stress_curl: 0:0:01.60 total: 1.60 seconds.
+2020-04-22 23:48:12,866:timed:wind_stress_curl: 0:0:01.60 total: 1.60 seconds.
+2020-04-22 23:49:04,506:timed:wind_stress_curl: 0:0:01.49 total: 1.49 seconds.
+2020-04-22 23:49:04,506:timed:wind_stress_curl: 0:0:01.49 total: 1.49 seconds.
+2020-04-22 23:49:19,136:timed:wind_stress_curl: 0:0:01.87 total: 1.87 seconds.
+2020-04-22 23:49:19,136:timed:wind_stress_curl: 0:0:01.87 total: 1.87 seconds.
+2020-04-23 00:46:43,065:timed:wind_stress_curl: 0:0:01.94 total: 1.94 seconds.
+2020-04-23 00:46:43,065:timed:wind_stress_curl: 0:0:01.94 total: 1.94 seconds.
+2020-04-23 00:46:44,440:timed:wind_stress_curl: 0:0:00.04 total: 0.04 seconds.
+2020-04-23 00:46:44,440:timed:wind_stress_curl: 0:0:00.04 total: 0.04 seconds.
+2020-04-23 10:26:06,157:reanalysis_wind:Creating file: erai_ws_climo.nc from /g/data/rr7/ERA_INT/ERA_INT/.
+2020-04-23 10:31:58,812:reanalysis_wind:Creating file: erai_ws_climo.nc from /g/data/rr7/ERA_INT/ERA_INT/.
+2020-04-23 10:31:58,812:reanalysis_wind:Creating file: erai_ws_climo.nc from /g/data/rr7/ERA_INT/ERA_INT/.
+2020-04-23 10:34:55,199:reanalysis_wind:erai_ws_climo.nc NEW coords: Coordinates:
+  * lon      (lon) float32 120.0 121.5 123.0 124.5 ... 292.5 294.0 295.5 297.0
+  * lat      (lat) float64 -15.0 -13.5 -12.0 -10.5 -9.0 ... 10.5 12.0 13.5 15.0
+  * time     (time) int64 1 2 3 4 5 6 7 8 9 10 11 12
+2020-04-23 10:34:55,199:reanalysis_wind:erai_ws_climo.nc NEW coords: Coordinates:
+  * lon      (lon) float32 120.0 121.5 123.0 124.5 ... 292.5 294.0 295.5 297.0
+  * lat      (lat) float64 -15.0 -13.5 -12.0 -10.5 -9.0 ... 10.5 12.0 13.5 15.0
+  * time     (time) int64 1 2 3 4 5 6 7 8 9 10 11 12
+2020-04-23 10:34:55,286:reanalysis_wind:SUCCESS: erai_ws_climo.nc
+2020-04-23 10:34:55,286:reanalysis_wind:SUCCESS: erai_ws_climo.nc
+2020-04-23 10:34:55,290:timed:reanalysis_wind: 0:2:56.48 total: 176.48 seconds.
+2020-04-23 10:34:55,290:timed:reanalysis_wind: 0:2:56.48 total: 176.48 seconds.
+2020-04-23 13:03:26,519:reanalysis_wind:Creating file: erai_iws_climo.nc from /g/data/rr7/ERA_INT/ERA_INT/.
+2020-04-23 13:03:26,636:reanalysis_wind:erai_iws_climo.nc NEW coords: Coordinates:
+  * lon      (lon) float32 120.0 121.5 123.0 124.5 ... 292.5 294.0 295.5 297.0
+  * lat      (lat) float32 
+  * time     (time) int64 1 2 3 4 5 6 7 8 9 10 11 12
+2020-04-23 13:03:26,645:reanalysis_wind:ERROR: erai_iws_climo.nc (all NaN).
+2020-04-23 13:03:26,646:timed:reanalysis_wind: 0:0:00.13 total: 0.13 seconds.
+2020-04-23 13:04:17,789:reanalysis_wind:Creating file: erai_iws_climo.nc from /g/data/rr7/ERA_INT/ERA_INT/.
+2020-04-23 13:04:17,789:reanalysis_wind:Creating file: erai_iws_climo.nc from /g/data/rr7/ERA_INT/ERA_INT/.
+2020-04-23 13:04:17,955:reanalysis_wind:erai_iws_climo.nc NEW coords: Coordinates:
+  * lon      (lon) float32 120.0 121.5 123.0 124.5 ... 292.5 294.0 295.5 297.0
+  * lat      (lat) float64 -15.0 -13.5 -12.0 -10.5 -9.0 ... 10.5 12.0 13.5 15.0
+  * time     (time) int64 1 2 3 4 5 6 7 8 9 10 11 12
+2020-04-23 13:04:17,955:reanalysis_wind:erai_iws_climo.nc NEW coords: Coordinates:
+  * lon      (lon) float32 120.0 121.5 123.0 124.5 ... 292.5 294.0 295.5 297.0
+  * lat      (lat) float64 -15.0 -13.5 -12.0 -10.5 -9.0 ... 10.5 12.0 13.5 15.0
+  * time     (time) int64 1 2 3 4 5 6 7 8 9 10 11 12
+2020-04-23 13:04:17,964:reanalysis_wind:SUCCESS: erai_iws_climo.nc
+2020-04-23 13:04:17,964:reanalysis_wind:SUCCESS: erai_iws_climo.nc
+2020-04-23 13:04:17,965:timed:reanalysis_wind: 0:0:00.18 total: 0.18 seconds.
+2020-04-23 13:04:17,965:timed:reanalysis_wind: 0:0:00.18 total: 0.18 seconds.
+2020-04-23 13:04:47,434:<module>:Creating file: erai_iws_climo.nc from /g/data/rr7/ERA_INT/ERA_INT/.
+2020-04-23 13:04:47,434:<module>:Creating file: erai_iws_climo.nc from /g/data/rr7/ERA_INT/ERA_INT/.
+2020-04-23 13:08:57,316:timed:wind_stress_curl: 0:0:01.17 total: 1.17 seconds.
+2020-04-23 13:08:57,316:timed:wind_stress_curl: 0:0:01.17 total: 1.17 seconds.
+2020-04-23 13:08:57,944:timed:wind_stress_curl: 0:0:00.02 total: 0.02 seconds.
+2020-04-23 13:08:57,944:timed:wind_stress_curl: 0:0:00.02 total: 0.02 seconds.
+2020-04-23 13:09:47,847:timed:wind_stress_curl: 0:0:01.17 total: 1.17 seconds.
+2020-04-23 13:09:47,847:timed:wind_stress_curl: 0:0:01.17 total: 1.17 seconds.
+2020-04-23 13:09:48,477:timed:wind_stress_curl: 0:0:00.02 total: 0.02 seconds.
+2020-04-23 13:09:48,477:timed:wind_stress_curl: 0:0:00.02 total: 0.02 seconds.
+2020-04-23 13:13:08,826:timed:wind_stress_curl: 0:0:01.16 total: 1.16 seconds.
+2020-04-23 13:13:08,826:timed:wind_stress_curl: 0:0:01.16 total: 1.16 seconds.
+2020-04-23 13:13:09,456:timed:wind_stress_curl: 0:0:00.02 total: 0.02 seconds.
+2020-04-23 13:13:09,456:timed:wind_stress_curl: 0:0:00.02 total: 0.02 seconds.
+2020-04-23 13:14:27,987:timed:wind_stress_curl: 0:0:01.18 total: 1.18 seconds.
+2020-04-23 13:14:27,987:timed:wind_stress_curl: 0:0:01.18 total: 1.18 seconds.
+2020-04-23 13:14:28,619:timed:wind_stress_curl: 0:0:00.02 total: 0.02 seconds.
+2020-04-23 13:14:28,619:timed:wind_stress_curl: 0:0:00.02 total: 0.02 seconds.
+2020-04-23 13:18:07,036:timed:wind_stress_curl: 0:0:01.36 total: 1.36 seconds.
+2020-04-23 13:18:07,036:timed:wind_stress_curl: 0:0:01.36 total: 1.36 seconds.
+2020-04-23 13:18:07,668:timed:wind_stress_curl: 0:0:00.02 total: 0.02 seconds.
+2020-04-23 13:18:07,668:timed:wind_stress_curl: 0:0:00.02 total: 0.02 seconds.
+2020-04-23 13:19:11,603:timed:wind_stress_curl: 0:0:01.18 total: 1.18 seconds.
+2020-04-23 13:19:11,603:timed:wind_stress_curl: 0:0:01.18 total: 1.18 seconds.
+2020-04-23 13:19:12,239:timed:wind_stress_curl: 0:0:00.02 total: 0.02 seconds.
+2020-04-23 13:19:12,239:timed:wind_stress_curl: 0:0:00.02 total: 0.02 seconds.
+2020-04-23 14:02:47,597:timed:wind_stress_curl: 0:0:01.57 total: 1.57 seconds.
+2020-04-23 14:02:47,597:timed:wind_stress_curl: 0:0:01.57 total: 1.57 seconds.
+2020-04-23 14:02:58,830:timed:wind_stress_curl: 0:0:00.02 total: 0.02 seconds.
+2020-04-23 14:02:58,830:timed:wind_stress_curl: 0:0:00.02 total: 0.02 seconds.
+2020-04-23 14:57:30,339:timed:wind_stress_curl: 0:0:00.01 total: 0.01 seconds.
+2020-04-23 14:57:30,339:timed:wind_stress_curl: 0:0:00.01 total: 0.01 seconds.
+2020-04-23 14:57:31,202:timed:wind_stress_curl: 0:0:00.01 total: 0.01 seconds.
+2020-04-23 14:57:31,202:timed:wind_stress_curl: 0:0:00.01 total: 0.01 seconds.
+2020-04-23 15:04:35,102:timed:wind_stress_curl: 0:0:01.34 total: 1.34 seconds.
+2020-04-23 15:04:35,102:timed:wind_stress_curl: 0:0:01.34 total: 1.34 seconds.
+2020-04-23 15:05:10,206:timed:wind_stress_curl: 0:0:01.31 total: 1.31 seconds.
+2020-04-23 15:05:10,206:timed:wind_stress_curl: 0:0:01.31 total: 1.31 seconds.
+2020-04-23 15:05:20,155:timed:wind_stress_curl: 0:0:00.01 total: 0.01 seconds.
+2020-04-23 15:05:20,155:timed:wind_stress_curl: 0:0:00.01 total: 0.01 seconds.
+2020-04-23 15:08:30,604:timed:wind_stress_curl: 0:0:01.32 total: 1.32 seconds.
+2020-04-23 15:08:30,604:timed:wind_stress_curl: 0:0:01.32 total: 1.32 seconds.
+2020-04-23 15:08:40,567:timed:wind_stress_curl: 0:0:00.01 total: 0.01 seconds.
+2020-04-23 15:08:40,567:timed:wind_stress_curl: 0:0:00.01 total: 0.01 seconds.
+2020-04-23 15:09:43,337:timed:wind_stress_curl: 0:0:01.40 total: 1.40 seconds.
+2020-04-23 15:09:43,337:timed:wind_stress_curl: 0:0:01.40 total: 1.40 seconds.
+2020-04-23 15:09:53,449:timed:wind_stress_curl: 0:0:00.01 total: 0.01 seconds.
+2020-04-23 15:09:53,449:timed:wind_stress_curl: 0:0:00.01 total: 0.01 seconds.
+2020-04-23 15:12:39,280:timed:wind_stress_curl: 0:0:01.49 total: 1.49 seconds.
+2020-04-23 15:12:39,280:timed:wind_stress_curl: 0:0:01.49 total: 1.49 seconds.
+2020-04-23 15:12:49,082:timed:wind_stress_curl: 0:0:00.01 total: 0.01 seconds.
+2020-04-23 15:12:49,082:timed:wind_stress_curl: 0:0:00.01 total: 0.01 seconds.
+2020-04-23 15:16:18,217:timed:wind_stress_curl: 0:0:01.29 total: 1.29 seconds.
+2020-04-23 15:16:18,217:timed:wind_stress_curl: 0:0:01.29 total: 1.29 seconds.
+2020-04-23 15:17:22,207:timed:wind_stress_curl: 0:0:01.37 total: 1.37 seconds.
+2020-04-23 15:17:22,207:timed:wind_stress_curl: 0:0:01.37 total: 1.37 seconds.
+2020-04-23 15:17:22,832:timed:wind_stress_curl: 0:0:00.01 total: 0.01 seconds.
+2020-04-23 15:17:22,832:timed:wind_stress_curl: 0:0:00.01 total: 0.01 seconds.
+2020-04-23 15:18:06,041:timed:wind_stress_curl: 0:0:01.30 total: 1.30 seconds.
+2020-04-23 15:18:06,041:timed:wind_stress_curl: 0:0:01.30 total: 1.30 seconds.
+2020-04-23 15:18:06,671:timed:wind_stress_curl: 0:0:00.01 total: 0.01 seconds.
+2020-04-23 15:18:06,671:timed:wind_stress_curl: 0:0:00.01 total: 0.01 seconds.
+2020-04-23 15:41:27,726:timed:wind_stress_curl: 0:0:01.26 total: 1.26 seconds.
+2020-04-23 15:41:27,726:timed:wind_stress_curl: 0:0:01.26 total: 1.26 seconds.
+2020-04-23 15:41:28,355:timed:wind_stress_curl: 0:0:00.01 total: 0.01 seconds.
+2020-04-23 15:41:28,355:timed:wind_stress_curl: 0:0:00.01 total: 0.01 seconds.
+2020-04-23 15:41:54,280:timed:wind_stress_curl: 0:0:01.28 total: 1.28 seconds.
+2020-04-23 15:41:54,280:timed:wind_stress_curl: 0:0:01.28 total: 1.28 seconds.
+2020-04-23 15:41:54,629:timed:wind_stress_curl: 0:0:00.01 total: 0.01 seconds.
+2020-04-23 15:41:54,629:timed:wind_stress_curl: 0:0:00.01 total: 0.01 seconds.
+2020-04-23 15:46:44,119:timed:wind_stress_curl: 0:0:00.08 total: 0.08 seconds.
+2020-04-23 15:46:44,119:timed:wind_stress_curl: 0:0:00.08 total: 0.08 seconds.
+2020-04-23 15:46:44,455:timed:wind_stress_curl: 0:0:00.01 total: 0.01 seconds.
+2020-04-23 15:46:44,455:timed:wind_stress_curl: 0:0:00.01 total: 0.01 seconds.
+2020-04-23 15:47:27,463:timed:wind_stress_curl: 0:0:00.09 total: 0.09 seconds.
+2020-04-23 15:47:27,463:timed:wind_stress_curl: 0:0:00.09 total: 0.09 seconds.
+2020-04-23 15:47:30,441:timed:wind_stress_curl: 0:0:00.01 total: 0.01 seconds.
+2020-04-23 15:47:30,441:timed:wind_stress_curl: 0:0:00.01 total: 0.01 seconds.
+2020-04-23 15:48:19,305:timed:wind_stress_curl: 0:0:00.08 total: 0.08 seconds.
+2020-04-23 15:48:19,305:timed:wind_stress_curl: 0:0:00.08 total: 0.08 seconds.
+2020-04-23 15:48:22,200:timed:wind_stress_curl: 0:0:00.01 total: 0.01 seconds.
+2020-04-23 15:48:22,200:timed:wind_stress_curl: 0:0:00.01 total: 0.01 seconds.
+2020-04-23 15:49:27,204:timed:wind_stress_curl: 0:0:00.02 total: 0.02 seconds.
+2020-04-23 15:49:27,204:timed:wind_stress_curl: 0:0:00.02 total: 0.02 seconds.
+2020-04-23 15:49:28,338:timed:wind_stress_curl: 0:0:00.01 total: 0.01 seconds.
+2020-04-23 15:49:28,338:timed:wind_stress_curl: 0:0:00.01 total: 0.01 seconds.
+2020-04-23 15:50:46,095:timed:wind_stress_curl: 0:0:01.36 total: 1.36 seconds.
+2020-04-23 15:50:46,095:timed:wind_stress_curl: 0:0:01.36 total: 1.36 seconds.
+2020-04-23 15:50:46,745:timed:wind_stress_curl: 0:0:00.01 total: 0.01 seconds.
+2020-04-23 15:50:46,745:timed:wind_stress_curl: 0:0:00.01 total: 0.01 seconds.
+2020-04-23 17:27:48,617:timed:wind_stress_curl: 0:0:01.65 total: 1.65 seconds.
+2020-04-23 17:27:48,617:timed:wind_stress_curl: 0:0:01.65 total: 1.65 seconds.
+2020-04-23 17:27:59,603:timed:wind_stress_curl: 0:0:00.01 total: 0.01 seconds.
+2020-04-23 17:27:59,603:timed:wind_stress_curl: 0:0:00.01 total: 0.01 seconds.
+2020-04-23 17:29:13,702:timed:wind_stress_curl: 0:0:01.30 total: 1.30 seconds.
+2020-04-23 17:29:13,702:timed:wind_stress_curl: 0:0:01.30 total: 1.30 seconds.
+2020-04-23 17:29:23,779:timed:wind_stress_curl: 0:0:00.01 total: 0.01 seconds.
+2020-04-23 17:29:23,779:timed:wind_stress_curl: 0:0:00.01 total: 0.01 seconds.
+2020-04-23 17:30:21,689:timed:wind_stress_curl: 0:0:01.24 total: 1.24 seconds.
+2020-04-23 17:30:21,689:timed:wind_stress_curl: 0:0:01.24 total: 1.24 seconds.
+2020-04-23 17:30:30,961:timed:wind_stress_curl: 0:0:00.01 total: 0.01 seconds.
+2020-04-23 17:30:30,961:timed:wind_stress_curl: 0:0:00.01 total: 0.01 seconds.

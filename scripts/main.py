@@ -52,6 +52,15 @@ for i in 0 1 2 3 4; do
 done
 
 wait
+
+    logger.setLevel(logging.DEBUG)
+    now = datetime.now()
+    handler = logging.FileHandler(lpath/'main.log')
+    formatter = logging.Formatter(
+            '%(asctime)s:%(funcName)s:%(message)s')
+    handler.setFormatter(formatter)
+    logger.addHandler(handler)
+    logger.propagate = False
 """
 
 import sys
@@ -636,14 +645,4 @@ def deg2m(lat1, lon1, lat2, lon2):
 
 fpath, dpath, xpath, lpath, tpath = paths()
 
-if dpath == Path('/g/data/e14/as3189/OFAM/data'):
-    logger.setLevel(logging.DEBUG)
-    now = datetime.now()
-    handler = logging.FileHandler(lpath/'main_{}.log'
-                                  .format(now.strftime("%Y-%m-%d")))
-    formatter = logging.Formatter(
-            '%(asctime)s:%(funcName)s:%(message)s')
-    handler.setFormatter(formatter)
-    logger.addHandler(handler)
-    logger.propagate = False
-
+logger = mlogger('main')

@@ -21,8 +21,7 @@ from scipy import interpolate
 from datetime import datetime
 from math import radians, cos
 import matplotlib.pyplot as plt
-from main import paths, idx_1d, lx, EARTH_RADIUS, timeit
-from parcels.tools.loggers import logger
+from main import paths, idx_1d, lx, EARTH_RADIUS, timeit, mlogger
 from matplotlib.offsetbox import AnchoredText
 
 warnings.filterwarnings('ignore')
@@ -30,15 +29,7 @@ warnings.filterwarnings('ignore')
 # Path to save figures, save data and OFAM model output.
 fpath, dpath, xpath, lpath, tpath = paths()
 
-if dpath == Path('/g/data/e14/as3189/OFAM/data'):
-    logger.setLevel(logging.DEBUG)
-    now = datetime.now()
-    handler = logging.FileHandler(lpath/'main_valid_{}.log'
-                                  .format(now.strftime("%Y-%m-%d")))
-    formatter = logging.Formatter('%(asctime)s:%(funcName)s:%(message)s')
-    handler.setFormatter(formatter)
-    logger.addHandler(handler)
-    logger.propagate = False
+# logger = mlogger('main_valid')
 
 # Time index bounds where OFAM and TAO are available.
 tbnds_ofam = [[10*12+3, 27*12+1], [7*12+4, 384], [9*12+4, 384]]

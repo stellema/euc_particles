@@ -43,7 +43,7 @@ now = datetime.now()
 
 logger.setLevel(logging.DEBUG)
 now = datetime.now()
-handler = logging.FileHandler(lpath/'transport_file.log')
+handler = logging.FileHandler(lpath/'file_transport.log')
 formatter = logging.Formatter('%(asctime)s:%(funcName)s:%(message)s')
 handler.setFormatter(formatter)
 logger.addHandler(handler)

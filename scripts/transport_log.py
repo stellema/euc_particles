@@ -17,7 +17,7 @@ from valid_nino34 import enso_u_ofam, nino_events
 # Path to save figures, save data and OFAM model output.
 fpath, dpath, xpath, lpath, tpath = paths()
 
-logger = mlogger('transport_log')
+logger = mlogger('transport')
 
 oni = xr.open_dataset(dpath/'ofam_sst_anom_nino34_hist.nc')
 euc = xr.open_dataset(dpath/'ofam_EUC_transport_static_hist.nc').uvo/SV
@@ -33,7 +33,7 @@ mc = mc.isel(st_ocean=slice(0, idx(mc.st_ocean, 600) + 1))
 mc = mc.sum(dim='st_ocean').sum(dim='xu_ocean')
 
 sg = sg.isel(st_ocean=slice(0, idx(sg.st_ocean, 1200) + 1))
-sg = sg.sum(dim='st_ocean').sum(dim='xu_ocean')
+sg = sg.where(sg >0 ).sum(dim='st_ocean').sum(dim='xu_ocean')
 
 ss = ss.isel(st_ocean=slice(0, idx(ss.st_ocean, 1200) + 1))
 ss = ss.sum(dim='st_ocean').sum(dim='xu_ocean')
