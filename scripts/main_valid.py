@@ -550,7 +550,6 @@ def legend_without_duplicate_labels(ax, loc=False):
     return
 
 
-@timeit
 def wind_stress_curl(du, dv, w=0.5, wy=None):
     """Compute wind stress curl from wind stress.
 

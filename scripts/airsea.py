@@ -709,7 +709,6 @@ def bulk_fluxes(U_O, T_O, q_O, SLP, SST, SSU, z_U=10, z_T=2,
         return TAU, QH, QE, dU10, dtheta10, dq10, L, zeta
 
 
-@timeit
 def prescribed_momentum(u, v, method='static'):
     """Compute wind stress from wind field data Based on Gill (1982).
 
