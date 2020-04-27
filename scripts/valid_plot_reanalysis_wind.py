@@ -22,7 +22,6 @@ fpath, dpath, xpath, lpath, tpath = paths()
 
 
 def get_wsc(data='jra55', flux='bulk', res=0.1, mean_t=True, interp=''):
-
     if flux == 'bulk':
         U_O, T_O, q_O, SLP, SST, SSU = flux_data(data, mean_t=mean_t, res=res,
                                                  interp=interp)
@@ -67,8 +66,8 @@ def plot_winds(varz, title, units, vmax, save_name, plot_map):
     proj = ccrs.PlateCarree(central_longitude=180)
     box_proj = ccrs.PlateCarree(central_longitude=0)
     rows = len(varz)
-
-    c = 1.1 if rows == 4 else 0.9
+    lcolor = 'dimgrey'  # Grid line colour.
+    c = 1.1 if rows == 4 else 0.8
     fig = plt.figure(figsize=(14.1, 10*c))
     for i, v in zip(range(rows), varz):
         if plot_map[i]:
@@ -81,10 +80,10 @@ def plot_winds(varz, title, units, vmax, save_name, plot_map):
             ax.add_feature(cartopy.feature.LAND, zorder=2, edgecolor='k',
                            facecolor='lightgrey')
             ax.gridlines(xlocs=[110, 120, 160, 200, 240, 280, 290],
-                         ylocs=[-20, -15, 0, 15, 20], color='darkgrey')
+                         ylocs=[-20, -10, 0, 10, 20], color=lcolor)
             gl = ax.gridlines(draw_labels=True, linewidth=0.001,
                               xlocs=[120, 160, -160, -120, -80],
-                              ylocs=[-15, 0, 15], color='darkgrey')
+                              ylocs=[-10, 0, 10], color=lcolor)
             gl.xlabels_bottom = True
             gl.xlabels_top = False
             gl.ylabels_right = False
@@ -95,10 +94,9 @@ def plot_winds(varz, title, units, vmax, save_name, plot_map):
         else:
             ax = fig.add_subplot(rows, 1, i + 1)
             box = ax.get_position()
-            # [left, bottom, width, height]
+            # [left, bottom, width, height].
             ax.set_position([box.x0, box.y0+0.015, box.width*0.828,
                              box.height*0.85])
-            # ax.set_extent([x0, x1, y0, y1], box_proj)
             ax.plot(v[0].lon, v[0], 'k',  label='JRA-55')
             ax.plot(v[1].lon, v[1].where(~np.isnan(v[0])), 'r',
                     label='ERA-Interim')
@@ -124,34 +122,29 @@ def plot_winds(varz, title, units, vmax, save_name, plot_map):
 
 data = ['jra55', 'erai']
 flux = ['bulk', 'erai', 'static', 'GILL', 'LARGE_approx']
-tx1, ty1, phi1 = get_wsc(data=data[0], flux=flux[0], res=0.1, interp='cubic')
-tx2, ty2, phi2 = get_wsc(data=data[1], flux=flux[1], res=0.1, interp='cubic')
+f1, f2, res = 0, 1, 0.1
+tx1, ty1, phi1 = get_wsc(data=data[0], flux=flux[f1], res=res, interp='cubic')
+tx2, ty2, phi2 = get_wsc(data=data[1], flux=flux[f2], res=res, interp='cubic')
 
 # Wind stress line graph in first subplot and WSC for next three.
 title = ['Equatorial zonal wind stress', 'JRA-55 wind stress curl',
          'ERA-Interim wind stress curl',
          'Wind stress curl difference (JRA-55 minus ERA-Interim)']
-
 units = ['[N/m$^{2}$]', *['[x10$^{-7}$ N/m$^{3}$]' for i in range(3)]]
-
 varz = [[tx1.sel(lat=slice(-2, 2)).mean('lat'),
-        tx2.sel(lat=slice(-2, 2)).mean('lat')],
+         tx2.sel(lat=slice(-2, 2)).mean('lat')],
         phi1*1e7, phi2*1e7, (phi1 - phi2.values)*1e7]
 vmax = [0.07, 1.5, 1.5, 0.5]
-plot_map = [False, True, True, True]
+plot_map = [False, *[True]*3]
 save_name = 'WSC_{}_{}_{:02.0f}'.format(flux[f1], flux[f2], res*10)
-
 plot_winds(varz, title, units, vmax, save_name, plot_map)
-
 
 # Wind stress.
 title = ['JRA-55 wind stress', 'ERA-Interim wind stress',
          'Wind stress difference (JRA-55 minus ERA-Interim)']
 units = ['[N/m$^{2}$]' for i in range(3)]
-
 varz = [tx1, tx2, (tx1 - tx2.values)]
 vmax = [0.08, 0.08, 0.04]
-plot_map = [True, True, True]
+plot_map = [True]*3
 save_name = 'WS_{}_{}_{:02.0f}'.format(flux[f1], flux[f2], res*10)
-
 plot_winds(varz, title, units, vmax, save_name, plot_map)
