@@ -1,3 +1,74 @@
+2020-04-24 17:40:34,936:<module>:Creating transport file: St Georges Channel.
+2020-04-24 17:40:35,000:<module>:Creating transport file: Vitiaz Strait.
+2020-04-24 17:40:35,000:<module>:Creating transport file: Mindanao Current.
+2020-04-24 17:40:35,000:<module>:Creating transport file: Solomon Strait.
+2020-04-24 18:06:10,575:<module>:Creating transport file: Mindanao Current.
+2020-04-24 18:06:10,575:<module>:Creating transport file: St Georges Channel.
+2020-04-24 18:06:10,575:<module>:Creating transport file: Vitiaz Strait.
+2020-04-24 18:06:10,575:<module>:Creating transport file: Solomon Strait.
+2020-04-24 18:06:43,668:transport:Saving transport file: Vitiaz Strait.
+2020-04-24 18:06:43,669:transport:Saving transport file: Mindanao Current.
+2020-04-24 18:06:43,707:transport:Saving transport file: St Georges Channel.
+2020-04-24 18:06:43,843:transport:Saving transport file: Solomon Strait.
+2020-04-24 19:11:31,219:transport:Finished transport file: St Georges Channel.
+2020-04-24 19:11:45,407:transport:Finished transport file: Solomon Strait.
+2020-04-24 19:12:39,981:transport:Finished transport file: Vitiaz Strait.
+2020-04-25 11:04:56,063:<module>:Creating transport file: Mindanao Current.
+2020-04-25 11:07:22,560:transport:Saving transport file: Mindanao Current.
+2020-04-25 12:08:20,263:<module>:Creating transport file: Vitiaz Strait.
+2020-04-25 13:44:05,328:<module>:Creating transport file: Vitiaz Strait.
+2020-04-25 13:46:50,272:<module>:Vitiaz Strait test 0: -0.0329 m/s 1981-01-31 (-6.1, 207.50)
+2020-04-25 13:49:31,143:transport:Vitiaz Strait test 1: -0.1268 m/s 1981-01-31 (-6.1, 148.40)
+2020-04-25 13:54:23,128:transport:Vitiaz Strait test 2: -0.1268 m/s 3.0060 Sv 1981-01-31 (-6.1, 148.40)
+2020-04-25 13:54:23,128:transport:Saving transport file: Vitiaz Strait.
+2020-04-25 14:18:30,082:<module>:Creating transport file: St Georges Channel.
+2020-04-25 14:18:30,082:<module>:Creating transport file: Solomon Strait.
+2020-04-25 14:18:30,082:<module>:Creating transport file: Vitiaz Strait.
+2020-04-25 14:18:30,082:<module>:Creating transport file: Mindanao Current.
+2020-04-25 14:19:14,498:<module>:St Georges Channel test 0: nan m/s 1981-01-01 (-4.4, 152.80)
+2020-04-25 14:19:14,665:<module>:Vitiaz Strait test 0: nan m/s 1981-01-01 (-6.1, 149.10)
+2020-04-25 14:19:14,684:<module>:Mindanao Current test 0: -0.0148 m/s 1981-01-01 (6.4, 128.30)
+2020-04-25 14:19:30,340:transport:Mindanao Current test 1: -0.4867 m/s 1981-01-01 (9.0, 127.20)
+2020-04-25 14:19:31,049:transport:Vitiaz Strait test 1: -0.1268 m/s 1981-01-01 (-6.1, 148.40)
+2020-04-25 14:19:31,059:transport:St Georges Channel test 1: -0.3781 m/s 1981-01-01 (-4.4, 152.50)
+2020-04-25 14:19:54,333:transport:Mindanao Current test 2: -0.4867 m/s -23.6715 Sv 1981-01-01 (9.0, 127.20)
+2020-04-25 14:19:54,334:transport:Saving transport file: Mindanao Current.
+2020-04-25 14:19:56,391:transport:St Georges Channel test 2: -0.3781 m/s -0.4921 Sv 1981-01-01 (-4.4, 152.50)
+2020-04-25 14:19:56,391:transport:Saving transport file: St Georges Channel.
+2020-04-25 14:19:56,552:transport:Vitiaz Strait test 2: -0.1268 m/s 3.0060 Sv 1981-01-01 (-6.1, 148.40)
+2020-04-25 14:19:56,552:transport:Saving transport file: Vitiaz Strait.
+2020-04-25 14:22:32,626:<module>:Creating transport file: Mindanao Current.
+2020-04-25 14:22:32,626:<module>:Creating transport file: St Georges Channel.
+2020-04-25 14:22:32,626:<module>:Creating transport file: Solomon Strait.
+2020-04-25 14:22:32,626:<module>:Creating transport file: Vitiaz Strait.
+2020-04-25 14:23:10,884:<module>:Vitiaz Strait test 0: nan m/s 1981-01-01 (-6.1, 149.10)
+2020-04-25 14:23:11,120:<module>:St Georges Channel test 0: nan m/s 1981-01-01 (-4.4, 152.80)
+2020-04-25 14:23:11,252:<module>:Solomon Strait test 0: -0.0740 m/s 1981-01-01 (-4.1, 153.80)
+2020-04-25 14:23:11,291:<module>:Mindanao Current test 0: -0.0148 m/s 1981-01-01 (6.4, 128.30)
+2020-04-25 14:23:27,290:transport:Vitiaz Strait test 1: -0.1268 m/s 1981-01-01 (-6.1, 148.40)
+2020-04-25 14:23:28,029:transport:St Georges Channel test 1: -0.3781 m/s 1981-01-01 (-4.4, 152.50)
+2020-04-25 14:23:28,258:transport:Solomon Strait test 1: -0.3241 m/s 1981-01-01 (-4.1, 153.40)
+2020-04-25 14:23:28,282:transport:Mindanao Current test 1: -0.4867 m/s 1981-01-01 (9.0, 127.20)
+2020-04-25 14:24:04,818:transport:Mindanao Current test 2: -0.4867 m/s -23.6715 Sv 1981-01-01 (9.0, 127.20)
+2020-04-25 14:24:04,819:transport:Saving transport file: Mindanao Current.
+2020-04-25 14:24:23,991:transport:St Georges Channel test 2: -0.3781 m/s -0.4921 Sv 1981-01-01 (-4.4, 152.50)
+2020-04-25 14:24:23,994:transport:Saving transport file: St Georges Channel.
+2020-04-25 14:24:56,581:transport:Solomon Strait test 2: -0.3241 m/s -0.2934 Sv 1981-01-01 (-4.1, 153.40)
+2020-04-25 14:24:56,582:transport:Saving transport file: Solomon Strait.
+2020-04-25 14:24:57,428:transport:Vitiaz Strait test 2: -0.1268 m/s 3.0060 Sv 1981-01-01 (-6.1, 148.40)
+2020-04-25 14:24:57,428:transport:Saving transport file: Vitiaz Strait.
+2020-04-25 15:05:08,679:transport:Finished transport file: St Georges Channel.
+2020-04-26 15:07:34,001:<module>:Creating transport file: St Georges Channel.
+2020-04-26 15:07:34,001:<module>:Creating transport file: Vitiaz Strait.
+2020-04-26 15:07:34,001:<module>:Creating transport file: Solomon Strait.
+2020-04-26 15:07:34,001:<module>:Creating transport file: Mindanao Current.
+2020-04-26 15:10:00,747:<module>:Vitiaz Strait test: 3.0060 Sv 1981-01-01 (-6.1)
+2020-04-26 15:10:00,747:<module>:Saving transport file: Vitiaz Strait.
+2020-04-26 15:10:01,109:<module>:St Georges Channel test: -0.4921 Sv 1981-01-01 (-4.4)
+2020-04-26 15:10:01,109:<module>:Saving transport file: St Georges Channel.
+2020-04-26 15:10:01,115:<module>:Solomon Strait test: -0.2934 Sv 1981-01-01 (-4.1)
+2020-04-26 15:10:01,116:<module>:Saving transport file: Solomon Strait.
+2020-04-26 19:07:19,873:<module>:Finished transport file: Vitiaz Strait.
 2020-04-26 23:38:32,651:<module>:Creating transport file: Mindanao Current (mcz).
 2020-04-26 23:39:28,833:<module>:Creating transport file: Solomon Strait (ssz).
 2020-04-26 23:39:36,838:<module>:Creating transport file: St Georges Channel (sgz).
