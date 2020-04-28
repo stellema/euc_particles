@@ -29,7 +29,7 @@ warnings.filterwarnings('ignore')
 # Path to save figures, save data and OFAM model output.
 fpath, dpath, xpath, lpath, tpath = paths()
 
-# logger = mlogger('main_valid')
+logger = mlogger('main_valid')
 
 # Time index bounds where OFAM and TAO are available.
 tbnds_ofam = [[10*12+3, 27*12+1], [7*12+4, 384], [9*12+4, 384]]

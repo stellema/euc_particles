@@ -71,25 +71,25 @@ var = 'v'
 if s == 0:
     # Vitiaz strait.
     name = 'Vitiaz Strait'
-    name_short = 'vsz'
+    name_short = 'vs'
     lat, lon = -6.1, [147.7, 149]
 
 elif s == 1:
     # St.George's Channel.
     name = 'St Georges Channel'
-    name_short = 'sgz'
+    name_short = 'sg'
     lat, lon = -4.4, [152.3, 152.7]
 
 elif s == 2:
     # Solomon Strait (west).
     name = 'Solomon Strait'
-    name_short = 'ssz'
+    name_short = 'ss'
     lat, lon = -4.1, [153, 153.7]
 
 elif s == 3:
     # Mindanao Current.
     name = 'Mindanao Current'
-    name_short = 'mcz'
+    name_short = 'mc'
     lat, lon = [6.4, 9], [126.2, 128.2]
 
 
@@ -141,19 +141,20 @@ elif var == 'v':
     area = np.ones(df[var].shape)*dz[:, np.newaxis]*dx[:, np.newaxis]
 
 if var == 'v':
-    dv = df[var]*area
+    df = df.assign(vvo=df[var]*area)
 else:
-    dv = df[var]*area
+    df = df.assign(vvo=df[var]*area)
 
-dv.name = 'vvo'
+df.attrs = ds.attrs
+# dv.name = 'vvo'
 # dv.load()
 
-dv.attrs['name'] = name
-dv.attrs['bnds'] = 'lat={}, lon={}'.format(lat, lon)
-dv.attrs['history'] = 'Modified {}.'.format(now.strftime("%Y-%m-%d"))
+df.vvo.attrs['name'] = name
+df.vvo.attrs['bnds'] = 'lat={}, lon={}'.format(lat, lon)
+df.attrs['history'] = 'Modified {}.'.format(now.strftime("%Y-%m-%d"))
 
 
-ext = (dv.isel(Time=0, st_ocean=slice(0, 30))
+ext = (df.vvo.isel(Time=0, st_ocean=slice(0, 30))
        .sum(dim='st_ocean').sum(dim='xu_ocean'))/1e6
 if ext.shape != () and var == 'v':
     ext = ext.isel(yu_ocean=-1).load()
@@ -162,7 +163,7 @@ else:
 if test:
     print('{} ({}) test: {:.4f} Sv {} ({:.1f})'
           .format(name, name_short, ext.item(),
-                  ext.Time.dt.strftime('%Y-%m-%d').item(),ext.yu_ocean.item()))
+                  ext.Time.dt.strftime('%Y-%m-%d').item(), ext.yu_ocean.item()))
 else:
     logger.debug('{} ({}) test: {:.4f} Sv {} ({:.1f})'
                  .format(name, name_short, ext.item(),
@@ -170,5 +171,6 @@ else:
                          ext.yu_ocean.item()))
 
 logger.info('Saving transport file: {} ({}).'.format(name, name_short))
-dv.to_netcdf(dpath/'ofam_transport_{}.nc'.format(name_short), compute=True)
+df.to_netcdf(dpath/'ofam_transport_{}.nc'.format(name_short), compute=True)
+# df.to_netcdf(dpath/'test_{}.nc'.format(name_short), compute=True)
 logger.info('Finished transport file: {} ({}).'.format(name, name_short))
