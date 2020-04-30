@@ -77,9 +77,10 @@ if s == 0:
 elif s == 1:
     # St.George's Channel.
     name = 'St Georges Channel'
-    name_short = 'sg'
-    lat, lon = -4.4, [152.3, 152.7]
-
+    name_short = 'sgx'
+    lat, lon = [-4.8, -4.6], [152.3, 152.8]
+    # name_short = 'sg'
+    # lat, lon = -4.6, [152.3, 152.7]
 elif s == 2:
     # Solomon Strait (west).
     name = 'Solomon Strait'
@@ -177,5 +178,4 @@ else:
 
 logger.info('Saving transport file: {} ({}).'.format(name, name_short))
 df.to_netcdf(dpath/'ofam_transport_{}.nc'.format(name_short), compute=True)
-# df.to_netcdf(dpath/'test_{}.nc'.format(name_short), compute=True)
 logger.info('Finished transport file: {} ({}).'.format(name, name_short))
