@@ -84,7 +84,7 @@ elif s == 2:
     # Solomon Strait (west).
     name = 'Solomon Strait'
     name_short = 'ss'
-    lat, lon = -4.1, [153, 153.7]
+    lat, lon = -4.8, [153, 154.7]
 
 elif s == 3:
     # Mindanao Current.
@@ -92,6 +92,11 @@ elif s == 3:
     name_short = 'mc'
     lat, lon = [6.4, 9], [126.2, 128.2]
 
+elif s == 4:
+    # Solomon Strait (west).
+    name = 'New Ireland Coastal Current'
+    name_short = 'ni'
+    lat, lon = -4.1, [153, 153.7]
 
 def predrop(ds):
     ds = ds.drop('Time_bounds')

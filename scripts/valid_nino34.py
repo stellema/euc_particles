@@ -96,12 +96,14 @@ def plot_oni_valid(ds, da, add_obs_ev=False):
     return
 
 
-def enso_u_ofam(oni, du, nino=None, nina=None):
+def enso_u_ofam(oni, du, nino=None, nina=None, avg='mean'):
     if not nino and not nina:
         nino, nina = nino_events(oni.oni)
-    if hasattr(du, 'st_ocean'):
+    if hasattr(du, 'st_ocean') and hasattr(du, 'xu_ocean'):
         coords = [('nin', ['nino', 'nina']), ('st_ocean', du.st_ocean.values),
                   ('xu_ocean', lx['lons'])]
+    elif hasattr(du, 'st_ocean'):
+        coords = [('nin', ['nino', 'nina']), ('st_ocean', du.st_ocean.values)]
     else:
         coords = [('nin', ['nino', 'nina'])]
 
@@ -118,6 +120,20 @@ def enso_u_ofam(oni, du, nino=None, nina=None):
                         if len(u) != 0:
                             tmp = np.append(tmp, u)
                     enso[n, iz, ix] = np.nanmean(tmp)
+    elif hasattr(du, 'st_ocean'):
+        for n, nin in enumerate([nino, nina]):
+            for iz, z in enumerate(du.st_ocean):
+                tmp = []
+                for i in range(len(nin)):
+                    u = du.sel(Time=slice(nin[i][0], nin[i][1]),
+                               st_ocean=z).values
+                    if len(u) != 0:
+                        tmp = np.append(tmp, u)
+
+                if avg == 'mean':
+                    enso[n, iz] = np.nanmean(tmp)
+                else:
+                    enso[n, iz] = np.percentile(tmp, avg)
     else:
         for n, nin in enumerate([nino, nina]):
             tmp = []

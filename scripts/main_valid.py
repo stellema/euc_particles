@@ -537,15 +537,15 @@ def correlation_str(cor):
     return sig_str
 
 
-def legend_without_duplicate_labels(ax, loc=False):
+def legend_without_duplicate_labels(ax, loc=False, fontsize=11):
     """Add legend without duplicate labels."""
     handles, labels = ax.get_legend_handles_labels()
     unique = [(h, l) for i, (h, l) in enumerate(zip(handles, labels))
               if l not in labels[:i]]
     if loc:
-        ax.legend(*zip(*unique), loc=loc)
+        ax.legend(*zip(*unique), loc=loc, fontsize=fontsize)
     else:
-        ax.legend(*zip(*unique))
+        ax.legend(*zip(*unique), fontsize=fontsize)
 
     return
 

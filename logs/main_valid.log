@@ -3411,3 +3411,91 @@
 2020-04-27 09:54:18,167:<module>:Finished transport file: Mindanao Current (mcz).
 2020-04-27 10:01:52,351:<module>:Finished transport file: St Georges Channel (sgz).
 2020-04-27 10:01:52,391:<module>:Finished transport file: Solomon Strait (ssz).
+2020-04-28 15:12:59,515:log_wbc:INFO:EUC:165°E:: lag=0: El Nino: -1.5 Sv, La Nina:  2.7 Sv.
+2020-04-28 15:12:59,602:log_wbc:INFO:EUC:165°E:: lag=1: El Nino: -1.2 Sv, La Nina:  2.5 Sv.
+2020-04-28 15:12:59,690:log_wbc:INFO:EUC:165°E:: lag=2: El Nino: -0.9 Sv, La Nina:  2.6 Sv.
+2020-04-28 15:12:59,773:log_wbc:INFO:EUC:165°E:: lag=3: El Nino: -0.2 Sv, La Nina:  2.4 Sv.
+2020-04-28 15:12:59,860:log_wbc:INFO:EUC:165°E:: lag=4: El Nino:  0.2 Sv, La Nina:  2.1 Sv.
+2020-04-28 15:12:59,943:log_wbc:INFO:EUC:165°E:: lag=5: El Nino:  0.7 Sv, La Nina:  1.8 Sv.
+2020-04-28 15:13:00,028:log_wbc:INFO:EUC:165°E:: lag=6: El Nino:  1.0 Sv, La Nina:  1.7 Sv.
+2020-04-28 15:13:00,111:log_wbc:INFO:EUC:165°E:: lag=7: El Nino:  1.6 Sv, La Nina:  1.4 Sv.
+2020-04-28 15:13:00,194:log_wbc:INFO:EUC:165°E:: lag=8: El Nino:  1.9 Sv, La Nina:  1.2 Sv.
+2020-04-28 15:13:00,277:log_wbc:INFO:EUC:165°E:: lag=9: El Nino:  1.8 Sv, La Nina:  1.2 Sv.
+2020-04-28 15:13:00,361:log_wbc:INFO:EUC:170°W:: lag=0: El Nino: -5.4 Sv, La Nina:  5.6 Sv.
+2020-04-28 15:13:00,446:log_wbc:INFO:EUC:170°W:: lag=1: El Nino: -5.2 Sv, La Nina:  5.5 Sv.
+2020-04-28 15:13:00,529:log_wbc:INFO:EUC:170°W:: lag=2: El Nino: -4.1 Sv, La Nina:  5.4 Sv.
+2020-04-28 15:13:00,614:log_wbc:INFO:EUC:170°W:: lag=3: El Nino: -3.2 Sv, La Nina:  4.9 Sv.
+2020-04-28 15:13:00,702:log_wbc:INFO:EUC:170°W:: lag=4: El Nino: -2.1 Sv, La Nina:  4.3 Sv.
+2020-04-28 15:13:00,787:log_wbc:INFO:EUC:170°W:: lag=5: El Nino: -0.9 Sv, La Nina:  3.5 Sv.
+2020-04-28 15:13:00,873:log_wbc:INFO:EUC:170°W:: lag=6: El Nino:  0.1 Sv, La Nina:  2.9 Sv.
+2020-04-28 15:13:00,959:log_wbc:INFO:EUC:170°W:: lag=7: El Nino:  1.3 Sv, La Nina:  2.5 Sv.
+2020-04-28 15:13:01,049:log_wbc:INFO:EUC:170°W:: lag=8: El Nino:  2.4 Sv, La Nina:  2.0 Sv.
+2020-04-28 15:13:01,136:log_wbc:INFO:EUC:170°W:: lag=9: El Nino:  3.3 Sv, La Nina:  1.8 Sv.
+2020-04-28 15:13:01,222:log_wbc:INFO:EUC:140°W:: lag=0: El Nino: -5.9 Sv, La Nina:  5.0 Sv.
+2020-04-28 15:13:01,306:log_wbc:INFO:EUC:140°W:: lag=1: El Nino: -5.6 Sv, La Nina:  4.6 Sv.
+2020-04-28 15:13:01,391:log_wbc:INFO:EUC:140°W:: lag=2: El Nino: -4.5 Sv, La Nina:  4.0 Sv.
+2020-04-28 15:13:01,475:log_wbc:INFO:EUC:140°W:: lag=3: El Nino: -2.9 Sv, La Nina:  3.6 Sv.
+2020-04-28 15:13:01,559:log_wbc:INFO:EUC:140°W:: lag=4: El Nino: -1.3 Sv, La Nina:  2.9 Sv.
+2020-04-28 15:13:01,643:log_wbc:INFO:EUC:140°W:: lag=5: El Nino:  0.0 Sv, La Nina:  2.5 Sv.
+2020-04-28 15:13:01,730:log_wbc:INFO:EUC:140°W:: lag=6: El Nino:  1.5 Sv, La Nina:  1.7 Sv.
+2020-04-28 15:13:01,815:log_wbc:INFO:EUC:140°W:: lag=7: El Nino:  2.7 Sv, La Nina:  1.2 Sv.
+2020-04-28 15:13:01,899:log_wbc:INFO:EUC:140°W:: lag=8: El Nino:  3.8 Sv, La Nina:  0.9 Sv.
+2020-04-28 15:13:01,983:log_wbc:INFO:EUC:140°W:: lag=9: El Nino:  4.8 Sv, La Nina:  0.5 Sv.
+2020-04-28 15:13:02,073:log_wbc:INFO:Vitiaz: lag=0:2-256m:6.1°S: El Nino:  1.3 Sv, La Nina: -1.2 Sv.
+2020-04-28 15:13:02,159:log_wbc:INFO:Vitiaz: lag=1:2-256m:6.1°S: El Nino:  1.3 Sv, La Nina: -1.1 Sv.
+2020-04-28 15:13:02,246:log_wbc:INFO:Vitiaz: lag=2:2-256m:6.1°S: El Nino:  1.2 Sv, La Nina: -1.1 Sv.
+2020-04-28 15:13:02,333:log_wbc:INFO:Vitiaz: lag=3:2-256m:6.1°S: El Nino:  1.1 Sv, La Nina: -1.0 Sv.
+2020-04-28 15:13:02,420:log_wbc:INFO:Vitiaz: lag=4:2-256m:6.1°S: El Nino:  0.9 Sv, La Nina: -0.9 Sv.
+2020-04-28 15:13:02,505:log_wbc:INFO:Vitiaz: lag=5:2-256m:6.1°S: El Nino:  0.7 Sv, La Nina: -0.8 Sv.
+2020-04-28 15:13:02,592:log_wbc:INFO:Vitiaz: lag=6:2-256m:6.1°S: El Nino:  0.5 Sv, La Nina: -0.7 Sv.
+2020-04-28 15:13:02,680:log_wbc:INFO:Vitiaz: lag=7:2-256m:6.1°S: El Nino:  0.3 Sv, La Nina: -0.6 Sv.
+2020-04-28 15:13:02,765:log_wbc:INFO:Vitiaz: lag=8:2-256m:6.1°S: El Nino:  0.1 Sv, La Nina: -0.5 Sv.
+2020-04-28 15:13:02,852:log_wbc:INFO:Vitiaz: lag=9:2-256m:6.1°S: El Nino: -0.0 Sv, La Nina: -0.5 Sv.
+2020-04-28 15:13:02,941:log_wbc:INFO:George: lag=0:2-256m:4.4°S: El Nino:  0.1 Sv, La Nina: -0.1 Sv.
+2020-04-28 15:13:03,026:log_wbc:INFO:George: lag=1:2-256m:4.4°S: El Nino:  0.1 Sv, La Nina: -0.1 Sv.
+2020-04-28 15:13:03,110:log_wbc:INFO:George: lag=2:2-256m:4.4°S: El Nino:  0.1 Sv, La Nina: -0.0 Sv.
+2020-04-28 15:13:03,195:log_wbc:INFO:George: lag=3:2-256m:4.4°S: El Nino:  0.0 Sv, La Nina: -0.0 Sv.
+2020-04-28 15:13:03,280:log_wbc:INFO:George: lag=4:2-256m:4.4°S: El Nino: -0.0 Sv, La Nina: -0.0 Sv.
+2020-04-28 15:13:03,364:log_wbc:INFO:George: lag=5:2-256m:4.4°S: El Nino: -0.1 Sv, La Nina:  0.0 Sv.
+2020-04-28 15:13:03,450:log_wbc:INFO:George: lag=6:2-256m:4.4°S: El Nino: -0.1 Sv, La Nina:  0.0 Sv.
+2020-04-28 15:13:03,535:log_wbc:INFO:George: lag=7:2-256m:4.4°S: El Nino: -0.1 Sv, La Nina:  0.0 Sv.
+2020-04-28 15:13:03,619:log_wbc:INFO:George: lag=8:2-256m:4.4°S: El Nino: -0.2 Sv, La Nina:  0.0 Sv.
+2020-04-28 15:13:03,708:log_wbc:INFO:George: lag=9:2-256m:4.4°S: El Nino: -0.2 Sv, La Nina:  0.0 Sv.
+2020-04-28 15:13:03,796:log_wbc:INFO:Solomon: lag=0:2-256m:4.1°S: El Nino:  0.8 Sv, La Nina: -0.5 Sv.
+2020-04-28 15:13:03,881:log_wbc:INFO:Solomon: lag=1:2-256m:4.1°S: El Nino:  0.7 Sv, La Nina: -0.5 Sv.
+2020-04-28 15:13:03,965:log_wbc:INFO:Solomon: lag=2:2-256m:4.1°S: El Nino:  0.6 Sv, La Nina: -0.4 Sv.
+2020-04-28 15:13:04,049:log_wbc:INFO:Solomon: lag=3:2-256m:4.1°S: El Nino:  0.5 Sv, La Nina: -0.3 Sv.
+2020-04-28 15:13:04,134:log_wbc:INFO:Solomon: lag=4:2-256m:4.1°S: El Nino:  0.4 Sv, La Nina: -0.3 Sv.
+2020-04-28 15:13:04,219:log_wbc:INFO:Solomon: lag=5:2-256m:4.1°S: El Nino:  0.2 Sv, La Nina: -0.2 Sv.
+2020-04-28 15:13:04,303:log_wbc:INFO:Solomon: lag=6:2-256m:4.1°S: El Nino:  0.1 Sv, La Nina: -0.1 Sv.
+2020-04-28 15:13:04,387:log_wbc:INFO:Solomon: lag=7:2-256m:4.1°S: El Nino: -0.0 Sv, La Nina: -0.2 Sv.
+2020-04-28 15:13:04,471:log_wbc:INFO:Solomon: lag=8:2-256m:4.1°S: El Nino: -0.1 Sv, La Nina: -0.1 Sv.
+2020-04-28 15:13:04,556:log_wbc:INFO:Solomon: lag=9:2-256m:4.1°S: El Nino: -0.2 Sv, La Nina: -0.1 Sv.
+2020-04-28 15:13:04,653:log_wbc:INFO:MC: lag=0:2-256m:9°N: El Nino: -0.8 Sv, La Nina:  1.6 Sv.
+2020-04-28 15:13:04,741:log_wbc:INFO:MC: lag=1:2-256m:9°N: El Nino: -0.7 Sv, La Nina:  1.4 Sv.
+2020-04-28 15:13:04,826:log_wbc:INFO:MC: lag=2:2-256m:9°N: El Nino: -0.4 Sv, La Nina:  1.3 Sv.
+2020-04-28 15:13:04,910:log_wbc:INFO:MC: lag=3:2-256m:9°N: El Nino: -0.1 Sv, La Nina:  1.2 Sv.
+2020-04-28 15:13:04,994:log_wbc:INFO:MC: lag=4:2-256m:9°N: El Nino:  0.1 Sv, La Nina:  1.0 Sv.
+2020-04-28 15:13:05,078:log_wbc:INFO:MC: lag=5:2-256m:9°N: El Nino:  0.3 Sv, La Nina:  0.9 Sv.
+2020-04-28 15:13:05,163:log_wbc:INFO:MC: lag=6:2-256m:9°N: El Nino:  0.4 Sv, La Nina:  0.8 Sv.
+2020-04-28 15:13:05,248:log_wbc:INFO:MC: lag=7:2-256m:9°N: El Nino:  0.6 Sv, La Nina:  0.8 Sv.
+2020-04-28 15:13:05,332:log_wbc:INFO:MC: lag=8:2-256m:9°N: El Nino:  0.6 Sv, La Nina:  0.8 Sv.
+2020-04-28 15:13:05,416:log_wbc:INFO:MC: lag=9:2-256m:9°N: El Nino:  0.6 Sv, La Nina:  1.0 Sv.
+2020-04-28 15:13:05,513:log_wbc:INFO:MC: lag=0:2-256m:6.4°N: El Nino: -0.7 Sv, La Nina:  1.6 Sv.
+2020-04-28 15:13:05,597:log_wbc:INFO:MC: lag=1:2-256m:6.4°N: El Nino: -0.4 Sv, La Nina:  1.4 Sv.
+2020-04-28 15:13:05,685:log_wbc:INFO:MC: lag=2:2-256m:6.4°N: El Nino: -0.1 Sv, La Nina:  1.1 Sv.
+2020-04-28 15:13:05,769:log_wbc:INFO:MC: lag=3:2-256m:6.4°N: El Nino:  0.3 Sv, La Nina:  0.9 Sv.
+2020-04-28 15:13:05,855:log_wbc:INFO:MC: lag=4:2-256m:6.4°N: El Nino:  0.7 Sv, La Nina:  0.5 Sv.
+2020-04-28 15:13:05,940:log_wbc:INFO:MC: lag=5:2-256m:6.4°N: El Nino:  0.9 Sv, La Nina:  0.4 Sv.
+2020-04-28 15:13:06,024:log_wbc:INFO:MC: lag=6:2-256m:6.4°N: El Nino:  1.3 Sv, La Nina:  0.3 Sv.
+2020-04-28 15:13:06,109:log_wbc:INFO:MC: lag=7:2-256m:6.4°N: El Nino:  1.4 Sv, La Nina:  0.1 Sv.
+2020-04-28 15:13:06,193:log_wbc:INFO:MC: lag=8:2-256m:6.4°N: El Nino:  1.2 Sv, La Nina:  0.1 Sv.
+2020-04-28 15:13:06,277:log_wbc:INFO:MC: lag=9:2-256m:6.4°N: El Nino:  1.1 Sv, La Nina:  0.2 Sv.
+2020-04-28 15:26:45,287:log_wbc:INFO:EUC:165°E:: Mean:  22.1 Sv, Max:  34.8 Sv in Jun, Min:  12.5 Sv in Nov, El Nino: -1.5 Sv, La Nina:  2.7 Sv.
+2020-04-28 15:26:45,370:log_wbc:INFO:EUC:170°W:: Mean:  28.0 Sv, Max:  42.9 Sv in May, Min:  16.1 Sv in Sep, El Nino: -5.4 Sv, La Nina:  5.6 Sv.
+2020-04-28 15:26:45,454:log_wbc:INFO:EUC:140°W:: Mean:  29.5 Sv, Max:  42.1 Sv in Apr, Min:  22.0 Sv in Aug, El Nino: -5.9 Sv, La Nina:  5.0 Sv.
+2020-04-28 15:26:45,541:log_wbc:INFO:Vitiaz:2-1368m:6.1°S: Mean:  6.8 Sv, Max:  9.6 Sv in Jul, Min:  5.0 Sv in Feb, El Nino:  1.0 Sv, La Nina: -0.9 Sv.
+2020-04-28 15:26:45,626:log_wbc:INFO:George:2-1368m:4.4°S: Mean: -0.3 Sv, Max: -0.7 Sv in Oct, Min:  0.1 Sv in Jul, El Nino:  0.1 Sv, La Nina: -0.1 Sv.
+2020-04-28 15:26:45,712:log_wbc:INFO:Solomon:2-1368m:4.1°S: Mean:  4.5 Sv, Max:  10.1 Sv in Jun, Min:  1.2 Sv in Oct, El Nino: -0.7 Sv, La Nina:  0.4 Sv.
+2020-04-28 15:26:45,800:log_wbc:INFO:MC:2-546m:9°N: Mean: -19.4 Sv, Max: -20.3 Sv in Nov, Min: -18.3 Sv in Sep, El Nino: -0.8 Sv, La Nina:  1.4 Sv.
+2020-04-28 15:26:45,889:log_wbc:INFO:MC:2-546m:6.4°N: Mean: -17.0 Sv, Max: -19.4 Sv in Jun, Min: -14.5 Sv in Jan, El Nino: -0.0 Sv, La Nina:  0.6 Sv.
