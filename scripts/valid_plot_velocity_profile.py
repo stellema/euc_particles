@@ -6,31 +6,25 @@ author: Annette Stellema (astellemas@gmail.com)
 
 
 """
-import gsw
+import cfg
+import tools
 import numpy as np
 import xarray as xr
-from scipy import stats
-from pathlib import Path
-from scipy import interpolate
 import matplotlib.pyplot as plt
-from main import paths, idx_1d, LAT_DEG, lx, width, height
-from main_valid import open_tao_data, tbnds_tao, tbnds_ofam
-from matplotlib.offsetbox import AnchoredText
 from valid_nino34 import enso_u_tao, enso_u_ofam, nino_events
-import datetime
+from cfg import width, height, tbnds_tao, tbnds_ofam
 plt.rcParams.update({'font.size': 10})
-# Path to save figures, save data and OFAM model output.
-fpath, dpath, xpath, lpath, tpath = paths()
+
 # Saved data frequency (1 for monthly and 0 for daily data).
 
 def plot_eq_velocty_profile(z1=25, z2=300, anom=True, print_max=True):
     strx = 'anomaly' if anom else 'composite'
     name = ['Mean equatorial velocity', 'El Niño ' + strx, 'La Niña ' + strx]
     labels = ['TAO/TRITION', 'OFAM3']
-    oni_mod = xr.open_dataset(dpath/'ofam_sst_anom_nino34_hist.nc')
-    # oni_obs = xr.open_dataset(dpath/'noaa_sst_anom_nino34.nc').rename({'time': 'Time'})
-    du_mod = xr.open_dataset(dpath.joinpath('ofam_EUC_int_transport.nc'))
-    du_obs = open_tao_data(frq=lx['frq_short'][1], dz=slice(10, 360))
+    oni_mod = xr.open_dataset(cfg.data/'ofam_sst_anom_nino34_hist.nc')
+    # oni_obs = xr.open_dataset(cfg.data/'noaa_sst_anom_nino34.nc').rename({'time': 'Time'})
+    du_mod = xr.open_dataset(cfg.data/'ofam_EUC_int_transport.nc')
+    du_obs = tools.open_tao_data(frq=cfg.frq_short[1], dz=slice(10, 360))
 
     nino, nina = nino_events(oni_mod.oni)
     nio = [[2, -1], [2, 8], [2, 8]]
@@ -46,7 +40,7 @@ def plot_eq_velocty_profile(z1=25, z2=300, anom=True, print_max=True):
         for i in range(3):
             du = du_obs[i].isel(time=slice(tbnds_tao[i][0], tbnds_tao[i][1]))
             dq = du_mod.isel(Time=slice(tbnds_ofam[i][0], tbnds_ofam[i][1]))
-            umod_mean = dq.sel(xu_ocean=lx['lons'][i]).mean(axis=0).u
+            umod_mean = dq.sel(xu_ocean=cfg.lons[i]).mean(axis=0).u
             uobs_mean = du.u_1205.mean(axis=0)
             # Mean velocity.
             if j == 0:
@@ -62,8 +56,8 @@ def plot_eq_velocty_profile(z1=25, z2=300, anom=True, print_max=True):
                 enso_obs = enso_u_tao(oni_mod, du_obs, ninox, ninax)
                 if anom:
                     umod = enso_mod[j-1, :, i] - umod_mean
-                    zi = idx_1d(enso_obs[j-1, :, i].st_ocean,
-                                uobs_mean.depth[-1])
+                    zi = tools.idx(enso_obs[j-1, :, i].st_ocean,
+                                   uobs_mean.depth[-1])
                     tmp_obs = enso_obs[j-1, 0:zi+1, i]
                     uobs = tmp_obs.where(tmp_obs != None) - uobs_mean.values
                 else:
@@ -72,8 +66,8 @@ def plot_eq_velocty_profile(z1=25, z2=300, anom=True, print_max=True):
                 z_obs = uobs.st_ocean
                 z_mod = umod.st_ocean
 
-            ax[l].set_title('{}{} at {}'.format(lx['l'][l], name[j],
-                                                lx['lonstr'][i]),
+            ax[l].set_title('{}{} at {}'.format(cfg.lt[l], name[j],
+                                                cfg.lonstr[i]),
                             loc='left', fontsize=10)
             ax[l].plot(uobs, z_obs, label=labels[0], color='red', linewidth=2)
             ax[l].plot(umod, z_mod, label=labels[1], color='k', linewidth=2)
@@ -86,7 +80,7 @@ def plot_eq_velocty_profile(z1=25, z2=300, anom=True, print_max=True):
             ax[l].yaxis.set_ticks_position('both')
             l += 1
             if print_max:
-                print('{} {}: '.format(name[j][0:4], lx['lonstr'][i]), end='')
+                print('{} {}: '.format(name[j][0:4], cfg.lonstr[i]), end='')
                 for u, z, b, mn in zip([uobs, umod], [z_obs, z_mod],
                                        ['obs', 'mod'], [uobs_mean, umod_mean]):
                     end = '\n' if b == 'mod' else ', '
@@ -105,7 +99,7 @@ def plot_eq_velocty_profile(z1=25, z2=300, anom=True, print_max=True):
         ax[y].set_ylabel('Depth [m]')
     ax[0].legend(fontsize=10)
     plt.tight_layout()
-    plt.savefig(fpath/('valid/EUC_TAO_velocity_depth_{}.png'.format(strx)))
+    plt.savefig(cfg.fig/('valid/EUC_TAO_velocity_depth_{}.png'.format(strx)))
 
     return
 

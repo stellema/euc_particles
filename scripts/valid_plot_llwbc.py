@@ -6,6 +6,8 @@ author: Annette Stellema (astellemas@gmail.com)
 
 
 """
+import cfg
+import tools
 import cartopy
 import numpy as np
 import xarray as xr
@@ -14,12 +16,7 @@ import matplotlib.pyplot as plt
 import shapely.geometry as sgeom
 import matplotlib.gridspec as gridspec
 from valid_nino34 import enso_u_ofam, nino_events
-from main import paths, lx, SV, idx, width, height
-from main_valid import legend_without_duplicate_labels, coord_formatter
 from cartopy.mpl.gridliner import LONGITUDE_FORMATTER, LATITUDE_FORMATTER
-
-# Path to save figures, save data and OFAM model output.
-fpath, dpath, xpath, lpath, tpath = paths()
 
 
 def plot_llwbc_enso(euc, oni, vs, sg, ss, mc):
@@ -36,7 +33,7 @@ def plot_llwbc_enso(euc, oni, vs, sg, ss, mc):
         plt.axis('on')
         # Calculate transport (except for the EUC.
         if hasattr(d, 'xu_ocean') and hasattr(d, 'st_ocean'):
-            d = d.vvo.sum(dim='st_ocean').sum(dim='xu_ocean')/SV
+            d = d.vvo.sum(dim='st_ocean').sum(dim='xu_ocean')/cfg.SV
 
         # Plot OFAM3 ONI in red (but only in the first subplot).
         if i == 0:
@@ -49,9 +46,9 @@ def plot_llwbc_enso(euc, oni, vs, sg, ss, mc):
                            alpha=0.15, color=color)
         plt.axhline(y=0, color='grey')
         ax.margins(x=0)
-        ax.set_ylabel('Transport [Sv]')
+        ax.set_ylabel('Transport [cfg.SV]')
         ax.legend(fontsize=9, loc=4)
-    plt.savefig(fpath/'valid/llwbc_enso.png')
+    plt.savefig(cfg.fig/'valid/llwbc_enso.png')
     return
 
 
@@ -61,12 +58,7 @@ def plot_llwbc_profile(vs, sg, ss, mc, mon=False):
     xstr = ['transport', 'mean velocity', 'ENSO anomaly']
     names = ['Vitiaz Strait', 'St. George\'s Channel', 'Solomon Strait',
              'Mindanao Current']
-    # vsz = vs.isel(st_ocean=slice(0, idx(vs.st_ocean, 1000) + 3)).st_ocean[-1]
-    # sgz = sg.isel(st_ocean=slice(0, idx(sg.st_ocean, 1200) + 1)).st_ocean[-1]
-    # ssz = ss.isel(st_ocean=slice(0, idx(ss.st_ocean, 1200) + 1)).st_ocean[-1]
-    # mcz = mc.isel(st_ocean=slice(0, idx(mc.st_ocean, 550) + 1)).st_ocean[-1]
-    # dz = [vsz, sgz, ssz, mcz]
-    fig, ax = plt.subplots(4, 3, figsize=(width*1.56, height*2.3))
+    fig, ax = plt.subplots(4, 3, figsize=(cfg.width*1.56, cfg.height*2.3))
     ax = ax.flatten()
     k = 0  # Column index (goes up by three [rows] each dataset).
     for z, dk, n in zip(range(4), [vs, sg, ss, mc.isel(yu_ocean=11)], names):
@@ -74,7 +66,7 @@ def plot_llwbc_profile(vs, sg, ss, mc, mon=False):
             i = k+j
             # Plot transport seasonality in first row.
             if j == 0:
-                ds = dk.vvo.sum(dim='st_ocean').sum(dim='xu_ocean')/SV
+                ds = dk.vvo.sum(dim='st_ocean').sum(dim='xu_ocean')/cfg.SV
                 dd = ds.groupby('Time.month').mean('Time')
                 d25 = ds.groupby('Time.month').quantile(0.25)
                 d75 = ds.groupby('Time.month').quantile(0.75)
@@ -82,8 +74,8 @@ def plot_llwbc_profile(vs, sg, ss, mc, mon=False):
                 ax[i].plot(dd.month, dd.values, 'k')
                 ax[i].fill_between(dd.month, d25, d75, facecolor='b', alpha=0.1)
                 ax[i].set_xticks(dd.month.values)
-                ax[i].set_xticklabels(lx['mon_letter'])
-                ax[i].set_ylabel('Transport [Sv]')
+                ax[i].set_xticklabels(cfg.mon_letter)
+                ax[i].set_ylabel('Transport [cfg.SV]')
             # Plot velocity depth profiles in 2nd and 3rd rows.
             else:
                 ds = dk.v.mean(dim='xu_ocean')
@@ -112,7 +104,7 @@ def plot_llwbc_profile(vs, sg, ss, mc, mon=False):
                                         facecolor=c1, alpha=0.2)
                     ax[i].fill_betweenx(enso[1].st_ocean, x1[1], x2[1],
                                         facecolor=c2, alpha=0.2)
-                    legend_without_duplicate_labels(ax[i], loc=4, fontsize=10)
+                    tools.legend_without_duplicate_labels(ax[i], loc=4, fontsize=10)
                 # Set these for velocity profiles only.
                 ymin = ds.st_ocean[-1] if k != 3 else 550
                 ax[i].set_ylim(ymax=ds.st_ocean[0], ymin=ymin)
@@ -122,21 +114,21 @@ def plot_llwbc_profile(vs, sg, ss, mc, mon=False):
                 ax[i].set_ylabel('Depth [m]')
                 ax[i].set_xlabel('Velocity [m/s]')
 
-            ax[i].set_title('{}{} {}'.format(lx['l'][i], n, xstr[j]),
+            ax[i].set_title('{}{} {}'.format(cfg.lt[i], n, xstr[j]),
                             loc='left', fontsize=11, x=-0.05)
             ax[i].margins(x=0)
         k = k + 3
 
     plt.tight_layout()
     if not mon:
-        plt.savefig(fpath/'valid/llwbc_profile.png')
+        plt.savefig(cfg.fig/'valid/llwbc_profile.png')
     else:
-        plt.savefig(fpath/'valid/llwbc_profile_{}.png'.format(mon))
+        plt.savefig(cfg.fig/'valid/llwbc_profile_{}.png'.format(mon))
     return
 
 
 def plot_llwbc_map():
-    dv = xr.open_dataset(xpath/'ocean_v_1981-2012_climo.nc').mean('Time')
+    dv = xr.open_dataset(cfg.ofam/'ocean_u_1981-2012_climo.nc').mean('Time')
     bnds = [[[-6.1, -6.1], [147.7, 149]],  # VS.
             [[-4.6, -4.6], [152.3, 152.7]],  # SGC.
             [[-4.8, -4.8], [152.9, 154.6]],  # SS (minus 0.1 lons).
@@ -145,8 +137,10 @@ def plot_llwbc_map():
             [[9, 9], [126.2, 128.2]],
             [[6.4, 9], [126.2, 126.2]],
             [[6.4, 9], [128.2, 128.2]]]
+    cmap = plt.cm.seismic
+    cmap.set_bad('grey')
 
-    box = sgeom.box(minx=125, maxx=155.05, miny=-10.01, maxy=10.01)
+    box = sgeom.box(minx=125, maxx=290.05, miny=-10.01, maxy=10.01)
     x0, y0, x1, y1 = box.bounds
     proj = ccrs.PlateCarree(central_longitude=180)
     box_proj = ccrs.PlateCarree(central_longitude=0)
@@ -154,24 +148,27 @@ def plot_llwbc_map():
     ax = fig.add_subplot(1, 1, 1, projection=proj)
     ax.set_extent([x0, x1, y0, y1], box_proj)
     cs = ax.pcolormesh(dv.xu_ocean, dv.yu_ocean,
-                       dv.v.isel(st_ocean=slice(0, 28)).mean('st_ocean'),
+                       dv.u.isel(st_ocean=slice(0, 28)).mean('st_ocean'),
                        vmin=-0.5, vmax=0.5, transform=box_proj,
-                       cmap=plt.cm.seismic)
+                       cmap=cmap)
     for i in range(len(bnds)):
         ax.plot(bnds[i][1], bnds[i][0], color='k', linewidth=3, marker='o',
                 markersize=1, transform=box_proj)
-    ax.coastlines()
-    ax.add_feature(cartopy.feature.LAND, zorder=2, edgecolor='k',
-                   facecolor='lightgrey')
+    # ax.coastlines()
+    # ax.add_feature(cartopy.feature.LAND, zorder=2, edgecolor='k',
+    #                facecolor='lightgrey')
     ax.gridlines(xlocs=np.arange(120, 170, 5), ylocs=np.arange(-20, 25, 5),
                  color='dimgrey')
     G = ax.gridlines(draw_labels=True, linewidth=0.001, color='dimgrey',
                      xlocs=np.arange(125, 160, 5), ylocs=np.arange(-10, 15, 5))
-    G.xlabels_bottom = True; G.xlabels_top = False; G.ylabels_right = False
-    G.xformatter = LONGITUDE_FORMATTER; G.yformatter = LATITUDE_FORMATTER
+    G.xlabels_bottom = True
+    G.xlabels_top = False
+    G.ylabels_right = False
+    G.xformatter = LONGITUDE_FORMATTER
+    G.yformatter = LATITUDE_FORMATTER
     cbar = fig.colorbar(cs, shrink=0.5, pad=0.02, extend='both')
     cbar.set_label('Meridional velocity [m/s]', size=11)
-    fig.savefig(fpath/'valid/llwbc_map.png', bbox_inches='tight',
+    fig.savefig(cfg.fig/'valid/llwbc_map.png', bbox_inches='tight',
                 pad_inches=0.2)
     plt.close()
     dv.close()
@@ -187,7 +184,8 @@ def plot_llwbc_velocity(vs, sg, ss, ni, mc):
     xticks = [[147.9, 148.2, 148.5], [152.55, 152.65],
               np.arange(153.2, 154.7, 0.5), [153.2, 153.4],
               [126.8, 127.2, 127.6, 128.0], [126.5, 127, 127.5, 128]]
-    fig, ax = plt.subplots(2, 3, figsize=(width*1.56, height*2.3), sharey=True)
+    fig, ax = plt.subplots(2, 3, figsize=(cfg.width*1.56, cfg.height*2.3),
+                           sharey=True)
     ax = ax.flatten()
     cmap = plt.cm.seismic
     cmap.set_bad('lightgrey')
@@ -198,68 +196,49 @@ def plot_llwbc_velocity(vs, sg, ss, ni, mc):
         while np.isnan(ds.v.isel(xu_ocean=-1)).all() and i != 1:
             ds = ds.isel(xu_ocean=slice(0, len(ds.xu_ocean)-1))
 
-        ax[i].set_title('{}{}'.format(lx['l'][i], n), loc='left', fontsize=11)
+        ax[i].set_title('{}{}'.format(cfg.lt[i], n), loc='left', fontsize=11)
         # Plot mean velocity vs depth profile.
         mx = np.max(np.abs(ds.v))
-        cs = ax[i].pcolormesh(ds.xu_ocean, ds.st_ocean, ds.v, vmax=mx, vmin=-mx,
-                              cmap=cmap)
+        cs = ax[i].pcolormesh(ds.xu_ocean, ds.st_ocean, ds.v,
+                              vmax=mx, vmin=-mx, cmap=cmap)
         ax[i].set_ylim(ymax=ds.st_ocean[0], ymin=ds.st_ocean[-1])
         cbar = fig.colorbar(cs, ax=ax[i], orientation='horizontal')
         cbar.set_label('[m/s]', size=9)
         ax[i].set_xticks(xticks[i])
-        ax[i].set_xticklabels(coord_formatter(xticks[i], 'lon'))
+        ax[i].set_xticklabels(tools.coord_formatter(xticks[i], 'lon'))
         if i == 0 or i == 3:
             ax[i].set_ylabel('Depth [m]')
     plt.tight_layout()
-    plt.savefig(fpath/'valid/llwbc_velocity.png')
+    plt.savefig(cfg.fig/'valid/llwbc_velocity.png')
     return
 
 
-oni = xr.open_dataset(dpath/'ofam_sst_anom_nino34_hist.nc')
-euc = xr.open_dataset(dpath/'ofam_EUC_transport_static_hist.nc')
-vs = xr.open_dataset(dpath/'ofam_transport_vs.nc')
-sg = xr.open_dataset(dpath/'ofam_transport_sg.nc')
-ss = xr.open_dataset(dpath/'ofam_transport_ss.nc')
-ni = xr.open_dataset(dpath/'ofam_transport_ni.nc')
-mc = xr.open_dataset(dpath/'ofam_transport_mc.nc')
+oni = xr.open_dataset(cfg.data/'ofam_sst_anom_nino34_hist.nc')
+euc = xr.open_dataset(cfg.data/'ofam_EUC_transport_static_hist.nc')
+vs = xr.open_dataset(cfg.data/'ofam_transport_vs.nc')
+sg = xr.open_dataset(cfg.data/'ofam_transport_sg.nc')
+ss = xr.open_dataset(cfg.data/'ofam_transport_ss.nc')
+ni = xr.open_dataset(cfg.data/'ofam_transport_ni.nc')
+mc = xr.open_dataset(cfg.data/'ofam_transport_mc.nc')
 
 # plot_llwbc_velocity(vs, sg, ss, ni, mc)
 
-euc = euc.resample(Time='MS').mean().uvo/SV
-vs = vs.isel(st_ocean=slice(0, idx(vs.st_ocean, 1000) + 3))
-sg = sg.isel(st_ocean=slice(0, idx(sg.st_ocean, 1200) + 1))
-ss = ss.isel(st_ocean=slice(0, idx(ss.st_ocean, 1200) + 1))
-# ss = ss.isel(xu_ocean=slice(1, idx(ss.xu_ocean, 153.6) + 1))
-# ss = ss.isel(xu_ocean=slice(idx(ss.xu_ocean, 153.6)+1, -1))
-# ss = ss.where(ss <0)
-ni = ni.isel(st_ocean=slice(0, idx(ss.st_ocean, 1200) + 1))
-mc = mc.isel(st_ocean=slice(0, idx(mc.st_ocean, 550) + 1))
+euc = euc.resample(Time='MS').mean().uvo/cfg.SV
+vs = vs.isel(st_ocean=slice(0, tools.idx(vs.st_ocean, 1000) + 3))
+sg = sg.isel(st_ocean=slice(0, tools.idx(sg.st_ocean, 1200) + 1))
+ss = ss.isel(st_ocean=slice(0, tools.idx(ss.st_ocean, 1200) + 1))
+ni = ni.isel(st_ocean=slice(0, tools.idx(ss.st_ocean, 1200) + 1))
+mc = mc.isel(st_ocean=slice(0, tools.idx(mc.st_ocean, 550) + 1))
 
 # plot_llwbc_enso(euc, oni, vs, sg, ss, mc)
-plot_llwbc_profile(vs, sg, ss, mc)
-# plot_llwbc_map()
+# plot_llwbc_profile(vs, sg, ss, mc)
+plot_llwbc_map()
 
 
-# oni.close()
-# euc.close()
-# vs.close()
-# sg.close()
-# ss.close()
-# ni.close()
-# mc.close()
-
-
-# fig, ax = plt.subplots(1, 1, figsize=(width, height))
-# names = ['Vitiaz Strait', 'St. George\'s Channel', 'Solomon Strait']
-# for z, dk, n,c in zip(range(3), [vs, sg, ss], names, ['r', 'b', 'm']):
-
-#     ds = dk.vvo.sum(dim='st_ocean').sum(dim='xu_ocean')/SV
-#     dd = ds.groupby('Time.month').mean('Time')
-#     ax.plot(dd.month, dd.values, c, label=n)
-
-# tot = [dk.vvo.sum(dim='st_ocean').sum(dim='xu_ocean').groupby('Time.month').mean('Time')/SV for dk in [vs, sg, ss]]
-# ax.plot(dd.month, tot[0] + tot[1] + tot[2], 'k', label='total')
-# ax.set_xticks(dd.month.values)
-# ax.set_xticklabels(lx['mon_letter'])
-# ax.set_ylabel('Transport [Sv]')
-# ax.legend()
+oni.close()
+euc.close()
+vs.close()
+sg.close()
+ss.close()
+ni.close()
+mc.close()

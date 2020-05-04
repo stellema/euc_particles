@@ -7,33 +7,31 @@ created: Tue Sep 10 18:44:15 2019
 author: Annette Stellema (astellemas@gmail.com)
 
 """
+import cfg
+import tools
 import gsw
 import numpy as np
 import xarray as xr
 import matplotlib.colors
 import matplotlib.pyplot as plt
-from main import paths, im_ext, idx_1d, lx, width, height, LAT_DEG, SV
-from main_valid import coord_formatter
+from cfg import width, height, LAT_DEG, SV, im_ext
 
-# Path to save figures, save data and OFAM model output.
-fpath, dpath, xpath, lpath, tpath = paths()
-years = [[1985, 2000], [2070, 2101]]
-# years = lx['years']
+years = [[1985, 2000], [2070, 2101]]  # cfg.years
 
 # Open zonal velocity historical and future climatologies.
-duh = xr.open_dataset(xpath/('ocean_u_{}-{}_climo.nc'.format(*years[0])))
-duf = xr.open_dataset(xpath/('ocean_u_{}-{}_climo.nc'.format(*years[1])))
+duh = xr.open_dataset(cfg.ofam/('ocean_u_{}-{}_climo.nc'.format(*years[0])))
+duf = xr.open_dataset(cfg.ofam/('ocean_u_{}-{}_climo.nc'.format(*years[1])))
 
 # Open temperature historical and future climatologies.
-dth = xr.open_dataset(xpath/('ocean_temp_{}-{}_climo.nc'.format(*years[0])))
-dtf = xr.open_dataset(xpath/('ocean_temp_{}-{}_climo.nc'.format(*years[1])))
+dth = xr.open_dataset(cfg.ofam/('ocean_temp_{}-{}_climo.nc'.format(*years[0])))
+dtf = xr.open_dataset(cfg.ofam/('ocean_temp_{}-{}_climo.nc'.format(*years[1])))
 
 # Open salinity historical and future climatologies.
-dsh = xr.open_dataset(xpath/('ocean_salt_{}-{}_climo.nc'.format(*years[0])))
-dsf = xr.open_dataset(xpath/('ocean_salt_{}-{}_climo.nc'.format(*years[1])))
+dsh = xr.open_dataset(cfg.ofam/('ocean_salt_{}-{}_climo.nc'.format(*years[0])))
+dsf = xr.open_dataset(cfg.ofam/('ocean_salt_{}-{}_climo.nc'.format(*years[1])))
 
 
-depth = duh.st_ocean[idx_1d(duh.st_ocean, 500)].item()
+depth = duh.st_ocean[tools.idx(duh.st_ocean, 500)].item()
 
 # Slice data to selected latitudes and longitudes.
 duh = duh.sel(yu_ocean=slice(-5.0, 5.), st_ocean=slice(2.5, depth))
@@ -68,12 +66,12 @@ def plot_ofam_EUC_profile(du, exp=0, vmax=1.2, dt=None, ds=None,
     def sub_plot_u(ax, i, exp, lon, du, dt, ds, add_bounds, cmap, tstr=''):
         """Plot velocity and isopycnals."""
         # ax.set_title('{}OFAM3 {} EUC at {} {}'
-        #              .format(lx['l'][i], lx['exps'][exp],
-        #                      lx['lonstr'][ix], tstr), loc='left')
+        #              .format(cfg.lt[i], lx['exps'][exp],
+        #                      cfg.lonstr[ix], tstr), loc='left')
 
         # Title without including scenario.
         ax.set_title('{}OFAM3 EUC at {} {}'.format(
-            lx['l'][i+off], lx['lonstr'][ix], tstr), loc='left', fontsize=13)
+            cfg.lt[i+off], cfg.lonstr[ix], tstr), loc='left', fontsize=13)
 
         # Plot zonal velocity.
         cs = ax.pcolormesh(du.yu_ocean, du.st_ocean,
@@ -152,9 +150,9 @@ def plot_ofam_EUC_profile(du, exp=0, vmax=1.2, dt=None, ds=None,
         strx = '_isopycnals' if isopycnals else ''
         stry = '_{}E'.format(x) if freq == 'mon' else ''
         plt.tight_layout()
-        plt.savefig(fpath/('valid/ofam_EUC_velocity_{}{}_{}{}{}'
-                           .format(freq, stry, lx['exp_abr'][exp],
-                                   strx, im_ext)), bbox_inches='tight')
+        plt.savefig(cfg.fig/('valid/ofam_EUC_velocity_{}{}_{}{}{}'
+                             .format(freq, stry, cfg.exp_abr[exp],
+                                     strx, im_ext)), bbox_inches='tight')
         plt.show()
         plt.clf()
         plt.close()
@@ -172,8 +170,8 @@ def plot_ofam_EUC_profile(du, exp=0, vmax=1.2, dt=None, ds=None,
         caxes = [0.13, -0.01, 0.815, 0.025]  # Three rows.
         fig, ax = plt.subplots(3, 1, figsize=(width/1.3, height*1.55),
                                sharey=True)
-        for ix, x in enumerate(lx['lons']):
-            ax[ix], cs = sub_plot_u(ax[ix], ix, exp, lx['lonstr'][ix],
+        for ix, x in enumerate(cfg.lons):
+            ax[ix], cs = sub_plot_u(ax[ix], ix, exp, cfg.lonstr[ix],
                                     du.mean('Time'), dt.mean('Time'),
                                     ds.mean('Time'), tstr='',
                                     add_bounds=add_bounds, cmap=cmap)
@@ -181,18 +179,18 @@ def plot_ofam_EUC_profile(du, exp=0, vmax=1.2, dt=None, ds=None,
         save_fig(fig, cs, isopycnals, freq, exp, caxes)
 
     elif freq == 'mon':
-        for ix, x in enumerate(lx['lons']):
+        for ix, x in enumerate(cfg.lons):
             # Colorbar extra axis:[left, bottom, width, height].
             # caxes = [1, 0.1, 0.0175, 0.17]
             caxes = [0.33, -0.015, 0.4, 0.0225]
             fig, ax = plt.subplots(4, 3, figsize=(width*1.4, height*2.25),
                                    sharey=True)
             ax = ax.flatten()
-            for i, T in enumerate(lx['mon']):
-                ax[i], cs = sub_plot_u(ax[i], i, exp, lx['lonstr'][ix],
+            for i, T in enumerate(cfg.mon):
+                ax[i], cs = sub_plot_u(ax[i], i, exp, cfg.lonstr[ix],
                                        du.isel(Time=i), dt.isel(Time=i),
                                        ds.isel(Time=i),
-                                       tstr='in ' + lx['mon'][i],
+                                       tstr='in ' + cfg.mon[i],
                                        add_bounds=add_bounds, cmap=cmap)
 
             for col1 in [0, 3, 6, 9]:
@@ -204,7 +202,7 @@ def plot_ofam_EUC_profile(du, exp=0, vmax=1.2, dt=None, ds=None,
 
 def plot_transport(dh, dr):
     """Plot historical, RCP8.5 and projected change of EUC transport."""
-    depth = dh.st_ocean[idx_1d(dh.st_ocean, 350)].item()
+    depth = dh.st_ocean[tools.idx(dh.st_ocean, 350)].item()
 
     # Slice data to selected latitudes and lonitudes.
     dh = dh.sel(yu_ocean=slice(-2.6, 2.7), st_ocean=slice(2.5, depth),
@@ -244,18 +242,19 @@ def plot_transport(dh, dr):
     tmp = np.empty(len(xticks)).tolist()
     for i, x in enumerate(xticks):
         if x <= 180:
-            tmp[i] = str(int(x)) + lx['deg'] + 'E'
+            tmp[i] = str(int(x)) + cfg.deg + 'E'
         else:
-            tmp[i] = str(int(360-x)) + lx['deg'] + 'W'
+            tmp[i] = str(int(360-x)) + cfg.deg + 'W'
 
     ax[1].set_xticks(xticks)
     ax[1].set_xticklabels(tmp)
     ax[0].set_ylabel('Transport [Sv]')
     ax[1].set_ylabel('Transport [Sv]')
     plt.show()
-    plt.savefig(fpath/('valid/EUC_transport{}'.format(im_ext)))
+    plt.savefig(cfg.fig/('valid/EUC_transport{}'.format(im_ext)))
 
     return
+
 
 # Create colourmap to match Qin thesis Fig 3.3.
 norm = matplotlib.colors.Normalize(-1.0, 1.0)
@@ -283,7 +282,7 @@ cmap = matplotlib.colors.LinearSegmentedColormap.from_list("", colors)
 dh = duh.mean('Time')
 ds = dsh.mean('Time')
 dt = dth.mean('Time')
-dj = xr.open_dataset(dpath/'pac_mean_johnson_2002.cdf')
+dj = xr.open_dataset(cfg.data/'pac_mean_johnson_2002.cdf')
 dj = dj.rename({'YLAT11_101': 'yu_ocean', 'XLON': 'xu_ocean',
                 'ZDEP1_50': 'st_ocean'}).sel(yu_ocean=slice(-5, 5))
 
@@ -299,9 +298,9 @@ fig, ax = plt.subplots(2, 3, figsize=(width*1.4, height*1.5), sharey=True)
 ax = ax.flatten()
 i = 0
 for j, du, label in zip(range(2), [dj.UM, dh.u], ['Observed', 'OFAM3']):
-    for ix, x in enumerate(lx['lons']):
+    for ix, x in enumerate(cfg.lons):
         ax[i].set_title('{}{} EUC at {}'
-                        .format(lx['l'][i], label, lx['lonstr'][ix]),
+                        .format(cfg.lt[i], label, cfg.lonstr[ix]),
                         loc='left', fontsize=12)
 
         # Plot zonal velocity.
@@ -336,7 +335,7 @@ for j, du, label in zip(range(2), [dj.UM, dh.u], ['Observed', 'OFAM3']):
 
         # Define latitude tick labels that are either North or South.
         xticks = np.arange(-4, 5, 2)
-        xtickl = coord_formatter(xticks, convert='lat')
+        xtickl = tools.coord_formatter(xticks, convert='lat')
 
         ax[i].set_xticks(xticks)
         if j == 1:
@@ -351,20 +350,16 @@ for j, du, label in zip(range(2), [dj.UM, dh.u], ['Observed', 'OFAM3']):
 orientation = 'horizontal'
 caxes = [0.33, -0.015, 0.4, 0.0225]
 # Colorbar to match Qin thesis.
-cbar = plt.colorbar(cs, cax=fig.add_axes(caxes),
-                    orientation=orientation, ticks=np.arange(-1, 1.5, 0.5), extend='both')
+cbar = plt.colorbar(cs, cax=fig.add_axes(caxes), orientation=orientation,
+                    ticks=np.arange(-1, 1.5, 0.5), extend='both')
 
 cbar.ax.tick_params(labelsize=8, width=0.03)
 cbar.set_label('Zonal velocity [m/s]', size=9)
 
 # Add 'isopyncals' to file name if shown.
-
 plt.tight_layout()
-plt.savefig(fpath/('valid/ofam_EUC_velocity_{}{}'
-                   .format(lx['exp_abr'][0], im_ext)), bbox_inches='tight')
+plt.savefig(cfg.fig/('valid/ofam_EUC_velocity_{}{}'
+                     .format(cfg.exp_abr[0], im_ext)), bbox_inches='tight')
 plt.show()
-# plt.clf()
-# plt.close()
-
-
-
+plt.clf()
+plt.close()

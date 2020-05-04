@@ -3,14 +3,14 @@
 created: Thu Apr 23 17:54:09 2020
 
 author: Annette Stellema (astellemas@gmail.com)
-du= xr.open_dataset(xpath/'ocean_u_1981-2012_climo.nc')
-ds= xr.open_dataset(xpath/'ocean_v_1981-2012_climo.nc')
+du= xr.open_dataset(cfg.ofam/'ocean_u_1981-2012_climo.nc')
+ds= xr.open_dataset(cfg.ofam/'ocean_v_1981-2012_climo.nc')
 
 
 
 # Finding MC bounds.
 bnds_mc = [slice(214, 241), slice(62, 95)]
-ds = xr.open_dataset(xpath/'ocean_v_1981-2012_climo.nc')
+ds = xr.open_dataset(cfg.ofam/'ocean_v_1981-2012_climo.nc')
 sfc = ds.v.isel(yu_ocean=bnds_mc[0], xu_ocean=bnds_mc[1])
 mx = []
 z = 0
@@ -30,42 +30,35 @@ print('Maximum size index: {}, lon: {:.2f}'
       .format(np.max(mx), sfc.xu_ocean[np.max(mx)].item()))
 
 """
+import cfg
+import tools
 import sys
-import logging
 import numpy as np
 import xarray as xr
 from datetime import datetime
-from main import paths, lx, idx
+# from main import paths, lx, tools.idx
 from main_valid import deg_m
-from parcels.tools.loggers import logger
 
-# Path to save figures, save data and OFAM model output.
-fpath, dpath, xpath, lpath, tpath = paths()
-
-now = datetime.now()
-
-logger.setLevel(logging.DEBUG)
-now = datetime.now()
-handler = logging.FileHandler(lpath/'file_transport.log')
-formatter = logging.Formatter('%(asctime)s:%(funcName)s:%(message)s')
-handler.setFormatter(formatter)
-logger.addHandler(handler)
-logger.propagate = False
+logger = tools.mlogger('file_transport')
 
 s = int(sys.argv[1])
 
 test = False
+now = datetime.now()
+
 
 def bnd_idx(ds, lat, lon):
     if type(lat) == list:
-        ilat = slice(idx(ds.yu_ocean, lat[0]), idx(ds.yu_ocean, lat[1]) + 1)
+        ilat = slice(tools.idx(ds.yu_ocean, lat[0]),
+                     tools.idx(ds.yu_ocean, lat[1]) + 1)
     elif type(lat) != list:
-        ilat = idx(ds.yu_ocean, lat)
+        ilat = tools.idx(ds.yu_ocean, lat)
 
     if type(lon) == list:
-        ilon = slice(idx(ds.xu_ocean, lon[0]), idx(ds.xu_ocean, lon[1]) + 1)
+        ilon = slice(tools.idx(ds.xu_ocean, lon[0]),
+                     tools.idx(ds.xu_ocean, lon[1]) + 1)
     elif type(lon) != list:
-        ilon = idx(ds.xu_ocean, lon)
+        ilon = tools.idx(ds.xu_ocean, lon)
 
     bnds = [ilat, ilon]
     return bnds
@@ -114,12 +107,12 @@ if not test:
     logger.info('Creating transport file: {} ({}).'.format(name, name_short))
 
 f = []
-for y in range(lx['years'][0][0], lx['years'][0][1] + 1):
+for y in range(cfg.years[0][0], cfg.years[0][1] + 1):
     for m in range(1, 13):
-        f.append(xpath/'ocean_{}_{}_{:02d}.nc'.format(var, y, m))
+        f.append(cfg.ofam/'ocean_{}_{}_{:02d}.nc'.format(var, y, m))
 
 if test:
-    f = [xpath/'ocean_v_2010_01.nc', xpath/'ocean_v_2010_02.nc']
+    f = [cfg.ofam/'ocean_v_2010_01.nc', cfg.ofam/'ocean_v_2010_02.nc']
 
 ds = xr.open_mfdataset(f, combine='by_coords', concat_dim="Time",
                        preprocess=predrop)
@@ -180,5 +173,5 @@ else:
                          ext.yu_ocean.item()))
 
 logger.info('Saving transport file: {} ({}).'.format(name, name_short))
-df.to_netcdf(dpath/'ofam_transport_{}.nc'.format(name_short), compute=True)
+df.to_netcdf(cfg.data/'ofam_transport_{}.nc'.format(name_short), compute=True)
 logger.info('Finished transport file: {} ({}).'.format(name, name_short))

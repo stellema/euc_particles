@@ -12,20 +12,13 @@ author: Annette Stellema (astellemas@gmail.com)
 #     print(i, cor_r, cor_p)
 
 """
-import math
-import logging
+import cfg
+from tools import idx, mlogger, coord_formatter, precision
 import numpy as np
 import xarray as xr
-from datetime import datetime
-from main import paths, lx, SV, mlogger, idx
-from main_valid import coord_formatter, precision
-from valid_nino34 import enso_u_ofam, nino_events
-
-# Path to save figures, save data and OFAM model output.
-fpath, dpath, xpath, lpath, tpath = paths()
+from valid_nino34 import enso_u_ofam
 
 logger = mlogger('data')
-
 
 def log_wbc(data, name, full=True):
     # Log mean, seasonal and interannual transports.
@@ -47,10 +40,10 @@ def log_wbc(data, name, full=True):
             mx, mn = mn, mx
         p = precision(s.mean())
         nm = '{}:{}{}'.format(nm, y, d)
-        sx = ('{:<20s}Mean: {: .{p}f} Sv Max: {: .{p}f} Sv in {}, Min: '
-              '{: .{p}f} Sv in {}. '.format(nm, s.mean(), s[mx], lx['mon'][mx],
-                                            s[mn], lx['mon'][mn], p=p))
-        ia = 'El Nino: {: .{p}f} Sv La Nina: {: .{p}f} Sv'.format(*enso, p=p)
+        sx = ('{:<20s}Mean: {: .{p}f} cfg.SV Max: {: .{p}f} cfg.SV in {}, Min: '
+              '{: .{p}f} cfg.SV in {}. '.format(nm, s.mean(), s[mx], cfg.mon[mx],
+                                            s[mn], cfg.mon[mn], p=p))
+        ia = 'El Nino: {: .{p}f} cfg.SV La Nina: {: .{p}f} cfg.SV'.format(*enso, p=p)
 
         stx = sx + ia if full else '{} {}'.format(nm, ia)
         logger.info(stx)
@@ -60,18 +53,18 @@ def log_wbc(data, name, full=True):
 
 names = ['EUC', 'Vitiaz', 'Solomon', 'St. George', 'Mindanao']
 
-oni = xr.open_dataset(dpath/'ofam_sst_anom_nino34_hist.nc')
-euc = xr.open_dataset(dpath/'ofam_EUC_transport_static_hist.nc')
-vs = xr.open_dataset(dpath/'ofam_transport_vs.nc').vvo/SV
-mc = xr.open_dataset(dpath/'ofam_transport_mc.nc').vvo/SV
-sg = xr.open_dataset(dpath/'ofam_transport_sgx.nc').isel(yu_ocean=-2).vvo/SV
-ss = xr.open_dataset(dpath/'ofam_transport_ss.nc').vvo/SV
-ni = xr.open_dataset(dpath/'ofam_transport_ni.nc').vvo/SV
+oni = xr.open_dataset(cfg.data/'ofam_sst_anom_nino34_hist.nc')
+euc = xr.open_dataset(cfg.data/'ofam_EUC_transport_static_hist.nc')
+vs = xr.open_dataset(cfg.data/'ofam_transport_vs.nc').vvo/cfg.SV
+mc = xr.open_dataset(cfg.data/'ofam_transport_mc.nc').vvo/cfg.SV
+sg = xr.open_dataset(cfg.data/'ofam_transport_sgx.nc').isel(yu_ocean=-2).vvo/cfg.SV
+ss = xr.open_dataset(cfg.data/'ofam_transport_ss.nc').vvo/cfg.SV
+ni = xr.open_dataset(cfg.data/'ofam_transport_ni.nc').vvo/cfg.SV
 
 # log_wbc([vs.where(vs>0), sg.where(sg>0), ss.where(ss>0)],
 #         ['VS+', 'SGC+', 'SS+'])
 
-euc = euc.resample(Time='MS').mean().uvo/SV
+euc = euc.resample(Time='MS').mean().uvo/cfg.SV
 vs = vs.isel(st_ocean=slice(0, idx(vs.st_ocean, 1000) + 3))
 sg = sg.isel(st_ocean=slice(0, idx(sg.st_ocean, 1200) + 1))
 ss = ss.isel(st_ocean=slice(0, idx(ss.st_ocean, 1200) + 1))
@@ -88,7 +81,7 @@ mc = mc.isel(st_ocean=slice(0, idx(mc.st_ocean, 550) + 1))
 # DataArrays and names.
 data = [*[euc.isel(xu_ocean=i) for i in range(3)], vs, sg, ss, ni,
         *[mc.isel(yu_ocean=i) for i in [-1, 11]]]
-name = [*['EUC:{}'.format(i) for i in lx['lonstr']],
+name = [*['EUC:{}'.format(i) for i in cfg.lonstr],
         'VS', 'SGC', 'SS', 'NI', *['MC']*2]
 
 # Log seasonality and transport.

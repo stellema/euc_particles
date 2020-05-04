@@ -7,22 +7,18 @@ author: Annette Stellema (astellemas@gmail.com)
 
 """
 
-# import sys
-# sys.path.append('/g/data1a/e14/as3189/OFAM/scripts/')
+import cfg
+from cfg import SV, width, height, tbnds_tao, tbnds_ofam
+import tools
 import warnings
 import numpy as np
 import xarray as xr
 import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
-from main import paths, lx, SV, width, height, idx_1d
-from main_valid import EUC_vbounds, regress, tbnds_tao, tbnds_ofam
-from main_valid import open_tao_data, cor_scatter_plot
-from main_valid import EUC_bnds_grenier, EUC_bnds_izumo, EUC_bnds_static
-from main_valid import legend_without_duplicate_labels
+from main import EUC_vbounds, EUC_bnds_grenier, EUC_bnds_izumo, EUC_bnds_static
+from tools import open_tao_data, cor_scatter_plot, regress
+
 warnings.filterwarnings('ignore')
-# Path to save figures, save data and OFAM model output.
-fpath, dpath, xpath, lpath, tpath = paths()
-years = lx['years']
 
 
 def plot_tao_max_velocity_correlation(ds, v_bnd='half_max'):
@@ -35,7 +31,7 @@ def plot_tao_max_velocity_correlation(ds, v_bnd='half_max'):
         fig = plt.figure(figsize=(16, 5))
         for i, du in enumerate(ds):
             name = 'EUC {} depth and max velocity at {} ({})'.format(
-                loc, lx['lonstr'][i], lx['frq'][T])
+                loc, cfg.lonstr[i], cfg.frq[T])
 
             if loc == 'max':
                 v_max, depths, depth_end = EUC_vbounds(du.u_1205, du.depth, i,
@@ -45,8 +41,8 @@ def plot_tao_max_velocity_correlation(ds, v_bnd='half_max'):
                                                        v_bnd=v_bnd)
 
             cor_scatter_plot(fig, i + 1, v_max, depths, name=name)
-        plt.savefig(fpath.joinpath('valid', 'max_velocity_{}_depth_cor_{}.png'
-                                   .format(loc, lx['frq'][T])))
+        plt.savefig(cfg.fig/'valid/max_velocity_{}_depth_cor_{}.png'
+                    .format(loc, cfg.frq[T]))
 
     return
 
@@ -74,7 +70,7 @@ def eq_velocity_transport_reg(z1=25, z2=350, T=1, dk=5,
 
     """
     # OFAM3.
-    d3 = xr.open_dataset(dpath.joinpath('ofam_EUC_int_transport.nc'))
+    d3 = xr.open_dataset(cfg.data.joinpath('ofam_EUC_int_transport.nc'))
     # d3 = d3.sel(st_ocean=slice(z1, z2))
 
     # Add transport between depths.
@@ -84,7 +80,7 @@ def eq_velocity_transport_reg(z1=25, z2=350, T=1, dk=5,
     d3v = d3.u.isel(st_ocean=0).copy()*np.nan
 
     for i in range(3):
-        dq = d3.sel(xu_ocean=lx['lons'][i])
+        dq = d3.sel(xu_ocean=cfg.lons[i])
         v_max, d1, d2 = EUC_vbounds(dq.u, dq.st_ocean, i, v_bnd=v_bnd)
         for t in range(len(dt.Time)):
             # Transport
@@ -100,7 +96,7 @@ def eq_velocity_transport_reg(z1=25, z2=350, T=1, dk=5,
                         dim='st_ocean').item()
 
     # TAO/TRITION.
-    ds = open_tao_data(frq=lx['frq_short'][T], dz=slice(10, 360))
+    ds = open_tao_data(frq=cfg.frq_short[T], dz=slice(10, 360))
 
     # Calculate TAO/TRITION EUC transport based on OFAM3 regression.
     dsv = [ds[i].u_1205.isel(depth=0)*np.nan for i in range(3)]
@@ -123,18 +119,18 @@ def plot_ofam_transport_correlation(z1=25, z2=350, T=1, dk=5,
                                                       T, dk, v_bnd)
     fig = plt.figure(figsize=(18, 5))
 
-    for i, lon in enumerate(lx['lons']):
+    for i, lon in enumerate(cfg.lons):
         cor_scatter_plot(fig, i+1, d3v.isel(xu_ocean=i),
                          d3t.isel(xu_ocean=i)/SV,
                          name='{}OFAM3 EUC at {}'
-                         .format(lx['l'][i], lx['lonstr'][i]),
+                         .format(cfg.lt[i], cfg.lonstr[i]),
                          ylabel="Transport [Sv]",
                          xlabel="Depth-integrated equatorial velocity [m/s]",
                          cor_loc=4)
 
     save_name = 'ofam3_eq_transport_velocity_cor_vbnd_{}.png'.format(v_bnd)
     plt.tight_layout()
-    plt.savefig(fpath.joinpath('valid', save_name))
+    plt.savefig(cfg.fig.joinpath('valid', save_name))
 
     return
 
@@ -167,7 +163,7 @@ def plot_tao_ofam_transport_timeseries(z1=25, z2=350, T=1, dk=5,
         fig = plt.figure(figsize=(10, 7))
     else:
         fig = plt.figure(figsize=(6, 7))
-    for i, lon in enumerate(lx['lons']):
+    for i, lon in enumerate(cfg.lons):
         m[i], b[i] = regress(d3v.sel(xu_ocean=lon),
                              d3t.sel(xu_ocean=lon)/SV)[2:4]
         alpha = 0.15
@@ -182,7 +178,7 @@ def plot_tao_ofam_transport_timeseries(z1=25, z2=350, T=1, dk=5,
         dtao.coords['Time'] = dtao['Time'].values.astype('datetime64[M]')
 
         # OFAM3 slice.
-        d3x = d3t.sel(xu_ocean=lx['lons'][i])
+        d3x = d3t.sel(xu_ocean=cfg.lons[i])
         d3x = d3x.isel(Time=slice(tbnds_ofam[i][0], tbnds_ofam[i][1]))
 
         # Mask OFAM3 transport when TAO data is missing (and vise versa).
@@ -202,8 +198,8 @@ def plot_tao_ofam_transport_timeseries(z1=25, z2=350, T=1, dk=5,
             ax.plot(time, dtaom.where(mask)*m[i] + b[i], color='r',
                     label='TAO/TRITION')
             ax.plot(time, d3xm.where(mask)/SV, color='k', label='OFAM3')
-            ax.set_xticks(np.arange(1, len(lx['mon'])+1))
-            ax.set_xticklabels(lx['mon'])
+            ax.set_xticks(np.arange(1, len(cfg.mon)+1))
+            ax.set_xticklabels(cfg.mon)
             save_name = 'EUC_transport_regress_mon_{}.png'.format(v_bnd)
 
         elif series == 'all' and climo:
@@ -235,20 +231,20 @@ def plot_tao_ofam_transport_timeseries(z1=25, z2=350, T=1, dk=5,
                 save_name = 'EUC_transport_regress_{}_mask.png'.format(v_bnd)
 
         ax.set_title('{}Modelled and observed EUC transport at {}'
-                     .format(lx['l'][i], lx['lonstr'][i]), loc='left')
+                     .format(cfg.lt[i], cfg.lonstr[i]), loc='left')
         ax.set_ylabel('Transport [Sv]')
         ax.set_xlim(xmin=time[0], xmax=time[-1])
 
         if i == 0:
             # ax.legend(loc=1)
-            legend_without_duplicate_labels(ax, loc=1)
+            tools.legend_without_duplicate_labels(ax, loc=1)
         cor_r, cor_p = regress(dtaom*m[i] + b[i], d3xm/SV)[0:2]
 
         print('{}: R={:.2f}, p={:.3f} (stats.spearmanr)'.format(lon, cor_r,
                                                                 cor_p))
 
     plt.tight_layout()
-    plt.savefig(fpath.joinpath('valid', save_name))
+    plt.savefig(cfg.fig.joinpath('valid', save_name))
     plt.clf()
     plt.close()
 
@@ -261,7 +257,7 @@ def print_EUC_reg_transport(z1=25, z2=350, T=1, dk=5, v_bnd='half_max'):
 
     m, b = np.zeros(3), np.zeros(3)
     euc = np.zeros((3, 3))
-    for i, lon in enumerate(lx['lons']):
+    for i, lon in enumerate(cfg.lons):
         m[i], b[i] = regress(d3v.sel(xu_ocean=lon),
                              d3t.sel(xu_ocean=lon)/SV)[2:4]
         # TAO/TRITION slice.
@@ -275,7 +271,7 @@ def print_EUC_reg_transport(z1=25, z2=350, T=1, dk=5, v_bnd='half_max'):
         dtao.coords['Time'] = dtao['Time'].values.astype('datetime64[M]')
 
         # OFAM3 slice.
-        d3x = d3t.sel(xu_ocean=lx['lons'][i])
+        d3x = d3t.sel(xu_ocean=cfg.lons[i])
         d3x = d3x.isel(Time=slice(tbnds_ofam[i][0], tbnds_ofam[i][1]))
 
         # Mask OFAM3 transport when TAO data is missing (and vise versa).
@@ -287,7 +283,7 @@ def print_EUC_reg_transport(z1=25, z2=350, T=1, dk=5, v_bnd='half_max'):
         euc[i, 1] = d3x.mean('Time').item()/SV
         euc[i, 2] = d3xm.item()/SV
         print('EUC ({}) {}: TAO={:.2f} Sv, OFAM={:.2f} Sv, OFAM_mask= {:.2f}Sv'
-              .format(v_bnd, lx['lonstr'][i], *euc[i]))
+              .format(v_bnd, cfg.lonstr[i], *euc[i]))
 
     return euc
 
@@ -320,7 +316,7 @@ def plt_EUC_def_bounds(du, ds, dt, time='mon', lon=None, depth=450, exp=0):
 
         # Bbox (x, y, width, height).
         bbox = (0.33, -0.7, 0.5, 0.5)
-        tstr = [' in ' + lx['mon'][t] for t in range(12)]
+        tstr = [' in ' + cfg.mon[t] for t in range(12)]
         fig, ax = plt.subplots(4, 3, figsize=(width*1.4, height*2.25),
                                sharey=True)
 
@@ -331,13 +327,13 @@ def plt_EUC_def_bounds(du, ds, dt, time='mon', lon=None, depth=450, exp=0):
 
         # Bbox (x, y, width, height).
         bbox = (0.33, -0.7, 0.5, 0.5)
-        tstr = [' in ' + lx['mon_name'][time]]*12
+        tstr = [' in ' + cfg.mon_name[time]]*12
         fig, ax = plt.subplots(1, 3, figsize=(width*1.4, height/1.2),
                                sharey=True)
     ax = ax.flatten()
     for i in rge:
-        lonx = lon if time == 'mon' else lx['lons'][i]
-        x = idx_1d(np.array(lx['lons']), lonx) if time == 'mon' else i
+        lonx = lon if time == 'mon' else cfg.lons[i]
+        x = tools.idx(np.array(cfg.lons), lonx) if time == 'mon' else i
 
         if time != 'mon' or i == 0:
             dux = du.sel(xu_ocean=lonx)
@@ -347,7 +343,7 @@ def plt_EUC_def_bounds(du, ds, dt, time='mon', lon=None, depth=450, exp=0):
             dx = EUC_bnds_static(du, lon=lonx, z1=25, z2=350, lat=2.6)
 
         ax[i].set_title('{}OFAM EUC at {}{}'
-                        .format(lx['l'][i], lx['lonstr'][x], tstr[i]),
+                        .format(cfg.lt[i], cfg.lonstr[x], tstr[i]),
                         loc='left', fontsize=12)
 
         cs = ax[i].pcolormesh(du.yu_ocean, du.st_ocean, u,
@@ -359,10 +355,10 @@ def plt_EUC_def_bounds(du, ds, dt, time='mon', lon=None, depth=450, exp=0):
             dzt = dz[i] if time == 'mon' else dz[time]
 
             # Slice lon/depth of du to where EUC definitions are sliced.
-            iz = [idx_1d(du.st_ocean, dz.st_ocean[0]),
-                  idx_1d(du.st_ocean, dz.st_ocean[-1])]
-            iy = [idx_1d(du.yu_ocean, dz.yu_ocean[0]),
-                  idx_1d(du.yu_ocean, dz.yu_ocean[-1])]
+            iz = [tools.idx(du.st_ocean, dz.st_ocean[0]),
+                  tools.idx(du.st_ocean, dz.st_ocean[-1])]
+            iy = [tools.idx(du.yu_ocean, dz.yu_ocean[0]),
+                  tools.idx(du.yu_ocean, dz.yu_ocean[-1])]
 
             # Fill EUC values from def (with nan values changes to const).
             dq[iz[0]:iz[1]+1, iy[0]:iy[1]+1] = dzt.where(~np.isnan(dzt), const)
@@ -391,9 +387,9 @@ def plt_EUC_def_bounds(du, ds, dt, time='mon', lon=None, depth=450, exp=0):
     cbar.ax.tick_params(labelsize=8, width=0.03)
     cbar.set_label('Zonal velocity [m/s]', size=9)
     plt.tight_layout(w_pad=0.1)
-    st = time if time == 'mon' else lx['mon'][time]
-    plt.savefig(fpath/'valid/EUC_bounds_{}_{}_{}.png'.format(st, lon,
-                                                             lx['frq'][exp]))
+    st = time if time == 'mon' else cfg.mon[time]
+    plt.savefig(cfg.fig/'valid/EUC_bounds_{}_{}_{}.png'.format(st, lon,
+                                                               cfg.frq[exp]))
 
     return
 
@@ -402,8 +398,8 @@ def plt_EUC_def_bounds(du, ds, dt, time='mon', lon=None, depth=450, exp=0):
 T = 1
 
 # Open dataset of TAO data at the frequency.
-ds = open_tao_data(frq=lx['frq_short'][T], dz=slice(10, 360))
-dt = xr.open_dataset(dpath.joinpath('ofam_EUC_int_transport.nc'))
+ds = open_tao_data(frq=cfg.frq_short[T], dz=slice(10, 360))
+dt = xr.open_dataset(cfg.data/'ofam_EUC_int_transport.nc')
 
 """Plot """
 for v_bnd in ['half_max',  0.1]:
@@ -424,24 +420,21 @@ for v_bnd in ['half_max',  0.1]:
 """Plot EUC bounds"""
 # ex = 0
 # exp = ex if ex != 2 else 0
-# du = xr.open_dataset(xpath/'ocean_u_{}-{}_climo.nc'.format(*years[exp]))
+# du = xr.open_dataset(cfg.ofam/'ocean_u_{}-{}_climo.nc'.format(*cfg.years[exp]))
 
 # # Open temperature historical and future climatologies.
-# dt = xr.open_dataset(xpath/'ocean_temp_{}-{}_climo.nc'.format(*years[exp]))
+# dt = xr.open_dataset(cfg.ofam/'ocean_temp_{}-{}_climo.nc'.format(*cfg.years[exp]))
 
 # # Open salinity historical and future climatologies.
-# ds = xr.open_dataset(xpath/'ocean_salt_{}-{}_climo.nc'.format(*years[exp]))
+# ds = xr.open_dataset(cfg.ofam/'ocean_salt_{}-{}_climo.nc'.format(*cfg.years[exp]))
 
 # if ex == 2:
 #     exp = 2
-#     dur = xr.open_dataset(xpath/'ocean_u_{}-{}_climo.nc'.format(*years[1]))
-#     dtr = xr.open_dataset(xpath/'ocean_temp_{}-{}_climo.nc'.format(*years[1]))
-#     dsr = xr.open_dataset(xpath/'ocean_salt_{}-{}_climo.nc'.format(*years[1]))
+#     dur = xr.open_dataset(cfg.ofam/'ocean_u_{}-{}_climo.nc'.format(*cfg.years[1]))
+#     dtr = xr.open_dataset(cfg.ofam/'ocean_temp_{}-{}_climo.nc'.format(*cfg.years[1]))
+#     dsr = xr.open_dataset(cfg.ofam/'ocean_salt_{}-{}_climo.nc'.format(*cfg.years[1]))
 #     du, ds, dt = dur - du, dsr - ds, dtr - dt
 
 # plt_EUC_def_bounds(du, ds, dt, time=3, lon=None, depth=450, exp=ex)
-# for lon in lx['lons']:
+# for lon in cfg.lons:
 #     plt_EUC_def_bounds(du, ds, dt, time='mon', lon=lon, depth=450)
-
-
-

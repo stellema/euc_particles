@@ -3499,3 +3499,51 @@
 2020-04-28 15:26:45,712:log_wbc:INFO:Solomon:2-1368m:4.1°S: Mean:  4.5 Sv, Max:  10.1 Sv in Jun, Min:  1.2 Sv in Oct, El Nino: -0.7 Sv, La Nina:  0.4 Sv.
 2020-04-28 15:26:45,800:log_wbc:INFO:MC:2-546m:9°N: Mean: -19.4 Sv, Max: -20.3 Sv in Nov, Min: -18.3 Sv in Sep, El Nino: -0.8 Sv, La Nina:  1.4 Sv.
 2020-04-28 15:26:45,889:log_wbc:INFO:MC:2-546m:6.4°N: Mean: -17.0 Sv, Max: -19.4 Sv in Jun, Min: -14.5 Sv in Jan, El Nino: -0.0 Sv, La Nina:  0.6 Sv.
+2020-05-04 10:09:43,438:EUC_vbounds:DEBUG:OFAM3 165: v_bnd=half_max tot=384 count=335 null=0 skip=46(T=6,L=40).
+2020-05-04 10:10:01,506:EUC_vbounds:DEBUG:OFAM3 190: v_bnd=half_max tot=384 count=363 null=0 skip=21(T=5,L=16).
+2020-05-04 10:10:17,323:EUC_vbounds:DEBUG:OFAM3 220: v_bnd=half_max tot=384 count=377 null=0 skip=5(T=1,L=4).
+2020-05-04 10:10:26,681:EUC_vbounds:DEBUG:TAO/TRITION 165: v_bnd=half_max tot=203 count=112 null=5 skip=86(T=63,L=23).
+2020-05-04 10:10:38,047:EUC_vbounds:DEBUG:TAO/TRITION 190: v_bnd=half_max tot=340 count=280 null=36 skip=24(T=13,L=11).
+2020-05-04 10:10:46,865:EUC_vbounds:DEBUG:TAO/TRITION 220: v_bnd=half_max tot=311 count=258 null=31 skip=22(T=0,L=22).
+2020-05-04 10:11:05,593:EUC_vbounds:DEBUG:OFAM3 165: v_bnd=half_max tot=384 count=335 null=0 skip=46(T=6,L=40).
+2020-05-04 10:11:24,058:EUC_vbounds:DEBUG:OFAM3 190: v_bnd=half_max tot=384 count=363 null=0 skip=21(T=5,L=16).
+2020-05-04 10:11:40,639:EUC_vbounds:DEBUG:OFAM3 220: v_bnd=half_max tot=384 count=377 null=0 skip=5(T=1,L=4).
+2020-05-04 10:11:50,538:EUC_vbounds:DEBUG:TAO/TRITION 165: v_bnd=half_max tot=203 count=112 null=5 skip=86(T=63,L=23).
+2020-05-04 10:12:01,583:EUC_vbounds:DEBUG:TAO/TRITION 190: v_bnd=half_max tot=340 count=280 null=36 skip=24(T=13,L=11).
+2020-05-04 10:12:10,423:EUC_vbounds:DEBUG:TAO/TRITION 220: v_bnd=half_max tot=311 count=258 null=31 skip=22(T=0,L=22).
+2020-05-04 10:12:11,058:cor_scatter_plot:DEBUG:R=0.87, p=0.000 (stats.spearmanr)
+2020-05-04 10:12:11,059:cor_scatter_plot:DEBUG:Slope=0.44 Intercept=4.96 R=0.84 P=0.000 stder=0.02
+2020-05-04 10:12:11,124:cor_scatter_plot:DEBUG:R=0.87, p=0.000 (stats.spearmanr)
+2020-05-04 10:12:11,124:cor_scatter_plot:DEBUG:Slope=0.45 Intercept=-1.41 R=0.88 P=0.000 stder=0.01
+2020-05-04 10:12:11,158:cor_scatter_plot:DEBUG:R=0.89, p=0.000 (stats.spearmanr)
+2020-05-04 10:12:11,159:cor_scatter_plot:DEBUG:Slope=0.39 Intercept=-5.58 R=0.90 P=0.000 stder=0.01
+2020-05-04 10:12:28,100:EUC_vbounds:DEBUG:OFAM3 165: v_bnd=half_max tot=384 count=335 null=0 skip=46(T=6,L=40).
+2020-05-04 10:12:46,767:EUC_vbounds:DEBUG:OFAM3 190: v_bnd=half_max tot=384 count=363 null=0 skip=21(T=5,L=16).
+2020-05-04 10:13:01,956:EUC_vbounds:DEBUG:OFAM3 220: v_bnd=half_max tot=384 count=377 null=0 skip=5(T=1,L=4).
+2020-05-04 10:13:11,415:EUC_vbounds:DEBUG:TAO/TRITION 165: v_bnd=half_max tot=203 count=112 null=5 skip=86(T=63,L=23).
+2020-05-04 10:13:22,250:EUC_vbounds:DEBUG:TAO/TRITION 190: v_bnd=half_max tot=340 count=280 null=36 skip=24(T=13,L=11).
+2020-05-04 10:13:30,954:EUC_vbounds:DEBUG:TAO/TRITION 220: v_bnd=half_max tot=311 count=258 null=31 skip=22(T=0,L=22).
+2020-05-04 10:13:49,029:EUC_vbounds:DEBUG:OFAM3 165: v_bnd=0.1 tot=384 count=275 null=0 skip=100(T=58,L=42).
+2020-05-04 10:14:06,875:EUC_vbounds:DEBUG:OFAM3 190: v_bnd=0.1 tot=384 count=341 null=0 skip=28(T=16,L=12).
+2020-05-04 10:14:22,662:EUC_vbounds:DEBUG:OFAM3 220: v_bnd=0.1 tot=384 count=367 null=0 skip=2(T=0,L=2).
+2020-05-04 10:14:31,891:EUC_vbounds:DEBUG:TAO/TRITION 165: v_bnd=0.1 tot=203 count=107 null=5 skip=81(T=58,L=23).
+2020-05-04 10:14:42,385:EUC_vbounds:DEBUG:TAO/TRITION 190: v_bnd=0.1 tot=340 count=222 null=36 skip=6(T=1,L=5).
+2020-05-04 10:14:51,046:EUC_vbounds:DEBUG:TAO/TRITION 220: v_bnd=0.1 tot=311 count=225 null=31 skip=41(T=0,L=41).
+2020-05-04 10:15:08,483:EUC_vbounds:DEBUG:OFAM3 165: v_bnd=0.1 tot=384 count=275 null=0 skip=100(T=58,L=42).
+2020-05-04 10:15:26,560:EUC_vbounds:DEBUG:OFAM3 190: v_bnd=0.1 tot=384 count=341 null=0 skip=28(T=16,L=12).
+2020-05-04 10:15:42,398:EUC_vbounds:DEBUG:OFAM3 220: v_bnd=0.1 tot=384 count=367 null=0 skip=2(T=0,L=2).
+2020-05-04 10:15:51,863:EUC_vbounds:DEBUG:TAO/TRITION 165: v_bnd=0.1 tot=203 count=107 null=5 skip=81(T=58,L=23).
+2020-05-04 10:16:02,151:EUC_vbounds:DEBUG:TAO/TRITION 190: v_bnd=0.1 tot=340 count=222 null=36 skip=6(T=1,L=5).
+2020-05-04 10:16:10,893:EUC_vbounds:DEBUG:TAO/TRITION 220: v_bnd=0.1 tot=311 count=225 null=31 skip=41(T=0,L=41).
+2020-05-04 10:16:11,469:cor_scatter_plot:DEBUG:R=0.86, p=0.000 (stats.spearmanr)
+2020-05-04 10:16:11,470:cor_scatter_plot:DEBUG:Slope=0.36 Intercept=5.85 R=0.83 P=0.000 stder=0.01
+2020-05-04 10:16:11,508:cor_scatter_plot:DEBUG:R=0.84, p=0.000 (stats.spearmanr)
+2020-05-04 10:16:11,509:cor_scatter_plot:DEBUG:Slope=0.34 Intercept=4.19 R=0.87 P=0.000 stder=0.01
+2020-05-04 10:16:11,541:cor_scatter_plot:DEBUG:R=0.84, p=0.000 (stats.spearmanr)
+2020-05-04 10:16:11,542:cor_scatter_plot:DEBUG:Slope=0.26 Intercept=2.60 R=0.87 P=0.000 stder=0.01
+2020-05-04 10:16:30,040:EUC_vbounds:DEBUG:OFAM3 165: v_bnd=0.1 tot=384 count=275 null=0 skip=100(T=58,L=42).
+2020-05-04 10:16:47,906:EUC_vbounds:DEBUG:OFAM3 190: v_bnd=0.1 tot=384 count=341 null=0 skip=28(T=16,L=12).
+2020-05-04 10:17:03,979:EUC_vbounds:DEBUG:OFAM3 220: v_bnd=0.1 tot=384 count=367 null=0 skip=2(T=0,L=2).
+2020-05-04 10:17:13,617:EUC_vbounds:DEBUG:TAO/TRITION 165: v_bnd=0.1 tot=203 count=107 null=5 skip=81(T=58,L=23).
+2020-05-04 10:17:24,173:EUC_vbounds:DEBUG:TAO/TRITION 190: v_bnd=0.1 tot=340 count=222 null=36 skip=6(T=1,L=5).
+2020-05-04 10:17:32,823:EUC_vbounds:DEBUG:TAO/TRITION 220: v_bnd=0.1 tot=311 count=225 null=31 skip=41(T=0,L=41).

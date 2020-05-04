@@ -6,16 +6,14 @@ author: Annette Stellema (astellemas@gmail.com)
 
 
 """
+import cfg
+import tools
 import sys
-import gsw
 import numpy as np
 import xarray as xr
-import matplotlib.colors
-from argparse import ArgumentParser
-from datetime import datetime, date
-import matplotlib.pyplot as plt
-from main import paths, im_ext, idx_1d, lx, width, height, LAT_DEG, SV
-from main_valid import EUC_bnds_static, EUC_bnds_grenier, EUC_bnds_izumo
+from datetime import datetime
+from main import EUC_bnds_static, EUC_bnds_grenier, EUC_bnds_izumo
+
 
 """ Input at terminal """
 
@@ -23,17 +21,14 @@ method = str(sys.argv[1])
 
 exp = int(sys.argv[2])
 
-fpath, dpath, xpath, lpath, tpath = paths()
-
 fileu, files, filet = [], [], []
 
-for y in range(lx['years'][exp][0], lx['years'][exp][1]+1):
+for y in range(cfg.years[exp][0], cfg.years[exp][1]+1):
     for m in range(1, 13):
-        fileu.append(str(xpath/'ocean_u_{}_{:02d}.nc'.format(y, m)))
+        fileu.append(str(cfg.ofam/'ocean_u_{}_{:02d}.nc'.format(y, m)))
         if method != 'static':
-            files.append(str(xpath/('ocean_salt_{}_{:02d}.nc'.format(y, m))))
-            filet.append(str(xpath/('ocean_temp_{}_{:02d}.nc'.format(y, m))))
-
+            files.append(str(cfg.ofam/'ocean_salt_{}_{:02d}.nc'.format(y, m)))
+            filet.append(str(cfg.ofam/'ocean_temp_{}_{:02d}.nc'.format(y, m)))
 
 du = xr.open_mfdataset(fileu, combine='by_coords')
 if method != 'static':
@@ -41,7 +36,7 @@ if method != 'static':
     dt = xr.open_mfdataset(filet, combine='by_coords')
 
 
-dy = LAT_DEG*0.1
+dy = cfg.LAT_DEG*0.1
 dz = [(du.st_ocean[z+1] - du.st_ocean[z]).item()
       for z in range(0, len(du.st_ocean)-1)]
 
@@ -70,12 +65,12 @@ elif method == 'grenier':
 dtx = xr.Dataset()
 dtx['uvo'] = xr.DataArray(np.zeros((len(dx_165.Time), 3)),
                           coords=[('Time', dx_165.Time),
-                                  ('xu_ocean', lx['lons'])])
+                                  ('xu_ocean', cfg.lons)])
 
 dz_i, dz_f = [],  []
-for i, lon, dx in zip(range(3), lx['lons'], [dx_165, dx_190, dx_220]):
-    dz_i.append(idx_1d(du.st_ocean, dx.st_ocean[0]))
-    dz_f.append(idx_1d(du.st_ocean, dx.st_ocean[-1]))
+for i, lon, dx in zip(range(3), cfg.lons, [dx_165, dx_190, dx_220]):
+    dz_i.append(tools.idx(du.st_ocean, dx.st_ocean[0]))
+    dz_f.append(tools.idx(du.st_ocean, dx.st_ocean[-1]))
 
     dr = (dx*dy).sum(dim='yu_ocean')
     if method != 'grenier':
@@ -90,7 +85,7 @@ if method == 'static':
     dtx['uvo'].attrs['bounds'] = ('Integrated between z=({}, {}), y=({}, {})'
                                   .format(z1, z2, -lat, lat))
 dtx.attrs['history'] = (datetime.now().strftime('%a %b %d %H:%M:%S %Y') +
-                 ': Depth-integrated velocity (github.com/stellema)\n')
+                        ': Depth-integrated velocity (github.com/stellema)\n')
 # # Save to /data as a netcdf file.
-dtx.to_netcdf(dpath/('ofam_EUC_transport_{}_{}.nc'
-                     .format(method, lx['exp_abr'][exp])))
+dtx.to_netcdf(cfg.data/'ofam_EUC_transport_{}_{}.nc'
+              .format(method, cfg.exp_abr[exp]))

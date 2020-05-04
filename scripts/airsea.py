@@ -25,17 +25,15 @@ Specific humidity and vapour pressure formulas (specific to dew point temps):
 https://cran.r-project.org/web/packages/humidity/vignettes/humidity-measures.html
 
 
-ds = xr.open_dataset(dpath/'{}_uas_climo.nc'.format(data[0])).uas
+ds = xr.open_dataset(cfg.data/'{}_uas_climo.nc'.format(data[0])).uas
 """
+import cfg
+import tools
 import numpy as np
 import xarray as xr
 import pandas as pd
-from main import paths, timeit, idx_1d
 from warnings import warn
 from scipy.interpolate import griddata
-
-# Path to save figures, save data and OFAM model output.
-fpath, dpath, xpath, lpath, tpath = paths()
 
 
 def reduce(ds, mean_t=False, res=0.1, interp='', x2=[], y2=[]):
@@ -43,11 +41,11 @@ def reduce(ds, mean_t=False, res=0.1, interp='', x2=[], y2=[]):
     if hasattr(ds, 'xu_ocean'):
         ds = ds.rename({'Time': 'time', 'yu_ocean': 'lat',
                         'xu_ocean': 'lon'})
-        ds = ds.sel(st_ocean=2.5) ##, lon=slice(120, 294.9))
+        ds = ds.sel(st_ocean=2.5)
     elif hasattr(ds, 'xt_ocean'):
         ds = ds.rename({'Time': 'time', 'yt_ocean': 'lat',
                         'xt_ocean': 'lon'})
-        ds = ds.sel(st_ocean=2.5)  #, lon=slice(120.1, 295))
+        ds = ds.sel(st_ocean=2.5)
 
     if mean_t and hasattr(ds, 'time'):
         ds = ds.mean('time')
@@ -128,28 +126,28 @@ def specific_humidity_from_p(Td, p):
 def flux_data(dat='jra55', res=0.1, mean_t=True, interp=''):
 
     # Observed vector wind at height z_U, in m/s.
-    u_O = xr.open_dataset(dpath/'{}_uas_climo.nc'.format(dat))
-    v_O = xr.open_dataset(dpath/'{}_vas_climo.nc'.format(dat))
+    u_O = xr.open_dataset(cfg.data/'{}_uas_climo.nc'.format(dat))
+    v_O = xr.open_dataset(cfg.data/'{}_vas_climo.nc'.format(dat))
     U_O = (reduce(u_O.uas, mean_t, res, interp) +
            1j * reduce(v_O.vas, mean_t, res, interp))
 
     # Observed temperature at height z_T, in degrees Celsius
-    T_O = xr.open_dataset(dpath/'{}_tas_climo.nc'.format(dat))
+    T_O = xr.open_dataset(cfg.data/'{}_tas_climo.nc'.format(dat))
     T_O = reduce(T_O.tas, mean_t, res, interp)
 
     # Observed specific humidity at height z_q, in kg/kg.
     if dat == 'jra55':
-        q_ = xr.open_dataset(dpath/'{}_huss_climo.nc'.format(dat))
+        q_ = xr.open_dataset(cfg.data/'{}_huss_climo.nc'.format(dat))
         q_O = reduce(q_.huss, mean_t, res, interp)
     else:
-        ps = xr.open_dataset(dpath/'{}_ps_climo.nc'.format(dat))
+        ps = xr.open_dataset(cfg.data/'{}_ps_climo.nc'.format(dat))
         ps = reduce(ps.ps, mean_t, res, interp)
-        td = xr.open_dataset(dpath/'{}_ta2d_climo.nc'.format(dat))
+        td = xr.open_dataset(cfg.data/'{}_ta2d_climo.nc'.format(dat))
         td = reduce(td.ta2d, mean_t, res, interp)
         q_O = specific_humidity_from_p(td, ps)
 
     # Sea level pressure, in hectopascal (hPa). [Original units Pa]
-    SLP = xr.open_dataset(dpath/'{}_psl_climo.nc'.format(dat))
+    SLP = xr.open_dataset(cfg.data/'{}_psl_climo.nc'.format(dat))
     SLP = reduce(SLP.psl, mean_t, res, interp)
 
     # Convert from Kelvin to Celsius.
@@ -161,11 +159,11 @@ def flux_data(dat='jra55', res=0.1, mean_t=True, interp=''):
         SLP = SLP*0.01
 
     # OFAM3 SST
-    SST = xr.open_dataset(xpath/'ocean_temp_1981-2012_climo.nc')
+    SST = xr.open_dataset(cfg.ofam/'ocean_temp_1981-2012_climo.nc')
 
     # Surface vector current, in m/s.
-    SSU_u = xr.open_dataset(xpath/'ocean_u_1981-2012_climo.nc')
-    SSU_v = xr.open_dataset(xpath/'ocean_v_1981-2012_climo.nc')
+    SSU_u = xr.open_dataset(cfg.ofam/'ocean_u_1981-2012_climo.nc')
+    SSU_v = xr.open_dataset(cfg.ofam/'ocean_v_1981-2012_climo.nc')
 
     # if interp != '':
     SST = reduce(SST.temp, mean_t, res, interp='')
@@ -410,7 +408,7 @@ def bulk_fluxes(U_O, T_O, q_O, SLP, SST, SSU, z_U=10, z_T=2,
         return (CD ** 0.5) * dU
 
     def t_star(dtheta, CD, CH):
-        """Calculates turbulent fluctuations of potential temperature.
+        """Calculate turbulent fluctuations of potential temperature.
 
         Parameters
         ----------
@@ -429,7 +427,7 @@ def bulk_fluxes(U_O, T_O, q_O, SLP, SST, SSU, z_U=10, z_T=2,
         return CH / (CD ** 0.5) * dtheta
 
     def q_star(dq, CD, CE):
-        """Calculates turbulent fluctuations of specific humidity.
+        """Calculate turbulent fluctuations of specific humidity.
 
         Parameters
         ----------
@@ -464,7 +462,7 @@ def bulk_fluxes(U_O, T_O, q_O, SLP, SST, SSU, z_U=10, z_T=2,
         return z / L
 
     def Monin_Obukhov_Length(u_star, theta_star, q_star, theta_V, q):
-        """Calculates the Monin-Obukhov length.
+        """Calculate the Monin-Obukhov length.
 
         The length is used to describe the effects of buoyancy on turbulent
         flows, particularly in the lower tenth of the atmospheric boundary
@@ -743,7 +741,7 @@ def prescribed_momentum(u, v, method='static'):
     else:
         # cd = U.copy()*np.nan
         if method == 'LARGE_approx':
-            drag = pd.read_csv(dpath/'cdrag.csv')
+            drag = pd.read_csv(cfg.data/'cdrag.csv')
         for j in range(nlats):
             for i in range(nlons):
                 U = math.sqrt(u[j, i]**2 + v[j, i]**2)
@@ -761,8 +759,8 @@ def prescribed_momentum(u, v, method='static'):
 
                     # YEAGER LARGE (approx).
                     elif method == 'LARGE_approx':
-                        drag = pd.read_csv(dpath/'cdrag.csv')
-                        xi = idx_1d(drag['u'].values, U.item())
+                        drag = pd.read_csv(cfg.data/'cdrag.csv')
+                        xi = tools.idx(drag['u'].values, U.item())
 
                         if (drag['u'][xi] != U[j, i] and
                             xi != 0 and xi != len(drag['u']-1)):

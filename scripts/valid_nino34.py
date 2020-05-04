@@ -6,12 +6,11 @@ author: Annette Stellema (astellemas@gmail.com)
 
 
 """
-
+import cfg
+import tools
 import numpy as np
 import xarray as xr
 import matplotlib.pyplot as plt
-from main import paths, lx
-from main_valid import open_tao_data
 
 
 def find_runs(x):
@@ -89,9 +88,9 @@ def plot_oni_valid(ds, da, add_obs_ev=False):
     plt.ylabel('Oceanic Niño Index [°C]')
     plt.legend(fontsize=10, loc=1)
     if add_obs_ev:
-        plt.savefig(fpath/'valid/oni_ofam_noaa_hatch.png')
+        plt.savefig(cfg.fig/'valid/oni_ofam_noaa_hatch.png')
     else:
-        plt.savefig(fpath/'valid/oni_ofam_noaa.png')
+        plt.savefig(cfg.fig/'valid/oni_ofam_noaa.png')
 
     return
 
@@ -101,7 +100,7 @@ def enso_u_ofam(oni, du, nino=None, nina=None, avg='mean'):
         nino, nina = nino_events(oni.oni)
     if hasattr(du, 'st_ocean') and hasattr(du, 'xu_ocean'):
         coords = [('nin', ['nino', 'nina']), ('st_ocean', du.st_ocean.values),
-                  ('xu_ocean', lx['lons'])]
+                  ('xu_ocean', cfg.lons)]
     elif hasattr(du, 'st_ocean'):
         coords = [('nin', ['nino', 'nina']), ('st_ocean', du.st_ocean.values)]
     else:
@@ -110,7 +109,7 @@ def enso_u_ofam(oni, du, nino=None, nina=None, avg='mean'):
     enso = xr.DataArray(np.empty((2, *du[0].shape)).fill(np.nan), coords=coords)
 
     if hasattr(du, 'st_ocean') and hasattr(du, 'xu_ocean'):
-        for ix, x in enumerate(lx['lons']):
+        for ix, x in enumerate(cfg.lons):
             for n, nin in enumerate([nino, nina]):
                 for iz, z in enumerate(du.st_ocean):
                     tmp = []
@@ -156,10 +155,10 @@ def enso_u_tao(oni, ds, nino=None, nina=None):
     enso = xr.DataArray(np.empty((2, len(depths), 3)).fill(np.nan),
                         coords=[('nin', ['nino', 'nina']),
                                 ('st_ocean', ds[zimax].depth),
-                                ('xu_ocean', lx['lons'])])
+                                ('xu_ocean', cfg.lons)])
     skip = 0
     sm = np.zeros((2, 3, len(nino), len(ds[zimax].depth)))*np.nan
-    for ix, x in enumerate(lx['lons']):
+    for ix, x in enumerate(cfg.lons):
         du = ds[ix].u_1205
         for n, nin in enumerate([nino, nina]):
             for iz, z in enumerate(du.depth):
@@ -186,21 +185,18 @@ def print_enso_dates(oni):
         print(label, end='')
         for t in range(len(nin)):
             end = '\n' if t == len(nin) - 1 else ', '
-            print('{}/{}–{}/{}'.format(lx['mon'][int(nin[t][0][5:7])-1],
+            print('{}/{}–{}/{}'.format(cfg.mon[int(nin[t][0][5:7])-1],
                                        nino[t][0][0:4],
-                                       lx['mon'][int(nin[t][1][5:7])-1],
+                                       cfg.mon[int(nin[t][1][5:7])-1],
                                        nino[t][1][0:4]), end=end)
     return
 
 
-# Path to save figures, save data and OFAM model output.
-fpath, dpath, xpath, lpath, tpath = paths()
-
-oni_mod = xr.open_dataset(dpath/'ofam_sst_anom_nino34_hist.nc')
-oni_obs = xr.open_dataset(dpath/'noaa_sst_anom_nino34.nc').rename({'time':
-                                                                   'Time'})
-du_mod = xr.open_dataset(dpath.joinpath('ofam_EUC_int_transport.nc'))
-du_obs = open_tao_data(frq=lx['frq_short'][1], dz=slice(10, 360))
+oni_mod = xr.open_dataset(cfg.data/'ofam_sst_anom_nino34_hist.nc')
+oni_obs = xr.open_dataset(cfg.data/'noaa_sst_anom_nino34.nc').rename({'time':
+                                                                      'Time'})
+du_mod = xr.open_dataset(cfg.data/'ofam_EUC_int_transport.nc')
+du_obs = tools.open_tao_data(frq=cfg.frq_short[1], dz=slice(10, 360))
 
 
 # enso_mod = enso_u_ofam(oni_mod, du_mod.u)

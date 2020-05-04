@@ -33,297 +33,28 @@ du = du.rename({'month': 'Time'})
 du = du.assign_coords(Time=dt.Time)
 du.to_netcdf(xpath/'ocean_u_{}-{}_climoz.nc'.format(*years[exp]))
 
-#!/bin/bash
-#PBS -P e14
-#PBS -q normal
-#PBS -l walltime=22:00:00
-#PBS -l mem=30GB
-#PBS -l ncpus=5
-#PBS -l wd
-#PBS -M astellemas@gmail.com
-#PBS -m abe
-#PBS -l storage=gdata/hh5+gdata/e14+gdata/rr7
-
-module use /g/data3/hh5/public/modules
-module load conda/analysis3-20.01
-
-for i in 0 1 2 3 4; do
-        python3 /g/data/e14/as3189/OFAM/scripts/create_file_reanalysis_wind.py 'jra55' $i &
-done
-
-wait
-
-    logger.setLevel(logging.DEBUG)
-    now = datetime.now()
-    handler = logging.FileHandler(lpath/'main.log')
-    formatter = logging.Formatter(
-            '%(asctime)s:%(funcName)s:%(message)s')
-    handler.setFormatter(formatter)
-    logger.addHandler(handler)
-    logger.propagate = False
+logger.setLevel(logging.DEBUG)
+now = datetime.now()
+handler = logging.FileHandler(lpath/'main.log')
+formatter = logging.Formatter(
+        '%(asctime)s:%(funcName)s:%(message)s')
+handler.setFormatter(formatter)
+logger.addHandler(handler)
+logger.propagate = False
 """
-
-import sys
-import time
+import cfg
+import gsw
+import tools
 import math
-import string
-import logging
-import calendar
-import warnings
 import numpy as np
 import xarray as xr
-from pathlib import Path
-from functools import wraps
 import matplotlib.pyplot as plt
-from operator import attrgetter
 from collections import OrderedDict
-from mpl_toolkits.mplot3d import Axes3D
-from datetime import timedelta, datetime, date
-from parcels import FieldSet, ParticleSet, JITParticle, ScipyParticle
-from parcels import ErrorCode, Variable, AdvectionRK4_3D, AdvectionRK4
-from parcels import plottrajectoriesfile
-from parcels.tools.loggers import logger
-
-# Suppress scientific notation when printing.
-np.set_printoptions(suppress=True)
-
-# Constants.
-# Radius of Earth [m].
-EARTH_RADIUS = 6378137
-
-SV = 1e6
-
-# Metres in 1 degree of latitude [m].
-LAT_DEG = 111320
-# Ocean density [kg/m3].
-RHO = 1025
-
-# Rotation rate of the Earth [rad/s].
-OMEGA = 7.2921*10**(-5)
-
-# Figure extension type.
-im_ext = '.png'
-
-# Width and height of figures.
-width = 7.20472
-height = width / 1.718
-
-plt.rcParams['figure.facecolor'] = 'white'
-plt.rcParams.update({'font.size': 11})
-plt.rcParams['figure.dpi'] = 80
-plt.rcParams['savefig.dpi'] = 500
-plt.rcParams['legend.fontsize'] = 'large'
-plt.rcParams['figure.titlesize'] = 'medium'
-plt.rcParams['axes.titlesize'] = 'large'
-plt.rcParams['axes.labelsize'] = 'medium'
-
-# Create dict of various items.
-lx = {'exp': ['historical', 'rcp85', 'rcp85_minus_historial'],
-      'exps': ['Historical', 'RCP8.5', 'Projected change'],
-      'expx': ['Historical', 'RCP8.5', 'Change'],
-      'exp_abr': ['hist', 'rcp', 'diff'],
-      'years':  [[1981, 2012], [2070, 2101]],
-      'vars': ['u', 'v', 'w', 'salt', 'temp'],
-      'lons': [165, 190, 220],
-      'lonstr': ['165\u00b0E', '170\u00b0W', '140\u00b0W'],
-      'deg': '\u00b0',  # Degree symbol.
-      'frq': ['day', 'mon'],
-      'frq_short': ['dy', 'mon'],
-      'frq_long': ['daily', 'monthly'],
-      'mon': [i for i in calendar.month_abbr[1:]],  # Month abbreviations.
-      'mon_name': [i for i in calendar.month_name[1:]],
-      'mon_letter': [i[0] for i in calendar.month_abbr[1:]],
-      # Elements of the alphabet with left bracket and space for fig captions.
-      'l': [i + ') ' for i in list(string.ascii_lowercase)],
-      'lb': [r"$\bf{{{}}}$".format(i) for i in list(string.ascii_lowercase)]}
-
-ptype = {'scipy': ScipyParticle, 'jit': JITParticle}
+from parcels import FieldSet, ParticleSet, JITParticle
+from parcels import ErrorCode, Variable, AdvectionRK4_3D
 
 
-def paths():
-    """Return paths to figures, data and model output, logs and TAO data.
-
-    This function will determine and return paths depending on which
-    machine is being used.
-
-    Returns:
-        fpath (pathlib.Path): Path to save figures.
-        dpath (pathlib.Path): Path to save data.
-        xpath (pathlib.Path): Path to get model output.
-        lpath (pathlib.Path): Path to save log files.
-        tpath (pathlib.Path): Path to get TAO/TRITION data.
-
-    """
-    home = Path.home()
-
-    if home.drive == 'C:':
-        # Change to E drive if at home.
-        if not home.joinpath('GitHub', 'OFAM').exists():
-            home = Path('E:/')
-        fpath = home/'GitHub/OFAM/figures'
-        dpath = home/'GitHub/OFAM/data'
-        xpath = home/'model_output/OFAM/trop_pac'
-        lpath = home/'GitHub/OFAM/logs'
-        tpath = home/'model_output/OFAM/TAO'
-
-    # Raijin Paths.
-    else:
-        home = Path('/g/data/e14/as3189/OFAM')
-        fpath = home/'figures'
-        dpath = home/'data'
-        lpath = home/'logs'
-        xpath = home/'trop_pac'
-        tpath = home/'TAO'
-
-    return fpath, dpath, xpath, lpath, tpath
-
-
-loggers = {}
-
-
-def mlogger(name):
-
-    lpath = [i for i in [j for j in paths()] if i.name == 'logs'][0]
-
-    global loggers
-    # logger = logging.getLogger(__name__)
-    if loggers.get(name):
-        return loggers.get(name)
-    else:
-        logger = logging.getLogger(name)
-        # Create handlers
-        c_handler = logging.StreamHandler()
-        f_handler = logging.FileHandler(lpath/'{}.log'.format(name))
-        c_handler.setLevel(logging.DEBUG)
-        f_handler.setLevel(logging.DEBUG)
-
-        # Create formatters and add it to handlers
-        c_format = logging.Formatter('%(name)s:%(levelname)s:%(message)s')
-        f_format = logging.Formatter('%(asctime)s:%(funcName)s:%(levelname)s:%(message)s')
-        if len(logger.handlers) != 0:
-            logger.handlers.clear()
-        c_handler.setFormatter(c_format)
-        f_handler.setFormatter(f_format)
-
-        # Add handlers to the logger
-        logger.addHandler(c_handler)
-        logger.addHandler(f_handler)
-        logger.setLevel(logging.DEBUG)
-        # logger.propagate = False
-        loggers[name] = logger
-    return logger
-
-def current_time(print_time=False):
-    """Return and/or print the current time in AM/PM format (e.g. 9:00am).
-
-    Args:
-        print_time (bool, optional): Print the current time. Defaults is False.
-
-    Returns:
-        time (str): A string indicating the current time.
-
-    """
-    currentDT = datetime.now()
-    h = currentDT.hour if currentDT.hour <= 12 else currentDT.hour - 12
-    mrdm = 'pm' if currentDT.hour > 12 else 'am'
-    time = '{:0>2d}:{:0>2d}{}'.format(h, currentDT.minute, mrdm)
-    if print_time:
-        print(time)
-
-    return time
-
-
-def timer(ts, method=None):
-    """Print the execution time (starting from ts).
-
-    Args:
-        ts (int): Start time.
-        method (str, optional): Method name to print. Defaults to None.
-
-    """
-    te = time.time()
-    h, rem = divmod(te - ts, 3600)
-    m, s = divmod(rem, 60)
-    # Print method name if given.
-    arg = '' if method is None else ' ({})'.format(method)
-    print('Timer{}: {:} hours, {:} mins, {:05.2f} secs'
-          .format(arg, int(h), int(m), s, current_time(False)))
-
-    return
-
-
-def timeit(method, logger=logger):
-    """Wrap function to time method execution time."""
-    @wraps(method)
-    def timed(*args, **kw):
-        ts = time.time()
-        result = method(*args, **kw)
-        te = time.time()
-        h, rem = divmod(te - ts, 3600)
-        m, s = divmod(rem, 60)
-
-        logger.info('{}: {:}:{:}:{:05.2f} total: {:.2f} seconds.'.format(
-                method.__name__, int(h), int(m), s, te - ts))
-
-        return result
-
-    return timed
-
-
-def idx_1d(array, value):
-    """Find index to closet given value in 1D array.
-
-    Args:
-        array (1D array): The array to search for the closest index of value.
-        value (int): The value to find the closest index of.
-
-    Returns:
-        (int): The index of the closest element to value in array.
-
-    """
-    return int(np.abs(array - value).argmin())
-
-
-def idx(array, value):
-    return int(np.abs(array - value).argmin())
-
-
-def get_date(year, month, day='max'):
-    """Convert a year, month and day to datetime.datetime format.
-
-    N.B. 'max' day will give the last day in the given month.
-
-    """
-    if day == 'max':
-        return datetime(year, month, calendar.monthrange(year, month)[1])
-    else:
-        return datetime(year, month, day)
-
-
-def create_mesh_mask():
-    ufiles, sfiles = [], []
-    ufiles.append(xpath.joinpath('ocean_u_1981_01.nc'))
-    sfiles.append(xpath.joinpath('ocean_salt_1981_01.nc'))
-    du = xr.open_mfdataset(ufiles, combine='by_coords')
-    ds = xr.open_mfdataset(sfiles, combine='by_coords')
-
-    # Create copy of particle file with initally westward partciles removed.
-    mask = xr.Dataset()
-    mask['nv'] = du.nv
-    mask['st_edges_ocean'] = du.st_edges_ocean
-    mask['st_ocean'] = du.st_ocean
-    mask['xu_ocean'] = du.xu_ocean
-    mask['yu_ocean'] = du.yu_ocean
-    mask['xt_ocean'] = ds.xt_ocean
-    mask['yt_ocean'] = ds.yt_ocean
-    mask.to_netcdf(xpath.joinpath('ocean_mesh_mask.nc'))
-    du.close()
-    ds.close()
-    mask.close()
-    return
-
-
-@timeit
+@tools.timeit
 def ofam_fieldset(date_bnds, time_periodic=False, deferred_load=True):
     """Create a 3D parcels fieldset from OFAM model output.
 
@@ -345,9 +76,9 @@ def ofam_fieldset(date_bnds, time_periodic=False, deferred_load=True):
 
     for y in range(date_bnds[0].year, date_bnds[1].year + 1):
         for m in range(date_bnds[0].month, date_bnds[1].month + 1):
-            u.append(xpath.joinpath('ocean_u_{}_{:02d}.nc'.format(y, m)))
-            v.append(xpath.joinpath('ocean_v_{}_{:02d}.nc'.format(y, m)))
-            w.append(xpath.joinpath('ocean_w_{}_{:02d}.nc'.format(y, m)))
+            u.append(cfg.ofam/('ocean_u_{}_{:02d}.nc'.format(y, m)))
+            v.append(cfg.ofam/('ocean_v_{}_{:02d}.nc'.format(y, m)))
+            w.append(cfg.ofam/('ocean_w_{}_{:02d}.nc'.format(y, m)))
 
     filenames = {'U': {'lon': u[0], 'lat': u[0], 'depth': w[0], 'data': u},
                  'V': {'lon': u[0], 'lat': u[0], 'depth': w[0], 'data': v},
@@ -415,27 +146,27 @@ def Distance(particle, fieldset, time):
     return
 
 
-@timeit
+@tools.timeit
 def remove_westward_particles(pset):
     """Delete initially westward particles from the ParticleSet.
 
     Requires zonal velocity 'u' and partcile age in pset.
 
     """
-    idx = []
+    ix = []
     for p in pset:
         if p.u < 0. and p.age == 0.:
-            idx.append(np.where([pi.id == p.id for pi in pset])[0][0])
-    pset.remove(idx)
+            ix.append(np.where([pi.id == p.id for pi in pset])[0][0])
+    pset.remove(ix)
 
-    logger.debug('Particles removed: {}'.format(len(idx)))
+    logger.debug('Particles removed: {}'.format(len(ix)))
 
     # Warn if there are remaining intial westward particles.
     if any([p.u < 0 and p.age == 0 for p in pset]):
         logger.debug('Particles travelling in the wrong direction.')
 
 
-@timeit
+@tools.timeit
 def EUC_pset(fieldset, pclass, p_lats, p_lons, p_depths,
              pset_start, repeatdt):
     """Create a ParticleSet."""
@@ -449,7 +180,7 @@ def EUC_pset(fieldset, pclass, p_lats, p_lons, p_depths,
     return pset
 
 
-@timeit
+@tools.timeit
 def EUC_particles(fieldset, date_bnds, p_lats, p_lons, p_depths,
                   dt, pset_start, repeatdt, runtime, outputdt,
                   remove_westward=True):
@@ -484,12 +215,12 @@ def EUC_particles(fieldset, date_bnds, p_lats, p_lons, p_depths,
 
     # Create name to save particle file (looks for unsaved filename).
     i = 0
-    while dpath.joinpath('ParticleFile_{}-{}_v{}i.nc'.format(*[d.year
-                         for d in date_bnds], i)).exists():
+    while (cfg.data/('ParticleFile_{}-{}_v{}i.nc'
+                     .format(*[d.year for d in date_bnds], i))).exists():
         i += 1
 
-    pfile = dpath/'ParticleFile_{}-{}_v{}i.nc'.format(*[d.year for d in
-                                                        date_bnds], i)
+    pfile = cfg.data/'ParticleFile_{}-{}_v{}i.nc'.format(*[d.year for d in
+                                                           date_bnds], i)
 
     logger.info('Executing: {}'.format(pfile.stem))
     # Create particle set.
@@ -501,8 +232,7 @@ def EUC_particles(fieldset, date_bnds, p_lats, p_lons, p_depths,
         remove_westward_particles(pset)
 
     # Output particle file p_name and time steps to save.
-    output_file = pset.ParticleFile(dpath.joinpath(pfile.stem),
-                                    outputdt=outputdt)
+    output_file = pset.ParticleFile(cfg.data/pfile.stem, outputdt=outputdt)
 
     kernels = pset.Kernel(DeleteWestward) + pset.Kernel(Age) + AdvectionRK4_3D
 
@@ -514,7 +244,7 @@ def EUC_particles(fieldset, date_bnds, p_lats, p_lons, p_depths,
     return pfile
 
 
-@timeit
+@tools.timeit
 def ParticleFile_transport(pfile, dy, dz, save=True):
     """Remove westward particles and calculate transport.
 
@@ -541,15 +271,15 @@ def ParticleFile_transport(pfile, dy, dz, save=True):
     df = xr.Dataset()
     df.attrs = ds.attrs  # Copy partcile file attributes.
     # Indexes of particles that were intially westward.
-    idx = np.argwhere(ds.isel(obs=0).u.values < 0).flatten().tolist()
+    ix = np.argwhere(ds.isel(obs=0).u.values < 0).flatten().tolist()
     # Copy particle file variables (without westward) and attributes.
     for v in ds.variables:
-        df[v] = (('traj', 'obs'), np.delete(ds[v].values, idx, axis=0))
+        df[v] = (('traj', 'obs'), np.delete(ds[v].values, ix, axis=0))
         df[v].attrs = ds[v].attrs
     ds.close()
 
     # Print how many initial westward particles were removed.
-    logger.info('Particles removed (final): {}'.format(len(idx)))
+    logger.info('Particles removed (final): {}'.format(len(ix)))
     # Number of particles.
     N = len(df.traj)
 
@@ -559,7 +289,7 @@ def ParticleFile_transport(pfile, dy, dz, save=True):
     # Calculate inital volume transport of each particle.
     for traj in range(N):
         # Zonal transport (velocity x lat width x depth width).
-        df.uvo[traj] = df.u.isel(traj=traj, obs=0).item() * LAT_DEG * dy * dz
+        df.uvo[traj] = df.u.isel(traj=traj, obs=0).item()*cfg.LAT_DEG*dy*dz
 
     # Add transport metadata.
     df['uvo'].attrs = OrderedDict([('long_name',
@@ -580,12 +310,12 @@ def ParticleFile_transport(pfile, dy, dz, save=True):
     if save:
         # Saves with same file name, but with the last 'i' removed.
         # E.g. ParticleFile_2010-2011_v0i.nc -> ParticleFile_2010-2011_v0.nc
-        df.to_netcdf(dpath.joinpath(pfile.stem[:-1] + pfile.suffix))
+        df.to_netcdf(cfg.data/(pfile.stem[:-1] + pfile.suffix))
 
     return df
 
 
-@timeit
+@tools.timeit
 def plot3D(pfile):
     """Plot 3D figure of particle trajectories over time.
 
@@ -612,40 +342,268 @@ def plot3D(pfile):
     ax.set_zlabel("Depth [m]")
     ax.set_zlim(np.max(z), np.min(z))
     plt.show()
-    plt.savefig(fpath.joinpath(pfile.stem + im_ext))
+    plt.savefig(cfg.fig/(pfile.stem + cfg.im_ext))
     plt.close()
     ds.close()
 
     return
 
 
-def deg2m(lat1, lon1, lat2, lon2):
-    """Find distance in metres between two lat/lon points."""
-    # Convert latitude and longitude to spherical coordinates in radians.
-    degrees_to_radians = math.pi/180.0
-
-    # phi = 90 - latitude
-    phi1 = (90.0 - lat1)*degrees_to_radians
-    phi2 = (90.0 - lat2)*degrees_to_radians
-
-    # theta = longitude
-    theta1 = lon1*degrees_to_radians
-    theta2 = lon2*degrees_to_radians
-
-    # Compute spherical dst from spherical coordinates.
-    cos = (math.sin(phi1)*math.sin(phi2)*math.cos(theta1 - theta2) +
-           math.cos(phi1)*math.cos(phi2))
-
-    # Cheap way to avoid acos math domain error.
-    if cos > 1:
-        cos = math.floor(cos)
-    elif cos < -1:
-        cos = math.ceil(cos)
-    arc = math.acos(cos)
-
-    return arc*EARTH_RADIUS
+##############################################################################
+# VALIDATION
+##############################################################################
 
 
-fpath, dpath, xpath, lpath, tpath = paths()
+def EUC_vbounds(du, depths, i, v_bnd=0.3, index=False):
+    """Find EUC max velocity/position and lower EUC depth boundary.
 
-logger = mlogger('main')
+    Args:
+        du (array): Velocity values.
+        depths (array): Depth values.
+        i ({0, 1, 2}): Index of longitude.
+        v_bnd (float, str): Minimum velocity to include. Defaults to 0.3.
+        index (bool, optional): Return depth index or value. Defaults to False.
+
+    Returns:
+        v_max (array): Maximum velocity at each timestep.
+        array: Depth of maximum velocity at each timestep.
+        array: Deepest EUC depth based on v_bnd at each timestep.
+
+    """
+    du = du.where(du >= 0)
+    u = np.ma.masked_invalid(du)
+
+    # Maximum and minimum velocity at each time step.
+    v_max = du.max(axis=1, skipna=True)
+    v_max_half = v_max/2
+    v_max_25 = v_max*0.25
+
+    # Index of maximum and minimum velocity at each time.
+    v_imax = np.nanargmax(u, axis=1)
+
+    z1i = (v_imax.copy()*np.nan)
+    z2i = (v_imax.copy()*np.nan)
+    z1 = v_imax.copy()*np.nan
+    z2 = v_imax.copy()*np.nan
+
+    target = v_bnd if v_bnd == 'half_max' else v_max_half[0]
+
+    count, empty, skip_t, skip_l = 0, 0, 0, 0
+
+    for t in range(u.shape[0]):
+        # Make sure entire slice isn't all empty
+        if not (u[t] == True).mask.all() and not np.ma.is_masked(v_imax[t]):
+
+            # Set target velocity as half the maximum at each timestep.
+            if v_bnd == 'half_max':
+                target = v_max_half[t]
+            elif v_bnd == '25_max':
+                target = v_max_25[t]
+
+            # Subset velocity on either side of the maximum velocity.
+            top = du[t, slice(0, v_imax[t])]
+            low = du[t, slice(v_imax[t], len(depths))]
+
+            # Mask velocities that are greater than the maxmimum.
+            top = top.where(top <= target)
+            low = low.where(low <= target)
+
+            # Find the closest velocity depth/index if both the
+            # top and lower arrays are not all NaN.
+            if all([not all(np.isnan(top)), not all(np.isnan(low))]):
+                for k in np.arange(len(top)-1, 0, -1):
+                    if not np.isnan(top[k]):
+                        for j in np.arange(k-1, 0, -1):
+                            if np.isnan(top[j]):
+                                top[0:j] = top[0:j]*np.nan
+                            break
+
+                z1i[t] = tools.idx(top, target)
+                z1[t] = depths[int(z1i[t])]
+                z2i[t] = tools.idx(low, target) + v_imax[t]
+                z2[t] = depths[int(z2i[t])]
+                count += 1
+                if abs(z2[t] - z1[t]) < 50:
+                    z1i[t], z2i[t] = np.nan, np.nan
+                    z1[t], z2[t] = np.nan, np.nan
+                    count -= 1
+                if z2[t] < 125:
+                    z1i[t], z2i[t] = np.nan, np.nan
+                    z1[t], z2[t] = np.nan, np.nan
+                    count -= 1
+
+            # Check if skipped steps due to missing top depth (and vice versa).
+            if all(np.isnan(low)) and not all(np.isnan(top)):
+                skip_t += 1
+            elif all(np.isnan(top)) and not all(np.isnan(low)):
+                skip_l += 1
+        else:
+            empty += 1
+
+    data_name = 'OFAM3' if hasattr(du, 'st_ocean') else 'TAO/TRITION'
+
+    logger.debug('{} {}: v_bnd={} tot={} count={} null={} skip={}(T={},L={}).'
+                 .format(data_name, cfg.lons[i], v_bnd, u.shape[0], count,
+                         empty, skip_t + skip_l, skip_t, skip_l))
+    if not index:
+        return v_max, z1, z2
+    else:
+        return v_max, z1i, z2i
+
+
+def EUC_bnds_static(du, lon=None, z1=25, z2=350, lat=2.6):
+    """Apply static EUC definition to zonal velocity at a longitude.
+
+    Args:
+        du (Dataset): Zonal velocity dataset.
+        lon (float): The EUC longitude examined.
+        z1 (float): First depth level.
+        z2 (float): Final depth level.
+        lat (float): Latitude bounds.
+
+    Returns:
+        du4 (DataArray): The zonal velocity in the EUC region.
+
+    """
+    z2i = tools.idx(du.st_ocean, z2)
+    z2i = z2i if du.st_ocean[z2i] >= z2 else z2i + 1
+    z2 = du.st_ocean[z2i].item()
+
+    # Slice depth and longitude.
+    if lon is not None:
+        du = du.sel(st_ocean=slice(z1, z2),
+                    xu_ocean=lon,
+                    yu_ocean=slice(-lat, lat))
+    else:
+        du = du.sel(st_ocean=slice(z1, z2),
+                    yu_ocean=slice(-lat, lat))
+
+    # Remove negative/zero velocities.
+    du = du.u.where(du.u > 0, np.nan)
+    # print('Static z: {:.2f}-{:.2f}'.format(du.st_ocean[0].item(),
+    #                                        du.st_ocean[-1].item()))
+
+    return du
+
+
+def EUC_bnds_grenier(du, dt, ds, lon):
+    """Apply Grenier EUC definition to zonal velocity at a longitude.
+
+    Grenier et al. (2011) EUC definition:
+        - Equatorial eastward flow (u > 1 m s−1)
+        - Between σθ = 22.4 kg m−3 to 26.8 kg m−3
+        - Between 2.625°S to 2.625°N
+
+    Args:
+        du (Dataset): Zonal velocity dataset.
+        dt (Dataset): Temperature dataset.
+        ds (Dataset): Salinity dataset.
+        lon (float): The EUC longitude examined.
+
+    Returns:
+        du3 (dataset): The zonal velocity in the EUC region.
+
+    """
+    lat = 2.625
+    rho1 = 22.4
+    rho2 = 26.8
+
+    # Find exact latitude longitudes to slice dt and ds.
+    lat_i = dt.yt_ocean[tools.idx(dt.yt_ocean, -lat + 0.05)].item()
+    lat_f = dt.yt_ocean[tools.idx(dt.yt_ocean, lat + 0.05)].item()
+    lon_i = dt.xt_ocean[tools.idx(dt.xt_ocean, lon + 0.05)].item()
+    du = du.sel(xu_ocean=lon, yu_ocean=slice(-lat, lat))
+    dt = dt.sel(xt_ocean=lon_i, yt_ocean=slice(lat_i, lat_f))
+    ds = ds.sel(xt_ocean=lon_i, yt_ocean=slice(lat_i, lat_f))
+
+    Y, Z = np.meshgrid(dt.yt_ocean.values, -dt.st_ocean.values)
+    p = gsw.conversions.p_from_z(Z, Y)
+
+    SA = ds.salt
+    t = dt.temp
+    rho = gsw.pot_rho_t_exact(SA, t, p, p_ref=0)
+    dr = xr.Dataset({'rho': (['Time', 'st_ocean', 'yu_ocean'],  rho - 1000)},
+                    coords={'Time': du.Time,
+                            'st_ocean': du.st_ocean,
+                            'yu_ocean': du.yu_ocean})
+
+    du1 = du.u.where(dr.rho >= rho1, np.nan)
+    du2 = du1.where(dr.rho <= rho2, np.nan)
+    du_euc = du2.where(du.u > 0.1, np.nan)
+
+    return du_euc
+
+
+def EUC_bnds_izumo(du, dt, ds, lon, interpolated=False):
+    """Apply Izumo (2005) EUC definition to zonal velocity at a longitude.
+
+    Izumo (2005):
+        - Zonal velocity (U): U > 0 m s−1,
+        - Depth: 25 m < z < 300 m.
+        - Temperature (T): T < T(z = 15 m) – 0.1°C and T < 27°C
+
+        - Latitudinal boundaries:
+            - Between +/-2° at 25 m,
+            - which linearly increases to  +/-4° at 200 m
+            -via the function 2° – z/100 < y < 2° + z/100,
+            - and remains constant at  +/-4° below 200 m.
+
+    Args:
+        du (Dataset): Zonal velocity dataset.
+        dt (Dataset): Temperature dataset.
+        ds (Dataset): Salinity dataset.
+        lon (float): The EUC longitude examined.
+
+    Returns:
+        du4 (DataArray): The zonal velocity in the EUC region.
+
+    """
+    # Define depth boundary levels.
+    if interpolated:
+        z_15, z1, z2 = 15, 25, 300
+    else:
+        # Modified because this is the correct level for OFAM3 grid.
+        z_15, z1, z2 = 17, 25, 327
+
+    # Find exact latitude longitudes to slice dt and ds.
+    lon_i = dt.xt_ocean[tools.idx(dt.xt_ocean, lon + 0.05)].item()
+
+    dt_z15 = dt.temp.sel(xt_ocean=lon_i, st_ocean=z_15, method='nearest')
+
+    # Slice depth and longitude.
+    du = du.sel(xu_ocean=lon, st_ocean=slice(z1, z2))
+    dt = dt.sel(xt_ocean=lon_i, st_ocean=slice(z1, z2))
+    ds = ds.sel(xt_ocean=lon_i, st_ocean=slice(z1, z2))
+
+    Z = du.st_ocean.values
+
+    y1 = -2 - Z/100
+    y2 = 2 + Z/100
+
+    du1 = du.u.copy().load()
+    du2 = du.u.copy().load()
+
+    for z in range(len(du.st_ocean)):
+        # Remove latitides via function between 25-200 m.
+        if z <= tools.idx(du.st_ocean, 200):
+            du1[:, z, :] = du.u.isel(st_ocean=z).where(du.yu_ocean > y1[z])
+            du1[:, z, :] = du1.isel(st_ocean=z).where(du.yu_ocean < y2[z])
+
+        # Remove latitides greater than 4deg for depths greater than 200 m.
+        else:
+            du1[:, z, :] = du.u.isel(st_ocean=z).where(du.yu_ocean >= -4)
+            du1[:, z, :] = du1.isel(st_ocean=z).where(du.yu_ocean <= 4)
+
+        # Remove temperatures less than t(z=15) - 0.1 at each timestep.
+        du2[:, z, :] = du1.isel(st_ocean=z).where(
+            dt.temp.isel(st_ocean=z).values < dt_z15.values - 0.1).values
+
+    # Remove negative/zero velocities.
+    du3 = du2.where(du.u > 0, np.nan)
+
+    # Removed temperatures less than 27C.
+    du4 = du3.where(dt.temp.values < 27)
+    # logger.debug('Izumo depths={:.2f}-{:.2f}'.format(du4.st_ocean[0].item(),
+    #                                                  du4.st_ocean[-1].item()))
+
+    return du4

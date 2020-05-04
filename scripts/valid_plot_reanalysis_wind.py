@@ -6,6 +6,7 @@ author: Annette Stellema (astellemas@gmail.com)
 
 
 """
+import cfg
 import cartopy
 import numpy as np
 import xarray as xr
@@ -13,12 +14,8 @@ import cartopy.crs as ccrs
 import matplotlib.pyplot as plt
 import shapely.geometry as sgeom
 from airsea import prescribed_momentum, bulk_fluxes, flux_data, reduce
-from main import paths, lx
-from main_valid import wind_stress_curl, coord_formatter
 from cartopy.mpl.gridliner import LONGITUDE_FORMATTER, LATITUDE_FORMATTER
-
-# Path to save figures, save data and OFAM model output.
-fpath, dpath, xpath, lpath, tpath = paths()
+from tools import wind_stress_curl, coord_formatter
 
 
 def get_wsc(data='jra55', flux='bulk', res=0.1, mean_t=True, interp=''):
@@ -31,7 +28,7 @@ def get_wsc(data='jra55', flux='bulk', res=0.1, mean_t=True, interp=''):
         phi = wind_stress_curl(tx, ty, w=res, wy=res).phi
         phi = reduce(phi, mean_t, res, interp='linear')
     elif flux == 'erai':
-        ds = xr.open_dataset(dpath/'erai_iws_climo.nc').mean('time')
+        ds = xr.open_dataset(cfg.data/'erai_iws_climo.nc').mean('time')
         tx = reduce(ds.iews, mean_t, res, interp)
         ty = reduce(ds.inss, mean_t, res, interp)
         wy = np.median([(ds.lat[i+1] - ds.lat[i]).item()
@@ -41,8 +38,8 @@ def get_wsc(data='jra55', flux='bulk', res=0.1, mean_t=True, interp=''):
         phi = wind_stress_curl(ds.iews, ds.inss, w=w, wy=wy).phi
         phi = reduce(phi, mean_t, res, interp=interp)
     else:
-        u = xr.open_dataset(dpath/'{}_uas_climo.nc'.format(data)).mean('time')
-        v = xr.open_dataset(dpath/'{}_vas_climo.nc'.format(data)).mean('time')
+        u = xr.open_dataset(cfg.data/'{}_uas_climo.nc'.format(data)).mean('time')
+        v = xr.open_dataset(cfg.data/'{}_vas_climo.nc'.format(data)).mean('time')
         wy = np.median([(u.lat[i+1] - u.lat[i]).item()
                         for i in range(len(u.lat) - 1)])
         w = np.median([(u.lon[i+1] - u.lon[i]).item()
@@ -109,9 +106,9 @@ def plot_winds(varz, title, units, vmax, save_name, plot_map):
             ax.set_ylabel(units[i], size=10)
             ax.set_xlim(xmin=x0, xmax=x1)
             ax.legend(fontsize=11, loc=4)
-        ax.set_title('{}{}'.format(lx['l'][i], title[i]),
+        ax.set_title('{}{}'.format(cfg.lt[i], title[i]),
                      loc='left', fontsize=12)
-    fig.savefig(fpath/'valid/{}.png'.format(save_name),
+    fig.savefig(cfg.fig/'valid/{}.png'.format(save_name),
                 bbox_inches='tight', pad_inches=0.2)
     plt.show()
     plt.clf()

@@ -7,10 +7,8 @@ author: Annette Stellema (astellemas@gmail.com)
 
 """
 # Load required modules.
+import cfg
 import xarray as xr
-from main import paths, lx
-
-fpath, dpath, xpath, lpath, tpath = paths()
 
 # Directory where NOAA OISST files are saved.
 path = '/g/data/ua8/NOAA_OISST/AVHRR/v2-0_modified/'
@@ -60,4 +58,4 @@ print(ds.nino34)
 print(ds.oni)
 
 # Save to a netcdf file (may take quite a while to calculate and save).
-ds.to_netcdf(dpath/'noaa_sst_anom_nino34.nc')
+ds.to_netcdf(cfg.data/'noaa_sst_anom_nino34.nc')

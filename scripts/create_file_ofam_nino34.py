@@ -7,24 +7,23 @@ author: Annette Stellema (astellemas@gmail.com)
 
 """
 # Load required modules.
+import cfg
+import tools
 import numpy as np
 import xarray as xr
-from main import paths, lx, get_date
 
 np.set_printoptions(suppress=True)
 
-fpath, dpath, xpath, lpath, tpath = paths()
-
 exp = 1
-year1 = lx['years'][exp][0] - 1 if exp == 0 else lx['years'][exp][0]
-date_bnds = [get_date(year1, 1, 1),
-             get_date(lx['years'][exp][1], 12, 'max')]
+year1 = cfg.years[exp][0] - 1 if exp == 0 else cfg.years[exp][0]
+date_bnds = [tools.get_date(year1, 1, 1),
+             tools.get_date(cfg.years[exp][1], 12, 'max')]
 
 temp = []
 
 for y in range(date_bnds[0].year, date_bnds[1].year + 1):
     for m in range(date_bnds[0].month, date_bnds[1].month + 1):
-        temp.append(xpath.joinpath('ocean_temp_{}_{:02d}.nc'.format(y, m)))
+        temp.append(cfg.ofam/'ocean_temp_{}_{:02d}.nc'.format(y, m))
 
 ds = xr.open_mfdataset(temp, combine='by_coords')
 
@@ -33,8 +32,8 @@ sst = ds.sel(yt_ocean=slice(-5, 5), xt_ocean=slice(190, 240), st_ocean=2.5)
 sst = sst.temp.mean(['yt_ocean', 'xt_ocean'])
 
 # SST monthly climatology.
-sst_clim = xr.open_dataset(xpath/('ocean_temp_{}-{}_climo.nc')
-                           .format(lx['years'][exp][0], lx['years'][exp][1])).temp
+sst_clim = xr.open_dataset(cfg.ofam/('ocean_temp_{}-{}_climo.nc')
+                           .format(cfg.years[exp][0], cfg.years[exp][1])).temp
 sst_clim = sst_clim.sel(st_ocean=2.5,
                         xt_ocean=slice(190, 240),
                         yt_ocean=slice(-5, 5)).mean(['yt_ocean', 'xt_ocean'])
@@ -64,4 +63,4 @@ print(dv.nino34)
 print(dv.oni)
 
 # Save to a netcdf file (may take quite a while to calculate and save).
-dv.to_netcdf(dpath/'ofam_sst_anom_nino34_{}.nc'.format(lx['exp_abr'][exp]))
+dv.to_netcdf(cfg.data/'ofam_sst_anom_nino34_{}.nc'.format(cfg.exp_abr[exp]))

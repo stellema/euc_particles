@@ -1729,3 +1729,12 @@
 2020-05-03 11:01:50,149:log_wbc:INFO:MC:8.8°N:8.8°N:2-546m:Mean: -19.8 Sv Max: -20.9 Sv in Dec, Min: -18.6 Sv in Sep. El Nino: -0.6 Sv La Nina:  1.4 Sv
 2020-05-03 11:01:50,235:log_wbc:INFO:MC:8.9°N:8.9°N:2-546m:Mean: -19.6 Sv Max: -20.6 Sv in Dec, Min: -18.4 Sv in Sep. El Nino: -0.7 Sv La Nina:  1.4 Sv
 2020-05-03 11:01:50,320:log_wbc:INFO:MC:9°N:9°N:2-546m:  Mean: -19.4 Sv Max: -20.3 Sv in Nov, Min: -18.3 Sv in Sep. El Nino: -0.8 Sv La Nina:  1.4 Sv
+2020-05-04 19:01:52,492:log_wbc:INFO:EUC:165°E:          Mean:  22.1 cfg.SV Max:  34.8 cfg.SV in Jun, Min:  12.5 cfg.SV in Nov. El Nino: -1.5 cfg.SV La Nina:  2.7 cfg.SV
+2020-05-04 19:01:52,584:log_wbc:INFO:EUC:170°W:          Mean:  28.0 cfg.SV Max:  42.9 cfg.SV in May, Min:  16.1 cfg.SV in Sep. El Nino: -5.4 cfg.SV La Nina:  5.6 cfg.SV
+2020-05-04 19:01:52,668:log_wbc:INFO:EUC:140°W:          Mean:  29.5 cfg.SV Max:  42.1 cfg.SV in Apr, Min:  22.0 cfg.SV in Aug. El Nino: -5.9 cfg.SV La Nina:  5.0 cfg.SV
+2020-05-04 19:01:52,761:log_wbc:INFO:VS:6.1°S:2-1238m:   Mean:  6.8 cfg.SV Max:  9.6 cfg.SV in Jul, Min:  5.0 cfg.SV in Feb. El Nino:  1.0 cfg.SV La Nina: -0.9 cfg.SV
+2020-05-04 19:01:52,845:log_wbc:INFO:SGC:4.7°S:2-1238m:  Mean: -0.27 cfg.SV Max: -0.65 cfg.SV in Oct, Min:  0.12 cfg.SV in Jul. El Nino:  0.12 cfg.SV La Nina: -0.09 cfg.SV
+2020-05-04 19:01:52,930:log_wbc:INFO:SS:4.8°S:2-1238m:   Mean:  9.0 cfg.SV Max:  14.0 cfg.SV in Jul, Min:  3.6 cfg.SV in Feb. El Nino:  1.1 cfg.SV La Nina: -0.2 cfg.SV
+2020-05-04 19:01:53,013:log_wbc:INFO:NI:4.1°S:2-1238m:   Mean:  4.6 cfg.SV Max:  9.9 cfg.SV in Jun, Min:  1.5 cfg.SV in Nov. El Nino: -0.7 cfg.SV La Nina:  0.3 cfg.SV
+2020-05-04 19:01:53,101:log_wbc:INFO:MC:9°N:2-546m:      Mean: -19.4 cfg.SV Max: -20.3 cfg.SV in Nov, Min: -18.3 cfg.SV in Sep. El Nino: -0.8 cfg.SV La Nina:  1.4 cfg.SV
+2020-05-04 19:01:53,188:log_wbc:INFO:MC:7.5°N:2-546m:    Mean: -21.9 cfg.SV Max: -23.8 cfg.SV in May, Min: -20.1 cfg.SV in Sep. El Nino:  0.4 cfg.SV La Nina:  1.0 cfg.SV

@@ -34,22 +34,18 @@ ERA-Interim (erai):
     - Sea level pressure (psl) [Pa]
 
 """
+import cfg
+import tools
 import sys
-import logging
 import numpy as np
 import xarray as xr
 from datetime import datetime
-from main import paths, lx, timeit, idx_1d, mlogger
-
-# Path to save figures, save data and OFAM model output.
-fpath, dpath, xpath, lpath, tpath = paths()
 
 product = str(sys.argv[1])  # 'jra55' or 'erai'.
 vari = int(sys.argv[2])  # 0-4 for jra55 and 0-5 for erai.
-# res = float(sys.argv[3])  # Interpolation width.
 
 
-@timeit
+@tools.timeit
 def reanalysis_wind(product, vari, lon, lat):
     def slice_vars(ds):
         """Preprocess slice and rename variables."""
@@ -73,14 +69,14 @@ def reanalysis_wind(product, vari, lon, lat):
         if hasattr(ds, 'iews'):
             ds = ds.reindex(lat=ds.lat[::-1])
 
-        x0 = idx_1d(ds.lon.values, lon[0])
+        x0 = tools.idx(ds.lon.values, lon[0])
         x0 = x0 - 1 if ds.lon[x0] > lon[0] else x0
-        x1 = idx_1d(ds.lon.values, lon[1])
+        x1 = tools.idx(ds.lon.values, lon[1])
         x1 = x1 + 1 if ds.lon[x1] > lon[1] else x1
 
-        y0 = idx_1d(ds.lat.values, lat[0])
+        y0 = tools.idx(ds.lat.values, lat[0])
         y0 = y0 - 1 if ds.lat[y0] > lat[0] else y0
-        y1 = idx_1d(ds.lat.values, lat[1])
+        y1 = tools.idx(ds.lat.values, lat[1])
         y1 = y1 + 1 if ds.lat[y1] > lat[1] else y1
 
         ds = ds.isel(lat=slice(y0, y1+1), lon=slice(x0, x1+1))
@@ -92,23 +88,23 @@ def reanalysis_wind(product, vari, lon, lat):
         var = ['uas', 'vas', 'tas', 'ta2d', 'ps', 'psl', 'iws'][vari]
         path = '/g/data/rr7/ERA_INT/ERA_INT/'
 
-        for y in range(lx['years'][0][0], lx['years'][0][1]+1):
+        for y in range(cfg.years[0][0], cfg.years[0][1]+1):
             if var != 'ta2d' and var != 'iws':
                 f.append(path + 'ERA_INT_{}_{}.nc'.format(var, y))
             elif var == 'ta2d':
                 for m in range(1, 13):
-                    f.append(dpath/'ERA_INT_{}/ERA_INT_{}_{}{:02d}0100.nc'
+                    f.append(cfg.data/'ERA_INT_{}/ERA_INT_{}_{}{:02d}0100.nc'
                              .format(var, var, y, m))
             elif var == 'ws':
-                f = [dpath/'ERA_INT_wind_stress.nc',
-                     dpath/'ERA_INT_wind_stress_end.nc']
+                f = [cfg.data/'ERA_INT_wind_stress.nc',
+                     cfg.data/'ERA_INT_wind_stress_end.nc']
             elif var == 'iws':
-                f = [dpath/'ERA_INT_iws_mean.nc']
+                f = [cfg.data/'ERA_INT_iws_mean.nc']
 
     elif product == 'jra55':
         var = ['uas', 'vas', 'tas', 'huss', 'psl'][vari]
         path = '/g/data/rr7/JRA55/6hr/atmos/'
-        for y in range(lx['years'][0][0], lx['years'][0][1]+1):
+        for y in range(cfg.years[0][0], cfg.years[0][1]+1):
             f.append(path + '{}/v1/{}_6hrPlev_JRA55_{}010100_{}123118.nc'
                      .format(var, var, y, y))
 
@@ -137,12 +133,12 @@ def reanalysis_wind(product, vari, lon, lat):
         ds[var1].attrs['history'] = ('Modified {} from files e.g. {}'
                                      .format(now.strftime("%Y-%m-%d"), f[0]))
 
-    ds.to_netcdf(dpath/fname)
+    ds.to_netcdf(cfg.data/fname)
 
     logger.info('{} Coords: {}'.format(fname, ds[var].coords))
     ds.close()
 
-    da = xr.open_dataset(dpath/fname)
+    da = xr.open_dataset(cfg.data/fname)
 
     if np.isnan(da[var]).all():
         logger.info('ERROR: {} (all NaN).'.format(fname))
@@ -152,7 +148,7 @@ def reanalysis_wind(product, vari, lon, lat):
     return
 
 
-logger = mlogger('reanalysis')
+logger = tools.mlogger('reanalysis')
 now = datetime.now()
 
 lon = [120, 295]
