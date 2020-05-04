@@ -177,7 +177,10 @@ def paths():
 
     return fpath, dpath, xpath, lpath, tpath
 
+
 loggers = {}
+
+
 def mlogger(name):
 
     lpath = [i for i in [j for j in paths()] if i.name == 'logs'][0]

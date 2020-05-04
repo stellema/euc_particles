@@ -19,18 +19,31 @@ git pull stellema OFAM
 import sys
 import time
 import math
+import logging
 import numpy as np
 from pathlib import Path
-from datetime import timedelta
+from datetime import timedelta, datetime
 from main import paths, EUC_particles, ofam_fieldset, get_date
-from main import plot3D, ParticleFile_transport, timer, logger
+from main import plot3D, ParticleFile_transport, timer
+from parcels.tools.loggers import logger
 
-ts = time.time()
+
 fpath, dpath, xpath, lpath = paths()
+ts = time.time()
+now = datetime.now()
+
+logger.setLevel(logging.DEBUG)
+handler = logging.FileHandler(lpath/'parcels_base.log')
+formatter = logging.Formatter(
+            '%(asctime)s:%(funcName)s:%(message)s')
+handler.setFormatter(formatter)
+logger.addHandler(handler)
+logger.propagate = False
+
 
 # Define Fieldset and ParticleSet parameters.
 # Start and end dates.
-date_bnds = [get_date(1983, 1, 1), get_date(1989, 12, 'max')]
+date_bnds = [get_date(1981, 1, 1), get_date(1989, 12, 'max')]
 # Meridional and vertical distance between particles to release.
 dy, dz = 0.8, 50
 p_lats = np.round(np.arange(-2.4, 2.4 + dy, dy), 2)
@@ -63,10 +76,10 @@ logger.info('Particles (total): {}'.format(Z*X*Y*
 logger.info('Time decorator used.')
 
 fieldset = ofam_fieldset(date_bnds)
-fieldset.mindepth = fieldset.U.depth[0] 
+fieldset.mindepth = fieldset.U.depth[0]
 pset_start = fieldset.U.grid.time[-1]
-pfile = EUC_particles(fieldset, date_bnds, p_lats, p_lons, p_depths,  
-                      dt, pset_start, repeatdt, runtime, outputdt, 
+pfile = EUC_particles(fieldset, date_bnds, p_lats, p_lons, p_depths,
+                      dt, pset_start, repeatdt, runtime, outputdt,
                       remove_westward=True)
 
 if add_transport:
@@ -76,7 +89,7 @@ if add_transport:
 # Save the fieldset.
 if write_fieldset:
     fieldset.write(dpath.joinpath('fieldset_ofam_3D_{}-{}_{}-{}'.format(
-                                  date_bnds[0].year, date_bnds[0].month, 
+                                  date_bnds[0].year, date_bnds[0].month,
                                   date_bnds[1].year, date_bnds[1].month)))
 
 timer(ts, method=Path(sys.argv[0]).stem)
