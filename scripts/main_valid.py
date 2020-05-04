@@ -647,3 +647,39 @@ def deg_m(lat, lon, deg=0.1):
         dy = np.array([deg*arc for i in lon])
 
     return dx, dy
+
+
+def precision(var):
+    """ Determines the precision to print based on the number of digits
+    in the variable in the historical scenario and projected change.
+
+    Values greater than ten: the precision will be zero decimal places.
+    Values less than ten but greater than one: print one decimal place.
+    Values less than one: print two decimal places.
+
+    FIX: values less than 0.01: print three decimal places.
+
+    Parameters
+    ----------
+    var : xarray DataArray
+        Transport dataset
+
+    Returns
+    -------
+    p : list
+        The number of decimal places to print for historical and change
+    """
+
+    # List for the number of digits (n) and decimal place (p).
+    n, p = 1, 1
+
+    tmp = abs(var.item())
+    n = int(math.log10(tmp)) + 1
+    if n == 1:
+
+        p = 1 if tmp >= 1 else 2
+    elif n == 0:
+        p = 2
+    elif n == -1:
+        p = 3
+    return p

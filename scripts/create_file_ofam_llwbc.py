@@ -7,24 +7,27 @@ du= xr.open_dataset(xpath/'ocean_u_1981-2012_climo.nc')
 ds= xr.open_dataset(xpath/'ocean_v_1981-2012_climo.nc')
 
 
-## Finding MC bounds.
-# sfc = ds.v.isel(yu_ocean=bnds_mc[0], xu_ocean=bnds_mc[1])
-# mx = []
-# z = 0
-# for y in range(len(sfc.yu_ocean)):
-#     jx = []
-#     # v_max = np.min(sfc.mean('Time')[:, y]).item()*0.1
-#     v_max = -0.1
-#     for t in range(len(sfc.Time)):
-#         sfv = sfc[t, z, y].where(sfc[t, z, y] <= v_max)
-#         L = len(sfv)
-#         jx.append((next(i for i, x in enumerate(sfv[5:]) if np.isnan(x))+4))
-#     sfv = sfc.mean('Time')[z, y].where(sfc.mean('Time')[z, y] <= v_max)
-#     jx.append((next(i for i, x in enumerate(sfv[5:]) if np.isnan(x))+4))
-#     mx.append(np.max(jx))
-#     # print(y, np.round(v_max, 4), jx, mx[-1])
-# print('Maximum size index: {}, lon: {:.2f}'
-#       .format(np.max(mx), sfc.xu_ocean[np.max(mx)].item()))
+
+# Finding MC bounds.
+bnds_mc = [slice(214, 241), slice(62, 95)]
+ds = xr.open_dataset(xpath/'ocean_v_1981-2012_climo.nc')
+sfc = ds.v.isel(yu_ocean=bnds_mc[0], xu_ocean=bnds_mc[1])
+mx = []
+z = 0
+for y in range(len(sfc.yu_ocean)):
+    jx = []
+    # v_max = np.min(sfc.mean('Time')[:, y]).item()*0.1
+    v_max = -0.1
+    for t in range(len(sfc.Time)):
+        sfv = sfc[t, z, y].where(sfc[t, z, y] <= v_max)
+        L = len(sfv)
+        jx.append((next(i for i, x in enumerate(sfv[5:]) if np.isnan(x))+4))
+    sfv = sfc.mean('Time')[z, y].where(sfc.mean('Time')[z, y] <= v_max)
+    jx.append((next(i for i, x in enumerate(sfv[5:]) if np.isnan(x))+4))
+    mx.append(np.max(jx))
+    # print(y, np.round(v_max, 4), jx, mx[-1])
+print('Maximum size index: {}, lon: {:.2f}'
+      .format(np.max(mx), sfc.xu_ocean[np.max(mx)].item()))
 
 """
 import sys
