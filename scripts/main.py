@@ -103,12 +103,13 @@ def ofam_fieldset(date_bnds, time_periodic=False, deferred_load=True):
                   'V': vdims,
                   'W': vdims}
 
-    fieldset = FieldSet.from_b_grid_dataset(filenames, variables, dimensions,
-                                            mesh='spherical',
-                                            time_periodic=time_periodic,
-                                            deferred_load=deferred_load)
+    # fieldset = FieldSet.from_b_grid_dataset(filenames, variables, dimensions,
+    #                                         mesh='spherical',
+    #                                         time_periodic=time_periodic,
+    #                                         deferred_load=deferred_load)
 
-    return fieldset
+    return FieldSet.from_netcdf(filenames, variables, dimensions,
+                                deferred_load=True, field_chunksize='auto')
 
 
 def DeleteParticle(particle, fieldset, time):
@@ -126,7 +127,8 @@ def Age(particle, fieldset, time):
 def DeleteWestward(particle, fieldset, time):
     """Delete particles initially travelling westward."""
     # Delete particle if the initial zonal velocity is westward (negative).
-    if particle.age == 0. and particle.u < 0:
+    if particle.age == 0. and fieldset.U[time, particle.depth,
+                                         particle.lat, particle.lon] < 0:
         particle.delete()
 
     return
@@ -228,7 +230,7 @@ def EUC_particles(fieldset, date_bnds, p_lats, p_lons, p_depths,
     pfile = cfg.data/'ParticleFile_{}-{}_v{}i.nc'.format(*[d.year for d in
                                                            date_bnds], i)
 
-    logger.info('Executing: {}'.format(pfile.stem))
+    logger.info('{}: Started.'.format(pfile.stem))
     # Create particle set.
     pset = EUC_pset(fieldset, tparticle, p_lats, p_lons, p_depths,
                     pset_start, repeatdt)
@@ -238,14 +240,19 @@ def EUC_particles(fieldset, date_bnds, p_lats, p_lons, p_depths,
         remove_westward_particles(pset)
 
     # Output particle file p_name and time steps to save.
+    logger.debug('{}: Output file.'.format(pfile.stem))
     output_file = pset.ParticleFile(cfg.data/pfile.stem, outputdt=outputdt)
+
+    logger.info('{}: Kernels:pset.Kernel(DeleteWestward) + '
+                'pset.Kernel(Age) + AdvectionRK4_3D'.format(pfile.stem))
 
     kernels = pset.Kernel(DeleteWestward) + pset.Kernel(Age) + AdvectionRK4_3D
 
+    logger.debug('{}: Excecute particle set..'.format(pfile.stem))
     pset.execute(kernels, runtime=runtime, dt=dt, output_file=output_file,
                  recovery={ErrorCode.ErrorOutOfBounds: DeleteParticle},
                  verbose_progress=True)
-    logger.info('Completed: {}'.format(pfile.stem))
+    logger.info('{}: Completed.'.format(pfile.stem))
 
     return pfile
 
