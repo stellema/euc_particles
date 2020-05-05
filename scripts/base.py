@@ -106,7 +106,7 @@ if __name__ == "__main__":
                    type=int)
     p.add_argument('-o', '--outputdt', default=1, help='Write interval [day]',
                    type=int)
-    p.add_argument('-f', '--fieldm', default='netcdf', help='Fieldset method',
+    p.add_argument('-m', '--fieldm', default='netcdf', help='Fieldset method',
                    type=bool)
     p.add_argument('-t', '--transport', default=True, help='Add transport',
                    type=bool)
