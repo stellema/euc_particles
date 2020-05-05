@@ -81,7 +81,6 @@ def ofam_fieldset(date_bnds, field_method='netcdf', time_periodic=False,
 
     """
     u, v, w = [], [], []
-
     for y in range(date_bnds[0].year, date_bnds[1].year + 1):
         for m in range(date_bnds[0].month, date_bnds[1].month + 1):
             u.append(cfg.ofam/('ocean_u_{}_{:02d}.nc'.format(y, m)))
@@ -101,10 +100,11 @@ def ofam_fieldset(date_bnds, field_method='netcdf', time_periodic=False,
 
     dimensions = {'U': vdims, 'V': vdims, 'W': vdims}
 
+    cs = (date_bnds[1]-date_bnds[0]).days, 51, 300, 1750)
     if field_method == 'netcdf':
         fieldset = FieldSet.from_netcdf(files, variables, dimensions,
                                         deferred_load=True,
-                                        field_chunksize='auto')
+                                        field_chunksize=cs)
     elif field_method == 'b_grid':
         fieldset = FieldSet.from_b_grid_dataset(files, variables, dimensions,
                                                 mesh='spherical',

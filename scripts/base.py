@@ -26,7 +26,7 @@ from datetime import timedelta, datetime
 from argparse import ArgumentParser
 ts = time.time()
 now = datetime.now()
-
+from tools import get_date
 logger = tools.mlogger(Path(sys.argv[0]).stem, parcels=True)
 
 
@@ -37,8 +37,8 @@ def run_EUC(dy=0.8, dz=25, lon=190, lat=2.6, year_i=1981, year_f=2012,
     """Run Lagrangian EUC particle experiment."""
     # Define Fieldset and ParticleSet parameters.
     # Start and end dates.
-    date_bnds = [tools.get_date(year_i, 1, 1),
-                 tools.get_date(year_f, 12, 'max')]
+    date_bnds = [get_date(year_i, 1, 1),
+                 get_date(year_f, 12, 'max')]
     # Meridional and vertical distance between particles to release.
     p_lats = np.round(np.arange(-lat, lat + 0.1, dy), 2)
     p_depths = np.arange(25, 350 + dz, dz)
