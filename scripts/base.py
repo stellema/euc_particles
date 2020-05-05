@@ -88,16 +88,23 @@ def run_EUC(dy=0.8, dz=25, lon=190, year_i=1981, year_f=2012,
 
 if __name__ == "__main__":
     p = ArgumentParser(description="""Run lagrangian EUC experiment""")
-    p.add_argument('-y', '--dy', default=0.1, help='Particle latitude spacing')
-    p.add_argument('-z', '--dz', default=25, help='Particle depth spacing [m]')
-    p.add_argument('-x', '--lon', default=190, help='Particle start longitude')
-    p.add_argument('-i', '--year_i', default=1981, help='Start year')
-    p.add_argument('-f', '--year_f', default=2012, help='End year')
-    p.add_argument('-d', '--dt', default=240, help='Timestep [min]')
-    p.add_argument('-r', '--repeatdt', default=6, help='Repeat interval [day]')
-    p.add_argument('-o', '--outputdt', default=1, help='Write interval [day]')
-    p.add_argument('-t', '--transport', default=True, help='Add transport')
-    p.add_argument('-w', '--fieldset', default=False, help='Save fieldset')
+    p.add_argument('-y', '--dy', default=0.1, help='Particle latitude spacing',
+                   type=float)
+    p.add_argument('-z', '--dz', default=25, help='Particle depth spacing [m]',
+                   type=int)
+    p.add_argument('-x', '--lon', default=190, help='Particle start longitude',
+                   type=int)
+    p.add_argument('-i', '--year_i', default=1981, help='Start year', type=int)
+    p.add_argument('-f', '--year_f', default=2012, help='End year', type=int)
+    p.add_argument('-d', '--dt', default=240, help='Timestep [min]', type=int)
+    p.add_argument('-r', '--repeatdt', default=6, help='Repeat interval [day]',
+                   type=int)
+    p.add_argument('-o', '--outputdt', default=1, help='Write interval [day]',
+                   type=int)
+    p.add_argument('-t', '--transport', default=True, help='Add transport',
+                   type=bool)
+    p.add_argument('-w', '--fieldset', default=False, help='Save fieldset',
+                   type=bool)
     args = p.parse_args()
 
     run_EUC(dy=args.dy, dz=args.dz, lon=args.lon,
