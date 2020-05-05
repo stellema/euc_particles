@@ -1,0 +1,127 @@
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+base:INFO:Executing: 1981-01-01 00:00:00 to 1981-12-31 00:00:00
+base:INFO:Runtime: 364 days
+base:INFO:Timestep (dt): 240 minutes
+base:INFO:Output (dt): 1 days
+base:INFO:Repeat release: 6 days
+base:INFO:Depths: 14 dz=25 [25 to 350]
+base:INFO:Latitudes: 14 dy=0.4 [-2.6 to 2.6]
+base:INFO:Longitudes: 1 [190]
+base:INFO:Particles (/repeatdt): 196
+base:INFO:Particles (total): 11760
+base:INFO:Time decorator used.
+--- Logging error ---
+Traceback (most recent call last):
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.01/lib/python3.7/logging/__init__.py", line 1025, in emit
+    msg = self.format(record)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.01/lib/python3.7/logging/__init__.py", line 869, in format
+    return fmt.format(record)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.01/lib/python3.7/logging/__init__.py", line 608, in format
+    record.message = record.getMessage()
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.01/lib/python3.7/logging/__init__.py", line 369, in getMessage
+    msg = msg % self.args
+TypeError: not all arguments converted during string formatting
+Call stack:
+  File "/g/data/e14/as3189/OFAM/scripts/base.py", line 121, in <module>
+    add_transport=args.transport, write_fieldset=args.fieldset)
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 121, in timed
+    result = method(*args, **kw)
+  File "/g/data/e14/as3189/OFAM/scripts/base.py", line 69, in run_EUC
+    logger.info('Fieldset import method.', field_method)
+Message: 'Fieldset import method.'
+Arguments: ('netcdf',)
+--- Logging error ---
+Traceback (most recent call last):
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.01/lib/python3.7/logging/__init__.py", line 1025, in emit
+    msg = self.format(record)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.01/lib/python3.7/logging/__init__.py", line 869, in format
+    return fmt.format(record)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.01/lib/python3.7/logging/__init__.py", line 608, in format
+    record.message = record.getMessage()
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.01/lib/python3.7/logging/__init__.py", line 369, in getMessage
+    msg = msg % self.args
+TypeError: not all arguments converted during string formatting
+Call stack:
+  File "/g/data/e14/as3189/OFAM/scripts/base.py", line 121, in <module>
+    add_transport=args.transport, write_fieldset=args.fieldset)
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 121, in timed
+    result = method(*args, **kw)
+  File "/g/data/e14/as3189/OFAM/scripts/base.py", line 69, in run_EUC
+    logger.info('Fieldset import method.', field_method)
+Message: 'Fieldset import method.'
+Arguments: ('netcdf',)
+WARNING: Casting lon data to np.float32
+WARNING: Casting lat data to np.float32
+WARNING: Casting depth data to np.float32
+base:INFO:ofam_fieldset: 0:0:01.63 total: 1.63 seconds.
+base:INFO:ParticleFile_1981-1981_v1i: Started.
+WARNING: Particle initialisation from field can be very slow as it is computed in scipy mode.
+base:INFO:EUC_pset: 0:0:20.31 total: 20.31 seconds.
+base:DEBUG:Particles removed: 93
+base:INFO:remove_westward_particles: 0:0:00.03 total: 0.03 seconds.
+base:DEBUG:ParticleFile_1981-1981_v1i: Output file.
+base:INFO:ParticleFile_1981-1981_v1i:  AdvectionRK4_3D
+base:DEBUG:ParticleFile_1981-1981_v1i: Excecute particle set..
+INFO: Compiled tparticleAdvectionRK4_3D ==> /jobfs/5083114.gadi-pbs/parcels-12904/2af2fdf290ec367dd410784a189cb96b_0.so
+N/A% (0 of 31449600.0) |                 | Elapsed Time: 0:00:00 ETA:  --:--:--
+  0% (86400.0 of 31449600.0) |           | Elapsed Time: 0:00:00 ETA:   0:03:24
+  0% (172800.0 of 31449600.0) |          | Elapsed Time: 0:00:02 ETA:   0:13:35
+  0% (259200.0 of 31449600.0) |          | Elapsed Time: 0:00:05 ETA:   0:13:35
+  1% (345600.0 of 31449600.0) |          | Elapsed Time: 0:00:07 ETA:   0:15:52
+  1% (432000.0 of 31449600.0) |          | Elapsed Time: 0:00:10 ETA:   0:14:01
+  1% (518400.0 of 31449600.0) |          | Elapsed Time: 0:00:28 ETA:   1:49:49
+  1% (604800.0 of 31449600.0) |          | Elapsed Time: 0:00:31 ETA:   0:15:54
+  2% (691200.0 of 31449600.0) |          | Elapsed Time: 0:00:33 ETA:   0:13:36
+  2% (777600.0 of 31449600.0) |          | Elapsed Time: 0:00:35 ETA:   0:11:27
+  2% (864000.0 of 31449600.0) |          | Elapsed Time: 0:00:37 ETA:   0:11:38
+  3% (950400.0 of 31449600.0) |          | Elapsed Time: 0:00:39 ETA:   0:12:24
+  3% (1036800.0 of 31449600.0) |         | Elapsed Time: 0:01:00 ETA:   2:06:09
+  3% (1123200.0 of 31449600.0) |         | Elapsed Time: 0:01:04 ETA:   0:21:03
+  3% (1209600.0 of 31449600.0) |         | Elapsed Time: 0:01:08 ETA:   0:24:20
+  4% (1296000.0 of 31449600.0) |         | Elapsed Time: 0:01:14 ETA:   0:37:39
+  4% (1382400.0 of 31449600.0) |         | Elapsed Time: 0:01:27 ETA:   1:14:48
+  4% (1468800.0 of 31449600.0) |         | Elapsed Time: 0:01:31 ETA:   0:19:37
+  4% (1555200.0 of 31449600.0) |         | Elapsed Time: 0:01:53 ETA:   2:06:40
+  5% (1641600.0 of 31449600.0) |         | Elapsed Time: 0:01:58 ETA:   0:32:03
+  5% (1728000.0 of 31449600.0) |         | Elapsed Time: 0:02:03 ETA:   0:28:00
+  5% (1814400.0 of 31449600.0) |         | Elapsed Time: 0:02:16 ETA:   1:16:04
+  6% (1900800.0 of 31449600.0) |         | Elapsed Time: 0:02:20 ETA:   0:21:57
+  6% (1987200.0 of 31449600.0) |         | Elapsed Time: 0:02:28 ETA:   0:46:51
+  6% (2073600.0 of 31449600.0) |         | Elapsed Time: 0:03:12 ETA:   4:08:53
+  6% (2160000.0 of 31449600.0) |         | Elapsed Time: 0:03:37 ETA:   2:19:52
+  7% (2246400.0 of 31449600.0) |         | Elapsed Time: 0:04:03 ETA:   2:27:38
+  7% (2332800.0 of 31449600.0) |         | Elapsed Time: 0:04:22 ETA:   1:44:10
+
+------------------------------------------------------------------------
+Job 5083114 has exceeded memory allocation on node gadi-cpu-clx-1945.gadi.nci.org.au
+Process "bash", pid 64731, rss 3428352, vmem 238637056
+Process "5083114.gadi-pb", pid 65492, rss 3162112, vmem 228110336
+Process "python3", pid 65503, rss 10746396672, vmem 11827908608
+Process "orted", pid 65647, rss 18735104, vmem 388493312
+------------------------------------------------------------------------
+For more information visit https://opus.nci.org.au/x/SwGRAQ
+------------------------------------------------------------------------
+/local/spool/pbs/mom_priv/jobs/5083114.gadi-pbs.SC: line 15: 65503 Killed                  python3 /g/data/e14/as3189/OFAM/scripts/base.py -dy 0.4 -z 25 -x 190 -i 1981 -f 1981

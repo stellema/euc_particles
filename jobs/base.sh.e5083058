@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/base.py", line 17, in <module>
+    import main
+  File "/g/data/e14/as3189/OFAM/scripts/main.py", line 103
+    cs = (date_bnds[1]-date_bnds[0]).days, 51, 300, 1750)
+                                                        ^
+SyntaxError: invalid syntax

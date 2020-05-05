@@ -75,3 +75,105 @@
 2020-05-05 18:25:04,254:run_EUC:INFO:Particles (/repeatdt): 196
 2020-05-05 18:25:04,254:run_EUC:INFO:Particles (total): 131124
 2020-05-05 18:25:04,255:run_EUC:INFO:Time decorator used.
+2020-05-05 18:27:17,413:timed:INFO:ofam_fieldset: 0:2:13.16 total: 133.16 seconds.
+2020-05-05 18:27:17,415:EUC_particles:INFO:ParticleFile_1981-1991_v0i: Started.
+2020-05-05 18:50:40,787:timed:INFO:EUC_pset: 0:23:23.37 total: 1403.37 seconds.
+2020-05-05 18:50:40,828:remove_westward_particles:DEBUG:Particles removed: 109
+2020-05-05 18:50:40,828:timed:INFO:remove_westward_particles: 0:0:00.04 total: 0.04 seconds.
+2020-05-05 18:50:40,828:EUC_particles:DEBUG:ParticleFile_1981-1991_v0i: Output file.
+2020-05-05 18:50:40,849:EUC_particles:INFO:ParticleFile_1981-1991_v0i: Kernels: pset.Kernel(Age) + AdvectionRK4_3D
+2020-05-05 19:18:38,364:run_EUC:INFO:Executing: 1981-01-01 00:00:00 to 1981-12-31 00:00:00
+2020-05-05 19:18:38,367:run_EUC:INFO:Runtime: 364 days
+2020-05-05 19:18:38,367:run_EUC:INFO:Timestep (dt): 240 minutes
+2020-05-05 19:18:38,368:run_EUC:INFO:Output (dt): 1 days
+2020-05-05 19:18:38,368:run_EUC:INFO:Repeat release: 6 days
+2020-05-05 19:18:38,368:run_EUC:INFO:Depths: 14 dz=25 [25 to 350]
+2020-05-05 19:18:38,368:run_EUC:INFO:Latitudes: 14 dy=0.4 [-2.6 to 2.6]
+2020-05-05 19:18:38,368:run_EUC:INFO:Longitudes: 1 [190]
+2020-05-05 19:18:38,369:run_EUC:INFO:Particles (/repeatdt): 196
+2020-05-05 19:18:38,369:run_EUC:INFO:Particles (total): 11760
+2020-05-05 19:18:38,369:run_EUC:INFO:Time decorator used.
+2020-05-05 19:22:09,857:run_EUC:INFO:Executing: 1981-01-01 00:00:00 to 1981-12-31 00:00:00
+2020-05-05 19:22:09,859:run_EUC:INFO:Runtime: 364 days
+2020-05-05 19:22:09,859:run_EUC:INFO:Timestep (dt): 240 minutes
+2020-05-05 19:22:09,859:run_EUC:INFO:Output (dt): 1 days
+2020-05-05 19:22:09,859:run_EUC:INFO:Repeat release: 6 days
+2020-05-05 19:22:09,859:run_EUC:INFO:Depths: 14 dz=25 [25 to 350]
+2020-05-05 19:22:09,859:run_EUC:INFO:Latitudes: 14 dy=0.4 [-2.6 to 2.6]
+2020-05-05 19:22:09,859:run_EUC:INFO:Longitudes: 1 [190]
+2020-05-05 19:22:09,860:run_EUC:INFO:Particles (/repeatdt): 196
+2020-05-05 19:22:09,860:run_EUC:INFO:Particles (total): 11760
+2020-05-05 19:22:09,860:run_EUC:INFO:Time decorator used.
+2020-05-05 19:22:11,792:timed:INFO:ofam_fieldset: 0:0:01.92 total: 1.92 seconds.
+2020-05-05 19:22:11,793:EUC_particles:INFO:ParticleFile_1981-1981_v0i: Started.
+2020-05-05 19:22:11,819:timed:INFO:EUC_pset: 0:0:00.03 total: 0.03 seconds.
+2020-05-05 19:24:51,136:run_EUC:INFO:Executing: 1981-01-01 00:00:00 to 1981-12-31 00:00:00
+2020-05-05 19:24:51,138:run_EUC:INFO:Runtime: 364 days
+2020-05-05 19:24:51,138:run_EUC:INFO:Timestep (dt): 240 minutes
+2020-05-05 19:24:51,138:run_EUC:INFO:Output (dt): 1 days
+2020-05-05 19:24:51,138:run_EUC:INFO:Repeat release: 6 days
+2020-05-05 19:24:51,138:run_EUC:INFO:Depths: 14 dz=25 [25 to 350]
+2020-05-05 19:24:51,138:run_EUC:INFO:Latitudes: 14 dy=0.4 [-2.6 to 2.6]
+2020-05-05 19:24:51,138:run_EUC:INFO:Longitudes: 1 [190]
+2020-05-05 19:24:51,138:run_EUC:INFO:Particles (/repeatdt): 196
+2020-05-05 19:24:51,138:run_EUC:INFO:Particles (total): 11760
+2020-05-05 19:24:51,139:run_EUC:INFO:Time decorator used.
+2020-05-05 19:25:02,030:timed:INFO:ofam_fieldset: 0:0:10.88 total: 10.88 seconds.
+2020-05-05 19:25:02,031:EUC_particles:INFO:ParticleFile_1981-1981_v0i: Started.
+2020-05-05 19:26:41,361:timed:INFO:EUC_pset: 0:1:39.33 total: 99.33 seconds.
+2020-05-05 19:26:41,396:remove_westward_particles:DEBUG:Particles removed: 93
+2020-05-05 19:26:41,397:timed:INFO:remove_westward_particles: 0:0:00.04 total: 0.04 seconds.
+2020-05-05 19:26:41,397:EUC_particles:DEBUG:ParticleFile_1981-1981_v0i: Output file.
+2020-05-05 19:26:41,429:EUC_particles:INFO:ParticleFile_1981-1981_v0i:  AdvectionRK4_3D
+2020-05-05 19:26:41,429:EUC_particles:DEBUG:ParticleFile_1981-1981_v0i: Excecute particle set..
+2020-05-05 19:42:50,780:run_EUC:INFO:Executing: 1981-01-01 00:00:00 to 1981-12-31 00:00:00
+2020-05-05 19:42:50,786:run_EUC:INFO:Runtime: 364 days
+2020-05-05 19:42:50,786:run_EUC:INFO:Timestep (dt): 240 minutes
+2020-05-05 19:42:50,786:run_EUC:INFO:Output (dt): 1 days
+2020-05-05 19:42:50,786:run_EUC:INFO:Repeat release: 6 days
+2020-05-05 19:42:50,787:run_EUC:INFO:Depths: 14 dz=25 [25 to 350]
+2020-05-05 19:42:50,787:run_EUC:INFO:Latitudes: 14 dy=0.4 [-2.6 to 2.6]
+2020-05-05 19:42:50,787:run_EUC:INFO:Longitudes: 1 [190]
+2020-05-05 19:42:50,787:run_EUC:INFO:Particles (/repeatdt): 196
+2020-05-05 19:42:50,787:run_EUC:INFO:Particles (total): 11760
+2020-05-05 19:42:50,787:run_EUC:INFO:Time decorator used.
+2020-05-05 19:43:08,918:timed:INFO:ofam_fieldset: 0:0:18.12 total: 18.12 seconds.
+2020-05-05 19:43:09,009:EUC_particles:INFO:ParticleFile_1981-1981_v1i: Started.
+2020-05-05 19:46:48,550:run_EUC:INFO:Executing: 1981-01-01 00:00:00 to 1981-12-31 00:00:00
+2020-05-05 19:46:48,551:run_EUC:INFO:Runtime: 364 days
+2020-05-05 19:46:48,551:run_EUC:INFO:Timestep (dt): 240 minutes
+2020-05-05 19:46:48,551:run_EUC:INFO:Output (dt): 1 days
+2020-05-05 19:46:48,551:run_EUC:INFO:Repeat release: 6 days
+2020-05-05 19:46:48,551:run_EUC:INFO:Depths: 14 dz=25 [25 to 350]
+2020-05-05 19:46:48,551:run_EUC:INFO:Latitudes: 14 dy=0.4 [-2.6 to 2.6]
+2020-05-05 19:46:48,551:run_EUC:INFO:Longitudes: 1 [190]
+2020-05-05 19:46:48,551:run_EUC:INFO:Particles (/repeatdt): 196
+2020-05-05 19:46:48,551:run_EUC:INFO:Particles (total): 11760
+2020-05-05 19:46:48,552:run_EUC:INFO:Time decorator used.
+2020-05-05 19:46:50,186:timed:INFO:ofam_fieldset: 0:0:01.63 total: 1.63 seconds.
+2020-05-05 19:46:50,187:EUC_particles:INFO:ParticleFile_1981-1981_v1i: Started.
+2020-05-05 19:47:10,497:timed:INFO:EUC_pset: 0:0:20.31 total: 20.31 seconds.
+2020-05-05 19:47:10,530:remove_westward_particles:DEBUG:Particles removed: 93
+2020-05-05 19:47:10,530:timed:INFO:remove_westward_particles: 0:0:00.03 total: 0.03 seconds.
+2020-05-05 19:47:10,530:EUC_particles:DEBUG:ParticleFile_1981-1981_v1i: Output file.
+2020-05-05 19:47:10,531:EUC_particles:INFO:ParticleFile_1981-1981_v1i:  AdvectionRK4_3D
+2020-05-05 19:47:10,531:EUC_particles:DEBUG:ParticleFile_1981-1981_v1i: Excecute particle set..
+2020-05-05 22:45:59,931:run_EUC:INFO:Executing: 1981-01-01 00:00:00 to 1981-12-31 00:00:00
+2020-05-05 22:45:59,945:run_EUC:INFO:Runtime: 364 days
+2020-05-05 22:45:59,946:run_EUC:INFO:Timestep (dt): 240 minutes
+2020-05-05 22:45:59,946:run_EUC:INFO:Output (dt): 1 days
+2020-05-05 22:45:59,946:run_EUC:INFO:Repeat release: 6 days
+2020-05-05 22:45:59,946:run_EUC:INFO:Depths: 14 dz=25 [25 to 350]
+2020-05-05 22:45:59,946:run_EUC:INFO:Latitudes: 14 dy=0.4 [-2.6 to 2.6]
+2020-05-05 22:45:59,947:run_EUC:INFO:Longitudes: 1 [190]
+2020-05-05 22:45:59,947:run_EUC:INFO:Particles (/repeatdt): 196
+2020-05-05 22:45:59,947:run_EUC:INFO:Particles (total): 11760
+2020-05-05 22:45:59,947:run_EUC:INFO:Time decorator used.
+2020-05-05 22:46:08,921:timed:INFO:ofam_fieldset: 0:0:08.95 total: 8.95 seconds.
+2020-05-05 22:46:08,924:EUC_particles:INFO:ParticleFile_1981-1981_v1i: Started.
+2020-05-05 22:46:36,693:timed:INFO:EUC_pset: 0:0:27.77 total: 27.77 seconds.
+2020-05-05 22:46:36,728:remove_westward_particles:DEBUG:Particles removed: 93
+2020-05-05 22:46:36,729:timed:INFO:remove_westward_particles: 0:0:00.04 total: 0.04 seconds.
+2020-05-05 22:46:36,729:EUC_particles:DEBUG:ParticleFile_1981-1981_v1i: Output file.
+2020-05-05 22:46:36,730:EUC_particles:INFO:ParticleFile_1981-1981_v1i:  AdvectionRK4_3D
+2020-05-05 22:46:36,730:EUC_particles:DEBUG:ParticleFile_1981-1981_v1i: Excecute particle set..

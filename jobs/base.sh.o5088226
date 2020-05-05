@@ -1,0 +1,13 @@
+
+======================================================================================
+                  Resource Usage on 2020-05-05 23:36:25:
+   Job Id:             5088226.gadi-pbs
+   Project:            e14
+   Exit Status:        137 (Linux Signal 9 SIGKILL Kill, unblockable)
+   Service Units:      33.38
+   NCPUs Requested:    1                      NCPUs Used: 1               
+                                           CPU Time Used: 00:40:24                                   
+   Memory Requested:   80.0GB                Memory Used: 75.42GB         
+   Walltime requested: 24:00:00            Walltime Used: 00:50:04        
+   JobFS requested:    100.0MB                JobFS used: 260.87KB        
+======================================================================================

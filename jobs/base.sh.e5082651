@@ -1,0 +1,97 @@
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+base:INFO:Executing: 1981-01-01 00:00:00 to 1981-12-31 00:00:00
+base:INFO:Runtime: 364 days
+base:INFO:Timestep (dt): 240 minutes
+base:INFO:Output (dt): 1 days
+base:INFO:Repeat release: 6 days
+base:INFO:Depths: 14 dz=25 [25 to 350]
+base:INFO:Latitudes: 14 dy=0.4 [-2.6 to 2.6]
+base:INFO:Longitudes: 1 [190]
+base:INFO:Particles (/repeatdt): 196
+base:INFO:Particles (total): 11760
+base:INFO:Time decorator used.
+--- Logging error ---
+Traceback (most recent call last):
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.01/lib/python3.7/logging/__init__.py", line 1025, in emit
+    msg = self.format(record)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.01/lib/python3.7/logging/__init__.py", line 869, in format
+    return fmt.format(record)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.01/lib/python3.7/logging/__init__.py", line 608, in format
+    record.message = record.getMessage()
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.01/lib/python3.7/logging/__init__.py", line 369, in getMessage
+    msg = msg % self.args
+TypeError: not all arguments converted during string formatting
+Call stack:
+  File "/g/data/e14/as3189/OFAM/scripts/base.py", line 121, in <module>
+    add_transport=args.transport, write_fieldset=args.fieldset)
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 121, in timed
+    result = method(*args, **kw)
+  File "/g/data/e14/as3189/OFAM/scripts/base.py", line 69, in run_EUC
+    logger.info('Fieldset import method.', field_method)
+Message: 'Fieldset import method.'
+Arguments: ('netcdf',)
+--- Logging error ---
+Traceback (most recent call last):
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.01/lib/python3.7/logging/__init__.py", line 1025, in emit
+    msg = self.format(record)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.01/lib/python3.7/logging/__init__.py", line 869, in format
+    return fmt.format(record)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.01/lib/python3.7/logging/__init__.py", line 608, in format
+    record.message = record.getMessage()
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.01/lib/python3.7/logging/__init__.py", line 369, in getMessage
+    msg = msg % self.args
+TypeError: not all arguments converted during string formatting
+Call stack:
+  File "/g/data/e14/as3189/OFAM/scripts/base.py", line 121, in <module>
+    add_transport=args.transport, write_fieldset=args.fieldset)
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 121, in timed
+    result = method(*args, **kw)
+  File "/g/data/e14/as3189/OFAM/scripts/base.py", line 69, in run_EUC
+    logger.info('Fieldset import method.', field_method)
+Message: 'Fieldset import method.'
+Arguments: ('netcdf',)
+WARNING: Casting lon data to np.float32
+WARNING: Casting lat data to np.float32
+WARNING: Casting depth data to np.float32
+base:INFO:ofam_fieldset: 0:0:01.92 total: 1.92 seconds.
+base:INFO:ParticleFile_1981-1981_v0i: Started.
+base:INFO:EUC_pset: 0:0:00.03 total: 0.03 seconds.
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/base.py", line 121, in <module>
+    add_transport=args.transport, write_fieldset=args.fieldset)
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 121, in timed
+    result = method(*args, **kw)
+  File "/g/data/e14/as3189/OFAM/scripts/base.py", line 76, in run_EUC
+    remove_westward=True)
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 121, in timed
+    result = method(*args, **kw)
+  File "/g/data/e14/as3189/OFAM/scripts/main.py", line 243, in EUC_particles
+    remove_westward_particles(pset)
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 121, in timed
+    result = method(*args, **kw)
+  File "/g/data/e14/as3189/OFAM/scripts/main.py", line 168, in remove_westward_particles
+    if p.u < 0. and p.age == 0.:
+AttributeError: 'JITParticle' object has no attribute 'u'

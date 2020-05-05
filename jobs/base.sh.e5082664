@@ -1,0 +1,110 @@
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+base:INFO:Executing: 1981-01-01 00:00:00 to 1981-12-31 00:00:00
+base:INFO:Runtime: 364 days
+base:INFO:Timestep (dt): 240 minutes
+base:INFO:Output (dt): 1 days
+base:INFO:Repeat release: 6 days
+base:INFO:Depths: 14 dz=25 [25 to 350]
+base:INFO:Latitudes: 14 dy=0.4 [-2.6 to 2.6]
+base:INFO:Longitudes: 1 [190]
+base:INFO:Particles (/repeatdt): 196
+base:INFO:Particles (total): 11760
+base:INFO:Time decorator used.
+--- Logging error ---
+Traceback (most recent call last):
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.01/lib/python3.7/logging/__init__.py", line 1025, in emit
+    msg = self.format(record)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.01/lib/python3.7/logging/__init__.py", line 869, in format
+    return fmt.format(record)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.01/lib/python3.7/logging/__init__.py", line 608, in format
+    record.message = record.getMessage()
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.01/lib/python3.7/logging/__init__.py", line 369, in getMessage
+    msg = msg % self.args
+TypeError: not all arguments converted during string formatting
+Call stack:
+  File "/g/data/e14/as3189/OFAM/scripts/base.py", line 121, in <module>
+    add_transport=args.transport, write_fieldset=args.fieldset)
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 121, in timed
+    result = method(*args, **kw)
+  File "/g/data/e14/as3189/OFAM/scripts/base.py", line 69, in run_EUC
+    logger.info('Fieldset import method.', field_method)
+Message: 'Fieldset import method.'
+Arguments: ('netcdf',)
+--- Logging error ---
+Traceback (most recent call last):
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.01/lib/python3.7/logging/__init__.py", line 1025, in emit
+    msg = self.format(record)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.01/lib/python3.7/logging/__init__.py", line 869, in format
+    return fmt.format(record)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.01/lib/python3.7/logging/__init__.py", line 608, in format
+    record.message = record.getMessage()
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.01/lib/python3.7/logging/__init__.py", line 369, in getMessage
+    msg = msg % self.args
+TypeError: not all arguments converted during string formatting
+Call stack:
+  File "/g/data/e14/as3189/OFAM/scripts/base.py", line 121, in <module>
+    add_transport=args.transport, write_fieldset=args.fieldset)
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 121, in timed
+    result = method(*args, **kw)
+  File "/g/data/e14/as3189/OFAM/scripts/base.py", line 69, in run_EUC
+    logger.info('Fieldset import method.', field_method)
+Message: 'Fieldset import method.'
+Arguments: ('netcdf',)
+WARNING: Casting lon data to np.float32
+WARNING: Casting lat data to np.float32
+WARNING: Casting depth data to np.float32
+base:INFO:ofam_fieldset: 0:0:10.88 total: 10.88 seconds.
+base:INFO:ParticleFile_1981-1981_v0i: Started.
+INFO: Unable to locate chunking hints from dask, thus estimating the max. chunk size heuristically. Please consider defining the 'chunk-size' for 'array' in your local dask configuration file (see http://oceanparcels.org/faq.html#field_chunking_config and https://docs.dask.org).
+WARNING: Particle initialisation from field can be very slow as it is computed in scipy mode.
+base:INFO:EUC_pset: 0:1:39.33 total: 99.33 seconds.
+base:DEBUG:Particles removed: 93
+base:INFO:remove_westward_particles: 0:0:00.04 total: 0.04 seconds.
+base:DEBUG:ParticleFile_1981-1981_v0i: Output file.
+base:INFO:ParticleFile_1981-1981_v0i:  AdvectionRK4_3D
+base:DEBUG:ParticleFile_1981-1981_v0i: Excecute particle set..
+INFO: Compiled tparticleAdvectionRK4_3D ==> /jobfs/5082664.gadi-pbs/parcels-12904/1c5976f49659563ae3257d88adacfa3b_0.so
+N/A% (0 of 31449600.0) |                 | Elapsed Time: 0:00:00 ETA:  --:--:--
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/base.py", line 121, in <module>
+    add_transport=args.transport, write_fieldset=args.fieldset)
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 121, in timed
+    result = method(*args, **kw)
+  File "/g/data/e14/as3189/OFAM/scripts/base.py", line 76, in run_EUC
+    remove_westward=True)
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 121, in timed
+    result = method(*args, **kw)
+  File "/g/data/e14/as3189/OFAM/scripts/main.py", line 258, in EUC_particles
+    verbose_progress=True)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.01/lib/python3.7/site-packages/parcels/particleset.py", line 527, in execute
+    self.kernel.execute(self, endtime=time, dt=dt, recovery=recovery, output_file=output_file)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.01/lib/python3.7/site-packages/parcels/kernel.py", line 341, in execute
+    self.execute_jit(pset, endtime, dt)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.01/lib/python3.7/site-packages/parcels/kernel.py", line 233, in execute_jit
+    f.chunk_data()
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.01/lib/python3.7/site-packages/parcels/field.py", line 937, in chunk_data
+    self.data_chunks[block_id] = None
+IndexError: list assignment index out of range

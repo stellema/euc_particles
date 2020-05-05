@@ -1,0 +1,79 @@
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+base:INFO:Executing: 1981-01-01 00:00:00 to 1991-12-31 00:00:00
+base:INFO:Runtime: 4016 days
+base:INFO:Timestep (dt): 240 minutes
+base:INFO:Output (dt): 1 days
+base:INFO:Repeat release: 6 days
+base:INFO:Depths: 14 dz=25 [25 to 350]
+base:INFO:Latitudes: 14 dy=0.4 [-2.6 to 2.6]
+base:INFO:Longitudes: 1 [190]
+base:INFO:Particles (/repeatdt): 196
+base:INFO:Particles (total): 131124
+base:INFO:Time decorator used.
+WARNING: Casting lon data to np.float32
+WARNING: Casting lat data to np.float32
+WARNING: Casting depth data to np.float32
+base:INFO:ofam_fieldset: 0:2:13.16 total: 133.16 seconds.
+base:INFO:ParticleFile_1981-1991_v0i: Started.
+INFO: Unable to locate chunking hints from dask, thus estimating the max. chunk size heuristically. Please consider defining the 'chunk-size' for 'array' in your local dask configuration file (see http://oceanparcels.org/faq.html#field_chunking_config and https://docs.dask.org).
+WARNING: Particle initialisation from field can be very slow as it is computed in scipy mode.
+base:INFO:EUC_pset: 0:23:23.37 total: 1403.37 seconds.
+base:DEBUG:Particles removed: 109
+base:INFO:remove_westward_particles: 0:0:00.04 total: 0.04 seconds.
+base:DEBUG:ParticleFile_1981-1991_v0i: Output file.
+base:INFO:ParticleFile_1981-1991_v0i: Kernels: pset.Kernel(Age) + AdvectionRK4_3D
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/base.py", line 115, in <module>
+    add_transport=args.transport, write_fieldset=args.fieldset)
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 121, in timed
+    result = method(*args, **kw)
+  File "/g/data/e14/as3189/OFAM/scripts/base.py", line 75, in run_EUC
+    remove_westward=True)
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 121, in timed
+    result = method(*args, **kw)
+  File "/g/data/e14/as3189/OFAM/scripts/main.py", line 252, in EUC_particles
+    kernels = pset.Kernel(Age) + AdvectionRK4_3D
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.01/lib/python3.7/site-packages/parcels/particleset.py", line 625, in Kernel
+    delete_cfiles=delete_cfiles)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.01/lib/python3.7/site-packages/parcels/kernel.py", line 136, in __init__
+    self.funcvars)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.01/lib/python3.7/site-packages/parcels/codegenerator.py", line 388, in generate
+    self.visit(py_ast)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.01/lib/python3.7/ast.py", line 271, in visit
+    return visitor(node)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.01/lib/python3.7/site-packages/parcels/codegenerator.py", line 419, in visit_FunctionDef
+    self.visit(stmt)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.01/lib/python3.7/ast.py", line 271, in visit
+    return visitor(node)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.01/lib/python3.7/site-packages/parcels/codegenerator.py", line 832, in visit_Return
+    self.visit(node.value)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.01/lib/python3.7/ast.py", line 271, in visit
+    return visitor(node)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.01/lib/python3.7/ast.py", line 275, in generic_visit
+    for field, value in iter_fields(node):
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.01/lib/python3.7/ast.py", line 186, in iter_fields
+    for field in node._fields:
+AttributeError: 'NoneType' object has no attribute '_fields'
