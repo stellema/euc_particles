@@ -56,12 +56,12 @@ from collections import OrderedDict
 from parcels import *
 # from parcels import FieldSet, ParticleSet, JITParticle
 # from parcels import ErrorCode, Variable, AdvectionRK4_3D
-
+from tools import timeit
 
 logger = logging.getLogger(Path(sys.argv[0]).stem)
 
 
-@tools.timeit
+@timeit
 def ofam_fieldset(date_bnds, time_periodic=False, deferred_load=True):
     """Create a 3D parcels fieldset from OFAM model output.
 
@@ -155,7 +155,7 @@ def Distance(particle, fieldset, time):
     return
 
 
-@tools.timeit
+@timeit
 def remove_westward_particles(pset):
     """Delete initially westward particles from the ParticleSet.
 
@@ -175,7 +175,7 @@ def remove_westward_particles(pset):
         logger.debug('Particles travelling in the wrong direction.')
 
 
-@tools.timeit
+@timeit
 def EUC_pset(fieldset, pclass, p_lats, p_lons, p_depths,
              pset_start, repeatdt):
     """Create a ParticleSet."""
@@ -189,7 +189,7 @@ def EUC_pset(fieldset, pclass, p_lats, p_lons, p_depths,
     return pset
 
 
-@tools.timeit
+@timeit
 def EUC_particles(fieldset, date_bnds, p_lats, p_lons, p_depths,
                   dt, pset_start, repeatdt, runtime, outputdt,
                   remove_westward=True):
@@ -260,7 +260,7 @@ def EUC_particles(fieldset, date_bnds, p_lats, p_lons, p_depths,
     return pfile
 
 
-@tools.timeit
+@timeit
 def ParticleFile_transport(pfile, dy, dz, save=True):
     """Remove westward particles and calculate transport.
 
@@ -331,7 +331,7 @@ def ParticleFile_transport(pfile, dy, dz, save=True):
     return df
 
 
-@tools.timeit
+@timeit
 def plot3D(pfile):
     """Plot 3D figure of particle trajectories over time.
 

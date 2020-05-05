@@ -13,7 +13,6 @@
 
 # TODO: Specifiy specific start date (convert fieldset.U.grid.time[-1])
 
-# git pull stellema OFAM
 # """
 import main
 import cfg
@@ -30,9 +29,12 @@ now = datetime.now()
 
 logger = tools.mlogger(Path(sys.argv[0]).stem, parcels=True)
 
+
+@tools.timeit
 def run_EUC(dy=0.8, dz=25, lon=190, year_i=1981, year_f=2012,
             dt_mins=240, repeatdt_days=6, outputdt_days=1,
             add_transport=True, write_fieldset=False):
+    """Run Lagrangian EUC particle experiment."""
     # Define Fieldset and ParticleSet parameters.
     # Start and end dates.
     date_bnds = [tools.get_date(year_i, 1, 1),
@@ -111,3 +113,4 @@ if __name__ == "__main__":
             year_i=args.year_i, year_f=args.year_f, dt_mins=args.dt,
             repeatdt_days=args.repeatdt, outputdt_days=args.outputdt,
             add_transport=args.transport, write_fieldset=args.fieldset)
+
