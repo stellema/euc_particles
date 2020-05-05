@@ -12,4 +12,4 @@
 module use /g/data3/hh5/public/modules
 module load conda/analysis3-20.01
 
-python3 /g/data/e14/as3189/OFAM/scripts/base.py -y 0.4 -z 25 -x 190 -i 1981 -f 1991
+python3 /g/data/e14/as3189/OFAM/scripts/base.py -dy 0.4 -z 25 -x 190 -i 1981 -f 1991

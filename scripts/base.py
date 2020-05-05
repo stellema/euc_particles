@@ -31,16 +31,16 @@ logger = tools.mlogger(Path(sys.argv[0]).stem, parcels=True)
 
 
 @tools.timeit
-def run_EUC(dy=0.8, dz=25, lon=190, year_i=1981, year_f=2012,
+def run_EUC(dy=0.8, dz=25, lon=190, lat=2.6, year_i=1981, year_f=2012,
             dt_mins=240, repeatdt_days=6, outputdt_days=1,
-            add_transport=True, write_fieldset=False):
+            field_method='netcdf', add_transport=True, write_fieldset=False):
     """Run Lagrangian EUC particle experiment."""
     # Define Fieldset and ParticleSet parameters.
     # Start and end dates.
     date_bnds = [tools.get_date(year_i, 1, 1),
                  tools.get_date(year_f, 12, 'max')]
     # Meridional and vertical distance between particles to release.
-    p_lats = np.round(np.arange(-2.6, 2.6 + 0.1, dy), 2)
+    p_lats = np.round(np.arange(-lat, lat + 0.1, dy), 2)
     p_depths = np.arange(25, 350 + dz, dz)
     # Longitudes to release particles.
     p_lons = np.array([lon])
@@ -66,8 +66,9 @@ def run_EUC(dy=0.8, dz=25, lon=190, year_i=1981, year_f=2012,
     logger.info('Particles (total): {}'
                 .format(Z*X*Y*math.floor(runtime.days/repeatdt.days)))
     logger.info('Time decorator used.')
+    logger.info('Fieldset import method.', field_method)
 
-    fieldset = main.ofam_fieldset(date_bnds)
+    fieldset = main.ofam_fieldset(date_bnds, field_method=field_method)
     fieldset.mindepth = fieldset.U.depth[0]
     pset_start = fieldset.U.grid.time[-1]
     pfile = main.EUC_particles(fieldset, date_bnds, p_lats, p_lons, p_depths,
@@ -90,12 +91,14 @@ def run_EUC(dy=0.8, dz=25, lon=190, year_i=1981, year_f=2012,
 
 if __name__ == "__main__":
     p = ArgumentParser(description="""Run lagrangian EUC experiment""")
-    p.add_argument('-y', '--dy', default=0.1, help='Particle latitude spacing',
+    p.add_argument('-dy', '--dy', default=0.1, help='Particle latitude spacing',
                    type=float)
     p.add_argument('-z', '--dz', default=25, help='Particle depth spacing [m]',
                    type=int)
     p.add_argument('-x', '--lon', default=190, help='Particle start longitude',
                    type=int)
+    p.add_argument('-y', '--lat', default=2.6, help='Particle latitude bounds',
+                   type=float)
     p.add_argument('-i', '--year_i', default=1981, help='Start year', type=int)
     p.add_argument('-f', '--year_f', default=2012, help='End year', type=int)
     p.add_argument('-d', '--dt', default=240, help='Timestep [min]', type=int)
@@ -103,14 +106,17 @@ if __name__ == "__main__":
                    type=int)
     p.add_argument('-o', '--outputdt', default=1, help='Write interval [day]',
                    type=int)
+    p.add_argument('-f', '--fieldm', default='netcdf', help='Fieldset method',
+                   type=bool)
     p.add_argument('-t', '--transport', default=True, help='Add transport',
                    type=bool)
     p.add_argument('-w', '--fieldset', default=False, help='Save fieldset',
                    type=bool)
     args = p.parse_args()
 
-    run_EUC(dy=args.dy, dz=args.dz, lon=args.lon,
-            year_i=args.year_i, year_f=args.year_f, dt_mins=args.dt,
-            repeatdt_days=args.repeatdt, outputdt_days=args.outputdt,
+    run_EUC(dy=args.dy, dz=args.dz, lon=args.lon, lat=args.lat,
+            year_i=args.year_i,
+            year_f=args.year_f, dt_mins=args.dt, repeatdt_days=args.repeatdt,
+            outputdt_days=args.outputdt, field_method=args.fieldm,
             add_transport=args.transport, write_fieldset=args.fieldset)
 

@@ -62,7 +62,8 @@ logger = logging.getLogger(Path(sys.argv[0]).stem)
 
 
 @timeit
-def ofam_fieldset(date_bnds, time_periodic=False, deferred_load=True):
+def ofam_fieldset(date_bnds, field_method='netcdf', time_periodic=False,
+                  deferred_load=True):
     """Create a 3D parcels fieldset from OFAM model output.
 
     Between two dates useing FieldSet.from_b_grid_dataset.
@@ -87,30 +88,30 @@ def ofam_fieldset(date_bnds, time_periodic=False, deferred_load=True):
             v.append(cfg.ofam/('ocean_v_{}_{:02d}.nc'.format(y, m)))
             w.append(cfg.ofam/('ocean_w_{}_{:02d}.nc'.format(y, m)))
 
-    filenames = {'U': {'lon': u[0], 'lat': u[0], 'depth': w[0], 'data': u},
-                 'V': {'lon': u[0], 'lat': u[0], 'depth': w[0], 'data': v},
-                 'W': {'lon': u[0], 'lat': u[0], 'depth': w[0], 'data': w}}
+    files = {'U': {'lon': u[0], 'lat': u[0], 'depth': w[0], 'data': u},
+             'V': {'lon': u[0], 'lat': u[0], 'depth': w[0], 'data': v},
+             'W': {'lon': u[0], 'lat': u[0], 'depth': w[0], 'data': w}}
 
     vdims = {'lon': 'xu_ocean',
              'lat': 'yu_ocean',
              'depth': 'sw_ocean',
              'time': 'Time'}
 
-    variables = {'U': 'u',
-                 'V': 'v',
-                 'W': 'w'}
+    variables = {'U': 'u', 'V': 'v', 'W': 'w'}
 
-    dimensions = {'U': vdims,
-                  'V': vdims,
-                  'W': vdims}
+    dimensions = {'U': vdims, 'V': vdims, 'W': vdims}
 
-    # fieldset = FieldSet.from_b_grid_dataset(filenames, variables, dimensions,
-    #                                         mesh='spherical',
-    #                                         time_periodic=time_periodic,
-    #                                         deferred_load=deferred_load)
+    if field_method == 'netcdf':
+        fieldset = FieldSet.from_netcdf(files, variables, dimensions,
+                                        deferred_load=True,
+                                        field_chunksize='auto')
+    elif field_method == 'b_grid':
+        fieldset = FieldSet.from_b_grid_dataset(files, variables, dimensions,
+                                                mesh='spherical',
+                                                time_periodic=time_periodic,
+                                                deferred_load=deferred_load)
 
-    return FieldSet.from_netcdf(filenames, variables, dimensions,
-                                deferred_load=True, field_chunksize='auto')
+    return fieldset
 
 
 def DeleteParticle(particle, fieldset, time):
@@ -234,7 +235,7 @@ def EUC_particles(fieldset, date_bnds, p_lats, p_lons, p_depths,
 
     logger.info('{}: Started.'.format(pfile.stem))
     # Create particle set.
-    pset = EUC_pset(fieldset, tparticle, p_lats, p_lons, p_depths,
+    pset = EUC_pset(fieldset, JITParticle, p_lats, p_lons, p_depths,
                     pset_start, repeatdt)
 
     # Delete any particles that are intially travelling westward.
@@ -245,11 +246,11 @@ def EUC_particles(fieldset, date_bnds, p_lats, p_lons, p_depths,
     logger.debug('{}: Output file.'.format(pfile.stem))
     output_file = pset.ParticleFile(cfg.data/pfile.stem, outputdt=outputdt)
 
-    logger.info('{}: Kernels: pset.Kernel(Age) + AdvectionRK4_3D'
+    logger.info('{}:  AdvectionRK4_3D'
                 .format(pfile.stem))
 
     # kernels = pset.Kernel(DeleteWestward) + pset.Kernel(Age) + AdvectionRK4_3D
-    kernels = pset.Kernel(Age) + AdvectionRK4_3D
+    kernels = AdvectionRK4_3D
 
     logger.debug('{}: Excecute particle set..'.format(pfile.stem))
     pset.execute(kernels, runtime=runtime, dt=dt, output_file=output_file,
