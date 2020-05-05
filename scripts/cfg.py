@@ -24,6 +24,7 @@ if home.drive == 'C:':
     fig = home/'GitHub/OFAM/figures'
     data = home/'GitHub/OFAM/data'
     log = home/'GitHub/OFAM/logs'
+    job = home/'GitHub/OFAM/jobs'
     ofam = home/'model_output/OFAM/trop_pac'
     tao = home/'model_output/OFAM/TAO'
 
@@ -34,6 +35,7 @@ else:
     fig = home/'figures'
     data = home/'data'
     log = home/'logs'
+    job = home/'jobs'
     ofam = home/'trop_pac'
     tao = home/'TAO'
 

@@ -6,7 +6,8 @@ author: Annette Stellema (astellemas@gmail.com)
 
 
 """
-
+import os
+import sys
 import cfg
 import time
 import math
@@ -16,6 +17,7 @@ import numpy as np
 import xarray as xr
 import pandas as pd
 from scipy import stats
+from pathlib import Path
 from functools import wraps
 from datetime import datetime
 import matplotlib.pyplot as plt
@@ -67,6 +69,9 @@ def mlogger(name, parcels=False):
         # logger.propagate = False
         loggers[name] = logger
     return logger
+
+
+logger = mlogger(Path(sys.argv[0]).stem)
 
 
 def current_time(print_time=False):
@@ -487,4 +492,20 @@ def create_mesh_mask():
     du.close()
     ds.close()
     mask.close()
+    return
+
+
+def tidy_files(logs=True, jobs=True):
+    """Delete empty logs and job result files."""
+    logger.handlers.clear()
+    if logs:
+        for f in cfg.log.glob('*.log'):
+            if f.stat().st_size == 0:
+                os.remove(f)
+                print('Deleted:', f)
+    if jobs:
+        for f in cfg.job.glob('*.sh.*'):
+            if f.stat().st_size == 0:
+                os.remove(f)
+                print('Deleted:', f)
     return
