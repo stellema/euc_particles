@@ -219,7 +219,8 @@ def EUC_particles(fieldset, date_bnds, p_lats, p_lons, p_depths,
         # The age of the particle.
         age = Variable('age', dtype=np.float32, initial=0.)
         # The velocity of the particle.
-        u = Variable('u', dtype=np.float32, initial=fieldset.U)
+        u = Variable('u', dtype=np.float32, initial=fieldset.U,
+                     to_write="once")
 
     # Create name to save particle file (looks for unsaved filename).
     i = 0
