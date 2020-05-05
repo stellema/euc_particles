@@ -1,7 +1,7 @@
 #!/bin/bash
 #PBS -P e14
 #PBS -q normal
-#PBS -l walltime=2:00:00
+#PBS -l walltime=8:00:00
 #PBS -l mem=10GB
 #PBS -l ncpus=1
 #PBS -l wd
