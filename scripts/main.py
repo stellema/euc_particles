@@ -53,8 +53,9 @@ import xarray as xr
 from pathlib import Path
 import matplotlib.pyplot as plt
 from collections import OrderedDict
-from parcels import FieldSet, ParticleSet, JITParticle
-from parcels import ErrorCode, Variable, AdvectionRK4_3D
+from parcels import *
+# from parcels import FieldSet, ParticleSet, JITParticle
+# from parcels import ErrorCode, Variable, AdvectionRK4_3D
 
 
 logger = logging.getLogger(Path(sys.argv[0]).stem)
@@ -244,10 +245,11 @@ def EUC_particles(fieldset, date_bnds, p_lats, p_lons, p_depths,
     logger.debug('{}: Output file.'.format(pfile.stem))
     output_file = pset.ParticleFile(cfg.data/pfile.stem, outputdt=outputdt)
 
-    logger.info('{}: Kernels:pset.Kernel(DeleteWestward) + '
-                'pset.Kernel(Age) + AdvectionRK4_3D'.format(pfile.stem))
+    logger.info('{}: Kernels: pset.Kernel(Age) + AdvectionRK4_3D'
+                .format(pfile.stem))
 
-    kernels = pset.Kernel(DeleteWestward) + pset.Kernel(Age) + AdvectionRK4_3D
+    # kernels = pset.Kernel(DeleteWestward) + pset.Kernel(Age) + AdvectionRK4_3D
+    kernels = pset.Kernel(Age) + AdvectionRK4_3D
 
     logger.debug('{}: Excecute particle set..'.format(pfile.stem))
     pset.execute(kernels, runtime=runtime, dt=dt, output_file=output_file,
