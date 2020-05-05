@@ -1,0 +1,28 @@
+2020-05-05 14:06:38,032:run_EUC:INFO:Executing: 1981-01-01 00:00:00 to 1991-12-31 00:00:00
+2020-05-05 14:06:38,034:run_EUC:INFO:Runtime: 4016 days
+2020-05-05 14:06:38,034:run_EUC:INFO:Timestep (dt): 240 minutes
+2020-05-05 14:06:38,034:run_EUC:INFO:Output (dt): 1 days
+2020-05-05 14:06:38,034:run_EUC:INFO:Repeat release: 6 days
+2020-05-05 14:06:38,034:run_EUC:INFO:Depths: 14 dz=25 [25 to 350]
+2020-05-05 14:06:38,035:run_EUC:INFO:Latitudes: 14 dy=0.4 [-2.6 to 2.6]
+2020-05-05 14:06:38,035:run_EUC:INFO:Longitudes: 1 [190]
+2020-05-05 14:06:38,035:run_EUC:INFO:Particles (/repeatdt): 196
+2020-05-05 14:06:38,035:run_EUC:INFO:Particles (total): 131124
+2020-05-05 14:06:38,035:run_EUC:INFO:Time decorator used.
+2020-05-05 14:08:59,846:__init__:WARNING:Casting lon data to np.float32
+2020-05-05 14:08:59,847:__init__:WARNING:Casting lat data to np.float32
+2020-05-05 14:08:59,847:__init__:WARNING:Casting depth data to np.float32
+2020-05-05 14:41:35,283:run_EUC:INFO:Executing: 1981-01-01 00:00:00 to 1991-12-31 00:00:00
+2020-05-05 14:41:35,285:run_EUC:INFO:Runtime: 4016 days
+2020-05-05 14:41:35,285:run_EUC:INFO:Timestep (dt): 240 minutes
+2020-05-05 14:41:35,285:run_EUC:INFO:Output (dt): 1 days
+2020-05-05 14:41:35,285:run_EUC:INFO:Repeat release: 6 days
+2020-05-05 14:41:35,285:run_EUC:INFO:Depths: 14 dz=25 [25 to 350]
+2020-05-05 14:41:35,285:run_EUC:INFO:Latitudes: 14 dy=0.4 [-2.6 to 2.6]
+2020-05-05 14:41:35,286:run_EUC:INFO:Longitudes: 1 [190]
+2020-05-05 14:41:35,286:run_EUC:INFO:Particles (/repeatdt): 196
+2020-05-05 14:41:35,286:run_EUC:INFO:Particles (total): 131124
+2020-05-05 14:41:35,286:run_EUC:INFO:Time decorator used.
+2020-05-05 14:41:53,112:__init__:WARNING:Casting lon data to np.float32
+2020-05-05 14:41:53,112:__init__:WARNING:Casting lat data to np.float32
+2020-05-05 14:41:53,112:__init__:WARNING:Casting depth data to np.float32
