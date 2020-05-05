@@ -100,7 +100,7 @@ def ofam_fieldset(date_bnds, field_method='netcdf', time_periodic=False,
 
     dimensions = {'U': vdims, 'V': vdims, 'W': vdims}
 
-    cs = (date_bnds[1]-date_bnds[0]).days, 51, 300, 1750)
+    cs = ((date_bnds[1]-date_bnds[0]).days, 51, 300, 1750)
     if field_method == 'netcdf':
         fieldset = FieldSet.from_netcdf(files, variables, dimensions,
                                         deferred_load=True,
