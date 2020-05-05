@@ -42,16 +42,22 @@ handler.setFormatter(formatter)
 logger.addHandler(handler)
 logger.propagate = False
 """
+import sys
 import cfg
 import gsw
 import tools
 import math
+import logging
 import numpy as np
 import xarray as xr
+from pathlib import Path
 import matplotlib.pyplot as plt
 from collections import OrderedDict
 from parcels import FieldSet, ParticleSet, JITParticle
 from parcels import ErrorCode, Variable, AdvectionRK4_3D
+
+
+logger = logging.getLogger(Path(sys.argv[0]).stem)
 
 
 @tools.timeit

@@ -28,7 +28,7 @@ from argparse import ArgumentParser
 ts = time.time()
 now = datetime.now()
 
-logger = tools.mlogger('parcels_base', parcels=True)
+logger = tools.mlogger(Path(sys.argv[0]).stem, parcels=True)
 
 def run_EUC(dy=0.8, dz=25, lon=190, year_i=1981, year_f=2012,
             dt_mins=240, repeatdt_days=6, outputdt_days=1,
