@@ -104,7 +104,7 @@ def ofam_fieldset(date_bnds, field_method='netcdf', time_periodic=False,
     if field_method == 'netcdf':
         fieldset = FieldSet.from_netcdf(files, variables, dimensions,
                                         deferred_load=True,
-                                        field_chunksize=cs)
+                                        field_chunksize=False)
     elif field_method == 'b_grid':
         fieldset = FieldSet.from_b_grid_dataset(files, variables, dimensions,
                                                 mesh='spherical',
