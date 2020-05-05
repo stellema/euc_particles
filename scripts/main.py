@@ -235,7 +235,7 @@ def EUC_particles(fieldset, date_bnds, p_lats, p_lons, p_depths,
 
     logger.info('{}: Started.'.format(pfile.stem))
     # Create particle set.
-    pset = EUC_pset(fieldset, JITParticle, p_lats, p_lons, p_depths,
+    pset = EUC_pset(fieldset, tparticle, p_lats, p_lons, p_depths,
                     pset_start, repeatdt)
 
     # Delete any particles that are intially travelling westward.

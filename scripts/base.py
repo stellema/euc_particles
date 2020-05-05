@@ -119,4 +119,3 @@ if __name__ == "__main__":
             year_f=args.year_f, dt_mins=args.dt, repeatdt_days=args.repeatdt,
             outputdt_days=args.outputdt, field_method=args.fieldm,
             add_transport=args.transport, write_fieldset=args.fieldset)
-
