@@ -21,78 +21,86 @@ import tools
 import sys
 import time
 import math
-import logging
-import argparse
 import numpy as np
 from pathlib import Path
 from datetime import timedelta, datetime
-from parcels.tools.loggers import logger
-
-print(__name__)
-
-
+from argparse import ArgumentParser
 ts = time.time()
 now = datetime.now()
 
-logger.setLevel(logging.DEBUG)
-handler = logging.FileHandler(cfg.log/'parcels_base.log')
-formatter = logging.Formatter('%(asctime)s:%(funcName)s:%(message)s')
-handler.setFormatter(formatter)
-logger.addHandler(handler)
-logger.propagate = False
+logger = tools.mlogger('parcels_base', parcels=True)
+
+def run_EUC(dy=0.8, dz=25, lon=190, year_i=1981, year_f=2012,
+            dt_mins=240, repeatdt_days=6, outputdt_days=1,
+            add_transport=True, write_fieldset=False):
+    # Define Fieldset and ParticleSet parameters.
+    # Start and end dates.
+    date_bnds = [tools.get_date(year_i, 1, 1),
+                 tools.get_date(year_f, 12, 'max')]
+    # Meridional and vertical distance between particles to release.
+    p_lats = np.round(np.arange(-2.6, 2.6 + 0.1, dy), 2)
+    p_depths = np.arange(25, 350 + dz, dz)
+    # Longitudes to release particles.
+    p_lons = np.array([lon])
+    dt = -timedelta(minutes=dt_mins)
+    repeatdt = timedelta(days=repeatdt_days)
+    # Run for the number of days between date bounds.
+    runtime = timedelta(days=(date_bnds[1] - date_bnds[0]).days)
+    outputdt = timedelta(days=outputdt_days)
+
+    Z, Y, X = len(p_depths), len(p_lats), len(p_lons)
+
+    logger.info('Executing: {} to {}'.format(date_bnds[0], date_bnds[1]))
+    logger.info('Runtime: {} days'.format(runtime.days))
+    logger.info('Timestep (dt): {:.0f} minutes'.format(24*60 - dt.seconds/60))
+    logger.info('Output (dt): {:.0f} days'.format(outputdt.days))
+    logger.info('Repeat release: {} days'.format(repeatdt.days))
+    logger.info('Depths: {} dz={} [{} to {}]'
+                .format(Z, dz, p_depths[0], p_depths[-1]))
+    logger.info('Latitudes: {} dy={} [{} to {}]'
+                .format(Y, dy, p_lats[0], p_lats[-1]))
+    logger.info('Longitudes: {} '.format(X) + str(p_lons))
+    logger.info('Particles (/repeatdt): {}'.format(Z*X*Y))
+    logger.info('Particles (total): {}'
+                .format(Z*X*Y*math.floor(runtime.days/repeatdt.days)))
+    logger.info('Time decorator used.')
+
+    fieldset = main.ofam_fieldset(date_bnds)
+    fieldset.mindepth = fieldset.U.depth[0]
+    pset_start = fieldset.U.grid.time[-1]
+    pfile = main.EUC_particles(fieldset, date_bnds, p_lats, p_lons, p_depths,
+                               dt, pset_start, repeatdt, runtime, outputdt,
+                               remove_westward=True)
+
+    if add_transport:
+        df = main.ParticleFile_transport(pfile, dy, dz, save=True)
+        df.close()
+
+    # Save the fieldset.
+    if write_fieldset:
+        fieldset.write(cfg.data/'fieldset_ofam_3D_{}-{}_{}-{}'
+                       .format(date_bnds[0].year, date_bnds[0].month,
+                               date_bnds[1].year, date_bnds[1].month))
+
+    tools.timer(ts, method=Path(sys.argv[0]).stem)
+    return
 
 
-# Define Fieldset and ParticleSet parameters.
-# Start and end dates.
-date_bnds = [tools.get_date(1981, 1, 1), tools.get_date(2012, 12, 'max')]
-# Meridional and vertical distance between particles to release.
-dy, dz = 0.8, 50
-p_lats = np.round(np.arange(-2.6, 2.6 + dy, dy), 2)
-p_depths = np.arange(50, 300 + dz, dz)
-# Longitudes to release particles.
-p_lons = np.array([190])  # 190, 200
-dt = -timedelta(minutes=240)
-repeatdt = timedelta(days=6)
-# Run for the number of days between date bounds.
-runtime = timedelta(days=(date_bnds[1] - date_bnds[0]).days)
-outputdt = timedelta(days=1)
+if __name__ == "__main__":
+    p = ArgumentParser(description="""Run lagrangian EUC experiment""")
+    p.add_argument('-y', '--dy', default=0.1, help='Particle latitude spacing')
+    p.add_argument('-z', '--dz', default=25, help='Particle depth spacing [m]')
+    p.add_argument('-x', '--lon', default=190, help='Particle start longitude')
+    p.add_argument('-i', '--year_i', default=1981, help='Start year')
+    p.add_argument('-f', '--year_f', default=2012, help='End year')
+    p.add_argument('-d', '--dt', default=240, help='Timestep [min]')
+    p.add_argument('-r', '--repeatdt', default=6, help='Repeat interval [day]')
+    p.add_argument('-o', '--outputdt', default=1, help='Write interval [day]')
+    p.add_argument('-t', '--transport', default=True, help='Add transport')
+    p.add_argument('-w', '--fieldset', default=False, help='Save fieldset')
+    args = p.parse_args()
 
-# Extra stuff.
-add_transport = True
-write_fieldset = False
-
-Z, Y, X = len(p_depths), len(p_lats), len(p_lons)
-
-logger.info('Executing: {} to {}'.format(date_bnds[0], date_bnds[1]))
-logger.info('Runtime: {} days'.format(runtime.days))
-logger.info('Timestep (dt): {:.0f} minutes'.format(24*60 - dt.seconds/60))
-logger.info('Output (dt): {:.0f} days'.format(outputdt.days))
-logger.info('Repeat release: {} days'.format(repeatdt.days))
-logger.info('Depths: {} dz={} [{} to {}]'
-            .format(Z, dz, p_depths[0], p_depths[-1]))
-logger.info('Latitudes: {} dy={} [{} to {}]'
-            .format(Y, dy, p_lats[0], p_lats[-1]))
-logger.info('Longitudes: {} '.format(X) + str(p_lons))
-logger.info('Particles (/repeatdt): {}'.format(Z*X*Y))
-logger.info('Particles (total): {}'
-            .format(Z*X*Y*math.floor(runtime.days/repeatdt.days)))
-logger.info('Time decorator used.')
-
-fieldset = main.ofam_fieldset(date_bnds)
-fieldset.mindepth = fieldset.U.depth[0]
-pset_start = fieldset.U.grid.time[-1]
-pfile = main.EUC_particles(fieldset, date_bnds, p_lats, p_lons, p_depths,
-                           dt, pset_start, repeatdt, runtime, outputdt,
-                           remove_westward=True)
-
-if add_transport:
-    df = main.ParticleFile_transport(pfile, dy, dz, save=True)
-    df.close()
-
-# Save the fieldset.
-if write_fieldset:
-    fieldset.write(cfg.data/'fieldset_ofam_3D_{}-{}_{}-{}'
-                   .format(date_bnds[0].year, date_bnds[0].month,
-                           date_bnds[1].year, date_bnds[1].month))
-
-tools.timer(ts, method=Path(sys.argv[0]).stem)
+    run_EUC(dy=args.dy, dz=args.dz, lon=args.lon,
+            year_i=args.year_i, year_f=args.year_f, dt_mins=args.dt,
+            repeatdt_days=args.repeatdt, outputdt_days=args.outputdt,
+            add_transport=args.transport, write_fieldset=args.fieldset)
