@@ -63,7 +63,7 @@ logger = logging.getLogger(Path(sys.argv[0]).stem)
 
 @timeit
 def ofam_fieldset(date_bnds, field_method='netcdf', time_periodic=False,
-                  deferred_load=True):
+                  deferred_load=True, chunks='manual'):
     """Create a 3D parcels fieldset from OFAM model output.
 
     Between two dates useing FieldSet.from_b_grid_dataset.
@@ -100,16 +100,21 @@ def ofam_fieldset(date_bnds, field_method='netcdf', time_periodic=False,
 
     dimensions = {'U': vdims, 'V': vdims, 'W': vdims}
 
-    cs = ((date_bnds[1]-date_bnds[0]).days+1, 51, 300, 1750)
+    if chunks == 'manual':
+        # chunks = ((date_bnds[1]-date_bnds[0]).days+1, 51, 300, 1750)
+        chunks = (51, 300, 1750)
+    logger.info('Field import={}, Chunks={}'.format(field_method, chunks))
+
     if field_method == 'netcdf':
         fieldset = FieldSet.from_netcdf(files, variables, dimensions,
                                         deferred_load=True,
-                                        field_chunksize=cs)
+                                        field_chunksize=chunks)
     elif field_method == 'b_grid':
         fieldset = FieldSet.from_b_grid_dataset(files, variables, dimensions,
                                                 mesh='spherical',
                                                 time_periodic=time_periodic,
-                                                deferred_load=deferred_load)
+                                                deferred_load=deferred_load,
+                                                field_chunksize=chunks)
 
     return fieldset
 

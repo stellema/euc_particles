@@ -177,3 +177,163 @@
 2020-05-05 22:46:36,729:EUC_particles:DEBUG:ParticleFile_1981-1981_v1i: Output file.
 2020-05-05 22:46:36,730:EUC_particles:INFO:ParticleFile_1981-1981_v1i:  AdvectionRK4_3D
 2020-05-05 22:46:36,730:EUC_particles:DEBUG:ParticleFile_1981-1981_v1i: Excecute particle set..
+2020-05-06 09:27:35,065:run_EUC:INFO:Executing: 1981-01-01 00:00:00 to 1981-12-02 00:00:00
+2020-05-06 09:27:35,066:run_EUC:INFO:Runtime: 335 days
+2020-05-06 09:27:35,066:run_EUC:INFO:Timestep (dt): 240 minutes
+2020-05-06 09:27:35,067:run_EUC:INFO:Output (dt): 1 days
+2020-05-06 09:27:35,068:run_EUC:INFO:Repeat release: 6 days
+2020-05-06 09:27:35,068:run_EUC:INFO:Depths: 5 dz=100 [25 to 425]
+2020-05-06 09:27:35,069:run_EUC:INFO:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-06 09:27:35,069:run_EUC:INFO:Longitudes: 1 [190]
+2020-05-06 09:27:35,069:run_EUC:INFO:Particles (/repeatdt): 25
+2020-05-06 09:27:35,070:run_EUC:INFO:Particles (total): 1375
+2020-05-06 09:27:35,070:run_EUC:INFO:Time decorator used.
+2020-05-06 09:27:36,375:timed:INFO:ofam_fieldset: 0:0:01.29 total: 1.29 seconds.
+2020-05-06 09:27:36,376:EUC_particles:INFO:ParticleFile_1981-1981_v0i: Started.
+2020-05-06 09:28:19,998:timed:INFO:EUC_pset: 0:0:43.62 total: 43.62 seconds.
+2020-05-06 09:28:20,000:remove_westward_particles:DEBUG:Particles removed: 13
+2020-05-06 09:28:20,000:timed:INFO:remove_westward_particles: 0:0:00.00 total: 0.00 seconds.
+2020-05-06 09:28:20,001:EUC_particles:DEBUG:ParticleFile_1981-1981_v0i: Output file.
+2020-05-06 09:28:20,002:EUC_particles:INFO:ParticleFile_1981-1981_v0i:  AdvectionRK4_3D
+2020-05-06 09:28:20,002:EUC_particles:DEBUG:ParticleFile_1981-1981_v0i: Excecute particle set..
+2020-05-06 09:32:34,585:run_EUC:INFO:Executing: 1981-01-01 00:00:00 to 1981-12-02 00:00:00
+2020-05-06 09:32:34,586:run_EUC:INFO:Runtime: 335 days
+2020-05-06 09:32:34,586:run_EUC:INFO:Timestep (dt): 240 minutes
+2020-05-06 09:32:34,587:run_EUC:INFO:Output (dt): 1 days
+2020-05-06 09:32:34,587:run_EUC:INFO:Repeat release: 6 days
+2020-05-06 09:32:34,588:run_EUC:INFO:Depths: 5 dz=100 [25 to 425]
+2020-05-06 09:32:34,588:run_EUC:INFO:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-06 09:32:34,588:run_EUC:INFO:Longitudes: 1 [190]
+2020-05-06 09:32:34,588:run_EUC:INFO:Particles (/repeatdt): 25
+2020-05-06 09:32:34,589:run_EUC:INFO:Particles (total): 1375
+2020-05-06 09:32:34,589:run_EUC:INFO:Time decorator used.
+2020-05-06 09:32:35,436:timed:INFO:ofam_fieldset: 0:0:00.84 total: 0.84 seconds.
+2020-05-06 09:32:35,437:EUC_particles:INFO:ParticleFile_1981-1981_v0i: Started.
+2020-05-06 09:34:44,671:run_EUC:INFO:Executing: 1981-01-01 00:00:00 to 1981-12-02 00:00:00
+2020-05-06 09:34:44,672:run_EUC:INFO:Runtime: 335 days
+2020-05-06 09:34:44,673:run_EUC:INFO:Timestep (dt): 240 minutes
+2020-05-06 09:34:44,673:run_EUC:INFO:Output (dt): 1 days
+2020-05-06 09:34:44,673:run_EUC:INFO:Repeat release: 6 days
+2020-05-06 09:34:44,674:run_EUC:INFO:Depths: 5 dz=100 [25 to 425]
+2020-05-06 09:34:44,674:run_EUC:INFO:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-06 09:34:44,675:run_EUC:INFO:Longitudes: 1 [190]
+2020-05-06 09:34:44,676:run_EUC:INFO:Particles (/repeatdt): 25
+2020-05-06 09:34:44,676:run_EUC:INFO:Particles (total): 1375
+2020-05-06 09:34:44,676:run_EUC:INFO:Time decorator used.
+2020-05-06 09:34:44,682:ofam_fieldset:INFO:Field import=b_grid, Chunks=(336, 51, 300, 1750)
+2020-05-06 09:34:45,510:timed:INFO:ofam_fieldset: 0:0:00.83 total: 0.83 seconds.
+2020-05-06 09:34:45,511:EUC_particles:INFO:ParticleFile_1981-1981_v1i: Started.
+2020-05-06 09:36:25,836:run_EUC:INFO:Executing: 1981-01-01 00:00:00 to 1981-12-02 00:00:00
+2020-05-06 09:36:25,836:run_EUC:INFO:Runtime: 335 days
+2020-05-06 09:36:25,837:run_EUC:INFO:Timestep (dt): 240 minutes
+2020-05-06 09:36:25,837:run_EUC:INFO:Output (dt): 1 days
+2020-05-06 09:36:25,838:run_EUC:INFO:Repeat release: 6 days
+2020-05-06 09:36:25,838:run_EUC:INFO:Depths: 5 dz=100 [25 to 425]
+2020-05-06 09:36:25,838:run_EUC:INFO:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-06 09:36:25,839:run_EUC:INFO:Longitudes: 1 [190]
+2020-05-06 09:36:25,839:run_EUC:INFO:Particles (/repeatdt): 25
+2020-05-06 09:36:25,840:run_EUC:INFO:Particles (total): 1375
+2020-05-06 09:36:25,840:run_EUC:INFO:Time decorator used.
+2020-05-06 09:36:25,846:ofam_fieldset:INFO:Field import=b_grid, Chunks=(336, 51, 300, 1750)
+2020-05-06 09:36:26,686:timed:INFO:ofam_fieldset: 0:0:00.84 total: 0.84 seconds.
+2020-05-06 09:36:26,687:EUC_particles:INFO:ParticleFile_1981-1981_v1i: Started.
+2020-05-06 09:37:53,342:run_EUC:INFO:Executing: 1981-01-01 00:00:00 to 1981-12-02 00:00:00
+2020-05-06 09:37:53,342:run_EUC:INFO:Runtime: 335 days
+2020-05-06 09:37:53,342:run_EUC:INFO:Timestep (dt): 240 minutes
+2020-05-06 09:37:53,343:run_EUC:INFO:Output (dt): 1 days
+2020-05-06 09:37:53,343:run_EUC:INFO:Repeat release: 6 days
+2020-05-06 09:37:53,343:run_EUC:INFO:Depths: 5 dz=100 [25 to 425]
+2020-05-06 09:37:53,344:run_EUC:INFO:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-06 09:37:53,344:run_EUC:INFO:Longitudes: 1 [190]
+2020-05-06 09:37:53,345:run_EUC:INFO:Particles (/repeatdt): 25
+2020-05-06 09:37:53,345:run_EUC:INFO:Particles (total): 1375
+2020-05-06 09:37:53,345:run_EUC:INFO:Time decorator used.
+2020-05-06 09:37:53,349:ofam_fieldset:INFO:Field import=netcdf, Chunks=(336, 51, 300, 1750)
+2020-05-06 09:37:54,223:timed:INFO:ofam_fieldset: 0:0:00.87 total: 0.87 seconds.
+2020-05-06 09:37:54,224:EUC_particles:INFO:ParticleFile_1981-1981_v1i: Started.
+2020-05-06 09:38:07,143:<module>:INFO:Field import=netcdf, Chunks=manual
+2020-05-06 09:38:59,608:<module>:INFO:Field import=netcdf, Chunks=(336, 51, 300, 1750)
+2020-05-06 09:39:55,032:run_EUC:INFO:Executing: 1981-01-01 00:00:00 to 1981-02-28 00:00:00
+2020-05-06 09:39:55,033:run_EUC:INFO:Runtime: 58 days
+2020-05-06 09:39:55,033:run_EUC:INFO:Timestep (dt): 240 minutes
+2020-05-06 09:39:55,033:run_EUC:INFO:Output (dt): 1 days
+2020-05-06 09:39:55,034:run_EUC:INFO:Repeat release: 6 days
+2020-05-06 09:39:55,034:run_EUC:INFO:Depths: 5 dz=100 [25 to 425]
+2020-05-06 09:39:55,034:run_EUC:INFO:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-06 09:39:55,035:run_EUC:INFO:Longitudes: 1 [190]
+2020-05-06 09:39:55,035:run_EUC:INFO:Particles (/repeatdt): 25
+2020-05-06 09:39:55,036:run_EUC:INFO:Particles (total): 225
+2020-05-06 09:39:55,036:run_EUC:INFO:Time decorator used.
+2020-05-06 09:39:55,039:ofam_fieldset:INFO:Field import=netcdf, Chunks=(59, 51, 300, 1750)
+2020-05-06 09:39:55,281:timed:INFO:ofam_fieldset: 0:0:00.24 total: 0.24 seconds.
+2020-05-06 09:39:55,282:EUC_particles:INFO:ParticleFile_1981-1981_v1i: Started.
+2020-05-06 09:43:50,291:run_EUC:INFO:Executing: 1981-01-01 00:00:00 to 1981-02-28 00:00:00
+2020-05-06 09:43:50,292:run_EUC:INFO:Runtime: 58 days
+2020-05-06 09:43:50,292:run_EUC:INFO:Timestep (dt): 240 minutes
+2020-05-06 09:43:50,292:run_EUC:INFO:Output (dt): 1 days
+2020-05-06 09:43:50,293:run_EUC:INFO:Repeat release: 6 days
+2020-05-06 09:43:50,293:run_EUC:INFO:Depths: 5 dz=100 [25 to 425]
+2020-05-06 09:43:50,293:run_EUC:INFO:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-06 09:43:50,294:run_EUC:INFO:Longitudes: 1 [190]
+2020-05-06 09:43:50,294:run_EUC:INFO:Particles (/repeatdt): 25
+2020-05-06 09:43:50,295:run_EUC:INFO:Particles (total): 225
+2020-05-06 09:43:50,295:run_EUC:INFO:Time decorator used.
+2020-05-06 09:43:50,299:ofam_fieldset:INFO:Field import=netcdf, Chunks=(1, 51, 300, 1750)
+2020-05-06 09:43:50,544:timed:INFO:ofam_fieldset: 0:0:00.25 total: 0.25 seconds.
+2020-05-06 09:43:50,545:EUC_particles:INFO:ParticleFile_1981-1981_v1i: Started.
+2020-05-06 11:45:47,274:run_EUC:INFO:Executing: 1981-01-01 00:00:00 to 1981-02-28 00:00:00
+2020-05-06 11:45:47,275:run_EUC:INFO:Runtime: 58 days
+2020-05-06 11:45:47,276:run_EUC:INFO:Timestep (dt): 240 minutes
+2020-05-06 11:45:47,277:run_EUC:INFO:Output (dt): 1 days
+2020-05-06 11:45:47,277:run_EUC:INFO:Repeat release: 6 days
+2020-05-06 11:45:47,278:run_EUC:INFO:Depths: 5 dz=100 [25 to 425]
+2020-05-06 11:45:47,279:run_EUC:INFO:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-06 11:45:47,280:run_EUC:INFO:Longitudes: 1 [190]
+2020-05-06 11:45:47,281:run_EUC:INFO:Particles (/repeatdt): 25
+2020-05-06 11:45:47,282:run_EUC:INFO:Particles (total): 225
+2020-05-06 11:45:47,282:run_EUC:INFO:Time decorator used.
+2020-05-06 11:45:47,289:ofam_fieldset:INFO:Field import=netcdf, Chunks=(51, 300, 1750)
+2020-05-06 11:45:47,587:timed:INFO:ofam_fieldset: 0:0:00.30 total: 0.30 seconds.
+2020-05-06 11:45:47,587:EUC_particles:INFO:ParticleFile_1981-1981_v1i: Started.
+2020-05-06 12:15:26,803:timed:INFO:EUC_pset: 0:29:39.22 total: 1779.22 seconds.
+2020-05-06 12:15:26,820:remove_westward_particles:DEBUG:Particles removed: 11
+2020-05-06 12:15:26,822:timed:INFO:remove_westward_particles: 0:0:00.00 total: 0.00 seconds.
+2020-05-06 12:15:26,823:EUC_particles:DEBUG:ParticleFile_1981-1981_v1i: Output file.
+2020-05-06 12:15:26,825:EUC_particles:INFO:ParticleFile_1981-1981_v1i:  AdvectionRK4_3D
+2020-05-06 12:15:26,826:EUC_particles:DEBUG:ParticleFile_1981-1981_v1i: Excecute particle set..
+2020-05-06 13:25:55,391:run_EUC:INFO:Executing: 1981-01-01 00:00:00 to 1981-01-31 00:00:00
+2020-05-06 13:25:55,393:run_EUC:INFO:Runtime: 30 days
+2020-05-06 13:25:55,393:run_EUC:INFO:Timestep (dt): 240 minutes
+2020-05-06 13:25:55,394:run_EUC:INFO:Output (dt): 1 days
+2020-05-06 13:25:55,395:run_EUC:INFO:Repeat release: 6 days
+2020-05-06 13:25:55,396:run_EUC:INFO:Depths: 2 dz=200 [25 to 225]
+2020-05-06 13:25:55,397:run_EUC:INFO:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-06 13:25:55,398:run_EUC:INFO:Longitudes: 1 [190]
+2020-05-06 13:25:55,399:run_EUC:INFO:Particles (/repeatdt): 10
+2020-05-06 13:25:55,399:run_EUC:INFO:Particles (total): 50
+2020-05-06 13:25:55,400:run_EUC:INFO:Time decorator used.
+2020-05-06 13:25:55,401:run_EUC:INFO:Fieldset import method= b_grid.
+2020-05-06 13:25:55,401:ofam_fieldset:INFO:Field import=b_grid, Chunks=(51, 300, 1750)
+2020-05-06 13:25:55,707:timed:INFO:ofam_fieldset: 0:0:00.31 total: 0.31 seconds.
+2020-05-06 13:25:55,708:EUC_particles:INFO:ParticleFile_1981-1981_v1i: Started.
+2020-05-06 13:28:08,499:run_EUC:INFO:Executing: 1981-01-01 00:00:00 to 1981-01-31 00:00:00
+2020-05-06 13:28:08,501:run_EUC:INFO:Runtime: 30 days
+2020-05-06 13:28:08,501:run_EUC:INFO:Timestep (dt): 240 minutes
+2020-05-06 13:28:08,502:run_EUC:INFO:Output (dt): 1 days
+2020-05-06 13:28:08,502:run_EUC:INFO:Repeat release: 6 days
+2020-05-06 13:28:08,502:run_EUC:INFO:Depths: 2 dz=200 [25 to 225]
+2020-05-06 13:28:08,503:run_EUC:INFO:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-06 13:28:08,503:run_EUC:INFO:Longitudes: 1 [190]
+2020-05-06 13:28:08,504:run_EUC:INFO:Particles (/repeatdt): 10
+2020-05-06 13:28:08,504:run_EUC:INFO:Particles (total): 50
+2020-05-06 13:28:08,505:run_EUC:INFO:Time decorator used.
+2020-05-06 13:28:08,506:run_EUC:INFO:Fieldset import method= b_grid.
+2020-05-06 13:28:08,506:ofam_fieldset:INFO:Field import=b_grid, Chunks=(51, 300, 1750)
+2020-05-06 13:28:08,712:timed:INFO:ofam_fieldset: 0:0:00.21 total: 0.21 seconds.
+2020-05-06 13:28:08,713:EUC_particles:INFO:ParticleFile_1981-1981_v0i: Started.
+2020-05-06 13:39:57,222:timed:INFO:EUC_pset: 0:11:48.51 total: 708.51 seconds.
+2020-05-06 13:39:57,227:remove_westward_particles:DEBUG:Particles removed: 4
+2020-05-06 13:39:57,227:timed:INFO:remove_westward_particles: 0:0:00.00 total: 0.00 seconds.
+2020-05-06 13:39:57,229:EUC_particles:DEBUG:ParticleFile_1981-1981_v0i: Output file.
+2020-05-06 13:39:57,232:EUC_particles:INFO:ParticleFile_1981-1981_v0i:  AdvectionRK4_3D
+2020-05-06 13:39:57,233:EUC_particles:DEBUG:ParticleFile_1981-1981_v0i: Excecute particle set..
