@@ -31,14 +31,10 @@ def set_ofam_fieldset_3D(cs):
     files = {'U': {'lon': u[0], 'lat': u[0], 'depth': w[0], 'data': u},
              'V': {'lon': u[0], 'lat': u[0], 'depth': w[0], 'data': v}}
 
-    vdims = {'lon': 'xu_ocean',
-             'lat': 'yu_ocean',
-             'depth': 'sw_ocean',
-             'time': 'Time'}
+    dimensions = {'lon': 'xu_ocean', 'lat': 'yu_ocean',
+                  'depth': 'sw_ocean', 'time': 'Time'}
 
     variables = {'U': 'u', 'V': 'v', 'W': 'w'}
-
-    dimensions = {'U': vdims, 'V': vdims, 'W': vdims}
     if cs not in ['auto', False]:
         cs = {dimensions['time']: 1, dimensions['depth']: 1,
               dimensions['lon']: cs, dimensions['lat']: cs}
