@@ -1,0 +1,38 @@
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+WARNING: Casting lon data to np.float32
+WARNING: Casting lat data to np.float32
+WARNING: Casting depth data to np.float32
+WARNING: Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/test_dask_chunking.py", line 49, in <module>
+    fieldset = set_ofam_fieldset_3D(cs)
+  File "/g/data/e14/as3189/OFAM/scripts/test_dask_chunking.py", line 41, in set_ofam_fieldset_3D
+    return FieldSet.from_netcdf(files, variables, dimensions, field_chunksize=cs)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/parcels/fieldset.py", line 340, in from_netcdf
+    paths[dim] = cls.parse_wildcards(p, filenames, var)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/parcels/fieldset.py", line 270, in parse_wildcards
+    raise IOError("FieldSet files not found: %s" % str(notfound_paths))
+OSError: FieldSet files not found: {'U': {'lon': ['/g/data/e14/as3189/OFAM/trop_pac/ocean_u_1981_01.nc'], 'lat': ['/g/data/e14/as3189/OFAM/trop_pac/ocean_u_1981_01.nc'], 'depth': ['/g/data/e14/as3189/OFAM/trop_pac/ocean_w_1981_01.nc'], 'data': [PosixPath('/g/data/e14/as3189/OFAM/trop_pac/ocean_u_1981_01.nc')]}, 'V': {'lon': ['/g/data/e14/as3189/OFAM/trop_pac/ocean_u_1981_01.nc'], 'lat': ['/g/data/e14/as3189/OFAM/trop_pac/ocean_u_1981_01.nc'], 'depth': ['/g/data/e14/as3189/OFAM/trop_pac/ocean_w_1981_01.nc'], 'data': [PosixPath('/g/data/e14/as3189/OFAM/trop_pac/ocean_v_1981_01.nc')]}}
