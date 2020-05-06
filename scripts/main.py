@@ -124,6 +124,14 @@ def DeleteParticle(particle, fieldset, time):
     particle.delete()
 
 
+def SubmergeParticle(particle, fieldset, time):
+    particle.depth = fieldset.U.depth[0]
+    AdvectionRK4(particle, fieldset, time)  # perform a 2D advection because vertical flow will always push up in this case
+    particle.time = time + particle.dt  # to not trigger kernels again, otherwise infinite loop
+    particle.set_state(ErrorCode.Success)
+
+
+
 def Age(particle, fieldset, time):
     """Update particle age."""
     particle.age = particle.age + math.fabs(particle.dt)
