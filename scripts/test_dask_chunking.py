@@ -50,9 +50,9 @@ def set_ofam_fieldset_3D(cs):
                                         field_chunksize=cs, mesh='spherical')
 
 
-chunksize_3D = ['auto']
-# chunksize_3D = [128, 256, 512, 768, 1024, 1280,
-#                 1536, 1792, 2048, 2610, False]
+# chunksize_3D = ['auto']
+chunksize_3D = [128, 256, 512, 768, 1024, 1280,
+                1536, 1792, 2048, 2610, 'auto', False]
 func_time3D = []
 for cs in chunksize_3D:
 
