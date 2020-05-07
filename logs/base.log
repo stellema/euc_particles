@@ -347,6 +347,7 @@
 2020-05-06 14:39:13,416:run_EUC:INFO:Longitudes: 1 [190]
 2020-05-06 14:39:13,416:run_EUC:INFO:Particles (/repeatdt): 196
 2020-05-06 14:39:13,416:run_EUC:INFO:Particles (total): 11760
+2020-05-06 14:39:13,416:run_EUC:INFO:Time decorator used.
 2020-05-06 14:39:13,416:run_EUC:INFO:Fieldset import method= netcdf.
 2020-05-06 14:39:13,417:ofam_fieldset:INFO:Field import=netcdf, Chunks=False
 2020-05-06 14:39:27,338:timed:INFO:ofam_fieldset: 0:0:13.92 total: 13.92 seconds.
