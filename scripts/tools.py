@@ -495,6 +495,42 @@ def create_mesh_mask():
     return
 
 
+def coriolis(lat):
+    """ Calculates the Coriolis and Rossby parameters.
+
+    Coriolis parameter (f): The angular velocity or frequency required
+    to maintain a body at a fixed circle of latitude or zonal region.
+
+    Rossby parameter (beta): The northward variation of the Coriolis
+    parameter, arising from the sphericity of the earth.
+
+    NOTE: lon is not actually used (it was in an old version but
+    some calls to this function still include lon).
+
+    Parameters
+    ----------
+    lat : number
+        The latitude at which to calculate the values.
+    OMEGA : number, optional
+        Rotation rate of the Earth [rad/s]
+
+    Returns
+    -------
+    f : float
+        Coriolis parameter
+    beta : float
+        Rossby parameter
+    """
+
+    # Coriolis parameter.
+    f = 2*cfg.OMEGA*np.sin(np.radians(lat)) # [rad/s]
+
+    # Rossby parameter.
+    beta = 2*cfg.OMEGA*np.cos(np.radians(lat))/cfg.EARTH_RADIUS
+
+    return f, beta
+
+
 def tidy_files(logs=True, jobs=True):
     """Delete empty logs and job result files."""
     logger.handlers.clear()

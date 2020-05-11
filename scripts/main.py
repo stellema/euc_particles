@@ -53,9 +53,9 @@ import xarray as xr
 from pathlib import Path
 import matplotlib.pyplot as plt
 from collections import OrderedDict
-from parcels import *
-# from parcels import FieldSet, ParticleSet, JITParticle
-# from parcels import ErrorCode, Variable, AdvectionRK4_3D
+# from parcels import *
+from parcels import FieldSet, ParticleSet, JITParticle
+from parcels import ErrorCode, Variable, AdvectionRK4_3D
 from tools import timeit
 
 logger = logging.getLogger(Path(sys.argv[0]).stem)
@@ -472,9 +472,9 @@ def EUC_vbounds(du, depths, i, v_bnd=0.3, index=False):
 
     data_name = 'OFAM3' if hasattr(du, 'st_ocean') else 'TAO/TRITION'
 
-    logger.debug('{} {}: v_bnd={} tot={} count={} null={} skip={}(T={},L={}).'
-                 .format(data_name, cfg.lons[i], v_bnd, u.shape[0], count,
-                         empty, skip_t + skip_l, skip_t, skip_l))
+    # logger.debug('{} {}: v_bnd={} tot={} count={} null={} skip={}(T={},L={}).'
+    #              .format(data_name, cfg.lons[i], v_bnd, u.shape[0], count,
+    #                      empty, skip_t + skip_l, skip_t, skip_l))
     if not index:
         return v_max, z1, z2
     else:
