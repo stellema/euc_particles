@@ -264,7 +264,7 @@ def EUC_particles(fieldset, date_bnds, p_lats, p_lons, p_depths,
     output_file = pset.ParticleFile(cfg.data/pfile.stem, outputdt=outputdt)
     if all_kerels:
         logger.info('{}:pset.Kernel(Age) + AdvectionRK4_3D'.format(pfile.stem))
-        kernels = (pset.Kernel(Age) + AdvectionRK4_3D)
+        kernels = AdvectionRK4_3D + pset.Kernel(Age)
     else:
         logger.info('{}:AdvectionRK4_3D'.format(pfile.stem))
         kernels = AdvectionRK4_3D

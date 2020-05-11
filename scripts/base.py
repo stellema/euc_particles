@@ -114,7 +114,7 @@ if __name__ == "__main__" and cfg.home != Path('E:/'):
                    type=str)
     p.add_argument('-t', '--transport', default=True, help='Add transport',
                    type=bool)
-    p.add_argument('-w', '--fieldset', default=False, help='Save fieldset',
+    p.add_argument('-w', '--fset', default=False, help='Save fieldset',
                    type=bool)
     p.add_argument('-c', '--chunks', default='manual', help='Chunking method',
                    type=str)
@@ -124,7 +124,7 @@ if __name__ == "__main__" and cfg.home != Path('E:/'):
             year_i=args.year_i, year_f=args.year_f, month=args.month,
             dt_mins=args.dt, repeatdt_days=args.repeatdt,
             outputdt_days=args.outputdt, field_method=args.fieldm,
-            add_transport=args.transport, write_fieldset=args.fieldset)
+            add_transport=args.transport, write_fieldset=args.fset)
 else:
     run_EUC(dy=1, dz=200, lon=190, lat=2, year_i=1981, year_f=1981,
             dt_mins=240, repeatdt_days=6, outputdt_days=1, month=1,
