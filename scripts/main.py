@@ -102,7 +102,7 @@ def ofam_fieldset(date_bnds, field_method='netcdf', time_periodic=False,
 
     if chunks == 'manual':
         # chunks = ((date_bnds[1]-date_bnds[0]).days+1, 51, 300, 1750)
-        chunks = (51, 300, 1750)
+        chunks = (1, 1, 128, 128)
     logger.info('Field import={}, Chunks={}'.format(field_method, chunks))
 
     if field_method == 'netcdf':
