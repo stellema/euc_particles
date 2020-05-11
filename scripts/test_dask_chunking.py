@@ -59,7 +59,7 @@ for cs in chunksize_3D:
     fieldset = set_ofam_fieldset_3D(cs)
     pset = ParticleSet(fieldset=fieldset, pclass=JITParticle,
                        lon=[fieldset.U.lon[800]], lat=[fieldset.U.lat[151]],
-                       depth=[fieldset.U.depth[10]], repeatdt=delta(hours=1))
+                       depth=[fieldset.U.depth[20]], repeatdt=delta(hours=1))
 
     tic = time.time()
     pset.execute(AdvectionRK4_3D, dt=delta(hours=1),
@@ -77,4 +77,4 @@ plt.xlim([0, 2800])
 plt.legend()
 ax.set_xlabel('field_chunksize')
 ax.set_ylabel('Time spent in pset.execute() [s]')
-plt.savefig(cfg.fig/'dask_chunk.png')
+plt.savefig(cfg.fig/'dask_chunk_2.png')
