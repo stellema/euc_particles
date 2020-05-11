@@ -183,7 +183,7 @@ def remove_westward_particles(pset):
     for p in pset:
         if p.u < 0. and p.age == 0.:
             ix.append(np.where([pi.id == p.id for pi in pset])[0][0])
-    pset.remove(ix)
+    pset.remove_indices(ix)
 
     logger.debug('Particles removed: {}'.format(len(ix)))
 
@@ -263,10 +263,8 @@ def EUC_particles(fieldset, date_bnds, p_lats, p_lons, p_depths,
     logger.debug('{}: Output file.'.format(pfile.stem))
     output_file = pset.ParticleFile(cfg.data/pfile.stem, outputdt=outputdt)
     if all_kerels:
-        logger.info('{}:pset.Kernel(DeleteWestward) + pset.Kernel(Age) +'
-                    ' AdvectionRK4_3D'.format(pfile.stem))
-        kernels = (pset.Kernel(DeleteWestward) + pset.Kernel(Age) +
-                   AdvectionRK4_3D)
+        logger.info('{}:pset.Kernel(Age) + AdvectionRK4_3D'.format(pfile.stem))
+        kernels = (pset.Kernel(Age) + AdvectionRK4_3D)
     else:
         logger.info('{}:AdvectionRK4_3D'.format(pfile.stem))
         kernels = AdvectionRK4_3D

@@ -76,7 +76,7 @@ def run_EUC(dy=0.8, dz=25, lon=190, lat=2.6, year_i=1981, year_f=2012,
     pset_start = fieldset.U.grid.time[-1]
     pfile = main.EUC_particles(fieldset, date_bnds, p_lats, p_lons, p_depths,
                                dt, pset_start, repeatdt, runtime, outputdt,
-                               remove_westward=False)
+                               remove_westward=True)
 
     if add_transport:
         df = main.ParticleFile_transport(pfile, dy, dz, save=True)
