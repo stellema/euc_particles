@@ -22,15 +22,16 @@ import time
 import math
 import numpy as np
 from pathlib import Path
+from tools import get_date, timeit
 from datetime import timedelta, datetime
 from argparse import ArgumentParser
+
 ts = time.time()
 now = datetime.now()
-from tools import get_date
 logger = tools.mlogger(Path(sys.argv[0]).stem, parcels=True)
 
 
-@tools.timeit
+@timeit
 def run_EUC(dy=0.8, dz=25, lon=190, lat=2.6, year_i=1981, year_f=2012,
             dt_mins=240, repeatdt_days=6, outputdt_days=1, month='max',
             field_method='netcdf',
@@ -93,7 +94,7 @@ def run_EUC(dy=0.8, dz=25, lon=190, lat=2.6, year_i=1981, year_f=2012,
 
 if __name__ == "__main__" and cfg.home != Path('E:/'):
     p = ArgumentParser(description="""Run lagrangian EUC experiment""")
-    p.add_argument('-dy', '--dy', default=0.1, help='Particle latitude spacing',
+    p.add_argument('-dy', '--dy', default=0.1, help='Particle lat spacing',
                    type=float)
     p.add_argument('-z', '--dz', default=25, help='Particle depth spacing [m]',
                    type=int)

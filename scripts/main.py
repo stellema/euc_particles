@@ -55,7 +55,7 @@ import matplotlib.pyplot as plt
 from collections import OrderedDict
 # from parcels import *
 from parcels import FieldSet, ParticleSet, JITParticle
-from parcels import ErrorCode, Variable, AdvectionRK4_3D
+from parcels import ErrorCode, Variable, AdvectionRK4_3D, AdvectionRK4
 from tools import timeit
 
 logger = logging.getLogger(Path(sys.argv[0]).stem)
@@ -126,10 +126,13 @@ def DeleteParticle(particle, fieldset, time):
 
 def SubmergeParticle(particle, fieldset, time):
     particle.depth = fieldset.U.depth[0]
-    AdvectionRK4(particle, fieldset, time)  # perform a 2D advection because vertical flow will always push up in this case
-    particle.time = time + particle.dt  # to not trigger kernels again, otherwise infinite loop
+    # Perform 2D advection as vertical flow will always push up in this case.
+    AdvectionRK4(particle, fieldset, time)
+    # Increase time to not trigger kernels again, otherwise infinite loop.
+    particle.time = time + particle.dt
     particle.set_state(ErrorCode.Success)
 
+    return
 
 
 def Age(particle, fieldset, time):
@@ -206,7 +209,7 @@ def EUC_pset(fieldset, pclass, p_lats, p_lons, p_depths,
 @timeit
 def EUC_particles(fieldset, date_bnds, p_lats, p_lons, p_depths,
                   dt, pset_start, repeatdt, runtime, outputdt,
-                  remove_westward=True):
+                  remove_westward=True, all_kerels=True):
     """Create and execute a ParticleSet (created using EUC_pset).
 
     Args:
@@ -233,6 +236,7 @@ def EUC_particles(fieldset, date_bnds, p_lats, p_lons, p_depths,
 
         # The age of the particle.
         age = Variable('age', dtype=np.float32, initial=0.)
+
         # The velocity of the particle.
         u = Variable('u', dtype=np.float32, initial=fieldset.U,
                      to_write="once")
@@ -258,16 +262,19 @@ def EUC_particles(fieldset, date_bnds, p_lats, p_lons, p_depths,
     # Output particle file p_name and time steps to save.
     logger.debug('{}: Output file.'.format(pfile.stem))
     output_file = pset.ParticleFile(cfg.data/pfile.stem, outputdt=outputdt)
-
-    logger.info('{}:  AdvectionRK4_3D'
-                .format(pfile.stem))
-
-    # kernels = pset.Kernel(DeleteWestward) + pset.Kernel(Age) + AdvectionRK4_3D
-    kernels = AdvectionRK4_3D
+    if all_kerels:
+        logger.info('{}:pset.Kernel(DeleteWestward) + pset.Kernel(Age) +'
+                    ' AdvectionRK4_3D'.format(pfile.stem))
+        kernels = (pset.Kernel(DeleteWestward) + pset.Kernel(Age) +
+                   AdvectionRK4_3D)
+    else:
+        logger.info('{}:AdvectionRK4_3D'.format(pfile.stem))
+        kernels = AdvectionRK4_3D
 
     logger.debug('{}: Excecute particle set..'.format(pfile.stem))
     pset.execute(kernels, runtime=runtime, dt=dt, output_file=output_file,
-                 recovery={ErrorCode.ErrorOutOfBounds: DeleteParticle},
+                 recovery={ErrorCode.ErrorOutOfBounds: DeleteParticle,
+                           ErrorCode.ErrorThroughSurface: SubmergeParticle},
                  verbose_progress=True)
     logger.info('{}: Completed.'.format(pfile.stem))
 
