@@ -1,0 +1,37 @@
+base:INFO:Executing: 1981-01-01 00:00:00 to 1981-12-31 00:00:00
+base:INFO:Runtime: 364 days
+base:INFO:Timestep (dt): 240 minutes
+base:INFO:Output (dt): 1 days
+base:INFO:Repeat release: 6 days
+base:INFO:Depths: 14 dz=25 [25 to 350]
+base:INFO:Latitudes: 14 dy=0.4 [-2.6 to 2.6]
+base:INFO:Longitudes: 1 [190]
+base:INFO:Particles (/repeatdt): 196
+base:INFO:Particles (total): 11760
+base:INFO:Time decorator used.
+base:INFO:Fieldset import method= netcdf.
+base:INFO:Field import=netcdf, Chunks=False
+WARNING: Casting lon data to np.float32
+WARNING: Casting lat data to np.float32
+WARNING: Casting depth data to np.float32
+WARNING: Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+base:INFO:ofam_fieldset: 0:0:30.95 total: 30.95 seconds.
+base:INFO:ParticleFile_1981-1981_v1i: Started.
+WARNING: Particle initialisation from field can be very slow as it is computed in scipy mode.
+base:INFO:EUC_pset: 0:1:42.55 total: 102.55 seconds.
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/base.py", line 127, in <module>
+    add_transport=args.transport, write_fieldset=args.fieldset)
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 121, in timed
+    result = method(*args, **kw)
+  File "/g/data/e14/as3189/OFAM/scripts/base.py", line 79, in run_EUC
+    remove_westward=True)
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 121, in timed
+    result = method(*args, **kw)
+  File "/g/data/e14/as3189/OFAM/scripts/main.py", line 260, in EUC_particles
+    remove_westward_particles(pset)
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 121, in timed
+    result = method(*args, **kw)
+  File "/g/data/e14/as3189/OFAM/scripts/main.py", line 186, in remove_westward_particles
+    pset.remove(ix)
+TypeError: 'bool' object is not callable
