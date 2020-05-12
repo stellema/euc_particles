@@ -93,7 +93,7 @@ def run_EUC(dy=0.8, dz=25, lon=190, lat=2.6, year_i=1981, year_f=2012,
     return
 
 
-if __name__ == "__main__": # and cfg.home != Path('E:/'):
+if __name__ == "__main__" and cfg.home != Path('E:/'):
     p = ArgumentParser(description="""Run lagrangian EUC experiment""")
     p.add_argument('-dy', '--dy', default=0.1, help='Particle lat spacing',
                    type=float)
@@ -126,8 +126,8 @@ if __name__ == "__main__": # and cfg.home != Path('E:/'):
             dt_mins=args.dt, repeatdt_days=args.repeatdt,
             outputdt_days=args.outputdt, field_method=args.fieldm,
             add_transport=args.transport, write_fieldset=args.fset)
-# else:
-#     run_EUC(dy=1, dz=200, lon=190, lat=2, year_i=1981, year_f=1981,
-#             dt_mins=240, repeatdt_days=6, outputdt_days=1, month=1,
-#             field_method='b_grid', chunks='manual',
-#             add_transport=False, write_fieldset=False)
+else:
+    run_EUC(dy=1, dz=200, lon=190, lat=2, year_i=1981, year_f=1981,
+            dt_mins=240, repeatdt_days=6, outputdt_days=1, month=1,
+            field_method='b_grid', chunks='manual',
+            add_transport=False, write_fieldset=False)
