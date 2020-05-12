@@ -54,14 +54,14 @@ from pathlib import Path
 import matplotlib.pyplot as plt
 from collections import OrderedDict
 # from parcels import *
-from parcels import FieldSet, ParticleSet, JITParticle
+from parcels import FieldSet, ParticleSet, JITParticle, ScipyParticle
 from parcels import ErrorCode, Variable, AdvectionRK4_3D, AdvectionRK4
 from tools import timeit
 
 logger = logging.getLogger(Path(sys.argv[0]).stem)
 
 
-@timeit
+# @timeit
 def ofam_fieldset(date_bnds, field_method='netcdf', time_periodic=False,
                   deferred_load=True, chunks='manual'):
     """Create a 3D parcels fieldset from OFAM model output.
@@ -101,13 +101,16 @@ def ofam_fieldset(date_bnds, field_method='netcdf', time_periodic=False,
     dimensions = {'U': vdims, 'V': vdims, 'W': vdims}
 
     if chunks == 'manual':
-        # chunks = ((date_bnds[1]-date_bnds[0]).days+1, 51, 300, 1750)
         chunks = (1, 1, 128, 128)
+        # chunks = {"Time": 1, "st_ocean": 1, "sw_ocean": 1,
+        #           "xt_ocean": 1750, "xu_ocean": 1750,
+                  # "yt_ocean": 300, "yu_ocean": 300}
+
     logger.info('Field import={}, Chunks={}'.format(field_method, chunks))
 
     if field_method == 'netcdf':
         fieldset = FieldSet.from_netcdf(files, variables, dimensions,
-                                        deferred_load=True,
+                                        deferred_load=deferred_load,
                                         field_chunksize=chunks)
     elif field_method == 'b_grid':
         fieldset = FieldSet.from_b_grid_dataset(files, variables, dimensions,
@@ -125,6 +128,7 @@ def DeleteParticle(particle, fieldset, time):
 
 
 def SubmergeParticle(particle, fieldset, time):
+    """Run 2D advection if particle goes through surface."""
     particle.depth = fieldset.U.depth[0]
     # Perform 2D advection as vertical flow will always push up in this case.
     AdvectionRK4(particle, fieldset, time)
@@ -132,24 +136,17 @@ def SubmergeParticle(particle, fieldset, time):
     particle.time = time + particle.dt
     particle.set_state(ErrorCode.Success)
 
-    return
-
 
 def Age(particle, fieldset, time):
     """Update particle age."""
     particle.age = particle.age + math.fabs(particle.dt)
 
-    return
-
 
 def DeleteWestward(particle, fieldset, time):
     """Delete particles initially travelling westward."""
     # Delete particle if the initial zonal velocity is westward (negative).
-    if particle.age == 0. and fieldset.U[time, particle.depth,
-                                         particle.lat, particle.lon] < 0:
+    if particle.age == 0 and particle.u <= 0:
         particle.delete()
-
-    return
 
 
 def Distance(particle, fieldset, time):
@@ -168,8 +165,6 @@ def Distance(particle, fieldset, time):
     # Set the stored values for next iteration.
     particle.prev_lon = particle.lon
     particle.prev_lat = particle.lat
-
-    return
 
 
 @timeit
@@ -199,9 +194,9 @@ def EUC_pset(fieldset, pclass, p_lats, p_lons, p_depths,
     lats = np.tile(p_lats, len(p_depths)*len(p_lons))
     depths = np.tile(np.repeat(p_depths, len(p_lats)), len(p_lons))
     lons = np.repeat(p_lons, len(p_depths)*len(p_lats))
-    pset = ParticleSet(fieldset=fieldset, pclass=pclass,
-                       lon=lons, lat=lats, depth=depths,
-                       time=pset_start, repeatdt=repeatdt)
+    pset = ParticleSet.from_list(fieldset=fieldset, pclass=pclass,
+                                 lon=lons, lat=lats, depth=depths,
+                                 time=pset_start, repeatdt=repeatdt)
 
     return pset
 
@@ -209,7 +204,7 @@ def EUC_pset(fieldset, pclass, p_lats, p_lons, p_depths,
 @timeit
 def EUC_particles(fieldset, date_bnds, p_lats, p_lons, p_depths,
                   dt, pset_start, repeatdt, runtime, outputdt,
-                  remove_westward=True, all_kerels=True):
+                  remove_westward=True, all_kernels=True):
     """Create and execute a ParticleSet (created using EUC_pset).
 
     Args:
@@ -237,7 +232,7 @@ def EUC_particles(fieldset, date_bnds, p_lats, p_lons, p_depths,
         # The age of the particle.
         age = Variable('age', dtype=np.float32, initial=0.)
 
-        # The velocity of the particle.
+        # # The velocity of the particle.
         u = Variable('u', dtype=np.float32, initial=fieldset.U,
                      to_write="once")
 
@@ -246,11 +241,12 @@ def EUC_particles(fieldset, date_bnds, p_lats, p_lons, p_depths,
     while (cfg.data/('ParticleFile_{}-{}_v{}i.nc'
                      .format(*[d.year for d in date_bnds], i))).exists():
         i += 1
-
+    # fieldset.computeTimeChunk(fieldset.U.grid.time[-1], -3*3600)
     pfile = cfg.data/'ParticleFile_{}-{}_v{}i.nc'.format(*[d.year for d in
                                                            date_bnds], i)
 
     logger.info('{}: Started.'.format(pfile.stem))
+
     # Create particle set.
     pset = EUC_pset(fieldset, tparticle, p_lats, p_lons, p_depths,
                     pset_start, repeatdt)
@@ -262,14 +258,16 @@ def EUC_particles(fieldset, date_bnds, p_lats, p_lons, p_depths,
     # Output particle file p_name and time steps to save.
     logger.debug('{}: Output file.'.format(pfile.stem))
     output_file = pset.ParticleFile(cfg.data/pfile.stem, outputdt=outputdt)
-    if all_kerels:
-        logger.info('{}:pset.Kernel(Age) + AdvectionRK4_3D'.format(pfile.stem))
-        kernels = AdvectionRK4_3D + pset.Kernel(Age)
+    if all_kernels:
+        logger.info('{}:AdvectionRK4_3D + pset.Kernel(Age) +'
+                    'pset.Kernel(DeleteWestward)'.format(pfile.stem))
+        kernels = (AdvectionRK4_3D + pset.Kernel(Age) +
+                   pset.Kernel(DeleteWestward))
     else:
         logger.info('{}:AdvectionRK4_3D'.format(pfile.stem))
         kernels = AdvectionRK4_3D
 
-    logger.debug('{}: Excecute particle set..'.format(pfile.stem))
+    logger.debug('{}: Excecute particle set.'.format(pfile.stem))
     pset.execute(kernels, runtime=runtime, dt=dt, output_file=output_file,
                  recovery={ErrorCode.ErrorOutOfBounds: DeleteParticle,
                            ErrorCode.ErrorThroughSurface: SubmergeParticle},
@@ -427,7 +425,7 @@ def EUC_vbounds(du, depths, i, v_bnd=0.3, index=False):
 
     for t in range(u.shape[0]):
         # Make sure entire slice isn't all empty
-        if not (u[t] == True).mask.all() and not np.ma.is_masked(v_imax[t]):
+        if ~(u[t] == True).mask.all() and ~np.ma.is_masked(v_imax[t]):
 
             # Set target velocity as half the maximum at each timestep.
             if v_bnd == 'half_max':
@@ -475,8 +473,7 @@ def EUC_vbounds(du, depths, i, v_bnd=0.3, index=False):
         else:
             empty += 1
 
-    data_name = 'OFAM3' if hasattr(du, 'st_ocean') else 'TAO/TRITION'
-
+    # data_name = 'OFAM3' if hasattr(du, 'st_ocean') else 'TAO/TRITION'
     # logger.debug('{} {}: v_bnd={} tot={} count={} null={} skip={}(T={},L={}).'
     #              .format(data_name, cfg.lons[i], v_bnd, u.shape[0], count,
     #                      empty, skip_t + skip_l, skip_t, skip_l))
@@ -515,8 +512,6 @@ def EUC_bnds_static(du, lon=None, z1=25, z2=350, lat=2.6):
 
     # Remove negative/zero velocities.
     du = du.u.where(du.u > 0, np.nan)
-    # print('Static z: {:.2f}-{:.2f}'.format(du.st_ocean[0].item(),
-    #                                        du.st_ocean[-1].item()))
 
     return du
 

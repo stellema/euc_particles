@@ -45,7 +45,8 @@ def run_EUC(dy=0.8, dz=25, lon=190, lat=2.6, year_i=1981, year_f=2012,
     p_lats = np.round(np.arange(-lat, lat + 0.1, dy), 2)
     p_depths = np.arange(25, 350 + 20, dz)
     # Longitudes to release particles.
-    p_lons = np.array([lon])
+
+    p_lons = np.array([int(item) for item in lon.split(',')])
     dt = -timedelta(minutes=dt_mins)
     repeatdt = timedelta(days=repeatdt_days)
     # Run for the number of days between date bounds.
@@ -76,7 +77,7 @@ def run_EUC(dy=0.8, dz=25, lon=190, lat=2.6, year_i=1981, year_f=2012,
     pset_start = fieldset.U.grid.time[-1]
     pfile = main.EUC_particles(fieldset, date_bnds, p_lats, p_lons, p_depths,
                                dt, pset_start, repeatdt, runtime, outputdt,
-                               remove_westward=True)
+                               remove_westward=True, all_kernels=True)
 
     if add_transport:
         df = main.ParticleFile_transport(pfile, dy, dz, save=True)
@@ -92,14 +93,14 @@ def run_EUC(dy=0.8, dz=25, lon=190, lat=2.6, year_i=1981, year_f=2012,
     return
 
 
-if __name__ == "__main__" and cfg.home != Path('E:/'):
+if __name__ == "__main__": # and cfg.home != Path('E:/'):
     p = ArgumentParser(description="""Run lagrangian EUC experiment""")
     p.add_argument('-dy', '--dy', default=0.1, help='Particle lat spacing',
                    type=float)
     p.add_argument('-z', '--dz', default=25, help='Particle depth spacing [m]',
                    type=int)
     p.add_argument('-x', '--lon', default=190, help='Particle start longitude',
-                   type=int)
+                   type=str)
     p.add_argument('-y', '--lat', default=2.6, help='Particle latitude bounds',
                    type=float)
     p.add_argument('-i', '--year_i', default=1981, help='Start year', type=int)
@@ -125,8 +126,8 @@ if __name__ == "__main__" and cfg.home != Path('E:/'):
             dt_mins=args.dt, repeatdt_days=args.repeatdt,
             outputdt_days=args.outputdt, field_method=args.fieldm,
             add_transport=args.transport, write_fieldset=args.fset)
-else:
-    run_EUC(dy=1, dz=200, lon=190, lat=2, year_i=1981, year_f=1981,
-            dt_mins=240, repeatdt_days=6, outputdt_days=1, month=1,
-            field_method='b_grid', chunks='manual',
-            add_transport=False, write_fieldset=False)
+# else:
+#     run_EUC(dy=1, dz=200, lon=190, lat=2, year_i=1981, year_f=1981,
+#             dt_mins=240, repeatdt_days=6, outputdt_days=1, month=1,
+#             field_method='b_grid', chunks='manual',
+#             add_transport=False, write_fieldset=False)

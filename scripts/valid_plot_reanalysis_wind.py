@@ -123,6 +123,8 @@ f1, f2, res = 0, 1, 0.1
 tx1, ty1, phi1 = get_wsc(data=data[0], flux=flux[f1], res=res, interp='cubic')
 tx2, ty2, phi2 = get_wsc(data=data[1], flux=flux[f2], res=res, interp='cubic')
 
+
+# (phi1/(beta*RHO)).cumsum()
 # Wind stress line graph in first subplot and WSC for next three.
 title = ['Equatorial zonal wind stress', 'JRA-55 wind stress curl',
          'ERA-Interim wind stress curl',
