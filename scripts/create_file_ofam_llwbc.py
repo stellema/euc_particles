@@ -93,13 +93,16 @@ elif s == 4:
     name_short = 'ni'
     lat, lon = -4.1, [153, 153.7]
 
+
 def predrop(ds):
+    """Drop variables before processing."""
     ds = ds.drop('Time_bounds')
     ds = ds.drop('average_DT')
     ds = ds.drop('average_T1')
     ds = ds.drop('average_T2')
     ds = ds.drop('nv')
     return ds
+
 
 if not test:
     logger.info('Creating transport file: {} ({}).'.format(name, name_short))

@@ -62,7 +62,7 @@ from tools import timeit
 logger = logging.getLogger(Path(sys.argv[0]).stem)
 
 
-# @timeit
+@timeit
 def ofam_fieldset(date_bnds, field_method='b_grid', time_periodic=False,
                   deferred_load=True, chunks='manual'):
     """Create a 3D parcels fieldset from OFAM model output.
@@ -120,12 +120,12 @@ def ofam_fieldset(date_bnds, field_method='b_grid', time_periodic=False,
     return fieldset
 
 
-def generate_sim_id(date_bnds):
+def generate_sim_id(date_bnds, parallel=False):
     """Create name to save particle file (looks for unsaved filename)."""
     dsr = 'sim_{}_{}'.format(*[str(i)[:7].replace('-', '') for i in date_bnds])
-    i = random.randint(0, 100)
+    i = 0 if parallel else random.randint(0, 100)
     while (cfg.data/'{}_v{}i.nc'.format(dsr, i)).exists():
-        i = random.randint(0, 100)
+        i = i + 1 if parallel else random.randint(0, 100)
     sim_id = cfg.data/'{}_v{}i.nc'.format(dsr, i)
     return sim_id
 

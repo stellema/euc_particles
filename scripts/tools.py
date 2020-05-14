@@ -170,6 +170,7 @@ def legend_without_duplicate_labels(ax, loc=False, fontsize=11):
 
 
 def deg_m(lat, lon, deg=0.1):
+    """Convert latitude and longitude values or arrays to metres."""
     arc = ((np.pi*cfg.EARTH_RADIUS)/180)
 
     dy = deg*arc
@@ -224,7 +225,6 @@ def precision(var):
     p : list
         The number of decimal places to print for historical and change
     """
-
     # List for the number of digits (n) and decimal place (p).
     n, p = 1, 1
 
@@ -271,6 +271,7 @@ def correlation_str(cor):
 
 
 def coord_formatter(array, convert='lat'):
+    """Convert coords to str with degrees N/S/E/W."""
     array = np.array(array)
     if convert == 'lon':
         west = np.where(array <= 180)
@@ -336,7 +337,7 @@ def wind_stress_curl(du, dv, w=0.5, wy=None):
         phi_ds (Datadet): Wind stress curl dataset (variable phi).
 
     """
-    if wy == None:
+    if wy is None:
         wy = w
     # The distance between longitude points [m].
     dx = [(w*((np.pi*cfg.EARTH_RADIUS)/180) *
@@ -473,6 +474,7 @@ def open_tao_data(frq='mon', dz=slice(10, 355), SI=True):
 
 
 def create_mesh_mask():
+    """Create OFAM3 mesh mask."""
     ufiles, sfiles = [], []
     ufiles.append(cfg.ofam/'ocean_u_1981_01.nc')
     sfiles.append(cfg.ofam/'ocean_salt_1981_01.nc')
@@ -496,7 +498,7 @@ def create_mesh_mask():
 
 
 def coriolis(lat):
-    """ Calculates the Coriolis and Rossby parameters.
+    """Calculate the Coriolis and Rossby parameters.
 
     Coriolis parameter (f): The angular velocity or frequency required
     to maintain a body at a fixed circle of latitude or zonal region.
@@ -504,31 +506,35 @@ def coriolis(lat):
     Rossby parameter (beta): The northward variation of the Coriolis
     parameter, arising from the sphericity of the earth.
 
-    NOTE: lon is not actually used (it was in an old version but
-    some calls to this function still include lon).
+    Args:
+        lat (int or array-like): The latitude at which to calculate the values.
 
-    Parameters
-    ----------
-    lat : number
-        The latitude at which to calculate the values.
-    OMEGA : number, optional
-        Rotation rate of the Earth [rad/s]
+    Returns:
+        f (float): Coriolis parameter.
+        beta (float): Rossby parameter.
 
-    Returns
-    -------
-    f : float
-        Coriolis parameter
-    beta : float
-        Rossby parameter
     """
-
     # Coriolis parameter.
-    f = 2*cfg.OMEGA*np.sin(np.radians(lat)) # [rad/s]
+    f = 2*cfg.OMEGA*np.sin(np.radians(lat))  # [rad/s]
 
     # Rossby parameter.
     beta = 2*cfg.OMEGA*np.cos(np.radians(lat))/cfg.EARTH_RADIUS
 
     return f, beta
+
+
+def get_edge_depth(z, index=True, edge=False, greater=False):
+    """Integration OFAM3 depth levels."""
+    dg = xr.open_dataset(cfg.ofam/'ocean_u_1981_01.nc')
+    zi = idx(dg.st_edges_ocean, z)
+    zi = zi + 1 if dg.st_edges_ocean[zi] < z and greater else zi
+    z_new = dg.st_edges_ocean[zi].item() if edge else dg.st_ocean[zi].item()
+    dg.close()
+
+    if index:
+        return zi
+    else:
+        return z_new
 
 
 def tidy_files(logs=True, jobs=True):
@@ -545,17 +551,3 @@ def tidy_files(logs=True, jobs=True):
                 os.remove(f)
                 print('Deleted:', f)
     return
-
-
-def get_edge_depth(z, index=True, edge=False, greater=False):
-    """Integration OFAM3 depth levels."""
-    dg = xr.open_dataset(cfg.ofam/'ocean_u_1981_01.nc')
-    zi = idx(dg.st_edges_ocean, z)
-    zi = zi + 1 if dg.st_edges_ocean[zi] < z and greater else zi
-    z_new = dg.st_edges_ocean[zi].item() if edge else dg.st_ocean[zi].item()
-    dg.close()
-
-    if index:
-        return zi
-    else:
-        return z_new
