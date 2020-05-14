@@ -1,0 +1,30 @@
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/create_file_EUC_transport_definitions.py", line 53, in <module>
+    dx[i] = EUC_bnds_izumo(du, dt, ds, lon=lon)
+  File "/g/data/e14/as3189/OFAM/scripts/main.py", line 588, in EUC_bnds_izumo
+    z1 = tools.get_edge_depth(z1, index=False)
+UnboundLocalError: local variable 'z1' referenced before assignment

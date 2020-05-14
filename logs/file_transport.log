@@ -127,3 +127,9 @@
 2020-05-14 15:43:03,000:<module>:INFO:Finished transport file: Mindanao Current (mc).
 2020-05-14 15:43:04,206:<module>:INFO:Finished transport file: St Georges Channel (sgx).
 2020-05-14 15:43:04,726:<module>:INFO:Finished transport file: Solomon Strait (ss).
+2020-05-14 18:03:00,944:<module>:INFO:Creating transport file: St Georges Channel (sg).
+2020-05-14 18:03:18,543:<module>:INFO:Creating transport file: Vitiaz Strait (vs).
+2020-05-14 18:06:34,887:<module>:DEBUG:Vitiaz Strait (vs) test: 3.0060 Sv 1981-01-16 (-6.1)
+2020-05-14 18:06:34,890:<module>:INFO:Saving transport file: Vitiaz Strait (vs).
+2020-05-14 18:06:34,952:<module>:DEBUG:St Georges Channel (sg) test: -0.4901 Sv 1981-01-16 (-4.6)
+2020-05-14 18:06:34,955:<module>:INFO:Saving transport file: St Georges Channel (sg).
