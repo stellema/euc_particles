@@ -988,3 +988,12 @@
 2020-05-09 16:32:11,701:update_ticks:DEBUG:Using auto colorbar locator on colorbar
 2020-05-09 16:32:11,702:update_ticks:DEBUG:locator: <matplotlib.colorbar._ColorbarAutoLocator object at 0x000002C18245B978>
 2020-05-09 16:32:11,702:_add_solids:DEBUG:Setting pcolormesh
+2020-05-14 14:08:44,268:log_wbc:INFO:EUC:165°E:          Mean:  22.1 cfg.SV Max:  34.8 cfg.SV in Jun, Min:  12.5 cfg.SV in Nov. El Nino: -1.5 cfg.SV La Nina:  2.7 cfg.SV
+2020-05-14 14:08:44,344:log_wbc:INFO:EUC:170°W:          Mean:  28.0 cfg.SV Max:  42.9 cfg.SV in May, Min:  16.1 cfg.SV in Sep. El Nino: -5.4 cfg.SV La Nina:  5.6 cfg.SV
+2020-05-14 14:08:44,417:log_wbc:INFO:EUC:140°W:          Mean:  29.5 cfg.SV Max:  42.1 cfg.SV in Apr, Min:  22.0 cfg.SV in Aug. El Nino: -5.9 cfg.SV La Nina:  5.0 cfg.SV
+2020-05-14 14:08:44,513:log_wbc:INFO:VS:6.1°S:0-1303m:   Mean:  6.8 cfg.SV Max:  9.6 cfg.SV in Jul, Min:  5.0 cfg.SV in Feb. El Nino:  1.0 cfg.SV La Nina: -0.9 cfg.SV
+2020-05-14 14:08:44,602:log_wbc:INFO:SGC:4.7°S:0-1303m:  Mean: -0.27 cfg.SV Max: -0.65 cfg.SV in Oct, Min:  0.12 cfg.SV in Jul. El Nino:  0.12 cfg.SV La Nina: -0.09 cfg.SV
+2020-05-14 14:08:44,695:log_wbc:INFO:SS:4.8°S:0-1303m:   Mean:  9.0 cfg.SV Max:  14.0 cfg.SV in Jul, Min:  3.6 cfg.SV in Feb. El Nino:  1.1 cfg.SV La Nina: -0.2 cfg.SV
+2020-05-14 14:08:44,787:log_wbc:INFO:NI:4.1°S:0-1303m:   Mean:  4.6 cfg.SV Max:  9.9 cfg.SV in Jun, Min:  1.5 cfg.SV in Nov. El Nino: -0.7 cfg.SV La Nina:  0.3 cfg.SV
+2020-05-14 14:08:44,880:log_wbc:INFO:MC:9°N:0-578m:      Mean: -19.4 cfg.SV Max: -20.3 cfg.SV in Nov, Min: -18.3 cfg.SV in Sep. El Nino: -0.8 cfg.SV La Nina:  1.4 cfg.SV
+2020-05-14 14:08:44,975:log_wbc:INFO:MC:7.5°N:0-578m:    Mean: -21.9 cfg.SV Max: -23.8 cfg.SV in May, Min: -20.1 cfg.SV in Sep. El Nino:  0.4 cfg.SV La Nina:  1.0 cfg.SV
