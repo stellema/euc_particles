@@ -495,7 +495,7 @@ def EUC_bnds_static(du, lon=None, z1=25, z2=350, lat=2.6):
 
     """
     z1 = tools.get_edge_depth(z1, index=False)
-    z2 = tools.get_edge_depth(z2, index=False) - 1
+    z2 = tools.get_edge_depth(z2, index=False)
 
     # Slice depth and longitude.
     du = du.sel(st_ocean=slice(z1, z2), yu_ocean=slice(-lat, lat))
@@ -586,7 +586,7 @@ def EUC_bnds_izumo(du, dt, ds, lon, interpolated=False):
     else:
         # Modified because this is the correct level for OFAM3 grid.
         z1 = tools.get_edge_depth(z1, index=False)
-        z2 = tools.get_edge_depth(z2, index=False) - 1
+        z2 = tools.get_edge_depth(z2, index=False)
         z_15 = 17
 
     # Find exact latitude longitudes to slice dt and ds.

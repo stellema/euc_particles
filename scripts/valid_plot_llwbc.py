@@ -224,11 +224,11 @@ mc = xr.open_dataset(cfg.data/'ofam_transport_mc.nc')
 # plot_llwbc_velocity(vs, sg, ss, ni, mc)
 
 euc = euc.resample(Time='MS').mean().uvo/cfg.SV
-vs = vs.isel(st_ocean=slice(0, tools.idx(vs.st_ocean, 1000) + 3))
-sg = sg.isel(st_ocean=slice(0, tools.idx(sg.st_ocean, 1200) + 1))
-ss = ss.isel(st_ocean=slice(0, tools.idx(ss.st_ocean, 1200) + 1))
-ni = ni.isel(st_ocean=slice(0, tools.idx(ss.st_ocean, 1200) + 1))
-mc = mc.isel(st_ocean=slice(0, tools.idx(mc.st_ocean, 550) + 1))
+vs = vs.isel(st_ocean=slice(0, tools.get_edge_depth(1200)))
+sg = sg.isel(st_ocean=slice(0, tools.get_edge_depth(1200)))
+ss = ss.isel(st_ocean=slice(0, tools.get_edge_depth(1200)))
+ni = ni.isel(st_ocean=slice(0, tools.get_edge_depth(1200)))
+mc = mc.isel(st_ocean=slice(0, tools.get_edge_depth(550)))
 
 # plot_llwbc_enso(euc, oni, vs, sg, ss, mc)
 # plot_llwbc_profile(vs, sg, ss, mc)

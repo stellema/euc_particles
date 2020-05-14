@@ -547,12 +547,13 @@ def tidy_files(logs=True, jobs=True):
     return
 
 
-def get_edge_depth(z, index=True):
+def get_edge_depth(z, index=True, edge=False, greater=False):
     """Integration OFAM3 depth levels."""
-    ds = xr.open_dataset(cfg.ofam/'ocean_u_1981_01.nc')
-    zi = idx(ds.st_edges_ocean, z)
-    z_new = ds.st_ocean[zi].item()
-    ds.close()
+    dg = xr.open_dataset(cfg.ofam/'ocean_u_1981_01.nc')
+    zi = idx(dg.st_edges_ocean, z)
+    zi = zi + 1 if dg.st_edges_ocean[zi] < z and greater else zi
+    z_new = dg.st_edges_ocean[zi].item() if edge else dg.st_ocean[zi].item()
+    dg.close()
 
     if index:
         return zi

@@ -13,7 +13,8 @@ author: Annette Stellema (astellemas@gmail.com)
 
 """
 import cfg
-from tools import idx, mlogger, coord_formatter, precision
+import tools
+from tools import idx, mlogger, coord_formatter, precision, get_edge_depth
 import numpy as np
 import xarray as xr
 from valid_nino34 import enso_u_ofam
@@ -25,8 +26,9 @@ def log_wbc(data, name, full=True):
     for nm, ds in zip(name, data):
         d, y, = '', ''
         if hasattr(ds, 'st_ocean'):
-            d = '{:.0f}-{:.0f}m:'.format(ds.st_ocean[0].item(),
-                                         ds.st_ocean[-1].item())
+            d = [get_edge_depth(ds.st_ocean[i], index=0, edge=True, greater=b)
+                 for i, b in zip([0, -1], [False, True])]
+            d = '{:.0f}-{:.0f}m:'.format(*d)
         if hasattr(ds, 'yu_ocean'):
             y = coord_formatter([np.round(ds.yu_ocean.item(), 1)])[0] + ':'
         if hasattr(ds, 'xu_ocean') and hasattr(ds, 'st_ocean'):
@@ -65,11 +67,11 @@ ni = xr.open_dataset(cfg.data/'ofam_transport_ni.nc').vvo/cfg.SV
 #         ['VS+', 'SGC+', 'SS+'])
 
 euc = euc.resample(Time='MS').mean().uvo/cfg.SV
-vs = vs.isel(st_ocean=slice(0, idx(vs.st_ocean, 1000) + 3))
-sg = sg.isel(st_ocean=slice(0, idx(sg.st_ocean, 1200) + 1))
-ss = ss.isel(st_ocean=slice(0, idx(ss.st_ocean, 1200) + 1))
-ni = ni.isel(st_ocean=slice(0, idx(sg.st_ocean, 1200) + 1))
-mc = mc.isel(st_ocean=slice(0, idx(mc.st_ocean, 550) + 1))
+vs = vs.isel(st_ocean=slice(0, tools.get_edge_depth(355, greater=0)))
+sg = sg.isel(st_ocean=slice(0, tools.get_edge_depth(1200, greater=True)))
+ss = ss.isel(st_ocean=slice(0, tools.get_edge_depth(1200, greater=True)))
+ni = ni.isel(st_ocean=slice(0, tools.get_edge_depth(1200, greater=True)))
+mc = mc.isel(st_ocean=slice(0, tools.get_edge_depth(550)))
 
 
 # vst = vs.sum(dim='st_ocean').sum(dim='xu_ocean')
