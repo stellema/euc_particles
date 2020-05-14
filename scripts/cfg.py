@@ -10,6 +10,7 @@ import sys
 import string
 import calendar
 import numpy as np
+import xarray as xr
 from pathlib import Path
 import matplotlib.pyplot as plt
 from parcels import JITParticle, ScipyParticle
@@ -64,13 +65,17 @@ loggers = {}
 
 ptype = {'scipy': ScipyParticle, 'jit': JITParticle}
 
+# Sverdrup.
+SV = 1e6
+
 # Radius of Earth [m].
 EARTH_RADIUS = 6378137
 
-SV = 1e6
-
 # Metres in 1 degree of latitude [m].
-LAT_DEG = 111320
+LAT_DEG = (2 * np.pi/360) * EARTH_RADIUS
+
+def LON_DEG(lat):
+    return LAT_DEG * np.cos(np.radians(lat))
 
 # Ocean density [kg/m3].
 RHO = 1025
@@ -100,3 +105,12 @@ plt.rcParams['legend.fontsize'] = 'large'
 plt.rcParams['figure.titlesize'] = 'medium'
 plt.rcParams['axes.titlesize'] = 'large'
 plt.rcParams['axes.labelsize'] = 'medium'
+
+
+def dz():
+    """Width of OFAM3 depth levels."""
+    ds = xr.open_dataset(ofam/'ocean_u_1981_01.nc')
+    z = np.array([(ds.st_edges_ocean[i+1] - ds.st_edges_ocean[i]).item()
+                  for i in range(len(ds.st_edges_ocean)-1)])
+    ds.close()
+    return z

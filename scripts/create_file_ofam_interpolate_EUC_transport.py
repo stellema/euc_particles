@@ -10,9 +10,8 @@ import cfg
 import numpy as np
 import xarray as xr
 
-lons = [165, 190, 220]
 # Area = metres in a degree of latitude x cell width x cell depth
-area = cfg.LAT_DEG*0.1*5
+area = cfg.LAT_DEG * 0.1 * 5
 
 files = []
 for y in range(cfg.years[0][0], cfg.years[0][1]+1):
@@ -20,18 +19,19 @@ for y in range(cfg.years[0][0], cfg.years[0][1]+1):
         files.append(str(cfg.ofam/'ocean_u_{}_{:02d}.nc'.format(y, m)))
 
 ds = xr.open_mfdataset(files, combine='by_coords')
-dss = ds.u.sel(xu_ocean=[165, 190, 220], yu_ocean=slice(-2.6, 2.6),
-               st_ocean=slice(2.5, 610.415649))
+dss = ds.u.sel(xu_ocean=cfg.lons, yu_ocean=slice(-2.6, 2.6))
 
 # Calculate the monthly mean.
-df = dss.resample(Time="MS").mean()
+df = dss.resample(Time='MS').mean()
+
 # New depth levels to interpolate to.
 z = np.arange(10, 360, 5)
 di = df.interp(st_ocean=z, method='slinear')
 
 di = di.sel(st_ocean=slice(10, 555))
+
 # Multiply each grid cell by the constant.
-dt = (di.where(di > 0)*area).sum(dim='yu_ocean')
+dt = (di.where(di > 0) * area).sum(dim='yu_ocean')
 
 eq = di.sel(yu_ocean=0, method='nearest')
 

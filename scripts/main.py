@@ -62,7 +62,7 @@ logger = logging.getLogger(Path(sys.argv[0]).stem)
 
 
 # @timeit
-def ofam_fieldset(date_bnds, field_method='netcdf', time_periodic=False,
+def ofam_fieldset(date_bnds, field_method='b_grid', time_periodic=False,
                   deferred_load=True, chunks='manual'):
     """Create a 3D parcels fieldset from OFAM model output.
 
@@ -102,9 +102,6 @@ def ofam_fieldset(date_bnds, field_method='netcdf', time_periodic=False,
 
     if chunks == 'manual':
         chunks = (1, 1, 128, 128)
-        # chunks = {"Time": 1, "st_ocean": 1, "sw_ocean": 1,
-        #           "xt_ocean": 1750, "xu_ocean": 1750,
-                  # "yt_ocean": 300, "yu_ocean": 300}
 
     logger.info('Field import={}, Chunks={}'.format(field_method, chunks))
 
@@ -497,18 +494,13 @@ def EUC_bnds_static(du, lon=None, z1=25, z2=350, lat=2.6):
         du4 (DataArray): The zonal velocity in the EUC region.
 
     """
-    z2i = tools.idx(du.st_ocean, z2)
-    z2i = z2i if du.st_ocean[z2i] >= z2 else z2i + 1
-    z2 = du.st_ocean[z2i].item()
+    z1 = tools.get_edge_depth(z1, index=False)
+    z2 = tools.get_edge_depth(z2, index=False) - 1
 
     # Slice depth and longitude.
+    du = du.sel(st_ocean=slice(z1, z2), yu_ocean=slice(-lat, lat))
     if lon is not None:
-        du = du.sel(st_ocean=slice(z1, z2),
-                    xu_ocean=lon,
-                    yu_ocean=slice(-lat, lat))
-    else:
-        du = du.sel(st_ocean=slice(z1, z2),
-                    yu_ocean=slice(-lat, lat))
+        du = du.sel(xu_ocean=lon)
 
     # Remove negative/zero velocities.
     du = du.u.where(du.u > 0, np.nan)
@@ -593,7 +585,9 @@ def EUC_bnds_izumo(du, dt, ds, lon, interpolated=False):
         z_15, z1, z2 = 15, 25, 300
     else:
         # Modified because this is the correct level for OFAM3 grid.
-        z_15, z1, z2 = 17, 25, 327
+        z1 = tools.get_edge_depth(z1, index=False)
+        z2 = tools.get_edge_depth(z2, index=False) - 1
+        z_15 = 17
 
     # Find exact latitude longitudes to slice dt and ds.
     lon_i = dt.xt_ocean[tools.idx(dt.xt_ocean, lon + 0.05)].item()
@@ -615,7 +609,7 @@ def EUC_bnds_izumo(du, dt, ds, lon, interpolated=False):
 
     for z in range(len(du.st_ocean)):
         # Remove latitides via function between 25-200 m.
-        if z <= tools.idx(du.st_ocean, 200):
+        if z <= tools.get_edge_depth(200, index=False) - 1:
             du1[:, z, :] = du.u.isel(st_ocean=z).where(du.yu_ocean > y1[z])
             du1[:, z, :] = du1.isel(st_ocean=z).where(du.yu_ocean < y2[z])
 

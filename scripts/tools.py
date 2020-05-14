@@ -545,3 +545,16 @@ def tidy_files(logs=True, jobs=True):
                 os.remove(f)
                 print('Deleted:', f)
     return
+
+
+def get_edge_depth(z, index=True):
+    """Integration OFAM3 depth levels."""
+    ds = xr.open_dataset(cfg.ofam/'ocean_u_1981_01.nc')
+    zi = idx(ds.st_edges_ocean, z)
+    z_new = ds.st_ocean[zi].item()
+    ds.close()
+
+    if index:
+        return zi
+    else:
+        return z_new

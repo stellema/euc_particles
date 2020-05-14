@@ -35,9 +35,7 @@ import tools
 import sys
 import numpy as np
 import xarray as xr
-from datetime import datetime
-# from main import paths, lx, tools.idx
-from main_valid import deg_m
+from datetime import datetime, timedelta
 
 logger = tools.mlogger('file_transport')
 
@@ -122,20 +120,17 @@ if test:
     ds['Time'] = datetimeindex
 
 bnds = bnd_idx(ds, lat, lon)
-df = ds.isel(st_ocean=slice(0, 43), yu_ocean=bnds[0], xu_ocean=bnds[1])
+df = ds.isel(yu_ocean=bnds[0], xu_ocean=bnds[1])
 
 # Calculate the monthly means.
-df = df.resample(Time="MS").mean()
+df = df.resample(Time="MS", loffset=timedelta(days=15)).mean()
 
 # Calculate depth [m] of grid cells.
-DZ = np.array([(df.st_edges_ocean[z+1] - df.st_edges_ocean[z]).item()
-              for z in range(len(df.st_ocean))])
-
 # Change shape for easier multiplication.
-dz = DZ[:, np.newaxis]
+dz = cfg.dz()[:, np.newaxis]
 
 # Convert degrees to metres to multiply velocity
-dx, dy = deg_m(df.yu_ocean.values, df.xu_ocean.values)
+dx, dy = tools.deg_m(df.yu_ocean.values, df.xu_ocean.values)
 
 if df.yu_ocean.shape == () and var == 'v':
     area = np.ones(df[var].shape)*dz*dx
