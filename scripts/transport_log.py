@@ -12,17 +12,20 @@ author: Annette Stellema (astellemas@gmail.com)
 #     print(i, cor_r, cor_p)
 
 """
+import sys
 import cfg
 import tools
-from tools import idx, mlogger, coord_formatter, precision, get_edge_depth
 import numpy as np
 import xarray as xr
+from pathlib import Path
 from valid_nino34 import enso_u_ofam
+from tools import mlogger, coord_formatter, precision, get_edge_depth
 
-logger = mlogger('data')
+logger = mlogger(Path(sys.argv[0]).stem)
+
 
 def log_wbc(data, name, full=True):
-    # Log mean, seasonal and interannual transports.
+    """Log mean, seasonal and interannual transports."""
     for nm, ds in zip(name, data):
         d, y, = '', ''
         if hasattr(ds, 'st_ocean'):
@@ -42,9 +45,9 @@ def log_wbc(data, name, full=True):
             mx, mn = mn, mx
         p = precision(s.mean())
         nm = '{}:{}{}'.format(nm, y, d)
-        sx = ('{:<20s}Mean: {: .{p}f} cfg.SV Max: {: .{p}f} cfg.SV in {}, Min: '
-              '{: .{p}f} cfg.SV in {}. '.format(nm, s.mean(), s[mx], cfg.mon[mx],
-                                            s[mn], cfg.mon[mn], p=p))
+        sx = ('{:<20s}Mean: {: .{p}f} cfg.SV Max: {: .{p}f} cfg.SV in {}, '
+              'Min: {: .{p}f} cfg.SV in {}. '
+              .format(nm, s.mean(), s[mx], cfg.mon[mx], s[mn], cfg.mon[mn], p=p))
         ia = 'El Nino: {: .{p}f} cfg.SV La Nina: {: .{p}f} cfg.SV'.format(*enso, p=p)
 
         stx = sx + ia if full else '{} {}'.format(nm, ia)
@@ -67,7 +70,7 @@ ni = xr.open_dataset(cfg.data/'ofam_transport_ni.nc').vvo/cfg.SV
 #         ['VS+', 'SGC+', 'SS+'])
 
 euc = euc.resample(Time='MS').mean().uvo/cfg.SV
-vs = vs.isel(st_ocean=slice(0, tools.get_edge_depth(355, greater=0)))
+vs = vs.isel(st_ocean=slice(0, tools.get_edge_depth(1200, greater=True)))
 sg = sg.isel(st_ocean=slice(0, tools.get_edge_depth(1200, greater=True)))
 ss = ss.isel(st_ocean=slice(0, tools.get_edge_depth(1200, greater=True)))
 ni = ni.isel(st_ocean=slice(0, tools.get_edge_depth(1200, greater=True)))

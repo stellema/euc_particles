@@ -11,8 +11,6 @@
 # qsub -I -l walltime=5:00:00,mem=400GB,ncpus=7 -P e14 -q hugemem -X -l wd
 # qsub -I -l walltime=7:00:00,ncpus=1,mem=20GB -P e14 -q normal -l wd
 
-# TODO: Specifiy specific start date (convert fieldset.U.grid.time[-1])
-
 # """
 import main
 import cfg
@@ -32,7 +30,6 @@ logger = tools.mlogger(Path(sys.argv[0]).stem, parcels=True)
 def run_EUC(dy=0.8, dz=25, lon=190, lat=2.6, year=[1981, 2012],
             dt_mins=240, repeatdt_days=6, outputdt_days=1, month=12,
             add_transport=True, write_fieldset=False):
-
     """Run Lagrangian EUC particle experiment."""
     # Define Fieldset and ParticleSet parameters.
 
@@ -67,22 +64,22 @@ def run_EUC(dy=0.8, dz=25, lon=190, lat=2.6, year=[1981, 2012],
     # Number of particles release in each dimension.
     Z, Y, X = len(p_depths), len(p_lats), len(p_lons)
 
-    logger.info('{}:Executing: {} to {}'.format(sim_id.stem, *date_bnds))
+    logger.info('{}:Executing: {} to {}'.format(sim_id.stem, *[str(i)[:10] for i in date_bnds]))
     logger.info('{}:Longitudes: {}'.format(sim_id.stem, *p_lons))
-    logger.info('{}:Latitudes: {} dy={} [{} to {}]'.format(sim_id.stem, Y, dy, p_lats[0], p_lats[-1]))
-    logger.info('{}:Depths: {} dz={} [{} to {}]'.format(sim_id.stem, Z, dz, p_depths[0], p_depths[-1]))
+    logger.info('{}:Latitudes: {} dy={} [{} to {}]'.format(sim_id.stem, Y, dy, *p_lats[::Y-1]))
+    logger.info('{}:Depths: {} dz={} [{} to {}]'.format(sim_id.stem, Z, dz, *p_depths[::Z-1]))
     logger.info('{}:Runtime: {} days'.format(sim_id.stem, runtime.days))
     logger.info('{}:Timestep dt: {:.0f} mins'.format(sim_id.stem, 1440 - dt.seconds/60))
     logger.info('{}:Output dt: {:.0f} days'.format(sim_id.stem, outputdt.days))
     logger.info('{}:Repeat release: {} days'.format(sim_id.stem, repeatdt.days))
-    logger.info('{}:Particles /repeat: {}'.format(sim_id.stem, Z * X * Y))
-    logger.info('{}:Total particles: {}'.format(sim_id.stem, Z * X * Y * math.floor(runtime.days/repeatdt.days)))
+    logger.info('{}:Particles: Total: {} :/repeat: {}'
+                .format(sim_id.stem, Z * X * Y * math.floor(runtime.days/repeatdt.days), Z * X * Y))
 
     # Create fieldset.
     fieldset = main.ofam_fieldset(date_bnds, chunks='manual')
 
     # Set fieldset minimum depth.
-    fieldset.mindepth = fieldset.U.depth[0]
+    # fieldset.mindepth = fieldset.U.depth[0]
 
     # Set ParticleSet start depth as last fieldset time.
     pset_start = fieldset.U.grid.time[-1]
@@ -109,17 +106,16 @@ if __name__ == "__main__" and cfg.home != Path('E:/'):
     p = ArgumentParser(description="""Run EUC Lagrangian experiment.""")
     p.add_argument('-dy', '--dy', default=0.1, type=float, help='Particle latitude spacing [deg].')
     p.add_argument('-dz', '--dz', default=25, type=int, help='Particle depth spacing [m].')
-    p.add_argument('-lon', '--lon', default=190, type=str, help='Particle start longitude(s) [deg].')
+    p.add_argument('-lon', '--lon', default=190, type=str, help='Particle start longitude(s).')
     p.add_argument('-lat', '--lat', default=2.6, type=float, help='Latitude bounds [deg].')
     p.add_argument('-i', '--yri', default=1981, type=int, help='Simulation start year.')
     p.add_argument('-f', '--yrf', default=2012, type=int, help='Simulation end year.')
     p.add_argument('-dt', '--dt', default=240, type=int, help='Advection timestep [min].')
     p.add_argument('-r', '--repeatdt', default=6, type=int, help='Release repeat [day].')
-    p.add_argument('-out', '--outputdt', default=1, type=int, help='Advection write interval [day].')
+    p.add_argument('-out', '--outputdt', default=1, type=int, help='Advection write time [day].')
     p.add_argument('-mon', '--month', default=12, type=int, help='Final month (of final year).')
-    p.add_argument('-t', '--transport', default=True, type=bool, help='Calculate and save initial transport.')
+    p.add_argument('-t', '--transport', default=True, type=bool, help='Write transport file.')
     p.add_argument('-w', '--fset', default=False, type=bool, help='Write fieldset.')
-
     args = p.parse_args()
 
     run_EUC(dy=args.dy, dz=args.dz, lon=args.lon, lat=args.lat,

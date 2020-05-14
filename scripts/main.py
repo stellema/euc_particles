@@ -101,10 +101,10 @@ def ofam_fieldset(date_bnds, field_method='b_grid', time_periodic=False,
 
     dimensions = {'U': vdims, 'V': vdims, 'W': vdims}
 
-    if chunks == 'manual':
-        chunks = (1, 1, 128, 128)
 
-    logger.info('Field import={}, Chunks={}'.format(field_method, chunks))
+    chunk = (1, 1, 128, 128) if chunks == 'manual' else chunks
+
+    logger.info('Field import={}, Chunks={}'.format(field_method, chunk))
 
     if field_method == 'netcdf':
         fieldset = FieldSet.from_netcdf(files, variables, dimensions,
@@ -115,7 +115,7 @@ def ofam_fieldset(date_bnds, field_method='b_grid', time_periodic=False,
                                                 mesh='spherical',
                                                 time_periodic=time_periodic,
                                                 deferred_load=deferred_load,
-                                                field_chunksize=chunks)
+                                                field_chunksize=chunk)
 
     return fieldset
 
@@ -256,7 +256,7 @@ def EUC_particles(fieldset, date_bnds, p_lats, p_lons, p_depths,
     logger.debug('{}: Output file.'.format(sim_id.stem))
     output_file = pset.ParticleFile(cfg.data/sim_id.stem, outputdt=outputdt)
     if all_kernels:
-        logger.info('{}:AdvectionRK4_3D + pset.Kernel(Age) +'
+        logger.info('{}:AdvectionRK4_3D + pset.Kernel(Age) + '
                     'pset.Kernel(DeleteWestward)'.format(sim_id.stem))
         kernels = (AdvectionRK4_3D + pset.Kernel(Age) +
                    pset.Kernel(DeleteWestward))
@@ -585,8 +585,8 @@ def EUC_bnds_izumo(du, dt, ds, lon, interpolated=False):
         z_15, z1, z2 = 15, 25, 300
     else:
         # Modified because this is the correct level for OFAM3 grid.
-        z1 = tools.get_edge_depth(z1, index=False)
-        z2 = tools.get_edge_depth(z2, index=False)
+        z1 = tools.get_edge_depth(25, index=False)
+        z2 = tools.get_edge_depth(300, index=False)
         z_15 = 17
 
     # Find exact latitude longitudes to slice dt and ds.
