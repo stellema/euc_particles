@@ -34,8 +34,8 @@ logger = tools.mlogger(Path(sys.argv[0]).stem, parcels=True)
 @timeit
 def run_EUC(dy=0.8, dz=25, lon=190, lat=2.6, year_i=1981, year_f=2012,
             dt_mins=240, repeatdt_days=6, outputdt_days=1, month='max',
-            field_method='netcdf',
-            chunks=False, add_transport=True, write_fieldset=False):
+            field_method='b_grid',
+            chunks='manual', add_transport=True, write_fieldset=False):
     """Run Lagrangian EUC particle experiment."""
     # Define Fieldset and ParticleSet parameters.
     # Start and end dates.
@@ -111,7 +111,7 @@ if __name__ == "__main__" and cfg.home != Path('E:/'):
     p.add_argument('-o', '--outputdt', default=1, help='Write interval [day]',
                    type=int)
     p.add_argument('-mn', '--month', default=12, help='End month.', type=int)
-    p.add_argument('-m', '--fieldm', default='netcdf', help='Fieldset method',
+    p.add_argument('-m', '--fieldm', default='b_grid', help='Fieldset method',
                    type=str)
     p.add_argument('-t', '--transport', default=True, help='Add transport',
                    type=bool)
@@ -123,7 +123,7 @@ if __name__ == "__main__" and cfg.home != Path('E:/'):
 
     run_EUC(dy=args.dy, dz=args.dz, lon=args.lon, lat=args.lat,
             year_i=args.year_i, year_f=args.year_f, month=args.month,
-            dt_mins=args.dt, repeatdt_days=args.repeatdt,
+            dt_mins=args.dt, repeatdt_days=args.repeatdt, chunks=args.chunks,
             outputdt_days=args.outputdt, field_method=args.fieldm,
             add_transport=args.transport, write_fieldset=args.fset)
 else:
