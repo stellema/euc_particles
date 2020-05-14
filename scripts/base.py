@@ -18,7 +18,6 @@ import main
 import cfg
 import tools
 import sys
-import time
 import math
 import numpy as np
 from pathlib import Path
@@ -26,7 +25,6 @@ from tools import get_date, timeit
 from datetime import timedelta, datetime
 from argparse import ArgumentParser
 
-ts = time.time()
 now = datetime.now()
 logger = tools.mlogger(Path(sys.argv[0]).stem, parcels=True)
 
@@ -34,8 +32,9 @@ logger = tools.mlogger(Path(sys.argv[0]).stem, parcels=True)
 @timeit
 def run_EUC(dy=0.8, dz=25, lon=190, lat=2.6, year_i=1981, year_f=2012,
             dt_mins=240, repeatdt_days=6, outputdt_days=1, month='max',
-            field_method='b_grid',
-            chunks='manual', add_transport=True, write_fieldset=False):
+            field_method='b_grid', chunks='manual',
+            add_transport=True, write_fieldset=False):
+
     """Run Lagrangian EUC particle experiment."""
     # Define Fieldset and ParticleSet parameters.
     # Start and end dates.
@@ -49,35 +48,35 @@ def run_EUC(dy=0.8, dz=25, lon=190, lat=2.6, year_i=1981, year_f=2012,
     p_lons = np.array([int(item) for item in lon.split(',')])
     dt = -timedelta(minutes=dt_mins)
     repeatdt = timedelta(days=repeatdt_days)
+
     # Run for the number of days between date bounds.
     runtime = timedelta(days=(date_bnds[1] - date_bnds[0]).days)
     outputdt = timedelta(days=outputdt_days)
 
+    pfile = main.generate_pfile_name(date_bnds)
+    pfs = pfile.stem
     Z, Y, X = len(p_depths), len(p_lats), len(p_lons)
-
-    logger.info('Executing: {} to {}'.format(date_bnds[0], date_bnds[1]))
-    logger.info('Runtime: {} days'.format(runtime.days))
-    logger.info('Timestep (dt): {:.0f} minutes'.format(24*60 - dt.seconds/60))
-    logger.info('Output (dt): {:.0f} days'.format(outputdt.days))
-    logger.info('Repeat release: {} days'.format(repeatdt.days))
-    logger.info('Depths: {} dz={} [{} to {}]'
-                .format(Z, dz, p_depths[0], p_depths[-1]))
-    logger.info('Latitudes: {} dy={} [{} to {}]'
-                .format(Y, dy, p_lats[0], p_lats[-1]))
-    logger.info('Longitudes: {} '.format(X) + str(p_lons))
-    logger.info('Particles (/repeatdt): {}'.format(Z*X*Y))
-    logger.info('Particles (total): {}'
-                .format(Z*X*Y*math.floor(runtime.days/repeatdt.days)))
-    logger.info('Time decorator used.')
-    logger.info('Fieldset import method= {}.'.format(field_method))
+    logger.info('{}: Executing: {} to {}'.format(pfs, *date_bnds))
+    logger.info('{}: Runtime: {} days'.format(pfs, runtime.days))
+    logger.info('{}: Timestep dt: {:.0f} mins'.format(pfs, 1440-dt.seconds/60))
+    logger.info('{}: Output dt: {:.0f} days'.format(pfs, outputdt.days))
+    logger.info('{}: Repeat release: {} days'.format(pfs, repeatdt.days))
+    logger.info('{}: Depths: {} dz={} [{} to {}]'
+                .format(pfs, Z, dz, p_depths[0], p_depths[-1]))
+    logger.info('{}: Latitudes: {} dy={} [{} to {}]'
+                .format(pfs, Y, dy, p_lats[0], p_lats[-1]))
+    logger.info('{}: Longitudes: {} '.format(pfs, X) + str(p_lons))
+    logger.info('{}: Repeat particles: {}'.format(pfs, Z*X*Y))
+    logger.info('{}: Total particles: {}'
+                .format(pfs, Z*X*Y*math.floor(runtime.days/repeatdt.days)))
 
     fieldset = main.ofam_fieldset(date_bnds, field_method=field_method,
                                   chunks=chunks)
     fieldset.mindepth = fieldset.U.depth[0]
     pset_start = fieldset.U.grid.time[-1]
-    pfile = main.EUC_particles(fieldset, date_bnds, p_lats, p_lons, p_depths,
-                               dt, pset_start, repeatdt, runtime, outputdt,
-                               remove_westward=True, all_kernels=True)
+    main.EUC_particles(fieldset, date_bnds, p_lats, p_lons, p_depths,
+                       dt, pset_start, repeatdt, runtime, outputdt,
+                       pfile, remove_westward=True, all_kernels=True)
 
     if add_transport:
         df = main.ParticleFile_transport(pfile, dy, dz, save=True)
@@ -89,7 +88,6 @@ def run_EUC(dy=0.8, dz=25, lon=190, lat=2.6, year_i=1981, year_f=2012,
                        .format(date_bnds[0].year, date_bnds[0].month,
                                date_bnds[1].year, date_bnds[1].month))
 
-    tools.timer(ts, method=Path(sys.argv[0]).stem)
     return
 
 

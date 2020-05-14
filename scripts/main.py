@@ -47,6 +47,7 @@ import cfg
 import gsw
 import tools
 import math
+import random
 import logging
 import numpy as np
 import xarray as xr
@@ -117,6 +118,17 @@ def ofam_fieldset(date_bnds, field_method='b_grid', time_periodic=False,
                                                 field_chunksize=chunks)
 
     return fieldset
+
+
+def generate_pfile_name(date_bnds):
+    """Create name to save particle file (looks for unsaved filename)."""
+    i = random.randint(0, 100)
+    while (cfg.data/'particles_{}-{}_v{}i.nc'
+           .format(*[d.year for d in date_bnds], i)).exists():
+        i = random.randint(0, 100)
+    pfile = (cfg.data/'particles_{}-{}_v{}i.nc'
+             .format(*[d.year for d in date_bnds], i))
+    return pfile
 
 
 def DeleteParticle(particle, fieldset, time):
@@ -201,7 +213,7 @@ def EUC_pset(fieldset, pclass, p_lats, p_lons, p_depths,
 @timeit
 def EUC_particles(fieldset, date_bnds, p_lats, p_lons, p_depths,
                   dt, pset_start, repeatdt, runtime, outputdt,
-                  remove_westward=True, all_kernels=True):
+                  pfile, remove_westward=True, all_kernels=True):
     """Create and execute a ParticleSet (created using EUC_pset).
 
     Args:
@@ -233,17 +245,6 @@ def EUC_particles(fieldset, date_bnds, p_lats, p_lons, p_depths,
         u = Variable('u', dtype=np.float32, initial=fieldset.U,
                      to_write="once")
 
-    # Create name to save particle file (looks for unsaved filename).
-    i = 0
-    while (cfg.data/('ParticleFile_{}-{}_v{}i.nc'
-                     .format(*[d.year for d in date_bnds], i))).exists():
-        i += 1
-    # fieldset.computeTimeChunk(fieldset.U.grid.time[-1], -3*3600)
-    pfile = cfg.data/'ParticleFile_{}-{}_v{}i.nc'.format(*[d.year for d in
-                                                           date_bnds], i)
-
-    logger.info('{}: Started.'.format(pfile.stem))
-
     # Create particle set.
     pset = EUC_pset(fieldset, tparticle, p_lats, p_lons, p_depths,
                     pset_start, repeatdt)
@@ -271,7 +272,7 @@ def EUC_particles(fieldset, date_bnds, p_lats, p_lons, p_depths,
                  verbose_progress=True)
     logger.info('{}: Completed.'.format(pfile.stem))
 
-    return pfile
+    return
 
 
 @timeit
