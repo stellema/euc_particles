@@ -111,3 +111,15 @@
 2020-04-30 15:50:05,954:<module>:Saving transport file: St Georges Channel (sgx).
 2020-04-30 16:47:17,636:<module>:Finished transport file: St Georges Channel (sgx).
 2020-04-30 18:37:48,604:<module>:Finished transport file: Solomon Strait (ss).
+2020-05-14 13:19:20,604:<module>:INFO:Creating transport file: St Georges Channel (sgx).
+2020-05-14 13:19:20,605:<module>:INFO:Creating transport file: Mindanao Current (mc).
+2020-05-14 13:19:20,615:<module>:INFO:Creating transport file: Mindanao Current (mc).
+2020-05-14 13:19:24,778:<module>:INFO:Creating transport file: Solomon Strait (ss).
+2020-05-14 13:22:07,802:<module>:DEBUG:St Georges Channel (sgx) test: -0.4901 Sv 1981-01-16 (-4.6)
+2020-05-14 13:22:07,804:<module>:INFO:Saving transport file: St Georges Channel (sgx).
+2020-05-14 13:22:08,043:<module>:DEBUG:Mindanao Current (mc) test: -23.6715 Sv 1981-01-16 (9.0)
+2020-05-14 13:22:08,043:<module>:INFO:Saving transport file: Mindanao Current (mc).
+2020-05-14 13:22:08,049:<module>:DEBUG:Mindanao Current (mc) test: -23.6715 Sv 1981-01-16 (9.0)
+2020-05-14 13:22:08,051:<module>:INFO:Saving transport file: Mindanao Current (mc).
+2020-05-14 13:22:11,009:<module>:DEBUG:Solomon Strait (ss) test: 2.9960 Sv 1981-01-16 (-4.8)
+2020-05-14 13:22:11,012:<module>:INFO:Saving transport file: Solomon Strait (ss).
