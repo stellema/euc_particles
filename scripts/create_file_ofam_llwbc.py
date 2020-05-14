@@ -71,10 +71,10 @@ if s == 0:
 elif s == 1:
     # St.George's Channel.
     name = 'St Georges Channel'
-    name_short = 'sgx'
-    lat, lon = [-4.8, -4.6], [152.3, 152.8]
-    # name_short = 'sg'
-    # lat, lon = -4.6, [152.3, 152.7]
+    # name_short = 'sgx'
+    # lat, lon = [-4.8, -4.6], [152.3, 152.8]
+    name_short = 'sg'
+    lat, lon = -4.6, [152.3, 152.7]
 elif s == 2:
     # Solomon Strait (west).
     name = 'Solomon Strait'

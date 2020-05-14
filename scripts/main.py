@@ -120,15 +120,14 @@ def ofam_fieldset(date_bnds, field_method='b_grid', time_periodic=False,
     return fieldset
 
 
-def generate_pfile_name(date_bnds):
+def generate_sim_id(date_bnds):
     """Create name to save particle file (looks for unsaved filename)."""
+    dsr = 'sim_{}_{}'.format(*[str(i)[:7].replace('-', '') for i in date_bnds])
     i = random.randint(0, 100)
-    while (cfg.data/'particles_{}-{}_v{}i.nc'
-           .format(*[d.year for d in date_bnds], i)).exists():
+    while (cfg.data/'{}_v{}i.nc'.format(dsr, i)).exists():
         i = random.randint(0, 100)
-    pfile = (cfg.data/'particles_{}-{}_v{}i.nc'
-             .format(*[d.year for d in date_bnds], i))
-    return pfile
+    sim_id = cfg.data/'{}_v{}i.nc'.format(dsr, i)
+    return sim_id
 
 
 def DeleteParticle(particle, fieldset, time):
@@ -213,7 +212,7 @@ def EUC_pset(fieldset, pclass, p_lats, p_lons, p_depths,
 @timeit
 def EUC_particles(fieldset, date_bnds, p_lats, p_lons, p_depths,
                   dt, pset_start, repeatdt, runtime, outputdt,
-                  pfile, remove_westward=True, all_kernels=True):
+                  sim_id, remove_westward=True, all_kernels=True):
     """Create and execute a ParticleSet (created using EUC_pset).
 
     Args:
@@ -231,7 +230,7 @@ def EUC_particles(fieldset, date_bnds, p_lats, p_lons, p_depths,
             westward. Defaults to True.
 
     Returns:
-        pfile (pathlib.Path): Path to created ParticleFile.
+        sim_id (pathlib.Path): Path to created ParticleFile.
 
     """
 
@@ -254,29 +253,29 @@ def EUC_particles(fieldset, date_bnds, p_lats, p_lons, p_depths,
         remove_westward_particles(pset)
 
     # Output particle file p_name and time steps to save.
-    logger.debug('{}: Output file.'.format(pfile.stem))
-    output_file = pset.ParticleFile(cfg.data/pfile.stem, outputdt=outputdt)
+    logger.debug('{}: Output file.'.format(sim_id.stem))
+    output_file = pset.ParticleFile(cfg.data/sim_id.stem, outputdt=outputdt)
     if all_kernels:
         logger.info('{}:AdvectionRK4_3D + pset.Kernel(Age) +'
-                    'pset.Kernel(DeleteWestward)'.format(pfile.stem))
+                    'pset.Kernel(DeleteWestward)'.format(sim_id.stem))
         kernels = (AdvectionRK4_3D + pset.Kernel(Age) +
                    pset.Kernel(DeleteWestward))
     else:
-        logger.info('{}:AdvectionRK4_3D'.format(pfile.stem))
+        logger.info('{}:AdvectionRK4_3D'.format(sim_id.stem))
         kernels = AdvectionRK4_3D
 
-    logger.debug('{}: Excecute particle set.'.format(pfile.stem))
+    logger.debug('{}: Excecute particle set.'.format(sim_id.stem))
     pset.execute(kernels, runtime=runtime, dt=dt, output_file=output_file,
                  recovery={ErrorCode.ErrorOutOfBounds: DeleteParticle,
                            ErrorCode.ErrorThroughSurface: SubmergeParticle},
                  verbose_progress=True)
-    logger.info('{}: Completed.'.format(pfile.stem))
+    logger.info('{}: Completed.'.format(sim_id.stem))
 
     return
 
 
 @timeit
-def ParticleFile_transport(pfile, dy, dz, save=True):
+def ParticleFile_transport(sim_id, dy, dz, save=True):
     """Remove westward particles and calculate transport.
 
     Remove particles that were intially travellling westward and
@@ -296,7 +295,7 @@ def ParticleFile_transport(pfile, dy, dz, save=True):
 
     """
     # Open the output Particle File.
-    ds = xr.open_dataset(pfile, decode_times=False)
+    ds = xr.open_dataset(sim_id, decode_times=False)
 
     # Create copy of particle file with initally westward partciles removed.
     df = xr.Dataset()
@@ -341,20 +340,20 @@ def ParticleFile_transport(pfile, dy, dz, save=True):
     if save:
         # Saves with same file name, but with the last 'i' removed.
         # E.g. ParticleFile_2010-2011_v0i.nc -> ParticleFile_2010-2011_v0.nc
-        df.to_netcdf(cfg.data/(pfile.stem[:-1] + pfile.suffix))
+        df.to_netcdf(cfg.data/(sim_id.stem[:-1] + sim_id.suffix))
 
     return df
 
 
 @timeit
-def plot3D(pfile):
+def plot3D(sim_id):
     """Plot 3D figure of particle trajectories over time.
 
     Args:
-        pfile (pathlib.Path): ParticleFile to plot.
+        sim_id (pathlib.Path): ParticleFile to plot.
 
     """
-    ds = xr.open_dataset(pfile).isel(obs=slice(0, 100))
+    ds = xr.open_dataset(sim_id).isel(obs=slice(0, 100))
     plt.figure(figsize=(13, 10))
     ax = plt.axes(projection='3d')
 
@@ -373,7 +372,7 @@ def plot3D(pfile):
     ax.set_zlabel("Depth [m]")
     ax.set_zlim(np.max(z), np.min(z))
     plt.show()
-    plt.savefig(cfg.fig/(pfile.stem + cfg.im_ext))
+    plt.savefig(cfg.fig/(sim_id.stem + cfg.im_ext))
     plt.close()
     ds.close()
 
