@@ -120,10 +120,10 @@ def ofam_fieldset(date_bnds, field_method='b_grid', time_periodic=False,
 def generate_sim_id(date_bnds, ifile=0, parallel=False):
     """Create name to save particle file (looks for unsaved filename)."""
     dsr = 'sim_{}_{}'.format(*[str(i)[:7].replace('-', '') for i in date_bnds])
-    i = 0 if parallel else random.randint(0, 100)
+    i = 0 if parallel else random.randint(0, 200)
 
     while (cfg.data/'{}_v{}i.nc'.format(dsr, i)).exists():
-        i = i + 1 if parallel else random.randint(0, 100)
+        i = i + 1 if parallel else random.randint(0, 200)
     if ifile != 0:
         if not (cfg.data/'{}_v{}i.nc'.format(dsr, ifile)).exists():
             i = ifile
@@ -245,7 +245,7 @@ def EUC_particles(fieldset, date_bnds, p_lats, p_lons, p_depths,
         age = Variable('age', dtype=np.float32, initial=0.)
 
         # # The velocity of the particle.
-        u = Variable('u', dtype=np.float32, initial=fieldset.U)
+        u = Variable('u', dtype=np.float32, initial=fieldset.U, to_write="once")
 
     # Create particle set.
     pset = EUC_pset(fieldset, tparticle, p_lats, p_lons, p_depths,
