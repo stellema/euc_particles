@@ -1,0 +1,16 @@
+izumo: 165°E started
+izumo: 170°W started
+izumo: 140°W started
+
+======================================================================================
+                  Resource Usage on 2020-05-15 05:56:14:
+   Job Id:             5431382.gadi-pbs
+   Project:            e14
+   Exit Status:        1
+   Service Units:      110.93
+   NCPUs Requested:    1                      NCPUs Used: 1               
+                                           CPU Time Used: 02:46:34                                   
+   Memory Requested:   20.0GB                Memory Used: 20.0GB          
+   Walltime requested: 20:00:00            Walltime Used: 11:05:36        
+   JobFS requested:    100.0MB                JobFS used: 0B              
+======================================================================================
