@@ -8,6 +8,8 @@
 #PBS -M astellemas@gmail.com
 #PBS -m abe
 #PBS -l storage=gdata/hh5+gdata/e14
+
 module use /g/data3/hh5/public/modules
 module load conda/analysis3-20.04
-mpirun -np 48 python3 /g/data/e14/as3189/OFAM/scripts/base.py -dy 0.4 -dz 25 -lon 170 -i 1981 -f 1981 -p True -ix 48
+
+mpirun -np 48 python3 /g/data/e14/as3189/OFAM/scripts/base.py -dy 0.4 -dz 25 -lon "170,190" -i 1981 -f 1981 -p True
