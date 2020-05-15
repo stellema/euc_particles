@@ -142,8 +142,6 @@ elif var == 'v':
 
 if var == 'v':
     df = df.assign(vvo=df[var]*area)
-else:
-    df = df.assign(vvo=df[var]*area)
 
 df.attrs = ds.attrs
 # dv.name = 'vvo'

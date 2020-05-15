@@ -15,7 +15,6 @@
 import main
 import cfg
 import tools
-import sys
 import math
 import numpy as np
 from pathlib import Path
@@ -23,7 +22,7 @@ from tools import get_date, timeit
 from datetime import timedelta
 from argparse import ArgumentParser
 
-logger = tools.mlogger(Path(sys.argv[0]).stem, parcels=True)
+logger = tools.mlogger('base', parcels=True)
 
 
 @timeit

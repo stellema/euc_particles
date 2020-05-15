@@ -238,8 +238,8 @@ def plot_EUC_def_bounds(time='mon', lon=None, depth=450, exp=0, off=0):
             ax[i].set_yticks(np.arange(0, depth + 50, 100))
             ax[i].set_ylim(depth, 2.5)
             ax[i].set_xlim(-4.5, 4.5)
-            ax[i].set_xticks(np.arange(-4, 5, 2))
-            ax[i].set_xticklabels(['4°S', '2°S', '0°', '2°N', '4°N'])
+            # ax[i].set_xticks(np.arange(-4, 5, 2))
+            # ax[i].set_xticklabels(['4°S', '2°S', '0°', '2°N', '4°N'])
 
             # Add ylabel to first columns.
             if any(i == n for n in [0, 3, 6, 9]):
@@ -291,31 +291,14 @@ def print_EUC_transport_def_correlation():
     return
 
 
-def print_EUC_transport_defs():
-    for i in range(3):
-        for l, method in zip(range(3), ['grenier', 'izumo', 'static']):
-            dh = xr.open_dataset(cfg.data/'ofam_EUC_transport_{}_{}.nc'
-                                 .format(method, cfg.exp_abr[0])).uvo
-            dr = xr.open_dataset(cfg.data/'ofam_EUC_transport_{}_{}.nc'
-                                 .format(method, cfg.exp_abr[1])).uvo
-
-            uh = dh.isel(xu_ocean=i).groupby('Time.month').mean().mean('month')
-            ur = dr.isel(xu_ocean=i).groupby('Time.month').mean().mean('month')
-            ud = ur.values - uh.values
-            print('{} {: >7}: h={:.0f} Sv, r={:.1f} Sv, diff={: .2f} Sv'
-                  .format(cfg.lonstr[i], method, uh.item()/SV,
-                          ur.item()/SV, ud.item()/SV))
-    return
-
 # print_EUC_transport_def_correlation()
 
 # Plot EUC boundaries:
-for exp in range(3):
+for exp in range(1):
     off = 6 if exp == 1 else 6
     # plot_EUC_transport_def_timeseries(exp=exp)
-    plot_EUC_transport_def_annual(exp=exp, off=3)
-    plot_EUC_def_bounds(time=3, lon=None, depth=450, exp=exp, off=off)
+    # plot_EUC_transport_def_annual(exp=exp, off=3)
+    plot_EUC_def_bounds(time=4, lon=None, depth=450, exp=exp, off=off)
     # for lon in cfg.lons:
     #     plot_EUC_def_bounds(time='mon', lon=lon, depth=450, exp=exp)
 
-# print_EUC_transport_defs()

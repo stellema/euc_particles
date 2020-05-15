@@ -6,3 +6,219 @@
 2020-05-14 18:36:13,972:<module>:INFO:sim_198101_198101_v42i:Timestep dt: 240 mins
 2020-05-14 18:36:13,973:<module>:INFO:sim_198101_198101_v42i:Output dt: 1 days
 2020-05-14 18:36:13,974:<module>:INFO:sim_198101_198101_v42i:Repeat release: 6 days
+2020-05-15 09:54:23,582:log_wbc:INFO:EUC:165°E:          Mean:  20.8 cfg.SV Max:  33.0 cfg.SV in Jun, Min:  11.9 cfg.SV in Nov. El Nino: -1.2 cfg.SV La Nina:  2.5
+2020-05-15 09:54:23,659:log_wbc:INFO:EUC:170°W:          Mean:  26.8 cfg.SV Max:  41.2 cfg.SV in May, Min:  15.6 cfg.SV in Sep. El Nino: -5.0 cfg.SV La Nina:  5.2
+2020-05-15 09:54:23,732:log_wbc:INFO:EUC:140°W:          Mean:  28.6 cfg.SV Max:  40.8 cfg.SV in Apr, Min:  21.4 cfg.SV in Aug. El Nino: -5.7 cfg.SV La Nina:  4.8
+2020-05-15 09:54:23,832:log_wbc:INFO:VS:6.1°S:0-1303m:   Mean:  6.8 cfg.SV Max:  9.6 cfg.SV in Jul, Min:  5.0 cfg.SV in Feb. El Nino:  1.0 cfg.SV La Nina: -1.0
+2020-05-15 09:54:23,924:log_wbc:INFO:SGC:4.7°S:0-1303m:  Mean: -0.27 cfg.SV Max: -0.65 cfg.SV in Oct, Min:  0.12 cfg.SV in Jul. El Nino:  0.16 cfg.SV La Nina: -0.10
+2020-05-15 09:54:24,018:log_wbc:INFO:SS:4.8°S:0-1303m:   Mean:  9.0 cfg.SV Max:  14.0 cfg.SV in Jul, Min:  3.6 cfg.SV in Feb. El Nino:  1.3 cfg.SV La Nina: -0.2
+2020-05-15 09:54:24,126:log_wbc:INFO:NI:4.1°S:0-1303m:   Mean:  4.6 cfg.SV Max:  9.9 cfg.SV in Jun, Min:  1.5 cfg.SV in Nov. El Nino: -0.7 cfg.SV La Nina:  0.3
+2020-05-15 09:54:24,234:log_wbc:INFO:MC:9°N:0-578m:      Mean: -19.4 cfg.SV Max: -20.3 cfg.SV in Nov, Min: -18.3 cfg.SV in Sep. El Nino: -0.9 cfg.SV La Nina:  1.4
+2020-05-15 09:54:24,330:log_wbc:INFO:MC:7.5°N:0-578m:    Mean: -21.9 cfg.SV Max: -23.8 cfg.SV in May, Min: -20.1 cfg.SV in Sep. El Nino:  0.2 cfg.SV La Nina:  1.0
+2020-05-15 09:55:05,214:log_wbc:INFO:EUC:165°E:          Mean:  20.8 cfg.SV Max:  33.0 Sv in Jun, Min:  11.9 Sv in Nov. El Nino: -1.2 Sv La Nina:  2.5 Sv
+2020-05-15 09:55:05,286:log_wbc:INFO:EUC:170°W:          Mean:  26.8 cfg.SV Max:  41.2 Sv in May, Min:  15.6 Sv in Sep. El Nino: -5.0 Sv La Nina:  5.2 Sv
+2020-05-15 09:55:05,358:log_wbc:INFO:EUC:140°W:          Mean:  28.6 cfg.SV Max:  40.8 Sv in Apr, Min:  21.4 Sv in Aug. El Nino: -5.7 Sv La Nina:  4.8 Sv
+2020-05-15 09:55:05,452:log_wbc:INFO:VS:6.1°S:0-1303m:   Mean:  6.8 cfg.SV Max:  9.6 Sv in Jul, Min:  5.0 Sv in Feb. El Nino:  1.0 Sv La Nina: -1.0 Sv
+2020-05-15 09:55:05,540:log_wbc:INFO:SGC:4.7°S:0-1303m:  Mean: -0.27 cfg.SV Max: -0.65 Sv in Oct, Min:  0.12 Sv in Jul. El Nino:  0.16 Sv La Nina: -0.10 Sv
+2020-05-15 09:55:05,632:log_wbc:INFO:SS:4.8°S:0-1303m:   Mean:  9.0 cfg.SV Max:  14.0 Sv in Jul, Min:  3.6 Sv in Feb. El Nino:  1.3 Sv La Nina: -0.2 Sv
+2020-05-15 09:55:05,728:log_wbc:INFO:NI:4.1°S:0-1303m:   Mean:  4.6 cfg.SV Max:  9.9 Sv in Jun, Min:  1.5 Sv in Nov. El Nino: -0.7 Sv La Nina:  0.3 Sv
+2020-05-15 09:55:05,821:log_wbc:INFO:MC:9°N:0-578m:      Mean: -19.4 cfg.SV Max: -20.3 Sv in Nov, Min: -18.3 Sv in Sep. El Nino: -0.9 Sv La Nina:  1.4 Sv
+2020-05-15 09:55:05,912:log_wbc:INFO:MC:7.5°N:0-578m:    Mean: -21.9 cfg.SV Max: -23.8 Sv in May, Min: -20.1 Sv in Sep. El Nino:  0.2 Sv La Nina:  1.0 Sv
+2020-05-15 09:55:17,806:log_wbc:INFO:EUC:165°E:          Mean:  20.8 SV Max:  33.0 Sv in Jun, Min:  11.9 Sv in Nov. El Nino: -1.2 Sv La Nina:  2.5 Sv
+2020-05-15 09:55:17,887:log_wbc:INFO:EUC:170°W:          Mean:  26.8 SV Max:  41.2 Sv in May, Min:  15.6 Sv in Sep. El Nino: -5.0 Sv La Nina:  5.2 Sv
+2020-05-15 09:55:17,969:log_wbc:INFO:EUC:140°W:          Mean:  28.6 SV Max:  40.8 Sv in Apr, Min:  21.4 Sv in Aug. El Nino: -5.7 Sv La Nina:  4.8 Sv
+2020-05-15 09:55:18,079:log_wbc:INFO:VS:6.1°S:0-1303m:   Mean:  6.8 SV Max:  9.6 Sv in Jul, Min:  5.0 Sv in Feb. El Nino:  1.0 Sv La Nina: -1.0 Sv
+2020-05-15 09:55:18,200:log_wbc:INFO:SGC:4.7°S:0-1303m:  Mean: -0.27 SV Max: -0.65 Sv in Oct, Min:  0.12 Sv in Jul. El Nino:  0.16 Sv La Nina: -0.10 Sv
+2020-05-15 09:55:18,302:log_wbc:INFO:SS:4.8°S:0-1303m:   Mean:  9.0 SV Max:  14.0 Sv in Jul, Min:  3.6 Sv in Feb. El Nino:  1.3 Sv La Nina: -0.2 Sv
+2020-05-15 09:55:18,407:log_wbc:INFO:NI:4.1°S:0-1303m:   Mean:  4.6 SV Max:  9.9 Sv in Jun, Min:  1.5 Sv in Nov. El Nino: -0.7 Sv La Nina:  0.3 Sv
+2020-05-15 09:55:18,515:log_wbc:INFO:MC:9°N:0-578m:      Mean: -19.4 SV Max: -20.3 Sv in Nov, Min: -18.3 Sv in Sep. El Nino: -0.9 Sv La Nina:  1.4 Sv
+2020-05-15 09:55:18,614:log_wbc:INFO:MC:7.5°N:0-578m:    Mean: -21.9 SV Max: -23.8 Sv in May, Min: -20.1 Sv in Sep. El Nino:  0.2 Sv La Nina:  1.0 Sv
+2020-05-15 09:55:27,276:log_wbc:INFO:EUC:165°E:        Mean:  20.8 SV Max:  33.0 Sv in Jun, Min:  11.9 Sv in Nov. El Nino: -1.2 Sv La Nina:  2.5 Sv
+2020-05-15 09:55:27,347:log_wbc:INFO:EUC:170°W:        Mean:  26.8 SV Max:  41.2 Sv in May, Min:  15.6 Sv in Sep. El Nino: -5.0 Sv La Nina:  5.2 Sv
+2020-05-15 09:55:27,418:log_wbc:INFO:EUC:140°W:        Mean:  28.6 SV Max:  40.8 Sv in Apr, Min:  21.4 Sv in Aug. El Nino: -5.7 Sv La Nina:  4.8 Sv
+2020-05-15 09:55:27,510:log_wbc:INFO:VS:6.1°S:0-1303m: Mean:  6.8 SV Max:  9.6 Sv in Jul, Min:  5.0 Sv in Feb. El Nino:  1.0 Sv La Nina: -1.0 Sv
+2020-05-15 09:55:27,600:log_wbc:INFO:SGC:4.7°S:0-1303m:Mean: -0.27 SV Max: -0.65 Sv in Oct, Min:  0.12 Sv in Jul. El Nino:  0.16 Sv La Nina: -0.10 Sv
+2020-05-15 09:55:27,692:log_wbc:INFO:SS:4.8°S:0-1303m: Mean:  9.0 SV Max:  14.0 Sv in Jul, Min:  3.6 Sv in Feb. El Nino:  1.3 Sv La Nina: -0.2 Sv
+2020-05-15 09:55:27,795:log_wbc:INFO:NI:4.1°S:0-1303m: Mean:  4.6 SV Max:  9.9 Sv in Jun, Min:  1.5 Sv in Nov. El Nino: -0.7 Sv La Nina:  0.3 Sv
+2020-05-15 09:55:27,889:log_wbc:INFO:MC:9°N:0-578m:    Mean: -19.4 SV Max: -20.3 Sv in Nov, Min: -18.3 Sv in Sep. El Nino: -0.9 Sv La Nina:  1.4 Sv
+2020-05-15 09:55:27,981:log_wbc:INFO:MC:7.5°N:0-578m:  Mean: -21.9 SV Max: -23.8 Sv in May, Min: -20.1 Sv in Sep. El Nino:  0.2 Sv La Nina:  1.0 Sv
+2020-05-15 10:03:05,601:log_wbc:INFO:EUC:165°E:        Mean:  20.8 SV Max:  33.0 Sv in Jun, Min:  11.9 Sv in Nov. El Nino: -1.2 Sv La Nina:  2.5 Sv
+2020-05-15 10:03:05,676:log_wbc:INFO:EUC:170°W:        Mean:  26.8 SV Max:  41.2 Sv in May, Min:  15.6 Sv in Sep. El Nino: -5.0 Sv La Nina:  5.2 Sv
+2020-05-15 10:03:05,752:log_wbc:INFO:EUC:140°W:        Mean:  28.6 SV Max:  40.8 Sv in Apr, Min:  21.4 Sv in Aug. El Nino: -5.7 Sv La Nina:  4.8 Sv
+2020-05-15 10:03:05,859:log_wbc:INFO:VS:6.1°S:0-1303m: Mean:  6.8 SV Max:  9.6 Sv in Jul, Min:  5.0 Sv in Feb. El Nino:  1.0 Sv La Nina: -1.0 Sv
+2020-05-15 10:03:05,962:log_wbc:INFO:SGC:4.7°S:0-1303m:Mean: -0.27 SV Max: -0.65 Sv in Oct, Min:  0.12 Sv in Jul. El Nino:  0.16 Sv La Nina: -0.10 Sv
+2020-05-15 10:03:06,068:log_wbc:INFO:SS:4.8°S:0-1303m: Mean:  9.0 SV Max:  14.0 Sv in Jul, Min:  3.6 Sv in Feb. El Nino:  1.3 Sv La Nina: -0.2 Sv
+2020-05-15 10:03:06,178:log_wbc:INFO:NI:4.1°S:0-1303m: Mean:  4.6 SV Max:  9.9 Sv in Jun, Min:  1.5 Sv in Nov. El Nino: -0.7 Sv La Nina:  0.3 Sv
+2020-05-15 10:03:06,307:log_wbc:INFO:MC:9°N:0-578m:    Mean: -19.4 SV Max: -20.3 Sv in Nov, Min: -18.3 Sv in Sep. El Nino: -0.9 Sv La Nina:  1.4 Sv
+2020-05-15 10:03:06,402:log_wbc:INFO:MC:7.5°N:0-578m:  Mean: -21.9 SV Max: -23.8 Sv in May, Min: -20.1 Sv in Sep. El Nino:  0.2 Sv La Nina:  1.0 Sv
+2020-05-15 10:06:52,255:log_wbc:INFO:VS:6.1°S:0-1303m: Mean:  6.8 SV Max:  9.6 Sv in Jul, Min:  5.0 Sv in Feb. El Nino:  1.0 Sv La Nina: -1.0 Sv
+2020-05-15 10:06:52,356:log_wbc:INFO:VS:6.1°S:0-160m:  Mean:  1.4 SV Max:  2.9 Sv in Jul, Min:  0.5 Sv in Nov. El Nino:  1.4 Sv La Nina: -1.1 Sv
+2020-05-15 10:06:52,465:log_wbc:INFO:VS:6.1°S:160-1303m:Mean:  5.4 SV Max:  6.6 Sv in Jul, Min:  4.4 Sv in Feb. El Nino: -0.4 Sv La Nina:  0.2 Sv
+2020-05-15 10:06:52,575:log_wbc:INFO:SGC:4.7°S:0-1303m:Mean: -0.27 SV Max: -0.65 Sv in Oct, Min:  0.12 Sv in Jul. El Nino:  0.16 Sv La Nina: -0.10 Sv
+2020-05-15 10:06:52,686:log_wbc:INFO:SGC:4.7°S:0-160m: Mean: -0.27 SV Max: -0.64 Sv in Oct, Min:  0.11 Sv in Jul. El Nino:  0.16 Sv La Nina: -0.10 Sv
+2020-05-15 10:06:52,816:log_wbc:INFO:SGC:4.7°S:160-1303m:Mean: -0.001 SV Max: -0.003 Sv in Oct, Min:  0.002 Sv in Jul. El Nino:  0.002 Sv La Nina: -0.001 Sv
+2020-05-15 10:06:52,949:log_wbc:INFO:SS:4.8°S:0-1303m: Mean:  9.0 SV Max:  14.0 Sv in Jul, Min:  3.6 Sv in Feb. El Nino:  1.3 Sv La Nina: -0.2 Sv
+2020-05-15 10:06:53,052:log_wbc:INFO:SS:4.8°S:0-160m:  Mean: -0.30 SV Max: -1.63 Sv in Apr, Min:  1.39 Sv in Jul. El Nino:  2.10 Sv La Nina: -1.18 Sv
+2020-05-15 10:06:53,166:log_wbc:INFO:SS:4.8°S:160-1303m:Mean:  9.3 SV Max:  12.6 Sv in Jul, Min:  4.1 Sv in Feb. El Nino: -0.8 Sv La Nina:  1.0 Sv
+2020-05-15 10:06:53,271:log_wbc:INFO:NI:4.1°S:0-1303m: Mean:  4.6 SV Max:  9.9 Sv in Jun, Min:  1.5 Sv in Nov. El Nino: -0.7 Sv La Nina:  0.3 Sv
+2020-05-15 10:06:53,371:log_wbc:INFO:NI:4.1°S:0-160m:  Mean: -0.07 SV Max: -0.97 Sv in Nov, Min:  1.48 Sv in Jul. El Nino:  0.99 Sv La Nina: -0.61 Sv
+2020-05-15 10:06:53,483:log_wbc:INFO:NI:4.1°S:160-1303m:Mean:  4.7 SV Max:  9.1 Sv in Jun, Min:  2.0 Sv in Jan. El Nino: -1.7 Sv La Nina:  0.9 Sv
+2020-05-15 10:06:53,594:log_wbc:INFO:MC:9°N:0-578m:    Mean: -19.4 SV Max: -20.3 Sv in Nov, Min: -18.3 Sv in Sep. El Nino: -0.9 Sv La Nina:  1.4 Sv
+2020-05-15 10:06:53,697:log_wbc:INFO:MC:9°N:0-160m:    Mean: -11.2 SV Max: -11.8 Sv in Jul, Min: -10.7 Sv in Sep. El Nino: -0.7 Sv La Nina:  1.5 Sv
+2020-05-15 10:06:53,814:log_wbc:INFO:MC:9°N:160-578m:  Mean: -8.2 SV Max: -9.2 Sv in Nov, Min: -7.4 Sv in Feb. El Nino: -0.1 Sv La Nina: -0.0 Sv
+2020-05-15 10:06:53,919:log_wbc:INFO:MC:7.5°N:0-578m:  Mean: -21.9 SV Max: -23.8 Sv in May, Min: -20.1 Sv in Sep. El Nino:  0.2 Sv La Nina:  1.0 Sv
+2020-05-15 10:06:54,022:log_wbc:INFO:MC:7.5°N:0-160m:  Mean: -13.6 SV Max: -14.3 Sv in Jul, Min: -12.6 Sv in Sep. El Nino: -0.5 Sv La Nina:  1.4 Sv
+2020-05-15 10:06:54,136:log_wbc:INFO:MC:7.5°N:160-578m:Mean: -8.4 SV Max: -9.7 Sv in May, Min: -7.5 Sv in Sep. El Nino:  0.7 Sv La Nina: -0.5 Sv
+2020-05-15 10:07:23,808:log_wbc:INFO:VS:6.1°S:0-1303m: Mean:  6.8 SV Max:  9.6 Sv in Jul, Min:  5.0 Sv in Feb. El Nino:  1.0 Sv La Nina: -1.0 Sv
+2020-05-15 10:07:23,909:log_wbc:INFO:VS:6.1°S:0-271m:  Mean:  3.4 SV Max:  5.2 Sv in Jul, Min:  2.3 Sv in Feb. El Nino:  1.4 Sv La Nina: -1.2 Sv
+2020-05-15 10:07:24,033:log_wbc:INFO:VS:6.1°S:271-1303m:Mean:  3.4 SV Max:  4.4 Sv in Jun, Min:  2.7 Sv in Feb. El Nino: -0.4 Sv La Nina:  0.2 Sv
+2020-05-15 10:07:24,136:log_wbc:INFO:SGC:4.7°S:0-1303m:Mean: -0.27 SV Max: -0.65 Sv in Oct, Min:  0.12 Sv in Jul. El Nino:  0.16 Sv La Nina: -0.10 Sv
+2020-05-15 10:07:24,238:log_wbc:INFO:SGC:4.7°S:0-271m: Mean: -0.28 SV Max: -0.66 Sv in Oct, Min:  0.10 Sv in Jul. El Nino:  0.16 Sv La Nina: -0.10 Sv
+2020-05-15 10:07:24,345:log_wbc:INFO:SGC:4.7°S:271-1303m:Mean:  0.01 SV Max:  0.01 Sv in Jul, Min:  0.01 Sv in Nov. El Nino: -0.00 Sv La Nina:  0.00 Sv
+2020-05-15 10:07:24,446:log_wbc:INFO:SS:4.8°S:0-1303m: Mean:  9.0 SV Max:  14.0 Sv in Jul, Min:  3.6 Sv in Feb. El Nino:  1.3 Sv La Nina: -0.2 Sv
+2020-05-15 10:07:24,550:log_wbc:INFO:SS:4.8°S:0-271m:  Mean:  3.2 SV Max:  5.8 Sv in Jul, Min:  1.2 Sv in Apr. El Nino:  2.6 Sv La Nina: -1.5 Sv
+2020-05-15 10:07:24,660:log_wbc:INFO:SS:4.8°S:271-1303m:Mean:  5.8 SV Max:  8.5 Sv in Jun, Min:  1.6 Sv in Feb. El Nino: -1.3 Sv La Nina:  1.3 Sv
+2020-05-15 10:07:24,770:log_wbc:INFO:NI:4.1°S:0-1303m: Mean:  4.6 SV Max:  9.9 Sv in Jun, Min:  1.5 Sv in Nov. El Nino: -0.7 Sv La Nina:  0.3 Sv
+2020-05-15 10:07:24,887:log_wbc:INFO:NI:4.1°S:0-271m:  Mean:  2.3 SV Max:  4.5 Sv in Jul, Min:  0.7 Sv in Mar. El Nino:  0.8 Sv La Nina: -0.5 Sv
+2020-05-15 10:07:25,003:log_wbc:INFO:NI:4.1°S:271-1303m:Mean:  2.4 SV Max:  6.1 Sv in Jun, Min:  0.0 Sv in Oct. El Nino: -1.5 Sv La Nina:  0.8 Sv
+2020-05-15 10:07:25,110:log_wbc:INFO:MC:9°N:0-578m:    Mean: -19.4 SV Max: -20.3 Sv in Nov, Min: -18.3 Sv in Sep. El Nino: -0.9 Sv La Nina:  1.4 Sv
+2020-05-15 10:07:25,222:log_wbc:INFO:MC:9°N:0-271m:    Mean: -16.5 SV Max: -17.0 Sv in Jul, Min: -15.8 Sv in Sep. El Nino: -0.9 Sv La Nina:  1.6 Sv
+2020-05-15 10:07:25,345:log_wbc:INFO:MC:9°N:271-578m:  Mean: -2.9 SV Max: -3.7 Sv in Nov, Min: -2.3 Sv in Aug. El Nino:  0.0 Sv La Nina: -0.1 Sv
+2020-05-15 10:07:25,449:log_wbc:INFO:MC:7.5°N:0-578m:  Mean: -21.9 SV Max: -23.8 Sv in May, Min: -20.1 Sv in Sep. El Nino:  0.2 Sv La Nina:  1.0 Sv
+2020-05-15 10:07:25,554:log_wbc:INFO:MC:7.5°N:0-271m:  Mean: -19.4 SV Max: -20.4 Sv in May, Min: -18.1 Sv in Sep. El Nino: -0.5 Sv La Nina:  1.4 Sv
+2020-05-15 10:07:25,674:log_wbc:INFO:MC:7.5°N:271-578m:Mean: -2.5 SV Max: -3.4 Sv in May, Min: -1.9 Sv in Jan. El Nino:  0.7 Sv La Nina: -0.4 Sv
+2020-05-15 10:52:41,483:log_wbc:INFO:EUC:165°E:        Mean:  20.8 SV Max:  33.0 Sv in Jun, Min:  11.9 Sv in Nov. El Nino: -1.2 Sv La Nina:  2.5 Sv
+2020-05-15 10:52:41,555:log_wbc:INFO:EUC:170°W:        Mean:  26.8 SV Max:  41.2 Sv in May, Min:  15.6 Sv in Sep. El Nino: -5.0 Sv La Nina:  5.2 Sv
+2020-05-15 10:52:41,629:log_wbc:INFO:EUC:140°W:        Mean:  28.6 SV Max:  40.8 Sv in Apr, Min:  21.4 Sv in Aug. El Nino: -5.7 Sv La Nina:  4.8 Sv
+2020-05-15 10:52:41,733:log_wbc:INFO:VS:6.1°S:0-1303m: Mean:  6.8 SV Max:  9.6 Sv in Jul, Min:  5.0 Sv in Feb. El Nino:  1.0 Sv La Nina: -1.0 Sv
+2020-05-15 10:52:41,833:log_wbc:INFO:SGC:4.7°S:0-1303m:Mean: -0.27 SV Max: -0.65 Sv in Oct, Min:  0.12 Sv in Jul. El Nino:  0.16 Sv La Nina: -0.10 Sv
+2020-05-15 10:52:41,929:log_wbc:INFO:SS:4.8°S:0-1303m: Mean:  9.0 SV Max:  14.0 Sv in Jul, Min:  3.6 Sv in Feb. El Nino:  1.3 Sv La Nina: -0.2 Sv
+2020-05-15 10:52:42,030:log_wbc:INFO:NI:4.1°S:0-1303m: Mean:  4.6 SV Max:  9.9 Sv in Jun, Min:  1.5 Sv in Nov. El Nino: -0.7 Sv La Nina:  0.3 Sv
+2020-05-15 10:52:42,130:log_wbc:INFO:MC:9°N:0-578m:    Mean: -19.4 SV Max: -20.3 Sv in Nov, Min: -18.3 Sv in Sep. El Nino: -0.9 Sv La Nina:  1.4 Sv
+2020-05-15 10:52:42,240:log_wbc:INFO:MC:7.5°N:0-578m:  Mean: -21.9 SV Max: -23.8 Sv in May, Min: -20.1 Sv in Sep. El Nino:  0.2 Sv La Nina:  1.0 Sv
+2020-05-15 10:52:42,345:log_wbc:INFO:VS:6.1°S:0-1303m: Mean:  6.8 SV Max:  9.6 Sv in Jul, Min:  5.0 Sv in Feb. El Nino:  1.0 Sv La Nina: -1.0 Sv
+2020-05-15 10:52:42,449:log_wbc:INFO:VS:6.1°S:0-271m:  Mean:  3.4 SV Max:  5.2 Sv in Jul, Min:  2.3 Sv in Feb. El Nino:  1.4 Sv La Nina: -1.2 Sv
+2020-05-15 10:52:42,560:log_wbc:INFO:VS:6.1°S:271-1303m:Mean:  3.4 SV Max:  4.4 Sv in Jun, Min:  2.7 Sv in Feb. El Nino: -0.4 Sv La Nina:  0.2 Sv
+2020-05-15 10:52:42,662:log_wbc:INFO:SGC:4.7°S:0-1303m:Mean: -0.27 SV Max: -0.65 Sv in Oct, Min:  0.12 Sv in Jul. El Nino:  0.16 Sv La Nina: -0.10 Sv
+2020-05-15 10:52:42,767:log_wbc:INFO:SGC:4.7°S:0-271m: Mean: -0.28 SV Max: -0.66 Sv in Oct, Min:  0.10 Sv in Jul. El Nino:  0.16 Sv La Nina: -0.10 Sv
+2020-05-15 10:52:42,888:log_wbc:INFO:SGC:4.7°S:271-1303m:Mean:  0.01 SV Max:  0.01 Sv in Jul, Min:  0.01 Sv in Nov. El Nino: -0.00 Sv La Nina:  0.00 Sv
+2020-05-15 10:52:42,991:log_wbc:INFO:SS:4.8°S:0-1303m: Mean:  9.0 SV Max:  14.0 Sv in Jul, Min:  3.6 Sv in Feb. El Nino:  1.3 Sv La Nina: -0.2 Sv
+2020-05-15 10:52:43,096:log_wbc:INFO:SS:4.8°S:0-271m:  Mean:  3.2 SV Max:  5.8 Sv in Jul, Min:  1.2 Sv in Apr. El Nino:  2.6 Sv La Nina: -1.5 Sv
+2020-05-15 10:52:43,209:log_wbc:INFO:SS:4.8°S:271-1303m:Mean:  5.8 SV Max:  8.5 Sv in Jun, Min:  1.6 Sv in Feb. El Nino: -1.3 Sv La Nina:  1.3 Sv
+2020-05-15 10:52:43,315:log_wbc:INFO:NI:4.1°S:0-1303m: Mean:  4.6 SV Max:  9.9 Sv in Jun, Min:  1.5 Sv in Nov. El Nino: -0.7 Sv La Nina:  0.3 Sv
+2020-05-15 10:52:43,417:log_wbc:INFO:NI:4.1°S:0-271m:  Mean:  2.3 SV Max:  4.5 Sv in Jul, Min:  0.7 Sv in Mar. El Nino:  0.8 Sv La Nina: -0.5 Sv
+2020-05-15 10:52:43,530:log_wbc:INFO:NI:4.1°S:271-1303m:Mean:  2.4 SV Max:  6.1 Sv in Jun, Min:  0.0 Sv in Oct. El Nino: -1.5 Sv La Nina:  0.8 Sv
+2020-05-15 10:52:43,637:log_wbc:INFO:MC:9°N:0-578m:    Mean: -19.4 SV Max: -20.3 Sv in Nov, Min: -18.3 Sv in Sep. El Nino: -0.9 Sv La Nina:  1.4 Sv
+2020-05-15 10:52:43,740:log_wbc:INFO:MC:9°N:0-271m:    Mean: -16.5 SV Max: -17.0 Sv in Jul, Min: -15.8 Sv in Sep. El Nino: -0.9 Sv La Nina:  1.6 Sv
+2020-05-15 10:52:43,859:log_wbc:INFO:MC:9°N:271-578m:  Mean: -2.9 SV Max: -3.7 Sv in Nov, Min: -2.3 Sv in Aug. El Nino:  0.0 Sv La Nina: -0.1 Sv
+2020-05-15 10:52:43,965:log_wbc:INFO:MC:7.5°N:0-578m:  Mean: -21.9 SV Max: -23.8 Sv in May, Min: -20.1 Sv in Sep. El Nino:  0.2 Sv La Nina:  1.0 Sv
+2020-05-15 10:52:44,075:log_wbc:INFO:MC:7.5°N:0-271m:  Mean: -19.4 SV Max: -20.4 Sv in May, Min: -18.1 Sv in Sep. El Nino: -0.5 Sv La Nina:  1.4 Sv
+2020-05-15 10:52:44,191:log_wbc:INFO:MC:7.5°N:271-578m:Mean: -2.5 SV Max: -3.4 Sv in May, Min: -1.9 Sv in Jan. El Nino:  0.7 Sv La Nina: -0.4 Sv
+2020-05-15 10:53:59,601:log_wbc:INFO:EUC:165°E:        Mean:  20.8 SV Max:  33.0 Sv in Jun, Min:  11.9 Sv in Nov. El Nino: -1.2 Sv La Nina:  2.5 Sv
+2020-05-15 10:53:59,673:log_wbc:INFO:EUC:170°W:        Mean:  26.8 SV Max:  41.2 Sv in May, Min:  15.6 Sv in Sep. El Nino: -5.0 Sv La Nina:  5.2 Sv
+2020-05-15 10:53:59,746:log_wbc:INFO:EUC:140°W:        Mean:  28.6 SV Max:  40.8 Sv in Apr, Min:  21.4 Sv in Aug. El Nino: -5.7 Sv La Nina:  4.8 Sv
+2020-05-15 10:53:59,840:log_wbc:INFO:VS:6.1°S:0-1303m: Mean:  6.8 SV Max:  9.6 Sv in Jul, Min:  5.0 Sv in Feb. El Nino:  1.0 Sv La Nina: -1.0 Sv
+2020-05-15 10:53:59,932:log_wbc:INFO:SGC:4.7°S:0-1303m:Mean: -0.27 SV Max: -0.65 Sv in Oct, Min:  0.12 Sv in Jul. El Nino:  0.16 Sv La Nina: -0.10 Sv
+2020-05-15 10:54:00,027:log_wbc:INFO:SS:4.8°S:0-1303m: Mean:  9.0 SV Max:  14.0 Sv in Jul, Min:  3.6 Sv in Feb. El Nino:  1.3 Sv La Nina: -0.2 Sv
+2020-05-15 10:54:00,130:log_wbc:INFO:NI:4.1°S:0-1303m: Mean:  4.6 SV Max:  9.9 Sv in Jun, Min:  1.5 Sv in Nov. El Nino: -0.7 Sv La Nina:  0.3 Sv
+2020-05-15 10:54:00,250:log_wbc:INFO:MC:9°N:0-578m:    Mean: -19.4 SV Max: -20.3 Sv in Nov, Min: -18.3 Sv in Sep. El Nino: -0.9 Sv La Nina:  1.4 Sv
+2020-05-15 10:54:00,362:log_wbc:INFO:MC:7.5°N:0-578m:  Mean: -21.9 SV Max: -23.8 Sv in May, Min: -20.1 Sv in Sep. El Nino:  0.2 Sv La Nina:  1.0 Sv
+2020-05-15 10:54:00,474:log_wbc:INFO:VS:6.1°S:0-1303m: Mean:  6.8 SV Max:  9.6 Sv in Jul, Min:  5.0 Sv in Feb. El Nino:  1.0 Sv La Nina: -1.0 Sv
+2020-05-15 10:54:00,587:log_wbc:INFO:VS:6.1°S:0-271m:  Mean:  3.4 SV Max:  5.2 Sv in Jul, Min:  2.3 Sv in Feb. El Nino:  1.4 Sv La Nina: -1.2 Sv
+2020-05-15 10:54:00,707:log_wbc:INFO:VS:6.1°S:271-1303m:Mean:  3.4 SV Max:  4.4 Sv in Jun, Min:  2.7 Sv in Feb. El Nino: -0.4 Sv La Nina:  0.2 Sv
+2020-05-15 10:54:00,819:log_wbc:INFO:SGC:4.7°S:0-1303m:Mean: -0.27 SV Max: -0.65 Sv in Oct, Min:  0.12 Sv in Jul. El Nino:  0.16 Sv La Nina: -0.10 Sv
+2020-05-15 10:54:00,958:log_wbc:INFO:SGC:4.7°S:0-271m: Mean: -0.28 SV Max: -0.66 Sv in Oct, Min:  0.10 Sv in Jul. El Nino:  0.16 Sv La Nina: -0.10 Sv
+2020-05-15 10:54:01,083:log_wbc:INFO:SGC:4.7°S:271-1303m:Mean:  0.01 SV Max:  0.01 Sv in Jul, Min:  0.01 Sv in Nov. El Nino: -0.00 Sv La Nina:  0.00 Sv
+2020-05-15 10:54:01,206:log_wbc:INFO:SS:4.8°S:0-1303m: Mean:  9.0 SV Max:  14.0 Sv in Jul, Min:  3.6 Sv in Feb. El Nino:  1.3 Sv La Nina: -0.2 Sv
+2020-05-15 10:54:01,321:log_wbc:INFO:SS:4.8°S:0-271m:  Mean:  3.2 SV Max:  5.8 Sv in Jul, Min:  1.2 Sv in Apr. El Nino:  2.6 Sv La Nina: -1.5 Sv
+2020-05-15 10:54:01,436:log_wbc:INFO:SS:4.8°S:271-1303m:Mean:  5.8 SV Max:  8.5 Sv in Jun, Min:  1.6 Sv in Feb. El Nino: -1.3 Sv La Nina:  1.3 Sv
+2020-05-15 10:54:01,539:log_wbc:INFO:NI:4.1°S:0-1303m: Mean:  4.6 SV Max:  9.9 Sv in Jun, Min:  1.5 Sv in Nov. El Nino: -0.7 Sv La Nina:  0.3 Sv
+2020-05-15 10:54:01,648:log_wbc:INFO:NI:4.1°S:0-271m:  Mean:  2.3 SV Max:  4.5 Sv in Jul, Min:  0.7 Sv in Mar. El Nino:  0.8 Sv La Nina: -0.5 Sv
+2020-05-15 10:54:01,760:log_wbc:INFO:NI:4.1°S:271-1303m:Mean:  2.4 SV Max:  6.1 Sv in Jun, Min:  0.0 Sv in Oct. El Nino: -1.5 Sv La Nina:  0.8 Sv
+2020-05-15 10:54:01,867:log_wbc:INFO:MC:9°N:0-578m:    Mean: -19.4 SV Max: -20.3 Sv in Nov, Min: -18.3 Sv in Sep. El Nino: -0.9 Sv La Nina:  1.4 Sv
+2020-05-15 10:54:01,973:log_wbc:INFO:MC:9°N:0-271m:    Mean: -16.5 SV Max: -17.0 Sv in Jul, Min: -15.8 Sv in Sep. El Nino: -0.9 Sv La Nina:  1.6 Sv
+2020-05-15 10:54:02,085:log_wbc:INFO:MC:9°N:271-578m:  Mean: -2.9 SV Max: -3.7 Sv in Nov, Min: -2.3 Sv in Aug. El Nino:  0.0 Sv La Nina: -0.1 Sv
+2020-05-15 10:54:02,188:log_wbc:INFO:MC:7.5°N:0-578m:  Mean: -21.9 SV Max: -23.8 Sv in May, Min: -20.1 Sv in Sep. El Nino:  0.2 Sv La Nina:  1.0 Sv
+2020-05-15 10:54:02,292:log_wbc:INFO:MC:7.5°N:0-271m:  Mean: -19.4 SV Max: -20.4 Sv in May, Min: -18.1 Sv in Sep. El Nino: -0.5 Sv La Nina:  1.4 Sv
+2020-05-15 10:54:02,406:log_wbc:INFO:MC:7.5°N:271-578m:Mean: -2.5 SV Max: -3.4 Sv in May, Min: -1.9 Sv in Jan. El Nino:  0.7 Sv La Nina: -0.4 Sv
+2020-05-15 10:54:19,421:log_wbc:INFO:VS:6.1°S:0-1303m: Mean:  6.8 SV Max:  9.6 Sv in Jul, Min:  5.0 Sv in Feb. El Nino:  1.0 Sv La Nina: -1.0 Sv
+2020-05-15 10:54:19,522:log_wbc:INFO:VS:6.1°S:0-271m:  Mean:  3.4 SV Max:  5.2 Sv in Jul, Min:  2.3 Sv in Feb. El Nino:  1.4 Sv La Nina: -1.2 Sv
+2020-05-15 10:54:19,632:log_wbc:INFO:VS:6.1°S:245-1303m:Mean:  3.8 SV Max:  4.8 Sv in Jul, Min:  3.1 Sv in Feb. El Nino: -0.4 Sv La Nina:  0.2 Sv
+2020-05-15 10:54:19,732:log_wbc:INFO:SGC:4.7°S:0-1303m:Mean: -0.27 SV Max: -0.65 Sv in Oct, Min:  0.12 Sv in Jul. El Nino:  0.16 Sv La Nina: -0.10 Sv
+2020-05-15 10:54:19,831:log_wbc:INFO:SGC:4.7°S:0-271m: Mean: -0.28 SV Max: -0.66 Sv in Oct, Min:  0.10 Sv in Jul. El Nino:  0.16 Sv La Nina: -0.10 Sv
+2020-05-15 10:54:19,938:log_wbc:INFO:SGC:4.7°S:245-1303m:Mean:  0.007 SV Max:  0.013 Sv in Jul, Min:  0.004 Sv in Nov. El Nino: -0.000 Sv La Nina:  0.000 Sv
+2020-05-15 10:54:20,038:log_wbc:INFO:SS:4.8°S:0-1303m: Mean:  9.0 SV Max:  14.0 Sv in Jul, Min:  3.6 Sv in Feb. El Nino:  1.3 Sv La Nina: -0.2 Sv
+2020-05-15 10:54:20,142:log_wbc:INFO:SS:4.8°S:0-271m:  Mean:  3.2 SV Max:  5.8 Sv in Jul, Min:  1.2 Sv in Apr. El Nino:  2.6 Sv La Nina: -1.5 Sv
+2020-05-15 10:54:20,251:log_wbc:INFO:SS:4.8°S:245-1303m:Mean:  6.6 SV Max:  9.3 Sv in Jun, Min:  2.1 Sv in Feb. El Nino: -1.3 Sv La Nina:  1.4 Sv
+2020-05-15 10:54:20,351:log_wbc:INFO:NI:4.1°S:0-1303m: Mean:  4.6 SV Max:  9.9 Sv in Jun, Min:  1.5 Sv in Nov. El Nino: -0.7 Sv La Nina:  0.3 Sv
+2020-05-15 10:54:20,451:log_wbc:INFO:NI:4.1°S:0-271m:  Mean:  2.3 SV Max:  4.5 Sv in Jul, Min:  0.7 Sv in Mar. El Nino:  0.8 Sv La Nina: -0.5 Sv
+2020-05-15 10:54:20,560:log_wbc:INFO:NI:4.1°S:245-1303m:Mean:  2.8 SV Max:  6.8 Sv in Jun, Min:  0.4 Sv in Jan. El Nino: -1.6 Sv La Nina:  0.9 Sv
+2020-05-15 10:54:20,665:log_wbc:INFO:MC:9°N:0-578m:    Mean: -19.4 SV Max: -20.3 Sv in Nov, Min: -18.3 Sv in Sep. El Nino: -0.9 Sv La Nina:  1.4 Sv
+2020-05-15 10:54:20,768:log_wbc:INFO:MC:9°N:0-271m:    Mean: -16.5 SV Max: -17.0 Sv in Jul, Min: -15.8 Sv in Sep. El Nino: -0.9 Sv La Nina:  1.6 Sv
+2020-05-15 10:54:20,876:log_wbc:INFO:MC:9°N:245-578m:  Mean: -3.9 SV Max: -4.7 Sv in Nov, Min: -3.2 Sv in Aug. El Nino: -0.0 Sv La Nina: -0.1 Sv
+2020-05-15 10:54:20,979:log_wbc:INFO:MC:7.5°N:0-578m:  Mean: -21.9 SV Max: -23.8 Sv in May, Min: -20.1 Sv in Sep. El Nino:  0.2 Sv La Nina:  1.0 Sv
+2020-05-15 10:54:21,080:log_wbc:INFO:MC:7.5°N:0-271m:  Mean: -19.4 SV Max: -20.4 Sv in May, Min: -18.1 Sv in Sep. El Nino: -0.5 Sv La Nina:  1.4 Sv
+2020-05-15 10:54:21,188:log_wbc:INFO:MC:7.5°N:245-578m:Mean: -3.5 SV Max: -4.5 Sv in May, Min: -2.9 Sv in Sep. El Nino:  0.7 Sv La Nina: -0.4 Sv
+2020-05-15 10:57:08,915:log_wbc:INFO:VS:6.1°S:0-1303m: Mean:  6.8 SV Max:  9.6 Sv in Jul, Min:  5.0 Sv in Feb. El Nino:  1.0 Sv La Nina: -1.0 Sv
+2020-05-15 10:57:09,017:log_wbc:INFO:VS:6.1°S:0-245m:  Mean:  2.9 SV Max:  4.7 Sv in Jul, Min:  1.9 Sv in Feb. El Nino:  1.4 Sv La Nina: -1.2 Sv
+2020-05-15 10:57:09,125:log_wbc:INFO:VS:6.1°S:245-1303m:Mean:  3.8 SV Max:  4.8 Sv in Jul, Min:  3.1 Sv in Feb. El Nino: -0.4 Sv La Nina:  0.2 Sv
+2020-05-15 10:57:09,224:log_wbc:INFO:SGC:4.7°S:0-1303m:Mean: -0.27 SV Max: -0.65 Sv in Oct, Min:  0.12 Sv in Jul. El Nino:  0.16 Sv La Nina: -0.10 Sv
+2020-05-15 10:57:09,324:log_wbc:INFO:SGC:4.7°S:0-245m: Mean: -0.28 SV Max: -0.65 Sv in Oct, Min:  0.10 Sv in Jul. El Nino:  0.16 Sv La Nina: -0.10 Sv
+2020-05-15 10:57:09,433:log_wbc:INFO:SGC:4.7°S:245-1303m:Mean:  0.007 SV Max:  0.013 Sv in Jul, Min:  0.004 Sv in Nov. El Nino: -0.000 Sv La Nina:  0.000 Sv
+2020-05-15 10:57:09,534:log_wbc:INFO:SS:4.8°S:0-1303m: Mean:  9.0 SV Max:  14.0 Sv in Jul, Min:  3.6 Sv in Feb. El Nino:  1.3 Sv La Nina: -0.2 Sv
+2020-05-15 10:57:09,634:log_wbc:INFO:SS:4.8°S:0-245m:  Mean:  2.4 SV Max:  4.9 Sv in Jul, Min:  0.5 Sv in Apr. El Nino:  2.6 Sv La Nina: -1.5 Sv
+2020-05-15 10:57:09,749:log_wbc:INFO:SS:4.8°S:245-1303m:Mean:  6.6 SV Max:  9.3 Sv in Jun, Min:  2.1 Sv in Feb. El Nino: -1.3 Sv La Nina:  1.4 Sv
+2020-05-15 10:57:09,851:log_wbc:INFO:NI:4.1°S:0-1303m: Mean:  4.6 SV Max:  9.9 Sv in Jun, Min:  1.5 Sv in Nov. El Nino: -0.7 Sv La Nina:  0.3 Sv
+2020-05-15 10:57:09,951:log_wbc:INFO:NI:4.1°S:0-245m:  Mean:  1.8 SV Max:  3.9 Sv in Jul, Min:  0.4 Sv in Mar. El Nino:  0.9 Sv La Nina: -0.6 Sv
+2020-05-15 10:57:10,058:log_wbc:INFO:NI:4.1°S:245-1303m:Mean:  2.8 SV Max:  6.8 Sv in Jun, Min:  0.4 Sv in Jan. El Nino: -1.6 Sv La Nina:  0.9 Sv
+2020-05-15 10:57:10,159:log_wbc:INFO:MC:9°N:0-578m:    Mean: -19.4 SV Max: -20.3 Sv in Nov, Min: -18.3 Sv in Sep. El Nino: -0.9 Sv La Nina:  1.4 Sv
+2020-05-15 10:57:10,264:log_wbc:INFO:MC:9°N:0-245m:    Mean: -15.5 SV Max: -16.1 Sv in Jul, Min: -14.9 Sv in Sep. El Nino: -0.8 Sv La Nina:  1.6 Sv
+2020-05-15 10:57:10,373:log_wbc:INFO:MC:9°N:245-578m:  Mean: -3.9 SV Max: -4.7 Sv in Nov, Min: -3.2 Sv in Aug. El Nino: -0.0 Sv La Nina: -0.1 Sv
+2020-05-15 10:57:10,490:log_wbc:INFO:MC:7.5°N:0-578m:  Mean: -21.9 SV Max: -23.8 Sv in May, Min: -20.1 Sv in Sep. El Nino:  0.2 Sv La Nina:  1.0 Sv
+2020-05-15 10:57:10,591:log_wbc:INFO:MC:7.5°N:0-245m:  Mean: -18.4 SV Max: -19.3 Sv in May, Min: -17.2 Sv in Sep. El Nino: -0.5 Sv La Nina:  1.4 Sv
+2020-05-15 10:57:10,717:log_wbc:INFO:MC:7.5°N:245-578m:Mean: -3.5 SV Max: -4.5 Sv in May, Min: -2.9 Sv in Sep. El Nino:  0.7 Sv La Nina: -0.4 Sv
+2020-05-15 11:01:20,426:log_wbc:INFO:VS:6.1°S:0-1303m: Mean:  6.8 SV Max:  9.6 Sv in Jul, Min:  5.0 Sv in Feb. El Nino:  1.0 Sv La Nina: -1.0 Sv
+2020-05-15 11:01:20,535:log_wbc:INFO:VS:6.1°S:0-100m:  Mean:  0.54 SV Max:  1.83 Sv in Jul, Min: -0.27 Sv in Nov. El Nino:  1.22 Sv La Nina: -0.95 Sv
+2020-05-15 11:01:20,650:log_wbc:INFO:VS:6.1°S:100-1303m:Mean:  6.2 SV Max:  7.7 Sv in Jul, Min:  5.2 Sv in Feb. El Nino: -0.2 Sv La Nina: -0.0 Sv
+2020-05-15 11:01:20,756:log_wbc:INFO:SGC:4.7°S:0-1303m:Mean: -0.27 SV Max: -0.65 Sv in Oct, Min:  0.12 Sv in Jul. El Nino:  0.16 Sv La Nina: -0.10 Sv
+2020-05-15 11:01:20,860:log_wbc:INFO:SGC:4.7°S:0-100m: Mean: -0.28 SV Max: -0.66 Sv in Oct, Min:  0.10 Sv in Jul. El Nino:  0.16 Sv La Nina: -0.09 Sv
+2020-05-15 11:01:20,972:log_wbc:INFO:SGC:4.7°S:100-1303m:Mean:  0.007 SV Max:  0.012 Sv in Jul, Min: -0.000 Sv in Mar. El Nino:  0.004 Sv La Nina: -0.008 Sv
+2020-05-15 11:01:21,075:log_wbc:INFO:SS:4.8°S:0-1303m: Mean:  9.0 SV Max:  14.0 Sv in Jul, Min:  3.6 Sv in Feb. El Nino:  1.3 Sv La Nina: -0.2 Sv
+2020-05-15 11:01:21,175:log_wbc:INFO:SS:4.8°S:0-100m:  Mean: -1.2 SV Max: -2.1 Sv in Oct, Min: -0.3 Sv in Jan. El Nino:  1.0 Sv La Nina: -0.5 Sv
+2020-05-15 11:01:21,292:log_wbc:INFO:SS:4.8°S:100-1303m:Mean:  10.2 SV Max:  14.6 Sv in Jul, Min:  4.5 Sv in Feb. El Nino:  0.3 Sv La Nina:  0.3 Sv
+2020-05-15 11:01:21,401:log_wbc:INFO:NI:4.1°S:0-1303m: Mean:  4.6 SV Max:  9.9 Sv in Jun, Min:  1.5 Sv in Nov. El Nino: -0.7 Sv La Nina:  0.3 Sv
+2020-05-15 11:01:21,503:log_wbc:INFO:NI:4.1°S:0-100m:  Mean: -0.72 SV Max: -1.49 Sv in Oct, Min:  0.14 Sv in Jul. El Nino:  0.39 Sv La Nina: -0.15 Sv
+2020-05-15 11:01:21,630:log_wbc:INFO:NI:4.1°S:100-1303m:Mean:  5.4 SV Max:  10.1 Sv in Jun, Min:  2.4 Sv in Feb. El Nino: -1.1 Sv La Nina:  0.5 Sv
+2020-05-15 11:01:21,744:log_wbc:INFO:MC:9°N:0-578m:    Mean: -19.4 SV Max: -20.3 Sv in Nov, Min: -18.3 Sv in Sep. El Nino: -0.9 Sv La Nina:  1.4 Sv
+2020-05-15 11:01:21,857:log_wbc:INFO:MC:9°N:0-100m:    Mean: -6.9 SV Max: -7.4 Sv in Jul, Min: -6.6 Sv in Sep. El Nino: -0.6 Sv La Nina:  1.2 Sv
+2020-05-15 11:01:21,970:log_wbc:INFO:MC:9°N:100-578m:  Mean: -12.5 SV Max: -13.4 Sv in Nov, Min: -11.6 Sv in Feb. El Nino: -0.3 Sv La Nina:  0.2 Sv
+2020-05-15 11:01:22,072:log_wbc:INFO:MC:7.5°N:0-578m:  Mean: -21.9 SV Max: -23.8 Sv in May, Min: -20.1 Sv in Sep. El Nino:  0.2 Sv La Nina:  1.0 Sv
+2020-05-15 11:01:22,175:log_wbc:INFO:MC:7.5°N:0-100m:  Mean: -8.5 SV Max: -9.1 Sv in Jul, Min: -7.7 Sv in Sep. El Nino: -0.5 Sv La Nina:  1.3 Sv
+2020-05-15 11:01:22,286:log_wbc:INFO:MC:7.5°N:100-578m:Mean: -13.5 SV Max: -15.0 Sv in May, Min: -12.4 Sv in Sep. El Nino:  0.6 Sv La Nina: -0.3 Sv
+2020-05-15 11:03:05,331:log_wbc:INFO:VS:6.1°S:0-1303m: Mean:  6.8 SV Max:  9.6 Sv in Jul, Min:  5.0 Sv in Feb. El Nino:  1.0 Sv La Nina: -1.0 Sv
+2020-05-15 11:03:05,434:log_wbc:INFO:VS:6.1°S:0-150m:  Mean:  1.2 SV Max:  2.7 Sv in Jul, Min:  0.4 Sv in Nov. El Nino:  1.4 Sv La Nina: -1.1 Sv
+2020-05-15 11:03:05,544:log_wbc:INFO:VS:6.1°S:150-1303m:Mean:  5.5 SV Max:  6.8 Sv in Jul, Min:  4.6 Sv in Feb. El Nino: -0.4 Sv La Nina:  0.2 Sv
+2020-05-15 11:03:05,687:log_wbc:INFO:SGC:4.7°S:0-1303m:Mean: -0.27 SV Max: -0.65 Sv in Oct, Min:  0.12 Sv in Jul. El Nino:  0.16 Sv La Nina: -0.10 Sv
+2020-05-15 11:03:05,785:log_wbc:INFO:SGC:4.7°S:0-150m: Mean: -0.27 SV Max: -0.65 Sv in Oct, Min:  0.11 Sv in Jul. El Nino:  0.16 Sv La Nina: -0.10 Sv
+2020-05-15 11:03:05,893:log_wbc:INFO:SGC:4.7°S:150-1303m:Mean: -0.0 SV Max: -0.0 Sv in Oct, Min:  0.0 Sv in Jul. El Nino:  0.0 Sv La Nina: -0.0 Sv
+2020-05-15 11:03:05,994:log_wbc:INFO:SS:4.8°S:0-1303m: Mean:  9.0 SV Max:  14.0 Sv in Jul, Min:  3.6 Sv in Feb. El Nino:  1.3 Sv La Nina: -0.2 Sv
+2020-05-15 11:03:06,095:log_wbc:INFO:SS:4.8°S:0-150m:  Mean: -0.56 SV Max: -1.79 Sv in Apr, Min:  0.98 Sv in Jul. El Nino:  1.95 Sv La Nina: -1.08 Sv
+2020-05-15 11:03:06,206:log_wbc:INFO:SS:4.8°S:150-1303m:Mean:  9.5 SV Max:  13.0 Sv in Jul, Min:  4.2 Sv in Feb. El Nino: -0.7 Sv La Nina:  0.9 Sv
+2020-05-15 11:03:06,314:log_wbc:INFO:NI:4.1°S:0-1303m: Mean:  4.6 SV Max:  9.9 Sv in Jun, Min:  1.5 Sv in Nov. El Nino: -0.7 Sv La Nina:  0.3 Sv
+2020-05-15 11:03:06,416:log_wbc:INFO:NI:4.1°S:0-150m:  Mean: -0.26 SV Max: -1.15 Sv in Nov, Min:  1.19 Sv in Jul. El Nino:  0.92 Sv La Nina: -0.55 Sv
+2020-05-15 11:03:06,523:log_wbc:INFO:NI:4.1°S:150-1303m:Mean:  4.9 SV Max:  9.3 Sv in Jun, Min:  2.1 Sv in Jan. El Nino: -1.6 Sv La Nina:  0.9 Sv
+2020-05-15 11:03:06,628:log_wbc:INFO:MC:9°N:0-578m:    Mean: -19.4 SV Max: -20.3 Sv in Nov, Min: -18.3 Sv in Sep. El Nino: -0.9 Sv La Nina:  1.4 Sv
+2020-05-15 11:03:06,730:log_wbc:INFO:MC:9°N:0-150m:    Mean: -10.5 SV Max: -11.1 Sv in Jul, Min: -10.1 Sv in Sep. El Nino: -0.7 Sv La Nina:  1.4 Sv
+2020-05-15 11:03:06,839:log_wbc:INFO:MC:9°N:150-578m:  Mean: -8.9 SV Max: -9.8 Sv in Nov, Min: -8.1 Sv in Feb. El Nino: -0.2 Sv La Nina: -0.0 Sv
+2020-05-15 11:03:06,943:log_wbc:INFO:MC:7.5°N:0-578m:  Mean: -21.9 SV Max: -23.8 Sv in May, Min: -20.1 Sv in Sep. El Nino:  0.2 Sv La Nina:  1.0 Sv
+2020-05-15 11:03:07,046:log_wbc:INFO:MC:7.5°N:0-150m:  Mean: -12.8 SV Max: -13.6 Sv in Jul, Min: -11.8 Sv in Sep. El Nino: -0.5 Sv La Nina:  1.4 Sv
+2020-05-15 11:03:07,153:log_wbc:INFO:MC:7.5°N:150-578m:Mean: -9.1 SV Max: -10.5 Sv in May, Min: -8.2 Sv in Sep. El Nino:  0.7 Sv La Nina: -0.5 Sv
+2020-05-15 11:10:55,292:log_EUC_transport_defs:INFO:165°E  static: h=21 Sv, r=23.8 Sv, diff= 2.95 Sv
+2020-05-15 11:10:55,893:log_EUC_transport_defs:INFO:165°E   izumo: h=19 Sv, r=18.9 Sv, diff= 0.19 Sv
+2020-05-15 11:10:56,498:log_EUC_transport_defs:INFO:165°E grenier: h=15 Sv, r=16.6 Sv, diff= 1.14 Sv
+2020-05-15 11:10:57,062:log_EUC_transport_defs:INFO:170°W  static: h=27 Sv, r=28.4 Sv, diff= 1.60 Sv
+2020-05-15 11:10:57,630:log_EUC_transport_defs:INFO:170°W   izumo: h=23 Sv, r=21.1 Sv, diff=-1.92 Sv
+2020-05-15 11:10:58,228:log_EUC_transport_defs:INFO:170°W grenier: h=23 Sv, r=20.8 Sv, diff=-2.13 Sv
+2020-05-15 11:10:58,799:log_EUC_transport_defs:INFO:140°W  static: h=29 Sv, r=29.2 Sv, diff= 0.56 Sv
+2020-05-15 11:10:59,372:log_EUC_transport_defs:INFO:140°W   izumo: h=28 Sv, r=22.6 Sv, diff=-5.51 Sv
+2020-05-15 11:10:59,949:log_EUC_transport_defs:INFO:140°W grenier: h=27 Sv, r=22.6 Sv, diff=-4.08 Sv

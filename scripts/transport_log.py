@@ -21,7 +21,7 @@ from pathlib import Path
 from valid_nino34 import enso_u_ofam
 from tools import mlogger, coord_formatter, precision, get_edge_depth
 
-logger = mlogger(Path(sys.argv[0]).stem)
+logger = mlogger('transport_log')
 
 
 def log_wbc(data, name, full=True):
@@ -45,10 +45,10 @@ def log_wbc(data, name, full=True):
             mx, mn = mn, mx
         p = precision(s.mean())
         nm = '{}:{}{}'.format(nm, y, d)
-        sx = ('{:<20s}Mean: {: .{p}f} cfg.SV Max: {: .{p}f} cfg.SV in {}, '
-              'Min: {: .{p}f} cfg.SV in {}. '
+        sx = ('{:<18s}Mean: {: .{p}f} SV Max: {: .{p}f} Sv in {}, '
+              'Min: {: .{p}f} Sv in {}. '
               .format(nm, s.mean(), s[mx], cfg.mon[mx], s[mn], cfg.mon[mn], p=p))
-        ia = 'El Nino: {: .{p}f} cfg.SV La Nina: {: .{p}f} cfg.SV'.format(*enso, p=p)
+        ia = 'El Nino: {: .{p}f} Sv La Nina: {: .{p}f} Sv'.format(*enso, p=p)
 
         stx = sx + ia if full else '{} {}'.format(nm, ia)
         logger.info(stx)
@@ -90,18 +90,18 @@ name = [*['EUC:{}'.format(i) for i in cfg.lonstr],
         'VS', 'SGC', 'SS', 'NI', *['MC']*2]
 
 # Log seasonality and transport.
-log_wbc(data, name)
+# log_wbc(data, name)
 
 """Log seasonality and transport in upper 250m and below (to the sel depth)."""
-# datax = data.copy()
-# name = ['VS', 'SGC', 'SS', 'NI', *['MC']*2]
-# for i, ds, n in zip(range(len(data[3:])), data[3:], name):
-#     for d in [[2.5, 1500], [2.5, 155], [155, 1500]]:
-#         if hasattr(ds, 'st_ocean'):
-#             d0 = idx(ds.st_ocean, d[0])+1 if d[0] != 2.5 else 0
-#             d1 = idx(ds.st_ocean, d[1])
-#             datax[i] = ds.copy().isel(st_ocean=slice(d0, d1 + 1))
-#         log_wbc([datax[i]], [n])
+datax = data.copy()
+name = ['VS', 'SGC', 'SS', 'NI', *['MC']*2]
+for i, ds, n in zip(range(len(data[3:])), data[3:], name):
+    for d in [[2.5, 1500], [2.5, 150], [150, 1500]]:
+        if hasattr(ds, 'st_ocean'):
+            d0 = tools.get_edge_depth(d[0], index=True) if d[0] != 2.5 else 0
+            d1 = tools.get_edge_depth(d[1], index=True)
+            datax[i] = ds.copy().isel(st_ocean=slice(d0, d1))
+        log_wbc([datax[i]], [n])
 
 """Mindanao Current."""
 # data = [mc.isel(yu_ocean=i) for i in range(len(mc.yu_ocean))]
@@ -114,6 +114,25 @@ log_wbc(data, name)
 #     name = ['{}: lag={}'.format(n, -i) for i in range(10)]
 #     log_wbc(data, name, full=False)
 
+
+def log_EUC_transport_defs():
+    """EUC transport definitions."""
+    for i in range(3):
+        for l, method in enumerate(['static', 'izumo', 'grenier']):
+            dh = xr.open_dataset(cfg.data/'ofam_EUC_transport_{}_{}.nc'
+                                 .format(method, cfg.exp_abr[0])).uvo
+            dr = xr.open_dataset(cfg.data/'ofam_EUC_transport_{}_{}.nc'
+                                 .format(method, cfg.exp_abr[1])).uvo
+
+            uh = dh.isel(xu_ocean=i).groupby('Time.month').mean().mean('month')
+            ur = dr.isel(xu_ocean=i).groupby('Time.month').mean().mean('month')
+            ud = ur.values - uh.values
+            logger.info('{} {: >7}: h={:.0f} Sv, r={:.1f} Sv, diff={: .2f} Sv'
+                        .format(cfg.lonstr[i], method, uh.item()/cfg.SV,
+                                ur.item()/cfg.SV, ud.item()/cfg.SV))
+    return
+
+log_EUC_transport_defs()
 oni.close()
 euc.close()
 vs.close()

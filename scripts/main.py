@@ -48,18 +48,16 @@ import gsw
 import tools
 import math
 import random
-import logging
 import numpy as np
 import xarray as xr
 from pathlib import Path
 import matplotlib.pyplot as plt
 from collections import OrderedDict
-# from parcels import *
-from parcels import FieldSet, ParticleSet, JITParticle, ScipyParticle
+from parcels import FieldSet, ParticleSet, JITParticle
 from parcels import ErrorCode, Variable, AdvectionRK4_3D, AdvectionRK4
 from tools import timeit
 
-logger = logging.getLogger(Path(sys.argv[0]).stem)
+logger = tools.mlogger(Path(sys.argv[0]).stem)
 
 
 @timeit
@@ -592,13 +590,13 @@ def EUC_bnds_izumo(du, dt, ds, lon, interpolated=False):
     # Find exact latitude longitudes to slice dt and ds.
     lon_i = dt.xt_ocean[tools.idx(dt.xt_ocean, lon + 0.05)].item()
 
-    dt_z15 = dt.temp.sel(xt_ocean=lon_i, st_ocean=z_15, method='nearest')
+
 
     # Slice depth and longitude.
-    du = du.sel(xu_ocean=lon, st_ocean=slice(z1, z2))
-    dt = dt.sel(xt_ocean=lon_i, st_ocean=slice(z1, z2))
-    ds = ds.sel(xt_ocean=lon_i, st_ocean=slice(z1, z2))
-
+    du = du.sel(xu_ocean=lon, st_ocean=slice(z1, z2), yu_ocean=slice(-4, 4))
+    dt = dt.sel(xt_ocean=lon_i, st_ocean=slice(z1, z2), yt_ocean=slice(-4, 4.1))
+    ds = ds.sel(xt_ocean=lon_i, st_ocean=slice(z1, z2), yt_ocean=slice(-4, 4.1))
+    dt_z15 = dt.temp.sel(st_ocean=z_15, method='nearest')
     Z = du.st_ocean.values
 
     y1 = -2 - Z/100
@@ -615,8 +613,9 @@ def EUC_bnds_izumo(du, dt, ds, lon, interpolated=False):
 
         # Remove latitides greater than 4deg for depths greater than 200 m.
         else:
-            du1[:, z, :] = du.u.isel(st_ocean=z).where(du.yu_ocean >= -4)
-            du1[:, z, :] = du1.isel(st_ocean=z).where(du.yu_ocean <= 4)
+            du1[:, z, :] = du.u.isel(st_ocean=z).where(du.isel(st_ocean=z).yu_ocean >= -4
+                                                       and du.isel(st_ocean=z).yu_ocean <= 4)
+            # du1[:, z, :] = du1.isel(st_ocean=z).where(du1.yu_ocean <= 4)
 
         # Remove temperatures less than t(z=15) - 0.1 at each timestep.
         du2[:, z, :] = du1.isel(st_ocean=z).where(

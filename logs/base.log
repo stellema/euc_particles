@@ -1198,3 +1198,33 @@
 2020-05-14 16:25:51,851:EUC_particles:DEBUG:particles_1981-1981_v15i: Output file.
 2020-05-14 16:25:51,851:EUC_particles:INFO:particles_1981-1981_v15i:AdvectionRK4_3D + pset.Kernel(Age) +pset.Kernel(DeleteWestward)
 2020-05-14 16:25:52,234:EUC_particles:DEBUG:particles_1981-1981_v15i: Excecute particle set.
+2020-05-14 18:41:29,045:run_EUC:INFO:sim_198101_198101_v63i:Executing: 1981-01-01 00:00:00 to 1981-01-31 00:00:00
+2020-05-14 18:41:29,046:run_EUC:INFO:sim_198101_198101_v63i:Longitudes: 190
+2020-05-14 18:41:29,046:run_EUC:INFO:sim_198101_198101_v63i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-14 18:41:29,047:run_EUC:INFO:sim_198101_198101_v63i:Depths: 2 dz=200 [25 to 225]
+2020-05-14 18:41:29,047:run_EUC:INFO:sim_198101_198101_v63i:Runtime: 30 days
+2020-05-14 18:41:29,048:run_EUC:INFO:sim_198101_198101_v63i:Timestep dt: 240 mins
+2020-05-14 18:41:29,049:run_EUC:INFO:sim_198101_198101_v63i:Output dt: 1 days
+2020-05-14 18:41:29,050:run_EUC:INFO:sim_198101_198101_v63i:Repeat release: 6 days
+2020-05-14 18:41:29,050:run_EUC:INFO:sim_198101_198101_v63i:Particles: Total: 50 :/repeat: 10
+2020-05-14 18:41:29,051:ofam_fieldset:INFO:Field import=b_grid, Chunks=(1, 1, 128, 128)
+2020-05-14 18:41:40,000:ofam_fieldset:INFO:Field import=b_grid, Chunks=(1, 1, 128, 128)
+2020-05-14 18:44:17,189:run_EUC:INFO:sim_198101_198101_v36i:Executing: 1981-01-01 00:00:00 to 1981-01-31 00:00:00
+2020-05-14 18:44:17,189:run_EUC:INFO:sim_198101_198101_v36i:Longitudes: 190
+2020-05-14 18:44:17,190:run_EUC:INFO:sim_198101_198101_v36i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-14 18:44:17,191:run_EUC:INFO:sim_198101_198101_v36i:Depths: 2 dz=200 [25 to 225]
+2020-05-14 18:44:17,191:run_EUC:INFO:sim_198101_198101_v36i:Runtime: 30 days
+2020-05-14 18:44:17,191:run_EUC:INFO:sim_198101_198101_v36i:Timestep dt: 240 mins
+2020-05-14 18:44:17,192:run_EUC:INFO:sim_198101_198101_v36i:Output dt: 1 days
+2020-05-14 18:44:17,192:run_EUC:INFO:sim_198101_198101_v36i:Repeat release: 6 days
+2020-05-14 18:44:17,193:run_EUC:INFO:sim_198101_198101_v36i:Particles: Total: 50 :/repeat: 10
+2020-05-14 18:44:17,193:ofam_fieldset:INFO:Field import=b_grid, Chunks=(1, 1, 128, 128)
+2020-05-14 18:44:25,001:timed:INFO:EUC_pset: 0:0:07.72 total: 7.72 seconds.
+2020-05-14 18:44:25,002:remove_westward_particles:DEBUG:Particles removed: 4
+2020-05-14 18:44:25,003:timed:INFO:remove_westward_particles: 0:0:00.00 total: 0.00 seconds.
+2020-05-14 18:44:25,003:EUC_particles:DEBUG:sim_198101_198101_v36i: Output file.
+2020-05-14 18:44:25,004:EUC_particles:INFO:sim_198101_198101_v36i:AdvectionRK4_3D + pset.Kernel(Age) +pset.Kernel(DeleteWestward)
+2020-05-14 18:44:25,153:EUC_particles:DEBUG:sim_198101_198101_v36i: Excecute particle set.
+2020-05-14 19:53:26,223:EUC_particles:INFO:sim_198101_198101_v36i: Completed.
+2020-05-14 19:53:26,480:timed:INFO:EUC_particles: 1:9:09.20 total: 4149.20 seconds.
+2020-05-14 19:53:26,482:timed:INFO:run_EUC: 1:9:09.29 total: 4149.29 seconds.

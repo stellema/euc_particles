@@ -8,7 +8,6 @@ author: Annette Stellema (astellemas@gmail.com)
 """
 import cfg
 import tools
-import sys
 import numpy as np
 import xarray as xr
 from datetime import datetime
@@ -21,7 +20,7 @@ if __name__ == "__main__":
     p = ArgumentParser(description="""Run lagrangian EUC experiment""")
     p.add_argument('-m', '--method', default='static', type=str,
                    help='EUC definition (static, grenier, izumo)')
-    p.add_argument('-x', '--exp', default=0, help='Experiment index', type=int)
+    p.add_argument('-x', '--exp', default=0, type=int, help='Experiment index')
 
     args = p.parse_args()
     method = args.method
@@ -47,7 +46,7 @@ for i, lon in enumerate(cfg.lons):
     print('{}: {} started'.format(method, cfg.lonstr[i]))
     if method == 'static':
         z1, z2, lat = 25, 350, 2.6
-        dx[i] =  EUC_bnds_static(du, lon=lon, z1=z1, z2=z2, lat=lat)
+        dx[i] = EUC_bnds_static(du, lon=lon, z1=z1, z2=z2, lat=lat)
 
     elif method == 'izumo':
         dx[i] = EUC_bnds_izumo(du, dt, ds, lon=lon)
@@ -56,8 +55,8 @@ for i, lon in enumerate(cfg.lons):
         dx[i] = EUC_bnds_grenier(du, dt, ds, lon=lon)
 
 dtx = xr.Dataset()
-dtx['uvo'] = xr.DataArray(np.zeros((len(dx[0].Time), 3)), coords=
-                          [('Time', dx[0].Time), ('xu_ocean', cfg.lons)])
+dtx['uvo'] = xr.DataArray(np.zeros((len(dx[0].Time), 3)),
+                          coords=[('Time', dx[0].Time), ('xu_ocean', cfg.lons)])
 
 dy = cfg.LAT_DEG*0.1
 dz = cfg.dz()
@@ -82,6 +81,4 @@ if method == 'static':
 dtx.attrs['history'] = (datetime.now().strftime('%a %b %d %H:%M:%S %Y') +
                         ': Depth-integrated velocity (github.com/stellema)\n')
 # # Save to /data as a netcdf file.
-dtx.to_netcdf(cfg.data/'ofam_EUC_transport_{}_{}.nc'
-              .format(method, cfg.exp_abr[exp]))
-tools.deg2m()
+dtx.to_netcdf(cfg.data/'ofam_EUC_transport_{}_{}.nc'.format(method, cfg.exp_abr[exp]))
