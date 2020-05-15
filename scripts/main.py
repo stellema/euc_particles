@@ -99,7 +99,6 @@ def ofam_fieldset(date_bnds, field_method='b_grid', time_periodic=False,
 
     dimensions = {'U': vdims, 'V': vdims, 'W': vdims}
 
-
     chunk = (1, 1, 128, 128) if chunks == 'manual' else chunks
 
     logger.info('Field import={}, Chunks={}'.format(field_method, chunk))
@@ -118,12 +117,20 @@ def ofam_fieldset(date_bnds, field_method='b_grid', time_periodic=False,
     return fieldset
 
 
-def generate_sim_id(date_bnds, parallel=False):
+def generate_sim_id(date_bnds, ifile=0, parallel=False):
     """Create name to save particle file (looks for unsaved filename)."""
     dsr = 'sim_{}_{}'.format(*[str(i)[:7].replace('-', '') for i in date_bnds])
     i = 0 if parallel else random.randint(0, 100)
+
     while (cfg.data/'{}_v{}i.nc'.format(dsr, i)).exists():
         i = i + 1 if parallel else random.randint(0, 100)
+        i = 0 if ifile == 0 else ifile
+    if ifile != 0:
+        if not (cfg.data/'{}_v{}i.nc'.format(dsr, ifile)).exists():
+            i = ifile
+        else:
+            i = ifile + 1
+
     sim_id = cfg.data/'{}_v{}i.nc'.format(dsr, i)
     return sim_id
 

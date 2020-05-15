@@ -27,7 +27,7 @@ logger = tools.mlogger('base', parcels=True)
 
 @timeit
 def run_EUC(dy=0.8, dz=25, lon=190, lat=2.6, year=[1981, 2012],
-            dt_mins=240, repeatdt_days=6, outputdt_days=1, month=12,
+            dt_mins=240, repeatdt_days=6, outputdt_days=1, month=12, ifile=0,
             add_transport=True, write_fieldset=False, parallel=False):
     """Run Lagrangian EUC particle experiment."""
     # Define Fieldset and ParticleSet parameters.
@@ -58,7 +58,7 @@ def run_EUC(dy=0.8, dz=25, lon=190, lat=2.6, year=[1981, 2012],
     outputdt = timedelta(days=outputdt_days)
 
     # Generate file name for experiment.
-    sim_id = main.generate_sim_id(date_bnds, parallel=parallel)
+    sim_id = main.generate_sim_id(date_bnds, ifile=ifile, parallel=parallel)
 
     # Number of particles release in each dimension.
     Z, Y, X = len(p_depths), len(p_lats), len(p_lons)
@@ -116,11 +116,12 @@ if __name__ == "__main__" and cfg.home != Path('E:/'):
     p.add_argument('-t', '--transport', default=True, type=bool, help='Write transport file.')
     p.add_argument('-w', '--fset', default=False, type=bool, help='Write fieldset.')
     p.add_argument('-p', '--parallel', default=False, type=bool, help='Parallel execution.')
+    p.add_argument('-i', '--ifile', default=0, type=int, help='File Index.')
     args = p.parse_args()
 
     run_EUC(dy=args.dy, dz=args.dz, lon=args.lon, lat=args.lat,
             year=[args.yri, args.yrf], month=args.month, dt_mins=args.dt,
-            repeatdt_days=args.repeatdt, outputdt_days=args.outputdt,
+            repeatdt_days=args.repeatdt, outputdt_days=args.outputdt, ifile=args.ifile,
             add_transport=args.transport, write_fieldset=args.fset, parallel=args.parallel)
 else:
     run_EUC(dy=1, dz=200, lon=190, lat=2, year=[1981, 1981],
