@@ -116,7 +116,7 @@ if __name__ == "__main__" and cfg.home != Path('E:/'):
     p.add_argument('-t', '--transport', default=True, type=bool, help='Write transport file.')
     p.add_argument('-w', '--fset', default=False, type=bool, help='Write fieldset.')
     p.add_argument('-p', '--parallel', default=False, type=bool, help='Parallel execution.')
-    p.add_argument('-i', '--ifile', default=0, type=int, help='File Index.')
+    p.add_argument('-ix', '--ifile', default=0, type=int, help='File Index.')
     args = p.parse_args()
 
     run_EUC(dy=args.dy, dz=args.dz, lon=args.lon, lat=args.lat,
