@@ -1,8 +1,0 @@
-file_transport:INFO:Creating transport file: St Georges Channel (sg).
-/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/dask/array/numpy_compat.py:40: RuntimeWarning: invalid value encountered in true_divide
-  x = np.divide(x1, x2, out)
-file_transport:DEBUG:St Georges Channel (sg) test: -0.4901 Sv 1981-01-16 (-4.6)
-file_transport:INFO:Saving transport file: St Georges Channel (sg).
-/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/dask/array/numpy_compat.py:40: RuntimeWarning: invalid value encountered in true_divide
-  x = np.divide(x1, x2, out)
-file_transport:INFO:Finished transport file: St Georges Channel (sg).

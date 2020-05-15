@@ -124,7 +124,6 @@ def generate_sim_id(date_bnds, ifile=0, parallel=False):
 
     while (cfg.data/'{}_v{}i.nc'.format(dsr, i)).exists():
         i = i + 1 if parallel else random.randint(0, 100)
-        i = 0 if ifile == 0 else ifile
     if ifile != 0:
         if not (cfg.data/'{}_v{}i.nc'.format(dsr, ifile)).exists():
             i = ifile
@@ -246,8 +245,7 @@ def EUC_particles(fieldset, date_bnds, p_lats, p_lons, p_depths,
         age = Variable('age', dtype=np.float32, initial=0.)
 
         # # The velocity of the particle.
-        u = Variable('u', dtype=np.float32, initial=fieldset.U,
-                     to_write="once")
+        u = Variable('u', dtype=np.float32, initial=fieldset.U)
 
     # Create particle set.
     pset = EUC_pset(fieldset, tparticle, p_lats, p_lons, p_depths,
