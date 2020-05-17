@@ -2,7 +2,7 @@
 #PBS -P e14
 #PBS -q normal
 #PBS -l walltime=48:00:00
-#PBS -l mem=90GB
+#PBS -l mem=40GB
 #PBS -l ncpus=1
 #PBS -l wd
 #PBS -M astellemas@gmail.com
@@ -11,4 +11,4 @@
 
 module use /g/data3/hh5/public/modules
 module load conda/analysis3-20.04
-python3 /g/data/e14/as3189/OFAM/scripts/base.py -dy 0.4 -dz 25 -lon 190 -i 1981 -f 1981
+python3 /g/data/e14/as3189/OFAM/scripts/base.py -dy 0.4 -dz 25 -lon 165 -i 1981 -f 1981

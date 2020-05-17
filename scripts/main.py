@@ -157,7 +157,10 @@ def Age(particle, fieldset, time):
 def DeleteWestward(particle, fieldset, time):
     """Delete particles initially travelling westward."""
     # Delete particle if the initial zonal velocity is westward (negative).
-    if particle.age == 0 and particle.u <= 0:
+    # if particle.age == 0 and particle.u <= 0:
+    #     particle.delete()
+    if (time == fieldset.U.grid.time[-1] and
+        fieldset.U[particle.time, particle.depth, particle.lat, particle.lon] <= 0):
         particle.delete()
 
 
@@ -242,10 +245,10 @@ def EUC_particles(fieldset, date_bnds, p_lats, p_lons, p_depths,
         """Particle class that saves particle age and zonal velocity."""
 
         # The age of the particle.
-        age = Variable('age', dtype=np.float32, initial=0.)
+        # age = Variable('age', dtype=np.float32, initial=0.)
 
         # # The velocity of the particle.
-        u = Variable('u', dtype=np.float32, initial=fieldset.U, to_write="once")
+        # u = Variable('u', dtype=np.float32, initial=fieldset.U, to_write="once")
 
     # Create particle set.
     pset = EUC_pset(fieldset, tparticle, p_lats, p_lons, p_depths,
@@ -594,8 +597,6 @@ def EUC_bnds_izumo(du, dt, ds, lon, interpolated=False):
 
     # Find exact latitude longitudes to slice dt and ds.
     lon_i = dt.xt_ocean[tools.idx(dt.xt_ocean, lon + 0.05)].item()
-
-
 
     # Slice depth and longitude.
     du = du.sel(xu_ocean=lon, st_ocean=slice(z1, z2), yu_ocean=slice(-4, 4))
