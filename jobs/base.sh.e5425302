@@ -1,0 +1,111 @@
+base:INFO:particles_1981-1981_v15i: Executing: 1981-01-01 00:00:00 to 1981-12-31 00:00:00
+base:INFO:particles_1981-1981_v15i: Runtime: 364 days
+base:INFO:particles_1981-1981_v15i: Timestep dt: 240 mins
+base:INFO:particles_1981-1981_v15i: Output dt: 1 days
+base:INFO:particles_1981-1981_v15i: Repeat release: 6 days
+base:INFO:particles_1981-1981_v15i: Depths: 14 dz=25 [25 to 350]
+base:INFO:particles_1981-1981_v15i: Latitudes: 14 dy=0.4 [-2.6 to 2.6]
+base:INFO:particles_1981-1981_v15i: Longitudes: 1 [190]
+base:INFO:particles_1981-1981_v15i: Repeat particles: 196
+base:INFO:particles_1981-1981_v15i: Total particles: 11760
+base:INFO:Field import=b_grid, Chunks=(1, 1, 128, 128)
+WARNING: Casting lon data to np.float32
+WARNING: Casting lat data to np.float32
+WARNING: Casting depth data to np.float32
+WARNING: Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+WARNING: Did not find xu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'xu_ocean': <number>, ... }.
+WARNING: Did not find yu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'yu_ocean': <number>, ... }.
+WARNING: Did not find sw_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'sw_ocean': <number>, ... }.
+WARNING: Did not find Time in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'Time': <number>, ... }.
+WARNING: Particle initialisation from field can be very slow as it is computed in scipy mode.
+base:INFO:EUC_pset: 0:1:32.39 total: 92.39 seconds.
+base:DEBUG:Particles removed: 95
+base:INFO:remove_westward_particles: 0:0:00.03 total: 0.03 seconds.
+base:DEBUG:particles_1981-1981_v15i: Output file.
+base:INFO:particles_1981-1981_v15i:AdvectionRK4_3D + pset.Kernel(Age) +pset.Kernel(DeleteWestward)
+base:DEBUG:particles_1981-1981_v15i: Excecute particle set.
+INFO: Compiled tparticleAdvectionRK4_3DAgeDeleteWestward ==> /jobfs/5425302.gadi-pbs/parcels-12904/acd7df21f46493b4f0bd3518a9ea3ae3_0.so
+N/A% (0 of 31449600.0) |                 | Elapsed Time: 0:00:00 ETA:  --:--:--
+  0% (86400.0 of 31449600.0) |           | Elapsed Time: 0:00:36 ETA:   3:38:21
+  0% (172800.0 of 31449600.0) |          | Elapsed Time: 0:00:37 ETA:   1:51:57
+  0% (259200.0 of 31449600.0) |          | Elapsed Time: 0:00:38 ETA:   0:06:04
+  1% (345600.0 of 31449600.0) |          | Elapsed Time: 0:00:39 ETA:   0:06:04
+  1% (432000.0 of 31449600.0) |          | Elapsed Time: 0:00:40 ETA:   0:06:49
+  1% (518400.0 of 31449600.0) |          | Elapsed Time: 0:02:12 ETA:   9:08:55
+  1% (604800.0 of 31449600.0) |          | Elapsed Time: 0:02:13 ETA:   4:36:55
+  2% (691200.0 of 31449600.0) |          | Elapsed Time: 0:02:14 ETA:   0:06:18
+  2% (777600.0 of 31449600.0) |          | Elapsed Time: 0:02:15 ETA:   0:06:08
+  2% (864000.0 of 31449600.0) |          | Elapsed Time: 0:02:16 ETA:   0:06:13
+  3% (950400.0 of 31449600.0) |          | Elapsed Time: 0:02:39 ETA:   2:12:40
+  3% (1036800.0 of 31449600.0) |         | Elapsed Time: 0:04:54 ETA:  13:15:23
+  3% (1123200.0 of 31449600.0) |         | Elapsed Time: 0:05:59 ETA:   6:17:09
+  3% (1209600.0 of 31449600.0) |         | Elapsed Time: 0:07:28 ETA:   8:38:07
+  4% (1296000.0 of 31449600.0) |         | Elapsed Time: 0:09:40 ETA:  12:49:15
+  4% (1382400.0 of 31449600.0) |         | Elapsed Time: 0:11:44 ETA:  12:01:58
+  4% (1468800.0 of 31449600.0) |         | Elapsed Time: 0:14:11 ETA:  14:08:35
+  4% (1555200.0 of 31449600.0) |   | Elapsed Time: 0:18:29 ETA:  1 day, 0:45:34
+  5% (1641600.0 of 31449600.0) |         | Elapsed Time: 0:20:06 ETA:   9:17:31
+  5% (1728000.0 of 31449600.0) |         | Elapsed Time: 0:23:18 ETA:  18:25:35
+  5% (1814400.0 of 31449600.0) |         | Elapsed Time: 0:26:01 ETA:  15:30:57
+  6% (1900800.0 of 31449600.0) |         | Elapsed Time: 0:30:06 ETA:  23:12:59
+  6% (1987200.0 of 31449600.0) |   | Elapsed Time: 0:35:14 ETA:  1 day, 5:13:37
+  6% (2073600.0 of 31449600.0) |  | Elapsed Time: 0:43:46 ETA:  2 days, 0:18:22
+  6% (2160000.0 of 31449600.0) |  | Elapsed Time: 0:53:31 ETA:  2 days, 7:07:46
+  7% (2246400.0 of 31449600.0) |  | Elapsed Time: 1:07:44 ETA:  3 days, 8:06:06
+  7% (2332800.0 of 31449600.0) | | Elapsed Time: 1:26:47 ETA:  4 days, 10:55:43
+  7% (2419200.0 of 31449600.0) | | Elapsed Time: 1:46:40 ETA:  4 days, 15:21:23
+  7% (2505600.0 of 31449600.0) | | Elapsed Time: 2:05:43 ETA:  4 days, 10:24:33
+  8% (2592000.0 of 31449600.0) | | Elapsed Time: 2:27:15 ETA:  4 days, 23:48:46
+  8% (2678400.0 of 31449600.0) | | Elapsed Time: 2:48:39 ETA:  4 days, 22:50:00
+  8% (2764800.0 of 31449600.0) | | Elapsed Time: 3:12:57 ETA:  5 days, 14:27:55
+  9% (2851200.0 of 31449600.0) | | Elapsed Time: 3:41:46 ETA:  6 days, 14:56:09
+  9% (2937600.0 of 31449600.0) |  | Elapsed Time: 4:09:26 ETA:  6 days, 8:12:57
+  9% (3024000.0 of 31449600.0) |  | Elapsed Time: 4:36:47 ETA:  6 days, 5:53:53
+  9% (3110400.0 of 31449600.0) | | Elapsed Time: 5:11:37 ETA:  7 days, 22:26:17
+ 10% (3196800.0 of 31449600.0) |  | Elapsed Time: 5:51:40 ETA:  9 days, 2:18:22
+ 10% (3283200.0 of 31449600.0) |  | Elapsed Time: 6:28:03 ETA:  8 days, 5:37:36
+ 10% (3369600.0 of 31449600.0) | | Elapsed Time: 7:11:49 ETA:  9 days, 21:06:04
+ 10% (3456000.0 of 31449600.0) || Elapsed Time: 7:58:36 ETA:  10 days, 12:40:28
+ 11% (3542400.0 of 31449600.0) | | Elapsed Time: 8:41:58 ETA:  9 days, 17:27:40
+ 11% (3628800.0 of 31449600.0) | | Elapsed Time: 9:27:42 ETA:  10 days, 5:22:17
+ 11% (3715200.0 of 31449600.0) | | Elapsed Time: 10:08:16 ETA:  9 days, 1:01:25
+ 12% (3801600.0 of 31449600.0) | | Elapsed Time: 10:50:38 ETA:  9 days, 9:57:10
+ 12% (3888000.0 of 31449600.0) || Elapsed Time: 11:30:59 ETA:  8 days, 22:33:53
+ 12% (3974400.0 of 31449600.0) | | Elapsed Time: 12:08:12 ETA:  8 days, 5:12:17
+ 12% (4060800.0 of 31449600.0) || Elapsed Time: 12:41:56 ETA:  7 days, 10:13:09
+ 13% (4147200.0 of 31449600.0) || Elapsed Time: 13:30:09 ETA:  10 days, 13:56:22
+ 13% (4233600.0 of 31449600.0) | | Elapsed Time: 14:08:33 ETA:  8 days, 9:37:33
+ 13% (4320000.0 of 31449600.0) || Elapsed Time: 14:48:11 ETA:  8 days, 15:27:04
+ 14% (4406400.0 of 31449600.0) | | Elapsed Time: 15:21:23 ETA:  7 days, 5:08:24
+ 14% (4492800.0 of 31449600.0) || Elapsed Time: 15:39:48 ETA:  3 days, 23:46:24
+ 14% (4579200.0 of 31449600.0) | | Elapsed Time: 16:03:44 ETA:  5 days, 4:05:14
+ 14% (4665600.0 of 31449600.0) || Elapsed Time: 16:34:37 ETA:  6 days, 15:31:18
+ 15% (4752000.0 of 31449600.0) | | Elapsed Time: 17:03:54 ETA:  6 days, 6:49:41
+ 15% (4838400.0 of 31449600.0) | | Elapsed Time: 17:33:39 ETA:  6 days, 8:45:06
+ 15% (4924800.0 of 31449600.0) || Elapsed Time: 18:04:40 ETA:  6 days, 14:40:50
+ 15% (5011200.0 of 31449600.0) || Elapsed Time: 18:32:53 ETA:  5 days, 23:52:08
+ 16% (5097600.0 of 31449600.0) || Elapsed Time: 19:09:52 ETA:  7 days, 20:03:31
+ 16% (5184000.0 of 31449600.0) | | Elapsed Time: 19:53:14 ETA:  9 days, 3:43:20
+ 16% (5270400.0 of 31449600.0) || Elapsed Time: 20:42:51 ETA:  10 days, 10:34:54
+ 17% (5356800.0 of 31449600.0) || Elapsed Time: 21:37:55 ETA:  11 days, 13:06:15
+ 17% (5443200.0 of 31449600.0) || Elapsed Time: 22:23:05 ETA:  9 days, 10:36:36
+ 17% (5529600.0 of 31449600.0) || Elapsed Time: 23:28:37 ETA:  13 days, 15:41:12
+ 17% (5616000.0 of 31449600.0) || Elapsed Time: 1 day, 0:49:22 ETA:  16 days, 18:23:17
+ 18% (5702400.0 of 31449600.0) || Elapsed Time: 1 day, 2:12:24 ETA:  17 days, 4:25:11
+ 18% (5788800.0 of 31449600.0) || Elapsed Time: 1 day, 3:35:40 ETA:  17 days, 4:08:25
+ 18% (5875200.0 of 31449600.0) || Elapsed Time: 1 day, 4:57:05 ETA:  16 days, 17:39:43
+ 18% (5961600.0 of 31449600.0) || Elapsed Time: 1 day, 6:49:38 ETA:  23 days, 1:22:56
+ 19% (6048000.0 of 31449600.0) || Elapsed Time: 1 day, 8:31:09 ETA:  20 days, 17:24:08
+ 19% (6134400.0 of 31449600.0) || Elapsed Time: 1 day, 10:11:36 ETA:  20 days, 10:33:18
+ 19% (6220800.0 of 31449600.0) || Elapsed Time: 1 day, 11:58:52 ETA:  21 days, 17:59:25
+ 20% (6307200.0 of 31449600.0) || Elapsed Time: 1 day, 13:56:07 ETA:  23 days, 16:42:04
+ 20% (6393600.0 of 31449600.0) || Elapsed Time: 1 day, 16:01:42 ETA:  25 days, 6:58:56
+ 20% (6480000.0 of 31449600.0) || Elapsed Time: 1 day, 17:41:16 ETA:  19 days, 23:36:28
+ 20% (6566400.0 of 31449600.0) || Elapsed Time: 1 day, 19:17:31 ETA:  19 days, 5:55:55
+ 21% (6652800.0 of 31449600.0) || Elapsed Time: 1 day, 20:57:18 ETA:  19 days, 21:20:05
+ 21% (6739200.0 of 31449600.0) || Elapsed Time: 1 day, 22:40:12 ETA:  20 days, 10:29:20
+=>> PBS: job killed: walltime 172816 exceeded limit 172800

@@ -1,0 +1,160 @@
+base:INFO:sim_198101_198106_v181i:Executing: 1981-01-01 to 1981-06-30
+base:INFO:sim_198101_198106_v181i:Longitudes: 165
+base:INFO:sim_198101_198106_v181i:Latitudes: 14 dy=0.4 [-2.6 to 2.6]
+base:INFO:sim_198101_198106_v181i:Depths: 14 dz=25 [25 to 350]
+base:INFO:sim_198101_198106_v181i:Runtime: 180 days
+base:INFO:sim_198101_198106_v181i:Timestep dt: 240 mins
+base:INFO:sim_198101_198106_v181i:Output dt: 1 days
+base:INFO:sim_198101_198106_v181i:Repeat release: 6 days
+base:INFO:sim_198101_198106_v181i:Particles: Total: 5880 :/repeat: 196
+base:INFO:Field import=b_grid, Chunks=(1, 1, 128, 128)
+WARNING: Casting lon data to np.float32
+WARNING: Casting lat data to np.float32
+WARNING: Casting depth data to np.float32
+WARNING: Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+base:INFO:ofam_fieldset: 0:0:05.17 total: 5.17 seconds.
+WARNING: Did not find xu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'xu_ocean': <number>, ... }.
+WARNING: Did not find yu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'yu_ocean': <number>, ... }.
+WARNING: Did not find sw_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'sw_ocean': <number>, ... }.
+WARNING: Did not find Time in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'Time': <number>, ... }.
+WARNING: Particle initialisation from field can be very slow as it is computed in scipy mode.
+base:INFO:EUC_pset: 0:1:27.69 total: 87.69 seconds.
+base:DEBUG:Particles removed: 32
+base:INFO:remove_westward_particles: 0:0:00.01 total: 0.01 seconds.
+base:DEBUG:sim_198101_198106_v181i: Output file.
+base:INFO:sim_198101_198106_v181i:AdvectionRK4_3D + pset.Kernel(Age) + pset.Kernel(DeleteWestward)
+base:DEBUG:sim_198101_198106_v181i: Excecute particle set.
+INFO: Compiled tparticleAdvectionRK4_3DAgeDeleteWestward ==> /jobfs/5468481.gadi-pbs/parcels-12904/3ee3a6437a3dde8639571b9da08cdf21_0.so
+N/A% (0 of 15552000.0) |                 | Elapsed Time: 0:00:00 ETA:  --:--:--
+  0% (86400.0 of 15552000.0) |           | Elapsed Time: 0:00:34 ETA:   1:42:07
+  1% (172800.0 of 15552000.0) |          | Elapsed Time: 0:00:35 ETA:   0:52:11
+  1% (259200.0 of 15552000.0) |          | Elapsed Time: 0:00:36 ETA:   0:35:31
+  2% (345600.0 of 15552000.0) |          | Elapsed Time: 0:00:37 ETA:   0:02:46
+  2% (432000.0 of 15552000.0) |          | Elapsed Time: 0:00:38 ETA:   0:02:45
+  3% (518400.0 of 15552000.0) |          | Elapsed Time: 0:02:05 ETA:   4:13:13
+  3% (604800.0 of 15552000.0) |          | Elapsed Time: 0:02:06 ETA:   2:07:16
+  4% (691200.0 of 15552000.0) |          | Elapsed Time: 0:02:07 ETA:   1:25:16
+  5% (777600.0 of 15552000.0) |          | Elapsed Time: 0:02:08 ETA:   0:02:44
+  5% (864000.0 of 15552000.0) |          | Elapsed Time: 0:02:09 ETA:   0:02:43
+  6% (950400.0 of 15552000.0) |          | Elapsed Time: 0:02:10 ETA:   0:02:43
+  6% (1036800.0 of 15552000.0) |         | Elapsed Time: 0:03:37 ETA:   4:05:46
+  7% (1123200.0 of 15552000.0) |         | Elapsed Time: 0:03:38 ETA:   2:03:29
+  7% (1209600.0 of 15552000.0) |         | Elapsed Time: 0:03:39 ETA:   1:22:42
+  8% (1296000.0 of 15552000.0) |         | Elapsed Time: 0:03:40 ETA:   0:02:38
+  8% (1382400.0 of 15552000.0) |         | Elapsed Time: 0:03:41 ETA:   0:02:37
+  9% (1468800.0 of 15552000.0) |         | Elapsed Time: 0:03:42 ETA:   0:02:37
+ 10% (1555200.0 of 15552000.0) |         | Elapsed Time: 0:05:10 ETA:   3:58:10
+ 10% (1641600.0 of 15552000.0) |         | Elapsed Time: 0:05:11 ETA:   1:59:39
+ 11% (1728000.0 of 15552000.0) |#        | Elapsed Time: 0:05:12 ETA:   1:20:09
+ 11% (1814400.0 of 15552000.0) |#        | Elapsed Time: 0:05:13 ETA:   0:02:42
+ 12% (1900800.0 of 15552000.0) |#        | Elapsed Time: 0:05:14 ETA:   0:02:41
+ 12% (1987200.0 of 15552000.0) |#        | Elapsed Time: 0:05:16 ETA:   0:02:42
+ 13% (2073600.0 of 15552000.0) |#        | Elapsed Time: 0:06:44 ETA:   3:50:39
+ 13% (2160000.0 of 15552000.0) |#        | Elapsed Time: 0:06:45 ETA:   1:55:50
+ 14% (2246400.0 of 15552000.0) |#        | Elapsed Time: 0:06:46 ETA:   1:17:33
+ 15% (2332800.0 of 15552000.0) |#        | Elapsed Time: 0:06:47 ETA:   0:02:29
+ 15% (2419200.0 of 15552000.0) |#        | Elapsed Time: 0:06:48 ETA:   0:02:28
+ 16% (2505600.0 of 15552000.0) |#        | Elapsed Time: 0:06:51 ETA:   0:06:38
+ 16% (2592000.0 of 15552000.0) |#        | Elapsed Time: 0:08:21 ETA:   3:45:58
+ 17% (2678400.0 of 15552000.0) |#        | Elapsed Time: 0:08:23 ETA:   1:54:16
+ 17% (2764800.0 of 15552000.0) |#        | Elapsed Time: 0:08:25 ETA:   0:05:31
+ 18% (2851200.0 of 15552000.0) |#        | Elapsed Time: 0:08:27 ETA:   0:05:11
+ 18% (2937600.0 of 15552000.0) |#        | Elapsed Time: 0:09:10 ETA:   1:44:45
+ 19% (3024000.0 of 15552000.0) |#        | Elapsed Time: 0:09:53 ETA:   1:44:10
+ 20% (3110400.0 of 15552000.0) |#        | Elapsed Time: 0:12:05 ETA:   5:16:57
+ 20% (3196800.0 of 15552000.0) |#        | Elapsed Time: 0:13:04 ETA:   2:18:46
+ 21% (3283200.0 of 15552000.0) |#        | Elapsed Time: 0:14:29 ETA:   3:21:16
+ 21% (3369600.0 of 15552000.0) |#        | Elapsed Time: 0:15:53 ETA:   3:19:17
+ 22% (3456000.0 of 15552000.0) |##       | Elapsed Time: 0:17:19 ETA:   3:19:47
+ 22% (3542400.0 of 15552000.0) |##       | Elapsed Time: 0:17:21 ETA:   0:04:52
+ 23% (3628800.0 of 15552000.0) |##       | Elapsed Time: 0:18:52 ETA:   3:28:47
+ 23% (3715200.0 of 15552000.0) |##       | Elapsed Time: 0:18:54 ETA:   1:45:35
+ 24% (3801600.0 of 15552000.0) |##       | Elapsed Time: 0:18:56 ETA:   0:04:42
+ 25% (3888000.0 of 15552000.0) |##       | Elapsed Time: 0:20:22 ETA:   3:13:40
+ 25% (3974400.0 of 15552000.0) |##       | Elapsed Time: 0:21:48 ETA:   3:11:56
+ 26% (4060800.0 of 15552000.0) |##       | Elapsed Time: 0:22:53 ETA:   2:24:03
+ 26% (4147200.0 of 15552000.0) |##       | Elapsed Time: 0:24:24 ETA:   3:21:47
+ 27% (4233600.0 of 15552000.0) |##       | Elapsed Time: 0:25:02 ETA:   1:23:01
+ 27% (4320000.0 of 15552000.0) |##       | Elapsed Time: 0:25:47 ETA:   1:36:05
+ 28% (4406400.0 of 15552000.0) |##       | Elapsed Time: 0:26:17 ETA:   1:04:42
+ 28% (4492800.0 of 15552000.0) |##       | Elapsed Time: 0:26:18 ETA:   0:33:39
+ 29% (4579200.0 of 15552000.0) |##       | Elapsed Time: 0:26:20 ETA:   0:03:25
+ 30% (4665600.0 of 15552000.0) |##       | Elapsed Time: 0:28:34 ETA:   4:41:33
+ 30% (4752000.0 of 15552000.0) |##       | Elapsed Time: 0:30:01 ETA:   3:01:41
+ 31% (4838400.0 of 15552000.0) |##       | Elapsed Time: 0:31:06 ETA:   2:13:59
+ 31% (4924800.0 of 15552000.0) |##       | Elapsed Time: 0:31:57 ETA:   1:43:51
+ 32% (5011200.0 of 15552000.0) |##       | Elapsed Time: 0:33:24 ETA:   2:56:10
+ 32% (5097600.0 of 15552000.0) |##       | Elapsed Time: 0:35:19 ETA:   3:53:33
+ 33% (5184000.0 of 15552000.0) |###      | Elapsed Time: 0:38:10 ETA:   5:41:43
+ 33% (5270400.0 of 15552000.0) |###      | Elapsed Time: 0:39:30 ETA:   2:37:29
+ 34% (5356800.0 of 15552000.0) |###      | Elapsed Time: 0:43:27 ETA:   7:45:49
+ 35% (5443200.0 of 15552000.0) |###      | Elapsed Time: 0:49:26 ETA:  11:40:34
+ 35% (5529600.0 of 15552000.0) |###      | Elapsed Time: 0:54:28 ETA:   9:43:32
+ 36% (5616000.0 of 15552000.0) |###      | Elapsed Time: 0:57:21 ETA:   5:32:07
+ 36% (5702400.0 of 15552000.0) |###      | Elapsed Time: 1:01:08 ETA:   7:12:17
+ 37% (5788800.0 of 15552000.0) |###      | Elapsed Time: 1:03:47 ETA:   4:58:16
+ 37% (5875200.0 of 15552000.0) |###      | Elapsed Time: 1:07:16 ETA:   6:29:37
+ 38% (5961600.0 of 15552000.0) |###      | Elapsed Time: 1:07:53 ETA:   1:08:34
+ 38% (6048000.0 of 15552000.0) |###      | Elapsed Time: 1:11:01 ETA:   5:45:22
+ 39% (6134400.0 of 15552000.0) |###      | Elapsed Time: 1:13:18 ETA:   4:09:34
+ 40% (6220800.0 of 15552000.0) |###      | Elapsed Time: 1:18:07 ETA:   8:38:46
+ 40% (6307200.0 of 15552000.0) |###      | Elapsed Time: 1:20:09 ETA:   3:38:27
+ 41% (6393600.0 of 15552000.0) |###      | Elapsed Time: 1:22:50 ETA:   4:44:03
+ 41% (6480000.0 of 15552000.0) |###      | Elapsed Time: 1:27:02 ETA:   7:21:21
+ 42% (6566400.0 of 15552000.0) |###      | Elapsed Time: 1:30:11 ETA:   5:26:55
+ 42% (6652800.0 of 15552000.0) |###      | Elapsed Time: 1:30:55 ETA:   1:16:14
+ 43% (6739200.0 of 15552000.0) |###      | Elapsed Time: 1:33:19 ETA:   4:04:21
+ 43% (6825600.0 of 15552000.0) |###      | Elapsed Time: 1:34:47 ETA:   2:29:13
+ 44% (6912000.0 of 15552000.0) |####     | Elapsed Time: 1:35:46 ETA:   1:36:54
+ 45% (6998400.0 of 15552000.0) |####     | Elapsed Time: 1:41:48 ETA:   9:58:40
+ 45% (7084800.0 of 15552000.0) |####     | Elapsed Time: 1:55:36 ETA:  22:31:04
+ 46% (7171200.0 of 15552000.0) |#  | Elapsed Time: 2:12:16 ETA:  1 day, 2:57:17
+ 46% (7257600.0 of 15552000.0) |#  | Elapsed Time: 2:31:50 ETA:  1 day, 7:18:14
+ 47% (7344000.0 of 15552000.0) |#  | Elapsed Time: 2:50:28 ETA:  1 day, 5:29:31
+ 47% (7430400.0 of 15552000.0) |#  | Elapsed Time: 3:08:08 ETA:  1 day, 3:41:59
+ 48% (7516800.0 of 15552000.0) |#  | Elapsed Time: 3:24:58 ETA:  1 day, 2:05:01
+ 48% (7603200.0 of 15552000.0) |#  | Elapsed Time: 3:42:10 ETA:  1 day, 2:22:21
+ 49% (7689600.0 of 15552000.0) |#  | Elapsed Time: 4:01:33 ETA:  1 day, 5:24:23
+ 50% (7776000.0 of 15552000.0) |# | Elapsed Time: 4:28:03 ETA:  1 day, 15:44:43
+ 50% (7862400.0 of 15552000.0) |# | Elapsed Time: 4:54:06 ETA:  1 day, 14:38:42
+ 51% (7948800.0 of 15552000.0) |#  | Elapsed Time: 5:15:47 ETA:  1 day, 7:48:06
+ 51% (8035200.0 of 15552000.0) |#  | Elapsed Time: 5:39:02 ETA:  1 day, 9:42:52
+ 52% (8121600.0 of 15552000.0) |# | Elapsed Time: 6:06:29 ETA:  1 day, 15:20:09
+ 52% (8208000.0 of 15552000.0) |# | Elapsed Time: 6:31:47 ETA:  1 day, 11:49:59
+ 53% (8294400.0 of 15552000.0) |#  | Elapsed Time: 6:54:21 ETA:  1 day, 7:36:41
+ 53% (8380800.0 of 15552000.0) |#  | Elapsed Time: 7:13:25 ETA:  1 day, 2:21:11
+ 54% (8467200.0 of 15552000.0) |#  | Elapsed Time: 7:33:23 ETA:  1 day, 3:17:35
+ 55% (8553600.0 of 15552000.0) |#  | Elapsed Time: 7:54:13 ETA:  1 day, 4:07:32
+ 55% (8640000.0 of 15552000.0) |#####    | Elapsed Time: 8:11:41 ETA:  23:17:57
+ 56% (8726400.0 of 15552000.0) |# | Elapsed Time: 8:46:23 ETA:  1 day, 21:41:29
+ 56% (8812800.0 of 15552000.0) | | Elapsed Time: 9:38:45 ETA:  2 days, 20:04:17
+ 57% (8899200.0 of 15552000.0) || Elapsed Time: 10:46:49 ETA:  3 days, 15:20:22
+ 57% (8985600.0 of 15552000.0) || Elapsed Time: 12:02:16 ETA:  3 days, 23:34:56
+ 58% (9072000.0 of 15552000.0) || Elapsed Time: 13:30:09 ETA:  4 days, 13:51:32
+ 58% (9158400.0 of 15552000.0) | | Elapsed Time: 15:11:29 ETA:  5 days, 4:58:29
+ 59% (9244800.0 of 15552000.0) | | Elapsed Time: 17:17:05 ETA:  6 days, 8:48:24
+ 60% (9331200.0 of 15552000.0) | | Elapsed Time: 19:44:37 ETA:  7 days, 9:02:49
+ 60% (9417600.0 of 15552000.0) || Elapsed Time: 22:04:52 ETA:  6 days, 21:56:51
+ 61% (9504000.0 of 15552000.0) || Elapsed Time: 23:20:25 ETA:  3 days, 16:09:06
+ 61% (9590400.0 of 15552000.0) | | Elapsed Time: 23:54:43 ETA:  1 day, 15:26:04
+ 62% (9676800.0 of 15552000.0) || Elapsed Time: 1 day, 0:31:31 ETA:  1 day, 17:42:48
+ 62% (9763200.0 of 15552000.0) || Elapsed Time: 1 day, 1:02:27 ETA:  1 day, 10:32:09
+ 63% (9849600.0 of 15552000.0) |# | Elapsed Time: 1 day, 1:22:02 ETA:  21:32:35
+ 63% (9936000.0 of 15552000.0) || Elapsed Time: 1 day, 2:08:22 ETA:  2 days, 2:11:44
+ 64% (10022400.0 of 15552000.0) || Elapsed Time: 1 day, 3:09:32 ETA:  2 days, 17:15:29
+ 65% (10108800.0 of 15552000.0) || Elapsed Time: 1 day, 4:44:21 ETA:  4 days, 3:32:59
+ 65% (10195200.0 of 15552000.0) || Elapsed Time: 1 day, 7:05:29 ETA:  6 days, 1:50:13
+ 66% (10281600.0 of 15552000.0) || Elapsed Time: 1 day, 9:52:16 ETA:  7 days, 1:33:57
+ 66% (10368000.0 of 15552000.0) || Elapsed Time: 1 day, 12:35:34 ETA:  6 days, 19:18:10
+ 67% (10454400.0 of 15552000.0) || Elapsed Time: 1 day, 13:32:16 ETA:  2 days, 7:44:32
+ 67% (10540800.0 of 15552000.0) || Elapsed Time: 1 day, 14:39:27 ETA:  2 days, 16:57:15
+ 68% (10627200.0 of 15552000.0) || Elapsed Time: 1 day, 15:41:57 ETA:  2 days, 11:22:26
+ 68% (10713600.0 of 15552000.0) || Elapsed Time: 1 day, 17:11:19 ETA:  3 days, 11:24:26
+ 69% (10800000.0 of 15552000.0) || Elapsed Time: 1 day, 18:55:03 ETA:  3 days, 23:05:13
+ 70% (10886400.0 of 15552000.0) || Elapsed Time: 1 day, 20:35:59 ETA:  3 days, 18:50:02
+ 70% (10972800.0 of 15552000.0) || Elapsed Time: 1 day, 22:00:02 ETA:  3 days, 2:15:26
+=>> PBS: job killed: walltime 172892 exceeded limit 172800

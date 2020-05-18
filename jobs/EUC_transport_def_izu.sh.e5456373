@@ -1,0 +1,29 @@
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/dask/core.py:121: RuntimeWarning: invalid value encountered in greater
+  return func(*(_execute_task(a, cache) for a in args))
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/create_file_EUC_transport_definitions.py", line 87, in <module>
+TypeError: deg2m() missing 4 required positional arguments: 'lat1', 'lon1', 'lat2', and 'lon2'
