@@ -21,6 +21,7 @@ from pathlib import Path
 from functools import wraps
 from datetime import datetime
 import matplotlib.pyplot as plt
+import matplotlib.colors as colors
 from matplotlib.offsetbox import AnchoredText
 
 
@@ -475,25 +476,24 @@ def open_tao_data(frq='mon', dz=slice(10, 355), SI=True):
 
 def create_mesh_mask():
     """Create OFAM3 mesh mask."""
-    ufiles, sfiles = [], []
-    ufiles.append(cfg.ofam/'ocean_u_1981_01.nc')
-    sfiles.append(cfg.ofam/'ocean_salt_1981_01.nc')
-    du = xr.open_mfdataset(ufiles, combine='by_coords')
-    ds = xr.open_mfdataset(sfiles, combine='by_coords')
+    f = []
+    for var in ['u', 'w']:
+        f.append(cfg.ofam/('ocean_{}_1981-2012_climo.nc'.format(var)))
+
+    ds = xr.open_mfdataset(f, combine='by_coords')
 
     # Create copy of particle file with initally westward partciles removed.
     mask = xr.Dataset()
-    mask['nv'] = du.nv
-    mask['st_edges_ocean'] = du.st_edges_ocean
-    mask['st_ocean'] = du.st_ocean
-    mask['xu_ocean'] = du.xu_ocean
-    mask['yu_ocean'] = du.yu_ocean
-    mask['xt_ocean'] = ds.xt_ocean
-    mask['yt_ocean'] = ds.yt_ocean
+    # mask['sw_ocean'] = ds.sw_ocean
+    mask['st_ocean'] = ds.st_ocean
+    mask['xu_ocean'] = ds.xu_ocean
+    mask['yu_ocean'] = ds.yu_ocean
+    # mask['xt_ocean'] = ds.xt_ocean
+    # mask['yt_ocean'] = ds.yt_ocean
     mask.to_netcdf(cfg.ofam/'ocean_mesh_mask.nc')
-    du.close()
     ds.close()
     mask.close()
+
     return
 
 
@@ -550,4 +550,46 @@ def tidy_files(logs=True, jobs=True):
             if f.stat().st_size == 0:
                 os.remove(f)
                 print('Deleted:', f)
+    return
+
+
+def zone_fieldset(plot=True, file=False):
+    """Create fieldset or plot zone definitions."""
+    # Copy 2D empty OFGAM3 velocity grid.
+    d = xr.open_dataset(cfg.ofam/'ocean_u_1981_01.nc')
+    d = d.isel(st_ocean=0, Time=0)
+    d = d.u.where(np.isnan(d.u), 0)
+    d = d.drop('st_ocean')
+    eps = 0 if file else 0.1  # Add a bit of padding to the plotted lines.
+    for n, zone in enumerate(cfg.zones):
+        coords = cfg.zones[zone] if type(cfg.zones[zone][0]) == list else [cfg.zones[zone]]
+        for c in coords:
+            xx = [d.xu_ocean[idx(d.xu_ocean, i+ep)].item() for i, ep in zip(c[0:2], [-eps, eps])]
+            yy = [d.yu_ocean[idx(d.yu_ocean, i)].item() for i in c[2:4]]
+            d = xr.where((d.xu_ocean >= xx[0]) & (d.xu_ocean <= xx[1]) &
+                         (d.yu_ocean >= yy[0]) & (d.yu_ocean <= yy[1]) &
+                         ~np.isnan(d), n + 1, d)
+
+    if plot:
+        d = d.sel(yu_ocean=slice(-10, 12), xu_ocean=slice(120, 230))
+        cmap = colors.ListedColormap(['None', 'orange', 'deeppink',
+                                      'green', 'skyblue', 'k', 'k',
+                                      'red', 'm', 'blue'])
+        cmap.set_bad('grey')
+        fig = plt.figure(figsize=(16, 9))
+        cs = plt.pcolormesh(d.xu_ocean.values, d.yu_ocean.values, d.T,
+                            cmap=cmap, snap=False, linewidth=2)
+
+        plt.xticks(d.xu_ocean[::100], coord_formatter(d.xu_ocean[::100], 'lon'))
+        plt.yticks(d.yu_ocean[::25], coord_formatter(np.arange(d.yu_ocean[0],
+                                                               d.yu_ocean[-1] + 2.5, 2.5), 'lat'))
+        cbar = fig.colorbar(cs)
+        cbar.set_ticks(np.arange(1.4, 10, 0.9))
+        cbar.set_ticklabels([key for key, value in cfg.zones.items()])
+        plt.savefig(cfg.fig/'particle_boundaries.png')
+    if file:
+        ds = d.to_dataset(name='zone').transpose()
+        ds.attrs['history'] = 'Created {}.'.format(datetime.now().strftime("%Y-%m-%d"))
+        ds.to_netcdf(cfg.data/'OFAM3_zones.nc')
+    d.close()
     return

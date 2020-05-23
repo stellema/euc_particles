@@ -53,16 +53,16 @@ import xarray as xr
 from pathlib import Path
 import matplotlib.pyplot as plt
 from collections import OrderedDict
-from parcels import FieldSet, ParticleSet, JITParticle
+from parcels import FieldSet, Field, ParticleSet, JITParticle
 from parcels import ErrorCode, Variable, AdvectionRK4_3D, AdvectionRK4
 from tools import timeit
-
+from datetime import datetime
 logger = tools.mlogger(Path(sys.argv[0]).stem)
 
 
 @timeit
 def ofam_fieldset(date_bnds, field_method='b_grid', time_periodic=False,
-                  deferred_load=True, chunks='manual'):
+                  deferred_load=True, chunks='specific', time_ext=True):
     """Create a 3D parcels fieldset from OFAM model output.
 
     Between two dates useing FieldSet.from_b_grid_dataset.
@@ -79,40 +79,65 @@ def ofam_fieldset(date_bnds, field_method='b_grid', time_periodic=False,
         fieldset (parcels.Fieldset)
 
     """
+    # Chunk size for lat and lon.
+    cs = 258
+
+    # Create list of files for each variable based on selected years and months.
     u, v, w = [], [], []
     for y in range(date_bnds[0].year, date_bnds[1].year + 1):
         for m in range(date_bnds[0].month, date_bnds[1].month + 1):
-            u.append(cfg.ofam/('ocean_u_{}_{:02d}.nc'.format(y, m)))
-            v.append(cfg.ofam/('ocean_v_{}_{:02d}.nc'.format(y, m)))
-            w.append(cfg.ofam/('ocean_w_{}_{:02d}.nc'.format(y, m)))
-
-    files = {'U': {'lon': u[0], 'lat': u[0], 'depth': w[0], 'data': u},
-             'V': {'lon': u[0], 'lat': u[0], 'depth': w[0], 'data': v},
-             'W': {'lon': u[0], 'lat': u[0], 'depth': w[0], 'data': w}}
-
-    vdims = {'lon': 'xu_ocean',
-             'lat': 'yu_ocean',
-             'depth': 'sw_ocean',
-             'time': 'Time'}
+            u.append(str(cfg.ofam/('ocean_u_{}_{:02d}.nc'.format(y, m))))
+            v.append(str(cfg.ofam/('ocean_v_{}_{:02d}.nc'.format(y, m))))
+            w.append(str(cfg.ofam/('ocean_w_{}_{:02d}.nc'.format(y, m))))
 
     variables = {'U': 'u', 'V': 'v', 'W': 'w'}
+    dims = {'time': 'Time', 'depth': 'sw_ocean', 'lat': 'yu_ocean', 'lon': 'xu_ocean'}
+    dimensions = {'U': {'time': 'Time', 'depth': 'sw_ocean', 'lat': 'yu_ocean', 'lon': 'xu_ocean'},
+                  'V': {'time': 'Time', 'depth': 'sw_ocean', 'lat': 'yu_ocean', 'lon': 'xu_ocean'},
+                  'W': {'time': 'Time', 'depth': 'sw_ocean', 'lat': 'yu_ocean', 'lon': 'xu_ocean'}}
 
-    dimensions = {'U': vdims, 'V': vdims, 'W': vdims}
+    if field_method != 'xarray':
+        files = {'U': {'depth': w[0], 'lat': u[0], 'lon': u[0], 'data': u},
+                 'V': {'depth': w[0], 'lat': u[0], 'lon': u[0], 'data': v},
+                 'W': {'depth': w[0], 'lat': u[0], 'lon': u[0], 'data': w}}
 
-    chunk = (1, 1, 128, 128) if chunks == 'manual' else chunks
-
-    logger.info('Field import={}, Chunks={}'.format(field_method, chunk))
+        if chunks == 'specific':
+            chunks = ((1,), 1, (cs,), (cs,))  # (1, 1, 300, 1750)
+            chunks = {dims['time']: 1, dims['depth']: 1, dims['lon']: cs, dims['lat']: cs}
 
     if field_method == 'netcdf':
-        fieldset = FieldSet.from_netcdf(files, variables, dimensions,
-                                        deferred_load=deferred_load,
-                                        field_chunksize=chunks)
+        fieldset = FieldSet.from_netcdf(files, variables, dimensions, field_chunksize=chunks,
+                                        allow_time_extrapolation=time_ext)
+
     elif field_method == 'b_grid':
-        fieldset = FieldSet.from_b_grid_dataset(files, variables, dimensions,
-                                                mesh='spherical',
-                                                time_periodic=time_periodic,
-                                                deferred_load=deferred_load,
-                                                field_chunksize=chunk)
+        fieldset = FieldSet.from_b_grid_dataset(files, variables, dimensions, mesh='spherical',
+                                                time_periodic=time_periodic, field_chunksize=chunks,
+                                                allow_time_extrapolation=time_ext)
+    elif field_method == 'xarray':
+        def pre_drop(ds):
+            if hasattr(ds, 'w'):
+                ds['w'] = ds['w'].swap_dims({"yt_ocean": "yu_ocean", "xt_ocean": "xu_ocean"})
+            elif hasattr(ds, 'u'):
+                ds['u'] = ds['u'].swap_dims({"st_ocean": "sw_ocean"})
+            elif hasattr(ds, 'v'):
+                ds['v'] = ds['v'].swap_dims({"st_ocean": "sw_ocean"})
+
+            return ds
+
+        if chunks == 'specific':
+            chunks = {dims['time']: 1, dims['depth']: 1, dims['lon']: cs, dims['lat']: cs}
+        ds = xr.open_mfdataset(u + v + w, combine='by_coords',
+                               concat_dim="Time", preprocess=pre_drop)
+        fieldset = FieldSet.from_xarray_dataset(ds, variables, dims, mesh='spherical',
+                                                time_periodic=time_periodic, field_chunksize=chunks,
+                                                allow_time_extrapolation=time_ext)
+
+    logger.info('Field import={}, Chunks={}'.format(field_method, chunks))
+    zfield = Field.from_netcdf(cfg.data/'OFAM3_zones.nc', 'zone',
+                               {'lat': 'yu_ocean', 'lon': 'xu_ocean'},
+                               field_chunksize='auto')
+
+    fieldset.add_field(zfield, 'zone')
 
     return fieldset
 
@@ -159,9 +184,9 @@ def DeleteWestward(particle, fieldset, time):
     # Delete particle if the initial zonal velocity is westward (negative).
     # if particle.age == 0 and particle.u <= 0:
     #     particle.delete()
-    if (time == fieldset.U.grid.time[-1] and
-        fieldset.U[particle.time, particle.depth, particle.lat, particle.lon] <= 0):
-        particle.delete()
+    if particle.age == 0:
+        if fieldset.U[particle.time, particle.depth, particle.lat, particle.lon] <= 0:
+            particle.delete()
 
 
 def Distance(particle, fieldset, time):
@@ -191,7 +216,7 @@ def remove_westward_particles(pset):
     """
     ix = []
     for p in pset:
-        if p.u < 0. and p.age == 0.:
+        if p.u <= 0. and p.age == 0.:
             ix.append(np.where([pi.id == p.id for pi in pset])[0][0])
     pset.remove_indices(ix)
 
@@ -241,18 +266,18 @@ def EUC_particles(fieldset, date_bnds, p_lats, p_lons, p_depths,
 
     """
 
-    class tparticle(JITParticle):
+    class zParticle(JITParticle):
         """Particle class that saves particle age and zonal velocity."""
 
         # The age of the particle.
-        # age = Variable('age', dtype=np.float32, initial=0.)
+        age = Variable('age', dtype=np.float32, initial=0.)
 
-        # # The velocity of the particle.
-        # u = Variable('u', dtype=np.float32, initial=fieldset.U, to_write="once")
+        # The velocity of the particle.
+        u = Variable('u', dtype=np.float32, initial=fieldset.U, to_write='once')
+        zone = Variable('zone', dtype=np.float32, initial=fieldset.zone)
 
     # Create particle set.
-    pset = EUC_pset(fieldset, tparticle, p_lats, p_lons, p_depths,
-                    pset_start, repeatdt)
+    pset = EUC_pset(fieldset, zParticle, p_lats, p_lons, p_depths, pset_start, repeatdt)
 
     # Delete any particles that are intially travelling westward.
     if remove_westward:
@@ -266,6 +291,7 @@ def EUC_particles(fieldset, date_bnds, p_lats, p_lons, p_depths,
                     'pset.Kernel(DeleteWestward)'.format(sim_id.stem))
         kernels = (AdvectionRK4_3D + pset.Kernel(Age) +
                    pset.Kernel(DeleteWestward))
+
     else:
         logger.info('{}:AdvectionRK4_3D'.format(sim_id.stem))
         kernels = AdvectionRK4_3D
@@ -275,6 +301,7 @@ def EUC_particles(fieldset, date_bnds, p_lats, p_lons, p_depths,
                  recovery={ErrorCode.ErrorOutOfBounds: DeleteParticle,
                            ErrorCode.ErrorThroughSurface: SubmergeParticle},
                  verbose_progress=True)
+    output_file.export()
     logger.info('{}: Completed.'.format(sim_id.stem))
 
     return

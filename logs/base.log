@@ -5406,3 +5406,1516 @@
 2020-05-15 19:22:31,894:EUC_particles:DEBUG:sim_198101_198106_v486i: Excecute particle set.
 2020-05-15 19:22:31,895:EUC_particles:DEBUG:sim_198101_198106_v486i: Excecute particle set.
 2020-05-15 19:22:31,903:EUC_particles:DEBUG:sim_198101_198106_v486i: Excecute particle set.
+2020-05-17 14:29:05,050:run_EUC:INFO:sim_198101_198101_v60i:Executing: 1981-01-01 to 1981-01-31
+2020-05-17 14:29:05,053:run_EUC:INFO:sim_198101_198101_v60i:Longitudes: 190
+2020-05-17 14:29:05,053:run_EUC:INFO:sim_198101_198101_v60i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-17 14:29:05,054:run_EUC:INFO:sim_198101_198101_v60i:Depths: 2 dz=200 [25 to 225]
+2020-05-17 14:29:05,054:run_EUC:INFO:sim_198101_198101_v60i:Runtime: 30 days
+2020-05-17 14:29:05,055:run_EUC:INFO:sim_198101_198101_v60i:Timestep dt: 240 mins
+2020-05-17 14:29:05,055:run_EUC:INFO:sim_198101_198101_v60i:Output dt: 1 days
+2020-05-17 14:29:05,056:run_EUC:INFO:sim_198101_198101_v60i:Repeat release: 6 days
+2020-05-17 14:29:05,056:run_EUC:INFO:sim_198101_198101_v60i:Particles: Total: 50 :/repeat: 10
+2020-05-17 14:29:05,057:ofam_fieldset:INFO:Field import=b_grid, Chunks=(1, 1, 128, 128)
+2020-05-17 14:29:05,200:timed:INFO:ofam_fieldset: 0:0:00.14 total: 0.14 seconds.
+2020-05-17 14:29:05,201:timed:INFO:EUC_pset: 0:0:00.00 total: 0.00 seconds.
+2020-05-17 14:29:23,993:run_EUC:INFO:sim_198101_198101_v71i:Executing: 1981-01-01 to 1981-01-31
+2020-05-17 14:29:23,994:run_EUC:INFO:sim_198101_198101_v71i:Longitudes: 190
+2020-05-17 14:29:23,995:run_EUC:INFO:sim_198101_198101_v71i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-17 14:29:23,995:run_EUC:INFO:sim_198101_198101_v71i:Depths: 2 dz=200 [25 to 225]
+2020-05-17 14:29:23,996:run_EUC:INFO:sim_198101_198101_v71i:Runtime: 30 days
+2020-05-17 14:29:23,996:run_EUC:INFO:sim_198101_198101_v71i:Timestep dt: 240 mins
+2020-05-17 14:29:23,996:run_EUC:INFO:sim_198101_198101_v71i:Output dt: 1 days
+2020-05-17 14:29:23,997:run_EUC:INFO:sim_198101_198101_v71i:Repeat release: 6 days
+2020-05-17 14:29:23,998:run_EUC:INFO:sim_198101_198101_v71i:Particles: Total: 50 :/repeat: 10
+2020-05-17 14:29:23,998:ofam_fieldset:INFO:Field import=b_grid, Chunks=(1, 1, 128, 128)
+2020-05-17 14:29:24,091:timed:INFO:ofam_fieldset: 0:0:00.09 total: 0.09 seconds.
+2020-05-17 14:29:24,094:timed:INFO:EUC_pset: 0:0:00.00 total: 0.00 seconds.
+2020-05-17 14:29:24,095:EUC_particles:DEBUG:sim_198101_198101_v71i: Output file.
+2020-05-17 14:29:24,096:EUC_particles:INFO:sim_198101_198101_v71i:AdvectionRK4_3D + pset.Kernel(DeleteWestward)
+2020-05-17 14:29:58,434:run_EUC:INFO:sim_198101_198101_v136i:Executing: 1981-01-01 to 1981-01-31
+2020-05-17 14:29:58,435:run_EUC:INFO:sim_198101_198101_v136i:Longitudes: 190
+2020-05-17 14:29:58,436:run_EUC:INFO:sim_198101_198101_v136i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-17 14:29:58,437:run_EUC:INFO:sim_198101_198101_v136i:Depths: 2 dz=200 [25 to 225]
+2020-05-17 14:29:58,438:run_EUC:INFO:sim_198101_198101_v136i:Runtime: 30 days
+2020-05-17 14:29:58,440:run_EUC:INFO:sim_198101_198101_v136i:Timestep dt: 240 mins
+2020-05-17 14:29:58,442:run_EUC:INFO:sim_198101_198101_v136i:Output dt: 1 days
+2020-05-17 14:29:58,443:run_EUC:INFO:sim_198101_198101_v136i:Repeat release: 6 days
+2020-05-17 14:29:58,444:run_EUC:INFO:sim_198101_198101_v136i:Particles: Total: 50 :/repeat: 10
+2020-05-17 14:29:58,447:ofam_fieldset:INFO:Field import=b_grid, Chunks=(1, 1, 128, 128)
+2020-05-17 14:29:58,541:timed:INFO:ofam_fieldset: 0:0:00.09 total: 0.09 seconds.
+2020-05-17 14:29:58,544:timed:INFO:EUC_pset: 0:0:00.00 total: 0.00 seconds.
+2020-05-17 14:29:58,545:EUC_particles:DEBUG:sim_198101_198101_v136i: Output file.
+2020-05-17 14:29:58,546:EUC_particles:INFO:sim_198101_198101_v136i:AdvectionRK4_3D + pset.Kernel(DeleteWestward)
+2020-05-17 14:30:28,867:run_EUC:INFO:sim_198101_198101_v120i:Executing: 1981-01-01 to 1981-01-31
+2020-05-17 14:30:28,868:run_EUC:INFO:sim_198101_198101_v120i:Longitudes: 190
+2020-05-17 14:30:28,870:run_EUC:INFO:sim_198101_198101_v120i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-17 14:30:28,871:run_EUC:INFO:sim_198101_198101_v120i:Depths: 2 dz=200 [25 to 225]
+2020-05-17 14:30:28,872:run_EUC:INFO:sim_198101_198101_v120i:Runtime: 30 days
+2020-05-17 14:30:28,873:run_EUC:INFO:sim_198101_198101_v120i:Timestep dt: 240 mins
+2020-05-17 14:30:28,875:run_EUC:INFO:sim_198101_198101_v120i:Output dt: 1 days
+2020-05-17 14:30:28,876:run_EUC:INFO:sim_198101_198101_v120i:Repeat release: 6 days
+2020-05-17 14:30:28,877:run_EUC:INFO:sim_198101_198101_v120i:Particles: Total: 50 :/repeat: 10
+2020-05-17 14:30:28,878:ofam_fieldset:INFO:Field import=b_grid, Chunks=(1, 1, 128, 128)
+2020-05-17 14:30:28,981:timed:INFO:ofam_fieldset: 0:0:00.10 total: 0.10 seconds.
+2020-05-17 14:30:28,983:timed:INFO:EUC_pset: 0:0:00.00 total: 0.00 seconds.
+2020-05-17 14:30:28,985:EUC_particles:DEBUG:sim_198101_198101_v120i: Output file.
+2020-05-17 14:30:28,986:EUC_particles:INFO:sim_198101_198101_v120i:AdvectionRK4_3D + pset.Kernel(DeleteWestward)
+2020-05-17 14:40:37,646:run_EUC:INFO:sim_198101_198101_v80i:Executing: 1981-01-01 to 1981-01-31
+2020-05-17 14:40:37,647:run_EUC:INFO:sim_198101_198101_v80i:Longitudes: 190
+2020-05-17 14:40:37,648:run_EUC:INFO:sim_198101_198101_v80i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-17 14:40:37,649:run_EUC:INFO:sim_198101_198101_v80i:Depths: 2 dz=200 [25 to 225]
+2020-05-17 14:40:37,650:run_EUC:INFO:sim_198101_198101_v80i:Runtime: 30 days
+2020-05-17 14:40:37,651:run_EUC:INFO:sim_198101_198101_v80i:Timestep dt: 240 mins
+2020-05-17 14:40:37,652:run_EUC:INFO:sim_198101_198101_v80i:Output dt: 1 days
+2020-05-17 14:40:37,654:run_EUC:INFO:sim_198101_198101_v80i:Repeat release: 6 days
+2020-05-17 14:40:37,655:run_EUC:INFO:sim_198101_198101_v80i:Particles: Total: 50 :/repeat: 10
+2020-05-17 14:40:37,656:ofam_fieldset:INFO:Field import=b_grid, Chunks=(1, 1, 128, 128)
+2020-05-17 14:40:37,740:timed:INFO:ofam_fieldset: 0:0:00.08 total: 0.08 seconds.
+2020-05-17 14:40:37,742:timed:INFO:EUC_pset: 0:0:00.00 total: 0.00 seconds.
+2020-05-17 14:40:51,964:run_EUC:INFO:sim_198101_198101_v153i:Executing: 1981-01-01 to 1981-01-31
+2020-05-17 14:40:51,966:run_EUC:INFO:sim_198101_198101_v153i:Longitudes: 190
+2020-05-17 14:40:51,968:run_EUC:INFO:sim_198101_198101_v153i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-17 14:40:51,969:run_EUC:INFO:sim_198101_198101_v153i:Depths: 2 dz=200 [25 to 225]
+2020-05-17 14:40:51,971:run_EUC:INFO:sim_198101_198101_v153i:Runtime: 30 days
+2020-05-17 14:40:51,972:run_EUC:INFO:sim_198101_198101_v153i:Timestep dt: 240 mins
+2020-05-17 14:40:51,973:run_EUC:INFO:sim_198101_198101_v153i:Output dt: 1 days
+2020-05-17 14:40:51,973:run_EUC:INFO:sim_198101_198101_v153i:Repeat release: 6 days
+2020-05-17 14:40:51,974:run_EUC:INFO:sim_198101_198101_v153i:Particles: Total: 50 :/repeat: 10
+2020-05-17 14:40:51,975:ofam_fieldset:INFO:Field import=b_grid, Chunks=(1, 1, 128, 128)
+2020-05-17 14:40:52,065:timed:INFO:ofam_fieldset: 0:0:00.09 total: 0.09 seconds.
+2020-05-17 14:40:52,067:timed:INFO:EUC_pset: 0:0:00.00 total: 0.00 seconds.
+2020-05-17 14:40:52,068:EUC_particles:DEBUG:sim_198101_198101_v153i: Output file.
+2020-05-17 14:40:52,069:EUC_particles:INFO:sim_198101_198101_v153i:AdvectionRK4_3D + pset.Kernel(DeleteWestward)
+2020-05-17 14:40:52,133:EUC_particles:DEBUG:sim_198101_198101_v153i: Excecute particle set.
+2020-05-17 14:45:26,938:run_EUC:INFO:sim_198101_198101_v66i:Executing: 1981-01-01 to 1981-01-31
+2020-05-17 14:45:26,940:run_EUC:INFO:sim_198101_198101_v66i:Longitudes: 190
+2020-05-17 14:45:26,941:run_EUC:INFO:sim_198101_198101_v66i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-17 14:45:26,941:run_EUC:INFO:sim_198101_198101_v66i:Depths: 2 dz=200 [25 to 225]
+2020-05-17 14:45:26,942:run_EUC:INFO:sim_198101_198101_v66i:Runtime: 15 days
+2020-05-17 14:45:26,942:run_EUC:INFO:sim_198101_198101_v66i:Timestep dt: 240 mins
+2020-05-17 14:45:26,942:run_EUC:INFO:sim_198101_198101_v66i:Output dt: 1 days
+2020-05-17 14:45:26,944:run_EUC:INFO:sim_198101_198101_v66i:Repeat release: 6 days
+2020-05-17 14:45:26,945:run_EUC:INFO:sim_198101_198101_v66i:Particles: Total: 20 :/repeat: 10
+2020-05-17 14:45:26,945:ofam_fieldset:INFO:Field import=b_grid, Chunks=(1, 1, 128, 128)
+2020-05-17 14:45:27,054:timed:INFO:ofam_fieldset: 0:0:00.11 total: 0.11 seconds.
+2020-05-17 14:45:35,362:timed:INFO:EUC_pset: 0:0:08.31 total: 8.31 seconds.
+2020-05-17 14:45:35,363:remove_westward_particles:DEBUG:Particles removed: 4
+2020-05-17 14:45:35,364:timed:INFO:remove_westward_particles: 0:0:00.00 total: 0.00 seconds.
+2020-05-17 14:45:35,364:EUC_particles:DEBUG:sim_198101_198101_v66i: Output file.
+2020-05-17 14:45:35,365:EUC_particles:INFO:sim_198101_198101_v66i:AdvectionRK4_3D + pset.Kernel(Age) + pset.Kernel(DeleteWestward)
+2020-05-17 14:45:35,525:EUC_particles:DEBUG:sim_198101_198101_v66i: Excecute particle set.
+2020-05-17 14:48:01,102:run_EUC:INFO:sim_198101_198101_v133i:Executing: 1981-01-01 to 1981-01-31
+2020-05-17 14:48:01,105:run_EUC:INFO:sim_198101_198101_v133i:Longitudes: 190
+2020-05-17 14:48:01,106:run_EUC:INFO:sim_198101_198101_v133i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-17 14:48:01,108:run_EUC:INFO:sim_198101_198101_v133i:Depths: 2 dz=200 [25 to 225]
+2020-05-17 14:48:01,109:run_EUC:INFO:sim_198101_198101_v133i:Runtime: 15 days
+2020-05-17 14:48:01,110:run_EUC:INFO:sim_198101_198101_v133i:Timestep dt: 240 mins
+2020-05-17 14:48:01,111:run_EUC:INFO:sim_198101_198101_v133i:Output dt: 1 days
+2020-05-17 14:48:01,112:run_EUC:INFO:sim_198101_198101_v133i:Repeat release: 6 days
+2020-05-17 14:48:01,113:run_EUC:INFO:sim_198101_198101_v133i:Particles: Total: 20 :/repeat: 10
+2020-05-17 14:48:01,115:ofam_fieldset:INFO:Field import=b_grid, Chunks={'Time': 1, 'sw_ocean': 1, 'xu_ocean': 128, 'yu_ocean': 128}
+2020-05-17 14:48:01,245:timed:INFO:ofam_fieldset: 0:0:00.13 total: 0.13 seconds.
+2020-05-17 14:54:03,546:run_EUC:INFO:sim_198101_198101_v189i:Executing: 1981-01-01 to 1981-01-31
+2020-05-17 14:54:03,547:run_EUC:INFO:sim_198101_198101_v189i:Longitudes: 190
+2020-05-17 14:54:03,549:run_EUC:INFO:sim_198101_198101_v189i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-17 14:54:03,550:run_EUC:INFO:sim_198101_198101_v189i:Depths: 2 dz=200 [25 to 225]
+2020-05-17 14:54:03,551:run_EUC:INFO:sim_198101_198101_v189i:Runtime: 15 days
+2020-05-17 14:54:03,552:run_EUC:INFO:sim_198101_198101_v189i:Timestep dt: 240 mins
+2020-05-17 14:54:03,553:run_EUC:INFO:sim_198101_198101_v189i:Output dt: 1 days
+2020-05-17 14:54:03,555:run_EUC:INFO:sim_198101_198101_v189i:Repeat release: 6 days
+2020-05-17 14:54:03,556:run_EUC:INFO:sim_198101_198101_v189i:Particles: Total: 20 :/repeat: 10
+2020-05-17 14:54:03,557:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-17 14:54:03,650:timed:INFO:ofam_fieldset: 0:0:00.09 total: 0.09 seconds.
+2020-05-17 14:54:11,920:timed:INFO:EUC_pset: 0:0:08.27 total: 8.27 seconds.
+2020-05-17 14:54:11,922:remove_westward_particles:DEBUG:Particles removed: 4
+2020-05-17 14:54:11,922:timed:INFO:remove_westward_particles: 0:0:00.00 total: 0.00 seconds.
+2020-05-17 14:54:11,924:EUC_particles:DEBUG:sim_198101_198101_v189i: Output file.
+2020-05-17 14:54:11,925:EUC_particles:INFO:sim_198101_198101_v189i:AdvectionRK4_3D + pset.Kernel(Age) + pset.Kernel(DeleteWestward)
+2020-05-17 14:54:11,963:EUC_particles:DEBUG:sim_198101_198101_v189i: Excecute particle set.
+2020-05-17 14:55:24,037:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-17 14:55:24,132:timed:INFO:ofam_fieldset: 0:0:00.10 total: 0.10 seconds.
+2020-05-17 15:03:10,481:timed:INFO:ofam_fieldset: 0:0:00.12 total: 0.12 seconds.
+2020-05-17 15:04:32,371:timed:INFO:ofam_fieldset: 0:0:00.16 total: 0.16 seconds.
+2020-05-17 15:05:49,789:run_EUC:INFO:sim_198101_198101_v145i:Executing: 1981-01-01 to 1981-01-31
+2020-05-17 15:05:49,791:run_EUC:INFO:sim_198101_198101_v145i:Longitudes: 190
+2020-05-17 15:05:49,792:run_EUC:INFO:sim_198101_198101_v145i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-17 15:05:49,793:run_EUC:INFO:sim_198101_198101_v145i:Depths: 2 dz=200 [25 to 225]
+2020-05-17 15:05:49,795:run_EUC:INFO:sim_198101_198101_v145i:Runtime: 15 days
+2020-05-17 15:05:49,796:run_EUC:INFO:sim_198101_198101_v145i:Timestep dt: 240 mins
+2020-05-17 15:05:49,798:run_EUC:INFO:sim_198101_198101_v145i:Output dt: 1 days
+2020-05-17 15:05:49,800:run_EUC:INFO:sim_198101_198101_v145i:Repeat release: 6 days
+2020-05-17 15:05:49,801:run_EUC:INFO:sim_198101_198101_v145i:Particles: Total: 20 :/repeat: 10
+2020-05-17 15:05:49,802:ofam_fieldset:INFO:Field import=b_grid, Chunks=(1, 1, 512, 512)
+2020-05-17 15:05:49,962:timed:INFO:ofam_fieldset: 0:0:00.16 total: 0.16 seconds.
+2020-05-17 15:05:58,429:timed:INFO:EUC_pset: 0:0:08.47 total: 8.47 seconds.
+2020-05-17 15:05:58,431:remove_westward_particles:DEBUG:Particles removed: 4
+2020-05-17 15:05:58,432:timed:INFO:remove_westward_particles: 0:0:00.00 total: 0.00 seconds.
+2020-05-17 15:05:58,433:EUC_particles:DEBUG:sim_198101_198101_v145i: Output file.
+2020-05-17 15:05:58,434:EUC_particles:INFO:sim_198101_198101_v145i:AdvectionRK4_3D + pset.Kernel(Age) + pset.Kernel(DeleteWestward)
+2020-05-17 15:05:58,474:EUC_particles:DEBUG:sim_198101_198101_v145i: Excecute particle set.
+2020-05-17 15:08:41,494:EUC_particles:INFO:sim_198101_198101_v145i: Completed.
+2020-05-17 15:08:41,590:timed:INFO:EUC_particles: 0:2:51.63 total: 171.63 seconds.
+2020-05-17 15:08:41,592:timed:INFO:run_EUC: 0:2:51.80 total: 171.80 seconds.
+2020-05-17 15:26:47,603:EUC_particles:INFO:sim_198101_198101_v153i: Completed.
+2020-05-17 15:26:47,749:timed:INFO:EUC_particles: 0:45:55.68 total: 2755.68 seconds.
+2020-05-17 15:26:47,750:timed:INFO:run_EUC: 0:45:55.79 total: 2755.79 seconds.
+2020-05-18 11:37:40,315:run_EUC:INFO:sim_198101_198101_v181i:Executing: 1981-01-01 to 1981-01-31
+2020-05-18 11:37:40,317:run_EUC:INFO:sim_198101_198101_v181i:Longitudes: 190
+2020-05-18 11:37:40,318:run_EUC:INFO:sim_198101_198101_v181i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-18 11:37:40,318:run_EUC:INFO:sim_198101_198101_v181i:Depths: 2 dz=200 [25 to 225]
+2020-05-18 11:37:40,318:run_EUC:INFO:sim_198101_198101_v181i:Runtime: 30 days
+2020-05-18 11:37:40,319:run_EUC:INFO:sim_198101_198101_v181i:Timestep dt: 240 mins
+2020-05-18 11:37:40,320:run_EUC:INFO:sim_198101_198101_v181i:Output dt: 1 days
+2020-05-18 11:37:40,321:run_EUC:INFO:sim_198101_198101_v181i:Repeat release: 6 days
+2020-05-18 11:37:40,322:run_EUC:INFO:sim_198101_198101_v181i:Particles: Total: 50 :/repeat: 10
+2020-05-18 11:37:40,322:ofam_fieldset:INFO:Field import=b_grid, Chunks=(1, 1, 512, 512)
+2020-05-18 11:37:40,424:timed:INFO:ofam_fieldset: 0:0:00.10 total: 0.10 seconds.
+2020-05-18 11:37:48,626:timed:INFO:EUC_pset: 0:0:08.20 total: 8.20 seconds.
+2020-05-18 11:37:48,627:remove_westward_particles:DEBUG:Particles removed: 4
+2020-05-18 11:37:48,628:timed:INFO:remove_westward_particles: 0:0:00.00 total: 0.00 seconds.
+2020-05-18 11:37:48,628:EUC_particles:DEBUG:sim_198101_198101_v181i: Output file.
+2020-05-18 11:37:48,629:EUC_particles:INFO:sim_198101_198101_v181i:AdvectionRK4_3D + pset.Kernel(Age) + pset.Kernel(DeleteWestward)
+2020-05-18 11:37:48,808:EUC_particles:DEBUG:sim_198101_198101_v181i: Excecute particle set.
+2020-05-18 11:38:15,754:run_EUC:INFO:sim_198101_198101_v139i:Executing: 1981-01-01 to 1981-01-31
+2020-05-18 11:38:15,755:run_EUC:INFO:sim_198101_198101_v139i:Longitudes: 190
+2020-05-18 11:38:15,757:run_EUC:INFO:sim_198101_198101_v139i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-18 11:38:15,758:run_EUC:INFO:sim_198101_198101_v139i:Depths: 2 dz=200 [25 to 225]
+2020-05-18 11:38:15,760:run_EUC:INFO:sim_198101_198101_v139i:Runtime: 30 days
+2020-05-18 11:38:15,761:run_EUC:INFO:sim_198101_198101_v139i:Timestep dt: 240 mins
+2020-05-18 11:38:15,763:run_EUC:INFO:sim_198101_198101_v139i:Output dt: 1 days
+2020-05-18 11:38:15,764:run_EUC:INFO:sim_198101_198101_v139i:Repeat release: 6 days
+2020-05-18 11:38:15,765:run_EUC:INFO:sim_198101_198101_v139i:Particles: Total: 50 :/repeat: 10
+2020-05-18 11:38:15,767:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-18 11:38:15,872:timed:INFO:ofam_fieldset: 0:0:00.11 total: 0.11 seconds.
+2020-05-18 11:38:23,811:timed:INFO:EUC_pset: 0:0:07.94 total: 7.94 seconds.
+2020-05-18 11:38:23,813:remove_westward_particles:DEBUG:Particles removed: 4
+2020-05-18 11:38:23,814:timed:INFO:remove_westward_particles: 0:0:00.00 total: 0.00 seconds.
+2020-05-18 11:38:23,815:EUC_particles:DEBUG:sim_198101_198101_v139i: Output file.
+2020-05-18 11:38:23,817:EUC_particles:INFO:sim_198101_198101_v139i:AdvectionRK4_3D + pset.Kernel(Age) + pset.Kernel(DeleteWestward)
+2020-05-18 11:38:23,852:EUC_particles:DEBUG:sim_198101_198101_v139i: Excecute particle set.
+2020-05-18 11:42:12,502:run_EUC:INFO:sim_198101_198101_v47i:Executing: 1981-01-01 to 1981-01-31
+2020-05-18 11:42:12,503:run_EUC:INFO:sim_198101_198101_v47i:Longitudes: 190
+2020-05-18 11:42:12,504:run_EUC:INFO:sim_198101_198101_v47i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-18 11:42:12,505:run_EUC:INFO:sim_198101_198101_v47i:Depths: 2 dz=200 [25 to 225]
+2020-05-18 11:42:12,507:run_EUC:INFO:sim_198101_198101_v47i:Runtime: 30 days
+2020-05-18 11:42:12,508:run_EUC:INFO:sim_198101_198101_v47i:Timestep dt: 240 mins
+2020-05-18 11:42:12,509:run_EUC:INFO:sim_198101_198101_v47i:Output dt: 1 days
+2020-05-18 11:42:12,510:run_EUC:INFO:sim_198101_198101_v47i:Repeat release: 6 days
+2020-05-18 11:42:12,512:run_EUC:INFO:sim_198101_198101_v47i:Particles: Total: 50 :/repeat: 10
+2020-05-18 11:42:12,513:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-18 11:42:12,639:timed:INFO:ofam_fieldset: 0:0:00.13 total: 0.13 seconds.
+2020-05-18 11:42:20,473:timed:INFO:EUC_pset: 0:0:07.83 total: 7.83 seconds.
+2020-05-18 11:42:20,475:remove_westward_particles:DEBUG:Particles removed: 4
+2020-05-18 11:42:20,476:timed:INFO:remove_westward_particles: 0:0:00.00 total: 0.00 seconds.
+2020-05-18 11:42:20,477:EUC_particles:DEBUG:sim_198101_198101_v47i: Output file.
+2020-05-18 11:42:20,479:EUC_particles:INFO:sim_198101_198101_v47i:AdvectionRK4_3D + pset.Kernel(Age) + pset.Kernel(DeleteWestward)
+2020-05-18 11:42:20,516:EUC_particles:DEBUG:sim_198101_198101_v47i: Excecute particle set.
+2020-05-18 11:43:09,391:run_EUC:INFO:sim_198101_198101_v133i:Executing: 1981-01-01 to 1981-01-31
+2020-05-18 11:43:09,393:run_EUC:INFO:sim_198101_198101_v133i:Longitudes: 190
+2020-05-18 11:43:09,394:run_EUC:INFO:sim_198101_198101_v133i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-18 11:43:09,395:run_EUC:INFO:sim_198101_198101_v133i:Depths: 2 dz=200 [25 to 225]
+2020-05-18 11:43:09,396:run_EUC:INFO:sim_198101_198101_v133i:Runtime: 30 days
+2020-05-18 11:43:09,397:run_EUC:INFO:sim_198101_198101_v133i:Timestep dt: 240 mins
+2020-05-18 11:43:09,398:run_EUC:INFO:sim_198101_198101_v133i:Output dt: 1 days
+2020-05-18 11:43:09,399:run_EUC:INFO:sim_198101_198101_v133i:Repeat release: 6 days
+2020-05-18 11:43:09,400:run_EUC:INFO:sim_198101_198101_v133i:Particles: Total: 50 :/repeat: 10
+2020-05-18 11:43:09,400:ofam_fieldset:INFO:Field import=b_grid, Chunks={'Time': 1, 'sw_ocean': 1, 'xu_ocean': 128, 'yu_ocean': 128}
+2020-05-18 11:43:09,629:timed:INFO:ofam_fieldset: 0:0:00.23 total: 0.23 seconds.
+2020-05-18 11:43:48,406:run_EUC:INFO:sim_198101_198101_v8i:Executing: 1981-01-01 to 1981-01-31
+2020-05-18 11:43:48,407:run_EUC:INFO:sim_198101_198101_v8i:Longitudes: 190
+2020-05-18 11:43:48,408:run_EUC:INFO:sim_198101_198101_v8i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-18 11:43:48,409:run_EUC:INFO:sim_198101_198101_v8i:Depths: 2 dz=200 [25 to 225]
+2020-05-18 11:43:48,411:run_EUC:INFO:sim_198101_198101_v8i:Runtime: 30 days
+2020-05-18 11:43:48,412:run_EUC:INFO:sim_198101_198101_v8i:Timestep dt: 240 mins
+2020-05-18 11:43:48,414:run_EUC:INFO:sim_198101_198101_v8i:Output dt: 1 days
+2020-05-18 11:43:48,417:run_EUC:INFO:sim_198101_198101_v8i:Repeat release: 6 days
+2020-05-18 11:43:48,419:run_EUC:INFO:sim_198101_198101_v8i:Particles: Total: 50 :/repeat: 10
+2020-05-18 11:43:48,421:ofam_fieldset:INFO:Field import=b_grid, Chunks={'Time': 1, 'sw_ocean': 1, 'xu_ocean': 128, 'yu_ocean': 128, 'st_ocean': 1}
+2020-05-18 11:43:48,582:timed:INFO:ofam_fieldset: 0:0:00.16 total: 0.16 seconds.
+2020-05-18 11:49:56,724:run_EUC:INFO:sim_198101_198101_v70i:Executing: 1981-01-01 to 1981-01-31
+2020-05-18 11:49:56,729:run_EUC:INFO:sim_198101_198101_v70i:Longitudes: 190
+2020-05-18 11:49:56,731:run_EUC:INFO:sim_198101_198101_v70i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-18 11:49:56,732:run_EUC:INFO:sim_198101_198101_v70i:Depths: 2 dz=200 [25 to 225]
+2020-05-18 11:49:56,734:run_EUC:INFO:sim_198101_198101_v70i:Runtime: 30 days
+2020-05-18 11:49:56,735:run_EUC:INFO:sim_198101_198101_v70i:Timestep dt: 240 mins
+2020-05-18 11:49:56,738:run_EUC:INFO:sim_198101_198101_v70i:Output dt: 1 days
+2020-05-18 11:49:56,739:run_EUC:INFO:sim_198101_198101_v70i:Repeat release: 6 days
+2020-05-18 11:49:56,740:run_EUC:INFO:sim_198101_198101_v70i:Particles: Total: 50 :/repeat: 10
+2020-05-18 11:49:56,742:ofam_fieldset:INFO:Field import=b_grid, Chunks={'Time': 1, 'sw_ocean': 1, 'xu_ocean': 128, 'yu_ocean': 128}
+2020-05-18 11:49:56,888:timed:INFO:ofam_fieldset: 0:0:00.15 total: 0.15 seconds.
+2020-05-18 11:50:35,973:run_EUC:INFO:sim_198101_198101_v175i:Executing: 1981-01-01 to 1981-01-31
+2020-05-18 11:50:35,974:run_EUC:INFO:sim_198101_198101_v175i:Longitudes: 190
+2020-05-18 11:50:35,975:run_EUC:INFO:sim_198101_198101_v175i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-18 11:50:35,977:run_EUC:INFO:sim_198101_198101_v175i:Depths: 2 dz=200 [25 to 225]
+2020-05-18 11:50:35,978:run_EUC:INFO:sim_198101_198101_v175i:Runtime: 30 days
+2020-05-18 11:50:35,980:run_EUC:INFO:sim_198101_198101_v175i:Timestep dt: 240 mins
+2020-05-18 11:50:35,981:run_EUC:INFO:sim_198101_198101_v175i:Output dt: 1 days
+2020-05-18 11:50:35,982:run_EUC:INFO:sim_198101_198101_v175i:Repeat release: 6 days
+2020-05-18 11:50:35,983:run_EUC:INFO:sim_198101_198101_v175i:Particles: Total: 50 :/repeat: 10
+2020-05-18 11:50:35,984:ofam_fieldset:INFO:Field import=b_grid, Chunks={'Time': 1, 'sw_ocean': 1, 'xu_ocean': 128, 'yu_ocean': 128}
+2020-05-18 11:50:36,118:timed:INFO:ofam_fieldset: 0:0:00.13 total: 0.13 seconds.
+2020-05-18 11:52:01,616:run_EUC:INFO:sim_198101_198101_v96i:Executing: 1981-01-01 to 1981-01-31
+2020-05-18 11:52:01,618:run_EUC:INFO:sim_198101_198101_v96i:Longitudes: 190
+2020-05-18 11:52:01,619:run_EUC:INFO:sim_198101_198101_v96i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-18 11:52:01,620:run_EUC:INFO:sim_198101_198101_v96i:Depths: 2 dz=200 [25 to 225]
+2020-05-18 11:52:01,622:run_EUC:INFO:sim_198101_198101_v96i:Runtime: 30 days
+2020-05-18 11:52:01,623:run_EUC:INFO:sim_198101_198101_v96i:Timestep dt: 240 mins
+2020-05-18 11:52:01,624:run_EUC:INFO:sim_198101_198101_v96i:Output dt: 1 days
+2020-05-18 11:52:01,625:run_EUC:INFO:sim_198101_198101_v96i:Repeat release: 6 days
+2020-05-18 11:52:01,626:run_EUC:INFO:sim_198101_198101_v96i:Particles: Total: 50 :/repeat: 10
+2020-05-18 11:52:01,628:ofam_fieldset:INFO:Field import=b_grid, Chunks=(1, 1, 300, 1750)
+2020-05-18 11:52:01,751:timed:INFO:ofam_fieldset: 0:0:00.12 total: 0.12 seconds.
+2020-05-18 11:52:10,403:timed:INFO:EUC_pset: 0:0:08.65 total: 8.65 seconds.
+2020-05-18 11:52:10,405:remove_westward_particles:DEBUG:Particles removed: 4
+2020-05-18 11:52:10,406:timed:INFO:remove_westward_particles: 0:0:00.00 total: 0.00 seconds.
+2020-05-18 11:52:10,406:EUC_particles:DEBUG:sim_198101_198101_v96i: Output file.
+2020-05-18 11:52:10,408:EUC_particles:INFO:sim_198101_198101_v96i:AdvectionRK4_3D + pset.Kernel(Age) + pset.Kernel(DeleteWestward)
+2020-05-18 11:52:10,561:EUC_particles:DEBUG:sim_198101_198101_v96i: Excecute particle set.
+2020-05-18 11:53:04,694:run_EUC:INFO:sim_198101_198101_v154i:Executing: 1981-01-01 to 1981-01-31
+2020-05-18 11:53:04,697:run_EUC:INFO:sim_198101_198101_v154i:Longitudes: 190
+2020-05-18 11:53:04,698:run_EUC:INFO:sim_198101_198101_v154i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-18 11:53:04,700:run_EUC:INFO:sim_198101_198101_v154i:Depths: 2 dz=200 [25 to 225]
+2020-05-18 11:53:04,701:run_EUC:INFO:sim_198101_198101_v154i:Runtime: 30 days
+2020-05-18 11:53:04,702:run_EUC:INFO:sim_198101_198101_v154i:Timestep dt: 240 mins
+2020-05-18 11:53:04,704:run_EUC:INFO:sim_198101_198101_v154i:Output dt: 1 days
+2020-05-18 11:53:04,705:run_EUC:INFO:sim_198101_198101_v154i:Repeat release: 6 days
+2020-05-18 11:53:04,706:run_EUC:INFO:sim_198101_198101_v154i:Particles: Total: 50 :/repeat: 10
+2020-05-18 11:53:04,709:ofam_fieldset:INFO:Field import=b_grid, Chunks=(1, 1, 300, 1750)
+2020-05-18 11:53:13,194:run_EUC:INFO:sim_198101_198101_v71i:Executing: 1981-01-01 to 1981-01-31
+2020-05-18 11:53:13,195:run_EUC:INFO:sim_198101_198101_v71i:Longitudes: 190
+2020-05-18 11:53:13,196:run_EUC:INFO:sim_198101_198101_v71i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-18 11:53:13,197:run_EUC:INFO:sim_198101_198101_v71i:Depths: 2 dz=200 [25 to 225]
+2020-05-18 11:53:13,198:run_EUC:INFO:sim_198101_198101_v71i:Runtime: 30 days
+2020-05-18 11:53:13,199:run_EUC:INFO:sim_198101_198101_v71i:Timestep dt: 240 mins
+2020-05-18 11:53:13,201:run_EUC:INFO:sim_198101_198101_v71i:Output dt: 1 days
+2020-05-18 11:53:13,202:run_EUC:INFO:sim_198101_198101_v71i:Repeat release: 6 days
+2020-05-18 11:53:13,204:run_EUC:INFO:sim_198101_198101_v71i:Particles: Total: 50 :/repeat: 10
+2020-05-18 11:53:13,204:ofam_fieldset:INFO:Field import=b_grid, Chunks=(1, 1, 300, 1750)
+2020-05-18 11:53:13,321:timed:INFO:ofam_fieldset: 0:0:00.12 total: 0.12 seconds.
+2020-05-18 12:13:22,549:run_EUC:INFO:sim_198101_198101_v57i:Executing: 1981-01-01 to 1981-01-31
+2020-05-18 12:13:22,550:run_EUC:INFO:sim_198101_198101_v57i:Longitudes: 190
+2020-05-18 12:13:22,551:run_EUC:INFO:sim_198101_198101_v57i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-18 12:13:22,552:run_EUC:INFO:sim_198101_198101_v57i:Depths: 2 dz=200 [25 to 225]
+2020-05-18 12:13:22,553:run_EUC:INFO:sim_198101_198101_v57i:Runtime: 30 days
+2020-05-18 12:13:22,554:run_EUC:INFO:sim_198101_198101_v57i:Timestep dt: 240 mins
+2020-05-18 12:13:22,556:run_EUC:INFO:sim_198101_198101_v57i:Output dt: 1 days
+2020-05-18 12:13:22,557:run_EUC:INFO:sim_198101_198101_v57i:Repeat release: 6 days
+2020-05-18 12:13:22,558:run_EUC:INFO:sim_198101_198101_v57i:Particles: Total: 50 :/repeat: 10
+2020-05-18 12:13:22,559:ofam_fieldset:INFO:Field import=b_grid, Chunks=(1, 1, 300, 1750)
+2020-05-18 12:13:22,714:timed:INFO:ofam_fieldset: 0:0:00.16 total: 0.16 seconds.
+2020-05-18 12:13:32,270:timed:INFO:EUC_pset: 0:0:09.55 total: 9.55 seconds.
+2020-05-18 12:13:32,272:remove_westward_particles:DEBUG:Particles removed: 4
+2020-05-18 12:13:32,274:timed:INFO:remove_westward_particles: 0:0:00.00 total: 0.00 seconds.
+2020-05-18 12:13:32,275:EUC_particles:DEBUG:sim_198101_198101_v57i: Output file.
+2020-05-18 12:13:32,277:EUC_particles:INFO:sim_198101_198101_v57i:AdvectionRK4_3D + pset.Kernel(Age) + pset.Kernel(DeleteWestward)
+2020-05-18 12:13:32,335:EUC_particles:DEBUG:sim_198101_198101_v57i: Excecute particle set.
+2020-05-18 12:14:25,659:run_EUC:INFO:sim_198101_198101_v99i:Executing: 1981-01-01 to 1981-01-31
+2020-05-18 12:14:25,662:run_EUC:INFO:sim_198101_198101_v99i:Longitudes: 190
+2020-05-18 12:14:25,668:run_EUC:INFO:sim_198101_198101_v99i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-18 12:14:25,670:run_EUC:INFO:sim_198101_198101_v99i:Depths: 2 dz=200 [25 to 225]
+2020-05-18 12:14:25,671:run_EUC:INFO:sim_198101_198101_v99i:Runtime: 30 days
+2020-05-18 12:14:25,673:run_EUC:INFO:sim_198101_198101_v99i:Timestep dt: 240 mins
+2020-05-18 12:14:25,674:run_EUC:INFO:sim_198101_198101_v99i:Output dt: 1 days
+2020-05-18 12:14:25,676:run_EUC:INFO:sim_198101_198101_v99i:Repeat release: 6 days
+2020-05-18 12:14:25,677:run_EUC:INFO:sim_198101_198101_v99i:Particles: Total: 50 :/repeat: 10
+2020-05-18 12:14:25,678:ofam_fieldset:INFO:Field import=b_grid, Chunks={'Time': 1, 'st_ocean': 1, 'xu_ocean': 128, 'yu_ocean': 128}
+2020-05-18 12:14:25,893:timed:INFO:ofam_fieldset: 0:0:00.22 total: 0.22 seconds.
+2020-05-18 12:22:47,420:run_EUC:INFO:sim_198101_198101_v72i:Executing: 1981-01-01 to 1981-01-31
+2020-05-18 12:22:47,422:run_EUC:INFO:sim_198101_198101_v72i:Longitudes: 190
+2020-05-18 12:22:47,424:run_EUC:INFO:sim_198101_198101_v72i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-18 12:22:47,425:run_EUC:INFO:sim_198101_198101_v72i:Depths: 2 dz=200 [25 to 225]
+2020-05-18 12:22:47,426:run_EUC:INFO:sim_198101_198101_v72i:Runtime: 30 days
+2020-05-18 12:22:47,428:run_EUC:INFO:sim_198101_198101_v72i:Timestep dt: 240 mins
+2020-05-18 12:22:47,429:run_EUC:INFO:sim_198101_198101_v72i:Output dt: 1 days
+2020-05-18 12:22:47,430:run_EUC:INFO:sim_198101_198101_v72i:Repeat release: 6 days
+2020-05-18 12:22:47,431:run_EUC:INFO:sim_198101_198101_v72i:Particles: Total: 50 :/repeat: 10
+2020-05-18 12:22:47,432:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-18 12:22:47,610:timed:INFO:ofam_fieldset: 0:0:00.18 total: 0.18 seconds.
+2020-05-18 12:22:57,354:timed:INFO:EUC_pset: 0:0:09.74 total: 9.74 seconds.
+2020-05-18 12:22:57,356:remove_westward_particles:DEBUG:Particles removed: 4
+2020-05-18 12:22:57,357:timed:INFO:remove_westward_particles: 0:0:00.00 total: 0.00 seconds.
+2020-05-18 12:22:57,358:EUC_particles:DEBUG:sim_198101_198101_v72i: Output file.
+2020-05-18 12:22:57,360:EUC_particles:INFO:sim_198101_198101_v72i:AdvectionRK4_3D + pset.Kernel(Age) + pset.Kernel(DeleteWestward)
+2020-05-18 12:22:57,407:EUC_particles:DEBUG:sim_198101_198101_v72i: Excecute particle set.
+2020-05-18 12:54:41,480:EUC_particles:INFO:sim_198101_198101_v47i: Completed.
+2020-05-18 12:54:41,756:timed:INFO:EUC_particles: 1:12:29.12 total: 4349.12 seconds.
+2020-05-18 12:54:41,759:timed:INFO:run_EUC: 1:12:29.26 total: 4349.26 seconds.
+2020-05-18 17:28:41,490:run_EUC:INFO:sim_198101_198101_v5i:Executing: 1981-01-01 to 1981-01-31
+2020-05-18 17:28:41,494:run_EUC:INFO:sim_198101_198101_v5i:Longitudes: 190
+2020-05-18 17:28:41,494:run_EUC:INFO:sim_198101_198101_v5i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-18 17:28:41,495:run_EUC:INFO:sim_198101_198101_v5i:Depths: 2 dz=200 [25 to 225]
+2020-05-18 17:28:41,495:run_EUC:INFO:sim_198101_198101_v5i:Runtime: 10 days
+2020-05-18 17:28:41,496:run_EUC:INFO:sim_198101_198101_v5i:Timestep dt: 240 mins
+2020-05-18 17:28:41,496:run_EUC:INFO:sim_198101_198101_v5i:Output dt: 1 days
+2020-05-18 17:28:41,497:run_EUC:INFO:sim_198101_198101_v5i:Repeat release: 6 days
+2020-05-18 17:28:41,497:run_EUC:INFO:sim_198101_198101_v5i:Particles: Total: 10 :/repeat: 10
+2020-05-18 17:28:41,497:ofam_fieldset:INFO:Field import=b_grid, Chunks=(1, 1, 768, 768)
+2020-05-18 17:28:41,602:timed:INFO:ofam_fieldset: 0:0:00.10 total: 0.10 seconds.
+2020-05-18 17:29:26,932:run_EUC:INFO:sim_198101_198101_v65i:Executing: 1981-01-01 to 1981-01-31
+2020-05-18 17:29:26,935:run_EUC:INFO:sim_198101_198101_v65i:Longitudes: 190
+2020-05-18 17:29:26,936:run_EUC:INFO:sim_198101_198101_v65i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-18 17:29:26,936:run_EUC:INFO:sim_198101_198101_v65i:Depths: 2 dz=200 [25 to 225]
+2020-05-18 17:29:26,936:run_EUC:INFO:sim_198101_198101_v65i:Runtime: 10 days
+2020-05-18 17:29:26,937:run_EUC:INFO:sim_198101_198101_v65i:Timestep dt: 240 mins
+2020-05-18 17:29:26,938:run_EUC:INFO:sim_198101_198101_v65i:Output dt: 1 days
+2020-05-18 17:29:26,938:run_EUC:INFO:sim_198101_198101_v65i:Repeat release: 6 days
+2020-05-18 17:29:26,939:run_EUC:INFO:sim_198101_198101_v65i:Particles: Total: 10 :/repeat: 10
+2020-05-18 17:29:26,939:ofam_fieldset:INFO:Field import=b_grid, Chunks=(1, 1, 768, 768)
+2020-05-18 17:29:27,075:timed:INFO:ofam_fieldset: 0:0:00.14 total: 0.14 seconds.
+2020-05-18 17:29:35,599:timed:INFO:EUC_pset: 0:0:08.52 total: 8.52 seconds.
+2020-05-18 17:29:35,601:remove_westward_particles:DEBUG:Particles removed: 4
+2020-05-18 17:29:35,602:timed:INFO:remove_westward_particles: 0:0:00.00 total: 0.00 seconds.
+2020-05-18 17:29:35,606:EUC_particles:DEBUG:sim_198101_198101_v65i: Output file.
+2020-05-18 17:29:35,608:EUC_particles:INFO:sim_198101_198101_v65i:AdvectionRK4_3D + pset.Kernel(Age) + pset.Kernel(DeleteWestward)
+2020-05-18 17:29:35,762:EUC_particles:DEBUG:sim_198101_198101_v65i: Excecute particle set.
+2020-05-18 17:31:20,075:EUC_particles:INFO:sim_198101_198101_v65i: Completed.
+2020-05-18 17:31:20,163:timed:INFO:EUC_particles: 0:1:53.09 total: 113.09 seconds.
+2020-05-18 17:31:20,164:timed:INFO:run_EUC: 0:1:53.23 total: 113.23 seconds.
+2020-05-18 17:31:26,893:run_EUC:INFO:sim_198101_198101_v160i:Executing: 1981-01-01 to 1981-01-31
+2020-05-18 17:31:26,895:run_EUC:INFO:sim_198101_198101_v160i:Longitudes: 190
+2020-05-18 17:31:26,896:run_EUC:INFO:sim_198101_198101_v160i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-18 17:31:26,896:run_EUC:INFO:sim_198101_198101_v160i:Depths: 2 dz=200 [25 to 225]
+2020-05-18 17:31:26,897:run_EUC:INFO:sim_198101_198101_v160i:Runtime: 10 days
+2020-05-18 17:31:26,898:run_EUC:INFO:sim_198101_198101_v160i:Timestep dt: 240 mins
+2020-05-18 17:31:26,898:run_EUC:INFO:sim_198101_198101_v160i:Output dt: 1 days
+2020-05-18 17:31:26,899:run_EUC:INFO:sim_198101_198101_v160i:Repeat release: 6 days
+2020-05-18 17:31:26,899:run_EUC:INFO:sim_198101_198101_v160i:Particles: Total: 10 :/repeat: 10
+2020-05-18 17:32:55,756:run_EUC:INFO:sim_198101_198101_v12i:Executing: 1981-01-01 to 1981-01-31
+2020-05-18 17:32:55,760:run_EUC:INFO:sim_198101_198101_v12i:Longitudes: 190
+2020-05-18 17:32:55,761:run_EUC:INFO:sim_198101_198101_v12i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-18 17:32:55,762:run_EUC:INFO:sim_198101_198101_v12i:Depths: 2 dz=200 [25 to 225]
+2020-05-18 17:32:55,763:run_EUC:INFO:sim_198101_198101_v12i:Runtime: 10 days
+2020-05-18 17:32:55,764:run_EUC:INFO:sim_198101_198101_v12i:Timestep dt: 240 mins
+2020-05-18 17:32:55,765:run_EUC:INFO:sim_198101_198101_v12i:Output dt: 1 days
+2020-05-18 17:32:55,766:run_EUC:INFO:sim_198101_198101_v12i:Repeat release: 6 days
+2020-05-18 17:32:55,768:run_EUC:INFO:sim_198101_198101_v12i:Particles: Total: 10 :/repeat: 10
+2020-05-18 17:33:16,557:run_EUC:INFO:sim_198101_198101_v116i:Executing: 1981-01-01 to 1981-01-31
+2020-05-18 17:33:16,558:run_EUC:INFO:sim_198101_198101_v116i:Longitudes: 190
+2020-05-18 17:33:16,558:run_EUC:INFO:sim_198101_198101_v116i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-18 17:33:16,559:run_EUC:INFO:sim_198101_198101_v116i:Depths: 2 dz=200 [25 to 225]
+2020-05-18 17:33:16,560:run_EUC:INFO:sim_198101_198101_v116i:Runtime: 10 days
+2020-05-18 17:33:16,561:run_EUC:INFO:sim_198101_198101_v116i:Timestep dt: 240 mins
+2020-05-18 17:33:16,563:run_EUC:INFO:sim_198101_198101_v116i:Output dt: 1 days
+2020-05-18 17:33:16,563:run_EUC:INFO:sim_198101_198101_v116i:Repeat release: 6 days
+2020-05-18 17:33:16,565:run_EUC:INFO:sim_198101_198101_v116i:Particles: Total: 10 :/repeat: 10
+2020-05-18 17:33:48,981:run_EUC:INFO:sim_198101_198101_v139i:Executing: 1981-01-01 to 1981-01-31
+2020-05-18 17:33:48,983:run_EUC:INFO:sim_198101_198101_v139i:Longitudes: 190
+2020-05-18 17:33:48,983:run_EUC:INFO:sim_198101_198101_v139i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-18 17:33:48,984:run_EUC:INFO:sim_198101_198101_v139i:Depths: 2 dz=200 [25 to 225]
+2020-05-18 17:33:48,984:run_EUC:INFO:sim_198101_198101_v139i:Runtime: 10 days
+2020-05-18 17:33:48,985:run_EUC:INFO:sim_198101_198101_v139i:Timestep dt: 240 mins
+2020-05-18 17:33:48,986:run_EUC:INFO:sim_198101_198101_v139i:Output dt: 1 days
+2020-05-18 17:33:48,986:run_EUC:INFO:sim_198101_198101_v139i:Repeat release: 6 days
+2020-05-18 17:33:48,987:run_EUC:INFO:sim_198101_198101_v139i:Particles: Total: 10 :/repeat: 10
+2020-05-18 17:34:34,841:ofam_fieldset:INFO:Field import=xarray, Chunks={'Time': 1, 'sw_ocean': 1, 'xu_ocean': 768, 'yu_ocean': 768}
+2020-05-18 17:34:34,857:timed:INFO:ofam_fieldset: 0:0:45.87 total: 45.87 seconds.
+2020-05-18 17:34:34,877:timed:INFO:EUC_pset: 0:0:00.02 total: 0.02 seconds.
+2020-05-18 17:34:34,881:remove_westward_particles:DEBUG:Particles removed: 4
+2020-05-18 17:34:34,883:timed:INFO:remove_westward_particles: 0:0:00.01 total: 0.01 seconds.
+2020-05-18 17:34:34,884:EUC_particles:DEBUG:sim_198101_198101_v139i: Output file.
+2020-05-18 17:34:34,888:EUC_particles:INFO:sim_198101_198101_v139i:AdvectionRK4_3D + pset.Kernel(Age) + pset.Kernel(DeleteWestward)
+2020-05-18 17:34:35,250:EUC_particles:DEBUG:sim_198101_198101_v139i: Excecute particle set.
+2020-05-18 17:39:52,699:run_EUC:INFO:sim_198101_198101_v164i:Executing: 1981-01-01 to 1981-01-31
+2020-05-18 17:39:52,704:run_EUC:INFO:sim_198101_198101_v164i:Longitudes: 190
+2020-05-18 17:39:52,704:run_EUC:INFO:sim_198101_198101_v164i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-18 17:39:52,705:run_EUC:INFO:sim_198101_198101_v164i:Depths: 2 dz=200 [25 to 225]
+2020-05-18 17:39:52,706:run_EUC:INFO:sim_198101_198101_v164i:Runtime: 10 days
+2020-05-18 17:39:52,706:run_EUC:INFO:sim_198101_198101_v164i:Timestep dt: 240 mins
+2020-05-18 17:39:52,706:run_EUC:INFO:sim_198101_198101_v164i:Output dt: 1 days
+2020-05-18 17:39:52,707:run_EUC:INFO:sim_198101_198101_v164i:Repeat release: 6 days
+2020-05-18 17:39:52,707:run_EUC:INFO:sim_198101_198101_v164i:Particles: Total: 10 :/repeat: 10
+2020-05-18 17:41:17,252:ofam_fieldset:INFO:Field import=xarray, Chunks={'Time': 1, 'sw_ocean': 1, 'xu_ocean': 768, 'yu_ocean': 768}
+2020-05-18 17:41:17,263:timed:INFO:ofam_fieldset: 0:1:24.56 total: 84.56 seconds.
+2020-05-18 17:41:17,276:timed:INFO:EUC_pset: 0:0:00.01 total: 0.01 seconds.
+2020-05-18 17:41:17,279:remove_westward_particles:DEBUG:Particles removed: 4
+2020-05-18 17:41:17,280:timed:INFO:remove_westward_particles: 0:0:00.00 total: 0.00 seconds.
+2020-05-18 17:41:17,281:EUC_particles:DEBUG:sim_198101_198101_v164i: Output file.
+2020-05-18 17:41:17,284:EUC_particles:INFO:sim_198101_198101_v164i:AdvectionRK4_3D + pset.Kernel(Age) + pset.Kernel(DeleteWestward)
+2020-05-18 17:41:17,556:EUC_particles:DEBUG:sim_198101_198101_v164i: Excecute particle set.
+2020-05-18 17:42:26,030:run_EUC:INFO:sim_198101_198101_v70i:Executing: 1981-01-01 to 1981-01-31
+2020-05-18 17:42:26,031:run_EUC:INFO:sim_198101_198101_v70i:Longitudes: 190
+2020-05-18 17:42:26,031:run_EUC:INFO:sim_198101_198101_v70i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-18 17:42:26,032:run_EUC:INFO:sim_198101_198101_v70i:Depths: 2 dz=200 [25 to 225]
+2020-05-18 17:42:26,032:run_EUC:INFO:sim_198101_198101_v70i:Runtime: 10 days
+2020-05-18 17:42:26,033:run_EUC:INFO:sim_198101_198101_v70i:Timestep dt: 240 mins
+2020-05-18 17:42:26,034:run_EUC:INFO:sim_198101_198101_v70i:Output dt: 1 days
+2020-05-18 17:42:26,034:run_EUC:INFO:sim_198101_198101_v70i:Repeat release: 6 days
+2020-05-18 17:42:26,035:run_EUC:INFO:sim_198101_198101_v70i:Particles: Total: 10 :/repeat: 10
+2020-05-18 17:43:52,736:ofam_fieldset:INFO:Field import=xarray, Chunks={'Time': 1, 'sw_ocean': 1, 'xu_ocean': 768, 'yu_ocean': 768}
+2020-05-18 17:43:52,747:timed:INFO:ofam_fieldset: 0:1:26.71 total: 86.71 seconds.
+2020-05-18 17:43:52,761:timed:INFO:EUC_pset: 0:0:00.01 total: 0.01 seconds.
+2020-05-18 17:43:52,763:remove_westward_particles:DEBUG:Particles removed: 4
+2020-05-18 17:43:52,764:timed:INFO:remove_westward_particles: 0:0:00.00 total: 0.00 seconds.
+2020-05-18 17:43:52,765:EUC_particles:DEBUG:sim_198101_198101_v70i: Output file.
+2020-05-18 17:43:52,768:EUC_particles:INFO:sim_198101_198101_v70i:AdvectionRK4_3D + pset.Kernel(Age) + pset.Kernel(DeleteWestward)
+2020-05-18 17:43:53,123:EUC_particles:DEBUG:sim_198101_198101_v70i: Excecute particle set.
+2020-05-18 17:51:40,123:EUC_particles:INFO:sim_198101_198101_v70i: Completed.
+2020-05-18 17:51:40,747:timed:INFO:EUC_particles: 0:7:48.00 total: 468.00 seconds.
+2020-05-18 17:51:40,761:timed:INFO:run_EUC: 0:9:14.73 total: 554.73 seconds.
+2020-05-18 17:53:18,538:__init__:WARNING:Casting lon data to np.float32
+2020-05-18 17:53:18,541:__init__:WARNING:Casting lat data to np.float32
+2020-05-18 17:53:18,542:__init__:WARNING:Casting depth data to np.float32
+2020-05-18 17:53:18,544:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-05-18 18:01:34,149:run_EUC:INFO:sim_198101_198101_v151i:Executing: 1981-01-01 to 1981-01-31
+2020-05-18 18:01:34,151:run_EUC:INFO:sim_198101_198101_v151i:Longitudes: 190
+2020-05-18 18:01:34,152:run_EUC:INFO:sim_198101_198101_v151i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-18 18:01:34,152:run_EUC:INFO:sim_198101_198101_v151i:Depths: 2 dz=200 [25 to 225]
+2020-05-18 18:01:34,153:run_EUC:INFO:sim_198101_198101_v151i:Runtime: 10 days
+2020-05-18 18:01:34,153:run_EUC:INFO:sim_198101_198101_v151i:Timestep dt: 240 mins
+2020-05-18 18:01:34,154:run_EUC:INFO:sim_198101_198101_v151i:Output dt: 1 days
+2020-05-18 18:01:34,154:run_EUC:INFO:sim_198101_198101_v151i:Repeat release: 6 days
+2020-05-18 18:01:34,155:run_EUC:INFO:sim_198101_198101_v151i:Particles: Total: 10 :/repeat: 10
+2020-05-18 18:02:09,738:run_EUC:INFO:sim_198101_198101_v4i:Executing: 1981-01-01 to 1981-01-31
+2020-05-18 18:02:09,739:run_EUC:INFO:sim_198101_198101_v4i:Longitudes: 190
+2020-05-18 18:02:09,740:run_EUC:INFO:sim_198101_198101_v4i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-18 18:02:09,741:run_EUC:INFO:sim_198101_198101_v4i:Depths: 2 dz=200 [25 to 225]
+2020-05-18 18:02:09,742:run_EUC:INFO:sim_198101_198101_v4i:Runtime: 10 days
+2020-05-18 18:02:09,743:run_EUC:INFO:sim_198101_198101_v4i:Timestep dt: 240 mins
+2020-05-18 18:02:09,744:run_EUC:INFO:sim_198101_198101_v4i:Output dt: 1 days
+2020-05-18 18:02:09,745:run_EUC:INFO:sim_198101_198101_v4i:Repeat release: 6 days
+2020-05-18 18:02:09,746:run_EUC:INFO:sim_198101_198101_v4i:Particles: Total: 10 :/repeat: 10
+2020-05-18 18:02:09,861:ofam_fieldset:INFO:Field import=b_grid, Chunks=(1, 1, 768, 768)
+2020-05-18 18:02:09,862:timed:INFO:ofam_fieldset: 0:0:00.11 total: 0.11 seconds.
+2020-05-18 18:02:17,556:timed:INFO:EUC_pset: 0:0:07.69 total: 7.69 seconds.
+2020-05-18 18:02:17,558:remove_westward_particles:DEBUG:Particles removed: 4
+2020-05-18 18:02:17,559:timed:INFO:remove_westward_particles: 0:0:00.00 total: 0.00 seconds.
+2020-05-18 18:02:17,560:EUC_particles:DEBUG:sim_198101_198101_v4i: Output file.
+2020-05-18 18:02:17,562:EUC_particles:INFO:sim_198101_198101_v4i:AdvectionRK4_3D + pset.Kernel(Age) + pset.Kernel(DeleteWestward)
+2020-05-18 18:02:17,719:EUC_particles:DEBUG:sim_198101_198101_v4i: Excecute particle set.
+2020-05-18 18:05:24,285:run_EUC:INFO:sim_198101_198101_v87i:Executing: 1981-01-01 to 1981-01-31
+2020-05-18 18:05:24,287:run_EUC:INFO:sim_198101_198101_v87i:Longitudes: 190
+2020-05-18 18:05:24,288:run_EUC:INFO:sim_198101_198101_v87i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-18 18:05:24,288:run_EUC:INFO:sim_198101_198101_v87i:Depths: 2 dz=200 [25 to 225]
+2020-05-18 18:05:24,289:run_EUC:INFO:sim_198101_198101_v87i:Runtime: 10 days
+2020-05-18 18:05:24,290:run_EUC:INFO:sim_198101_198101_v87i:Timestep dt: 240 mins
+2020-05-18 18:05:24,290:run_EUC:INFO:sim_198101_198101_v87i:Output dt: 1 days
+2020-05-18 18:05:24,291:run_EUC:INFO:sim_198101_198101_v87i:Repeat release: 6 days
+2020-05-18 18:05:24,292:run_EUC:INFO:sim_198101_198101_v87i:Particles: Total: 10 :/repeat: 10
+2020-05-18 18:05:52,932:run_EUC:INFO:sim_198101_198101_v149i:Executing: 1981-01-01 to 1981-01-31
+2020-05-18 18:05:52,936:run_EUC:INFO:sim_198101_198101_v149i:Longitudes: 190
+2020-05-18 18:05:52,937:run_EUC:INFO:sim_198101_198101_v149i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-18 18:05:52,937:run_EUC:INFO:sim_198101_198101_v149i:Depths: 2 dz=200 [25 to 225]
+2020-05-18 18:05:52,938:run_EUC:INFO:sim_198101_198101_v149i:Runtime: 10 days
+2020-05-18 18:05:52,939:run_EUC:INFO:sim_198101_198101_v149i:Timestep dt: 240 mins
+2020-05-18 18:05:52,940:run_EUC:INFO:sim_198101_198101_v149i:Output dt: 1 days
+2020-05-18 18:05:52,941:run_EUC:INFO:sim_198101_198101_v149i:Repeat release: 6 days
+2020-05-18 18:05:52,942:run_EUC:INFO:sim_198101_198101_v149i:Particles: Total: 10 :/repeat: 10
+2020-05-18 18:06:25,995:run_EUC:INFO:sim_198101_198101_v12i:Executing: 1981-01-01 to 1981-01-31
+2020-05-18 18:06:25,996:run_EUC:INFO:sim_198101_198101_v12i:Longitudes: 190
+2020-05-18 18:06:25,997:run_EUC:INFO:sim_198101_198101_v12i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-18 18:06:25,998:run_EUC:INFO:sim_198101_198101_v12i:Depths: 2 dz=200 [25 to 225]
+2020-05-18 18:06:25,999:run_EUC:INFO:sim_198101_198101_v12i:Runtime: 10 days
+2020-05-18 18:06:26,000:run_EUC:INFO:sim_198101_198101_v12i:Timestep dt: 240 mins
+2020-05-18 18:06:26,001:run_EUC:INFO:sim_198101_198101_v12i:Output dt: 1 days
+2020-05-18 18:06:26,003:run_EUC:INFO:sim_198101_198101_v12i:Repeat release: 6 days
+2020-05-18 18:06:26,004:run_EUC:INFO:sim_198101_198101_v12i:Particles: Total: 10 :/repeat: 10
+2020-05-18 18:06:26,074:ofam_fieldset:INFO:Field import=b_grid, Chunks={'st_ocean': 1, 'sw_ocean': 1, 'yt_ocean': 768, 'yu_ocean': 768, 'xt_ocean': 768, 'xu_ocean': 768}
+2020-05-18 18:06:26,076:timed:INFO:ofam_fieldset: 0:0:00.07 total: 0.07 seconds.
+2020-05-18 18:07:02,791:run_EUC:INFO:sim_198101_198101_v200i:Executing: 1981-01-01 to 1981-01-31
+2020-05-18 18:07:02,792:run_EUC:INFO:sim_198101_198101_v200i:Longitudes: 190
+2020-05-18 18:07:02,794:run_EUC:INFO:sim_198101_198101_v200i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-18 18:07:02,795:run_EUC:INFO:sim_198101_198101_v200i:Depths: 2 dz=200 [25 to 225]
+2020-05-18 18:07:02,796:run_EUC:INFO:sim_198101_198101_v200i:Runtime: 10 days
+2020-05-18 18:07:02,797:run_EUC:INFO:sim_198101_198101_v200i:Timestep dt: 240 mins
+2020-05-18 18:07:02,798:run_EUC:INFO:sim_198101_198101_v200i:Output dt: 1 days
+2020-05-18 18:07:02,799:run_EUC:INFO:sim_198101_198101_v200i:Repeat release: 6 days
+2020-05-18 18:07:02,800:run_EUC:INFO:sim_198101_198101_v200i:Particles: Total: 10 :/repeat: 10
+2020-05-18 18:07:02,897:ofam_fieldset:INFO:Field import=b_grid, Chunks={'st_ocean': 1, 'sw_ocean': 1, 'yt_ocean': 768, 'yu_ocean': 768, 'xt_ocean': 768, 'xu_ocean': 768}
+2020-05-18 18:07:02,898:timed:INFO:ofam_fieldset: 0:0:00.10 total: 0.10 seconds.
+2020-05-18 18:07:16,464:run_EUC:INFO:sim_198101_198101_v122i:Executing: 1981-01-01 to 1981-01-31
+2020-05-18 18:07:16,465:run_EUC:INFO:sim_198101_198101_v122i:Longitudes: 190
+2020-05-18 18:07:16,466:run_EUC:INFO:sim_198101_198101_v122i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-18 18:07:16,467:run_EUC:INFO:sim_198101_198101_v122i:Depths: 2 dz=200 [25 to 225]
+2020-05-18 18:07:16,468:run_EUC:INFO:sim_198101_198101_v122i:Runtime: 10 days
+2020-05-18 18:07:16,468:run_EUC:INFO:sim_198101_198101_v122i:Timestep dt: 240 mins
+2020-05-18 18:07:16,470:run_EUC:INFO:sim_198101_198101_v122i:Output dt: 1 days
+2020-05-18 18:07:16,472:run_EUC:INFO:sim_198101_198101_v122i:Repeat release: 6 days
+2020-05-18 18:07:16,473:run_EUC:INFO:sim_198101_198101_v122i:Particles: Total: 10 :/repeat: 10
+2020-05-18 18:07:16,559:ofam_fieldset:INFO:Field import=b_grid, Chunks={'Time': 1, 'sw_ocean': 1, 'xu_ocean': 768, 'yu_ocean': 768}
+2020-05-18 18:07:16,560:timed:INFO:ofam_fieldset: 0:0:00.09 total: 0.09 seconds.
+2020-05-18 18:07:24,080:run_EUC:INFO:sim_198101_198101_v29i:Executing: 1981-01-01 to 1981-01-31
+2020-05-18 18:07:24,081:run_EUC:INFO:sim_198101_198101_v29i:Longitudes: 190
+2020-05-18 18:07:24,082:run_EUC:INFO:sim_198101_198101_v29i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-18 18:07:24,083:run_EUC:INFO:sim_198101_198101_v29i:Depths: 2 dz=200 [25 to 225]
+2020-05-18 18:07:24,084:run_EUC:INFO:sim_198101_198101_v29i:Runtime: 10 days
+2020-05-18 18:07:24,086:run_EUC:INFO:sim_198101_198101_v29i:Timestep dt: 240 mins
+2020-05-18 18:07:24,087:run_EUC:INFO:sim_198101_198101_v29i:Output dt: 1 days
+2020-05-18 18:07:24,088:run_EUC:INFO:sim_198101_198101_v29i:Repeat release: 6 days
+2020-05-18 18:07:24,089:run_EUC:INFO:sim_198101_198101_v29i:Particles: Total: 10 :/repeat: 10
+2020-05-18 18:07:24,172:ofam_fieldset:INFO:Field import=b_grid, Chunks=(1, 1, 768, 768)
+2020-05-18 18:07:24,174:timed:INFO:ofam_fieldset: 0:0:00.08 total: 0.08 seconds.
+2020-05-18 18:07:32,011:timed:INFO:EUC_pset: 0:0:07.84 total: 7.84 seconds.
+2020-05-18 18:07:32,012:remove_westward_particles:DEBUG:Particles removed: 4
+2020-05-18 18:07:32,014:timed:INFO:remove_westward_particles: 0:0:00.00 total: 0.00 seconds.
+2020-05-18 18:07:32,015:EUC_particles:DEBUG:sim_198101_198101_v29i: Output file.
+2020-05-18 18:07:32,016:EUC_particles:INFO:sim_198101_198101_v29i:AdvectionRK4_3D + pset.Kernel(Age) + pset.Kernel(DeleteWestward)
+2020-05-18 18:07:32,208:EUC_particles:DEBUG:sim_198101_198101_v29i: Excecute particle set.
+2020-05-18 18:09:05,373:run_EUC:INFO:sim_198101_198101_v154i:Executing: 1981-01-01 to 1981-01-31
+2020-05-18 18:09:05,374:run_EUC:INFO:sim_198101_198101_v154i:Longitudes: 190
+2020-05-18 18:09:05,374:run_EUC:INFO:sim_198101_198101_v154i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-18 18:09:05,375:run_EUC:INFO:sim_198101_198101_v154i:Depths: 2 dz=200 [25 to 225]
+2020-05-18 18:09:05,376:run_EUC:INFO:sim_198101_198101_v154i:Runtime: 10 days
+2020-05-18 18:09:05,377:run_EUC:INFO:sim_198101_198101_v154i:Timestep dt: 240 mins
+2020-05-18 18:09:05,377:run_EUC:INFO:sim_198101_198101_v154i:Output dt: 1 days
+2020-05-18 18:09:05,378:run_EUC:INFO:sim_198101_198101_v154i:Repeat release: 6 days
+2020-05-18 18:09:05,379:run_EUC:INFO:sim_198101_198101_v154i:Particles: Total: 10 :/repeat: 10
+2020-05-18 18:09:33,863:run_EUC:INFO:sim_198101_198101_v96i:Executing: 1981-01-01 to 1981-01-31
+2020-05-18 18:09:33,864:run_EUC:INFO:sim_198101_198101_v96i:Longitudes: 190
+2020-05-18 18:09:33,865:run_EUC:INFO:sim_198101_198101_v96i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-18 18:09:33,866:run_EUC:INFO:sim_198101_198101_v96i:Depths: 2 dz=200 [25 to 225]
+2020-05-18 18:09:33,867:run_EUC:INFO:sim_198101_198101_v96i:Runtime: 10 days
+2020-05-18 18:09:33,868:run_EUC:INFO:sim_198101_198101_v96i:Timestep dt: 240 mins
+2020-05-18 18:09:33,868:run_EUC:INFO:sim_198101_198101_v96i:Output dt: 1 days
+2020-05-18 18:09:33,870:run_EUC:INFO:sim_198101_198101_v96i:Repeat release: 6 days
+2020-05-18 18:09:33,871:run_EUC:INFO:sim_198101_198101_v96i:Particles: Total: 10 :/repeat: 10
+2020-05-18 18:11:48,299:run_EUC:INFO:sim_198101_198101_v115i:Executing: 1981-01-01 to 1981-01-31
+2020-05-18 18:11:48,301:run_EUC:INFO:sim_198101_198101_v115i:Longitudes: 190
+2020-05-18 18:11:48,302:run_EUC:INFO:sim_198101_198101_v115i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-18 18:11:48,303:run_EUC:INFO:sim_198101_198101_v115i:Depths: 2 dz=200 [25 to 225]
+2020-05-18 18:11:48,304:run_EUC:INFO:sim_198101_198101_v115i:Runtime: 10 days
+2020-05-18 18:11:48,306:run_EUC:INFO:sim_198101_198101_v115i:Timestep dt: 240 mins
+2020-05-18 18:11:48,307:run_EUC:INFO:sim_198101_198101_v115i:Output dt: 1 days
+2020-05-18 18:11:48,308:run_EUC:INFO:sim_198101_198101_v115i:Repeat release: 6 days
+2020-05-18 18:11:48,309:run_EUC:INFO:sim_198101_198101_v115i:Particles: Total: 10 :/repeat: 10
+2020-05-18 18:11:48,434:ofam_fieldset:INFO:Field import=b_grid, Chunks=(1, 1, 768, 768)
+2020-05-18 18:11:48,435:timed:INFO:ofam_fieldset: 0:0:00.13 total: 0.13 seconds.
+2020-05-18 18:12:33,345:run_EUC:INFO:sim_198101_198101_v174i:Executing: 1981-01-01 to 1981-01-31
+2020-05-18 18:12:33,346:run_EUC:INFO:sim_198101_198101_v174i:Longitudes: 190
+2020-05-18 18:12:33,347:run_EUC:INFO:sim_198101_198101_v174i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-18 18:12:33,348:run_EUC:INFO:sim_198101_198101_v174i:Depths: 2 dz=200 [25 to 225]
+2020-05-18 18:12:33,349:run_EUC:INFO:sim_198101_198101_v174i:Runtime: 10 days
+2020-05-18 18:12:33,351:run_EUC:INFO:sim_198101_198101_v174i:Timestep dt: 240 mins
+2020-05-18 18:12:33,352:run_EUC:INFO:sim_198101_198101_v174i:Output dt: 1 days
+2020-05-18 18:12:33,352:run_EUC:INFO:sim_198101_198101_v174i:Repeat release: 6 days
+2020-05-18 18:12:33,354:run_EUC:INFO:sim_198101_198101_v174i:Particles: Total: 10 :/repeat: 10
+2020-05-18 18:12:33,420:ofam_fieldset:INFO:Field import=b_grid, Chunks=(1, 1, 768, 768)
+2020-05-18 18:12:33,421:timed:INFO:ofam_fieldset: 0:0:00.07 total: 0.07 seconds.
+2020-05-18 18:12:44,678:run_EUC:INFO:sim_198101_198101_v192i:Executing: 1981-01-01 to 1981-01-31
+2020-05-18 18:12:44,680:run_EUC:INFO:sim_198101_198101_v192i:Longitudes: 190
+2020-05-18 18:12:44,680:run_EUC:INFO:sim_198101_198101_v192i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-18 18:12:44,681:run_EUC:INFO:sim_198101_198101_v192i:Depths: 2 dz=200 [25 to 225]
+2020-05-18 18:12:44,681:run_EUC:INFO:sim_198101_198101_v192i:Runtime: 10 days
+2020-05-18 18:12:44,682:run_EUC:INFO:sim_198101_198101_v192i:Timestep dt: 240 mins
+2020-05-18 18:12:44,682:run_EUC:INFO:sim_198101_198101_v192i:Output dt: 1 days
+2020-05-18 18:12:44,683:run_EUC:INFO:sim_198101_198101_v192i:Repeat release: 6 days
+2020-05-18 18:12:44,683:run_EUC:INFO:sim_198101_198101_v192i:Particles: Total: 10 :/repeat: 10
+2020-05-18 18:12:44,777:ofam_fieldset:INFO:Field import=b_grid, Chunks=(1, 1, 768, 768)
+2020-05-18 18:12:44,778:timed:INFO:ofam_fieldset: 0:0:00.09 total: 0.09 seconds.
+2020-05-18 18:12:52,370:timed:INFO:EUC_pset: 0:0:07.59 total: 7.59 seconds.
+2020-05-18 18:12:52,371:remove_westward_particles:DEBUG:Particles removed: 4
+2020-05-18 18:12:52,371:timed:INFO:remove_westward_particles: 0:0:00.00 total: 0.00 seconds.
+2020-05-18 18:12:52,372:EUC_particles:DEBUG:sim_198101_198101_v192i: Output file.
+2020-05-18 18:12:52,373:EUC_particles:INFO:sim_198101_198101_v192i:AdvectionRK4_3D + pset.Kernel(Age) + pset.Kernel(DeleteWestward)
+2020-05-18 18:12:52,512:EUC_particles:DEBUG:sim_198101_198101_v192i: Excecute particle set.
+2020-05-18 18:13:50,164:run_EUC:INFO:sim_198101_198101_v13i:Executing: 1981-01-01 to 1981-01-31
+2020-05-18 18:13:50,164:run_EUC:INFO:sim_198101_198101_v13i:Longitudes: 190
+2020-05-18 18:13:50,165:run_EUC:INFO:sim_198101_198101_v13i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-18 18:13:50,165:run_EUC:INFO:sim_198101_198101_v13i:Depths: 2 dz=200 [25 to 225]
+2020-05-18 18:13:50,166:run_EUC:INFO:sim_198101_198101_v13i:Runtime: 10 days
+2020-05-18 18:13:50,167:run_EUC:INFO:sim_198101_198101_v13i:Timestep dt: 240 mins
+2020-05-18 18:13:50,168:run_EUC:INFO:sim_198101_198101_v13i:Output dt: 1 days
+2020-05-18 18:13:50,169:run_EUC:INFO:sim_198101_198101_v13i:Repeat release: 6 days
+2020-05-18 18:13:50,170:run_EUC:INFO:sim_198101_198101_v13i:Particles: Total: 10 :/repeat: 10
+2020-05-18 18:16:21,363:run_EUC:INFO:sim_198101_198101_v135i:Executing: 1981-01-01 to 1981-01-31
+2020-05-18 18:16:21,365:run_EUC:INFO:sim_198101_198101_v135i:Longitudes: 190
+2020-05-18 18:16:21,366:run_EUC:INFO:sim_198101_198101_v135i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-18 18:16:21,366:run_EUC:INFO:sim_198101_198101_v135i:Depths: 2 dz=200 [25 to 225]
+2020-05-18 18:16:21,367:run_EUC:INFO:sim_198101_198101_v135i:Runtime: 10 days
+2020-05-18 18:16:21,367:run_EUC:INFO:sim_198101_198101_v135i:Timestep dt: 240 mins
+2020-05-18 18:16:21,368:run_EUC:INFO:sim_198101_198101_v135i:Output dt: 1 days
+2020-05-18 18:16:21,368:run_EUC:INFO:sim_198101_198101_v135i:Repeat release: 6 days
+2020-05-18 18:16:21,369:run_EUC:INFO:sim_198101_198101_v135i:Particles: Total: 10 :/repeat: 10
+2020-05-18 18:17:02,276:run_EUC:INFO:sim_198101_198101_v42i:Executing: 1981-01-01 to 1981-01-31
+2020-05-18 18:17:02,277:run_EUC:INFO:sim_198101_198101_v42i:Longitudes: 190
+2020-05-18 18:17:02,278:run_EUC:INFO:sim_198101_198101_v42i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-18 18:17:02,280:run_EUC:INFO:sim_198101_198101_v42i:Depths: 2 dz=200 [25 to 225]
+2020-05-18 18:17:02,281:run_EUC:INFO:sim_198101_198101_v42i:Runtime: 10 days
+2020-05-18 18:17:02,282:run_EUC:INFO:sim_198101_198101_v42i:Timestep dt: 240 mins
+2020-05-18 18:17:02,283:run_EUC:INFO:sim_198101_198101_v42i:Output dt: 1 days
+2020-05-18 18:17:02,284:run_EUC:INFO:sim_198101_198101_v42i:Repeat release: 6 days
+2020-05-18 18:17:02,285:run_EUC:INFO:sim_198101_198101_v42i:Particles: Total: 10 :/repeat: 10
+2020-05-18 18:17:33,844:run_EUC:INFO:sim_198101_198101_v110i:Executing: 1981-01-01 to 1981-01-31
+2020-05-18 18:17:33,845:run_EUC:INFO:sim_198101_198101_v110i:Longitudes: 190
+2020-05-18 18:17:33,846:run_EUC:INFO:sim_198101_198101_v110i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-18 18:17:33,847:run_EUC:INFO:sim_198101_198101_v110i:Depths: 2 dz=200 [25 to 225]
+2020-05-18 18:17:33,848:run_EUC:INFO:sim_198101_198101_v110i:Runtime: 10 days
+2020-05-18 18:17:33,849:run_EUC:INFO:sim_198101_198101_v110i:Timestep dt: 240 mins
+2020-05-18 18:17:33,851:run_EUC:INFO:sim_198101_198101_v110i:Output dt: 1 days
+2020-05-18 18:17:33,852:run_EUC:INFO:sim_198101_198101_v110i:Repeat release: 6 days
+2020-05-18 18:17:33,853:run_EUC:INFO:sim_198101_198101_v110i:Particles: Total: 10 :/repeat: 10
+2020-05-18 18:17:59,836:run_EUC:INFO:sim_198101_198101_v147i:Executing: 1981-01-01 to 1981-01-31
+2020-05-18 18:17:59,837:run_EUC:INFO:sim_198101_198101_v147i:Longitudes: 190
+2020-05-18 18:17:59,839:run_EUC:INFO:sim_198101_198101_v147i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-18 18:17:59,840:run_EUC:INFO:sim_198101_198101_v147i:Depths: 2 dz=200 [25 to 225]
+2020-05-18 18:17:59,841:run_EUC:INFO:sim_198101_198101_v147i:Runtime: 10 days
+2020-05-18 18:17:59,843:run_EUC:INFO:sim_198101_198101_v147i:Timestep dt: 240 mins
+2020-05-18 18:17:59,844:run_EUC:INFO:sim_198101_198101_v147i:Output dt: 1 days
+2020-05-18 18:17:59,846:run_EUC:INFO:sim_198101_198101_v147i:Repeat release: 6 days
+2020-05-18 18:17:59,848:run_EUC:INFO:sim_198101_198101_v147i:Particles: Total: 10 :/repeat: 10
+2020-05-18 18:18:11,938:run_EUC:INFO:sim_198101_198101_v62i:Executing: 1981-01-01 to 1981-01-31
+2020-05-18 18:18:11,939:run_EUC:INFO:sim_198101_198101_v62i:Longitudes: 190
+2020-05-18 18:18:11,940:run_EUC:INFO:sim_198101_198101_v62i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-18 18:18:11,941:run_EUC:INFO:sim_198101_198101_v62i:Depths: 2 dz=200 [25 to 225]
+2020-05-18 18:18:11,942:run_EUC:INFO:sim_198101_198101_v62i:Runtime: 10 days
+2020-05-18 18:18:11,944:run_EUC:INFO:sim_198101_198101_v62i:Timestep dt: 240 mins
+2020-05-18 18:18:11,945:run_EUC:INFO:sim_198101_198101_v62i:Output dt: 1 days
+2020-05-18 18:18:11,945:run_EUC:INFO:sim_198101_198101_v62i:Repeat release: 6 days
+2020-05-18 18:18:11,947:run_EUC:INFO:sim_198101_198101_v62i:Particles: Total: 10 :/repeat: 10
+2020-05-18 18:20:52,203:run_EUC:INFO:sim_198101_198101_v88i:Executing: 1981-01-01 to 1981-01-31
+2020-05-18 18:20:52,204:run_EUC:INFO:sim_198101_198101_v88i:Longitudes: 190
+2020-05-18 18:20:52,205:run_EUC:INFO:sim_198101_198101_v88i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-18 18:20:52,205:run_EUC:INFO:sim_198101_198101_v88i:Depths: 2 dz=200 [25 to 225]
+2020-05-18 18:20:52,207:run_EUC:INFO:sim_198101_198101_v88i:Runtime: 10 days
+2020-05-18 18:20:52,208:run_EUC:INFO:sim_198101_198101_v88i:Timestep dt: 240 mins
+2020-05-18 18:20:52,209:run_EUC:INFO:sim_198101_198101_v88i:Output dt: 1 days
+2020-05-18 18:20:52,210:run_EUC:INFO:sim_198101_198101_v88i:Repeat release: 6 days
+2020-05-18 18:20:52,211:run_EUC:INFO:sim_198101_198101_v88i:Particles: Total: 10 :/repeat: 10
+2020-05-18 18:20:52,290:ofam_fieldset:INFO:Field import=b_grid, Chunks={'U': {'st_ocean': 1, 'sw_ocean': 1, 'yt_ocean': 300, 'yy_ocean': 300, 'xt_ocean': 1750, 'xu_ocean': 1750}, 'V': {'st_ocean': 1, 'sw_ocean': 1, 'yt_ocean': 300, 'yy_ocean': 300, 'xt_ocean': 1750, 'xu_ocean': 1750}, 'W': {'st_ocean': 1, 'sw_ocean': 1, 'yt_ocean': 300, 'yy_ocean': 300, 'xt_ocean': 1750, 'xu_ocean': 1750}}
+2020-05-18 18:20:52,292:timed:INFO:ofam_fieldset: 0:0:00.08 total: 0.08 seconds.
+2020-05-18 18:21:13,064:run_EUC:INFO:sim_198101_198101_v152i:Executing: 1981-01-01 to 1981-01-31
+2020-05-18 18:21:13,065:run_EUC:INFO:sim_198101_198101_v152i:Longitudes: 190
+2020-05-18 18:21:13,067:run_EUC:INFO:sim_198101_198101_v152i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-18 18:21:13,068:run_EUC:INFO:sim_198101_198101_v152i:Depths: 2 dz=200 [25 to 225]
+2020-05-18 18:21:13,069:run_EUC:INFO:sim_198101_198101_v152i:Runtime: 10 days
+2020-05-18 18:21:13,070:run_EUC:INFO:sim_198101_198101_v152i:Timestep dt: 240 mins
+2020-05-18 18:21:13,071:run_EUC:INFO:sim_198101_198101_v152i:Output dt: 1 days
+2020-05-18 18:21:13,073:run_EUC:INFO:sim_198101_198101_v152i:Repeat release: 6 days
+2020-05-18 18:21:13,074:run_EUC:INFO:sim_198101_198101_v152i:Particles: Total: 10 :/repeat: 10
+2020-05-18 18:21:13,155:ofam_fieldset:INFO:Field import=b_grid, Chunks={'U': {'st_ocean': 1, 'sw_ocean': 1, 'yt_ocean': 300, 'yu_ocean': 300, 'xt_ocean': 1750, 'xu_ocean': 1750}, 'V': {'st_ocean': 1, 'sw_ocean': 1, 'yt_ocean': 300, 'yu_ocean': 300, 'xt_ocean': 1750, 'xu_ocean': 1750}, 'W': {'st_ocean': 1, 'sw_ocean': 1, 'yt_ocean': 300, 'yu_ocean': 300, 'xt_ocean': 1750, 'xu_ocean': 1750}}
+2020-05-18 18:21:13,157:timed:INFO:ofam_fieldset: 0:0:00.08 total: 0.08 seconds.
+2020-05-18 18:22:05,425:run_EUC:INFO:sim_198101_198101_v165i:Executing: 1981-01-01 to 1981-01-31
+2020-05-18 18:22:05,426:run_EUC:INFO:sim_198101_198101_v165i:Longitudes: 190
+2020-05-18 18:22:05,426:run_EUC:INFO:sim_198101_198101_v165i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-18 18:22:05,428:run_EUC:INFO:sim_198101_198101_v165i:Depths: 2 dz=200 [25 to 225]
+2020-05-18 18:22:05,429:run_EUC:INFO:sim_198101_198101_v165i:Runtime: 10 days
+2020-05-18 18:22:05,430:run_EUC:INFO:sim_198101_198101_v165i:Timestep dt: 240 mins
+2020-05-18 18:22:05,431:run_EUC:INFO:sim_198101_198101_v165i:Output dt: 1 days
+2020-05-18 18:22:05,432:run_EUC:INFO:sim_198101_198101_v165i:Repeat release: 6 days
+2020-05-18 18:22:05,433:run_EUC:INFO:sim_198101_198101_v165i:Particles: Total: 10 :/repeat: 10
+2020-05-18 18:22:05,519:ofam_fieldset:INFO:Field import=b_grid, Chunks={'U': {'st_ocean': 1, 'sw_ocean': 1, 'yt_ocean': 1750, 'yu_ocean': 1750, 'xt_ocean': 1750, 'xu_ocean': 1750}, 'V': {'st_ocean': 1, 'sw_ocean': 1, 'yt_ocean': 1750, 'yu_ocean': 1750, 'xt_ocean': 1750, 'xu_ocean': 1750}, 'W': {'st_ocean': 1, 'sw_ocean': 1, 'yt_ocean': 1750, 'yu_ocean': 1750, 'xt_ocean': 1750, 'xu_ocean': 1750}}
+2020-05-18 18:22:05,520:timed:INFO:ofam_fieldset: 0:0:00.09 total: 0.09 seconds.
+2020-05-18 18:22:39,409:run_EUC:INFO:sim_198101_198101_v78i:Executing: 1981-01-01 to 1981-01-31
+2020-05-18 18:22:39,411:run_EUC:INFO:sim_198101_198101_v78i:Longitudes: 190
+2020-05-18 18:22:39,411:run_EUC:INFO:sim_198101_198101_v78i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-18 18:22:39,411:run_EUC:INFO:sim_198101_198101_v78i:Depths: 2 dz=200 [25 to 225]
+2020-05-18 18:22:39,413:run_EUC:INFO:sim_198101_198101_v78i:Runtime: 10 days
+2020-05-18 18:22:39,413:run_EUC:INFO:sim_198101_198101_v78i:Timestep dt: 240 mins
+2020-05-18 18:22:39,414:run_EUC:INFO:sim_198101_198101_v78i:Output dt: 1 days
+2020-05-18 18:22:39,414:run_EUC:INFO:sim_198101_198101_v78i:Repeat release: 6 days
+2020-05-18 18:22:39,415:run_EUC:INFO:sim_198101_198101_v78i:Particles: Total: 10 :/repeat: 10
+2020-05-18 18:22:39,510:ofam_fieldset:INFO:Field import=b_grid, Chunks=(1, 1, 1750, 1750)
+2020-05-18 18:22:39,511:timed:INFO:ofam_fieldset: 0:0:00.10 total: 0.10 seconds.
+2020-05-18 18:22:47,276:timed:INFO:EUC_pset: 0:0:07.76 total: 7.76 seconds.
+2020-05-18 18:22:47,277:remove_westward_particles:DEBUG:Particles removed: 4
+2020-05-18 18:22:47,277:timed:INFO:remove_westward_particles: 0:0:00.00 total: 0.00 seconds.
+2020-05-18 18:22:47,278:EUC_particles:DEBUG:sim_198101_198101_v78i: Output file.
+2020-05-18 18:22:47,279:EUC_particles:INFO:sim_198101_198101_v78i:AdvectionRK4_3D + pset.Kernel(Age) + pset.Kernel(DeleteWestward)
+2020-05-18 18:22:47,426:EUC_particles:DEBUG:sim_198101_198101_v78i: Excecute particle set.
+2020-05-18 18:46:23,898:run_EUC:INFO:sim_198101_198101_v137i:Executing: 1981-01-01 to 1981-01-31
+2020-05-18 18:46:23,899:run_EUC:INFO:sim_198101_198101_v137i:Longitudes: 190
+2020-05-18 18:46:23,900:run_EUC:INFO:sim_198101_198101_v137i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-18 18:46:23,902:run_EUC:INFO:sim_198101_198101_v137i:Depths: 2 dz=200 [25 to 225]
+2020-05-18 18:46:23,903:run_EUC:INFO:sim_198101_198101_v137i:Runtime: 10 days
+2020-05-18 18:46:23,904:run_EUC:INFO:sim_198101_198101_v137i:Timestep dt: 240 mins
+2020-05-18 18:46:23,905:run_EUC:INFO:sim_198101_198101_v137i:Output dt: 1 days
+2020-05-18 18:46:23,906:run_EUC:INFO:sim_198101_198101_v137i:Repeat release: 6 days
+2020-05-18 18:46:23,907:run_EUC:INFO:sim_198101_198101_v137i:Particles: Total: 10 :/repeat: 10
+2020-05-18 18:46:23,993:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-18 18:46:23,995:timed:INFO:ofam_fieldset: 0:0:00.09 total: 0.09 seconds.
+2020-05-18 18:46:39,418:run_EUC:INFO:sim_198101_198101_v111i:Executing: 1981-01-01 to 1981-01-31
+2020-05-18 18:46:39,420:run_EUC:INFO:sim_198101_198101_v111i:Longitudes: 190
+2020-05-18 18:46:39,421:run_EUC:INFO:sim_198101_198101_v111i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-18 18:46:39,421:run_EUC:INFO:sim_198101_198101_v111i:Depths: 2 dz=200 [25 to 225]
+2020-05-18 18:46:39,421:run_EUC:INFO:sim_198101_198101_v111i:Runtime: 10 days
+2020-05-18 18:46:39,422:run_EUC:INFO:sim_198101_198101_v111i:Timestep dt: 240 mins
+2020-05-18 18:46:39,422:run_EUC:INFO:sim_198101_198101_v111i:Output dt: 1 days
+2020-05-18 18:46:39,423:run_EUC:INFO:sim_198101_198101_v111i:Repeat release: 6 days
+2020-05-18 18:46:39,423:run_EUC:INFO:sim_198101_198101_v111i:Particles: Total: 10 :/repeat: 10
+2020-05-18 18:46:39,521:ofam_fieldset:INFO:Field import=b_grid, Chunks=((1,), (1,), (1750,), (1750,))
+2020-05-18 18:46:39,522:timed:INFO:ofam_fieldset: 0:0:00.10 total: 0.10 seconds.
+2020-05-19 15:15:48,319:run_EUC:INFO:sim_198101_198101_v139i:Executing: 1981-01-01 to 1981-01-31
+2020-05-19 15:15:48,323:run_EUC:INFO:sim_198101_198101_v139i:Longitudes: 190
+2020-05-19 15:15:48,324:run_EUC:INFO:sim_198101_198101_v139i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-19 15:15:48,325:run_EUC:INFO:sim_198101_198101_v139i:Depths: 2 dz=200 [25 to 225]
+2020-05-19 15:15:48,326:run_EUC:INFO:sim_198101_198101_v139i:Runtime: 10 days
+2020-05-19 15:15:48,327:run_EUC:INFO:sim_198101_198101_v139i:Timestep dt: 240 mins
+2020-05-19 15:15:48,328:run_EUC:INFO:sim_198101_198101_v139i:Output dt: 1 days
+2020-05-19 15:15:48,330:run_EUC:INFO:sim_198101_198101_v139i:Repeat release: 6 days
+2020-05-19 15:15:48,331:run_EUC:INFO:sim_198101_198101_v139i:Particles: Total: 10 :/repeat: 10
+2020-05-19 15:15:48,463:ofam_fieldset:INFO:Field import=b_grid, Chunks=((1,), (1,), (1750,), (1750,))
+2020-05-19 15:15:48,464:timed:INFO:ofam_fieldset: 0:0:00.13 total: 0.13 seconds.
+2020-05-19 15:15:56,227:timed:INFO:EUC_pset: 0:0:07.76 total: 7.76 seconds.
+2020-05-19 15:15:56,229:remove_westward_particles:DEBUG:Particles removed: 4
+2020-05-19 15:15:56,230:timed:INFO:remove_westward_particles: 0:0:00.00 total: 0.00 seconds.
+2020-05-19 15:15:56,232:EUC_particles:DEBUG:sim_198101_198101_v139i: Output file.
+2020-05-19 15:15:56,234:EUC_particles:INFO:sim_198101_198101_v139i:AdvectionRK4_3D + pset.Kernel(Age) + pset.Kernel(DeleteWestward)
+2020-05-19 15:15:56,393:EUC_particles:DEBUG:sim_198101_198101_v139i: Excecute particle set.
+2020-05-19 15:17:33,503:EUC_particles:INFO:sim_198101_198101_v139i: Completed.
+2020-05-19 15:17:33,586:timed:INFO:EUC_particles: 0:1:45.12 total: 105.12 seconds.
+2020-05-19 15:17:33,587:timed:INFO:run_EUC: 0:1:45.27 total: 105.27 seconds.
+2020-05-19 15:40:38,697:run_EUC:INFO:sim_198101_198103_v65i:Executing: 1981-01-01 to 1981-03-31
+2020-05-19 15:40:38,698:run_EUC:INFO:sim_198101_198103_v65i:Longitudes: 190
+2020-05-19 15:40:38,698:run_EUC:INFO:sim_198101_198103_v65i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-19 15:40:38,699:run_EUC:INFO:sim_198101_198103_v65i:Depths: 2 dz=200 [25 to 225]
+2020-05-19 15:40:38,699:run_EUC:INFO:sim_198101_198103_v65i:Runtime: 10 days
+2020-05-19 15:40:38,700:run_EUC:INFO:sim_198101_198103_v65i:Timestep dt: 240 mins
+2020-05-19 15:40:38,701:run_EUC:INFO:sim_198101_198103_v65i:Output dt: 1 days
+2020-05-19 15:40:38,701:run_EUC:INFO:sim_198101_198103_v65i:Repeat release: 6 days
+2020-05-19 15:40:38,702:run_EUC:INFO:sim_198101_198103_v65i:Particles: Total: 10 :/repeat: 10
+2020-05-19 15:40:38,934:ofam_fieldset:INFO:Field import=b_grid, Chunks={'U': {'st_ocean': 1, 'sw_ocean': 1, 'yt_ocean': 1728, 'yu_ocean': 1728, 'xt_ocean': 1728, 'xu_ocean': 1728}, 'V': {'st_ocean': 1, 'sw_ocean': 1, 'yt_ocean': 1728, 'yu_ocean': 1728, 'xt_ocean': 1728, 'xu_ocean': 1728}, 'W': {'st_ocean': 1, 'sw_ocean': 1, 'yt_ocean': 1728, 'yu_ocean': 1728, 'xt_ocean': 1728, 'xu_ocean': 1728}}
+2020-05-19 15:40:38,935:timed:INFO:ofam_fieldset: 0:0:00.23 total: 0.23 seconds.
+2020-05-19 15:43:29,319:run_EUC:INFO:sim_198101_198103_v19i:Executing: 1981-01-01 to 1981-03-31
+2020-05-19 15:43:29,319:run_EUC:INFO:sim_198101_198103_v19i:Longitudes: 190
+2020-05-19 15:43:29,320:run_EUC:INFO:sim_198101_198103_v19i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-19 15:43:29,321:run_EUC:INFO:sim_198101_198103_v19i:Depths: 2 dz=200 [25 to 225]
+2020-05-19 15:43:29,321:run_EUC:INFO:sim_198101_198103_v19i:Runtime: 10 days
+2020-05-19 15:43:29,322:run_EUC:INFO:sim_198101_198103_v19i:Timestep dt: 240 mins
+2020-05-19 15:43:29,322:run_EUC:INFO:sim_198101_198103_v19i:Output dt: 1 days
+2020-05-19 15:43:29,323:run_EUC:INFO:sim_198101_198103_v19i:Repeat release: 6 days
+2020-05-19 15:43:29,324:run_EUC:INFO:sim_198101_198103_v19i:Particles: Total: 10 :/repeat: 10
+2020-05-19 15:43:29,477:ofam_fieldset:INFO:Field import=b_grid, Chunks=((1,), (1,), (258,), (258,))
+2020-05-19 15:43:29,477:timed:INFO:ofam_fieldset: 0:0:00.15 total: 0.15 seconds.
+2020-05-19 15:43:37,437:timed:INFO:EUC_pset: 0:0:07.96 total: 7.96 seconds.
+2020-05-19 15:43:37,438:remove_westward_particles:DEBUG:Particles removed: 6
+2020-05-19 15:43:37,438:timed:INFO:remove_westward_particles: 0:0:00.00 total: 0.00 seconds.
+2020-05-19 15:43:37,439:EUC_particles:DEBUG:sim_198101_198103_v19i: Output file.
+2020-05-19 15:43:37,440:EUC_particles:INFO:sim_198101_198103_v19i:AdvectionRK4_3D + pset.Kernel(Age) + pset.Kernel(DeleteWestward)
+2020-05-19 15:43:37,598:EUC_particles:DEBUG:sim_198101_198103_v19i: Excecute particle set.
+2020-05-19 15:44:20,003:run_EUC:INFO:sim_198101_198103_v115i:Executing: 1981-01-01 to 1981-03-31
+2020-05-19 15:44:20,004:run_EUC:INFO:sim_198101_198103_v115i:Longitudes: 190
+2020-05-19 15:44:20,005:run_EUC:INFO:sim_198101_198103_v115i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-19 15:44:20,005:run_EUC:INFO:sim_198101_198103_v115i:Depths: 2 dz=200 [25 to 225]
+2020-05-19 15:44:20,006:run_EUC:INFO:sim_198101_198103_v115i:Runtime: 10 days
+2020-05-19 15:44:20,007:run_EUC:INFO:sim_198101_198103_v115i:Timestep dt: 240 mins
+2020-05-19 15:44:20,007:run_EUC:INFO:sim_198101_198103_v115i:Output dt: 1 days
+2020-05-19 15:44:20,008:run_EUC:INFO:sim_198101_198103_v115i:Repeat release: 6 days
+2020-05-19 15:44:20,009:run_EUC:INFO:sim_198101_198103_v115i:Particles: Total: 10 :/repeat: 10
+2020-05-19 15:44:20,246:ofam_fieldset:INFO:Field import=b_grid, Chunks={'st_ocean': 1, 'yu_ocean': 258, 'xu_ocean': 258}
+2020-05-19 15:44:20,246:timed:INFO:ofam_fieldset: 0:0:00.24 total: 0.24 seconds.
+2020-05-19 15:44:58,642:run_EUC:INFO:sim_198101_198103_v146i:Executing: 1981-01-01 to 1981-03-31
+2020-05-19 15:44:58,643:run_EUC:INFO:sim_198101_198103_v146i:Longitudes: 190
+2020-05-19 15:44:58,644:run_EUC:INFO:sim_198101_198103_v146i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-19 15:44:58,644:run_EUC:INFO:sim_198101_198103_v146i:Depths: 2 dz=200 [25 to 225]
+2020-05-19 15:44:58,645:run_EUC:INFO:sim_198101_198103_v146i:Runtime: 10 days
+2020-05-19 15:44:58,646:run_EUC:INFO:sim_198101_198103_v146i:Timestep dt: 240 mins
+2020-05-19 15:44:58,647:run_EUC:INFO:sim_198101_198103_v146i:Output dt: 1 days
+2020-05-19 15:44:58,647:run_EUC:INFO:sim_198101_198103_v146i:Repeat release: 6 days
+2020-05-19 15:44:58,648:run_EUC:INFO:sim_198101_198103_v146i:Particles: Total: 10 :/repeat: 10
+2020-05-19 15:44:58,796:ofam_fieldset:INFO:Field import=b_grid, Chunks=((1,), (258,), (258,))
+2020-05-19 15:44:58,797:timed:INFO:ofam_fieldset: 0:0:00.15 total: 0.15 seconds.
+2020-05-19 15:45:06,616:timed:INFO:EUC_pset: 0:0:07.82 total: 7.82 seconds.
+2020-05-19 15:45:06,618:remove_westward_particles:DEBUG:Particles removed: 6
+2020-05-19 15:45:06,618:timed:INFO:remove_westward_particles: 0:0:00.00 total: 0.00 seconds.
+2020-05-19 15:45:06,619:EUC_particles:DEBUG:sim_198101_198103_v146i: Output file.
+2020-05-19 15:45:06,620:EUC_particles:INFO:sim_198101_198103_v146i:AdvectionRK4_3D + pset.Kernel(Age) + pset.Kernel(DeleteWestward)
+2020-05-19 15:45:06,760:EUC_particles:DEBUG:sim_198101_198103_v146i: Excecute particle set.
+2020-05-19 15:46:56,833:EUC_particles:INFO:sim_198101_198103_v146i: Completed.
+2020-05-19 15:46:56,970:timed:INFO:EUC_particles: 0:1:58.17 total: 118.17 seconds.
+2020-05-19 15:46:56,973:timed:INFO:run_EUC: 0:1:58.33 total: 118.33 seconds.
+2020-05-19 15:47:45,292:run_EUC:INFO:sim_198101_198103_v115i:Executing: 1981-01-01 to 1981-03-31
+2020-05-19 15:47:45,295:run_EUC:INFO:sim_198101_198103_v115i:Longitudes: 190
+2020-05-19 15:47:45,297:run_EUC:INFO:sim_198101_198103_v115i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-19 15:47:45,298:run_EUC:INFO:sim_198101_198103_v115i:Depths: 2 dz=200 [25 to 225]
+2020-05-19 15:47:45,300:run_EUC:INFO:sim_198101_198103_v115i:Runtime: 10 days
+2020-05-19 15:47:45,301:run_EUC:INFO:sim_198101_198103_v115i:Timestep dt: 240 mins
+2020-05-19 15:47:45,303:run_EUC:INFO:sim_198101_198103_v115i:Output dt: 1 days
+2020-05-19 15:47:45,304:run_EUC:INFO:sim_198101_198103_v115i:Repeat release: 6 days
+2020-05-19 15:47:45,305:run_EUC:INFO:sim_198101_198103_v115i:Particles: Total: 10 :/repeat: 10
+2020-05-19 16:32:37,147:run_EUC:INFO:sim_198101_198103_v138i:Executing: 1981-01-01 to 1981-03-31
+2020-05-19 16:32:37,148:run_EUC:INFO:sim_198101_198103_v138i:Longitudes: 190
+2020-05-19 16:32:37,149:run_EUC:INFO:sim_198101_198103_v138i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-19 16:32:37,150:run_EUC:INFO:sim_198101_198103_v138i:Depths: 2 dz=200 [25 to 225]
+2020-05-19 16:32:37,151:run_EUC:INFO:sim_198101_198103_v138i:Runtime: 10 days
+2020-05-19 16:32:37,152:run_EUC:INFO:sim_198101_198103_v138i:Timestep dt: 240 mins
+2020-05-19 16:32:37,154:run_EUC:INFO:sim_198101_198103_v138i:Output dt: 1 days
+2020-05-19 16:32:37,155:run_EUC:INFO:sim_198101_198103_v138i:Repeat release: 6 days
+2020-05-19 16:32:37,156:run_EUC:INFO:sim_198101_198103_v138i:Particles: Total: 10 :/repeat: 10
+2020-05-19 16:32:53,454:run_EUC:INFO:sim_198101_198103_v69i:Executing: 1981-01-01 to 1981-03-31
+2020-05-19 16:32:53,455:run_EUC:INFO:sim_198101_198103_v69i:Longitudes: 190
+2020-05-19 16:32:53,456:run_EUC:INFO:sim_198101_198103_v69i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-19 16:32:53,457:run_EUC:INFO:sim_198101_198103_v69i:Depths: 2 dz=200 [25 to 225]
+2020-05-19 16:32:53,458:run_EUC:INFO:sim_198101_198103_v69i:Runtime: 10 days
+2020-05-19 16:32:53,459:run_EUC:INFO:sim_198101_198103_v69i:Timestep dt: 240 mins
+2020-05-19 16:32:53,460:run_EUC:INFO:sim_198101_198103_v69i:Output dt: 1 days
+2020-05-19 16:32:53,461:run_EUC:INFO:sim_198101_198103_v69i:Repeat release: 6 days
+2020-05-19 16:32:53,462:run_EUC:INFO:sim_198101_198103_v69i:Particles: Total: 10 :/repeat: 10
+2020-05-19 16:33:07,595:run_EUC:INFO:sim_198101_198103_v126i:Executing: 1981-01-01 to 1981-03-31
+2020-05-19 16:33:07,596:run_EUC:INFO:sim_198101_198103_v126i:Longitudes: 190
+2020-05-19 16:33:07,597:run_EUC:INFO:sim_198101_198103_v126i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-19 16:33:07,598:run_EUC:INFO:sim_198101_198103_v126i:Depths: 2 dz=200 [25 to 225]
+2020-05-19 16:33:07,599:run_EUC:INFO:sim_198101_198103_v126i:Runtime: 10 days
+2020-05-19 16:33:07,601:run_EUC:INFO:sim_198101_198103_v126i:Timestep dt: 240 mins
+2020-05-19 16:33:07,602:run_EUC:INFO:sim_198101_198103_v126i:Output dt: 1 days
+2020-05-19 16:33:07,603:run_EUC:INFO:sim_198101_198103_v126i:Repeat release: 6 days
+2020-05-19 16:33:07,604:run_EUC:INFO:sim_198101_198103_v126i:Particles: Total: 10 :/repeat: 10
+2020-05-19 16:33:25,219:run_EUC:INFO:sim_198101_198102_v41i:Executing: 1981-01-01 to 1981-02-28
+2020-05-19 16:33:25,221:run_EUC:INFO:sim_198101_198102_v41i:Longitudes: 190
+2020-05-19 16:33:25,222:run_EUC:INFO:sim_198101_198102_v41i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-19 16:33:25,223:run_EUC:INFO:sim_198101_198102_v41i:Depths: 2 dz=200 [25 to 225]
+2020-05-19 16:33:25,224:run_EUC:INFO:sim_198101_198102_v41i:Runtime: 10 days
+2020-05-19 16:33:25,225:run_EUC:INFO:sim_198101_198102_v41i:Timestep dt: 240 mins
+2020-05-19 16:33:25,226:run_EUC:INFO:sim_198101_198102_v41i:Output dt: 1 days
+2020-05-19 16:33:25,227:run_EUC:INFO:sim_198101_198102_v41i:Repeat release: 6 days
+2020-05-19 16:33:25,228:run_EUC:INFO:sim_198101_198102_v41i:Particles: Total: 10 :/repeat: 10
+2020-05-19 16:33:30,129:run_EUC:INFO:sim_198101_198101_v190i:Executing: 1981-01-01 to 1981-01-31
+2020-05-19 16:33:30,130:run_EUC:INFO:sim_198101_198101_v190i:Longitudes: 190
+2020-05-19 16:33:30,131:run_EUC:INFO:sim_198101_198101_v190i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-19 16:33:30,132:run_EUC:INFO:sim_198101_198101_v190i:Depths: 2 dz=200 [25 to 225]
+2020-05-19 16:33:30,133:run_EUC:INFO:sim_198101_198101_v190i:Runtime: 10 days
+2020-05-19 16:33:30,135:run_EUC:INFO:sim_198101_198101_v190i:Timestep dt: 240 mins
+2020-05-19 16:33:30,136:run_EUC:INFO:sim_198101_198101_v190i:Output dt: 1 days
+2020-05-19 16:33:30,136:run_EUC:INFO:sim_198101_198101_v190i:Repeat release: 6 days
+2020-05-19 16:33:30,137:run_EUC:INFO:sim_198101_198101_v190i:Particles: Total: 10 :/repeat: 10
+2020-05-19 16:33:50,288:run_EUC:INFO:sim_198101_198101_v151i:Executing: 1981-01-01 to 1981-01-31
+2020-05-19 16:33:50,289:run_EUC:INFO:sim_198101_198101_v151i:Longitudes: 190
+2020-05-19 16:33:50,290:run_EUC:INFO:sim_198101_198101_v151i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-19 16:33:50,291:run_EUC:INFO:sim_198101_198101_v151i:Depths: 2 dz=200 [25 to 225]
+2020-05-19 16:33:50,293:run_EUC:INFO:sim_198101_198101_v151i:Runtime: 10 days
+2020-05-19 16:33:50,293:run_EUC:INFO:sim_198101_198101_v151i:Timestep dt: 240 mins
+2020-05-19 16:33:50,294:run_EUC:INFO:sim_198101_198101_v151i:Output dt: 1 days
+2020-05-19 16:33:50,296:run_EUC:INFO:sim_198101_198101_v151i:Repeat release: 6 days
+2020-05-19 16:33:50,297:run_EUC:INFO:sim_198101_198101_v151i:Particles: Total: 10 :/repeat: 10
+2020-05-19 16:34:22,753:run_EUC:INFO:sim_198101_198101_v39i:Executing: 1981-01-01 to 1981-01-31
+2020-05-19 16:34:22,754:run_EUC:INFO:sim_198101_198101_v39i:Longitudes: 190
+2020-05-19 16:34:22,755:run_EUC:INFO:sim_198101_198101_v39i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-19 16:34:22,757:run_EUC:INFO:sim_198101_198101_v39i:Depths: 2 dz=200 [25 to 225]
+2020-05-19 16:34:22,758:run_EUC:INFO:sim_198101_198101_v39i:Runtime: 10 days
+2020-05-19 16:34:22,759:run_EUC:INFO:sim_198101_198101_v39i:Timestep dt: 240 mins
+2020-05-19 16:34:22,760:run_EUC:INFO:sim_198101_198101_v39i:Output dt: 1 days
+2020-05-19 16:34:22,761:run_EUC:INFO:sim_198101_198101_v39i:Repeat release: 6 days
+2020-05-19 16:34:22,762:run_EUC:INFO:sim_198101_198101_v39i:Particles: Total: 10 :/repeat: 10
+2020-05-19 16:34:34,712:run_EUC:INFO:sim_198101_198101_v7i:Executing: 1981-01-01 to 1981-01-31
+2020-05-19 16:34:34,713:run_EUC:INFO:sim_198101_198101_v7i:Longitudes: 190
+2020-05-19 16:34:34,714:run_EUC:INFO:sim_198101_198101_v7i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-19 16:34:34,715:run_EUC:INFO:sim_198101_198101_v7i:Depths: 2 dz=200 [25 to 225]
+2020-05-19 16:34:34,716:run_EUC:INFO:sim_198101_198101_v7i:Runtime: 10 days
+2020-05-19 16:34:34,717:run_EUC:INFO:sim_198101_198101_v7i:Timestep dt: 240 mins
+2020-05-19 16:34:34,719:run_EUC:INFO:sim_198101_198101_v7i:Output dt: 1 days
+2020-05-19 16:34:34,720:run_EUC:INFO:sim_198101_198101_v7i:Repeat release: 6 days
+2020-05-19 16:34:34,720:run_EUC:INFO:sim_198101_198101_v7i:Particles: Total: 10 :/repeat: 10
+2020-05-19 16:35:09,510:run_EUC:INFO:sim_198101_198101_v94i:Executing: 1981-01-01 to 1981-01-31
+2020-05-19 16:35:09,512:run_EUC:INFO:sim_198101_198101_v94i:Longitudes: 190
+2020-05-19 16:35:09,512:run_EUC:INFO:sim_198101_198101_v94i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-19 16:35:09,514:run_EUC:INFO:sim_198101_198101_v94i:Depths: 2 dz=200 [25 to 225]
+2020-05-19 16:35:09,515:run_EUC:INFO:sim_198101_198101_v94i:Runtime: 10 days
+2020-05-19 16:35:09,516:run_EUC:INFO:sim_198101_198101_v94i:Timestep dt: 240 mins
+2020-05-19 16:35:09,517:run_EUC:INFO:sim_198101_198101_v94i:Output dt: 1 days
+2020-05-19 16:35:09,518:run_EUC:INFO:sim_198101_198101_v94i:Repeat release: 6 days
+2020-05-19 16:35:09,520:run_EUC:INFO:sim_198101_198101_v94i:Particles: Total: 10 :/repeat: 10
+2020-05-19 16:35:38,590:run_EUC:INFO:sim_198101_198101_v146i:Executing: 1981-01-01 to 1981-01-31
+2020-05-19 16:35:38,591:run_EUC:INFO:sim_198101_198101_v146i:Longitudes: 190
+2020-05-19 16:35:38,592:run_EUC:INFO:sim_198101_198101_v146i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-19 16:35:38,594:run_EUC:INFO:sim_198101_198101_v146i:Depths: 2 dz=200 [25 to 225]
+2020-05-19 16:35:38,594:run_EUC:INFO:sim_198101_198101_v146i:Runtime: 10 days
+2020-05-19 16:35:38,595:run_EUC:INFO:sim_198101_198101_v146i:Timestep dt: 240 mins
+2020-05-19 16:35:38,596:run_EUC:INFO:sim_198101_198101_v146i:Output dt: 1 days
+2020-05-19 16:35:38,598:run_EUC:INFO:sim_198101_198101_v146i:Repeat release: 6 days
+2020-05-19 16:35:38,599:run_EUC:INFO:sim_198101_198101_v146i:Particles: Total: 10 :/repeat: 10
+2020-05-19 16:37:14,896:run_EUC:INFO:sim_198101_198101_v123i:Executing: 1981-01-01 to 1981-01-31
+2020-05-19 16:37:14,897:run_EUC:INFO:sim_198101_198101_v123i:Longitudes: 190
+2020-05-19 16:37:14,898:run_EUC:INFO:sim_198101_198101_v123i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-19 16:37:14,899:run_EUC:INFO:sim_198101_198101_v123i:Depths: 2 dz=200 [25 to 225]
+2020-05-19 16:37:14,900:run_EUC:INFO:sim_198101_198101_v123i:Runtime: 10 days
+2020-05-19 16:37:14,901:run_EUC:INFO:sim_198101_198101_v123i:Timestep dt: 240 mins
+2020-05-19 16:37:14,902:run_EUC:INFO:sim_198101_198101_v123i:Output dt: 1 days
+2020-05-19 16:37:14,903:run_EUC:INFO:sim_198101_198101_v123i:Repeat release: 6 days
+2020-05-19 16:37:14,905:run_EUC:INFO:sim_198101_198101_v123i:Particles: Total: 10 :/repeat: 10
+2020-05-19 16:37:27,119:run_EUC:INFO:sim_198101_198101_v7i:Executing: 1981-01-01 to 1981-01-31
+2020-05-19 16:37:27,120:run_EUC:INFO:sim_198101_198101_v7i:Longitudes: 190
+2020-05-19 16:37:27,121:run_EUC:INFO:sim_198101_198101_v7i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-19 16:37:27,123:run_EUC:INFO:sim_198101_198101_v7i:Depths: 2 dz=200 [25 to 225]
+2020-05-19 16:37:27,124:run_EUC:INFO:sim_198101_198101_v7i:Runtime: 10 days
+2020-05-19 16:37:27,126:run_EUC:INFO:sim_198101_198101_v7i:Timestep dt: 240 mins
+2020-05-19 16:37:27,126:run_EUC:INFO:sim_198101_198101_v7i:Output dt: 1 days
+2020-05-19 16:37:27,127:run_EUC:INFO:sim_198101_198101_v7i:Repeat release: 6 days
+2020-05-19 16:37:27,128:run_EUC:INFO:sim_198101_198101_v7i:Particles: Total: 10 :/repeat: 10
+2020-05-19 16:37:48,459:run_EUC:INFO:sim_198101_198101_v180i:Executing: 1981-01-01 to 1981-01-31
+2020-05-19 16:37:48,460:run_EUC:INFO:sim_198101_198101_v180i:Longitudes: 190
+2020-05-19 16:37:48,461:run_EUC:INFO:sim_198101_198101_v180i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-19 16:37:48,462:run_EUC:INFO:sim_198101_198101_v180i:Depths: 2 dz=200 [25 to 225]
+2020-05-19 16:37:48,463:run_EUC:INFO:sim_198101_198101_v180i:Runtime: 10 days
+2020-05-19 16:37:48,464:run_EUC:INFO:sim_198101_198101_v180i:Timestep dt: 240 mins
+2020-05-19 16:37:48,465:run_EUC:INFO:sim_198101_198101_v180i:Output dt: 1 days
+2020-05-19 16:37:48,466:run_EUC:INFO:sim_198101_198101_v180i:Repeat release: 6 days
+2020-05-19 16:37:48,467:run_EUC:INFO:sim_198101_198101_v180i:Particles: Total: 10 :/repeat: 10
+2020-05-19 16:39:16,247:run_EUC:INFO:sim_198101_198101_v158i:Executing: 1981-01-01 to 1981-01-31
+2020-05-19 16:39:16,249:run_EUC:INFO:sim_198101_198101_v158i:Longitudes: 190
+2020-05-19 16:39:16,250:run_EUC:INFO:sim_198101_198101_v158i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-19 16:39:16,252:run_EUC:INFO:sim_198101_198101_v158i:Depths: 2 dz=200 [25 to 225]
+2020-05-19 16:39:16,253:run_EUC:INFO:sim_198101_198101_v158i:Runtime: 10 days
+2020-05-19 16:39:16,254:run_EUC:INFO:sim_198101_198101_v158i:Timestep dt: 240 mins
+2020-05-19 16:39:16,255:run_EUC:INFO:sim_198101_198101_v158i:Output dt: 1 days
+2020-05-19 16:39:16,256:run_EUC:INFO:sim_198101_198101_v158i:Repeat release: 6 days
+2020-05-19 16:39:16,257:run_EUC:INFO:sim_198101_198101_v158i:Particles: Total: 10 :/repeat: 10
+2020-05-19 16:40:57,338:run_EUC:INFO:sim_198101_198101_v74i:Executing: 1981-01-01 to 1981-01-31
+2020-05-19 16:40:57,340:run_EUC:INFO:sim_198101_198101_v74i:Longitudes: 190
+2020-05-19 16:40:57,340:run_EUC:INFO:sim_198101_198101_v74i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-19 16:40:57,341:run_EUC:INFO:sim_198101_198101_v74i:Depths: 2 dz=200 [25 to 225]
+2020-05-19 16:40:57,341:run_EUC:INFO:sim_198101_198101_v74i:Runtime: 10 days
+2020-05-19 16:40:57,342:run_EUC:INFO:sim_198101_198101_v74i:Timestep dt: 240 mins
+2020-05-19 16:40:57,343:run_EUC:INFO:sim_198101_198101_v74i:Output dt: 1 days
+2020-05-19 16:40:57,343:run_EUC:INFO:sim_198101_198101_v74i:Repeat release: 6 days
+2020-05-19 16:40:57,344:run_EUC:INFO:sim_198101_198101_v74i:Particles: Total: 10 :/repeat: 10
+2020-05-19 16:41:33,135:run_EUC:INFO:sim_198101_198101_v112i:Executing: 1981-01-01 to 1981-01-31
+2020-05-19 16:41:33,136:run_EUC:INFO:sim_198101_198101_v112i:Longitudes: 190
+2020-05-19 16:41:33,137:run_EUC:INFO:sim_198101_198101_v112i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-19 16:41:33,138:run_EUC:INFO:sim_198101_198101_v112i:Depths: 2 dz=200 [25 to 225]
+2020-05-19 16:41:33,140:run_EUC:INFO:sim_198101_198101_v112i:Runtime: 10 days
+2020-05-19 16:41:33,141:run_EUC:INFO:sim_198101_198101_v112i:Timestep dt: 240 mins
+2020-05-19 16:41:33,142:run_EUC:INFO:sim_198101_198101_v112i:Output dt: 1 days
+2020-05-19 16:41:33,143:run_EUC:INFO:sim_198101_198101_v112i:Repeat release: 6 days
+2020-05-19 16:41:33,144:run_EUC:INFO:sim_198101_198101_v112i:Particles: Total: 10 :/repeat: 10
+2020-05-19 16:43:21,034:run_EUC:INFO:sim_198101_198101_v159i:Executing: 1981-01-01 to 1981-01-31
+2020-05-19 16:43:21,035:run_EUC:INFO:sim_198101_198101_v159i:Longitudes: 190
+2020-05-19 16:43:21,036:run_EUC:INFO:sim_198101_198101_v159i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-19 16:43:21,037:run_EUC:INFO:sim_198101_198101_v159i:Depths: 2 dz=200 [25 to 225]
+2020-05-19 16:43:21,038:run_EUC:INFO:sim_198101_198101_v159i:Runtime: 10 days
+2020-05-19 16:43:21,039:run_EUC:INFO:sim_198101_198101_v159i:Timestep dt: 240 mins
+2020-05-19 16:43:21,041:run_EUC:INFO:sim_198101_198101_v159i:Output dt: 1 days
+2020-05-19 16:43:21,042:run_EUC:INFO:sim_198101_198101_v159i:Repeat release: 6 days
+2020-05-19 16:43:21,044:run_EUC:INFO:sim_198101_198101_v159i:Particles: Total: 10 :/repeat: 10
+2020-05-19 16:43:31,939:run_EUC:INFO:sim_198101_198101_v110i:Executing: 1981-01-01 to 1981-01-31
+2020-05-19 16:43:31,941:run_EUC:INFO:sim_198101_198101_v110i:Longitudes: 190
+2020-05-19 16:43:31,943:run_EUC:INFO:sim_198101_198101_v110i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-19 16:43:31,945:run_EUC:INFO:sim_198101_198101_v110i:Depths: 2 dz=200 [25 to 225]
+2020-05-19 16:43:31,946:run_EUC:INFO:sim_198101_198101_v110i:Runtime: 10 days
+2020-05-19 16:43:31,947:run_EUC:INFO:sim_198101_198101_v110i:Timestep dt: 240 mins
+2020-05-19 16:43:31,948:run_EUC:INFO:sim_198101_198101_v110i:Output dt: 1 days
+2020-05-19 16:43:31,949:run_EUC:INFO:sim_198101_198101_v110i:Repeat release: 6 days
+2020-05-19 16:43:31,950:run_EUC:INFO:sim_198101_198101_v110i:Particles: Total: 10 :/repeat: 10
+2020-05-19 16:43:32,048:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-19 16:43:32,049:timed:INFO:ofam_fieldset: 0:0:00.10 total: 0.10 seconds.
+2020-05-19 16:43:40,172:timed:INFO:EUC_pset: 0:0:08.12 total: 8.12 seconds.
+2020-05-19 16:43:40,174:remove_westward_particles:DEBUG:Particles removed: 4
+2020-05-19 16:43:40,176:timed:INFO:remove_westward_particles: 0:0:00.00 total: 0.00 seconds.
+2020-05-19 16:43:40,177:EUC_particles:DEBUG:sim_198101_198101_v110i: Output file.
+2020-05-19 16:43:40,178:EUC_particles:INFO:sim_198101_198101_v110i:AdvectionRK4_3D + pset.Kernel(Age) + pset.Kernel(DeleteWestward)
+2020-05-19 16:43:40,332:EUC_particles:DEBUG:sim_198101_198101_v110i: Excecute particle set.
+2020-05-19 16:47:22,476:EUC_particles:INFO:sim_198101_198101_v110i: Completed.
+2020-05-19 16:47:22,558:timed:INFO:EUC_particles: 0:3:50.51 total: 230.51 seconds.
+2020-05-19 16:47:22,560:timed:INFO:run_EUC: 0:3:50.62 total: 230.62 seconds.
+2020-05-19 16:52:08,706:run_EUC:INFO:sim_198101_198101_v26i:Executing: 1981-01-01 to 1981-01-31
+2020-05-19 16:52:08,707:run_EUC:INFO:sim_198101_198101_v26i:Longitudes: 190
+2020-05-19 16:52:08,709:run_EUC:INFO:sim_198101_198101_v26i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-19 16:52:08,710:run_EUC:INFO:sim_198101_198101_v26i:Depths: 2 dz=200 [25 to 225]
+2020-05-19 16:52:08,711:run_EUC:INFO:sim_198101_198101_v26i:Runtime: 10 days
+2020-05-19 16:52:08,712:run_EUC:INFO:sim_198101_198101_v26i:Timestep dt: 240 mins
+2020-05-19 16:52:08,714:run_EUC:INFO:sim_198101_198101_v26i:Output dt: 1 days
+2020-05-19 16:52:08,715:run_EUC:INFO:sim_198101_198101_v26i:Repeat release: 6 days
+2020-05-19 16:52:08,716:run_EUC:INFO:sim_198101_198101_v26i:Particles: Total: 10 :/repeat: 10
+2020-05-19 16:52:08,826:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-19 16:52:08,828:timed:INFO:ofam_fieldset: 0:0:00.11 total: 0.11 seconds.
+2020-05-19 16:52:16,120:run_EUC:INFO:sim_198101_198101_v156i:Executing: 1981-01-01 to 1981-01-31
+2020-05-19 16:52:16,122:run_EUC:INFO:sim_198101_198101_v156i:Longitudes: 190
+2020-05-19 16:52:16,123:run_EUC:INFO:sim_198101_198101_v156i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-19 16:52:16,124:run_EUC:INFO:sim_198101_198101_v156i:Depths: 2 dz=200 [25 to 225]
+2020-05-19 16:52:16,125:run_EUC:INFO:sim_198101_198101_v156i:Runtime: 10 days
+2020-05-19 16:52:16,126:run_EUC:INFO:sim_198101_198101_v156i:Timestep dt: 240 mins
+2020-05-19 16:52:16,127:run_EUC:INFO:sim_198101_198101_v156i:Output dt: 1 days
+2020-05-19 16:52:16,128:run_EUC:INFO:sim_198101_198101_v156i:Repeat release: 6 days
+2020-05-19 16:52:16,129:run_EUC:INFO:sim_198101_198101_v156i:Particles: Total: 10 :/repeat: 10
+2020-05-19 16:52:16,219:ofam_fieldset:INFO:Field import=b_grid, Chunks=((1,), 1, (258,), (258,))
+2020-05-19 16:52:16,221:timed:INFO:ofam_fieldset: 0:0:00.09 total: 0.09 seconds.
+2020-05-19 16:52:34,875:run_EUC:INFO:sim_198101_198101_v108i:Executing: 1981-01-01 to 1981-01-31
+2020-05-19 16:52:34,876:run_EUC:INFO:sim_198101_198101_v108i:Longitudes: 190
+2020-05-19 16:52:34,877:run_EUC:INFO:sim_198101_198101_v108i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-19 16:52:34,878:run_EUC:INFO:sim_198101_198101_v108i:Depths: 2 dz=200 [25 to 225]
+2020-05-19 16:52:34,879:run_EUC:INFO:sim_198101_198101_v108i:Runtime: 10 days
+2020-05-19 16:52:34,880:run_EUC:INFO:sim_198101_198101_v108i:Timestep dt: 240 mins
+2020-05-19 16:52:34,882:run_EUC:INFO:sim_198101_198101_v108i:Output dt: 1 days
+2020-05-19 16:52:34,883:run_EUC:INFO:sim_198101_198101_v108i:Repeat release: 6 days
+2020-05-19 16:52:34,883:run_EUC:INFO:sim_198101_198101_v108i:Particles: Total: 10 :/repeat: 10
+2020-05-19 16:52:34,974:ofam_fieldset:INFO:Field import=b_grid, Chunks={'Time': 1, 'sw_ocean': 1, 'xu_ocean': 258, 'yu_ocean': 258}
+2020-05-19 16:52:34,975:timed:INFO:ofam_fieldset: 0:0:00.09 total: 0.09 seconds.
+2020-05-19 17:18:58,642:run_EUC:INFO:sim_198101_198101_v151i:Executing: 1981-01-01 to 1981-01-31
+2020-05-19 17:18:58,644:run_EUC:INFO:sim_198101_198101_v151i:Longitudes: 190
+2020-05-19 17:18:58,645:run_EUC:INFO:sim_198101_198101_v151i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-19 17:18:58,646:run_EUC:INFO:sim_198101_198101_v151i:Depths: 2 dz=200 [25 to 225]
+2020-05-19 17:18:58,647:run_EUC:INFO:sim_198101_198101_v151i:Runtime: 10 days
+2020-05-19 17:18:58,648:run_EUC:INFO:sim_198101_198101_v151i:Timestep dt: 240 mins
+2020-05-19 17:18:58,650:run_EUC:INFO:sim_198101_198101_v151i:Output dt: 1 days
+2020-05-19 17:18:58,651:run_EUC:INFO:sim_198101_198101_v151i:Repeat release: 6 days
+2020-05-19 17:18:58,655:run_EUC:INFO:sim_198101_198101_v151i:Particles: Total: 10 :/repeat: 10
+2020-05-19 17:21:04,785:run_EUC:INFO:sim_198101_198101_v31i:Executing: 1981-01-01 to 1981-01-31
+2020-05-19 17:21:04,786:run_EUC:INFO:sim_198101_198101_v31i:Longitudes: 190
+2020-05-19 17:21:04,787:run_EUC:INFO:sim_198101_198101_v31i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-19 17:21:04,788:run_EUC:INFO:sim_198101_198101_v31i:Depths: 2 dz=200 [25 to 225]
+2020-05-19 17:21:04,790:run_EUC:INFO:sim_198101_198101_v31i:Runtime: 10 days
+2020-05-19 17:21:04,791:run_EUC:INFO:sim_198101_198101_v31i:Timestep dt: 240 mins
+2020-05-19 17:21:04,792:run_EUC:INFO:sim_198101_198101_v31i:Output dt: 1 days
+2020-05-19 17:21:04,793:run_EUC:INFO:sim_198101_198101_v31i:Repeat release: 6 days
+2020-05-19 17:21:04,794:run_EUC:INFO:sim_198101_198101_v31i:Particles: Total: 10 :/repeat: 10
+2020-05-19 17:21:30,953:run_EUC:INFO:sim_198101_198101_v75i:Executing: 1981-01-01 to 1981-01-31
+2020-05-19 17:21:30,954:run_EUC:INFO:sim_198101_198101_v75i:Longitudes: 190
+2020-05-19 17:21:30,955:run_EUC:INFO:sim_198101_198101_v75i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-19 17:21:30,957:run_EUC:INFO:sim_198101_198101_v75i:Depths: 2 dz=200 [25 to 225]
+2020-05-19 17:21:30,958:run_EUC:INFO:sim_198101_198101_v75i:Runtime: 10 days
+2020-05-19 17:21:30,959:run_EUC:INFO:sim_198101_198101_v75i:Timestep dt: 240 mins
+2020-05-19 17:21:30,961:run_EUC:INFO:sim_198101_198101_v75i:Output dt: 1 days
+2020-05-19 17:21:30,962:run_EUC:INFO:sim_198101_198101_v75i:Repeat release: 6 days
+2020-05-19 17:21:30,962:run_EUC:INFO:sim_198101_198101_v75i:Particles: Total: 10 :/repeat: 10
+2020-05-19 17:31:42,140:run_EUC:INFO:sim_198101_198101_v199i:Executing: 1981-01-01 to 1981-01-31
+2020-05-19 17:31:42,141:run_EUC:INFO:sim_198101_198101_v199i:Longitudes: 190
+2020-05-19 17:31:42,143:run_EUC:INFO:sim_198101_198101_v199i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-19 17:31:42,144:run_EUC:INFO:sim_198101_198101_v199i:Depths: 2 dz=200 [25 to 225]
+2020-05-19 17:31:42,145:run_EUC:INFO:sim_198101_198101_v199i:Runtime: 10 days
+2020-05-19 17:31:42,146:run_EUC:INFO:sim_198101_198101_v199i:Timestep dt: 240 mins
+2020-05-19 17:31:42,147:run_EUC:INFO:sim_198101_198101_v199i:Output dt: 1 days
+2020-05-19 17:31:42,148:run_EUC:INFO:sim_198101_198101_v199i:Repeat release: 6 days
+2020-05-19 17:31:42,149:run_EUC:INFO:sim_198101_198101_v199i:Particles: Total: 10 :/repeat: 10
+2020-05-19 17:31:52,651:run_EUC:INFO:sim_198101_198101_v31i:Executing: 1981-01-01 to 1981-01-31
+2020-05-19 17:31:52,654:run_EUC:INFO:sim_198101_198101_v31i:Longitudes: 190
+2020-05-19 17:31:52,654:run_EUC:INFO:sim_198101_198101_v31i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-19 17:31:52,655:run_EUC:INFO:sim_198101_198101_v31i:Depths: 2 dz=200 [25 to 225]
+2020-05-19 17:31:52,656:run_EUC:INFO:sim_198101_198101_v31i:Runtime: 10 days
+2020-05-19 17:31:52,656:run_EUC:INFO:sim_198101_198101_v31i:Timestep dt: 240 mins
+2020-05-19 17:31:52,657:run_EUC:INFO:sim_198101_198101_v31i:Output dt: 1 days
+2020-05-19 17:31:52,657:run_EUC:INFO:sim_198101_198101_v31i:Repeat release: 6 days
+2020-05-19 17:31:52,658:run_EUC:INFO:sim_198101_198101_v31i:Particles: Total: 10 :/repeat: 10
+2020-05-19 17:34:06,271:run_EUC:INFO:sim_198101_198101_v84i:Executing: 1981-01-01 to 1981-01-31
+2020-05-19 17:34:06,272:run_EUC:INFO:sim_198101_198101_v84i:Longitudes: 190
+2020-05-19 17:34:06,274:run_EUC:INFO:sim_198101_198101_v84i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-19 17:34:06,275:run_EUC:INFO:sim_198101_198101_v84i:Depths: 2 dz=200 [25 to 225]
+2020-05-19 17:34:06,275:run_EUC:INFO:sim_198101_198101_v84i:Runtime: 10 days
+2020-05-19 17:34:06,277:run_EUC:INFO:sim_198101_198101_v84i:Timestep dt: 240 mins
+2020-05-19 17:34:06,278:run_EUC:INFO:sim_198101_198101_v84i:Output dt: 1 days
+2020-05-19 17:34:06,279:run_EUC:INFO:sim_198101_198101_v84i:Repeat release: 6 days
+2020-05-19 17:34:06,280:run_EUC:INFO:sim_198101_198101_v84i:Particles: Total: 10 :/repeat: 10
+2020-05-19 17:35:26,875:ofam_fieldset:INFO:Field import=xarray, Chunks={'Time': 1, 'sw_ocean': 1, 'xu_ocean': 258, 'yu_ocean': 258}
+2020-05-19 17:35:26,922:timed:INFO:ofam_fieldset: 0:1:20.64 total: 80.64 seconds.
+2020-05-19 17:35:26,936:timed:INFO:EUC_pset: 0:0:00.01 total: 0.01 seconds.
+2020-05-19 17:35:26,940:remove_westward_particles:DEBUG:Particles removed: 4
+2020-05-19 17:35:26,941:timed:INFO:remove_westward_particles: 0:0:00.00 total: 0.00 seconds.
+2020-05-19 17:35:26,942:EUC_particles:DEBUG:sim_198101_198101_v84i: Output file.
+2020-05-19 17:35:26,945:EUC_particles:INFO:sim_198101_198101_v84i:AdvectionRK4_3D + pset.Kernel(Age) + pset.Kernel(DeleteWestward)
+2020-05-19 17:35:27,215:EUC_particles:DEBUG:sim_198101_198101_v84i: Excecute particle set.
+2020-05-19 17:48:00,257:run_EUC:INFO:sim_198101_198101_v82i:Executing: 1981-01-01 to 1981-01-31
+2020-05-19 17:48:00,262:run_EUC:INFO:sim_198101_198101_v82i:Longitudes: 190
+2020-05-19 17:48:00,262:run_EUC:INFO:sim_198101_198101_v82i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-19 17:48:00,263:run_EUC:INFO:sim_198101_198101_v82i:Depths: 2 dz=200 [25 to 225]
+2020-05-19 17:48:00,263:run_EUC:INFO:sim_198101_198101_v82i:Runtime: 2 days
+2020-05-19 17:48:00,264:run_EUC:INFO:sim_198101_198101_v82i:Timestep dt: 240 mins
+2020-05-19 17:48:00,265:run_EUC:INFO:sim_198101_198101_v82i:Output dt: 1 days
+2020-05-19 17:48:00,265:run_EUC:INFO:sim_198101_198101_v82i:Repeat release: 6 days
+2020-05-19 17:48:00,266:run_EUC:INFO:sim_198101_198101_v82i:Particles: Total: 0 :/repeat: 10
+2020-05-19 17:48:08,713:EUC_particles:INFO:sim_198101_198101_v84i: Completed.
+2020-05-19 17:48:08,957:timed:INFO:EUC_particles: 0:12:42.03 total: 762.03 seconds.
+2020-05-19 17:48:08,964:timed:INFO:run_EUC: 0:14:02.69 total: 842.69 seconds.
+2020-05-19 17:48:42,524:run_EUC:INFO:sim_198101_198101_v20i:Executing: 1981-01-01 to 1981-01-31
+2020-05-19 17:48:42,536:run_EUC:INFO:sim_198101_198101_v20i:Longitudes: 190
+2020-05-19 17:48:42,537:run_EUC:INFO:sim_198101_198101_v20i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-19 17:48:42,538:run_EUC:INFO:sim_198101_198101_v20i:Depths: 2 dz=200 [25 to 225]
+2020-05-19 17:48:42,539:run_EUC:INFO:sim_198101_198101_v20i:Runtime: 2 days
+2020-05-19 17:48:42,539:run_EUC:INFO:sim_198101_198101_v20i:Timestep dt: 240 mins
+2020-05-19 17:48:42,540:run_EUC:INFO:sim_198101_198101_v20i:Output dt: 1 days
+2020-05-19 17:48:42,541:run_EUC:INFO:sim_198101_198101_v20i:Repeat release: 6 days
+2020-05-19 17:48:42,541:run_EUC:INFO:sim_198101_198101_v20i:Particles: Total: 0 :/repeat: 10
+2020-05-19 17:49:55,493:ofam_fieldset:INFO:Field import=xarray, Chunks={'Time': 1, 'sw_ocean': 1, 'xu_ocean': 258, 'yu_ocean': 258}
+2020-05-19 17:49:55,509:timed:INFO:ofam_fieldset: 0:1:12.97 total: 72.97 seconds.
+2020-05-19 17:49:55,541:timed:INFO:EUC_pset: 0:0:00.03 total: 0.03 seconds.
+2020-05-19 17:49:55,548:remove_westward_particles:DEBUG:Particles removed: 4
+2020-05-19 17:49:55,550:timed:INFO:remove_westward_particles: 0:0:00.01 total: 0.01 seconds.
+2020-05-19 17:49:55,553:EUC_particles:DEBUG:sim_198101_198101_v20i: Output file.
+2020-05-19 17:49:55,567:EUC_particles:INFO:sim_198101_198101_v20i:AdvectionRK4_3D + pset.Kernel(Age) + pset.Kernel(DeleteWestward)
+2020-05-19 17:49:56,224:EUC_particles:DEBUG:sim_198101_198101_v20i: Excecute particle set.
+2020-05-19 17:52:02,590:EUC_particles:INFO:sim_198101_198101_v20i: Completed.
+2020-05-19 17:52:02,909:timed:INFO:EUC_particles: 0:2:07.40 total: 127.40 seconds.
+2020-05-19 17:52:02,910:timed:INFO:run_EUC: 0:3:20.40 total: 200.40 seconds.
+2020-05-19 17:52:43,720:run_EUC:INFO:sim_198101_198101_v94i:Executing: 1981-01-01 to 1981-01-31
+2020-05-19 17:52:43,722:run_EUC:INFO:sim_198101_198101_v94i:Longitudes: 190
+2020-05-19 17:52:43,722:run_EUC:INFO:sim_198101_198101_v94i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-19 17:52:43,723:run_EUC:INFO:sim_198101_198101_v94i:Depths: 2 dz=200 [25 to 225]
+2020-05-19 17:52:43,723:run_EUC:INFO:sim_198101_198101_v94i:Runtime: 2 days
+2020-05-19 17:52:43,724:run_EUC:INFO:sim_198101_198101_v94i:Timestep dt: 240 mins
+2020-05-19 17:52:43,725:run_EUC:INFO:sim_198101_198101_v94i:Output dt: 1 days
+2020-05-19 17:52:43,725:run_EUC:INFO:sim_198101_198101_v94i:Repeat release: 6 days
+2020-05-19 17:52:43,726:run_EUC:INFO:sim_198101_198101_v94i:Particles: Total: 0 :/repeat: 10
+2020-05-19 17:52:56,688:run_EUC:INFO:sim_198101_198101_v147i:Executing: 1981-01-01 to 1981-01-31
+2020-05-19 17:52:56,693:run_EUC:INFO:sim_198101_198101_v147i:Longitudes: 190
+2020-05-19 17:52:56,693:run_EUC:INFO:sim_198101_198101_v147i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-19 17:52:56,694:run_EUC:INFO:sim_198101_198101_v147i:Depths: 2 dz=200 [25 to 225]
+2020-05-19 17:52:56,695:run_EUC:INFO:sim_198101_198101_v147i:Runtime: 2 days
+2020-05-19 17:52:56,696:run_EUC:INFO:sim_198101_198101_v147i:Timestep dt: 240 mins
+2020-05-19 17:52:56,698:run_EUC:INFO:sim_198101_198101_v147i:Output dt: 1 days
+2020-05-19 17:52:56,699:run_EUC:INFO:sim_198101_198101_v147i:Repeat release: 6 days
+2020-05-19 17:52:56,700:run_EUC:INFO:sim_198101_198101_v147i:Particles: Total: 0 :/repeat: 10
+2020-05-19 17:52:56,811:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-19 17:52:56,813:timed:INFO:ofam_fieldset: 0:0:00.11 total: 0.11 seconds.
+2020-05-19 17:53:04,570:timed:INFO:EUC_pset: 0:0:07.76 total: 7.76 seconds.
+2020-05-19 17:53:04,573:remove_westward_particles:DEBUG:Particles removed: 4
+2020-05-19 17:53:04,574:timed:INFO:remove_westward_particles: 0:0:00.00 total: 0.00 seconds.
+2020-05-19 17:53:04,576:EUC_particles:DEBUG:sim_198101_198101_v147i: Output file.
+2020-05-19 17:53:04,578:EUC_particles:INFO:sim_198101_198101_v147i:AdvectionRK4_3D + pset.Kernel(Age) + pset.Kernel(DeleteWestward)
+2020-05-19 17:53:04,734:EUC_particles:DEBUG:sim_198101_198101_v147i: Excecute particle set.
+2020-05-19 17:54:09,405:EUC_particles:INFO:sim_198101_198101_v147i: Completed.
+2020-05-19 17:54:09,672:timed:INFO:EUC_particles: 0:1:12.86 total: 72.86 seconds.
+2020-05-19 17:54:09,674:timed:INFO:run_EUC: 0:1:12.99 total: 72.99 seconds.
+2020-05-20 18:33:52,461:run_EUC:INFO:sim_198101_198101_v199i:Executing: 1981-01-01 to 1981-01-31
+2020-05-20 18:33:52,465:run_EUC:INFO:sim_198101_198101_v199i:Longitudes: 165
+2020-05-20 18:33:52,466:run_EUC:INFO:sim_198101_198101_v199i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-20 18:33:52,466:run_EUC:INFO:sim_198101_198101_v199i:Depths: 2 dz=200 [25 to 225]
+2020-05-20 18:33:52,467:run_EUC:INFO:sim_198101_198101_v199i:Runtime: 30 days
+2020-05-20 18:33:52,467:run_EUC:INFO:sim_198101_198101_v199i:Timestep dt: 240 mins
+2020-05-20 18:33:52,468:run_EUC:INFO:sim_198101_198101_v199i:Output dt: 1 days
+2020-05-20 18:33:52,469:run_EUC:INFO:sim_198101_198101_v199i:Repeat release: 6 days
+2020-05-20 18:33:52,469:run_EUC:INFO:sim_198101_198101_v199i:Particles: Total: 50 :/repeat: 10
+2020-05-20 18:33:52,614:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-20 18:33:52,615:timed:INFO:ofam_fieldset: 0:0:00.15 total: 0.15 seconds.
+2020-05-20 18:34:00,526:timed:INFO:EUC_pset: 0:0:07.91 total: 7.91 seconds.
+2020-05-20 18:34:00,529:remove_westward_particles:DEBUG:Particles removed: 5
+2020-05-20 18:34:00,530:timed:INFO:remove_westward_particles: 0:0:00.00 total: 0.00 seconds.
+2020-05-20 18:34:00,530:EUC_particles:DEBUG:sim_198101_198101_v199i: Output file.
+2020-05-20 18:34:00,531:EUC_particles:INFO:sim_198101_198101_v199i:AdvectionRK4_3D + pset.Kernel(Age) + pset.Kernel(DeleteWestward) + Zone
+2020-05-20 18:36:40,958:run_EUC:INFO:sim_198101_198101_v142i:Executing: 1981-01-01 to 1981-01-31
+2020-05-20 18:36:40,962:run_EUC:INFO:sim_198101_198101_v142i:Longitudes: 165
+2020-05-20 18:36:40,963:run_EUC:INFO:sim_198101_198101_v142i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-20 18:36:40,964:run_EUC:INFO:sim_198101_198101_v142i:Depths: 2 dz=200 [25 to 225]
+2020-05-20 18:36:40,965:run_EUC:INFO:sim_198101_198101_v142i:Runtime: 30 days
+2020-05-20 18:36:40,966:run_EUC:INFO:sim_198101_198101_v142i:Timestep dt: 240 mins
+2020-05-20 18:36:40,967:run_EUC:INFO:sim_198101_198101_v142i:Output dt: 1 days
+2020-05-20 18:36:40,968:run_EUC:INFO:sim_198101_198101_v142i:Repeat release: 6 days
+2020-05-20 18:36:40,969:run_EUC:INFO:sim_198101_198101_v142i:Particles: Total: 50 :/repeat: 10
+2020-05-20 18:36:41,061:ofam_fieldset:INFO:Field import=b_grid, Chunks=('auto',)
+2020-05-20 18:36:41,062:timed:INFO:ofam_fieldset: 0:0:00.09 total: 0.09 seconds.
+2020-05-20 18:36:48,957:timed:INFO:EUC_pset: 0:0:07.89 total: 7.89 seconds.
+2020-05-20 18:36:48,959:remove_westward_particles:DEBUG:Particles removed: 5
+2020-05-20 18:36:48,960:timed:INFO:remove_westward_particles: 0:0:00.00 total: 0.00 seconds.
+2020-05-20 18:36:48,961:EUC_particles:DEBUG:sim_198101_198101_v142i: Output file.
+2020-05-20 18:36:48,962:EUC_particles:INFO:sim_198101_198101_v142i:AdvectionRK4_3D + pset.Kernel(Age) + pset.Kernel(DeleteWestward) + Zone
+2020-05-20 18:40:51,539:run_EUC:INFO:sim_198101_198101_v103i:Executing: 1981-01-01 to 1981-01-31
+2020-05-20 18:40:51,540:run_EUC:INFO:sim_198101_198101_v103i:Longitudes: 165
+2020-05-20 18:40:51,542:run_EUC:INFO:sim_198101_198101_v103i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-20 18:40:51,543:run_EUC:INFO:sim_198101_198101_v103i:Depths: 2 dz=200 [25 to 225]
+2020-05-20 18:40:51,544:run_EUC:INFO:sim_198101_198101_v103i:Runtime: 30 days
+2020-05-20 18:40:51,545:run_EUC:INFO:sim_198101_198101_v103i:Timestep dt: 240 mins
+2020-05-20 18:40:51,546:run_EUC:INFO:sim_198101_198101_v103i:Output dt: 1 days
+2020-05-20 18:40:51,548:run_EUC:INFO:sim_198101_198101_v103i:Repeat release: 6 days
+2020-05-20 18:40:51,549:run_EUC:INFO:sim_198101_198101_v103i:Particles: Total: 50 :/repeat: 10
+2020-05-20 18:40:51,638:ofam_fieldset:INFO:Field import=b_grid, Chunks=('auto',)
+2020-05-20 18:40:51,639:timed:INFO:ofam_fieldset: 0:0:00.09 total: 0.09 seconds.
+2020-05-20 18:40:59,489:timed:INFO:EUC_pset: 0:0:07.85 total: 7.85 seconds.
+2020-05-20 18:40:59,491:remove_westward_particles:DEBUG:Particles removed: 5
+2020-05-20 18:40:59,492:timed:INFO:remove_westward_particles: 0:0:00.00 total: 0.00 seconds.
+2020-05-20 18:40:59,494:EUC_particles:DEBUG:sim_198101_198101_v103i: Output file.
+2020-05-20 18:40:59,495:EUC_particles:INFO:sim_198101_198101_v103i:AdvectionRK4_3D + pset.Kernel(Age) + pset.Kernel(DeleteWestward) + Zone
+2020-05-20 18:41:19,277:run_EUC:INFO:sim_198101_198101_v133i:Executing: 1981-01-01 to 1981-01-31
+2020-05-20 18:41:19,278:run_EUC:INFO:sim_198101_198101_v133i:Longitudes: 165
+2020-05-20 18:41:19,279:run_EUC:INFO:sim_198101_198101_v133i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-20 18:41:19,280:run_EUC:INFO:sim_198101_198101_v133i:Depths: 2 dz=200 [25 to 225]
+2020-05-20 18:41:19,281:run_EUC:INFO:sim_198101_198101_v133i:Runtime: 30 days
+2020-05-20 18:41:19,282:run_EUC:INFO:sim_198101_198101_v133i:Timestep dt: 240 mins
+2020-05-20 18:41:19,284:run_EUC:INFO:sim_198101_198101_v133i:Output dt: 1 days
+2020-05-20 18:41:19,284:run_EUC:INFO:sim_198101_198101_v133i:Repeat release: 6 days
+2020-05-20 18:41:19,285:run_EUC:INFO:sim_198101_198101_v133i:Particles: Total: 50 :/repeat: 10
+2020-05-20 18:41:19,370:ofam_fieldset:INFO:Field import=b_grid, Chunks=('auto',)
+2020-05-20 18:41:19,372:timed:INFO:ofam_fieldset: 0:0:00.09 total: 0.09 seconds.
+2020-05-20 18:41:27,045:timed:INFO:EUC_pset: 0:0:07.67 total: 7.67 seconds.
+2020-05-20 18:41:27,046:remove_westward_particles:DEBUG:Particles removed: 5
+2020-05-20 18:41:27,048:timed:INFO:remove_westward_particles: 0:0:00.00 total: 0.00 seconds.
+2020-05-20 18:41:27,049:EUC_particles:DEBUG:sim_198101_198101_v133i: Output file.
+2020-05-20 18:41:27,050:EUC_particles:INFO:sim_198101_198101_v133i:AdvectionRK4_3D + pset.Kernel(Age) + pset.Kernel(DeleteWestward) + Zone
+2020-05-21 18:15:11,438:run_EUC:INFO:sim_198101_198101_v133i:Executing: 1981-01-01 to 1981-01-31
+2020-05-21 18:15:11,442:run_EUC:INFO:sim_198101_198101_v133i:Longitudes: 165
+2020-05-21 18:15:11,443:run_EUC:INFO:sim_198101_198101_v133i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-21 18:15:11,444:run_EUC:INFO:sim_198101_198101_v133i:Depths: 2 dz=200 [25 to 225]
+2020-05-21 18:15:11,445:run_EUC:INFO:sim_198101_198101_v133i:Runtime: 30 days
+2020-05-21 18:15:11,446:run_EUC:INFO:sim_198101_198101_v133i:Timestep dt: 240 mins
+2020-05-21 18:15:11,447:run_EUC:INFO:sim_198101_198101_v133i:Output dt: 1 days
+2020-05-21 18:15:11,448:run_EUC:INFO:sim_198101_198101_v133i:Repeat release: 6 days
+2020-05-21 18:15:11,450:run_EUC:INFO:sim_198101_198101_v133i:Particles: Total: 50 :/repeat: 10
+2020-05-21 18:15:11,550:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-21 18:15:11,551:timed:INFO:ofam_fieldset: 0:0:00.10 total: 0.10 seconds.
+2020-05-21 18:15:27,084:run_EUC:INFO:sim_198101_198101_v118i:Executing: 1981-01-01 to 1981-01-31
+2020-05-21 18:15:27,088:run_EUC:INFO:sim_198101_198101_v118i:Longitudes: 165
+2020-05-21 18:15:27,089:run_EUC:INFO:sim_198101_198101_v118i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-21 18:15:27,090:run_EUC:INFO:sim_198101_198101_v118i:Depths: 2 dz=200 [25 to 225]
+2020-05-21 18:15:27,091:run_EUC:INFO:sim_198101_198101_v118i:Runtime: 30 days
+2020-05-21 18:15:27,092:run_EUC:INFO:sim_198101_198101_v118i:Timestep dt: 240 mins
+2020-05-21 18:15:27,094:run_EUC:INFO:sim_198101_198101_v118i:Output dt: 1 days
+2020-05-21 18:15:27,094:run_EUC:INFO:sim_198101_198101_v118i:Repeat release: 6 days
+2020-05-21 18:15:27,096:run_EUC:INFO:sim_198101_198101_v118i:Particles: Total: 50 :/repeat: 10
+2020-05-21 18:15:27,192:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-21 18:15:27,193:timed:INFO:ofam_fieldset: 0:0:00.10 total: 0.10 seconds.
+2020-05-21 18:15:35,023:timed:INFO:EUC_pset: 0:0:07.81 total: 7.81 seconds.
+2020-05-21 18:15:35,026:remove_westward_particles:DEBUG:Particles removed: 5
+2020-05-21 18:15:35,027:timed:INFO:remove_westward_particles: 0:0:00.00 total: 0.00 seconds.
+2020-05-21 18:15:35,028:EUC_particles:DEBUG:sim_198101_198101_v118i: Output file.
+2020-05-21 18:15:35,029:EUC_particles:INFO:sim_198101_198101_v118i:AdvectionRK4_3D + pset.Kernel(Age) + pset.Kernel(DeleteWestward)
+2020-05-21 18:15:35,197:EUC_particles:DEBUG:sim_198101_198101_v118i: Excecute particle set.
+2020-05-21 18:33:04,190:EUC_particles:INFO:sim_198101_198101_v118i: Completed.
+2020-05-21 18:33:04,448:timed:INFO:EUC_particles: 0:17:37.25 total: 1057.25 seconds.
+2020-05-21 18:33:04,451:timed:INFO:run_EUC: 0:17:37.37 total: 1057.37 seconds.
+2020-05-22 14:43:53,704:run_EUC:INFO:sim_198101_198101_v29i:Executing: 1981-01-01 to 1981-01-31
+2020-05-22 14:43:53,705:run_EUC:INFO:sim_198101_198101_v29i:Longitudes: 155
+2020-05-22 14:43:53,706:run_EUC:INFO:sim_198101_198101_v29i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-22 14:43:53,706:run_EUC:INFO:sim_198101_198101_v29i:Depths: 2 dz=200 [25 to 225]
+2020-05-22 14:43:53,707:run_EUC:INFO:sim_198101_198101_v29i:Runtime: 30 days
+2020-05-22 14:43:53,708:run_EUC:INFO:sim_198101_198101_v29i:Timestep dt: 240 mins
+2020-05-22 14:43:53,708:run_EUC:INFO:sim_198101_198101_v29i:Output dt: 1 days
+2020-05-22 14:43:53,709:run_EUC:INFO:sim_198101_198101_v29i:Repeat release: 6 days
+2020-05-22 14:43:53,710:run_EUC:INFO:sim_198101_198101_v29i:Particles: Total: 50 :/repeat: 10
+2020-05-22 14:43:53,830:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-22 14:43:53,830:timed:INFO:ofam_fieldset: 0:0:00.12 total: 0.12 seconds.
+2020-05-22 14:44:01,519:timed:INFO:EUC_pset: 0:0:07.66 total: 7.66 seconds.
+2020-05-22 14:44:01,520:remove_westward_particles:DEBUG:Particles removed: 6
+2020-05-22 14:44:01,521:timed:INFO:remove_westward_particles: 0:0:00.00 total: 0.00 seconds.
+2020-05-22 14:44:01,521:EUC_particles:DEBUG:sim_198101_198101_v29i: Output file.
+2020-05-22 14:44:01,522:EUC_particles:INFO:sim_198101_198101_v29i:AdvectionRK4_3D + pset.Kernel(Age) + pset.Kernel(DeleteWestward)
+2020-05-22 14:44:01,679:EUC_particles:DEBUG:sim_198101_198101_v29i: Excecute particle set.
+2020-05-22 14:59:36,840:EUC_particles:INFO:sim_198101_198101_v29i: Completed.
+2020-05-22 14:59:37,102:timed:INFO:EUC_particles: 0:15:43.27 total: 943.27 seconds.
+2020-05-22 14:59:37,105:timed:INFO:run_EUC: 0:15:43.40 total: 943.40 seconds.
+2020-05-22 15:13:05,290:run_EUC:INFO:sim_198101_198102_v23i:Executing: 1981-01-01 to 1981-02-28
+2020-05-22 15:13:05,290:run_EUC:INFO:sim_198101_198102_v23i:Longitudes: 155
+2020-05-22 15:13:05,291:run_EUC:INFO:sim_198101_198102_v23i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-22 15:13:05,291:run_EUC:INFO:sim_198101_198102_v23i:Depths: 3 dz=120 [25 to 265]
+2020-05-22 15:13:05,292:run_EUC:INFO:sim_198101_198102_v23i:Runtime: 58 days
+2020-05-22 15:13:05,293:run_EUC:INFO:sim_198101_198102_v23i:Timestep dt: 240 mins
+2020-05-22 15:13:05,293:run_EUC:INFO:sim_198101_198102_v23i:Output dt: 1 days
+2020-05-22 15:13:05,293:run_EUC:INFO:sim_198101_198102_v23i:Repeat release: 6 days
+2020-05-22 15:13:05,294:run_EUC:INFO:sim_198101_198102_v23i:Particles: Total: 135 :/repeat: 15
+2020-05-22 15:13:05,472:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-22 15:13:05,472:timed:INFO:ofam_fieldset: 0:0:00.18 total: 0.18 seconds.
+2020-05-22 15:13:17,096:timed:INFO:EUC_pset: 0:0:11.59 total: 11.59 seconds.
+2020-05-22 15:13:17,097:remove_westward_particles:DEBUG:Particles removed: 11
+2020-05-22 15:13:17,098:timed:INFO:remove_westward_particles: 0:0:00.00 total: 0.00 seconds.
+2020-05-22 15:13:17,098:EUC_particles:DEBUG:sim_198101_198102_v23i: Output file.
+2020-05-22 15:13:17,099:EUC_particles:INFO:sim_198101_198102_v23i:AdvectionRK4_3D + pset.Kernel(Age) + pset.Kernel(DeleteWestward)
+2020-05-22 15:13:17,157:EUC_particles:DEBUG:sim_198101_198102_v23i: Excecute particle set.
+2020-05-22 15:14:24,242:run_EUC:INFO:sim_198101_198102_v82i:Executing: 1981-01-01 to 1981-02-28
+2020-05-22 15:14:24,243:run_EUC:INFO:sim_198101_198102_v82i:Longitudes: 155
+2020-05-22 15:14:24,243:run_EUC:INFO:sim_198101_198102_v82i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-22 15:14:24,244:run_EUC:INFO:sim_198101_198102_v82i:Depths: 2 dz=120 [200 to 320]
+2020-05-22 15:14:24,245:run_EUC:INFO:sim_198101_198102_v82i:Runtime: 58 days
+2020-05-22 15:14:24,245:run_EUC:INFO:sim_198101_198102_v82i:Timestep dt: 240 mins
+2020-05-22 15:14:24,246:run_EUC:INFO:sim_198101_198102_v82i:Output dt: 1 days
+2020-05-22 15:14:24,246:run_EUC:INFO:sim_198101_198102_v82i:Repeat release: 6 days
+2020-05-22 15:14:24,246:run_EUC:INFO:sim_198101_198102_v82i:Particles: Total: 90 :/repeat: 10
+2020-05-22 15:14:24,371:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-22 15:14:24,372:timed:INFO:ofam_fieldset: 0:0:00.12 total: 0.12 seconds.
+2020-05-22 15:14:32,205:timed:INFO:EUC_pset: 0:0:07.82 total: 7.82 seconds.
+2020-05-22 15:14:32,206:remove_westward_particles:DEBUG:Particles removed: 3
+2020-05-22 15:14:32,207:timed:INFO:remove_westward_particles: 0:0:00.00 total: 0.00 seconds.
+2020-05-22 15:14:32,208:EUC_particles:DEBUG:sim_198101_198102_v82i: Output file.
+2020-05-22 15:14:32,208:EUC_particles:INFO:sim_198101_198102_v82i:AdvectionRK4_3D + pset.Kernel(Age) + pset.Kernel(DeleteWestward)
+2020-05-22 15:14:32,245:EUC_particles:DEBUG:sim_198101_198102_v82i: Excecute particle set.
+2020-05-22 15:15:01,809:run_EUC:INFO:sim_198101_198102_v140i:Executing: 1981-01-01 to 1981-02-28
+2020-05-22 15:15:01,810:run_EUC:INFO:sim_198101_198102_v140i:Longitudes: 155
+2020-05-22 15:15:01,810:run_EUC:INFO:sim_198101_198102_v140i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-22 15:15:01,811:run_EUC:INFO:sim_198101_198102_v140i:Depths: 2 dz=120 [200 to 320]
+2020-05-22 15:15:01,811:run_EUC:INFO:sim_198101_198102_v140i:Runtime: 5 days
+2020-05-22 15:15:01,811:run_EUC:INFO:sim_198101_198102_v140i:Timestep dt: 240 mins
+2020-05-22 15:15:01,812:run_EUC:INFO:sim_198101_198102_v140i:Output dt: 1 days
+2020-05-22 15:15:01,812:run_EUC:INFO:sim_198101_198102_v140i:Repeat release: 6 days
+2020-05-22 15:15:01,813:run_EUC:INFO:sim_198101_198102_v140i:Particles: Total: 0 :/repeat: 10
+2020-05-22 15:15:01,928:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-22 15:15:01,929:timed:INFO:ofam_fieldset: 0:0:00.12 total: 0.12 seconds.
+2020-05-22 15:15:09,462:timed:INFO:EUC_pset: 0:0:07.52 total: 7.52 seconds.
+2020-05-22 15:15:09,464:remove_westward_particles:DEBUG:Particles removed: 3
+2020-05-22 15:15:09,464:timed:INFO:remove_westward_particles: 0:0:00.00 total: 0.00 seconds.
+2020-05-22 15:15:09,465:EUC_particles:DEBUG:sim_198101_198102_v140i: Output file.
+2020-05-22 15:15:09,466:EUC_particles:INFO:sim_198101_198102_v140i:AdvectionRK4_3D + pset.Kernel(Age) + pset.Kernel(DeleteWestward)
+2020-05-22 15:15:09,500:EUC_particles:DEBUG:sim_198101_198102_v140i: Excecute particle set.
+2020-05-22 15:15:47,555:EUC_particles:INFO:sim_198101_198102_v140i: Completed.
+2020-05-22 15:15:47,616:timed:INFO:EUC_particles: 0:0:45.69 total: 45.69 seconds.
+2020-05-22 15:15:47,617:timed:INFO:run_EUC: 0:0:45.81 total: 45.81 seconds.
+2020-05-22 15:17:33,307:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-22 15:17:33,308:timed:INFO:ofam_fieldset: 0:0:00.14 total: 0.14 seconds.
+2020-05-22 15:30:35,473:timed:INFO:ofam_fieldset: 0:0:00.12 total: 0.12 seconds.
+2020-05-22 15:40:50,554:run_EUC:INFO:sim_198101_198102_v51i:Executing: 1981-01-01 to 1981-02-28
+2020-05-22 15:40:50,556:run_EUC:INFO:sim_198101_198102_v51i:Longitudes: 155
+2020-05-22 15:40:50,557:run_EUC:INFO:sim_198101_198102_v51i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-22 15:40:50,558:run_EUC:INFO:sim_198101_198102_v51i:Depths: 2 dz=120 [200 to 320]
+2020-05-22 15:40:50,560:run_EUC:INFO:sim_198101_198102_v51i:Runtime: 31 days
+2020-05-22 15:40:50,561:run_EUC:INFO:sim_198101_198102_v51i:Timestep dt: 240 mins
+2020-05-22 15:40:50,563:run_EUC:INFO:sim_198101_198102_v51i:Output dt: 1 days
+2020-05-22 15:40:50,564:run_EUC:INFO:sim_198101_198102_v51i:Repeat release: 6 days
+2020-05-22 15:40:50,565:run_EUC:INFO:sim_198101_198102_v51i:Particles: Total: 50 :/repeat: 10
+2020-05-22 15:40:50,756:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-22 15:40:50,758:timed:INFO:ofam_fieldset: 0:0:00.19 total: 0.19 seconds.
+2020-05-22 15:45:31,577:run_EUC:INFO:sim_198101_198102_v0i:Executing: 1981-01-01 to 1981-02-28
+2020-05-22 15:45:31,579:run_EUC:INFO:sim_198101_198102_v0i:Longitudes: 155
+2020-05-22 15:45:31,579:run_EUC:INFO:sim_198101_198102_v0i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-22 15:45:31,580:run_EUC:INFO:sim_198101_198102_v0i:Depths: 2 dz=120 [200 to 320]
+2020-05-22 15:45:31,581:run_EUC:INFO:sim_198101_198102_v0i:Runtime: 31 days
+2020-05-22 15:45:31,581:run_EUC:INFO:sim_198101_198102_v0i:Timestep dt: 240 mins
+2020-05-22 15:45:31,582:run_EUC:INFO:sim_198101_198102_v0i:Output dt: 1 days
+2020-05-22 15:45:31,582:run_EUC:INFO:sim_198101_198102_v0i:Repeat release: 6 days
+2020-05-22 15:45:31,582:run_EUC:INFO:sim_198101_198102_v0i:Particles: Total: 50 :/repeat: 10
+2020-05-22 15:45:31,721:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-22 15:45:31,722:timed:INFO:ofam_fieldset: 0:0:00.14 total: 0.14 seconds.
+2020-05-22 15:53:07,776:run_EUC:INFO:sim_198101_198102_v156i:Executing: 1981-01-01 to 1981-02-28
+2020-05-22 15:53:07,776:run_EUC:INFO:sim_198101_198102_v156i:Longitudes: 155
+2020-05-22 15:53:07,777:run_EUC:INFO:sim_198101_198102_v156i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-22 15:53:07,777:run_EUC:INFO:sim_198101_198102_v156i:Depths: 2 dz=120 [200 to 320]
+2020-05-22 15:53:07,778:run_EUC:INFO:sim_198101_198102_v156i:Runtime: 31 days
+2020-05-22 15:53:07,778:run_EUC:INFO:sim_198101_198102_v156i:Timestep dt: 240 mins
+2020-05-22 15:53:07,779:run_EUC:INFO:sim_198101_198102_v156i:Output dt: 1 days
+2020-05-22 15:53:07,780:run_EUC:INFO:sim_198101_198102_v156i:Repeat release: 6 days
+2020-05-22 15:53:07,780:run_EUC:INFO:sim_198101_198102_v156i:Particles: Total: 50 :/repeat: 10
+2020-05-22 15:53:07,897:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-22 15:53:07,897:timed:INFO:ofam_fieldset: 0:0:00.12 total: 0.12 seconds.
+2020-05-22 15:53:15,345:run_EUC:INFO:sim_198101_198102_v157i:Executing: 1981-01-01 to 1981-02-28
+2020-05-22 15:53:15,346:run_EUC:INFO:sim_198101_198102_v157i:Longitudes: 155
+2020-05-22 15:53:15,347:run_EUC:INFO:sim_198101_198102_v157i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-22 15:53:15,348:run_EUC:INFO:sim_198101_198102_v157i:Depths: 2 dz=120 [200 to 320]
+2020-05-22 15:53:15,349:run_EUC:INFO:sim_198101_198102_v157i:Runtime: 31 days
+2020-05-22 15:53:15,351:run_EUC:INFO:sim_198101_198102_v157i:Timestep dt: 240 mins
+2020-05-22 15:53:15,352:run_EUC:INFO:sim_198101_198102_v157i:Output dt: 1 days
+2020-05-22 15:53:15,353:run_EUC:INFO:sim_198101_198102_v157i:Repeat release: 6 days
+2020-05-22 15:53:15,354:run_EUC:INFO:sim_198101_198102_v157i:Particles: Total: 50 :/repeat: 10
+2020-05-22 15:53:15,478:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-22 15:53:15,479:timed:INFO:ofam_fieldset: 0:0:00.12 total: 0.12 seconds.
+2020-05-22 15:53:36,644:run_EUC:INFO:sim_198101_198102_v3i:Executing: 1981-01-01 to 1981-02-28
+2020-05-22 15:53:36,646:run_EUC:INFO:sim_198101_198102_v3i:Longitudes: 155
+2020-05-22 15:53:36,647:run_EUC:INFO:sim_198101_198102_v3i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-22 15:53:36,648:run_EUC:INFO:sim_198101_198102_v3i:Depths: 2 dz=120 [200 to 320]
+2020-05-22 15:53:36,649:run_EUC:INFO:sim_198101_198102_v3i:Runtime: 31 days
+2020-05-22 15:53:36,651:run_EUC:INFO:sim_198101_198102_v3i:Timestep dt: 240 mins
+2020-05-22 15:53:36,652:run_EUC:INFO:sim_198101_198102_v3i:Output dt: 1 days
+2020-05-22 15:53:36,653:run_EUC:INFO:sim_198101_198102_v3i:Repeat release: 6 days
+2020-05-22 15:53:36,654:run_EUC:INFO:sim_198101_198102_v3i:Particles: Total: 50 :/repeat: 10
+2020-05-22 15:53:36,769:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-22 15:53:36,770:timed:INFO:ofam_fieldset: 0:0:00.12 total: 0.12 seconds.
+2020-05-22 16:00:12,212:timed:INFO:ofam_fieldset: 0:0:00.12 total: 0.12 seconds.
+2020-05-22 16:07:46,443:run_EUC:INFO:sim_198101_198102_v108i:Executing: 1981-01-01 to 1981-02-28
+2020-05-22 16:07:46,444:run_EUC:INFO:sim_198101_198102_v108i:Longitudes: 155
+2020-05-22 16:07:46,444:run_EUC:INFO:sim_198101_198102_v108i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-22 16:07:46,446:run_EUC:INFO:sim_198101_198102_v108i:Depths: 2 dz=120 [200 to 320]
+2020-05-22 16:07:46,447:run_EUC:INFO:sim_198101_198102_v108i:Runtime: 31 days
+2020-05-22 16:07:46,448:run_EUC:INFO:sim_198101_198102_v108i:Timestep dt: 240 mins
+2020-05-22 16:07:46,449:run_EUC:INFO:sim_198101_198102_v108i:Output dt: 1 days
+2020-05-22 16:07:46,450:run_EUC:INFO:sim_198101_198102_v108i:Repeat release: 6 days
+2020-05-22 16:07:46,451:run_EUC:INFO:sim_198101_198102_v108i:Particles: Total: 50 :/repeat: 10
+2020-05-22 16:07:46,570:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-22 16:07:46,571:timed:INFO:ofam_fieldset: 0:0:00.12 total: 0.12 seconds.
+2020-05-22 16:08:47,388:run_EUC:INFO:sim_198101_198102_v51i:Executing: 1981-01-01 to 1981-02-28
+2020-05-22 16:08:47,389:run_EUC:INFO:sim_198101_198102_v51i:Longitudes: 155
+2020-05-22 16:08:47,390:run_EUC:INFO:sim_198101_198102_v51i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-22 16:08:47,391:run_EUC:INFO:sim_198101_198102_v51i:Depths: 2 dz=120 [200 to 320]
+2020-05-22 16:08:47,392:run_EUC:INFO:sim_198101_198102_v51i:Runtime: 31 days
+2020-05-22 16:08:47,394:run_EUC:INFO:sim_198101_198102_v51i:Timestep dt: 240 mins
+2020-05-22 16:08:47,395:run_EUC:INFO:sim_198101_198102_v51i:Output dt: 1 days
+2020-05-22 16:08:47,396:run_EUC:INFO:sim_198101_198102_v51i:Repeat release: 6 days
+2020-05-22 16:08:47,397:run_EUC:INFO:sim_198101_198102_v51i:Particles: Total: 50 :/repeat: 10
+2020-05-22 16:08:47,511:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-22 16:08:47,512:timed:INFO:ofam_fieldset: 0:0:00.11 total: 0.11 seconds.
+2020-05-22 16:09:09,406:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-22 16:09:09,407:timed:INFO:ofam_fieldset: 0:0:00.12 total: 0.12 seconds.
+2020-05-22 16:18:57,147:run_EUC:INFO:sim_198101_198102_v109i:Executing: 1981-01-01 to 1981-02-28
+2020-05-22 16:18:57,148:run_EUC:INFO:sim_198101_198102_v109i:Longitudes: 155
+2020-05-22 16:18:57,150:run_EUC:INFO:sim_198101_198102_v109i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-22 16:18:57,151:run_EUC:INFO:sim_198101_198102_v109i:Depths: 2 dz=120 [200 to 320]
+2020-05-22 16:18:57,152:run_EUC:INFO:sim_198101_198102_v109i:Runtime: 31 days
+2020-05-22 16:18:57,153:run_EUC:INFO:sim_198101_198102_v109i:Timestep dt: 240 mins
+2020-05-22 16:18:57,154:run_EUC:INFO:sim_198101_198102_v109i:Output dt: 1 days
+2020-05-22 16:18:57,155:run_EUC:INFO:sim_198101_198102_v109i:Repeat release: 6 days
+2020-05-22 16:18:57,156:run_EUC:INFO:sim_198101_198102_v109i:Particles: Total: 50 :/repeat: 10
+2020-05-22 16:18:57,284:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-22 16:18:57,285:timed:INFO:ofam_fieldset: 0:0:00.13 total: 0.13 seconds.
+2020-05-22 16:21:59,911:run_EUC:INFO:sim_198101_198102_v92i:Executing: 1981-01-01 to 1981-02-28
+2020-05-22 16:21:59,912:run_EUC:INFO:sim_198101_198102_v92i:Longitudes: 155
+2020-05-22 16:21:59,913:run_EUC:INFO:sim_198101_198102_v92i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-22 16:21:59,915:run_EUC:INFO:sim_198101_198102_v92i:Depths: 2 dz=120 [200 to 320]
+2020-05-22 16:21:59,916:run_EUC:INFO:sim_198101_198102_v92i:Runtime: 31 days
+2020-05-22 16:21:59,917:run_EUC:INFO:sim_198101_198102_v92i:Timestep dt: 240 mins
+2020-05-22 16:21:59,918:run_EUC:INFO:sim_198101_198102_v92i:Output dt: 1 days
+2020-05-22 16:21:59,919:run_EUC:INFO:sim_198101_198102_v92i:Repeat release: 6 days
+2020-05-22 16:21:59,919:run_EUC:INFO:sim_198101_198102_v92i:Particles: Total: 50 :/repeat: 10
+2020-05-22 16:22:00,038:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-22 16:22:00,039:timed:INFO:ofam_fieldset: 0:0:00.12 total: 0.12 seconds.
+2020-05-22 16:22:36,208:run_EUC:INFO:sim_198101_198102_v174i:Executing: 1981-01-01 to 1981-02-28
+2020-05-22 16:22:36,209:run_EUC:INFO:sim_198101_198102_v174i:Longitudes: 155
+2020-05-22 16:22:36,210:run_EUC:INFO:sim_198101_198102_v174i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-22 16:22:36,211:run_EUC:INFO:sim_198101_198102_v174i:Depths: 2 dz=120 [200 to 320]
+2020-05-22 16:22:36,213:run_EUC:INFO:sim_198101_198102_v174i:Runtime: 31 days
+2020-05-22 16:22:36,214:run_EUC:INFO:sim_198101_198102_v174i:Timestep dt: 240 mins
+2020-05-22 16:22:36,215:run_EUC:INFO:sim_198101_198102_v174i:Output dt: 1 days
+2020-05-22 16:22:36,216:run_EUC:INFO:sim_198101_198102_v174i:Repeat release: 6 days
+2020-05-22 16:22:36,217:run_EUC:INFO:sim_198101_198102_v174i:Particles: Total: 50 :/repeat: 10
+2020-05-22 16:22:36,338:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-22 16:22:36,339:timed:INFO:ofam_fieldset: 0:0:00.12 total: 0.12 seconds.
+2020-05-22 16:23:17,453:run_EUC:INFO:sim_198101_198102_v46i:Executing: 1981-01-01 to 1981-02-28
+2020-05-22 16:23:17,454:run_EUC:INFO:sim_198101_198102_v46i:Longitudes: 155
+2020-05-22 16:23:17,455:run_EUC:INFO:sim_198101_198102_v46i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-22 16:23:17,456:run_EUC:INFO:sim_198101_198102_v46i:Depths: 2 dz=120 [200 to 320]
+2020-05-22 16:23:17,457:run_EUC:INFO:sim_198101_198102_v46i:Runtime: 31 days
+2020-05-22 16:23:17,459:run_EUC:INFO:sim_198101_198102_v46i:Timestep dt: 240 mins
+2020-05-22 16:23:17,460:run_EUC:INFO:sim_198101_198102_v46i:Output dt: 1 days
+2020-05-22 16:23:17,461:run_EUC:INFO:sim_198101_198102_v46i:Repeat release: 6 days
+2020-05-22 16:23:17,461:run_EUC:INFO:sim_198101_198102_v46i:Particles: Total: 50 :/repeat: 10
+2020-05-22 16:23:17,578:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-22 16:23:17,579:timed:INFO:ofam_fieldset: 0:0:00.12 total: 0.12 seconds.
+2020-05-22 16:24:13,145:run_EUC:INFO:sim_198101_198102_v70i:Executing: 1981-01-01 to 1981-02-28
+2020-05-22 16:24:13,146:run_EUC:INFO:sim_198101_198102_v70i:Longitudes: 155
+2020-05-22 16:24:13,148:run_EUC:INFO:sim_198101_198102_v70i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-22 16:24:13,148:run_EUC:INFO:sim_198101_198102_v70i:Depths: 2 dz=120 [200 to 320]
+2020-05-22 16:24:13,150:run_EUC:INFO:sim_198101_198102_v70i:Runtime: 31 days
+2020-05-22 16:24:13,151:run_EUC:INFO:sim_198101_198102_v70i:Timestep dt: 240 mins
+2020-05-22 16:24:13,152:run_EUC:INFO:sim_198101_198102_v70i:Output dt: 1 days
+2020-05-22 16:24:13,153:run_EUC:INFO:sim_198101_198102_v70i:Repeat release: 6 days
+2020-05-22 16:24:13,154:run_EUC:INFO:sim_198101_198102_v70i:Particles: Total: 50 :/repeat: 10
+2020-05-22 16:24:13,269:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-22 16:24:13,270:timed:INFO:ofam_fieldset: 0:0:00.11 total: 0.11 seconds.
+2020-05-22 16:25:02,056:run_EUC:INFO:sim_198101_198102_v175i:Executing: 1981-01-01 to 1981-02-28
+2020-05-22 16:25:02,057:run_EUC:INFO:sim_198101_198102_v175i:Longitudes: 155
+2020-05-22 16:25:02,059:run_EUC:INFO:sim_198101_198102_v175i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-22 16:25:02,060:run_EUC:INFO:sim_198101_198102_v175i:Depths: 2 dz=120 [200 to 320]
+2020-05-22 16:25:02,061:run_EUC:INFO:sim_198101_198102_v175i:Runtime: 31 days
+2020-05-22 16:25:02,063:run_EUC:INFO:sim_198101_198102_v175i:Timestep dt: 240 mins
+2020-05-22 16:25:02,064:run_EUC:INFO:sim_198101_198102_v175i:Output dt: 1 days
+2020-05-22 16:25:02,065:run_EUC:INFO:sim_198101_198102_v175i:Repeat release: 6 days
+2020-05-22 16:25:02,066:run_EUC:INFO:sim_198101_198102_v175i:Particles: Total: 50 :/repeat: 10
+2020-05-22 16:25:02,209:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-22 16:25:02,211:timed:INFO:ofam_fieldset: 0:0:00.14 total: 0.14 seconds.
+2020-05-22 16:29:06,138:run_EUC:INFO:sim_198101_198102_v21i:Executing: 1981-01-01 to 1981-02-28
+2020-05-22 16:29:06,139:run_EUC:INFO:sim_198101_198102_v21i:Longitudes: 155
+2020-05-22 16:29:06,139:run_EUC:INFO:sim_198101_198102_v21i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-22 16:29:06,140:run_EUC:INFO:sim_198101_198102_v21i:Depths: 2 dz=120 [200 to 320]
+2020-05-22 16:29:06,142:run_EUC:INFO:sim_198101_198102_v21i:Runtime: 31 days
+2020-05-22 16:29:06,143:run_EUC:INFO:sim_198101_198102_v21i:Timestep dt: 240 mins
+2020-05-22 16:29:06,144:run_EUC:INFO:sim_198101_198102_v21i:Output dt: 1 days
+2020-05-22 16:29:06,145:run_EUC:INFO:sim_198101_198102_v21i:Repeat release: 6 days
+2020-05-22 16:29:06,146:run_EUC:INFO:sim_198101_198102_v21i:Particles: Total: 50 :/repeat: 10
+2020-05-22 16:29:06,269:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-22 16:29:06,270:timed:INFO:ofam_fieldset: 0:0:00.12 total: 0.12 seconds.
+2020-05-22 16:29:13,850:timed:INFO:EUC_pset: 0:0:07.56 total: 7.56 seconds.
+2020-05-22 16:29:13,851:remove_westward_particles:DEBUG:Particles removed: 3
+2020-05-22 16:29:13,852:timed:INFO:remove_westward_particles: 0:0:00.00 total: 0.00 seconds.
+2020-05-22 16:29:13,854:EUC_particles:DEBUG:sim_198101_198102_v21i: Output file.
+2020-05-22 16:29:13,856:EUC_particles:INFO:sim_198101_198102_v21i:AdvectionRK4_3D + pset.Kernel(Age) + pset.Kernel(DeleteWestward)
+2020-05-22 16:29:14,006:EUC_particles:DEBUG:sim_198101_198102_v21i: Excecute particle set.
+2020-05-22 16:42:28,082:EUC_particles:INFO:sim_198101_198102_v21i: Completed.
+2020-05-22 16:42:28,273:timed:INFO:EUC_particles: 0:13:22.00 total: 802.00 seconds.
+2020-05-22 16:42:28,275:timed:INFO:run_EUC: 0:13:22.14 total: 802.14 seconds.
+2020-05-22 16:56:05,138:timed:INFO:ofam_fieldset: 0:0:00.15 total: 0.15 seconds.
+2020-05-22 17:36:51,705:<module>:INFO:sim_198101_198102_v154i:Executing: 1981-01-01 to 1981-02-28
+2020-05-22 17:36:51,708:<module>:INFO:sim_198101_198102_v154i:Longitudes: 155
+2020-05-22 17:36:51,710:<module>:INFO:sim_198101_198102_v154i:Latitudes: 5 dy=1 [-2.0 to 2.0]
+2020-05-22 17:36:51,711:<module>:INFO:sim_198101_198102_v154i:Depths: 2 dz=120 [200 to 320]
+2020-05-22 17:36:51,712:<module>:INFO:sim_198101_198102_v154i:Runtime: 10 days
+2020-05-22 17:36:51,713:<module>:INFO:sim_198101_198102_v154i:Timestep dt: 240 mins
+2020-05-22 17:36:51,715:<module>:INFO:sim_198101_198102_v154i:Output dt: 1 days
+2020-05-22 17:36:51,716:<module>:INFO:sim_198101_198102_v154i:Repeat release: 6 days
+2020-05-22 17:36:51,717:<module>:INFO:sim_198101_198102_v154i:Particles: Total: 10 :/repeat: 10
+2020-05-22 17:36:51,762:__init__:WARNING:Casting lon data to np.float32
+2020-05-22 17:36:51,764:__init__:WARNING:Casting lat data to np.float32
+2020-05-22 17:36:51,765:__init__:WARNING:Casting depth data to np.float32
+2020-05-22 17:36:51,767:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-05-22 17:36:51,856:__init__:WARNING:Casting time data to np.float64
+2020-05-22 17:37:15,677:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-05-22 17:37:22,339:<module>:DEBUG:sim_198101_198102_v154i: Output file.
+2020-05-22 17:37:22,340:<module>:INFO:sim_198101_198102_v154i:AdvectionRK4_3D + pset.Kernel(Age) + pset.Kernel(DeleteWestward)
+2020-05-22 17:37:22,515:<module>:DEBUG:sim_198101_198102_v154i: Excecute particle set.
+2020-05-22 17:39:13,370:compile:INFO:Compiled zParticleAdvectionRK4_3DAgeDeleteWestward ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\b20be86608219be08f7cf70d1855aca1_0.dll
+2020-05-22 17:39:46,580:execute:WARNING:Deleting particle because of bug in #749 and #737
+2020-05-22 17:39:46,584:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 4.9248e+06
+2020-05-22 17:39:46,587:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 4.8384e+06
+2020-05-22 17:39:46,719:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 4.752e+06
+2020-05-22 17:39:46,819:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 4.6656e+06
+2020-05-22 17:39:46,917:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 4.5792e+06
+2020-05-22 17:48:30,261:<module>:DEBUG:sim_198101_198102_v154i: Excecute particle set.
+2020-05-22 17:48:41,049:<module>:DEBUG:sim_198101_198102_v154i: Excecute particle set.
+2020-05-22 17:50:20,154:<module>:DEBUG:sim_198101_198102_v154i: Excecute particle set.
+2020-05-22 17:51:09,717:<module>:DEBUG:sim_198101_198102_v154i: Excecute particle set.
+2020-05-22 17:52:15,288:compile:INFO:Compiled zParticleAdvectionRK4_3DAgeDeleteWestward ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\607d76b5f94f208168701aee574496dd_0.dll

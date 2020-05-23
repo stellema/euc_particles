@@ -13,6 +13,7 @@
 
 # """
 import main
+import cftime
 import cfg
 import tools
 import math
@@ -26,14 +27,15 @@ logger = tools.mlogger('base', parcels=True)
 
 
 @timeit
-def run_EUC(dy=0.8, dz=25, lon=190, lat=2.6, year=[1981, 2012],
-            dt_mins=240, repeatdt_days=6, outputdt_days=1, month=12, ifile=0,
+def run_EUC(dy=0.8, dz=25, lon=165, lat=2.6, year=[1981, 2012],
+            dt_mins=240, repeatdt_days=6, outputdt_days=1, month=12, day='max', runtime_days='all',
+            ifile=0, field_method='b_grid', chunks='auto',
             add_transport=True, write_fieldset=False, parallel=False):
     """Run Lagrangian EUC particle experiment."""
     # Define Fieldset and ParticleSet parameters.
 
     # Start and end dates.
-    date_bnds = [get_date(year[0], 1, 1), get_date(year[1], month, 'max')]
+    date_bnds = [get_date(year[0], 1, 1), get_date(year[1], month, day)]
 
     # Meridional distance between released particles.
     p_lats = np.round(np.arange(-lat, lat + 0.1, dy), 2)
@@ -52,7 +54,10 @@ def run_EUC(dy=0.8, dz=25, lon=190, lat=2.6, year=[1981, 2012],
     repeatdt = timedelta(days=repeatdt_days)
 
     # Run for the number of days between date bounds.
-    runtime = timedelta(days=(date_bnds[1] - date_bnds[0]).days)
+    if runtime_days == 'all':
+        runtime = timedelta(days=(date_bnds[1] - date_bnds[0]).days)
+    else:
+        runtime = timedelta(days=int(runtime_days))
 
     # Advection steps to write.
     outputdt = timedelta(days=outputdt_days)
@@ -75,13 +80,15 @@ def run_EUC(dy=0.8, dz=25, lon=190, lat=2.6, year=[1981, 2012],
                 .format(sim_id.stem, Z * X * Y * math.floor(runtime.days/repeatdt.days), Z * X * Y))
 
     # Create fieldset.
-    fieldset = main.ofam_fieldset(date_bnds, chunks='manual')
+    fieldset = main.ofam_fieldset(date_bnds, chunks=chunks, field_method=field_method)
 
     # Set fieldset minimum depth.
-    # fieldset.mindepth = fieldset.U.depth[0]
+    fieldset.mindepth = fieldset.U.depth[0]
 
     # Set ParticleSet start depth as last fieldset time.
     pset_start = fieldset.U.grid.time[-1]
+
+    fieldset.add_constant('pset_start', pset_start)
 
     # Create ParticleSet and execute.
     main.EUC_particles(fieldset, date_bnds, p_lats, p_lons, p_depths,
@@ -105,13 +112,14 @@ if __name__ == "__main__" and cfg.home != Path('E:/'):
     p = ArgumentParser(description="""Run EUC Lagrangian experiment.""")
     p.add_argument('-dy', '--dy', default=0.1, type=float, help='Particle latitude spacing [deg].')
     p.add_argument('-dz', '--dz', default=25, type=int, help='Particle depth spacing [m].')
-    p.add_argument('-lon', '--lon', default=190, type=str, help='Particle start longitude(s).')
+    p.add_argument('-lon', '--lon', default=165, type=str, help='Particle start longitude(s).')
     p.add_argument('-lat', '--lat', default=2.6, type=float, help='Latitude bounds [deg].')
     p.add_argument('-i', '--yri', default=1981, type=int, help='Simulation start year.')
     p.add_argument('-f', '--yrf', default=2012, type=int, help='Simulation end year.')
     p.add_argument('-dt', '--dt', default=240, type=int, help='Advection timestep [min].')
     p.add_argument('-r', '--repeatdt', default=6, type=int, help='Release repeat [day].')
     p.add_argument('-out', '--outputdt', default=1, type=int, help='Advection write freq [day].')
+    p.add_argument('-run', '--runtime', default='all', type=str, help='Runtime [day].')
     p.add_argument('-mon', '--month', default=12, type=int, help='Final month (of final year).')
     p.add_argument('-t', '--transport', default=True, type=bool, help='Write transport file.')
     p.add_argument('-w', '--fset', default=False, type=bool, help='Write fieldset.')
@@ -121,9 +129,39 @@ if __name__ == "__main__" and cfg.home != Path('E:/'):
 
     run_EUC(dy=args.dy, dz=args.dz, lon=args.lon, lat=args.lat,
             year=[args.yri, args.yrf], month=args.month, dt_mins=args.dt,
-            repeatdt_days=args.repeatdt, outputdt_days=args.outputdt, ifile=args.ifile,
+            repeatdt_days=args.repeatdt, outputdt_days=args.outputdt, runtime_days=args.runtime,
+            ifile=args.ifile,
             add_transport=args.transport, write_fieldset=args.fset, parallel=args.parallel)
 else:
-    run_EUC(dy=1, dz=200, lon=190, lat=2, year=[1981, 1981],
-            dt_mins=240, repeatdt_days=6, outputdt_days=1, month=1,
+    dy, dz = 1, 120
+    lon, lat = 155, 2
+    year, month, day = [1981, 1981], 2, 'max'
+    dt_mins, repeatdt_days, outputdt_days, runtime_days = 240, 6, 1, 10
+    add_transport, write_fieldset = False, False
+    field_method = 'b_grid'
+    chunks = 'auto'
+    ifile = 0
+    parallel = False
+    run_EUC(dy=dy, dz=dz, lon=lon, lat=lat, year=year,
+            dt_mins=240, repeatdt_days=6, outputdt_days=1, month=month, runtime_days=runtime_days,
+            field_method=field_method, chunks=chunks,
             add_transport=False, write_fieldset=False)
+
+# tmp_time = fieldset.time_origin.time_origin
+# tmp_cal = fieldset.time_origin.calendar
+# fieldset.time_origin.time_origin = np.datetime64(fieldset.time_origin.time_origin)
+# fieldset.time_origin.calendar = 'np_datetime64'
+# pset2 = ParticleSet.from_particlefile(fieldset, pclass=zParticle,
+#                                       filename=str('E:\GitHub\OFAM\data\sim_198101_198102_v154i.nc'),
+#                                       restart=True, repeatdt=repeatdt)
+
+# fieldset.time_origin.time_origin = tmp_time
+# fieldset.time_origin.calendar = tmp_cal
+
+# # Need to computer nearest time chunk of fieldset when executing again
+
+# output_file = pset.ParticleFile(cfg.data/sim_id.stem, outputdt=outputdt)
+# pset2.execute(kernels, runtime=runtime, dt=dt, output_file=output_file,
+#              recovery={ErrorCode.ErrorOutOfBounds: DeleteParticle,
+#                        ErrorCode.ErrorThroughSurface: SubmergeParticle},
+#              verbose_progress=True)
