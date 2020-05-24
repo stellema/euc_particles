@@ -27,7 +27,7 @@ logger = tools.mlogger('base', parcels=True)
 
 
 @timeit
-def run_EUC(dy=0.8, dz=25, lon=165, lat=2.6, year=[1981, 2012],
+def run_EUC(dy=0.4, dz=25, lon=165, lat=2.6, year=[1981, 2012],
             dt_mins=240, repeatdt_days=6, outputdt_days=1, month=12, day='max', runtime_days='all',
             ifile=0, field_method='b_grid', chunks='auto',
             add_transport=True, write_fieldset=False, parallel=False):
@@ -39,10 +39,11 @@ def run_EUC(dy=0.8, dz=25, lon=165, lat=2.6, year=[1981, 2012],
 
     # Meridional distance between released particles.
     p_lats = np.round(np.arange(-lat, lat + 0.1, dy), 2)
+    # p_lats = [lat]
 
     # Vertical distance between released particles.
     p_depths = np.arange(25, 350 + 20, dz)
-
+    # p_depths = 200
     # Longitudes to release particles.
     lon = lon if type(lon) == 'str' else str(lon)  # Convert to string.
     p_lons = np.array([int(item) for item in lon.split(',')])
@@ -80,10 +81,11 @@ def run_EUC(dy=0.8, dz=25, lon=165, lat=2.6, year=[1981, 2012],
                 .format(sim_id.stem, Z * X * Y * math.floor(runtime.days/repeatdt.days), Z * X * Y))
 
     # Create fieldset.
-    fieldset = main.ofam_fieldset(date_bnds, chunks=chunks, field_method=field_method)
+    fieldset = main.ofam_fieldset(date_bnds, chunks=chunks, field_method=field_method,
+                                  time_periodic=timedelta(days=(date_bnds[1] - date_bnds[0]).days))
 
     # Set fieldset minimum depth.
-    fieldset.mindepth = fieldset.U.depth[0]
+    fieldset.mindepth = 2.5
 
     # Set ParticleSet start depth as last fieldset time.
     pset_start = fieldset.U.grid.time[-1]
@@ -93,7 +95,7 @@ def run_EUC(dy=0.8, dz=25, lon=165, lat=2.6, year=[1981, 2012],
     # Create ParticleSet and execute.
     main.EUC_particles(fieldset, date_bnds, p_lats, p_lons, p_depths,
                        dt, pset_start, repeatdt, runtime, outputdt,
-                       sim_id, remove_westward=True, all_kernels=True)
+                       sim_id, all_kernels=True)
 
     # Calculate initial transport of particle and save altered ParticleFile.
     if add_transport:
@@ -105,7 +107,7 @@ def run_EUC(dy=0.8, dz=25, lon=165, lat=2.6, year=[1981, 2012],
         fieldset.write(cfg.data/'fieldset_ofam_3D_{}_{}'
                        .format(*[str(i)[:7] for i in date_bnds]))
 
-    return
+    return fieldset
 
 
 if __name__ == "__main__" and cfg.home != Path('E:/'):
@@ -121,7 +123,7 @@ if __name__ == "__main__" and cfg.home != Path('E:/'):
     p.add_argument('-out', '--outputdt', default=1, type=int, help='Advection write freq [day].')
     p.add_argument('-run', '--runtime', default='all', type=str, help='Runtime [day].')
     p.add_argument('-mon', '--month', default=12, type=int, help='Final month (of final year).')
-    p.add_argument('-t', '--transport', default=True, type=bool, help='Write transport file.')
+    p.add_argument('-t', '--transport', default=False, type=bool, help='Write transport file.')
     p.add_argument('-w', '--fset', default=False, type=bool, help='Write fieldset.')
     p.add_argument('-p', '--parallel', default=False, type=bool, help='Parallel execution.')
     p.add_argument('-ix', '--ifile', default=0, type=int, help='File Index.')
@@ -133,35 +135,75 @@ if __name__ == "__main__" and cfg.home != Path('E:/'):
             ifile=args.ifile,
             add_transport=args.transport, write_fieldset=args.fset, parallel=args.parallel)
 else:
-    dy, dz = 1, 120
-    lon, lat = 155, 2
-    year, month, day = [1981, 1981], 2, 'max'
-    dt_mins, repeatdt_days, outputdt_days, runtime_days = 240, 6, 1, 10
+    dy, dz = 1, 200
+    lon, lat = 165, 2.6
+    year, month, day = [1981, 1981], 6, 'max'
+    dt_mins, repeatdt_days, outputdt_days, runtime_days = 240, 6, 1, 7
     add_transport, write_fieldset = False, False
     field_method = 'b_grid'
     chunks = 'auto'
     ifile = 0
     parallel = False
-    run_EUC(dy=dy, dz=dz, lon=lon, lat=lat, year=year,
-            dt_mins=240, repeatdt_days=6, outputdt_days=1, month=month, runtime_days=runtime_days,
-            field_method=field_method, chunks=chunks,
-            add_transport=False, write_fieldset=False)
+    fieldset = run_EUC(dy=dy, dz=dz, lon=lon, lat=lat, year=year,
+                       dt_mins=240, repeatdt_days=6, outputdt_days=1, month=month,
+                       runtime_days=runtime_days,
+                       field_method=field_method, chunks=chunks,
+                       add_transport=False, write_fieldset=False)
 
-# tmp_time = fieldset.time_origin.time_origin
-# tmp_cal = fieldset.time_origin.calendar
-# fieldset.time_origin.time_origin = np.datetime64(fieldset.time_origin.time_origin)
-# fieldset.time_origin.calendar = 'np_datetime64'
-# pset2 = ParticleSet.from_particlefile(fieldset, pclass=zParticle,
-#                                       filename=str('E:\GitHub\OFAM\data\sim_198101_198102_v154i.nc'),
+
+# date_bnds2 = [get_date(year[0], 1, 1), get_date(year[1], 3, 'max')]
+# fieldset2 = main.ofam_fieldset(date_bnds2, chunks=chunks, field_method=field_method,
+#                                time_periodic=runtime)
+
+# # Set fieldset minimum depth.
+# # fieldset.mindepth = fieldset.U.depth[0]
+
+# # Set ParticleSet start depth as last fieldset time.
+# pset_start = fieldset2.U.grid.time[-1]
+
+# fieldset2.add_constant('pset_start', pset_start)
+# # fieldset.computeTimeChunk(fieldset.time_origin.reltime(get_date(year[1], month, day)), -240*60)
+# # fieldset.computeTimeChunk(2592000, -240*60)
+# # fieldset.computeTimeChunk(fieldset.time_origin.reltime(
+# #     get_date(year[1], 1, 31-runtime_days+2))+12*3600, -240*60)
+# # fieldset.computeTimeChunk(fieldset.time_origin.reltime(
+# #     get_date(year[1], 1, 31))+12*3600, -240*60)
+# # fieldset.computeTimeChunk(fieldset.U.grid.time_full[0], 1)
+
+# sim_id = Path('E:\GitHub\OFAM\data\sim_198101_198101_v77i.nc')
+# tmp_time = fieldset2.time_origin.time_origin
+# tmp_cal = fieldset2.time_origin.calendar
+# class zParticle(JITParticle):
+#     """Particle class that saves particle age and zonal velocity."""
+
+#     # The age of the particle.
+#     age = Variable('age', dtype=np.float32, initial=0.)
+
+#     # The velocity of the particle.
+#     u = Variable('u', dtype=np.float32, initial=fieldset.U, to_write='once')
+#     zone = Variable('zone', dtype=np.float32, initial=fieldset.zone)
+
+
+
+# fieldset2.time_origin.time_origin = np.datetime64(fieldset2.time_origin.time_origin)
+# fieldset2.time_origin.calendar = 'np_datetime64'
+# # Need to computer nearest time chunk of fieldset when executing again
+
+#             pset2 = ParticleSet.from_particlefile(fieldset2+-+```+`+`+`+```` -+
+
+#                                                   .0, pclass=zParticle,
+#                                       filename=sim_id,
 #                                       restart=True, repeatdt=repeatdt)
-
+# kernels = (AdvectionRK4_3D + pset2.Kernel(Age) +
+#            pset2.Kernel(DeleteWestward))
 # fieldset.time_origin.time_origin = tmp_time
 # fieldset.time_origin.calendar = tmp_cal
 
 # # Need to computer nearest time chunk of fieldset when executing again
 
-# output_file = pset.ParticleFile(cfg.data/sim_id.stem, outputdt=outputdt)
+# output_file = pset2.ParticleFile(Path('E:\GitHub\OFAM\data\sim_198101_198103_v33i.nc'),
+#                                  outputdt=outputdt)
 # pset2.execute(kernels, runtime=runtime, dt=dt, output_file=output_file,
-#              recovery={ErrorCode.ErrorOutOfBounds: DeleteParticle,
-#                        ErrorCode.ErrorThroughSurface: SubmergeParticle},
-#              verbose_progress=True)
+#               recovery={ErrorCode.ErrorOutOfBounds: DeleteParticle,
+#                         ErrorCode.ErrorThroughSurface: SubmergeParticle},
+#               verbose_progress=True)

@@ -57,6 +57,7 @@ from parcels import FieldSet, Field, ParticleSet, JITParticle
 from parcels import ErrorCode, Variable, AdvectionRK4_3D, AdvectionRK4
 from tools import timeit
 from datetime import datetime
+from operator import attrgetter
 logger = tools.mlogger(Path(sys.argv[0]).stem)
 
 
@@ -166,7 +167,7 @@ def DeleteParticle(particle, fieldset, time):
 
 def SubmergeParticle(particle, fieldset, time):
     """Run 2D advection if particle goes through surface."""
-    particle.depth = fieldset.U.depth[0]
+    particle.depth = 0.
     # Perform 2D advection as vertical flow will always push up in this case.
     AdvectionRK4(particle, fieldset, time)
     # Increase time to not trigger kernels again, otherwise infinite loop.
@@ -176,18 +177,22 @@ def SubmergeParticle(particle, fieldset, time):
 
 def Age(particle, fieldset, time):
     """Update particle age."""
+    if particle.age == 0.:
+        if particle.u < 0.:
+            particle.delete()
     particle.age = particle.age + math.fabs(particle.dt)
 
 
 def DeleteWestward(particle, fieldset, time):
     """Delete particles initially travelling westward."""
     # Delete particle if the initial zonal velocity is westward (negative).
-    # if particle.age == 0 and particle.u <= 0:
+    # if particle.age == 0. and particle.u <= 0:
     #     particle.delete()
-    if particle.age == 0:
-        if fieldset.U[particle.time, particle.depth, particle.lat, particle.lon] <= 0:
-            particle.delete()
-
+    # if particle.age == 0:
+    if fieldset.U[particle.tstart, particle.depth, particle.lat, particle.lon] <= 0:
+        particle.delete()
+    # if particle.u <= 0:
+    #     particle.delete()
 
 def Distance(particle, fieldset, time):
     """Calculate distance travelled by particle."""
@@ -216,7 +221,8 @@ def remove_westward_particles(pset):
     """
     ix = []
     for p in pset:
-        if p.u <= 0. and p.age == 0.:
+        print(p.u, p.age)
+        if p.u < 0. and p.age == 0.:
             ix.append(np.where([pi.id == p.id for pi in pset])[0][0])
     pset.remove_indices(ix)
 
@@ -228,10 +234,14 @@ def remove_westward_particles(pset):
 
 
 @timeit
-def EUC_pset(fieldset, pclass, p_lats, p_lons, p_depths,
-             pset_start, repeatdt):
+def EUC_pset(fieldset, pclass, p_lats, p_lons, p_depths, pset_start, repeatdt):
     """Create a ParticleSet."""
-    lats = np.tile(p_lats, len(p_depths)*len(p_lons))
+    # Convert to lists if float or int.
+    p_lats = [p_lats] if type(p_lats) not in [list, np.array, np.ndarray] else p_lats
+    p_depths = [p_depths] if type(p_depths) not in [list, np.array, np.ndarray] else p_depths
+    p_lons = [p_lons] if type(p_lons) not in [list, np.array, np.ndarray] else p_lons
+
+    lats = np.repeat(p_lats, len(p_depths)*len(p_lons))
     depths = np.tile(np.repeat(p_depths, len(p_lats)), len(p_lons))
     lons = np.repeat(p_lons, len(p_depths)*len(p_lats))
     pset = ParticleSet.from_list(fieldset=fieldset, pclass=pclass,
@@ -244,7 +254,7 @@ def EUC_pset(fieldset, pclass, p_lats, p_lons, p_depths,
 @timeit
 def EUC_particles(fieldset, date_bnds, p_lats, p_lons, p_depths,
                   dt, pset_start, repeatdt, runtime, outputdt,
-                  sim_id, remove_westward=True, all_kernels=True):
+                  sim_id, all_kernels=True):
     """Create and execute a ParticleSet (created using EUC_pset).
 
     Args:
@@ -266,7 +276,7 @@ def EUC_particles(fieldset, date_bnds, p_lats, p_lons, p_depths,
 
     """
 
-    class zParticle(JITParticle):
+    class zParticle(cfg.ptype['jit']):
         """Particle class that saves particle age and zonal velocity."""
 
         # The age of the particle.
@@ -274,23 +284,19 @@ def EUC_particles(fieldset, date_bnds, p_lats, p_lons, p_depths,
 
         # The velocity of the particle.
         u = Variable('u', dtype=np.float32, initial=fieldset.U, to_write='once')
+
         zone = Variable('zone', dtype=np.float32, initial=fieldset.zone)
 
     # Create particle set.
     pset = EUC_pset(fieldset, zParticle, p_lats, p_lons, p_depths, pset_start, repeatdt)
 
-    # Delete any particles that are intially travelling westward.
-    if remove_westward:
-        remove_westward_particles(pset)
-
     # Output particle file p_name and time steps to save.
-    logger.debug('{}: Output file.'.format(sim_id.stem))
     output_file = pset.ParticleFile(cfg.data/sim_id.stem, outputdt=outputdt)
+    logger.debug('{}:tempwritedir:{}'.format(sim_id.stem, output_file.tempwritedir_base))
+
     if all_kernels:
-        logger.info('{}:AdvectionRK4_3D + pset.Kernel(Age) + '
-                    'pset.Kernel(DeleteWestward)'.format(sim_id.stem))
-        kernels = (AdvectionRK4_3D + pset.Kernel(Age) +
-                   pset.Kernel(DeleteWestward))
+        logger.info('{}:pset.Kernel(Age)+AdvectionRK4_3D'.format(sim_id.stem))
+        kernels = (pset.Kernel(Age) + AdvectionRK4_3D)
 
     else:
         logger.info('{}:AdvectionRK4_3D'.format(sim_id.stem))
@@ -302,6 +308,7 @@ def EUC_particles(fieldset, date_bnds, p_lats, p_lons, p_depths,
                            ErrorCode.ErrorThroughSurface: SubmergeParticle},
                  verbose_progress=True)
     output_file.export()
+    logger.info('{}: Total particles:{}'.format(sim_id.stem, len(pset)))
     logger.info('{}: Completed.'.format(sim_id.stem))
 
     return
@@ -334,7 +341,7 @@ def ParticleFile_transport(sim_id, dy, dz, save=True):
     df = xr.Dataset()
     df.attrs = ds.attrs  # Copy partcile file attributes.
     # Indexes of particles that were intially westward.
-    ix = np.argwhere(ds.isel(obs=0).u.values < 0).flatten().tolist()
+    ix = np.argwhere(ds.u.values < 0).flatten().tolist()
     # Copy particle file variables (without westward) and attributes.
     for v in ds.variables:
         df[v] = (('traj', 'obs'), np.delete(ds[v].values, ix, axis=0))
@@ -386,19 +393,16 @@ def plot3D(sim_id):
         sim_id (pathlib.Path): ParticleFile to plot.
 
     """
-    ds = xr.open_dataset(sim_id).isel(obs=slice(0, 100))
+    ds = xr.open_dataset(sim_id)#.isel(obs=slice(0, 100))
+    # ds = ds.where(ds.u > 0, drop=True)
     plt.figure(figsize=(13, 10))
     ax = plt.axes(projection='3d')
-
-    cmap = plt.cm.Spectral
-    norm = plt.Normalize()
-    colors = cmap(norm(ds.u))
-
+    colors = plt.cm.rainbow(np.linspace(0, 1, len(ds.traj)))
     x = ds.lon
     y = ds.lat
     z = ds.z
     for i in range(len(ds.traj)):
-        ax.scatter(x[i], y[i], z[i], s=5, marker="o", c=colors[i])
+        ax.scatter(x[i], y[i], z[i], s=5, marker="o", c=np.tile(colors[i], (len(x[i]), 1)))
 
     ax.set_xlabel("Longitude")
     ax.set_ylabel("Latitude")
