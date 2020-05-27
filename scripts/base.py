@@ -38,7 +38,7 @@ def run_EUC(dy=0.4, dz=25, lon=165, lat=2.6, year=[1981, 2012],
     date_bnds = [get_date(year[0], 1, 1), get_date(year[1], month, day)]
 
     # Meridional distance between released particles.
-    p_lats = np.round(np.arange(-lat, lat + 0.1, dy), 2)
+    p_lats = np.round(np.arange(-lat, lat + 0.05, dy), 2)
     # p_lats = [lat]
 
     # Vertical distance between released particles.
