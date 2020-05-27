@@ -56,7 +56,7 @@ def run_EUC(dy=0.4, dz=25, lon=165, lat=2.6, year=[1981, 2012],
 
     # Run for the number of days between date bounds.
     if runtime_days == 'all':
-        runtime = timedelta(days=(date_bnds[1] - date_bnds[0]).days)
+        runtime = timedelta(days=(date_bnds[1] - date_bnds[0]).days+1)
     else:
         runtime = timedelta(days=int(runtime_days))
 
@@ -78,14 +78,14 @@ def run_EUC(dy=0.4, dz=25, lon=165, lat=2.6, year=[1981, 2012],
     logger.info('{}:Output dt: {:.0f} days'.format(sim_id.stem, outputdt.days))
     logger.info('{}:Repeat release: {} days'.format(sim_id.stem, repeatdt.days))
     logger.info('{}:Particles: Total: {} :/repeat: {}'
-                .format(sim_id.stem, Z * X * Y * math.floor(runtime.days/repeatdt.days), Z * X * Y))
+                .format(sim_id.stem, Z * X * Y * math.ceil(runtime.days/repeatdt.days), Z * X * Y))
 
     # Create fieldset.
     fieldset = main.ofam_fieldset(date_bnds, chunks=chunks, field_method=field_method,
-                                  time_periodic=timedelta(days=(date_bnds[1] - date_bnds[0]).days))
+                                  time_periodic=timedelta(days=(date_bnds[1] - date_bnds[0]).days+1))
 
     # Set fieldset minimum depth.
-    fieldset.mindepth = 2.5
+    fieldset.mindepth = 5
 
     # Set ParticleSet start depth as last fieldset time.
     pset_start = fieldset.U.grid.time[-1]
@@ -137,8 +137,8 @@ if __name__ == "__main__" and cfg.home != Path('E:/'):
 else:
     dy, dz = 1, 200
     lon, lat = 165, 2.6
-    year, month, day = [1981, 1981], 6, 'max'
-    dt_mins, repeatdt_days, outputdt_days, runtime_days = 240, 6, 1, 7
+    year, month, day = [1981, 1981], 1, 'max'
+    dt_mins, repeatdt_days, outputdt_days, runtime_days = 240, 6, 1, 2
     add_transport, write_fieldset = False, False
     field_method = 'b_grid'
     chunks = 'auto'
@@ -149,61 +149,3 @@ else:
                        runtime_days=runtime_days,
                        field_method=field_method, chunks=chunks,
                        add_transport=False, write_fieldset=False)
-
-
-# date_bnds2 = [get_date(year[0], 1, 1), get_date(year[1], 3, 'max')]
-# fieldset2 = main.ofam_fieldset(date_bnds2, chunks=chunks, field_method=field_method,
-#                                time_periodic=runtime)
-
-# # Set fieldset minimum depth.
-# # fieldset.mindepth = fieldset.U.depth[0]
-
-# # Set ParticleSet start depth as last fieldset time.
-# pset_start = fieldset2.U.grid.time[-1]
-
-# fieldset2.add_constant('pset_start', pset_start)
-# # fieldset.computeTimeChunk(fieldset.time_origin.reltime(get_date(year[1], month, day)), -240*60)
-# # fieldset.computeTimeChunk(2592000, -240*60)
-# # fieldset.computeTimeChunk(fieldset.time_origin.reltime(
-# #     get_date(year[1], 1, 31-runtime_days+2))+12*3600, -240*60)
-# # fieldset.computeTimeChunk(fieldset.time_origin.reltime(
-# #     get_date(year[1], 1, 31))+12*3600, -240*60)
-# # fieldset.computeTimeChunk(fieldset.U.grid.time_full[0], 1)
-
-# sim_id = Path('E:\GitHub\OFAM\data\sim_198101_198101_v77i.nc')
-# tmp_time = fieldset2.time_origin.time_origin
-# tmp_cal = fieldset2.time_origin.calendar
-# class zParticle(JITParticle):
-#     """Particle class that saves particle age and zonal velocity."""
-
-#     # The age of the particle.
-#     age = Variable('age', dtype=np.float32, initial=0.)
-
-#     # The velocity of the particle.
-#     u = Variable('u', dtype=np.float32, initial=fieldset.U, to_write='once')
-#     zone = Variable('zone', dtype=np.float32, initial=fieldset.zone)
-
-
-
-# fieldset2.time_origin.time_origin = np.datetime64(fieldset2.time_origin.time_origin)
-# fieldset2.time_origin.calendar = 'np_datetime64'
-# # Need to computer nearest time chunk of fieldset when executing again
-
-#             pset2 = ParticleSet.from_particlefile(fieldset2+-+```+`+`+`+```` -+
-
-#                                                   .0, pclass=zParticle,
-#                                       filename=sim_id,
-#                                       restart=True, repeatdt=repeatdt)
-# kernels = (AdvectionRK4_3D + pset2.Kernel(Age) +
-#            pset2.Kernel(DeleteWestward))
-# fieldset.time_origin.time_origin = tmp_time
-# fieldset.time_origin.calendar = tmp_cal
-
-# # Need to computer nearest time chunk of fieldset when executing again
-
-# output_file = pset2.ParticleFile(Path('E:\GitHub\OFAM\data\sim_198101_198103_v33i.nc'),
-#                                  outputdt=outputdt)
-# pset2.execute(kernels, runtime=runtime, dt=dt, output_file=output_file,
-#               recovery={ErrorCode.ErrorOutOfBounds: DeleteParticle,
-#                         ErrorCode.ErrorThroughSurface: SubmergeParticle},
-#               verbose_progress=True)

@@ -95,28 +95,30 @@ tbnds_ofam = [[10*12+3, 27*12+1], [7*12+4, 384], [9*12+4, 384]]
 tbnds_tao = [[0, -1], [0, 24*12+8], [0, 22*12+8]]
 
 dx = 0.1
-e1, e2, e3 = 165 - dx, 190 - dx, 220 - dx
+e1, e2, e3, e4 = 165 - dx, 190 - dx, 220 - dx, 250 - dx
 j1, j2 = -6.1, 8
 zones = {'VS': [147.7, 149, j1, j1],
          'SS': [152.3, 154.6, -5, -5],  # Includes SGC.
-         'MC': [126.2, 128.2, j2, j2],
+         'MC': [126.2, 128.5, j2, j2],
          'EUC': [[e1, e1, -2.6, 2.6],
                  [e2, e2, -2.6, 2.6],
-                 [e3, e3, -2.6, 2.6]],
+                 [e3, e3, -2.6, 2.6],
+                 [e4, e4, -2.6, 2.6]],
          'EUCS': [[e1, e1, j1, -2.6 - dx],
                   [e2, e2, j1, -2.6 - dx],
-                  [e3, e3, j1, -2.6 - dx]],
+                  [e3, e3, j1, -2.6 - dx],
+                  [e4, e4, j1, -2.6 - dx]],
          'EUCN': [[e1, e1, 2.6 + dx, j2],
                   [e2, e2, 2.6 + dx, j2],
-                  [e3, e3, 2.6 + dx, j2]],
-         'IS': [[124.4, 126.4, -8.3, -8.3],
-                [127.4, 140.4, -8.3, -8.3],
-                [120, 120, -8.3, 10.3],
-                [120, 122.9, 10.3, 10.3],
-                [123.1, 123.1, 8.6, 9.1]],
-         'NI': [128.2 + dx, e3 + dx, j2, j2],
-         'ESI': [155, e3 + dx, j1, j1]}
-
+                  [e3, e3, 2.6 + dx, j2],
+                  [e4, e4, 2.6 + dx, j2]],
+         'IS': [[122.8, 140.4, j1, j1],
+                [122.8, 122.8, j1, j2]],
+         'NI': [128.5 + dx, e4 + dx, j2, j2],
+         'SI': [155, e4 + dx, j1, j1]}
+zone_names = ['Vitiaz Strait', 'Solomon Strait', 'Mindanao Current',
+              'EUC recirculation', 'North of EUC', 'South of EUC',
+              'Indonesian Seas', 'North Interior', 'South Interior']
 # Suppress scientific notation when printing.
 np.set_printoptions(suppress=True)
 

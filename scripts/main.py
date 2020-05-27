@@ -50,13 +50,14 @@ import math
 import random
 import numpy as np
 import xarray as xr
+import pandas as pd
 from pathlib import Path
 import matplotlib.pyplot as plt
 from collections import OrderedDict
-from parcels import FieldSet, Field, ParticleSet, JITParticle
-from parcels import ErrorCode, Variable, AdvectionRK4_3D, AdvectionRK4
+from parcels import (FieldSet, Field, ParticleSet, JITParticle,
+                     ErrorCode, Variable, AdvectionRK4_3D, AdvectionRK4)
 from tools import timeit
-from datetime import datetime
+from datetime import datetime, timedelta
 from operator import attrgetter
 logger = tools.mlogger(Path(sys.argv[0]).stem)
 
@@ -85,17 +86,27 @@ def ofam_fieldset(date_bnds, field_method='b_grid', time_periodic=False,
 
     # Create list of files for each variable based on selected years and months.
     u, v, w = [], [], []
+
     for y in range(date_bnds[0].year, date_bnds[1].year + 1):
+
         for m in range(date_bnds[0].month, date_bnds[1].month + 1):
             u.append(str(cfg.ofam/('ocean_u_{}_{:02d}.nc'.format(y, m))))
             v.append(str(cfg.ofam/('ocean_v_{}_{:02d}.nc'.format(y, m))))
             w.append(str(cfg.ofam/('ocean_w_{}_{:02d}.nc'.format(y, m))))
+            # f = np.arange(np.datetime64(tools.get_date(y, m, 1)),
+            #                         np.datetime64(tools.get_date(y, m, 'max')), timedelta(days=1)).astype('datetime64[ns]')
+            # if y == date_bnds[0].year and m == date_bnds[0].month:
+            #     timestamps = f
+            # else:
+            #     timestamps = np.append(timestamps, f)
+
 
     variables = {'U': 'u', 'V': 'v', 'W': 'w'}
     dims = {'time': 'Time', 'depth': 'sw_ocean', 'lat': 'yu_ocean', 'lon': 'xu_ocean'}
     dimensions = {'U': {'time': 'Time', 'depth': 'sw_ocean', 'lat': 'yu_ocean', 'lon': 'xu_ocean'},
                   'V': {'time': 'Time', 'depth': 'sw_ocean', 'lat': 'yu_ocean', 'lon': 'xu_ocean'},
                   'W': {'time': 'Time', 'depth': 'sw_ocean', 'lat': 'yu_ocean', 'lon': 'xu_ocean'}}
+    # timestamps = stamps  #np.expand_dims(np.array(stamps), axis=1)
 
     if field_method != 'xarray':
         files = {'U': {'depth': w[0], 'lat': u[0], 'lon': u[0], 'data': u},
@@ -177,9 +188,8 @@ def SubmergeParticle(particle, fieldset, time):
 
 def Age(particle, fieldset, time):
     """Update particle age."""
-    if particle.age == 0.:
-        if particle.u < 0.:
-            particle.delete()
+    if particle.age == 0. and particle.u <= 0.:
+        particle.delete()
     particle.age = particle.age + math.fabs(particle.dt)
 
 
@@ -286,13 +296,16 @@ def EUC_particles(fieldset, date_bnds, p_lats, p_lons, p_depths,
         u = Variable('u', dtype=np.float32, initial=fieldset.U, to_write='once')
 
         zone = Variable('zone', dtype=np.float32, initial=fieldset.zone)
-
+    # fieldset.time_origin.time_origin = np.datetime64(fieldset.time_origin.time_origin)
+    # fieldset.time_origin.calendar = 'np_datetime64'
     # Create particle set.
     pset = EUC_pset(fieldset, zParticle, p_lats, p_lons, p_depths, pset_start, repeatdt)
-
+    # pset.time_origin.time_origin = np.datetime64(pset.time_origin.time_origin)
+    # pset.time_origin.calendar = 'np_datetime64'
     # Output particle file p_name and time steps to save.
     output_file = pset.ParticleFile(cfg.data/sim_id.stem, outputdt=outputdt)
     logger.debug('{}:tempwritedir:{}'.format(sim_id.stem, output_file.tempwritedir_base))
+    logger.debug('{}:pset size:{}'.format(sim_id.stem, pset.size))
 
     if all_kernels:
         logger.info('{}:pset.Kernel(Age)+AdvectionRK4_3D'.format(sim_id.stem))
@@ -393,10 +406,10 @@ def plot3D(sim_id):
         sim_id (pathlib.Path): ParticleFile to plot.
 
     """
-    ds = xr.open_dataset(sim_id)#.isel(obs=slice(0, 100))
-    # ds = ds.where(ds.u > 0, drop=True)
-    plt.figure(figsize=(13, 10))
-    ax = plt.axes(projection='3d')
+    ds = xr.open_dataset(sim_id, decode_cf=True)
+    ds = ds.where(ds.u > 0, drop=True)
+    fig = plt.figure(figsize=(13, 10))
+    ax = fig.add_subplot(111, projection='3d')
     colors = plt.cm.rainbow(np.linspace(0, 1, len(ds.traj)))
     x = ds.lon
     y = ds.lat
@@ -408,8 +421,8 @@ def plot3D(sim_id):
     ax.set_ylabel("Latitude")
     ax.set_zlabel("Depth [m]")
     ax.set_zlim(np.max(z), np.min(z))
+    fig.savefig(cfg.fig/(sim_id.stem + cfg.im_ext))
     plt.show()
-    plt.savefig(cfg.fig/(sim_id.stem + cfg.im_ext))
     plt.close()
     ds.close()
 
