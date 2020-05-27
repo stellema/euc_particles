@@ -56,9 +56,12 @@ def run_EUC(dy=0.4, dz=25, lon=165, lat=2.6, year=[1981, 2012],
 
     # Run for the number of days between date bounds.
     if runtime_days == 'all':
-        runtime = timedelta(days=(date_bnds[1] - date_bnds[0]).days+1)
+        runtime = timedelta(days=(date_bnds[1] - date_bnds[0]).days + 1)
     else:
         runtime = timedelta(days=int(runtime_days))
+
+    time_periodic = timedelta(days=(date_bnds[1] - date_bnds[0]).days + 1)
+    # time_periodic = False
 
     # Advection steps to write.
     outputdt = timedelta(days=outputdt_days)
@@ -82,10 +85,10 @@ def run_EUC(dy=0.4, dz=25, lon=165, lat=2.6, year=[1981, 2012],
 
     # Create fieldset.
     fieldset = main.ofam_fieldset(date_bnds, chunks=chunks, field_method=field_method,
-                                  time_periodic=timedelta(days=(date_bnds[1] - date_bnds[0]).days+1))
+                                  time_periodic=time_periodic)
 
     # Set fieldset minimum depth.
-    fieldset.mindepth = 5
+    fieldset.mindepth = fieldset.U.depth[0]
 
     # Set ParticleSet start depth as last fieldset time.
     pset_start = fieldset.U.grid.time[-1]
@@ -94,8 +97,7 @@ def run_EUC(dy=0.4, dz=25, lon=165, lat=2.6, year=[1981, 2012],
 
     # Create ParticleSet and execute.
     main.EUC_particles(fieldset, date_bnds, p_lats, p_lons, p_depths,
-                       dt, pset_start, repeatdt, runtime, outputdt,
-                       sim_id, all_kernels=True)
+                       dt, pset_start, repeatdt, runtime, outputdt, sim_id)
 
     # Calculate initial transport of particle and save altered ParticleFile.
     if add_transport:

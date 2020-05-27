@@ -64,7 +64,7 @@ logger = tools.mlogger(Path(sys.argv[0]).stem)
 
 @timeit
 def ofam_fieldset(date_bnds, field_method='b_grid', time_periodic=False,
-                  deferred_load=True, chunks='specific', time_ext=True):
+                  deferred_load=True, chunks='specific', time_ext=False):
     """Create a 3D parcels fieldset from OFAM model output.
 
     Between two dates useing FieldSet.from_b_grid_dataset.
@@ -82,7 +82,7 @@ def ofam_fieldset(date_bnds, field_method='b_grid', time_periodic=False,
 
     """
     # Chunk size for lat and lon.
-    cs = 258
+    cs = 300
 
     # Create list of files for each variable based on selected years and months.
     u, v, w = [], [], []
@@ -93,13 +93,6 @@ def ofam_fieldset(date_bnds, field_method='b_grid', time_periodic=False,
             u.append(str(cfg.ofam/('ocean_u_{}_{:02d}.nc'.format(y, m))))
             v.append(str(cfg.ofam/('ocean_v_{}_{:02d}.nc'.format(y, m))))
             w.append(str(cfg.ofam/('ocean_w_{}_{:02d}.nc'.format(y, m))))
-            # f = np.arange(np.datetime64(tools.get_date(y, m, 1)),
-            #                         np.datetime64(tools.get_date(y, m, 'max')), timedelta(days=1)).astype('datetime64[ns]')
-            # if y == date_bnds[0].year and m == date_bnds[0].month:
-            #     timestamps = f
-            # else:
-            #     timestamps = np.append(timestamps, f)
-
 
     variables = {'U': 'u', 'V': 'v', 'W': 'w'}
     dims = {'time': 'Time', 'depth': 'sw_ocean', 'lat': 'yu_ocean', 'lon': 'xu_ocean'}
@@ -178,7 +171,7 @@ def DeleteParticle(particle, fieldset, time):
 
 def SubmergeParticle(particle, fieldset, time):
     """Run 2D advection if particle goes through surface."""
-    particle.depth = 0.
+    particle.depth = fieldset.mindepth
     # Perform 2D advection as vertical flow will always push up in this case.
     AdvectionRK4(particle, fieldset, time)
     # Increase time to not trigger kernels again, otherwise infinite loop.
@@ -198,11 +191,9 @@ def DeleteWestward(particle, fieldset, time):
     # Delete particle if the initial zonal velocity is westward (negative).
     # if particle.age == 0. and particle.u <= 0:
     #     particle.delete()
-    # if particle.age == 0:
     if fieldset.U[particle.tstart, particle.depth, particle.lat, particle.lon] <= 0:
         particle.delete()
-    # if particle.u <= 0:
-    #     particle.delete()
+
 
 def Distance(particle, fieldset, time):
     """Calculate distance travelled by particle."""
@@ -264,7 +255,7 @@ def EUC_pset(fieldset, pclass, p_lats, p_lons, p_depths, pset_start, repeatdt):
 @timeit
 def EUC_particles(fieldset, date_bnds, p_lats, p_lons, p_depths,
                   dt, pset_start, repeatdt, runtime, outputdt,
-                  sim_id, all_kernels=True):
+                  sim_id):
     """Create and execute a ParticleSet (created using EUC_pset).
 
     Args:
@@ -295,25 +286,24 @@ def EUC_particles(fieldset, date_bnds, p_lats, p_lons, p_depths,
         # The velocity of the particle.
         u = Variable('u', dtype=np.float32, initial=fieldset.U, to_write='once')
 
+        # The 'zone' of the particle.
         zone = Variable('zone', dtype=np.float32, initial=fieldset.zone)
+
     # fieldset.time_origin.time_origin = np.datetime64(fieldset.time_origin.time_origin)
     # fieldset.time_origin.calendar = 'np_datetime64'
-    # Create particle set.
-    pset = EUC_pset(fieldset, zParticle, p_lats, p_lons, p_depths, pset_start, repeatdt)
     # pset.time_origin.time_origin = np.datetime64(pset.time_origin.time_origin)
     # pset.time_origin.calendar = 'np_datetime64'
+
+    # Create particle set.
+    pset = EUC_pset(fieldset, zParticle, p_lats, p_lons, p_depths, pset_start, repeatdt)
+
     # Output particle file p_name and time steps to save.
     output_file = pset.ParticleFile(cfg.data/sim_id.stem, outputdt=outputdt)
-    logger.debug('{}:tempwritedir:{}'.format(sim_id.stem, output_file.tempwritedir_base))
-    logger.debug('{}:pset size:{}'.format(sim_id.stem, pset.size))
+    logger.debug('{}:Temp write dir:{}'.format(sim_id.stem, output_file.tempwritedir_base))
+    logger.debug('{}:Initial pset size:{}'.format(sim_id.stem, pset.size))
 
-    if all_kernels:
-        logger.info('{}:pset.Kernel(Age)+AdvectionRK4_3D'.format(sim_id.stem))
-        kernels = (pset.Kernel(Age) + AdvectionRK4_3D)
-
-    else:
-        logger.info('{}:AdvectionRK4_3D'.format(sim_id.stem))
-        kernels = AdvectionRK4_3D
+    logger.info('{}:pset.Kernel(Age)+AdvectionRK4_3D'.format(sim_id.stem))
+    kernels = pset.Kernel(Age) + AdvectionRK4_3D
 
     logger.debug('{}: Excecute particle set.'.format(sim_id.stem))
     pset.execute(kernels, runtime=runtime, dt=dt, output_file=output_file,
@@ -321,7 +311,7 @@ def EUC_particles(fieldset, date_bnds, p_lats, p_lons, p_depths,
                            ErrorCode.ErrorThroughSurface: SubmergeParticle},
                  verbose_progress=True)
     output_file.export()
-    logger.info('{}: Total particles:{}'.format(sim_id.stem, len(pset)))
+    logger.debug('{}:Final pset size:{}'.format(sim_id.stem, pset.size))
     logger.info('{}: Completed.'.format(sim_id.stem))
 
     return
