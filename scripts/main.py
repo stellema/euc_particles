@@ -62,7 +62,6 @@ from operator import attrgetter
 logger = tools.mlogger(Path(sys.argv[0]).stem)
 
 
-@timeit
 def ofam_fieldset(date_bnds, field_method='b_grid', time_periodic=False,
                   deferred_load=True, chunks='specific', time_ext=False):
     """Create a 3D parcels fieldset from OFAM model output.
@@ -213,7 +212,6 @@ def Distance(particle, fieldset, time):
     particle.prev_lat = particle.lat
 
 
-@timeit
 def remove_westward_particles(pset):
     """Delete initially westward particles from the ParticleSet.
 
@@ -234,7 +232,6 @@ def remove_westward_particles(pset):
         logger.debug('Particles travelling in the wrong direction.')
 
 
-@timeit
 def EUC_pset(fieldset, pclass, p_lats, p_lons, p_depths, pset_start, repeatdt):
     """Create a ParticleSet."""
     # Convert to lists if float or int.
@@ -288,11 +285,6 @@ def EUC_particles(fieldset, date_bnds, p_lats, p_lons, p_depths,
 
         # The 'zone' of the particle.
         zone = Variable('zone', dtype=np.float32, initial=fieldset.zone)
-
-    # fieldset.time_origin.time_origin = np.datetime64(fieldset.time_origin.time_origin)
-    # fieldset.time_origin.calendar = 'np_datetime64'
-    # pset.time_origin.time_origin = np.datetime64(pset.time_origin.time_origin)
-    # pset.time_origin.calendar = 'np_datetime64'
 
     # Create particle set.
     pset = EUC_pset(fieldset, zParticle, p_lats, p_lons, p_depths, pset_start, repeatdt)
@@ -388,7 +380,6 @@ def ParticleFile_transport(sim_id, dy, dz, save=True):
     return df
 
 
-@timeit
 def plot3D(sim_id):
     """Plot 3D figure of particle trajectories over time.
 
