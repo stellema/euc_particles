@@ -242,7 +242,7 @@ def EUC_pset(fieldset, pclass, p_lats, p_lons, p_depths, pset_start, repeatdt):
     p_depths = [p_depths] if type(p_depths) not in [list, np.array, np.ndarray] else p_depths
     p_lons = [p_lons] if type(p_lons) not in [list, np.array, np.ndarray] else p_lons
 
-    lats = np.repeat(p_lats, len(p_depths)*len(p_lons))
+    lats = np.tile(p_lats, len(p_depths)*len(p_lons))
     depths = np.tile(np.repeat(p_depths, len(p_lats)), len(p_lons))
     lons = np.repeat(p_lons, len(p_depths)*len(p_lats))
     pset = ParticleSet.from_list(fieldset=fieldset, pclass=pclass,
@@ -397,7 +397,7 @@ def plot3D(sim_id):
 
     """
     ds = xr.open_dataset(sim_id, decode_cf=True)
-    ds = ds.where(ds.u > 0, drop=True)
+    ds = ds.where(ds.u >= 0, drop=True)
     fig = plt.figure(figsize=(13, 10))
     ax = fig.add_subplot(111, projection='3d')
     colors = plt.cm.rainbow(np.linspace(0, 1, len(ds.traj)))

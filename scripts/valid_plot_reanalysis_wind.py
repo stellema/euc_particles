@@ -7,6 +7,7 @@ author: Annette Stellema (astellemas@gmail.com)
 
 """
 import cfg
+import tools
 import cartopy
 import numpy as np
 import xarray as xr
@@ -124,7 +125,47 @@ tx1, ty1, phi1 = get_wsc(data=data[0], flux=flux[f1], res=res, interp='cubic')
 tx2, ty2, phi2 = get_wsc(data=data[1], flux=flux[f2], res=res, interp='cubic')
 
 
-# (phi1/(beta*RHO)).cumsum()
+ix = np.fliplr(np.isnan(phi1)).argmin(axis=1)*-1
+eb = phi1.lon[ix-1]
+ceb=eb.copy()*0
+for y in range(len(phi1.lat)-1):
+    # ceb[y] = phi1[y, ix[y]-1]*np.flip(np.diff(np.flip(eb)))[y]
+    ceb[y] = np.flip(np.diff(np.flip(eb)))[y]
+# lat = phi1.lat[0]
+# curl = phi1.sel(lat=lat)
+# dlon = 0.1
+# curl = np.flip(curl)
+# dx = (dlon/360)*2*np.pi*6400000*np.cos(np.radians(lat))
+
+# f, beta = tools.coriolis(lat)
+# curl = np.nancumsum(curl)
+# curl = curl*(dx/(beta*cfg.RHO)).item()
+# curl = np.flip(curl)
+
+
+
+lat = phi1.lat
+curl = phi1
+dlon = 0.1
+curl = np.fliplr(curl)
+dx = (dlon/360)*2*np.pi*6400000*np.cos(np.radians(lat))
+f, beta = tools.coriolis(lat)
+curl = np.nancumsum(curl, axis=1) # cumsum from east to west
+dxr = (dx/(beta)).values[:, np.newaxis]
+
+curl = np.fliplr(curl)
+curl = curl*dxr
+ix = np.fliplr(np.isnan(phi1)).argmin(axis=1)*-1
+eb = phi1.lon[ix-1]
+ceb = eb.copy()*0
+for y in range(len(phi1.lat)-1):
+    ceb[y] = curl[y, ix[y]-1]*np.diff(eb)[y]
+sverdrup = (-ceb.values[:, np.newaxis]+curl)/cfg.SV/cfg.RHO
+sverdrup = (-curl)/cfg.SV/cfg.RHO
+
+cs = plt.pcolormesh(phi1.lon, phi1.lat, sverdrup, vmax=30, vmin=-30, cmap=plt.cm.seismic)
+plt.colorbar()
+
 # Wind stress line graph in first subplot and WSC for next three.
 title = ['Equatorial zonal wind stress', 'JRA-55 wind stress curl',
          'ERA-Interim wind stress curl',

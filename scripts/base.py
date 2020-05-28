@@ -79,6 +79,7 @@ def run_EUC(dy=0.4, dz=25, lon=165, lat=2.6, year=[1981, 2012],
     logger.info('{}:Runtime: {} days'.format(sim_id.stem, runtime.days))
     logger.info('{}:Timestep dt: {:.0f} mins'.format(sim_id.stem, 1440 - dt.seconds/60))
     logger.info('{}:Output dt: {:.0f} days'.format(sim_id.stem, outputdt.days))
+    logger.info('{}:Time periodic:{} days'.format(sim_id.stem, time_periodic.days))
     logger.info('{}:Repeat release: {} days'.format(sim_id.stem, repeatdt.days))
     logger.info('{}:Particles: Total: {} :/repeat: {}'
                 .format(sim_id.stem, Z * X * Y * math.ceil(runtime.days/repeatdt.days), Z * X * Y))
