@@ -138,9 +138,9 @@ def ofam_fieldset(date_bnds, field_method='b_grid', time_periodic=False,
                                                 allow_time_extrapolation=time_ext)
 
     logger.info('Field import={}, Chunks={}'.format(field_method, chunks))
-    zfield = Field.from_netcdf(cfg.data/'OFAM3_zones.nc', 'zone',
+    zfield = Field.from_netcdf(str(cfg.data/'OFAM3_zones.nc'), 'zone',
                                {'lat': 'yu_ocean', 'lon': 'xu_ocean'},
-                               field_chunksize='auto')
+                               field_chunksize='auto', time_periodic=time_periodic)
 
     fieldset.add_field(zfield, 'zone')
 
