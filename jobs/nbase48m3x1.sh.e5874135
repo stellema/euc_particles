@@ -1,0 +1,1849 @@
+Traceback (most recent call last):
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 198, in _acquire_with_cache_info
+    file = self._cache[self._key]
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/lru_cache.py", line 53, in __getitem__
+    value = self._cache[key]
+KeyError: [<class 'netCDF4._netCDF4.Dataset'>, ('/g/data/e14/as3189/OFAM/data/OFAM3_zones.nc',), 'a', (('clobber', True), ('diskless', False), ('format', 'NETCDF4'), ('persist', False))]
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/base.py", line 15, in <module>
+    import main
+  File "/g/data/e14/as3189/OFAM/scripts/main.py", line 48, in <module>
+    import tools
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 598, in <module>
+    zone_fieldset(plot=False)
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 595, in zone_fieldset
+    ds.to_netcdf(cfg.data/'OFAM3_zones.nc')
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/core/dataset.py", line 1554, in to_netcdf
+    invalid_netcdf=invalid_netcdf,
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/api.py", line 1071, in to_netcdf
+    store = store_open(target, mode, format, group, **kwargs)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 358, in open
+    return cls(manager, group=group, mode=mode, lock=lock, autoclose=autoclose)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 314, in __init__
+    self.format = self.ds.data_model
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 367, in ds
+    return self._acquire()
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 361, in _acquire
+    with self._manager.acquire_context(needs_lock) as root:
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/contextlib.py", line 112, in __enter__
+    return next(self.gen)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 186, in acquire_context
+    file, cached = self._acquire_with_cache_info(needs_lock)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 204, in _acquire_with_cache_info
+    file = self._opener(*self._args, **kwargs)
+  File "netCDF4/_netCDF4.pyx", line 2321, in netCDF4._netCDF4.Dataset.__init__
+  File "netCDF4/_netCDF4.pyx", line 1885, in netCDF4._netCDF4._ensure_nc_success
+PermissionError: [Errno 13] Permission denied: b'/g/data/e14/as3189/OFAM/data/OFAM3_zones.nc'
+Traceback (most recent call last):
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 198, in _acquire_with_cache_info
+    file = self._cache[self._key]
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/lru_cache.py", line 53, in __getitem__
+    value = self._cache[key]
+KeyError: [<class 'netCDF4._netCDF4.Dataset'>, ('/g/data/e14/as3189/OFAM/data/OFAM3_zones.nc',), 'a', (('clobber', True), ('diskless', False), ('format', 'NETCDF4'), ('persist', False))]
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/base.py", line 15, in <module>
+    import main
+  File "/g/data/e14/as3189/OFAM/scripts/main.py", line 48, in <module>
+    import tools
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 598, in <module>
+    zone_fieldset(plot=False)
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 595, in zone_fieldset
+    ds.to_netcdf(cfg.data/'OFAM3_zones.nc')
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/core/dataset.py", line 1554, in to_netcdf
+    invalid_netcdf=invalid_netcdf,
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/api.py", line 1071, in to_netcdf
+    store = store_open(target, mode, format, group, **kwargs)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 358, in open
+    return cls(manager, group=group, mode=mode, lock=lock, autoclose=autoclose)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 314, in __init__
+    self.format = self.ds.data_model
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 367, in ds
+    return self._acquire()
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 361, in _acquire
+    with self._manager.acquire_context(needs_lock) as root:
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/contextlib.py", line 112, in __enter__
+    return next(self.gen)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 186, in acquire_context
+    file, cached = self._acquire_with_cache_info(needs_lock)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 204, in _acquire_with_cache_info
+    file = self._opener(*self._args, **kwargs)
+  File "netCDF4/_netCDF4.pyx", line 2321, in netCDF4._netCDF4.Dataset.__init__
+  File "netCDF4/_netCDF4.pyx", line 1885, in netCDF4._netCDF4._ensure_nc_success
+PermissionError: [Errno 13] Permission denied: b'/g/data/e14/as3189/OFAM/data/OFAM3_zones.nc'
+Traceback (most recent call last):
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 198, in _acquire_with_cache_info
+    file = self._cache[self._key]
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/lru_cache.py", line 53, in __getitem__
+    value = self._cache[key]
+KeyError: [<class 'netCDF4._netCDF4.Dataset'>, ('/g/data/e14/as3189/OFAM/data/OFAM3_zones.nc',), 'a', (('clobber', True), ('diskless', False), ('format', 'NETCDF4'), ('persist', False))]
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/base.py", line 15, in <module>
+    import main
+  File "/g/data/e14/as3189/OFAM/scripts/main.py", line 48, in <module>
+    import tools
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 598, in <module>
+    zone_fieldset(plot=False)
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 595, in zone_fieldset
+    ds.to_netcdf(cfg.data/'OFAM3_zones.nc')
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/core/dataset.py", line 1554, in to_netcdf
+    invalid_netcdf=invalid_netcdf,
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/api.py", line 1071, in to_netcdf
+    store = store_open(target, mode, format, group, **kwargs)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 358, in open
+    return cls(manager, group=group, mode=mode, lock=lock, autoclose=autoclose)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 314, in __init__
+    self.format = self.ds.data_model
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 367, in ds
+    return self._acquire()
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 361, in _acquire
+    with self._manager.acquire_context(needs_lock) as root:
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/contextlib.py", line 112, in __enter__
+    return next(self.gen)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 186, in acquire_context
+    file, cached = self._acquire_with_cache_info(needs_lock)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 204, in _acquire_with_cache_info
+    file = self._opener(*self._args, **kwargs)
+  File "netCDF4/_netCDF4.pyx", line 2321, in netCDF4._netCDF4.Dataset.__init__
+  File "netCDF4/_netCDF4.pyx", line 1885, in netCDF4._netCDF4._ensure_nc_success
+PermissionError: [Errno 13] Permission denied: b'/g/data/e14/as3189/OFAM/data/OFAM3_zones.nc'
+Traceback (most recent call last):
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 198, in _acquire_with_cache_info
+    file = self._cache[self._key]
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/lru_cache.py", line 53, in __getitem__
+    value = self._cache[key]
+KeyError: [<class 'netCDF4._netCDF4.Dataset'>, ('/g/data/e14/as3189/OFAM/data/OFAM3_zones.nc',), 'a', (('clobber', True), ('diskless', False), ('format', 'NETCDF4'), ('persist', False))]
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/base.py", line 15, in <module>
+    import main
+  File "/g/data/e14/as3189/OFAM/scripts/main.py", line 48, in <module>
+    import tools
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 598, in <module>
+    zone_fieldset(plot=False)
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 595, in zone_fieldset
+    ds.to_netcdf(cfg.data/'OFAM3_zones.nc')
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/core/dataset.py", line 1554, in to_netcdf
+    invalid_netcdf=invalid_netcdf,
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/api.py", line 1071, in to_netcdf
+    store = store_open(target, mode, format, group, **kwargs)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 358, in open
+    return cls(manager, group=group, mode=mode, lock=lock, autoclose=autoclose)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 314, in __init__
+    self.format = self.ds.data_model
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 367, in ds
+    return self._acquire()
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 361, in _acquire
+    with self._manager.acquire_context(needs_lock) as root:
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/contextlib.py", line 112, in __enter__
+    return next(self.gen)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 186, in acquire_context
+    file, cached = self._acquire_with_cache_info(needs_lock)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 204, in _acquire_with_cache_info
+    file = self._opener(*self._args, **kwargs)
+  File "netCDF4/_netCDF4.pyx", line 2321, in netCDF4._netCDF4.Dataset.__init__
+  File "netCDF4/_netCDF4.pyx", line 1885, in netCDF4._netCDF4._ensure_nc_success
+PermissionError: [Errno 13] Permission denied: b'/g/data/e14/as3189/OFAM/data/OFAM3_zones.nc'
+Traceback (most recent call last):
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 198, in _acquire_with_cache_info
+    file = self._cache[self._key]
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/lru_cache.py", line 53, in __getitem__
+    value = self._cache[key]
+KeyError: [<class 'netCDF4._netCDF4.Dataset'>, ('/g/data/e14/as3189/OFAM/data/OFAM3_zones.nc',), 'a', (('clobber', True), ('diskless', False), ('format', 'NETCDF4'), ('persist', False))]
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/base.py", line 15, in <module>
+    import main
+  File "/g/data/e14/as3189/OFAM/scripts/main.py", line 48, in <module>
+    import tools
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 598, in <module>
+    zone_fieldset(plot=False)
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 595, in zone_fieldset
+    ds.to_netcdf(cfg.data/'OFAM3_zones.nc')
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/core/dataset.py", line 1554, in to_netcdf
+    invalid_netcdf=invalid_netcdf,
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/api.py", line 1071, in to_netcdf
+    store = store_open(target, mode, format, group, **kwargs)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 358, in open
+    return cls(manager, group=group, mode=mode, lock=lock, autoclose=autoclose)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 314, in __init__
+    self.format = self.ds.data_model
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 367, in ds
+    return self._acquire()
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 361, in _acquire
+    with self._manager.acquire_context(needs_lock) as root:
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/contextlib.py", line 112, in __enter__
+    return next(self.gen)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 186, in acquire_context
+    file, cached = self._acquire_with_cache_info(needs_lock)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 204, in _acquire_with_cache_info
+    file = self._opener(*self._args, **kwargs)
+  File "netCDF4/_netCDF4.pyx", line 2321, in netCDF4._netCDF4.Dataset.__init__
+  File "netCDF4/_netCDF4.pyx", line 1885, in netCDF4._netCDF4._ensure_nc_success
+PermissionError: [Errno 13] Permission denied: b'/g/data/e14/as3189/OFAM/data/OFAM3_zones.nc'
+Traceback (most recent call last):
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 198, in _acquire_with_cache_info
+    file = self._cache[self._key]
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/lru_cache.py", line 53, in __getitem__
+    value = self._cache[key]
+KeyError: [<class 'netCDF4._netCDF4.Dataset'>, ('/g/data/e14/as3189/OFAM/data/OFAM3_zones.nc',), 'a', (('clobber', True), ('diskless', False), ('format', 'NETCDF4'), ('persist', False))]
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/base.py", line 15, in <module>
+    import main
+  File "/g/data/e14/as3189/OFAM/scripts/main.py", line 48, in <module>
+    import tools
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 598, in <module>
+    zone_fieldset(plot=False)
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 595, in zone_fieldset
+    ds.to_netcdf(cfg.data/'OFAM3_zones.nc')
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/core/dataset.py", line 1554, in to_netcdf
+    invalid_netcdf=invalid_netcdf,
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/api.py", line 1071, in to_netcdf
+    store = store_open(target, mode, format, group, **kwargs)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 358, in open
+    return cls(manager, group=group, mode=mode, lock=lock, autoclose=autoclose)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 314, in __init__
+    self.format = self.ds.data_model
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 367, in ds
+    return self._acquire()
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 361, in _acquire
+    with self._manager.acquire_context(needs_lock) as root:
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/contextlib.py", line 112, in __enter__
+    return next(self.gen)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 186, in acquire_context
+    file, cached = self._acquire_with_cache_info(needs_lock)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 204, in _acquire_with_cache_info
+    file = self._opener(*self._args, **kwargs)
+  File "netCDF4/_netCDF4.pyx", line 2321, in netCDF4._netCDF4.Dataset.__init__
+  File "netCDF4/_netCDF4.pyx", line 1885, in netCDF4._netCDF4._ensure_nc_success
+PermissionError: [Errno 13] Permission denied: b'/g/data/e14/as3189/OFAM/data/OFAM3_zones.nc'
+Traceback (most recent call last):
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 198, in _acquire_with_cache_info
+    file = self._cache[self._key]
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/lru_cache.py", line 53, in __getitem__
+    value = self._cache[key]
+KeyError: [<class 'netCDF4._netCDF4.Dataset'>, ('/g/data/e14/as3189/OFAM/data/OFAM3_zones.nc',), 'a', (('clobber', True), ('diskless', False), ('format', 'NETCDF4'), ('persist', False))]
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/base.py", line 15, in <module>
+    import main
+  File "/g/data/e14/as3189/OFAM/scripts/main.py", line 48, in <module>
+    import tools
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 598, in <module>
+    zone_fieldset(plot=False)
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 595, in zone_fieldset
+    ds.to_netcdf(cfg.data/'OFAM3_zones.nc')
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/core/dataset.py", line 1554, in to_netcdf
+    invalid_netcdf=invalid_netcdf,
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/api.py", line 1071, in to_netcdf
+    store = store_open(target, mode, format, group, **kwargs)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 358, in open
+    return cls(manager, group=group, mode=mode, lock=lock, autoclose=autoclose)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 314, in __init__
+    self.format = self.ds.data_model
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 367, in ds
+    return self._acquire()
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 361, in _acquire
+    with self._manager.acquire_context(needs_lock) as root:
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/contextlib.py", line 112, in __enter__
+    return next(self.gen)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 186, in acquire_context
+    file, cached = self._acquire_with_cache_info(needs_lock)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 204, in _acquire_with_cache_info
+    file = self._opener(*self._args, **kwargs)
+  File "netCDF4/_netCDF4.pyx", line 2321, in netCDF4._netCDF4.Dataset.__init__
+  File "netCDF4/_netCDF4.pyx", line 1885, in netCDF4._netCDF4._ensure_nc_success
+PermissionError: [Errno 13] Permission denied: b'/g/data/e14/as3189/OFAM/data/OFAM3_zones.nc'
+Traceback (most recent call last):
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 198, in _acquire_with_cache_info
+    file = self._cache[self._key]
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/lru_cache.py", line 53, in __getitem__
+    value = self._cache[key]
+KeyError: [<class 'netCDF4._netCDF4.Dataset'>, ('/g/data/e14/as3189/OFAM/data/OFAM3_zones.nc',), 'a', (('clobber', True), ('diskless', False), ('format', 'NETCDF4'), ('persist', False))]
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/base.py", line 15, in <module>
+    import main
+  File "/g/data/e14/as3189/OFAM/scripts/main.py", line 48, in <module>
+    import tools
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 598, in <module>
+    zone_fieldset(plot=False)
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 595, in zone_fieldset
+    ds.to_netcdf(cfg.data/'OFAM3_zones.nc')
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/core/dataset.py", line 1554, in to_netcdf
+    invalid_netcdf=invalid_netcdf,
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/api.py", line 1071, in to_netcdf
+    store = store_open(target, mode, format, group, **kwargs)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 358, in open
+    return cls(manager, group=group, mode=mode, lock=lock, autoclose=autoclose)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 314, in __init__
+    self.format = self.ds.data_model
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 367, in ds
+    return self._acquire()
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 361, in _acquire
+    with self._manager.acquire_context(needs_lock) as root:
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/contextlib.py", line 112, in __enter__
+    return next(self.gen)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 186, in acquire_context
+    file, cached = self._acquire_with_cache_info(needs_lock)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 204, in _acquire_with_cache_info
+    file = self._opener(*self._args, **kwargs)
+  File "netCDF4/_netCDF4.pyx", line 2321, in netCDF4._netCDF4.Dataset.__init__
+  File "netCDF4/_netCDF4.pyx", line 1885, in netCDF4._netCDF4._ensure_nc_success
+PermissionError: [Errno 13] Permission denied: b'/g/data/e14/as3189/OFAM/data/OFAM3_zones.nc'
+Traceback (most recent call last):
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 198, in _acquire_with_cache_info
+    file = self._cache[self._key]
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/lru_cache.py", line 53, in __getitem__
+    value = self._cache[key]
+KeyError: [<class 'netCDF4._netCDF4.Dataset'>, ('/g/data/e14/as3189/OFAM/data/OFAM3_zones.nc',), 'a', (('clobber', True), ('diskless', False), ('format', 'NETCDF4'), ('persist', False))]
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/base.py", line 15, in <module>
+    import main
+  File "/g/data/e14/as3189/OFAM/scripts/main.py", line 48, in <module>
+    import tools
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 598, in <module>
+    zone_fieldset(plot=False)
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 595, in zone_fieldset
+    ds.to_netcdf(cfg.data/'OFAM3_zones.nc')
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/core/dataset.py", line 1554, in to_netcdf
+    invalid_netcdf=invalid_netcdf,
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/api.py", line 1071, in to_netcdf
+    store = store_open(target, mode, format, group, **kwargs)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 358, in open
+    return cls(manager, group=group, mode=mode, lock=lock, autoclose=autoclose)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 314, in __init__
+    self.format = self.ds.data_model
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 367, in ds
+    return self._acquire()
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 361, in _acquire
+    with self._manager.acquire_context(needs_lock) as root:
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/contextlib.py", line 112, in __enter__
+    return next(self.gen)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 186, in acquire_context
+    file, cached = self._acquire_with_cache_info(needs_lock)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 204, in _acquire_with_cache_info
+    file = self._opener(*self._args, **kwargs)
+  File "netCDF4/_netCDF4.pyx", line 2321, in netCDF4._netCDF4.Dataset.__init__
+  File "netCDF4/_netCDF4.pyx", line 1885, in netCDF4._netCDF4._ensure_nc_success
+PermissionError: [Errno 13] Permission denied: b'/g/data/e14/as3189/OFAM/data/OFAM3_zones.nc'
+Traceback (most recent call last):
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 198, in _acquire_with_cache_info
+    file = self._cache[self._key]
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/lru_cache.py", line 53, in __getitem__
+    value = self._cache[key]
+KeyError: [<class 'netCDF4._netCDF4.Dataset'>, ('/g/data/e14/as3189/OFAM/data/OFAM3_zones.nc',), 'a', (('clobber', True), ('diskless', False), ('format', 'NETCDF4'), ('persist', False))]
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/base.py", line 15, in <module>
+    import main
+  File "/g/data/e14/as3189/OFAM/scripts/main.py", line 48, in <module>
+    import tools
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 598, in <module>
+    zone_fieldset(plot=False)
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 595, in zone_fieldset
+    ds.to_netcdf(cfg.data/'OFAM3_zones.nc')
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/core/dataset.py", line 1554, in to_netcdf
+    invalid_netcdf=invalid_netcdf,
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/api.py", line 1071, in to_netcdf
+    store = store_open(target, mode, format, group, **kwargs)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 358, in open
+    return cls(manager, group=group, mode=mode, lock=lock, autoclose=autoclose)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 314, in __init__
+    self.format = self.ds.data_model
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 367, in ds
+    return self._acquire()
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 361, in _acquire
+    with self._manager.acquire_context(needs_lock) as root:
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/contextlib.py", line 112, in __enter__
+    return next(self.gen)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 186, in acquire_context
+    file, cached = self._acquire_with_cache_info(needs_lock)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 204, in _acquire_with_cache_info
+    file = self._opener(*self._args, **kwargs)
+  File "netCDF4/_netCDF4.pyx", line 2321, in netCDF4._netCDF4.Dataset.__init__
+  File "netCDF4/_netCDF4.pyx", line 1885, in netCDF4._netCDF4._ensure_nc_success
+PermissionError: [Errno 13] Permission denied: b'/g/data/e14/as3189/OFAM/data/OFAM3_zones.nc'
+Traceback (most recent call last):
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 198, in _acquire_with_cache_info
+    file = self._cache[self._key]
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/lru_cache.py", line 53, in __getitem__
+    value = self._cache[key]
+KeyError: [<class 'netCDF4._netCDF4.Dataset'>, ('/g/data/e14/as3189/OFAM/data/OFAM3_zones.nc',), 'a', (('clobber', True), ('diskless', False), ('format', 'NETCDF4'), ('persist', False))]
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/base.py", line 15, in <module>
+    import main
+  File "/g/data/e14/as3189/OFAM/scripts/main.py", line 48, in <module>
+    import tools
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 598, in <module>
+    zone_fieldset(plot=False)
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 595, in zone_fieldset
+    ds.to_netcdf(cfg.data/'OFAM3_zones.nc')
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/core/dataset.py", line 1554, in to_netcdf
+    invalid_netcdf=invalid_netcdf,
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/api.py", line 1071, in to_netcdf
+    store = store_open(target, mode, format, group, **kwargs)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 358, in open
+    return cls(manager, group=group, mode=mode, lock=lock, autoclose=autoclose)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 314, in __init__
+    self.format = self.ds.data_model
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 367, in ds
+    return self._acquire()
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 361, in _acquire
+    with self._manager.acquire_context(needs_lock) as root:
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/contextlib.py", line 112, in __enter__
+    return next(self.gen)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 186, in acquire_context
+    file, cached = self._acquire_with_cache_info(needs_lock)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 204, in _acquire_with_cache_info
+    file = self._opener(*self._args, **kwargs)
+  File "netCDF4/_netCDF4.pyx", line 2321, in netCDF4._netCDF4.Dataset.__init__
+  File "netCDF4/_netCDF4.pyx", line 1885, in netCDF4._netCDF4._ensure_nc_success
+PermissionError: [Errno 13] Permission denied: b'/g/data/e14/as3189/OFAM/data/OFAM3_zones.nc'
+Traceback (most recent call last):
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 198, in _acquire_with_cache_info
+    file = self._cache[self._key]
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/lru_cache.py", line 53, in __getitem__
+    value = self._cache[key]
+KeyError: [<class 'netCDF4._netCDF4.Dataset'>, ('/g/data/e14/as3189/OFAM/data/OFAM3_zones.nc',), 'a', (('clobber', True), ('diskless', False), ('format', 'NETCDF4'), ('persist', False))]
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/base.py", line 15, in <module>
+    import main
+  File "/g/data/e14/as3189/OFAM/scripts/main.py", line 48, in <module>
+    import tools
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 598, in <module>
+    zone_fieldset(plot=False)
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 595, in zone_fieldset
+    ds.to_netcdf(cfg.data/'OFAM3_zones.nc')
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/core/dataset.py", line 1554, in to_netcdf
+    invalid_netcdf=invalid_netcdf,
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/api.py", line 1071, in to_netcdf
+    store = store_open(target, mode, format, group, **kwargs)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 358, in open
+    return cls(manager, group=group, mode=mode, lock=lock, autoclose=autoclose)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 314, in __init__
+    self.format = self.ds.data_model
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 367, in ds
+    return self._acquire()
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 361, in _acquire
+    with self._manager.acquire_context(needs_lock) as root:
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/contextlib.py", line 112, in __enter__
+    return next(self.gen)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 186, in acquire_context
+    file, cached = self._acquire_with_cache_info(needs_lock)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 204, in _acquire_with_cache_info
+    file = self._opener(*self._args, **kwargs)
+  File "netCDF4/_netCDF4.pyx", line 2321, in netCDF4._netCDF4.Dataset.__init__
+  File "netCDF4/_netCDF4.pyx", line 1885, in netCDF4._netCDF4._ensure_nc_success
+PermissionError: [Errno 13] Permission denied: b'/g/data/e14/as3189/OFAM/data/OFAM3_zones.nc'
+Traceback (most recent call last):
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 198, in _acquire_with_cache_info
+    file = self._cache[self._key]
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/lru_cache.py", line 53, in __getitem__
+    value = self._cache[key]
+KeyError: [<class 'netCDF4._netCDF4.Dataset'>, ('/g/data/e14/as3189/OFAM/data/OFAM3_zones.nc',), 'a', (('clobber', True), ('diskless', False), ('format', 'NETCDF4'), ('persist', False))]
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/base.py", line 15, in <module>
+    import main
+  File "/g/data/e14/as3189/OFAM/scripts/main.py", line 48, in <module>
+    import tools
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 598, in <module>
+    zone_fieldset(plot=False)
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 595, in zone_fieldset
+    ds.to_netcdf(cfg.data/'OFAM3_zones.nc')
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/core/dataset.py", line 1554, in to_netcdf
+    invalid_netcdf=invalid_netcdf,
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/api.py", line 1071, in to_netcdf
+    store = store_open(target, mode, format, group, **kwargs)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 358, in open
+    return cls(manager, group=group, mode=mode, lock=lock, autoclose=autoclose)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 314, in __init__
+    self.format = self.ds.data_model
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 367, in ds
+    return self._acquire()
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 361, in _acquire
+    with self._manager.acquire_context(needs_lock) as root:
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/contextlib.py", line 112, in __enter__
+    return next(self.gen)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 186, in acquire_context
+    file, cached = self._acquire_with_cache_info(needs_lock)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 204, in _acquire_with_cache_info
+    file = self._opener(*self._args, **kwargs)
+  File "netCDF4/_netCDF4.pyx", line 2321, in netCDF4._netCDF4.Dataset.__init__
+  File "netCDF4/_netCDF4.pyx", line 1885, in netCDF4._netCDF4._ensure_nc_success
+PermissionError: [Errno 13] Permission denied: b'/g/data/e14/as3189/OFAM/data/OFAM3_zones.nc'
+Traceback (most recent call last):
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 198, in _acquire_with_cache_info
+    file = self._cache[self._key]
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/lru_cache.py", line 53, in __getitem__
+    value = self._cache[key]
+KeyError: [<class 'netCDF4._netCDF4.Dataset'>, ('/g/data/e14/as3189/OFAM/data/OFAM3_zones.nc',), 'a', (('clobber', True), ('diskless', False), ('format', 'NETCDF4'), ('persist', False))]
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/base.py", line 15, in <module>
+    import main
+  File "/g/data/e14/as3189/OFAM/scripts/main.py", line 48, in <module>
+    import tools
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 598, in <module>
+    zone_fieldset(plot=False)
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 595, in zone_fieldset
+    ds.to_netcdf(cfg.data/'OFAM3_zones.nc')
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/core/dataset.py", line 1554, in to_netcdf
+    invalid_netcdf=invalid_netcdf,
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/api.py", line 1071, in to_netcdf
+    store = store_open(target, mode, format, group, **kwargs)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 358, in open
+    return cls(manager, group=group, mode=mode, lock=lock, autoclose=autoclose)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 314, in __init__
+    self.format = self.ds.data_model
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 367, in ds
+    return self._acquire()
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 361, in _acquire
+    with self._manager.acquire_context(needs_lock) as root:
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/contextlib.py", line 112, in __enter__
+    return next(self.gen)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 186, in acquire_context
+    file, cached = self._acquire_with_cache_info(needs_lock)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 204, in _acquire_with_cache_info
+    file = self._opener(*self._args, **kwargs)
+  File "netCDF4/_netCDF4.pyx", line 2321, in netCDF4._netCDF4.Dataset.__init__
+  File "netCDF4/_netCDF4.pyx", line 1885, in netCDF4._netCDF4._ensure_nc_success
+PermissionError: [Errno 13] Permission denied: b'/g/data/e14/as3189/OFAM/data/OFAM3_zones.nc'
+Traceback (most recent call last):
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 198, in _acquire_with_cache_info
+    file = self._cache[self._key]
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/lru_cache.py", line 53, in __getitem__
+    value = self._cache[key]
+KeyError: [<class 'netCDF4._netCDF4.Dataset'>, ('/g/data/e14/as3189/OFAM/data/OFAM3_zones.nc',), 'a', (('clobber', True), ('diskless', False), ('format', 'NETCDF4'), ('persist', False))]
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/base.py", line 15, in <module>
+    import main
+  File "/g/data/e14/as3189/OFAM/scripts/main.py", line 48, in <module>
+    import tools
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 598, in <module>
+    zone_fieldset(plot=False)
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 595, in zone_fieldset
+    ds.to_netcdf(cfg.data/'OFAM3_zones.nc')
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/core/dataset.py", line 1554, in to_netcdf
+    invalid_netcdf=invalid_netcdf,
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/api.py", line 1071, in to_netcdf
+    store = store_open(target, mode, format, group, **kwargs)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 358, in open
+    return cls(manager, group=group, mode=mode, lock=lock, autoclose=autoclose)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 314, in __init__
+    self.format = self.ds.data_model
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 367, in ds
+    return self._acquire()
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 361, in _acquire
+    with self._manager.acquire_context(needs_lock) as root:
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/contextlib.py", line 112, in __enter__
+    return next(self.gen)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 186, in acquire_context
+    file, cached = self._acquire_with_cache_info(needs_lock)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 204, in _acquire_with_cache_info
+    file = self._opener(*self._args, **kwargs)
+  File "netCDF4/_netCDF4.pyx", line 2321, in netCDF4._netCDF4.Dataset.__init__
+  File "netCDF4/_netCDF4.pyx", line 1885, in netCDF4._netCDF4._ensure_nc_success
+PermissionError: [Errno 13] Permission denied: b'/g/data/e14/as3189/OFAM/data/OFAM3_zones.nc'
+Traceback (most recent call last):
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 198, in _acquire_with_cache_info
+    file = self._cache[self._key]
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/lru_cache.py", line 53, in __getitem__
+    value = self._cache[key]
+KeyError: [<class 'netCDF4._netCDF4.Dataset'>, ('/g/data/e14/as3189/OFAM/data/OFAM3_zones.nc',), 'a', (('clobber', True), ('diskless', False), ('format', 'NETCDF4'), ('persist', False))]
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/base.py", line 15, in <module>
+    import main
+  File "/g/data/e14/as3189/OFAM/scripts/main.py", line 48, in <module>
+    import tools
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 598, in <module>
+    zone_fieldset(plot=False)
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 595, in zone_fieldset
+    ds.to_netcdf(cfg.data/'OFAM3_zones.nc')
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/core/dataset.py", line 1554, in to_netcdf
+    invalid_netcdf=invalid_netcdf,
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/api.py", line 1071, in to_netcdf
+    store = store_open(target, mode, format, group, **kwargs)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 358, in open
+    return cls(manager, group=group, mode=mode, lock=lock, autoclose=autoclose)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 314, in __init__
+    self.format = self.ds.data_model
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 367, in ds
+    return self._acquire()
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 361, in _acquire
+    with self._manager.acquire_context(needs_lock) as root:
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/contextlib.py", line 112, in __enter__
+    return next(self.gen)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 186, in acquire_context
+    file, cached = self._acquire_with_cache_info(needs_lock)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 204, in _acquire_with_cache_info
+    file = self._opener(*self._args, **kwargs)
+  File "netCDF4/_netCDF4.pyx", line 2321, in netCDF4._netCDF4.Dataset.__init__
+  File "netCDF4/_netCDF4.pyx", line 1885, in netCDF4._netCDF4._ensure_nc_success
+PermissionError: [Errno 13] Permission denied: b'/g/data/e14/as3189/OFAM/data/OFAM3_zones.nc'
+Traceback (most recent call last):
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 198, in _acquire_with_cache_info
+    file = self._cache[self._key]
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/lru_cache.py", line 53, in __getitem__
+    value = self._cache[key]
+KeyError: [<class 'netCDF4._netCDF4.Dataset'>, ('/g/data/e14/as3189/OFAM/data/OFAM3_zones.nc',), 'a', (('clobber', True), ('diskless', False), ('format', 'NETCDF4'), ('persist', False))]
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/base.py", line 15, in <module>
+    import main
+  File "/g/data/e14/as3189/OFAM/scripts/main.py", line 48, in <module>
+    import tools
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 598, in <module>
+    zone_fieldset(plot=False)
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 595, in zone_fieldset
+    ds.to_netcdf(cfg.data/'OFAM3_zones.nc')
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/core/dataset.py", line 1554, in to_netcdf
+    invalid_netcdf=invalid_netcdf,
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/api.py", line 1071, in to_netcdf
+    store = store_open(target, mode, format, group, **kwargs)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 358, in open
+    return cls(manager, group=group, mode=mode, lock=lock, autoclose=autoclose)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 314, in __init__
+    self.format = self.ds.data_model
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 367, in ds
+    return self._acquire()
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 361, in _acquire
+    with self._manager.acquire_context(needs_lock) as root:
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/contextlib.py", line 112, in __enter__
+    return next(self.gen)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 186, in acquire_context
+    file, cached = self._acquire_with_cache_info(needs_lock)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 204, in _acquire_with_cache_info
+    file = self._opener(*self._args, **kwargs)
+  File "netCDF4/_netCDF4.pyx", line 2321, in netCDF4._netCDF4.Dataset.__init__
+  File "netCDF4/_netCDF4.pyx", line 1885, in netCDF4._netCDF4._ensure_nc_success
+PermissionError: [Errno 13] Permission denied: b'/g/data/e14/as3189/OFAM/data/OFAM3_zones.nc'
+Traceback (most recent call last):
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 198, in _acquire_with_cache_info
+    file = self._cache[self._key]
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/lru_cache.py", line 53, in __getitem__
+    value = self._cache[key]
+KeyError: [<class 'netCDF4._netCDF4.Dataset'>, ('/g/data/e14/as3189/OFAM/data/OFAM3_zones.nc',), 'a', (('clobber', True), ('diskless', False), ('format', 'NETCDF4'), ('persist', False))]
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/base.py", line 15, in <module>
+    import main
+  File "/g/data/e14/as3189/OFAM/scripts/main.py", line 48, in <module>
+    import tools
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 598, in <module>
+    zone_fieldset(plot=False)
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 595, in zone_fieldset
+    ds.to_netcdf(cfg.data/'OFAM3_zones.nc')
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/core/dataset.py", line 1554, in to_netcdf
+    invalid_netcdf=invalid_netcdf,
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/api.py", line 1071, in to_netcdf
+    store = store_open(target, mode, format, group, **kwargs)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 358, in open
+    return cls(manager, group=group, mode=mode, lock=lock, autoclose=autoclose)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 314, in __init__
+    self.format = self.ds.data_model
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 367, in ds
+    return self._acquire()
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 361, in _acquire
+    with self._manager.acquire_context(needs_lock) as root:
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/contextlib.py", line 112, in __enter__
+    return next(self.gen)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 186, in acquire_context
+    file, cached = self._acquire_with_cache_info(needs_lock)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 204, in _acquire_with_cache_info
+    file = self._opener(*self._args, **kwargs)
+  File "netCDF4/_netCDF4.pyx", line 2321, in netCDF4._netCDF4.Dataset.__init__
+  File "netCDF4/_netCDF4.pyx", line 1885, in netCDF4._netCDF4._ensure_nc_success
+PermissionError: [Errno 13] Permission denied: b'/g/data/e14/as3189/OFAM/data/OFAM3_zones.nc'
+Traceback (most recent call last):
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 198, in _acquire_with_cache_info
+    file = self._cache[self._key]
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/lru_cache.py", line 53, in __getitem__
+    value = self._cache[key]
+KeyError: [<class 'netCDF4._netCDF4.Dataset'>, ('/g/data/e14/as3189/OFAM/data/OFAM3_zones.nc',), 'a', (('clobber', True), ('diskless', False), ('format', 'NETCDF4'), ('persist', False))]
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/base.py", line 15, in <module>
+    import main
+  File "/g/data/e14/as3189/OFAM/scripts/main.py", line 48, in <module>
+    import tools
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 598, in <module>
+    zone_fieldset(plot=False)
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 595, in zone_fieldset
+    ds.to_netcdf(cfg.data/'OFAM3_zones.nc')
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/core/dataset.py", line 1554, in to_netcdf
+    invalid_netcdf=invalid_netcdf,
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/api.py", line 1071, in to_netcdf
+    store = store_open(target, mode, format, group, **kwargs)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 358, in open
+    return cls(manager, group=group, mode=mode, lock=lock, autoclose=autoclose)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 314, in __init__
+    self.format = self.ds.data_model
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 367, in ds
+    return self._acquire()
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 361, in _acquire
+    with self._manager.acquire_context(needs_lock) as root:
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/contextlib.py", line 112, in __enter__
+    return next(self.gen)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 186, in acquire_context
+    file, cached = self._acquire_with_cache_info(needs_lock)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 204, in _acquire_with_cache_info
+    file = self._opener(*self._args, **kwargs)
+  File "netCDF4/_netCDF4.pyx", line 2321, in netCDF4._netCDF4.Dataset.__init__
+  File "netCDF4/_netCDF4.pyx", line 1885, in netCDF4._netCDF4._ensure_nc_success
+PermissionError: [Errno 13] Permission denied: b'/g/data/e14/as3189/OFAM/data/OFAM3_zones.nc'
+Traceback (most recent call last):
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 198, in _acquire_with_cache_info
+    file = self._cache[self._key]
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/lru_cache.py", line 53, in __getitem__
+    value = self._cache[key]
+KeyError: [<class 'netCDF4._netCDF4.Dataset'>, ('/g/data/e14/as3189/OFAM/data/OFAM3_zones.nc',), 'a', (('clobber', True), ('diskless', False), ('format', 'NETCDF4'), ('persist', False))]
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/base.py", line 15, in <module>
+    import main
+  File "/g/data/e14/as3189/OFAM/scripts/main.py", line 48, in <module>
+    import tools
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 598, in <module>
+    zone_fieldset(plot=False)
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 595, in zone_fieldset
+    ds.to_netcdf(cfg.data/'OFAM3_zones.nc')
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/core/dataset.py", line 1554, in to_netcdf
+    invalid_netcdf=invalid_netcdf,
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/api.py", line 1071, in to_netcdf
+    store = store_open(target, mode, format, group, **kwargs)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 358, in open
+    return cls(manager, group=group, mode=mode, lock=lock, autoclose=autoclose)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 314, in __init__
+    self.format = self.ds.data_model
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 367, in ds
+    return self._acquire()
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 361, in _acquire
+    with self._manager.acquire_context(needs_lock) as root:
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/contextlib.py", line 112, in __enter__
+    return next(self.gen)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 186, in acquire_context
+    file, cached = self._acquire_with_cache_info(needs_lock)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 204, in _acquire_with_cache_info
+    file = self._opener(*self._args, **kwargs)
+  File "netCDF4/_netCDF4.pyx", line 2321, in netCDF4._netCDF4.Dataset.__init__
+  File "netCDF4/_netCDF4.pyx", line 1885, in netCDF4._netCDF4._ensure_nc_success
+PermissionError: [Errno 13] Permission denied: b'/g/data/e14/as3189/OFAM/data/OFAM3_zones.nc'
+Traceback (most recent call last):
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 198, in _acquire_with_cache_info
+    file = self._cache[self._key]
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/lru_cache.py", line 53, in __getitem__
+    value = self._cache[key]
+KeyError: [<class 'netCDF4._netCDF4.Dataset'>, ('/g/data/e14/as3189/OFAM/data/OFAM3_zones.nc',), 'a', (('clobber', True), ('diskless', False), ('format', 'NETCDF4'), ('persist', False))]
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/base.py", line 15, in <module>
+    import main
+  File "/g/data/e14/as3189/OFAM/scripts/main.py", line 48, in <module>
+    import tools
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 598, in <module>
+    zone_fieldset(plot=False)
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 595, in zone_fieldset
+    ds.to_netcdf(cfg.data/'OFAM3_zones.nc')
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/core/dataset.py", line 1554, in to_netcdf
+    invalid_netcdf=invalid_netcdf,
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/api.py", line 1071, in to_netcdf
+    store = store_open(target, mode, format, group, **kwargs)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 358, in open
+    return cls(manager, group=group, mode=mode, lock=lock, autoclose=autoclose)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 314, in __init__
+    self.format = self.ds.data_model
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 367, in ds
+    return self._acquire()
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 361, in _acquire
+    with self._manager.acquire_context(needs_lock) as root:
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/contextlib.py", line 112, in __enter__
+    return next(self.gen)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 186, in acquire_context
+    file, cached = self._acquire_with_cache_info(needs_lock)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 204, in _acquire_with_cache_info
+    file = self._opener(*self._args, **kwargs)
+  File "netCDF4/_netCDF4.pyx", line 2321, in netCDF4._netCDF4.Dataset.__init__
+  File "netCDF4/_netCDF4.pyx", line 1885, in netCDF4._netCDF4._ensure_nc_success
+PermissionError: [Errno 13] Permission denied: b'/g/data/e14/as3189/OFAM/data/OFAM3_zones.nc'
+Traceback (most recent call last):
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 198, in _acquire_with_cache_info
+    file = self._cache[self._key]
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/lru_cache.py", line 53, in __getitem__
+    value = self._cache[key]
+KeyError: [<class 'netCDF4._netCDF4.Dataset'>, ('/g/data/e14/as3189/OFAM/data/OFAM3_zones.nc',), 'a', (('clobber', True), ('diskless', False), ('format', 'NETCDF4'), ('persist', False))]
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/base.py", line 15, in <module>
+    import main
+  File "/g/data/e14/as3189/OFAM/scripts/main.py", line 48, in <module>
+    import tools
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 598, in <module>
+    zone_fieldset(plot=False)
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 595, in zone_fieldset
+    ds.to_netcdf(cfg.data/'OFAM3_zones.nc')
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/core/dataset.py", line 1554, in to_netcdf
+    invalid_netcdf=invalid_netcdf,
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/api.py", line 1071, in to_netcdf
+    store = store_open(target, mode, format, group, **kwargs)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 358, in open
+    return cls(manager, group=group, mode=mode, lock=lock, autoclose=autoclose)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 314, in __init__
+    self.format = self.ds.data_model
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 367, in ds
+    return self._acquire()
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 361, in _acquire
+    with self._manager.acquire_context(needs_lock) as root:
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/contextlib.py", line 112, in __enter__
+    return next(self.gen)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 186, in acquire_context
+    file, cached = self._acquire_with_cache_info(needs_lock)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 204, in _acquire_with_cache_info
+    file = self._opener(*self._args, **kwargs)
+  File "netCDF4/_netCDF4.pyx", line 2321, in netCDF4._netCDF4.Dataset.__init__
+  File "netCDF4/_netCDF4.pyx", line 1885, in netCDF4._netCDF4._ensure_nc_success
+PermissionError: [Errno 13] Permission denied: b'/g/data/e14/as3189/OFAM/data/OFAM3_zones.nc'
+Traceback (most recent call last):
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 198, in _acquire_with_cache_info
+    file = self._cache[self._key]
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/lru_cache.py", line 53, in __getitem__
+    value = self._cache[key]
+KeyError: [<class 'netCDF4._netCDF4.Dataset'>, ('/g/data/e14/as3189/OFAM/data/OFAM3_zones.nc',), 'a', (('clobber', True), ('diskless', False), ('format', 'NETCDF4'), ('persist', False))]
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/base.py", line 15, in <module>
+    import main
+  File "/g/data/e14/as3189/OFAM/scripts/main.py", line 48, in <module>
+    import tools
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 598, in <module>
+    zone_fieldset(plot=False)
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 595, in zone_fieldset
+    ds.to_netcdf(cfg.data/'OFAM3_zones.nc')
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/core/dataset.py", line 1554, in to_netcdf
+    invalid_netcdf=invalid_netcdf,
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/api.py", line 1071, in to_netcdf
+    store = store_open(target, mode, format, group, **kwargs)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 358, in open
+    return cls(manager, group=group, mode=mode, lock=lock, autoclose=autoclose)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 314, in __init__
+    self.format = self.ds.data_model
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 367, in ds
+    return self._acquire()
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 361, in _acquire
+    with self._manager.acquire_context(needs_lock) as root:
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/contextlib.py", line 112, in __enter__
+    return next(self.gen)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 186, in acquire_context
+    file, cached = self._acquire_with_cache_info(needs_lock)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 204, in _acquire_with_cache_info
+    file = self._opener(*self._args, **kwargs)
+  File "netCDF4/_netCDF4.pyx", line 2321, in netCDF4._netCDF4.Dataset.__init__
+  File "netCDF4/_netCDF4.pyx", line 1885, in netCDF4._netCDF4._ensure_nc_success
+PermissionError: [Errno 13] Permission denied: b'/g/data/e14/as3189/OFAM/data/OFAM3_zones.nc'
+Traceback (most recent call last):
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 198, in _acquire_with_cache_info
+    file = self._cache[self._key]
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/lru_cache.py", line 53, in __getitem__
+    value = self._cache[key]
+KeyError: [<class 'netCDF4._netCDF4.Dataset'>, ('/g/data/e14/as3189/OFAM/data/OFAM3_zones.nc',), 'a', (('clobber', True), ('diskless', False), ('format', 'NETCDF4'), ('persist', False))]
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/base.py", line 15, in <module>
+    import main
+  File "/g/data/e14/as3189/OFAM/scripts/main.py", line 48, in <module>
+    import tools
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 598, in <module>
+    zone_fieldset(plot=False)
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 595, in zone_fieldset
+    ds.to_netcdf(cfg.data/'OFAM3_zones.nc')
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/core/dataset.py", line 1554, in to_netcdf
+    invalid_netcdf=invalid_netcdf,
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/api.py", line 1071, in to_netcdf
+    store = store_open(target, mode, format, group, **kwargs)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 358, in open
+    return cls(manager, group=group, mode=mode, lock=lock, autoclose=autoclose)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 314, in __init__
+    self.format = self.ds.data_model
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 367, in ds
+    return self._acquire()
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 361, in _acquire
+    with self._manager.acquire_context(needs_lock) as root:
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/contextlib.py", line 112, in __enter__
+    return next(self.gen)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 186, in acquire_context
+    file, cached = self._acquire_with_cache_info(needs_lock)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 204, in _acquire_with_cache_info
+    file = self._opener(*self._args, **kwargs)
+  File "netCDF4/_netCDF4.pyx", line 2321, in netCDF4._netCDF4.Dataset.__init__
+  File "netCDF4/_netCDF4.pyx", line 1885, in netCDF4._netCDF4._ensure_nc_success
+PermissionError: [Errno 13] Permission denied: b'/g/data/e14/as3189/OFAM/data/OFAM3_zones.nc'
+Traceback (most recent call last):
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 198, in _acquire_with_cache_info
+    file = self._cache[self._key]
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/lru_cache.py", line 53, in __getitem__
+    value = self._cache[key]
+KeyError: [<class 'netCDF4._netCDF4.Dataset'>, ('/g/data/e14/as3189/OFAM/data/OFAM3_zones.nc',), 'a', (('clobber', True), ('diskless', False), ('format', 'NETCDF4'), ('persist', False))]
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/base.py", line 15, in <module>
+    import main
+  File "/g/data/e14/as3189/OFAM/scripts/main.py", line 48, in <module>
+    import tools
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 598, in <module>
+    zone_fieldset(plot=False)
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 595, in zone_fieldset
+    ds.to_netcdf(cfg.data/'OFAM3_zones.nc')
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/core/dataset.py", line 1554, in to_netcdf
+    invalid_netcdf=invalid_netcdf,
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/api.py", line 1071, in to_netcdf
+    store = store_open(target, mode, format, group, **kwargs)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 358, in open
+    return cls(manager, group=group, mode=mode, lock=lock, autoclose=autoclose)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 314, in __init__
+    self.format = self.ds.data_model
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 367, in ds
+    return self._acquire()
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 361, in _acquire
+    with self._manager.acquire_context(needs_lock) as root:
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/contextlib.py", line 112, in __enter__
+    return next(self.gen)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 186, in acquire_context
+    file, cached = self._acquire_with_cache_info(needs_lock)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 204, in _acquire_with_cache_info
+    file = self._opener(*self._args, **kwargs)
+  File "netCDF4/_netCDF4.pyx", line 2321, in netCDF4._netCDF4.Dataset.__init__
+  File "netCDF4/_netCDF4.pyx", line 1885, in netCDF4._netCDF4._ensure_nc_success
+PermissionError: [Errno 13] Permission denied: b'/g/data/e14/as3189/OFAM/data/OFAM3_zones.nc'
+Traceback (most recent call last):
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 198, in _acquire_with_cache_info
+    file = self._cache[self._key]
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/lru_cache.py", line 53, in __getitem__
+    value = self._cache[key]
+KeyError: [<class 'netCDF4._netCDF4.Dataset'>, ('/g/data/e14/as3189/OFAM/data/OFAM3_zones.nc',), 'a', (('clobber', True), ('diskless', False), ('format', 'NETCDF4'), ('persist', False))]
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/base.py", line 15, in <module>
+    import main
+  File "/g/data/e14/as3189/OFAM/scripts/main.py", line 48, in <module>
+    import tools
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 598, in <module>
+    zone_fieldset(plot=False)
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 595, in zone_fieldset
+    ds.to_netcdf(cfg.data/'OFAM3_zones.nc')
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/core/dataset.py", line 1554, in to_netcdf
+    invalid_netcdf=invalid_netcdf,
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/api.py", line 1071, in to_netcdf
+    store = store_open(target, mode, format, group, **kwargs)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 358, in open
+    return cls(manager, group=group, mode=mode, lock=lock, autoclose=autoclose)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 314, in __init__
+    self.format = self.ds.data_model
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 367, in ds
+    return self._acquire()
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 361, in _acquire
+    with self._manager.acquire_context(needs_lock) as root:
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/contextlib.py", line 112, in __enter__
+    return next(self.gen)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 186, in acquire_context
+    file, cached = self._acquire_with_cache_info(needs_lock)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 204, in _acquire_with_cache_info
+    file = self._opener(*self._args, **kwargs)
+  File "netCDF4/_netCDF4.pyx", line 2321, in netCDF4._netCDF4.Dataset.__init__
+  File "netCDF4/_netCDF4.pyx", line 1885, in netCDF4._netCDF4._ensure_nc_success
+PermissionError: [Errno 13] Permission denied: b'/g/data/e14/as3189/OFAM/data/OFAM3_zones.nc'
+Traceback (most recent call last):
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 198, in _acquire_with_cache_info
+    file = self._cache[self._key]
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/lru_cache.py", line 53, in __getitem__
+    value = self._cache[key]
+KeyError: [<class 'netCDF4._netCDF4.Dataset'>, ('/g/data/e14/as3189/OFAM/data/OFAM3_zones.nc',), 'a', (('clobber', True), ('diskless', False), ('format', 'NETCDF4'), ('persist', False))]
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/base.py", line 15, in <module>
+    import main
+  File "/g/data/e14/as3189/OFAM/scripts/main.py", line 48, in <module>
+    import tools
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 598, in <module>
+    zone_fieldset(plot=False)
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 595, in zone_fieldset
+    ds.to_netcdf(cfg.data/'OFAM3_zones.nc')
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/core/dataset.py", line 1554, in to_netcdf
+    invalid_netcdf=invalid_netcdf,
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/api.py", line 1071, in to_netcdf
+    store = store_open(target, mode, format, group, **kwargs)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 358, in open
+    return cls(manager, group=group, mode=mode, lock=lock, autoclose=autoclose)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 314, in __init__
+    self.format = self.ds.data_model
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 367, in ds
+    return self._acquire()
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 361, in _acquire
+    with self._manager.acquire_context(needs_lock) as root:
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/contextlib.py", line 112, in __enter__
+    return next(self.gen)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 186, in acquire_context
+    file, cached = self._acquire_with_cache_info(needs_lock)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 204, in _acquire_with_cache_info
+    file = self._opener(*self._args, **kwargs)
+  File "netCDF4/_netCDF4.pyx", line 2321, in netCDF4._netCDF4.Dataset.__init__
+  File "netCDF4/_netCDF4.pyx", line 1885, in netCDF4._netCDF4._ensure_nc_success
+PermissionError: [Errno 13] Permission denied: b'/g/data/e14/as3189/OFAM/data/OFAM3_zones.nc'
+Traceback (most recent call last):
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 198, in _acquire_with_cache_info
+    file = self._cache[self._key]
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/lru_cache.py", line 53, in __getitem__
+    value = self._cache[key]
+KeyError: [<class 'netCDF4._netCDF4.Dataset'>, ('/g/data/e14/as3189/OFAM/data/OFAM3_zones.nc',), 'a', (('clobber', True), ('diskless', False), ('format', 'NETCDF4'), ('persist', False))]
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/base.py", line 15, in <module>
+    import main
+  File "/g/data/e14/as3189/OFAM/scripts/main.py", line 48, in <module>
+    import tools
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 598, in <module>
+    zone_fieldset(plot=False)
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 595, in zone_fieldset
+    ds.to_netcdf(cfg.data/'OFAM3_zones.nc')
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/core/dataset.py", line 1554, in to_netcdf
+    invalid_netcdf=invalid_netcdf,
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/api.py", line 1071, in to_netcdf
+    store = store_open(target, mode, format, group, **kwargs)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 358, in open
+    return cls(manager, group=group, mode=mode, lock=lock, autoclose=autoclose)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 314, in __init__
+    self.format = self.ds.data_model
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 367, in ds
+    return self._acquire()
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 361, in _acquire
+    with self._manager.acquire_context(needs_lock) as root:
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/contextlib.py", line 112, in __enter__
+    return next(self.gen)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 186, in acquire_context
+    file, cached = self._acquire_with_cache_info(needs_lock)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 204, in _acquire_with_cache_info
+    file = self._opener(*self._args, **kwargs)
+  File "netCDF4/_netCDF4.pyx", line 2321, in netCDF4._netCDF4.Dataset.__init__
+  File "netCDF4/_netCDF4.pyx", line 1885, in netCDF4._netCDF4._ensure_nc_success
+PermissionError: [Errno 13] Permission denied: b'/g/data/e14/as3189/OFAM/data/OFAM3_zones.nc'
+Traceback (most recent call last):
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 198, in _acquire_with_cache_info
+    file = self._cache[self._key]
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/lru_cache.py", line 53, in __getitem__
+    value = self._cache[key]
+KeyError: [<class 'netCDF4._netCDF4.Dataset'>, ('/g/data/e14/as3189/OFAM/data/OFAM3_zones.nc',), 'a', (('clobber', True), ('diskless', False), ('format', 'NETCDF4'), ('persist', False))]
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/base.py", line 15, in <module>
+    import main
+  File "/g/data/e14/as3189/OFAM/scripts/main.py", line 48, in <module>
+    import tools
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 598, in <module>
+    zone_fieldset(plot=False)
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 595, in zone_fieldset
+    ds.to_netcdf(cfg.data/'OFAM3_zones.nc')
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/core/dataset.py", line 1554, in to_netcdf
+    invalid_netcdf=invalid_netcdf,
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/api.py", line 1071, in to_netcdf
+    store = store_open(target, mode, format, group, **kwargs)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 358, in open
+    return cls(manager, group=group, mode=mode, lock=lock, autoclose=autoclose)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 314, in __init__
+    self.format = self.ds.data_model
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 367, in ds
+    return self._acquire()
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 361, in _acquire
+    with self._manager.acquire_context(needs_lock) as root:
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/contextlib.py", line 112, in __enter__
+    return next(self.gen)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 186, in acquire_context
+    file, cached = self._acquire_with_cache_info(needs_lock)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 204, in _acquire_with_cache_info
+    file = self._opener(*self._args, **kwargs)
+  File "netCDF4/_netCDF4.pyx", line 2321, in netCDF4._netCDF4.Dataset.__init__
+  File "netCDF4/_netCDF4.pyx", line 1885, in netCDF4._netCDF4._ensure_nc_success
+PermissionError: [Errno 13] Permission denied: b'/g/data/e14/as3189/OFAM/data/OFAM3_zones.nc'
+Traceback (most recent call last):
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 198, in _acquire_with_cache_info
+    file = self._cache[self._key]
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/lru_cache.py", line 53, in __getitem__
+    value = self._cache[key]
+KeyError: [<class 'netCDF4._netCDF4.Dataset'>, ('/g/data/e14/as3189/OFAM/data/OFAM3_zones.nc',), 'a', (('clobber', True), ('diskless', False), ('format', 'NETCDF4'), ('persist', False))]
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/base.py", line 15, in <module>
+    import main
+  File "/g/data/e14/as3189/OFAM/scripts/main.py", line 48, in <module>
+    import tools
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 598, in <module>
+    zone_fieldset(plot=False)
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 595, in zone_fieldset
+    ds.to_netcdf(cfg.data/'OFAM3_zones.nc')
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/core/dataset.py", line 1554, in to_netcdf
+    invalid_netcdf=invalid_netcdf,
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/api.py", line 1071, in to_netcdf
+    store = store_open(target, mode, format, group, **kwargs)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 358, in open
+    return cls(manager, group=group, mode=mode, lock=lock, autoclose=autoclose)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 314, in __init__
+    self.format = self.ds.data_model
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 367, in ds
+    return self._acquire()
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 361, in _acquire
+    with self._manager.acquire_context(needs_lock) as root:
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/contextlib.py", line 112, in __enter__
+    return next(self.gen)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 186, in acquire_context
+    file, cached = self._acquire_with_cache_info(needs_lock)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 204, in _acquire_with_cache_info
+    file = self._opener(*self._args, **kwargs)
+  File "netCDF4/_netCDF4.pyx", line 2321, in netCDF4._netCDF4.Dataset.__init__
+  File "netCDF4/_netCDF4.pyx", line 1885, in netCDF4._netCDF4._ensure_nc_success
+PermissionError: [Errno 13] Permission denied: b'/g/data/e14/as3189/OFAM/data/OFAM3_zones.nc'
+Traceback (most recent call last):
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 198, in _acquire_with_cache_info
+    file = self._cache[self._key]
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/lru_cache.py", line 53, in __getitem__
+    value = self._cache[key]
+KeyError: [<class 'netCDF4._netCDF4.Dataset'>, ('/g/data/e14/as3189/OFAM/data/OFAM3_zones.nc',), 'a', (('clobber', True), ('diskless', False), ('format', 'NETCDF4'), ('persist', False))]
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/base.py", line 15, in <module>
+    import main
+  File "/g/data/e14/as3189/OFAM/scripts/main.py", line 48, in <module>
+    import tools
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 598, in <module>
+    zone_fieldset(plot=False)
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 595, in zone_fieldset
+    ds.to_netcdf(cfg.data/'OFAM3_zones.nc')
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/core/dataset.py", line 1554, in to_netcdf
+    invalid_netcdf=invalid_netcdf,
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/api.py", line 1071, in to_netcdf
+    store = store_open(target, mode, format, group, **kwargs)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 358, in open
+    return cls(manager, group=group, mode=mode, lock=lock, autoclose=autoclose)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 314, in __init__
+    self.format = self.ds.data_model
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 367, in ds
+    return self._acquire()
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 361, in _acquire
+    with self._manager.acquire_context(needs_lock) as root:
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/contextlib.py", line 112, in __enter__
+    return next(self.gen)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 186, in acquire_context
+    file, cached = self._acquire_with_cache_info(needs_lock)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 204, in _acquire_with_cache_info
+    file = self._opener(*self._args, **kwargs)
+  File "netCDF4/_netCDF4.pyx", line 2321, in netCDF4._netCDF4.Dataset.__init__
+  File "netCDF4/_netCDF4.pyx", line 1885, in netCDF4._netCDF4._ensure_nc_success
+PermissionError: [Errno 13] Permission denied: b'/g/data/e14/as3189/OFAM/data/OFAM3_zones.nc'
+Traceback (most recent call last):
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 198, in _acquire_with_cache_info
+    file = self._cache[self._key]
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/lru_cache.py", line 53, in __getitem__
+    value = self._cache[key]
+KeyError: [<class 'netCDF4._netCDF4.Dataset'>, ('/g/data/e14/as3189/OFAM/data/OFAM3_zones.nc',), 'a', (('clobber', True), ('diskless', False), ('format', 'NETCDF4'), ('persist', False))]
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/base.py", line 15, in <module>
+    import main
+  File "/g/data/e14/as3189/OFAM/scripts/main.py", line 48, in <module>
+    import tools
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 598, in <module>
+    zone_fieldset(plot=False)
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 595, in zone_fieldset
+    ds.to_netcdf(cfg.data/'OFAM3_zones.nc')
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/core/dataset.py", line 1554, in to_netcdf
+    invalid_netcdf=invalid_netcdf,
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/api.py", line 1071, in to_netcdf
+    store = store_open(target, mode, format, group, **kwargs)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 358, in open
+    return cls(manager, group=group, mode=mode, lock=lock, autoclose=autoclose)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 314, in __init__
+    self.format = self.ds.data_model
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 367, in ds
+    return self._acquire()
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 361, in _acquire
+    with self._manager.acquire_context(needs_lock) as root:
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/contextlib.py", line 112, in __enter__
+    return next(self.gen)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 186, in acquire_context
+    file, cached = self._acquire_with_cache_info(needs_lock)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 204, in _acquire_with_cache_info
+    file = self._opener(*self._args, **kwargs)
+  File "netCDF4/_netCDF4.pyx", line 2321, in netCDF4._netCDF4.Dataset.__init__
+  File "netCDF4/_netCDF4.pyx", line 1885, in netCDF4._netCDF4._ensure_nc_success
+PermissionError: [Errno 13] Permission denied: b'/g/data/e14/as3189/OFAM/data/OFAM3_zones.nc'
+Traceback (most recent call last):
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 198, in _acquire_with_cache_info
+    file = self._cache[self._key]
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/lru_cache.py", line 53, in __getitem__
+    value = self._cache[key]
+KeyError: [<class 'netCDF4._netCDF4.Dataset'>, ('/g/data/e14/as3189/OFAM/data/OFAM3_zones.nc',), 'a', (('clobber', True), ('diskless', False), ('format', 'NETCDF4'), ('persist', False))]
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/base.py", line 15, in <module>
+    import main
+  File "/g/data/e14/as3189/OFAM/scripts/main.py", line 48, in <module>
+    import tools
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 598, in <module>
+    zone_fieldset(plot=False)
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 595, in zone_fieldset
+    ds.to_netcdf(cfg.data/'OFAM3_zones.nc')
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/core/dataset.py", line 1554, in to_netcdf
+    invalid_netcdf=invalid_netcdf,
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/api.py", line 1071, in to_netcdf
+    store = store_open(target, mode, format, group, **kwargs)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 358, in open
+    return cls(manager, group=group, mode=mode, lock=lock, autoclose=autoclose)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 314, in __init__
+    self.format = self.ds.data_model
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 367, in ds
+    return self._acquire()
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 361, in _acquire
+    with self._manager.acquire_context(needs_lock) as root:
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/contextlib.py", line 112, in __enter__
+    return next(self.gen)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 186, in acquire_context
+    file, cached = self._acquire_with_cache_info(needs_lock)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 204, in _acquire_with_cache_info
+    file = self._opener(*self._args, **kwargs)
+  File "netCDF4/_netCDF4.pyx", line 2321, in netCDF4._netCDF4.Dataset.__init__
+  File "netCDF4/_netCDF4.pyx", line 1885, in netCDF4._netCDF4._ensure_nc_success
+PermissionError: [Errno 13] Permission denied: b'/g/data/e14/as3189/OFAM/data/OFAM3_zones.nc'
+Traceback (most recent call last):
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 198, in _acquire_with_cache_info
+    file = self._cache[self._key]
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/lru_cache.py", line 53, in __getitem__
+    value = self._cache[key]
+KeyError: [<class 'netCDF4._netCDF4.Dataset'>, ('/g/data/e14/as3189/OFAM/data/OFAM3_zones.nc',), 'a', (('clobber', True), ('diskless', False), ('format', 'NETCDF4'), ('persist', False))]
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/base.py", line 15, in <module>
+    import main
+  File "/g/data/e14/as3189/OFAM/scripts/main.py", line 48, in <module>
+    import tools
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 598, in <module>
+    zone_fieldset(plot=False)
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 595, in zone_fieldset
+    ds.to_netcdf(cfg.data/'OFAM3_zones.nc')
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/core/dataset.py", line 1554, in to_netcdf
+    invalid_netcdf=invalid_netcdf,
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/api.py", line 1071, in to_netcdf
+    store = store_open(target, mode, format, group, **kwargs)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 358, in open
+    return cls(manager, group=group, mode=mode, lock=lock, autoclose=autoclose)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 314, in __init__
+    self.format = self.ds.data_model
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 367, in ds
+    return self._acquire()
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 361, in _acquire
+    with self._manager.acquire_context(needs_lock) as root:
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/contextlib.py", line 112, in __enter__
+    return next(self.gen)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 186, in acquire_context
+    file, cached = self._acquire_with_cache_info(needs_lock)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 204, in _acquire_with_cache_info
+    file = self._opener(*self._args, **kwargs)
+  File "netCDF4/_netCDF4.pyx", line 2321, in netCDF4._netCDF4.Dataset.__init__
+  File "netCDF4/_netCDF4.pyx", line 1885, in netCDF4._netCDF4._ensure_nc_success
+PermissionError: [Errno 13] Permission denied: b'/g/data/e14/as3189/OFAM/data/OFAM3_zones.nc'
+Traceback (most recent call last):
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 198, in _acquire_with_cache_info
+    file = self._cache[self._key]
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/lru_cache.py", line 53, in __getitem__
+    value = self._cache[key]
+KeyError: [<class 'netCDF4._netCDF4.Dataset'>, ('/g/data/e14/as3189/OFAM/data/OFAM3_zones.nc',), 'a', (('clobber', True), ('diskless', False), ('format', 'NETCDF4'), ('persist', False))]
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/base.py", line 15, in <module>
+    import main
+  File "/g/data/e14/as3189/OFAM/scripts/main.py", line 48, in <module>
+    import tools
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 598, in <module>
+    zone_fieldset(plot=False)
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 595, in zone_fieldset
+    ds.to_netcdf(cfg.data/'OFAM3_zones.nc')
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/core/dataset.py", line 1554, in to_netcdf
+    invalid_netcdf=invalid_netcdf,
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/api.py", line 1071, in to_netcdf
+    store = store_open(target, mode, format, group, **kwargs)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 358, in open
+    return cls(manager, group=group, mode=mode, lock=lock, autoclose=autoclose)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 314, in __init__
+    self.format = self.ds.data_model
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 367, in ds
+    return self._acquire()
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 361, in _acquire
+    with self._manager.acquire_context(needs_lock) as root:
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/contextlib.py", line 112, in __enter__
+    return next(self.gen)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 186, in acquire_context
+    file, cached = self._acquire_with_cache_info(needs_lock)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 204, in _acquire_with_cache_info
+    file = self._opener(*self._args, **kwargs)
+  File "netCDF4/_netCDF4.pyx", line 2321, in netCDF4._netCDF4.Dataset.__init__
+  File "netCDF4/_netCDF4.pyx", line 1885, in netCDF4._netCDF4._ensure_nc_success
+PermissionError: [Errno 13] Permission denied: b'/g/data/e14/as3189/OFAM/data/OFAM3_zones.nc'
+Traceback (most recent call last):
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 198, in _acquire_with_cache_info
+    file = self._cache[self._key]
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/lru_cache.py", line 53, in __getitem__
+    value = self._cache[key]
+KeyError: [<class 'netCDF4._netCDF4.Dataset'>, ('/g/data/e14/as3189/OFAM/data/OFAM3_zones.nc',), 'a', (('clobber', True), ('diskless', False), ('format', 'NETCDF4'), ('persist', False))]
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/base.py", line 15, in <module>
+    import main
+  File "/g/data/e14/as3189/OFAM/scripts/main.py", line 48, in <module>
+    import tools
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 598, in <module>
+    zone_fieldset(plot=False)
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 595, in zone_fieldset
+    ds.to_netcdf(cfg.data/'OFAM3_zones.nc')
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/core/dataset.py", line 1554, in to_netcdf
+    invalid_netcdf=invalid_netcdf,
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/api.py", line 1071, in to_netcdf
+    store = store_open(target, mode, format, group, **kwargs)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 358, in open
+    return cls(manager, group=group, mode=mode, lock=lock, autoclose=autoclose)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 314, in __init__
+    self.format = self.ds.data_model
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 367, in ds
+    return self._acquire()
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 361, in _acquire
+    with self._manager.acquire_context(needs_lock) as root:
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/contextlib.py", line 112, in __enter__
+    return next(self.gen)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 186, in acquire_context
+    file, cached = self._acquire_with_cache_info(needs_lock)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 204, in _acquire_with_cache_info
+    file = self._opener(*self._args, **kwargs)
+  File "netCDF4/_netCDF4.pyx", line 2321, in netCDF4._netCDF4.Dataset.__init__
+  File "netCDF4/_netCDF4.pyx", line 1885, in netCDF4._netCDF4._ensure_nc_success
+PermissionError: [Errno 13] Permission denied: b'/g/data/e14/as3189/OFAM/data/OFAM3_zones.nc'
+Traceback (most recent call last):
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 198, in _acquire_with_cache_info
+    file = self._cache[self._key]
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/lru_cache.py", line 53, in __getitem__
+    value = self._cache[key]
+KeyError: [<class 'netCDF4._netCDF4.Dataset'>, ('/g/data/e14/as3189/OFAM/data/OFAM3_zones.nc',), 'a', (('clobber', True), ('diskless', False), ('format', 'NETCDF4'), ('persist', False))]
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/base.py", line 15, in <module>
+    import main
+  File "/g/data/e14/as3189/OFAM/scripts/main.py", line 48, in <module>
+    import tools
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 598, in <module>
+    zone_fieldset(plot=False)
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 595, in zone_fieldset
+    ds.to_netcdf(cfg.data/'OFAM3_zones.nc')
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/core/dataset.py", line 1554, in to_netcdf
+    invalid_netcdf=invalid_netcdf,
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/api.py", line 1071, in to_netcdf
+    store = store_open(target, mode, format, group, **kwargs)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 358, in open
+    return cls(manager, group=group, mode=mode, lock=lock, autoclose=autoclose)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 314, in __init__
+    self.format = self.ds.data_model
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 367, in ds
+    return self._acquire()
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 361, in _acquire
+    with self._manager.acquire_context(needs_lock) as root:
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/contextlib.py", line 112, in __enter__
+    return next(self.gen)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 186, in acquire_context
+    file, cached = self._acquire_with_cache_info(needs_lock)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 204, in _acquire_with_cache_info
+    file = self._opener(*self._args, **kwargs)
+  File "netCDF4/_netCDF4.pyx", line 2321, in netCDF4._netCDF4.Dataset.__init__
+  File "netCDF4/_netCDF4.pyx", line 1885, in netCDF4._netCDF4._ensure_nc_success
+PermissionError: [Errno 13] Permission denied: b'/g/data/e14/as3189/OFAM/data/OFAM3_zones.nc'
+Traceback (most recent call last):
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 198, in _acquire_with_cache_info
+    file = self._cache[self._key]
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/lru_cache.py", line 53, in __getitem__
+    value = self._cache[key]
+KeyError: [<class 'netCDF4._netCDF4.Dataset'>, ('/g/data/e14/as3189/OFAM/data/OFAM3_zones.nc',), 'a', (('clobber', True), ('diskless', False), ('format', 'NETCDF4'), ('persist', False))]
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/base.py", line 15, in <module>
+    import main
+  File "/g/data/e14/as3189/OFAM/scripts/main.py", line 48, in <module>
+    import tools
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 598, in <module>
+    zone_fieldset(plot=False)
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 595, in zone_fieldset
+    ds.to_netcdf(cfg.data/'OFAM3_zones.nc')
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/core/dataset.py", line 1554, in to_netcdf
+    invalid_netcdf=invalid_netcdf,
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/api.py", line 1071, in to_netcdf
+    store = store_open(target, mode, format, group, **kwargs)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 358, in open
+    return cls(manager, group=group, mode=mode, lock=lock, autoclose=autoclose)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 314, in __init__
+    self.format = self.ds.data_model
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 367, in ds
+    return self._acquire()
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 361, in _acquire
+    with self._manager.acquire_context(needs_lock) as root:
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/contextlib.py", line 112, in __enter__
+    return next(self.gen)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 186, in acquire_context
+    file, cached = self._acquire_with_cache_info(needs_lock)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 204, in _acquire_with_cache_info
+    file = self._opener(*self._args, **kwargs)
+  File "netCDF4/_netCDF4.pyx", line 2321, in netCDF4._netCDF4.Dataset.__init__
+  File "netCDF4/_netCDF4.pyx", line 1885, in netCDF4._netCDF4._ensure_nc_success
+PermissionError: [Errno 13] Permission denied: b'/g/data/e14/as3189/OFAM/data/OFAM3_zones.nc'
+Traceback (most recent call last):
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 198, in _acquire_with_cache_info
+    file = self._cache[self._key]
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/lru_cache.py", line 53, in __getitem__
+    value = self._cache[key]
+KeyError: [<class 'netCDF4._netCDF4.Dataset'>, ('/g/data/e14/as3189/OFAM/data/OFAM3_zones.nc',), 'a', (('clobber', True), ('diskless', False), ('format', 'NETCDF4'), ('persist', False))]
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/base.py", line 15, in <module>
+    import main
+  File "/g/data/e14/as3189/OFAM/scripts/main.py", line 48, in <module>
+    import tools
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 598, in <module>
+    zone_fieldset(plot=False)
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 595, in zone_fieldset
+    ds.to_netcdf(cfg.data/'OFAM3_zones.nc')
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/core/dataset.py", line 1554, in to_netcdf
+    invalid_netcdf=invalid_netcdf,
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/api.py", line 1071, in to_netcdf
+    store = store_open(target, mode, format, group, **kwargs)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 358, in open
+    return cls(manager, group=group, mode=mode, lock=lock, autoclose=autoclose)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 314, in __init__
+    self.format = self.ds.data_model
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 367, in ds
+    return self._acquire()
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 361, in _acquire
+    with self._manager.acquire_context(needs_lock) as root:
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/contextlib.py", line 112, in __enter__
+    return next(self.gen)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 186, in acquire_context
+    file, cached = self._acquire_with_cache_info(needs_lock)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 204, in _acquire_with_cache_info
+    file = self._opener(*self._args, **kwargs)
+  File "netCDF4/_netCDF4.pyx", line 2321, in netCDF4._netCDF4.Dataset.__init__
+  File "netCDF4/_netCDF4.pyx", line 1885, in netCDF4._netCDF4._ensure_nc_success
+PermissionError: [Errno 13] Permission denied: b'/g/data/e14/as3189/OFAM/data/OFAM3_zones.nc'
+Traceback (most recent call last):
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 198, in _acquire_with_cache_info
+    file = self._cache[self._key]
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/lru_cache.py", line 53, in __getitem__
+    value = self._cache[key]
+KeyError: [<class 'netCDF4._netCDF4.Dataset'>, ('/g/data/e14/as3189/OFAM/data/OFAM3_zones.nc',), 'a', (('clobber', True), ('diskless', False), ('format', 'NETCDF4'), ('persist', False))]
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/base.py", line 15, in <module>
+    import main
+  File "/g/data/e14/as3189/OFAM/scripts/main.py", line 48, in <module>
+    import tools
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 598, in <module>
+    zone_fieldset(plot=False)
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 595, in zone_fieldset
+    ds.to_netcdf(cfg.data/'OFAM3_zones.nc')
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/core/dataset.py", line 1554, in to_netcdf
+    invalid_netcdf=invalid_netcdf,
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/api.py", line 1071, in to_netcdf
+    store = store_open(target, mode, format, group, **kwargs)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 358, in open
+    return cls(manager, group=group, mode=mode, lock=lock, autoclose=autoclose)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 314, in __init__
+    self.format = self.ds.data_model
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 367, in ds
+    return self._acquire()
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 361, in _acquire
+    with self._manager.acquire_context(needs_lock) as root:
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/contextlib.py", line 112, in __enter__
+    return next(self.gen)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 186, in acquire_context
+    file, cached = self._acquire_with_cache_info(needs_lock)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 204, in _acquire_with_cache_info
+    file = self._opener(*self._args, **kwargs)
+  File "netCDF4/_netCDF4.pyx", line 2321, in netCDF4._netCDF4.Dataset.__init__
+  File "netCDF4/_netCDF4.pyx", line 1885, in netCDF4._netCDF4._ensure_nc_success
+PermissionError: [Errno 13] Permission denied: b'/g/data/e14/as3189/OFAM/data/OFAM3_zones.nc'
+Traceback (most recent call last):
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 198, in _acquire_with_cache_info
+    file = self._cache[self._key]
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/lru_cache.py", line 53, in __getitem__
+    value = self._cache[key]
+KeyError: [<class 'netCDF4._netCDF4.Dataset'>, ('/g/data/e14/as3189/OFAM/data/OFAM3_zones.nc',), 'a', (('clobber', True), ('diskless', False), ('format', 'NETCDF4'), ('persist', False))]
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/base.py", line 15, in <module>
+    import main
+  File "/g/data/e14/as3189/OFAM/scripts/main.py", line 48, in <module>
+    import tools
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 598, in <module>
+    zone_fieldset(plot=False)
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 595, in zone_fieldset
+    ds.to_netcdf(cfg.data/'OFAM3_zones.nc')
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/core/dataset.py", line 1554, in to_netcdf
+    invalid_netcdf=invalid_netcdf,
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/api.py", line 1071, in to_netcdf
+    store = store_open(target, mode, format, group, **kwargs)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 358, in open
+    return cls(manager, group=group, mode=mode, lock=lock, autoclose=autoclose)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 314, in __init__
+    self.format = self.ds.data_model
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 367, in ds
+    return self._acquire()
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 361, in _acquire
+    with self._manager.acquire_context(needs_lock) as root:
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/contextlib.py", line 112, in __enter__
+    return next(self.gen)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 186, in acquire_context
+    file, cached = self._acquire_with_cache_info(needs_lock)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 204, in _acquire_with_cache_info
+    file = self._opener(*self._args, **kwargs)
+  File "netCDF4/_netCDF4.pyx", line 2321, in netCDF4._netCDF4.Dataset.__init__
+  File "netCDF4/_netCDF4.pyx", line 1885, in netCDF4._netCDF4._ensure_nc_success
+PermissionError: [Errno 13] Permission denied: b'/g/data/e14/as3189/OFAM/data/OFAM3_zones.nc'
+Traceback (most recent call last):
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 198, in _acquire_with_cache_info
+    file = self._cache[self._key]
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/lru_cache.py", line 53, in __getitem__
+    value = self._cache[key]
+KeyError: [<class 'netCDF4._netCDF4.Dataset'>, ('/g/data/e14/as3189/OFAM/data/OFAM3_zones.nc',), 'a', (('clobber', True), ('diskless', False), ('format', 'NETCDF4'), ('persist', False))]
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/base.py", line 15, in <module>
+    import main
+  File "/g/data/e14/as3189/OFAM/scripts/main.py", line 48, in <module>
+    import tools
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 598, in <module>
+    zone_fieldset(plot=False)
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 595, in zone_fieldset
+    ds.to_netcdf(cfg.data/'OFAM3_zones.nc')
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/core/dataset.py", line 1554, in to_netcdf
+    invalid_netcdf=invalid_netcdf,
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/api.py", line 1071, in to_netcdf
+    store = store_open(target, mode, format, group, **kwargs)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 358, in open
+    return cls(manager, group=group, mode=mode, lock=lock, autoclose=autoclose)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 314, in __init__
+    self.format = self.ds.data_model
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 367, in ds
+    return self._acquire()
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 361, in _acquire
+    with self._manager.acquire_context(needs_lock) as root:
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/contextlib.py", line 112, in __enter__
+    return next(self.gen)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 186, in acquire_context
+    file, cached = self._acquire_with_cache_info(needs_lock)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 204, in _acquire_with_cache_info
+    file = self._opener(*self._args, **kwargs)
+  File "netCDF4/_netCDF4.pyx", line 2321, in netCDF4._netCDF4.Dataset.__init__
+  File "netCDF4/_netCDF4.pyx", line 1885, in netCDF4._netCDF4._ensure_nc_success
+PermissionError: [Errno 13] Permission denied: b'/g/data/e14/as3189/OFAM/data/OFAM3_zones.nc'
+Traceback (most recent call last):
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 198, in _acquire_with_cache_info
+    file = self._cache[self._key]
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/lru_cache.py", line 53, in __getitem__
+    value = self._cache[key]
+KeyError: [<class 'netCDF4._netCDF4.Dataset'>, ('/g/data/e14/as3189/OFAM/data/OFAM3_zones.nc',), 'a', (('clobber', True), ('diskless', False), ('format', 'NETCDF4'), ('persist', False))]
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/base.py", line 15, in <module>
+    import main
+  File "/g/data/e14/as3189/OFAM/scripts/main.py", line 48, in <module>
+    import tools
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 598, in <module>
+    zone_fieldset(plot=False)
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 595, in zone_fieldset
+    ds.to_netcdf(cfg.data/'OFAM3_zones.nc')
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/core/dataset.py", line 1554, in to_netcdf
+    invalid_netcdf=invalid_netcdf,
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/api.py", line 1071, in to_netcdf
+    store = store_open(target, mode, format, group, **kwargs)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 358, in open
+    return cls(manager, group=group, mode=mode, lock=lock, autoclose=autoclose)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 314, in __init__
+    self.format = self.ds.data_model
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 367, in ds
+    return self._acquire()
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 361, in _acquire
+    with self._manager.acquire_context(needs_lock) as root:
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/contextlib.py", line 112, in __enter__
+    return next(self.gen)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 186, in acquire_context
+    file, cached = self._acquire_with_cache_info(needs_lock)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 204, in _acquire_with_cache_info
+    file = self._opener(*self._args, **kwargs)
+  File "netCDF4/_netCDF4.pyx", line 2321, in netCDF4._netCDF4.Dataset.__init__
+  File "netCDF4/_netCDF4.pyx", line 1885, in netCDF4._netCDF4._ensure_nc_success
+PermissionError: [Errno 13] Permission denied: b'/g/data/e14/as3189/OFAM/data/OFAM3_zones.nc'
+Traceback (most recent call last):
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 198, in _acquire_with_cache_info
+    file = self._cache[self._key]
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/lru_cache.py", line 53, in __getitem__
+    value = self._cache[key]
+KeyError: [<class 'netCDF4._netCDF4.Dataset'>, ('/g/data/e14/as3189/OFAM/data/OFAM3_zones.nc',), 'a', (('clobber', True), ('diskless', False), ('format', 'NETCDF4'), ('persist', False))]
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/base.py", line 15, in <module>
+    import main
+  File "/g/data/e14/as3189/OFAM/scripts/main.py", line 48, in <module>
+    import tools
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 598, in <module>
+    zone_fieldset(plot=False)
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 595, in zone_fieldset
+    ds.to_netcdf(cfg.data/'OFAM3_zones.nc')
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/core/dataset.py", line 1554, in to_netcdf
+    invalid_netcdf=invalid_netcdf,
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/api.py", line 1071, in to_netcdf
+    store = store_open(target, mode, format, group, **kwargs)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 358, in open
+    return cls(manager, group=group, mode=mode, lock=lock, autoclose=autoclose)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 314, in __init__
+    self.format = self.ds.data_model
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 367, in ds
+    return self._acquire()
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 361, in _acquire
+    with self._manager.acquire_context(needs_lock) as root:
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/contextlib.py", line 112, in __enter__
+    return next(self.gen)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 186, in acquire_context
+    file, cached = self._acquire_with_cache_info(needs_lock)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 204, in _acquire_with_cache_info
+    file = self._opener(*self._args, **kwargs)
+  File "netCDF4/_netCDF4.pyx", line 2321, in netCDF4._netCDF4.Dataset.__init__
+  File "netCDF4/_netCDF4.pyx", line 1885, in netCDF4._netCDF4._ensure_nc_success
+PermissionError: [Errno 13] Permission denied: b'/g/data/e14/as3189/OFAM/data/OFAM3_zones.nc'
+Traceback (most recent call last):
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 198, in _acquire_with_cache_info
+    file = self._cache[self._key]
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/lru_cache.py", line 53, in __getitem__
+    value = self._cache[key]
+KeyError: [<class 'netCDF4._netCDF4.Dataset'>, ('/g/data/e14/as3189/OFAM/data/OFAM3_zones.nc',), 'a', (('clobber', True), ('diskless', False), ('format', 'NETCDF4'), ('persist', False))]
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/base.py", line 15, in <module>
+    import main
+  File "/g/data/e14/as3189/OFAM/scripts/main.py", line 48, in <module>
+    import tools
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 598, in <module>
+    zone_fieldset(plot=False)
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 595, in zone_fieldset
+    ds.to_netcdf(cfg.data/'OFAM3_zones.nc')
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/core/dataset.py", line 1554, in to_netcdf
+    invalid_netcdf=invalid_netcdf,
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/api.py", line 1071, in to_netcdf
+    store = store_open(target, mode, format, group, **kwargs)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 358, in open
+    return cls(manager, group=group, mode=mode, lock=lock, autoclose=autoclose)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 314, in __init__
+    self.format = self.ds.data_model
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 367, in ds
+    return self._acquire()
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 361, in _acquire
+    with self._manager.acquire_context(needs_lock) as root:
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/contextlib.py", line 112, in __enter__
+    return next(self.gen)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 186, in acquire_context
+    file, cached = self._acquire_with_cache_info(needs_lock)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 204, in _acquire_with_cache_info
+    file = self._opener(*self._args, **kwargs)
+  File "netCDF4/_netCDF4.pyx", line 2321, in netCDF4._netCDF4.Dataset.__init__
+  File "netCDF4/_netCDF4.pyx", line 1885, in netCDF4._netCDF4._ensure_nc_success
+PermissionError: [Errno 13] Permission denied: b'/g/data/e14/as3189/OFAM/data/OFAM3_zones.nc'
+Traceback (most recent call last):
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 198, in _acquire_with_cache_info
+    file = self._cache[self._key]
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/lru_cache.py", line 53, in __getitem__
+    value = self._cache[key]
+KeyError: [<class 'netCDF4._netCDF4.Dataset'>, ('/g/data/e14/as3189/OFAM/data/OFAM3_zones.nc',), 'a', (('clobber', True), ('diskless', False), ('format', 'NETCDF4'), ('persist', False))]
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/base.py", line 15, in <module>
+    import main
+  File "/g/data/e14/as3189/OFAM/scripts/main.py", line 48, in <module>
+    import tools
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 598, in <module>
+    zone_fieldset(plot=False)
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 595, in zone_fieldset
+    ds.to_netcdf(cfg.data/'OFAM3_zones.nc')
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/core/dataset.py", line 1554, in to_netcdf
+    invalid_netcdf=invalid_netcdf,
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/api.py", line 1071, in to_netcdf
+    store = store_open(target, mode, format, group, **kwargs)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 358, in open
+    return cls(manager, group=group, mode=mode, lock=lock, autoclose=autoclose)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 314, in __init__
+    self.format = self.ds.data_model
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 367, in ds
+    return self._acquire()
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 361, in _acquire
+    with self._manager.acquire_context(needs_lock) as root:
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/contextlib.py", line 112, in __enter__
+    return next(self.gen)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 186, in acquire_context
+    file, cached = self._acquire_with_cache_info(needs_lock)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 204, in _acquire_with_cache_info
+    file = self._opener(*self._args, **kwargs)
+  File "netCDF4/_netCDF4.pyx", line 2321, in netCDF4._netCDF4.Dataset.__init__
+  File "netCDF4/_netCDF4.pyx", line 1885, in netCDF4._netCDF4._ensure_nc_success
+PermissionError: [Errno 13] Permission denied: b'/g/data/e14/as3189/OFAM/data/OFAM3_zones.nc'
+Traceback (most recent call last):
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 198, in _acquire_with_cache_info
+    file = self._cache[self._key]
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/lru_cache.py", line 53, in __getitem__
+    value = self._cache[key]
+KeyError: [<class 'netCDF4._netCDF4.Dataset'>, ('/g/data/e14/as3189/OFAM/data/OFAM3_zones.nc',), 'a', (('clobber', True), ('diskless', False), ('format', 'NETCDF4'), ('persist', False))]
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/base.py", line 15, in <module>
+    import main
+  File "/g/data/e14/as3189/OFAM/scripts/main.py", line 48, in <module>
+    import tools
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 598, in <module>
+    zone_fieldset(plot=False)
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 595, in zone_fieldset
+    ds.to_netcdf(cfg.data/'OFAM3_zones.nc')
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/core/dataset.py", line 1554, in to_netcdf
+    invalid_netcdf=invalid_netcdf,
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/api.py", line 1071, in to_netcdf
+    store = store_open(target, mode, format, group, **kwargs)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 358, in open
+    return cls(manager, group=group, mode=mode, lock=lock, autoclose=autoclose)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 314, in __init__
+    self.format = self.ds.data_model
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 367, in ds
+    return self._acquire()
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 361, in _acquire
+    with self._manager.acquire_context(needs_lock) as root:
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/contextlib.py", line 112, in __enter__
+    return next(self.gen)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 186, in acquire_context
+    file, cached = self._acquire_with_cache_info(needs_lock)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 204, in _acquire_with_cache_info
+    file = self._opener(*self._args, **kwargs)
+  File "netCDF4/_netCDF4.pyx", line 2321, in netCDF4._netCDF4.Dataset.__init__
+  File "netCDF4/_netCDF4.pyx", line 1885, in netCDF4._netCDF4._ensure_nc_success
+PermissionError: [Errno 13] Permission denied: b'/g/data/e14/as3189/OFAM/data/OFAM3_zones.nc'
+base:INFO:sim_198101_198103_v150i:Executing: 1981-01-01 to 1981-03-31
+base:INFO:sim_198101_198103_v150i:Longitudes: 165
+base:INFO:sim_198101_198103_v150i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+base:INFO:sim_198101_198103_v150i:Depths: 14 dz=25 [25 to 350]
+base:INFO:sim_198101_198103_v150i:Runtime: 90 days
+base:INFO:sim_198101_198103_v150i:Timestep dt: 240 mins
+base:INFO:sim_198101_198103_v150i:Output dt: 1 days
+base:INFO:sim_198101_198103_v150i:Repeat release: 6 days
+base:INFO:sim_198101_198103_v150i:Particles: Total: 11130 :/repeat: 742
+WARNING: Casting lon data to np.float32
+WARNING: Casting lat data to np.float32
+WARNING: Casting depth data to np.float32
+WARNING: Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+base:INFO:Field import=b_grid, Chunks=auto
+WARNING: Casting time data to np.float64
+base:INFO:ofam_fieldset: 0:0:01.07 total: 1.07 seconds.
