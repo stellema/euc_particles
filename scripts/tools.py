@@ -557,9 +557,12 @@ def zone_fieldset(plot=True):
     """Create fieldset or plot zone definitions."""
     # Copy 2D empty OFGAM3 velocity grid.
     d = xr.open_dataset(cfg.ofam/'ocean_u_1981_01.nc')
-    d = d.isel(st_ocean=0, Time=0)
+    d = d.isel(st_ocean=slice(0, 1), Time=slice(0, 1))
     d = d.u.where(np.isnan(d.u), 0)
-    d = d.drop('st_ocean')
+    d = d.rename({'st_ocean': 'sw_ocean'})
+    d.coords['sw_ocean'] = np.array([5.0])
+    # d = d.drop('st_ocean')
+    # d = d.drop('Time')
     eps = 0 if not plot else 0.1  # Add a bit of padding to the plotted lines.
     for n, zone in enumerate(cfg.zones):
         coords = cfg.zones[zone] if type(cfg.zones[zone][0]) == list else [cfg.zones[zone]]
@@ -590,7 +593,7 @@ def zone_fieldset(plot=True):
 
         plt.savefig(cfg.fig/'particle_boundaries.png')
     if not plot:
-        ds = d.to_dataset(name='zone').transpose()
+        ds = d.to_dataset(name='zone').transpose('Time', 'sw_ocean', 'yu_ocean', 'xu_ocean')
         ds.attrs['history'] = 'Created {}.'.format(datetime.now().strftime("%Y-%m-%d"))
         ds.to_netcdf(cfg.data/'OFAM3_zones.nc')
     d.close()
