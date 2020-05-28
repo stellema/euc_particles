@@ -288,11 +288,11 @@ def EUC_particles(fieldset, date_bnds, p_lats, p_lons, p_depths,
 
     # Create particle set.
     pset = EUC_pset(fieldset, zParticle, p_lats, p_lons, p_depths, pset_start, repeatdt)
+    logger.debug('{}:Initial pset size:{}'.format(sim_id.stem, pset.size))
 
     # Output particle file p_name and time steps to save.
     output_file = pset.ParticleFile(cfg.data/sim_id.stem, outputdt=outputdt)
     logger.debug('{}:Temp write dir:{}'.format(sim_id.stem, output_file.tempwritedir_base))
-    logger.debug('{}:Initial pset size:{}'.format(sim_id.stem, pset.size))
 
     logger.info('{}:pset.Kernel(Age)+AdvectionRK4_3D'.format(sim_id.stem))
     kernels = pset.Kernel(Age) + AdvectionRK4_3D
