@@ -595,4 +595,3 @@ def zone_fieldset(plot=True):
         ds.to_netcdf(cfg.data/'OFAM3_zones.nc')
     d.close()
     return
-zone_fieldset(plot=False)
