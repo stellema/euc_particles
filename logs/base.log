@@ -3614,4 +3614,1937 @@
 2020-05-28 06:12:45,011:EUC_particles:DEBUG:sim_198101_198103_v165i:Final pset size:7111
 2020-05-28 06:12:45,021:EUC_particles:INFO:sim_198101_198103_v165i: Completed.
 2020-05-28 06:12:45,807:timed:INFO:EUC_particles: 15:51:50.87 total: 57110.87 seconds.
-2020-05-28 06:12:45,807:timed:INFO:run_EUC: 15:51:52.42 total: 57112.42 seconds.
+2020-05-28 06:12:45,807:timed:INFO:run_EUC: 15:51:52.42 total: 57112.42 seconds.2020-05-28 13:18:23,328:run_EUC:INFO:sim_198101_198103_v331i:Executing: 1981-01-01 to 1981-03-31
+2020-05-28 13:18:23,328:run_EUC:INFO:sim_198101_198103_v331i:Executing: 1981-01-01 to 1981-03-31
+2020-05-28 13:18:23,328:run_EUC:INFO:sim_198101_198103_v331i:Executing: 1981-01-01 to 1981-03-31
+2020-05-28 13:18:23,329:run_EUC:INFO:sim_198101_198103_v331i:Longitudes: 165
+2020-05-28 13:18:23,329:run_EUC:INFO:sim_198101_198103_v331i:Longitudes: 165
+2020-05-28 13:18:23,329:run_EUC:INFO:sim_198101_198103_v331i:Longitudes: 165
+2020-05-28 13:18:23,329:run_EUC:INFO:sim_198101_198103_v331i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 13:18:23,329:run_EUC:INFO:sim_198101_198103_v331i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 13:18:23,329:run_EUC:INFO:sim_198101_198103_v331i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 13:18:23,329:run_EUC:INFO:sim_198101_198103_v331i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 13:18:23,329:run_EUC:INFO:sim_198101_198103_v331i:Runtime: 90 days
+2020-05-28 13:18:23,329:run_EUC:INFO:sim_198101_198103_v331i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 13:18:23,329:run_EUC:INFO:sim_198101_198103_v331i:Timestep dt: 240 mins
+2020-05-28 13:18:23,329:run_EUC:INFO:sim_198101_198103_v331i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 13:18:23,329:run_EUC:INFO:sim_198101_198103_v331i:Output dt: 1 days
+2020-05-28 13:18:23,329:run_EUC:INFO:sim_198101_198103_v331i:Runtime: 90 days
+2020-05-28 13:18:23,329:run_EUC:INFO:sim_198101_198103_v331i:Runtime: 90 days
+2020-05-28 13:18:23,329:run_EUC:INFO:sim_198101_198103_v331i:Time periodic:90 days
+2020-05-28 13:18:23,329:run_EUC:INFO:sim_198101_198103_v331i:Repeat release: 6 days
+2020-05-28 13:18:23,329:run_EUC:INFO:sim_198101_198103_v331i:Timestep dt: 240 mins
+2020-05-28 13:18:23,329:run_EUC:INFO:sim_198101_198103_v331i:Timestep dt: 240 mins
+2020-05-28 13:18:23,329:run_EUC:INFO:sim_198101_198103_v331i:Particles: Total: 11130 :/repeat: 742
+2020-05-28 13:18:23,329:run_EUC:INFO:sim_198101_198103_v331i:Output dt: 1 days
+2020-05-28 13:18:23,329:run_EUC:INFO:sim_198101_198103_v331i:Output dt: 1 days
+2020-05-28 13:18:23,330:run_EUC:INFO:sim_198101_198103_v331i:Time periodic:90 days
+2020-05-28 13:18:23,330:run_EUC:INFO:sim_198101_198103_v331i:Time periodic:90 days
+2020-05-28 13:18:23,330:run_EUC:INFO:sim_198101_198103_v331i:Repeat release: 6 days
+2020-05-28 13:18:23,330:run_EUC:INFO:sim_198101_198103_v331i:Repeat release: 6 days
+2020-05-28 13:18:23,330:run_EUC:INFO:sim_198101_198103_v331i:Particles: Total: 11130 :/repeat: 742
+2020-05-28 13:18:23,330:run_EUC:INFO:sim_198101_198103_v331i:Particles: Total: 11130 :/repeat: 742
+2020-05-28 13:18:25,099:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 13:18:25,099:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 13:18:25,100:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:07:01,517:run_EUC:INFO:sim_198101_198103_v331i:Executing: 1981-01-01 to 1981-03-31
+2020-05-28 14:07:01,518:run_EUC:INFO:sim_198101_198103_v331i:Longitudes: 165
+2020-05-28 14:07:01,518:run_EUC:INFO:sim_198101_198103_v331i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:07:01,518:run_EUC:INFO:sim_198101_198103_v331i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:07:01,518:run_EUC:INFO:sim_198101_198103_v331i:Runtime: 90 days
+2020-05-28 14:07:01,518:run_EUC:INFO:sim_198101_198103_v331i:Timestep dt: 240 mins
+2020-05-28 14:07:01,518:run_EUC:INFO:sim_198101_198103_v331i:Output dt: 1 days
+2020-05-28 14:07:01,518:run_EUC:INFO:sim_198101_198103_v331i:Time periodic:90 days
+2020-05-28 14:07:01,518:run_EUC:INFO:sim_198101_198103_v331i:Repeat release: 6 days
+2020-05-28 14:07:01,518:run_EUC:INFO:sim_198101_198103_v331i:Particles: Total: 11130 :/repeat: 742
+2020-05-28 14:07:01,639:run_EUC:INFO:sim_198101_198103_v331i:Executing: 1981-01-01 to 1981-03-31
+2020-05-28 14:07:01,639:run_EUC:INFO:sim_198101_198103_v331i:Longitudes: 165
+2020-05-28 14:07:01,639:run_EUC:INFO:sim_198101_198103_v331i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:07:01,639:run_EUC:INFO:sim_198101_198103_v331i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:07:01,640:run_EUC:INFO:sim_198101_198103_v331i:Runtime: 90 days
+2020-05-28 14:07:01,640:run_EUC:INFO:sim_198101_198103_v331i:Timestep dt: 240 mins
+2020-05-28 14:07:01,640:run_EUC:INFO:sim_198101_198103_v331i:Output dt: 1 days
+2020-05-28 14:07:01,640:run_EUC:INFO:sim_198101_198103_v331i:Time periodic:90 days
+2020-05-28 14:07:01,640:run_EUC:INFO:sim_198101_198103_v331i:Repeat release: 6 days
+2020-05-28 14:07:01,640:run_EUC:INFO:sim_198101_198103_v331i:Particles: Total: 11130 :/repeat: 742
+2020-05-28 14:07:01,720:run_EUC:INFO:sim_198101_198103_v331i:Executing: 1981-01-01 to 1981-03-31
+2020-05-28 14:07:01,721:run_EUC:INFO:sim_198101_198103_v331i:Longitudes: 165
+2020-05-28 14:07:01,721:run_EUC:INFO:sim_198101_198103_v331i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:07:01,721:run_EUC:INFO:sim_198101_198103_v331i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:07:01,721:run_EUC:INFO:sim_198101_198103_v331i:Runtime: 90 days
+2020-05-28 14:07:01,722:run_EUC:INFO:sim_198101_198103_v331i:Timestep dt: 240 mins
+2020-05-28 14:07:01,722:run_EUC:INFO:sim_198101_198103_v331i:Output dt: 1 days
+2020-05-28 14:07:01,722:run_EUC:INFO:sim_198101_198103_v331i:Time periodic:90 days
+2020-05-28 14:07:01,722:run_EUC:INFO:sim_198101_198103_v331i:Repeat release: 6 days
+2020-05-28 14:07:01,722:run_EUC:INFO:sim_198101_198103_v331i:Particles: Total: 11130 :/repeat: 742
+2020-05-28 14:07:04,052:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:07:04,056:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:07:04,065:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:08:58,272:EUC_particles:DEBUG:sim_198101_198103_v331i:Initial pset size:238
+2020-05-28 14:08:59,252:EUC_particles:DEBUG:sim_198101_198103_v331i:Initial pset size:252
+2020-05-28 14:08:59,252:EUC_particles:DEBUG:sim_198101_198103_v331i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-STQDVSVM
+2020-05-28 14:08:59,252:EUC_particles:DEBUG:sim_198101_198103_v331i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-STQDVSVM
+2020-05-28 14:08:59,252:EUC_particles:INFO:sim_198101_198103_v331i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:08:59,252:EUC_particles:INFO:sim_198101_198103_v331i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:08:59,950:EUC_particles:DEBUG:sim_198101_198103_v331i: Excecute particle set.
+2020-05-28 14:08:59,950:EUC_particles:DEBUG:sim_198101_198103_v331i: Excecute particle set.
+2020-05-28 14:09:04,647:EUC_particles:DEBUG:sim_198101_198103_v331i:Initial pset size:252
+2020-05-28 14:09:04,648:EUC_particles:DEBUG:sim_198101_198103_v331i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-STQDVSVM
+2020-05-28 14:09:04,648:EUC_particles:INFO:sim_198101_198103_v331i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:09:04,893:EUC_particles:DEBUG:sim_198101_198103_v331i: Excecute particle set.
+2020-05-28 14:13:28,012:run_EUC:INFO:sim_198101_198103_v9i:Executing: 1981-01-01 to 1981-03-31
+2020-05-28 14:13:28,012:run_EUC:INFO:sim_198101_198103_v9i:Executing: 1981-01-01 to 1981-03-31
+2020-05-28 14:13:28,012:run_EUC:INFO:sim_198101_198103_v9i:Executing: 1981-01-01 to 1981-03-31
+2020-05-28 14:13:28,012:run_EUC:INFO:sim_198101_198103_v9i:Executing: 1981-01-01 to 1981-03-31
+2020-05-28 14:13:28,012:run_EUC:INFO:sim_198101_198103_v9i:Executing: 1981-01-01 to 1981-03-31
+2020-05-28 14:13:28,012:run_EUC:INFO:sim_198101_198103_v9i:Executing: 1981-01-01 to 1981-03-31
+2020-05-28 14:13:28,012:run_EUC:INFO:sim_198101_198103_v9i:Executing: 1981-01-01 to 1981-03-31
+2020-05-28 14:13:28,012:run_EUC:INFO:sim_198101_198103_v9i:Executing: 1981-01-01 to 1981-03-31
+2020-05-28 14:13:28,012:run_EUC:INFO:sim_198101_198103_v9i:Executing: 1981-01-01 to 1981-03-31
+2020-05-28 14:13:28,013:run_EUC:INFO:sim_198101_198103_v9i:Longitudes: 165
+2020-05-28 14:13:28,013:run_EUC:INFO:sim_198101_198103_v9i:Longitudes: 165
+2020-05-28 14:13:28,013:run_EUC:INFO:sim_198101_198103_v9i:Longitudes: 165
+2020-05-28 14:13:28,013:run_EUC:INFO:sim_198101_198103_v9i:Longitudes: 165
+2020-05-28 14:13:28,013:run_EUC:INFO:sim_198101_198103_v9i:Longitudes: 165
+2020-05-28 14:13:28,013:run_EUC:INFO:sim_198101_198103_v9i:Longitudes: 165
+2020-05-28 14:13:28,013:run_EUC:INFO:sim_198101_198103_v9i:Longitudes: 165
+2020-05-28 14:13:28,013:run_EUC:INFO:sim_198101_198103_v9i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:13:28,013:run_EUC:INFO:sim_198101_198103_v9i:Longitudes: 165
+2020-05-28 14:13:28,013:run_EUC:INFO:sim_198101_198103_v9i:Longitudes: 165
+2020-05-28 14:13:28,013:run_EUC:INFO:sim_198101_198103_v9i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:13:28,013:run_EUC:INFO:sim_198101_198103_v9i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:13:28,013:run_EUC:INFO:sim_198101_198103_v9i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:13:28,013:run_EUC:INFO:sim_198101_198103_v9i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:13:28,013:run_EUC:INFO:sim_198101_198103_v9i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:13:28,013:run_EUC:INFO:sim_198101_198103_v9i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:13:28,013:run_EUC:INFO:sim_198101_198103_v9i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:13:28,013:run_EUC:INFO:sim_198101_198103_v9i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:13:28,013:run_EUC:INFO:sim_198101_198103_v9i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:13:28,013:run_EUC:INFO:sim_198101_198103_v9i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:13:28,013:run_EUC:INFO:sim_198101_198103_v9i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:13:28,013:run_EUC:INFO:sim_198101_198103_v9i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:13:28,013:run_EUC:INFO:sim_198101_198103_v9i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:13:28,013:run_EUC:INFO:sim_198101_198103_v9i:Runtime: 90 days
+2020-05-28 14:13:28,013:run_EUC:INFO:sim_198101_198103_v9i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:13:28,013:run_EUC:INFO:sim_198101_198103_v9i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:13:28,013:run_EUC:INFO:sim_198101_198103_v9i:Runtime: 90 days
+2020-05-28 14:13:28,013:run_EUC:INFO:sim_198101_198103_v9i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:13:28,013:run_EUC:INFO:sim_198101_198103_v9i:Runtime: 90 days
+2020-05-28 14:13:28,013:run_EUC:INFO:sim_198101_198103_v9i:Runtime: 90 days
+2020-05-28 14:13:28,013:run_EUC:INFO:sim_198101_198103_v9i:Runtime: 90 days
+2020-05-28 14:13:28,013:run_EUC:INFO:sim_198101_198103_v9i:Timestep dt: 240 mins
+2020-05-28 14:13:28,014:run_EUC:INFO:sim_198101_198103_v9i:Runtime: 90 days
+2020-05-28 14:13:28,013:run_EUC:INFO:sim_198101_198103_v9i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:13:28,014:run_EUC:INFO:sim_198101_198103_v9i:Runtime: 90 days
+2020-05-28 14:13:28,014:run_EUC:INFO:sim_198101_198103_v9i:Timestep dt: 240 mins
+2020-05-28 14:13:28,014:run_EUC:INFO:sim_198101_198103_v9i:Runtime: 90 days
+2020-05-28 14:13:28,014:run_EUC:INFO:sim_198101_198103_v9i:Timestep dt: 240 mins
+2020-05-28 14:13:28,014:run_EUC:INFO:sim_198101_198103_v9i:Timestep dt: 240 mins
+2020-05-28 14:13:28,014:run_EUC:INFO:sim_198101_198103_v9i:Timestep dt: 240 mins
+2020-05-28 14:13:28,014:run_EUC:INFO:sim_198101_198103_v9i:Output dt: 1 days
+2020-05-28 14:13:28,014:run_EUC:INFO:sim_198101_198103_v9i:Timestep dt: 240 mins
+2020-05-28 14:13:28,014:run_EUC:INFO:sim_198101_198103_v9i:Output dt: 1 days
+2020-05-28 14:13:28,014:run_EUC:INFO:sim_198101_198103_v9i:Timestep dt: 240 mins
+2020-05-28 14:13:28,014:run_EUC:INFO:sim_198101_198103_v9i:Runtime: 90 days
+2020-05-28 14:13:28,014:run_EUC:INFO:sim_198101_198103_v9i:Timestep dt: 240 mins
+2020-05-28 14:13:28,014:run_EUC:INFO:sim_198101_198103_v9i:Output dt: 1 days
+2020-05-28 14:13:28,014:run_EUC:INFO:sim_198101_198103_v9i:Output dt: 1 days
+2020-05-28 14:13:28,014:run_EUC:INFO:sim_198101_198103_v9i:Output dt: 1 days
+2020-05-28 14:13:28,014:run_EUC:INFO:sim_198101_198103_v9i:Time periodic:90 days
+2020-05-28 14:13:28,014:run_EUC:INFO:sim_198101_198103_v9i:Time periodic:90 days
+2020-05-28 14:13:28,014:run_EUC:INFO:sim_198101_198103_v9i:Output dt: 1 days
+2020-05-28 14:13:28,014:run_EUC:INFO:sim_198101_198103_v9i:Output dt: 1 days
+2020-05-28 14:13:28,014:run_EUC:INFO:sim_198101_198103_v9i:Output dt: 1 days
+2020-05-28 14:13:28,014:run_EUC:INFO:sim_198101_198103_v9i:Timestep dt: 240 mins
+2020-05-28 14:13:28,014:run_EUC:INFO:sim_198101_198103_v9i:Time periodic:90 days
+2020-05-28 14:13:28,014:run_EUC:INFO:sim_198101_198103_v9i:Time periodic:90 days
+2020-05-28 14:13:28,014:run_EUC:INFO:sim_198101_198103_v9i:Time periodic:90 days
+2020-05-28 14:13:28,014:run_EUC:INFO:sim_198101_198103_v9i:Repeat release: 6 days
+2020-05-28 14:13:28,014:run_EUC:INFO:sim_198101_198103_v9i:Repeat release: 6 days
+2020-05-28 14:13:28,014:run_EUC:INFO:sim_198101_198103_v9i:Time periodic:90 days
+2020-05-28 14:13:28,014:run_EUC:INFO:sim_198101_198103_v9i:Time periodic:90 days
+2020-05-28 14:13:28,014:run_EUC:INFO:sim_198101_198103_v9i:Time periodic:90 days
+2020-05-28 14:13:28,014:run_EUC:INFO:sim_198101_198103_v9i:Repeat release: 6 days
+2020-05-28 14:13:28,014:run_EUC:INFO:sim_198101_198103_v9i:Repeat release: 6 days
+2020-05-28 14:13:28,014:run_EUC:INFO:sim_198101_198103_v9i:Output dt: 1 days
+2020-05-28 14:13:28,014:run_EUC:INFO:sim_198101_198103_v9i:Repeat release: 6 days
+2020-05-28 14:13:28,014:run_EUC:INFO:sim_198101_198103_v9i:Particles: Total: 11130 :/repeat: 742
+2020-05-28 14:13:28,014:run_EUC:INFO:sim_198101_198103_v9i:Particles: Total: 11130 :/repeat: 742
+2020-05-28 14:13:28,014:run_EUC:INFO:sim_198101_198103_v9i:Repeat release: 6 days
+2020-05-28 14:13:28,014:run_EUC:INFO:sim_198101_198103_v9i:Repeat release: 6 days
+2020-05-28 14:13:28,014:run_EUC:INFO:sim_198101_198103_v9i:Repeat release: 6 days
+2020-05-28 14:13:28,014:run_EUC:INFO:sim_198101_198103_v9i:Particles: Total: 11130 :/repeat: 742
+2020-05-28 14:13:28,014:run_EUC:INFO:sim_198101_198103_v9i:Particles: Total: 11130 :/repeat: 742
+2020-05-28 14:13:28,014:run_EUC:INFO:sim_198101_198103_v9i:Particles: Total: 11130 :/repeat: 742
+2020-05-28 14:13:28,014:run_EUC:INFO:sim_198101_198103_v9i:Time periodic:90 days
+2020-05-28 14:13:28,014:run_EUC:INFO:sim_198101_198103_v9i:Particles: Total: 11130 :/repeat: 742
+2020-05-28 14:13:28,014:run_EUC:INFO:sim_198101_198103_v9i:Particles: Total: 11130 :/repeat: 742
+2020-05-28 14:13:28,014:run_EUC:INFO:sim_198101_198103_v9i:Particles: Total: 11130 :/repeat: 742
+2020-05-28 14:13:28,014:run_EUC:INFO:sim_198101_198103_v9i:Repeat release: 6 days
+2020-05-28 14:13:28,014:run_EUC:INFO:sim_198101_198103_v9i:Particles: Total: 11130 :/repeat: 742
+2020-05-28 14:13:28,333:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:13:28,333:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:13:28,334:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:13:28,334:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:13:28,334:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:13:28,335:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:13:28,335:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:13:28,335:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:13:28,335:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:13:38,643:run_EUC:INFO:sim_198101_198103_v14i:Executing: 1981-01-01 to 1981-03-31
+2020-05-28 14:13:38,643:run_EUC:INFO:sim_198101_198103_v14i:Executing: 1981-01-01 to 1981-03-31
+2020-05-28 14:13:38,643:run_EUC:INFO:sim_198101_198103_v14i:Executing: 1981-01-01 to 1981-03-31
+2020-05-28 14:13:38,643:run_EUC:INFO:sim_198101_198103_v14i:Executing: 1981-01-01 to 1981-03-31
+2020-05-28 14:13:38,643:run_EUC:INFO:sim_198101_198103_v14i:Executing: 1981-01-01 to 1981-03-31
+2020-05-28 14:13:38,643:run_EUC:INFO:sim_198101_198103_v14i:Executing: 1981-01-01 to 1981-03-31
+2020-05-28 14:13:38,643:run_EUC:INFO:sim_198101_198103_v14i:Executing: 1981-01-01 to 1981-03-31
+2020-05-28 14:13:38,643:run_EUC:INFO:sim_198101_198103_v14i:Executing: 1981-01-01 to 1981-03-31
+2020-05-28 14:13:38,643:run_EUC:INFO:sim_198101_198103_v14i:Executing: 1981-01-01 to 1981-03-31
+2020-05-28 14:13:38,643:run_EUC:INFO:sim_198101_198103_v14i:Executing: 1981-01-01 to 1981-03-31
+2020-05-28 14:13:38,643:run_EUC:INFO:sim_198101_198103_v14i:Executing: 1981-01-01 to 1981-03-31
+2020-05-28 14:13:38,643:run_EUC:INFO:sim_198101_198103_v14i:Executing: 1981-01-01 to 1981-03-31
+2020-05-28 14:13:38,643:run_EUC:INFO:sim_198101_198103_v14i:Executing: 1981-01-01 to 1981-03-31
+2020-05-28 14:13:38,643:run_EUC:INFO:sim_198101_198103_v14i:Executing: 1981-01-01 to 1981-03-31
+2020-05-28 14:13:38,644:run_EUC:INFO:sim_198101_198103_v14i:Longitudes: 165
+2020-05-28 14:13:38,644:run_EUC:INFO:sim_198101_198103_v14i:Longitudes: 165
+2020-05-28 14:13:38,644:run_EUC:INFO:sim_198101_198103_v14i:Longitudes: 165
+2020-05-28 14:13:38,644:run_EUC:INFO:sim_198101_198103_v14i:Longitudes: 165
+2020-05-28 14:13:38,644:run_EUC:INFO:sim_198101_198103_v14i:Longitudes: 165
+2020-05-28 14:13:38,644:run_EUC:INFO:sim_198101_198103_v14i:Longitudes: 165
+2020-05-28 14:13:38,644:run_EUC:INFO:sim_198101_198103_v14i:Longitudes: 165
+2020-05-28 14:13:38,644:run_EUC:INFO:sim_198101_198103_v14i:Longitudes: 165
+2020-05-28 14:13:38,644:run_EUC:INFO:sim_198101_198103_v14i:Longitudes: 165
+2020-05-28 14:13:38,644:run_EUC:INFO:sim_198101_198103_v14i:Longitudes: 165
+2020-05-28 14:13:38,644:run_EUC:INFO:sim_198101_198103_v14i:Longitudes: 165
+2020-05-28 14:13:38,644:run_EUC:INFO:sim_198101_198103_v14i:Longitudes: 165
+2020-05-28 14:13:38,644:run_EUC:INFO:sim_198101_198103_v14i:Longitudes: 165
+2020-05-28 14:13:38,644:run_EUC:INFO:sim_198101_198103_v14i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:13:38,644:run_EUC:INFO:sim_198101_198103_v14i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:13:38,644:run_EUC:INFO:sim_198101_198103_v14i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:13:38,644:run_EUC:INFO:sim_198101_198103_v14i:Longitudes: 165
+2020-05-28 14:13:38,644:run_EUC:INFO:sim_198101_198103_v14i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:13:38,644:run_EUC:INFO:sim_198101_198103_v14i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:13:38,644:run_EUC:INFO:sim_198101_198103_v14i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:13:38,644:run_EUC:INFO:sim_198101_198103_v14i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:13:38,644:run_EUC:INFO:sim_198101_198103_v14i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:13:38,644:run_EUC:INFO:sim_198101_198103_v14i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:13:38,644:run_EUC:INFO:sim_198101_198103_v14i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:13:38,644:run_EUC:INFO:sim_198101_198103_v14i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:13:38,644:run_EUC:INFO:sim_198101_198103_v14i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:13:38,644:run_EUC:INFO:sim_198101_198103_v14i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:13:38,644:run_EUC:INFO:sim_198101_198103_v14i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:13:38,644:run_EUC:INFO:sim_198101_198103_v14i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:13:38,644:run_EUC:INFO:sim_198101_198103_v14i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:13:38,644:run_EUC:INFO:sim_198101_198103_v14i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:13:38,644:run_EUC:INFO:sim_198101_198103_v14i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:13:38,644:run_EUC:INFO:sim_198101_198103_v14i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:13:38,644:run_EUC:INFO:sim_198101_198103_v14i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:13:38,644:run_EUC:INFO:sim_198101_198103_v14i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:13:38,644:run_EUC:INFO:sim_198101_198103_v14i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:13:38,644:run_EUC:INFO:sim_198101_198103_v14i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:13:38,644:run_EUC:INFO:sim_198101_198103_v14i:Runtime: 90 days
+2020-05-28 14:13:38,644:run_EUC:INFO:sim_198101_198103_v14i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:13:38,644:run_EUC:INFO:sim_198101_198103_v14i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:13:38,644:run_EUC:INFO:sim_198101_198103_v14i:Runtime: 90 days
+2020-05-28 14:13:38,644:run_EUC:INFO:sim_198101_198103_v14i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:13:38,644:run_EUC:INFO:sim_198101_198103_v14i:Runtime: 90 days
+2020-05-28 14:13:38,644:run_EUC:INFO:sim_198101_198103_v14i:Runtime: 90 days
+2020-05-28 14:13:38,644:run_EUC:INFO:sim_198101_198103_v14i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:13:38,644:run_EUC:INFO:sim_198101_198103_v14i:Runtime: 90 days
+2020-05-28 14:13:38,644:run_EUC:INFO:sim_198101_198103_v14i:Runtime: 90 days
+2020-05-28 14:13:38,644:run_EUC:INFO:sim_198101_198103_v14i:Runtime: 90 days
+2020-05-28 14:13:38,644:run_EUC:INFO:sim_198101_198103_v14i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:13:38,644:run_EUC:INFO:sim_198101_198103_v14i:Runtime: 90 days
+2020-05-28 14:13:38,644:run_EUC:INFO:sim_198101_198103_v14i:Runtime: 90 days
+2020-05-28 14:13:38,644:run_EUC:INFO:sim_198101_198103_v14i:Timestep dt: 240 mins
+2020-05-28 14:13:38,644:run_EUC:INFO:sim_198101_198103_v14i:Runtime: 90 days
+2020-05-28 14:13:38,645:run_EUC:INFO:sim_198101_198103_v14i:Runtime: 90 days
+2020-05-28 14:13:38,645:run_EUC:INFO:sim_198101_198103_v14i:Timestep dt: 240 mins
+2020-05-28 14:13:38,645:run_EUC:INFO:sim_198101_198103_v14i:Timestep dt: 240 mins
+2020-05-28 14:13:38,645:run_EUC:INFO:sim_198101_198103_v14i:Timestep dt: 240 mins
+2020-05-28 14:13:38,645:run_EUC:INFO:sim_198101_198103_v14i:Runtime: 90 days
+2020-05-28 14:13:38,645:run_EUC:INFO:sim_198101_198103_v14i:Timestep dt: 240 mins
+2020-05-28 14:13:38,645:run_EUC:INFO:sim_198101_198103_v14i:Runtime: 90 days
+2020-05-28 14:13:38,645:run_EUC:INFO:sim_198101_198103_v14i:Timestep dt: 240 mins
+2020-05-28 14:13:38,645:run_EUC:INFO:sim_198101_198103_v14i:Timestep dt: 240 mins
+2020-05-28 14:13:38,645:run_EUC:INFO:sim_198101_198103_v14i:Runtime: 90 days
+2020-05-28 14:13:38,645:run_EUC:INFO:sim_198101_198103_v14i:Timestep dt: 240 mins
+2020-05-28 14:13:38,645:run_EUC:INFO:sim_198101_198103_v14i:Timestep dt: 240 mins
+2020-05-28 14:13:38,645:run_EUC:INFO:sim_198101_198103_v14i:Output dt: 1 days
+2020-05-28 14:13:38,645:run_EUC:INFO:sim_198101_198103_v14i:Timestep dt: 240 mins
+2020-05-28 14:13:38,645:run_EUC:INFO:sim_198101_198103_v14i:Output dt: 1 days
+2020-05-28 14:13:38,645:run_EUC:INFO:sim_198101_198103_v14i:Timestep dt: 240 mins
+2020-05-28 14:13:38,645:run_EUC:INFO:sim_198101_198103_v14i:Output dt: 1 days
+2020-05-28 14:13:38,645:run_EUC:INFO:sim_198101_198103_v14i:Output dt: 1 days
+2020-05-28 14:13:38,645:run_EUC:INFO:sim_198101_198103_v14i:Output dt: 1 days
+2020-05-28 14:13:38,645:run_EUC:INFO:sim_198101_198103_v14i:Timestep dt: 240 mins
+2020-05-28 14:13:38,645:run_EUC:INFO:sim_198101_198103_v14i:Timestep dt: 240 mins
+2020-05-28 14:13:38,645:run_EUC:INFO:sim_198101_198103_v14i:Output dt: 1 days
+2020-05-28 14:13:38,645:run_EUC:INFO:sim_198101_198103_v14i:Output dt: 1 days
+2020-05-28 14:13:38,645:run_EUC:INFO:sim_198101_198103_v14i:Timestep dt: 240 mins
+2020-05-28 14:13:38,645:run_EUC:INFO:sim_198101_198103_v14i:Output dt: 1 days
+2020-05-28 14:13:38,645:run_EUC:INFO:sim_198101_198103_v14i:Output dt: 1 days
+2020-05-28 14:13:38,645:run_EUC:INFO:sim_198101_198103_v14i:Time periodic:90 days
+2020-05-28 14:13:38,645:run_EUC:INFO:sim_198101_198103_v14i:Time periodic:90 days
+2020-05-28 14:13:38,645:run_EUC:INFO:sim_198101_198103_v14i:Output dt: 1 days
+2020-05-28 14:13:38,645:run_EUC:INFO:sim_198101_198103_v14i:Time periodic:90 days
+2020-05-28 14:13:38,645:run_EUC:INFO:sim_198101_198103_v14i:Output dt: 1 days
+2020-05-28 14:13:38,645:run_EUC:INFO:sim_198101_198103_v14i:Time periodic:90 days
+2020-05-28 14:13:38,645:run_EUC:INFO:sim_198101_198103_v14i:Time periodic:90 days
+2020-05-28 14:13:38,645:run_EUC:INFO:sim_198101_198103_v14i:Output dt: 1 days
+2020-05-28 14:13:38,645:run_EUC:INFO:sim_198101_198103_v14i:Time periodic:90 days
+2020-05-28 14:13:38,645:run_EUC:INFO:sim_198101_198103_v14i:Output dt: 1 days
+2020-05-28 14:13:38,645:run_EUC:INFO:sim_198101_198103_v14i:Time periodic:90 days
+2020-05-28 14:13:38,645:run_EUC:INFO:sim_198101_198103_v14i:Output dt: 1 days
+2020-05-28 14:13:38,645:run_EUC:INFO:sim_198101_198103_v14i:Time periodic:90 days
+2020-05-28 14:13:38,645:run_EUC:INFO:sim_198101_198103_v14i:Time periodic:90 days
+2020-05-28 14:13:38,645:run_EUC:INFO:sim_198101_198103_v14i:Repeat release: 6 days
+2020-05-28 14:13:38,645:run_EUC:INFO:sim_198101_198103_v14i:Repeat release: 6 days
+2020-05-28 14:13:38,645:run_EUC:INFO:sim_198101_198103_v14i:Repeat release: 6 days
+2020-05-28 14:13:38,645:run_EUC:INFO:sim_198101_198103_v14i:Time periodic:90 days
+2020-05-28 14:13:38,645:run_EUC:INFO:sim_198101_198103_v14i:Repeat release: 6 days
+2020-05-28 14:13:38,645:run_EUC:INFO:sim_198101_198103_v14i:Time periodic:90 days
+2020-05-28 14:13:38,645:run_EUC:INFO:sim_198101_198103_v14i:Repeat release: 6 days
+2020-05-28 14:13:38,645:run_EUC:INFO:sim_198101_198103_v14i:Repeat release: 6 days
+2020-05-28 14:13:38,645:run_EUC:INFO:sim_198101_198103_v14i:Time periodic:90 days
+2020-05-28 14:13:38,645:run_EUC:INFO:sim_198101_198103_v14i:Time periodic:90 days
+2020-05-28 14:13:38,645:run_EUC:INFO:sim_198101_198103_v14i:Repeat release: 6 days
+2020-05-28 14:13:38,645:run_EUC:INFO:sim_198101_198103_v14i:Time periodic:90 days
+2020-05-28 14:13:38,645:run_EUC:INFO:sim_198101_198103_v14i:Repeat release: 6 days
+2020-05-28 14:13:38,645:run_EUC:INFO:sim_198101_198103_v14i:Repeat release: 6 days
+2020-05-28 14:13:38,645:run_EUC:INFO:sim_198101_198103_v14i:Particles: Total: 11130 :/repeat: 742
+2020-05-28 14:13:38,645:run_EUC:INFO:sim_198101_198103_v14i:Particles: Total: 11130 :/repeat: 742
+2020-05-28 14:13:38,645:run_EUC:INFO:sim_198101_198103_v14i:Particles: Total: 11130 :/repeat: 742
+2020-05-28 14:13:38,645:run_EUC:INFO:sim_198101_198103_v14i:Particles: Total: 11130 :/repeat: 742
+2020-05-28 14:13:38,645:run_EUC:INFO:sim_198101_198103_v14i:Repeat release: 6 days
+2020-05-28 14:13:38,645:run_EUC:INFO:sim_198101_198103_v14i:Particles: Total: 11130 :/repeat: 742
+2020-05-28 14:13:38,645:run_EUC:INFO:sim_198101_198103_v14i:Repeat release: 6 days
+2020-05-28 14:13:38,645:run_EUC:INFO:sim_198101_198103_v14i:Particles: Total: 11130 :/repeat: 742
+2020-05-28 14:13:38,645:run_EUC:INFO:sim_198101_198103_v14i:Repeat release: 6 days
+2020-05-28 14:13:38,645:run_EUC:INFO:sim_198101_198103_v14i:Repeat release: 6 days
+2020-05-28 14:13:38,645:run_EUC:INFO:sim_198101_198103_v14i:Particles: Total: 11130 :/repeat: 742
+2020-05-28 14:13:38,645:run_EUC:INFO:sim_198101_198103_v14i:Repeat release: 6 days
+2020-05-28 14:13:38,645:run_EUC:INFO:sim_198101_198103_v14i:Particles: Total: 11130 :/repeat: 742
+2020-05-28 14:13:38,645:run_EUC:INFO:sim_198101_198103_v14i:Particles: Total: 11130 :/repeat: 742
+2020-05-28 14:13:38,646:run_EUC:INFO:sim_198101_198103_v14i:Particles: Total: 11130 :/repeat: 742
+2020-05-28 14:13:38,646:run_EUC:INFO:sim_198101_198103_v14i:Particles: Total: 11130 :/repeat: 742
+2020-05-28 14:13:38,646:run_EUC:INFO:sim_198101_198103_v14i:Particles: Total: 11130 :/repeat: 742
+2020-05-28 14:13:38,646:run_EUC:INFO:sim_198101_198103_v14i:Particles: Total: 11130 :/repeat: 742
+2020-05-28 14:13:38,646:run_EUC:INFO:sim_198101_198103_v14i:Particles: Total: 11130 :/repeat: 742
+2020-05-28 14:13:38,953:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:13:38,952:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:13:38,953:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:13:38,953:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:13:38,953:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:13:38,953:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:13:38,953:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:13:38,953:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:13:38,953:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:13:38,954:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:13:38,954:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:13:38,955:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:13:38,955:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:13:38,955:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:13:57,575:EUC_particles:DEBUG:sim_198101_198103_v14i:Initial pset size:28
+2020-05-28 14:14:07,281:EUC_particles:DEBUG:sim_198101_198103_v14i:Initial pset size:42
+2020-05-28 14:14:07,469:EUC_particles:DEBUG:sim_198101_198103_v14i:Initial pset size:42
+2020-05-28 14:14:14,496:EUC_particles:DEBUG:sim_198101_198103_v14i:Initial pset size:56
+2020-05-28 14:14:14,684:EUC_particles:DEBUG:sim_198101_198103_v14i:Initial pset size:56
+2020-05-28 14:14:15,275:EUC_particles:DEBUG:sim_198101_198103_v14i:Initial pset size:56
+2020-05-28 14:14:17,392:EUC_particles:DEBUG:sim_198101_198103_v14i:Initial pset size:56
+2020-05-28 14:14:18,233:EUC_particles:DEBUG:sim_198101_198103_v14i:Initial pset size:56
+2020-05-28 14:14:18,301:EUC_particles:DEBUG:sim_198101_198103_v14i:Initial pset size:56
+2020-05-28 14:14:18,308:EUC_particles:DEBUG:sim_198101_198103_v14i:Initial pset size:56
+2020-05-28 14:14:18,328:EUC_particles:DEBUG:sim_198101_198103_v14i:Initial pset size:56
+2020-05-28 14:14:18,329:EUC_particles:DEBUG:sim_198101_198103_v14i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-EPMUFQUR
+2020-05-28 14:14:18,329:EUC_particles:DEBUG:sim_198101_198103_v14i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-EPMUFQUR
+2020-05-28 14:14:18,329:EUC_particles:DEBUG:sim_198101_198103_v14i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-EPMUFQUR
+2020-05-28 14:14:18,329:EUC_particles:DEBUG:sim_198101_198103_v14i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-EPMUFQUR
+2020-05-28 14:14:18,329:EUC_particles:DEBUG:sim_198101_198103_v14i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-EPMUFQUR
+2020-05-28 14:14:18,329:EUC_particles:INFO:sim_198101_198103_v14i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:14:18,329:EUC_particles:DEBUG:sim_198101_198103_v14i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-EPMUFQUR
+2020-05-28 14:14:18,329:EUC_particles:INFO:sim_198101_198103_v14i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:14:18,329:EUC_particles:DEBUG:sim_198101_198103_v14i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-EPMUFQUR
+2020-05-28 14:14:18,329:EUC_particles:INFO:sim_198101_198103_v14i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:14:18,329:EUC_particles:INFO:sim_198101_198103_v14i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:14:18,329:EUC_particles:INFO:sim_198101_198103_v14i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:14:18,329:EUC_particles:INFO:sim_198101_198103_v14i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:14:18,329:EUC_particles:DEBUG:sim_198101_198103_v14i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-EPMUFQUR
+2020-05-28 14:14:18,329:EUC_particles:INFO:sim_198101_198103_v14i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:14:18,329:EUC_particles:INFO:sim_198101_198103_v14i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:14:18,329:EUC_particles:DEBUG:sim_198101_198103_v14i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-EPMUFQUR
+2020-05-28 14:14:18,329:EUC_particles:INFO:sim_198101_198103_v14i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:14:18,434:EUC_particles:DEBUG:sim_198101_198103_v14i:Initial pset size:56
+2020-05-28 14:14:18,434:EUC_particles:DEBUG:sim_198101_198103_v14i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-EPMUFQUR
+2020-05-28 14:14:18,435:EUC_particles:INFO:sim_198101_198103_v14i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:14:18,435:EUC_particles:DEBUG:sim_198101_198103_v14i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-EPMUFQUR
+2020-05-28 14:14:18,435:EUC_particles:INFO:sim_198101_198103_v14i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:14:18,540:EUC_particles:DEBUG:sim_198101_198103_v14i:Initial pset size:56
+2020-05-28 14:14:18,540:EUC_particles:DEBUG:sim_198101_198103_v14i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-EPMUFQUR
+2020-05-28 14:14:18,540:EUC_particles:INFO:sim_198101_198103_v14i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:14:18,750:EUC_particles:DEBUG:sim_198101_198103_v14i: Excecute particle set.
+2020-05-28 14:14:18,750:EUC_particles:DEBUG:sim_198101_198103_v14i: Excecute particle set.
+2020-05-28 14:14:18,750:EUC_particles:DEBUG:sim_198101_198103_v14i: Excecute particle set.
+2020-05-28 14:14:18,750:EUC_particles:DEBUG:sim_198101_198103_v14i: Excecute particle set.
+2020-05-28 14:14:18,750:EUC_particles:DEBUG:sim_198101_198103_v14i: Excecute particle set.
+2020-05-28 14:14:18,751:EUC_particles:DEBUG:sim_198101_198103_v14i: Excecute particle set.
+2020-05-28 14:14:18,752:EUC_particles:DEBUG:sim_198101_198103_v14i: Excecute particle set.
+2020-05-28 14:14:18,752:EUC_particles:DEBUG:sim_198101_198103_v14i: Excecute particle set.
+2020-05-28 14:14:18,752:EUC_particles:DEBUG:sim_198101_198103_v14i: Excecute particle set.
+2020-05-28 14:14:18,815:EUC_particles:DEBUG:sim_198101_198103_v14i: Excecute particle set.
+2020-05-28 14:14:18,815:EUC_particles:DEBUG:sim_198101_198103_v14i: Excecute particle set.
+2020-05-28 14:14:18,883:EUC_particles:DEBUG:sim_198101_198103_v14i: Excecute particle set.
+2020-05-28 14:14:24,192:EUC_particles:DEBUG:sim_198101_198103_v14i:Initial pset size:70
+2020-05-28 14:14:24,192:EUC_particles:DEBUG:sim_198101_198103_v14i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-EPMUFQUR
+2020-05-28 14:14:24,192:EUC_particles:INFO:sim_198101_198103_v14i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:14:24,192:EUC_particles:DEBUG:sim_198101_198103_v14i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-EPMUFQUR
+2020-05-28 14:14:24,193:EUC_particles:INFO:sim_198101_198103_v14i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:14:24,570:EUC_particles:DEBUG:sim_198101_198103_v14i: Excecute particle set.
+2020-05-28 14:14:24,570:EUC_particles:DEBUG:sim_198101_198103_v14i: Excecute particle set.
+2020-05-28 14:15:12,885:EUC_particles:DEBUG:sim_198101_198103_v9i:Initial pset size:70
+2020-05-28 14:15:13,850:EUC_particles:DEBUG:sim_198101_198103_v9i:Initial pset size:70
+2020-05-28 14:15:13,889:EUC_particles:DEBUG:sim_198101_198103_v9i:Initial pset size:70
+2020-05-28 14:15:28,119:EUC_particles:DEBUG:sim_198101_198103_v9i:Initial pset size:84
+2020-05-28 14:15:28,451:EUC_particles:DEBUG:sim_198101_198103_v9i:Initial pset size:84
+2020-05-28 14:15:28,505:EUC_particles:DEBUG:sim_198101_198103_v9i:Initial pset size:84
+2020-05-28 14:15:28,826:EUC_particles:DEBUG:sim_198101_198103_v9i:Initial pset size:84
+2020-05-28 14:15:28,826:EUC_particles:DEBUG:sim_198101_198103_v9i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-CGUZIUWF
+2020-05-28 14:15:28,826:EUC_particles:DEBUG:sim_198101_198103_v9i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-CGUZIUWF
+2020-05-28 14:15:28,826:EUC_particles:DEBUG:sim_198101_198103_v9i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-CGUZIUWF
+2020-05-28 14:15:28,826:EUC_particles:DEBUG:sim_198101_198103_v9i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-CGUZIUWF
+2020-05-28 14:15:28,826:EUC_particles:DEBUG:sim_198101_198103_v9i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-CGUZIUWF
+2020-05-28 14:15:28,826:EUC_particles:DEBUG:sim_198101_198103_v9i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-CGUZIUWF
+2020-05-28 14:15:28,827:EUC_particles:INFO:sim_198101_198103_v9i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:15:28,827:EUC_particles:INFO:sim_198101_198103_v9i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:15:28,827:EUC_particles:INFO:sim_198101_198103_v9i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:15:28,827:EUC_particles:INFO:sim_198101_198103_v9i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:15:28,827:EUC_particles:INFO:sim_198101_198103_v9i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:15:28,827:EUC_particles:INFO:sim_198101_198103_v9i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:15:29,247:EUC_particles:DEBUG:sim_198101_198103_v9i: Excecute particle set.
+2020-05-28 14:15:29,247:EUC_particles:DEBUG:sim_198101_198103_v9i: Excecute particle set.
+2020-05-28 14:15:29,247:EUC_particles:DEBUG:sim_198101_198103_v9i: Excecute particle set.
+2020-05-28 14:15:29,304:EUC_particles:DEBUG:sim_198101_198103_v9i: Excecute particle set.
+2020-05-28 14:15:29,305:EUC_particles:DEBUG:sim_198101_198103_v9i: Excecute particle set.
+2020-05-28 14:15:29,306:EUC_particles:DEBUG:sim_198101_198103_v9i: Excecute particle set.
+2020-05-28 14:15:41,990:EUC_particles:DEBUG:sim_198101_198103_v9i:Initial pset size:98
+2020-05-28 14:15:41,990:EUC_particles:DEBUG:sim_198101_198103_v9i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-CGUZIUWF
+2020-05-28 14:15:41,990:EUC_particles:DEBUG:sim_198101_198103_v9i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-CGUZIUWF
+2020-05-28 14:15:41,990:EUC_particles:INFO:sim_198101_198103_v9i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:15:41,990:EUC_particles:INFO:sim_198101_198103_v9i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:15:42,348:EUC_particles:DEBUG:sim_198101_198103_v9i: Excecute particle set.
+2020-05-28 14:15:42,400:EUC_particles:DEBUG:sim_198101_198103_v9i: Excecute particle set.
+2020-05-28 14:15:42,726:EUC_particles:DEBUG:sim_198101_198103_v9i:Initial pset size:98
+2020-05-28 14:15:42,726:EUC_particles:DEBUG:sim_198101_198103_v9i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-CGUZIUWF
+2020-05-28 14:15:42,727:EUC_particles:INFO:sim_198101_198103_v9i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:15:42,974:EUC_particles:DEBUG:sim_198101_198103_v9i: Excecute particle set.
+2020-05-28 14:33:59,876:run_EUC:INFO:sim_198101_198106_v486i:Executing: 1981-01-01 to 1981-06-30
+2020-05-28 14:33:59,876:run_EUC:INFO:sim_198101_198106_v486i:Executing: 1981-01-01 to 1981-06-30
+2020-05-28 14:33:59,876:run_EUC:INFO:sim_198101_198106_v486i:Executing: 1981-01-01 to 1981-06-30
+2020-05-28 14:33:59,876:run_EUC:INFO:sim_198101_198106_v486i:Executing: 1981-01-01 to 1981-06-30
+2020-05-28 14:33:59,876:run_EUC:INFO:sim_198101_198106_v486i:Executing: 1981-01-01 to 1981-06-30
+2020-05-28 14:33:59,876:run_EUC:INFO:sim_198101_198106_v486i:Executing: 1981-01-01 to 1981-06-30
+2020-05-28 14:33:59,876:run_EUC:INFO:sim_198101_198106_v486i:Executing: 1981-01-01 to 1981-06-30
+2020-05-28 14:33:59,876:run_EUC:INFO:sim_198101_198106_v486i:Executing: 1981-01-01 to 1981-06-30
+2020-05-28 14:33:59,876:run_EUC:INFO:sim_198101_198106_v486i:Executing: 1981-01-01 to 1981-06-30
+2020-05-28 14:33:59,876:run_EUC:INFO:sim_198101_198106_v486i:Executing: 1981-01-01 to 1981-06-30
+2020-05-28 14:33:59,876:run_EUC:INFO:sim_198101_198106_v486i:Executing: 1981-01-01 to 1981-06-30
+2020-05-28 14:33:59,876:run_EUC:INFO:sim_198101_198106_v486i:Executing: 1981-01-01 to 1981-06-30
+2020-05-28 14:33:59,876:run_EUC:INFO:sim_198101_198106_v486i:Executing: 1981-01-01 to 1981-06-30
+2020-05-28 14:33:59,876:run_EUC:INFO:sim_198101_198106_v486i:Executing: 1981-01-01 to 1981-06-30
+2020-05-28 14:33:59,876:run_EUC:INFO:sim_198101_198106_v486i:Executing: 1981-01-01 to 1981-06-30
+2020-05-28 14:33:59,876:run_EUC:INFO:sim_198101_198106_v486i:Executing: 1981-01-01 to 1981-06-30
+2020-05-28 14:33:59,876:run_EUC:INFO:sim_198101_198106_v486i:Executing: 1981-01-01 to 1981-06-30
+2020-05-28 14:33:59,876:run_EUC:INFO:sim_198101_198106_v486i:Executing: 1981-01-01 to 1981-06-30
+2020-05-28 14:33:59,876:run_EUC:INFO:sim_198101_198106_v486i:Executing: 1981-01-01 to 1981-06-30
+2020-05-28 14:33:59,876:run_EUC:INFO:sim_198101_198106_v486i:Executing: 1981-01-01 to 1981-06-30
+2020-05-28 14:33:59,876:run_EUC:INFO:sim_198101_198106_v486i:Executing: 1981-01-01 to 1981-06-30
+2020-05-28 14:33:59,876:run_EUC:INFO:sim_198101_198106_v486i:Executing: 1981-01-01 to 1981-06-30
+2020-05-28 14:33:59,876:run_EUC:INFO:sim_198101_198106_v486i:Executing: 1981-01-01 to 1981-06-30
+2020-05-28 14:33:59,876:run_EUC:INFO:sim_198101_198106_v486i:Executing: 1981-01-01 to 1981-06-30
+2020-05-28 14:33:59,876:run_EUC:INFO:sim_198101_198106_v486i:Executing: 1981-01-01 to 1981-06-30
+2020-05-28 14:33:59,876:run_EUC:INFO:sim_198101_198106_v486i:Executing: 1981-01-01 to 1981-06-30
+2020-05-28 14:33:59,876:run_EUC:INFO:sim_198101_198106_v486i:Executing: 1981-01-01 to 1981-06-30
+2020-05-28 14:33:59,876:run_EUC:INFO:sim_198101_198106_v486i:Executing: 1981-01-01 to 1981-06-30
+2020-05-28 14:33:59,876:run_EUC:INFO:sim_198101_198106_v486i:Executing: 1981-01-01 to 1981-06-30
+2020-05-28 14:33:59,876:run_EUC:INFO:sim_198101_198106_v486i:Executing: 1981-01-01 to 1981-06-30
+2020-05-28 14:33:59,876:run_EUC:INFO:sim_198101_198106_v486i:Executing: 1981-01-01 to 1981-06-30
+2020-05-28 14:33:59,876:run_EUC:INFO:sim_198101_198106_v486i:Executing: 1981-01-01 to 1981-06-30
+2020-05-28 14:33:59,876:run_EUC:INFO:sim_198101_198106_v486i:Executing: 1981-01-01 to 1981-06-30
+2020-05-28 14:33:59,876:run_EUC:INFO:sim_198101_198106_v486i:Executing: 1981-01-01 to 1981-06-30
+2020-05-28 14:33:59,876:run_EUC:INFO:sim_198101_198106_v486i:Executing: 1981-01-01 to 1981-06-30
+2020-05-28 14:33:59,876:run_EUC:INFO:sim_198101_198106_v486i:Executing: 1981-01-01 to 1981-06-30
+2020-05-28 14:33:59,876:run_EUC:INFO:sim_198101_198106_v486i:Executing: 1981-01-01 to 1981-06-30
+2020-05-28 14:33:59,876:run_EUC:INFO:sim_198101_198106_v486i:Executing: 1981-01-01 to 1981-06-30
+2020-05-28 14:33:59,876:run_EUC:INFO:sim_198101_198106_v486i:Executing: 1981-01-01 to 1981-06-30
+2020-05-28 14:33:59,876:run_EUC:INFO:sim_198101_198106_v486i:Executing: 1981-01-01 to 1981-06-30
+2020-05-28 14:33:59,876:run_EUC:INFO:sim_198101_198106_v486i:Executing: 1981-01-01 to 1981-06-30
+2020-05-28 14:33:59,876:run_EUC:INFO:sim_198101_198106_v486i:Executing: 1981-01-01 to 1981-06-30
+2020-05-28 14:33:59,876:run_EUC:INFO:sim_198101_198106_v486i:Executing: 1981-01-01 to 1981-06-30
+2020-05-28 14:33:59,876:run_EUC:INFO:sim_198101_198106_v486i:Executing: 1981-01-01 to 1981-06-30
+2020-05-28 14:33:59,877:run_EUC:INFO:sim_198101_198106_v486i:Executing: 1981-01-01 to 1981-06-30
+2020-05-28 14:33:59,876:run_EUC:INFO:sim_198101_198106_v486i:Executing: 1981-01-01 to 1981-06-30
+2020-05-28 14:33:59,876:run_EUC:INFO:sim_198101_198106_v486i:Executing: 1981-01-01 to 1981-06-30
+2020-05-28 14:33:59,877:run_EUC:INFO:sim_198101_198106_v486i:Executing: 1981-01-01 to 1981-06-30
+2020-05-28 14:33:59,878:run_EUC:INFO:sim_198101_198106_v486i:Longitudes: 165
+2020-05-28 14:33:59,878:run_EUC:INFO:sim_198101_198106_v486i:Longitudes: 165
+2020-05-28 14:33:59,878:run_EUC:INFO:sim_198101_198106_v486i:Longitudes: 165
+2020-05-28 14:33:59,878:run_EUC:INFO:sim_198101_198106_v486i:Longitudes: 165
+2020-05-28 14:33:59,878:run_EUC:INFO:sim_198101_198106_v486i:Longitudes: 165
+2020-05-28 14:33:59,878:run_EUC:INFO:sim_198101_198106_v486i:Longitudes: 165
+2020-05-28 14:33:59,878:run_EUC:INFO:sim_198101_198106_v486i:Longitudes: 165
+2020-05-28 14:33:59,878:run_EUC:INFO:sim_198101_198106_v486i:Longitudes: 165
+2020-05-28 14:33:59,878:run_EUC:INFO:sim_198101_198106_v486i:Longitudes: 165
+2020-05-28 14:33:59,878:run_EUC:INFO:sim_198101_198106_v486i:Longitudes: 165
+2020-05-28 14:33:59,878:run_EUC:INFO:sim_198101_198106_v486i:Longitudes: 165
+2020-05-28 14:33:59,878:run_EUC:INFO:sim_198101_198106_v486i:Longitudes: 165
+2020-05-28 14:33:59,878:run_EUC:INFO:sim_198101_198106_v486i:Longitudes: 165
+2020-05-28 14:33:59,878:run_EUC:INFO:sim_198101_198106_v486i:Longitudes: 165
+2020-05-28 14:33:59,878:run_EUC:INFO:sim_198101_198106_v486i:Longitudes: 165
+2020-05-28 14:33:59,878:run_EUC:INFO:sim_198101_198106_v486i:Longitudes: 165
+2020-05-28 14:33:59,878:run_EUC:INFO:sim_198101_198106_v486i:Longitudes: 165
+2020-05-28 14:33:59,878:run_EUC:INFO:sim_198101_198106_v486i:Longitudes: 165
+2020-05-28 14:33:59,878:run_EUC:INFO:sim_198101_198106_v486i:Longitudes: 165
+2020-05-28 14:33:59,878:run_EUC:INFO:sim_198101_198106_v486i:Longitudes: 165
+2020-05-28 14:33:59,878:run_EUC:INFO:sim_198101_198106_v486i:Longitudes: 165
+2020-05-28 14:33:59,878:run_EUC:INFO:sim_198101_198106_v486i:Longitudes: 165
+2020-05-28 14:33:59,878:run_EUC:INFO:sim_198101_198106_v486i:Longitudes: 165
+2020-05-28 14:33:59,879:run_EUC:INFO:sim_198101_198106_v486i:Longitudes: 165
+2020-05-28 14:33:59,879:run_EUC:INFO:sim_198101_198106_v486i:Longitudes: 165
+2020-05-28 14:33:59,879:run_EUC:INFO:sim_198101_198106_v486i:Longitudes: 165
+2020-05-28 14:33:59,879:run_EUC:INFO:sim_198101_198106_v486i:Longitudes: 165
+2020-05-28 14:33:59,879:run_EUC:INFO:sim_198101_198106_v486i:Longitudes: 165
+2020-05-28 14:33:59,879:run_EUC:INFO:sim_198101_198106_v486i:Longitudes: 165
+2020-05-28 14:33:59,879:run_EUC:INFO:sim_198101_198106_v486i:Longitudes: 165
+2020-05-28 14:33:59,879:run_EUC:INFO:sim_198101_198106_v486i:Longitudes: 165
+2020-05-28 14:33:59,879:run_EUC:INFO:sim_198101_198106_v486i:Longitudes: 165
+2020-05-28 14:33:59,879:run_EUC:INFO:sim_198101_198106_v486i:Longitudes: 165
+2020-05-28 14:33:59,879:run_EUC:INFO:sim_198101_198106_v486i:Longitudes: 165
+2020-05-28 14:33:59,879:run_EUC:INFO:sim_198101_198106_v486i:Longitudes: 165
+2020-05-28 14:33:59,879:run_EUC:INFO:sim_198101_198106_v486i:Longitudes: 165
+2020-05-28 14:33:59,879:run_EUC:INFO:sim_198101_198106_v486i:Longitudes: 165
+2020-05-28 14:33:59,880:run_EUC:INFO:sim_198101_198106_v486i:Longitudes: 165
+2020-05-28 14:33:59,880:run_EUC:INFO:sim_198101_198106_v486i:Longitudes: 165
+2020-05-28 14:33:59,880:run_EUC:INFO:sim_198101_198106_v486i:Longitudes: 165
+2020-05-28 14:33:59,880:run_EUC:INFO:sim_198101_198106_v486i:Longitudes: 165
+2020-05-28 14:33:59,880:run_EUC:INFO:sim_198101_198106_v486i:Longitudes: 165
+2020-05-28 14:33:59,880:run_EUC:INFO:sim_198101_198106_v486i:Longitudes: 165
+2020-05-28 14:33:59,880:run_EUC:INFO:sim_198101_198106_v486i:Longitudes: 165
+2020-05-28 14:33:59,880:run_EUC:INFO:sim_198101_198106_v486i:Longitudes: 165
+2020-05-28 14:33:59,880:run_EUC:INFO:sim_198101_198106_v486i:Longitudes: 165
+2020-05-28 14:33:59,880:run_EUC:INFO:sim_198101_198106_v486i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:33:59,880:run_EUC:INFO:sim_198101_198106_v486i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:33:59,880:run_EUC:INFO:sim_198101_198106_v486i:Longitudes: 165
+2020-05-28 14:33:59,880:run_EUC:INFO:sim_198101_198106_v486i:Longitudes: 165
+2020-05-28 14:33:59,880:run_EUC:INFO:sim_198101_198106_v486i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:33:59,880:run_EUC:INFO:sim_198101_198106_v486i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:33:59,880:run_EUC:INFO:sim_198101_198106_v486i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:33:59,880:run_EUC:INFO:sim_198101_198106_v486i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:33:59,880:run_EUC:INFO:sim_198101_198106_v486i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:33:59,880:run_EUC:INFO:sim_198101_198106_v486i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:33:59,880:run_EUC:INFO:sim_198101_198106_v486i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:33:59,880:run_EUC:INFO:sim_198101_198106_v486i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:33:59,880:run_EUC:INFO:sim_198101_198106_v486i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:33:59,880:run_EUC:INFO:sim_198101_198106_v486i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:33:59,880:run_EUC:INFO:sim_198101_198106_v486i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:33:59,881:run_EUC:INFO:sim_198101_198106_v486i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:33:59,881:run_EUC:INFO:sim_198101_198106_v486i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:33:59,881:run_EUC:INFO:sim_198101_198106_v486i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:33:59,881:run_EUC:INFO:sim_198101_198106_v486i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:33:59,881:run_EUC:INFO:sim_198101_198106_v486i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:33:59,881:run_EUC:INFO:sim_198101_198106_v486i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:33:59,881:run_EUC:INFO:sim_198101_198106_v486i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:33:59,881:run_EUC:INFO:sim_198101_198106_v486i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:33:59,881:run_EUC:INFO:sim_198101_198106_v486i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:33:59,881:run_EUC:INFO:sim_198101_198106_v486i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:33:59,881:run_EUC:INFO:sim_198101_198106_v486i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:33:59,881:run_EUC:INFO:sim_198101_198106_v486i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:33:59,881:run_EUC:INFO:sim_198101_198106_v486i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:33:59,881:run_EUC:INFO:sim_198101_198106_v486i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:33:59,881:run_EUC:INFO:sim_198101_198106_v486i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:33:59,881:run_EUC:INFO:sim_198101_198106_v486i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:33:59,881:run_EUC:INFO:sim_198101_198106_v486i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:33:59,881:run_EUC:INFO:sim_198101_198106_v486i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:33:59,881:run_EUC:INFO:sim_198101_198106_v486i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:33:59,881:run_EUC:INFO:sim_198101_198106_v486i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:33:59,881:run_EUC:INFO:sim_198101_198106_v486i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:33:59,881:run_EUC:INFO:sim_198101_198106_v486i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:33:59,881:run_EUC:INFO:sim_198101_198106_v486i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:33:59,881:run_EUC:INFO:sim_198101_198106_v486i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:33:59,881:run_EUC:INFO:sim_198101_198106_v486i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:33:59,881:run_EUC:INFO:sim_198101_198106_v486i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:33:59,881:run_EUC:INFO:sim_198101_198106_v486i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:33:59,881:run_EUC:INFO:sim_198101_198106_v486i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:33:59,881:run_EUC:INFO:sim_198101_198106_v486i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:33:59,881:run_EUC:INFO:sim_198101_198106_v486i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:33:59,882:run_EUC:INFO:sim_198101_198106_v486i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:33:59,882:run_EUC:INFO:sim_198101_198106_v486i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:33:59,882:run_EUC:INFO:sim_198101_198106_v486i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:33:59,882:run_EUC:INFO:sim_198101_198106_v486i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:33:59,882:run_EUC:INFO:sim_198101_198106_v486i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:33:59,882:run_EUC:INFO:sim_198101_198106_v486i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:33:59,882:run_EUC:INFO:sim_198101_198106_v486i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:33:59,882:run_EUC:INFO:sim_198101_198106_v486i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:33:59,882:run_EUC:INFO:sim_198101_198106_v486i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:33:59,882:run_EUC:INFO:sim_198101_198106_v486i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:33:59,882:run_EUC:INFO:sim_198101_198106_v486i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:33:59,882:run_EUC:INFO:sim_198101_198106_v486i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:33:59,882:run_EUC:INFO:sim_198101_198106_v486i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:33:59,882:run_EUC:INFO:sim_198101_198106_v486i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:33:59,882:run_EUC:INFO:sim_198101_198106_v486i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:33:59,882:run_EUC:INFO:sim_198101_198106_v486i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:33:59,882:run_EUC:INFO:sim_198101_198106_v486i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:33:59,882:run_EUC:INFO:sim_198101_198106_v486i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:33:59,882:run_EUC:INFO:sim_198101_198106_v486i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:33:59,882:run_EUC:INFO:sim_198101_198106_v486i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:33:59,882:run_EUC:INFO:sim_198101_198106_v486i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:33:59,882:run_EUC:INFO:sim_198101_198106_v486i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:33:59,882:run_EUC:INFO:sim_198101_198106_v486i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:33:59,882:run_EUC:INFO:sim_198101_198106_v486i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:33:59,882:run_EUC:INFO:sim_198101_198106_v486i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:33:59,882:run_EUC:INFO:sim_198101_198106_v486i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:33:59,882:run_EUC:INFO:sim_198101_198106_v486i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:33:59,883:run_EUC:INFO:sim_198101_198106_v486i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:33:59,883:run_EUC:INFO:sim_198101_198106_v486i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:33:59,883:run_EUC:INFO:sim_198101_198106_v486i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:33:59,883:run_EUC:INFO:sim_198101_198106_v486i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:33:59,883:run_EUC:INFO:sim_198101_198106_v486i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:33:59,883:run_EUC:INFO:sim_198101_198106_v486i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:33:59,883:run_EUC:INFO:sim_198101_198106_v486i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:33:59,883:run_EUC:INFO:sim_198101_198106_v486i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:33:59,883:run_EUC:INFO:sim_198101_198106_v486i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:33:59,883:run_EUC:INFO:sim_198101_198106_v486i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:33:59,883:run_EUC:INFO:sim_198101_198106_v486i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:33:59,883:run_EUC:INFO:sim_198101_198106_v486i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:33:59,883:run_EUC:INFO:sim_198101_198106_v486i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:33:59,883:run_EUC:INFO:sim_198101_198106_v486i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:33:59,883:run_EUC:INFO:sim_198101_198106_v486i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:33:59,883:run_EUC:INFO:sim_198101_198106_v486i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:33:59,883:run_EUC:INFO:sim_198101_198106_v486i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:33:59,883:run_EUC:INFO:sim_198101_198106_v486i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:33:59,883:run_EUC:INFO:sim_198101_198106_v486i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:33:59,883:run_EUC:INFO:sim_198101_198106_v486i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:33:59,883:run_EUC:INFO:sim_198101_198106_v486i:Runtime: 181 days
+2020-05-28 14:33:59,883:run_EUC:INFO:sim_198101_198106_v486i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:33:59,883:run_EUC:INFO:sim_198101_198106_v486i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:33:59,883:run_EUC:INFO:sim_198101_198106_v486i:Runtime: 181 days
+2020-05-28 14:33:59,883:run_EUC:INFO:sim_198101_198106_v486i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:33:59,883:run_EUC:INFO:sim_198101_198106_v486i:Runtime: 181 days
+2020-05-28 14:33:59,883:run_EUC:INFO:sim_198101_198106_v486i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:33:59,883:run_EUC:INFO:sim_198101_198106_v486i:Runtime: 181 days
+2020-05-28 14:33:59,883:run_EUC:INFO:sim_198101_198106_v486i:Runtime: 181 days
+2020-05-28 14:33:59,883:run_EUC:INFO:sim_198101_198106_v486i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:33:59,884:run_EUC:INFO:sim_198101_198106_v486i:Runtime: 181 days
+2020-05-28 14:33:59,884:run_EUC:INFO:sim_198101_198106_v486i:Runtime: 181 days
+2020-05-28 14:33:59,884:run_EUC:INFO:sim_198101_198106_v486i:Runtime: 181 days
+2020-05-28 14:33:59,884:run_EUC:INFO:sim_198101_198106_v486i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:33:59,884:run_EUC:INFO:sim_198101_198106_v486i:Runtime: 181 days
+2020-05-28 14:33:59,884:run_EUC:INFO:sim_198101_198106_v486i:Runtime: 181 days
+2020-05-28 14:33:59,884:run_EUC:INFO:sim_198101_198106_v486i:Runtime: 181 days
+2020-05-28 14:33:59,884:run_EUC:INFO:sim_198101_198106_v486i:Runtime: 181 days
+2020-05-28 14:33:59,884:run_EUC:INFO:sim_198101_198106_v486i:Runtime: 181 days
+2020-05-28 14:33:59,884:run_EUC:INFO:sim_198101_198106_v486i:Runtime: 181 days
+2020-05-28 14:33:59,884:run_EUC:INFO:sim_198101_198106_v486i:Runtime: 181 days
+2020-05-28 14:33:59,884:run_EUC:INFO:sim_198101_198106_v486i:Runtime: 181 days
+2020-05-28 14:33:59,884:run_EUC:INFO:sim_198101_198106_v486i:Runtime: 181 days
+2020-05-28 14:33:59,884:run_EUC:INFO:sim_198101_198106_v486i:Runtime: 181 days
+2020-05-28 14:33:59,884:run_EUC:INFO:sim_198101_198106_v486i:Runtime: 181 days
+2020-05-28 14:33:59,884:run_EUC:INFO:sim_198101_198106_v486i:Runtime: 181 days
+2020-05-28 14:33:59,884:run_EUC:INFO:sim_198101_198106_v486i:Runtime: 181 days
+2020-05-28 14:33:59,884:run_EUC:INFO:sim_198101_198106_v486i:Runtime: 181 days
+2020-05-28 14:33:59,884:run_EUC:INFO:sim_198101_198106_v486i:Runtime: 181 days
+2020-05-28 14:33:59,884:run_EUC:INFO:sim_198101_198106_v486i:Runtime: 181 days
+2020-05-28 14:33:59,884:run_EUC:INFO:sim_198101_198106_v486i:Runtime: 181 days
+2020-05-28 14:33:59,884:run_EUC:INFO:sim_198101_198106_v486i:Runtime: 181 days
+2020-05-28 14:33:59,885:run_EUC:INFO:sim_198101_198106_v486i:Runtime: 181 days
+2020-05-28 14:33:59,885:run_EUC:INFO:sim_198101_198106_v486i:Runtime: 181 days
+2020-05-28 14:33:59,885:run_EUC:INFO:sim_198101_198106_v486i:Runtime: 181 days
+2020-05-28 14:33:59,885:run_EUC:INFO:sim_198101_198106_v486i:Runtime: 181 days
+2020-05-28 14:33:59,885:run_EUC:INFO:sim_198101_198106_v486i:Runtime: 181 days
+2020-05-28 14:33:59,885:run_EUC:INFO:sim_198101_198106_v486i:Runtime: 181 days
+2020-05-28 14:33:59,885:run_EUC:INFO:sim_198101_198106_v486i:Runtime: 181 days
+2020-05-28 14:33:59,885:run_EUC:INFO:sim_198101_198106_v486i:Runtime: 181 days
+2020-05-28 14:33:59,885:run_EUC:INFO:sim_198101_198106_v486i:Runtime: 181 days
+2020-05-28 14:33:59,885:run_EUC:INFO:sim_198101_198106_v486i:Runtime: 181 days
+2020-05-28 14:33:59,885:run_EUC:INFO:sim_198101_198106_v486i:Runtime: 181 days
+2020-05-28 14:33:59,885:run_EUC:INFO:sim_198101_198106_v486i:Runtime: 181 days
+2020-05-28 14:33:59,885:run_EUC:INFO:sim_198101_198106_v486i:Runtime: 181 days
+2020-05-28 14:33:59,885:run_EUC:INFO:sim_198101_198106_v486i:Runtime: 181 days
+2020-05-28 14:33:59,885:run_EUC:INFO:sim_198101_198106_v486i:Timestep dt: 240 mins
+2020-05-28 14:33:59,885:run_EUC:INFO:sim_198101_198106_v486i:Runtime: 181 days
+2020-05-28 14:33:59,885:run_EUC:INFO:sim_198101_198106_v486i:Runtime: 181 days
+2020-05-28 14:33:59,885:run_EUC:INFO:sim_198101_198106_v486i:Runtime: 181 days
+2020-05-28 14:33:59,885:run_EUC:INFO:sim_198101_198106_v486i:Timestep dt: 240 mins
+2020-05-28 14:33:59,885:run_EUC:INFO:sim_198101_198106_v486i:Runtime: 181 days
+2020-05-28 14:33:59,885:run_EUC:INFO:sim_198101_198106_v486i:Timestep dt: 240 mins
+2020-05-28 14:33:59,885:run_EUC:INFO:sim_198101_198106_v486i:Runtime: 181 days
+2020-05-28 14:33:59,885:run_EUC:INFO:sim_198101_198106_v486i:Runtime: 181 days
+2020-05-28 14:33:59,885:run_EUC:INFO:sim_198101_198106_v486i:Timestep dt: 240 mins
+2020-05-28 14:33:59,885:run_EUC:INFO:sim_198101_198106_v486i:Timestep dt: 240 mins
+2020-05-28 14:33:59,885:run_EUC:INFO:sim_198101_198106_v486i:Timestep dt: 240 mins
+2020-05-28 14:33:59,885:run_EUC:INFO:sim_198101_198106_v486i:Timestep dt: 240 mins
+2020-05-28 14:33:59,885:run_EUC:INFO:sim_198101_198106_v486i:Timestep dt: 240 mins
+2020-05-28 14:33:59,885:run_EUC:INFO:sim_198101_198106_v486i:Runtime: 181 days
+2020-05-28 14:33:59,885:run_EUC:INFO:sim_198101_198106_v486i:Runtime: 181 days
+2020-05-28 14:33:59,885:run_EUC:INFO:sim_198101_198106_v486i:Timestep dt: 240 mins
+2020-05-28 14:33:59,885:run_EUC:INFO:sim_198101_198106_v486i:Timestep dt: 240 mins
+2020-05-28 14:33:59,885:run_EUC:INFO:sim_198101_198106_v486i:Timestep dt: 240 mins
+2020-05-28 14:33:59,885:run_EUC:INFO:sim_198101_198106_v486i:Timestep dt: 240 mins
+2020-05-28 14:33:59,885:run_EUC:INFO:sim_198101_198106_v486i:Timestep dt: 240 mins
+2020-05-28 14:33:59,886:run_EUC:INFO:sim_198101_198106_v486i:Timestep dt: 240 mins
+2020-05-28 14:33:59,886:run_EUC:INFO:sim_198101_198106_v486i:Timestep dt: 240 mins
+2020-05-28 14:33:59,886:run_EUC:INFO:sim_198101_198106_v486i:Timestep dt: 240 mins
+2020-05-28 14:33:59,886:run_EUC:INFO:sim_198101_198106_v486i:Timestep dt: 240 mins
+2020-05-28 14:33:59,886:run_EUC:INFO:sim_198101_198106_v486i:Timestep dt: 240 mins
+2020-05-28 14:33:59,886:run_EUC:INFO:sim_198101_198106_v486i:Timestep dt: 240 mins
+2020-05-28 14:33:59,886:run_EUC:INFO:sim_198101_198106_v486i:Timestep dt: 240 mins
+2020-05-28 14:33:59,886:run_EUC:INFO:sim_198101_198106_v486i:Timestep dt: 240 mins
+2020-05-28 14:33:59,886:run_EUC:INFO:sim_198101_198106_v486i:Timestep dt: 240 mins
+2020-05-28 14:33:59,886:run_EUC:INFO:sim_198101_198106_v486i:Timestep dt: 240 mins
+2020-05-28 14:33:59,886:run_EUC:INFO:sim_198101_198106_v486i:Timestep dt: 240 mins
+2020-05-28 14:33:59,886:run_EUC:INFO:sim_198101_198106_v486i:Timestep dt: 240 mins
+2020-05-28 14:33:59,886:run_EUC:INFO:sim_198101_198106_v486i:Timestep dt: 240 mins
+2020-05-28 14:33:59,886:run_EUC:INFO:sim_198101_198106_v486i:Timestep dt: 240 mins
+2020-05-28 14:33:59,886:run_EUC:INFO:sim_198101_198106_v486i:Timestep dt: 240 mins
+2020-05-28 14:33:59,886:run_EUC:INFO:sim_198101_198106_v486i:Timestep dt: 240 mins
+2020-05-28 14:33:59,886:run_EUC:INFO:sim_198101_198106_v486i:Timestep dt: 240 mins
+2020-05-28 14:33:59,886:run_EUC:INFO:sim_198101_198106_v486i:Timestep dt: 240 mins
+2020-05-28 14:33:59,886:run_EUC:INFO:sim_198101_198106_v486i:Timestep dt: 240 mins
+2020-05-28 14:33:59,886:run_EUC:INFO:sim_198101_198106_v486i:Timestep dt: 240 mins
+2020-05-28 14:33:59,886:run_EUC:INFO:sim_198101_198106_v486i:Timestep dt: 240 mins
+2020-05-28 14:33:59,886:run_EUC:INFO:sim_198101_198106_v486i:Timestep dt: 240 mins
+2020-05-28 14:33:59,886:run_EUC:INFO:sim_198101_198106_v486i:Timestep dt: 240 mins
+2020-05-28 14:33:59,887:run_EUC:INFO:sim_198101_198106_v486i:Timestep dt: 240 mins
+2020-05-28 14:33:59,887:run_EUC:INFO:sim_198101_198106_v486i:Timestep dt: 240 mins
+2020-05-28 14:33:59,887:run_EUC:INFO:sim_198101_198106_v486i:Timestep dt: 240 mins
+2020-05-28 14:33:59,887:run_EUC:INFO:sim_198101_198106_v486i:Output dt: 1 days
+2020-05-28 14:33:59,887:run_EUC:INFO:sim_198101_198106_v486i:Timestep dt: 240 mins
+2020-05-28 14:33:59,887:run_EUC:INFO:sim_198101_198106_v486i:Timestep dt: 240 mins
+2020-05-28 14:33:59,887:run_EUC:INFO:sim_198101_198106_v486i:Timestep dt: 240 mins
+2020-05-28 14:33:59,887:run_EUC:INFO:sim_198101_198106_v486i:Output dt: 1 days
+2020-05-28 14:33:59,887:run_EUC:INFO:sim_198101_198106_v486i:Timestep dt: 240 mins
+2020-05-28 14:33:59,887:run_EUC:INFO:sim_198101_198106_v486i:Output dt: 1 days
+2020-05-28 14:33:59,887:run_EUC:INFO:sim_198101_198106_v486i:Timestep dt: 240 mins
+2020-05-28 14:33:59,887:run_EUC:INFO:sim_198101_198106_v486i:Timestep dt: 240 mins
+2020-05-28 14:33:59,887:run_EUC:INFO:sim_198101_198106_v486i:Output dt: 1 days
+2020-05-28 14:33:59,887:run_EUC:INFO:sim_198101_198106_v486i:Output dt: 1 days
+2020-05-28 14:33:59,887:run_EUC:INFO:sim_198101_198106_v486i:Output dt: 1 days
+2020-05-28 14:33:59,887:run_EUC:INFO:sim_198101_198106_v486i:Timestep dt: 240 mins
+2020-05-28 14:33:59,887:run_EUC:INFO:sim_198101_198106_v486i:Output dt: 1 days
+2020-05-28 14:33:59,887:run_EUC:INFO:sim_198101_198106_v486i:Output dt: 1 days
+2020-05-28 14:33:59,887:run_EUC:INFO:sim_198101_198106_v486i:Output dt: 1 days
+2020-05-28 14:33:59,887:run_EUC:INFO:sim_198101_198106_v486i:Timestep dt: 240 mins
+2020-05-28 14:33:59,887:run_EUC:INFO:sim_198101_198106_v486i:Timestep dt: 240 mins
+2020-05-28 14:33:59,887:run_EUC:INFO:sim_198101_198106_v486i:Output dt: 1 days
+2020-05-28 14:33:59,887:run_EUC:INFO:sim_198101_198106_v486i:Output dt: 1 days
+2020-05-28 14:33:59,887:run_EUC:INFO:sim_198101_198106_v486i:Output dt: 1 days
+2020-05-28 14:33:59,887:run_EUC:INFO:sim_198101_198106_v486i:Output dt: 1 days
+2020-05-28 14:33:59,887:run_EUC:INFO:sim_198101_198106_v486i:Output dt: 1 days
+2020-05-28 14:33:59,887:run_EUC:INFO:sim_198101_198106_v486i:Output dt: 1 days
+2020-05-28 14:33:59,887:run_EUC:INFO:sim_198101_198106_v486i:Output dt: 1 days
+2020-05-28 14:33:59,887:run_EUC:INFO:sim_198101_198106_v486i:Output dt: 1 days
+2020-05-28 14:33:59,887:run_EUC:INFO:sim_198101_198106_v486i:Output dt: 1 days
+2020-05-28 14:33:59,887:run_EUC:INFO:sim_198101_198106_v486i:Output dt: 1 days
+2020-05-28 14:33:59,887:run_EUC:INFO:sim_198101_198106_v486i:Output dt: 1 days
+2020-05-28 14:33:59,887:run_EUC:INFO:sim_198101_198106_v486i:Output dt: 1 days
+2020-05-28 14:33:59,887:run_EUC:INFO:sim_198101_198106_v486i:Output dt: 1 days
+2020-05-28 14:33:59,887:run_EUC:INFO:sim_198101_198106_v486i:Output dt: 1 days
+2020-05-28 14:33:59,887:run_EUC:INFO:sim_198101_198106_v486i:Output dt: 1 days
+2020-05-28 14:33:59,887:run_EUC:INFO:sim_198101_198106_v486i:Output dt: 1 days
+2020-05-28 14:33:59,888:run_EUC:INFO:sim_198101_198106_v486i:Output dt: 1 days
+2020-05-28 14:33:59,888:run_EUC:INFO:sim_198101_198106_v486i:Output dt: 1 days
+2020-05-28 14:33:59,888:run_EUC:INFO:sim_198101_198106_v486i:Output dt: 1 days
+2020-05-28 14:33:59,888:run_EUC:INFO:sim_198101_198106_v486i:Output dt: 1 days
+2020-05-28 14:33:59,888:run_EUC:INFO:sim_198101_198106_v486i:Output dt: 1 days
+2020-05-28 14:33:59,888:run_EUC:INFO:sim_198101_198106_v486i:Output dt: 1 days
+2020-05-28 14:33:59,888:run_EUC:INFO:sim_198101_198106_v486i:Output dt: 1 days
+2020-05-28 14:33:59,888:run_EUC:INFO:sim_198101_198106_v486i:Output dt: 1 days
+2020-05-28 14:33:59,888:run_EUC:INFO:sim_198101_198106_v486i:Output dt: 1 days
+2020-05-28 14:33:59,888:run_EUC:INFO:sim_198101_198106_v486i:Output dt: 1 days
+2020-05-28 14:33:59,888:run_EUC:INFO:sim_198101_198106_v486i:Output dt: 1 days
+2020-05-28 14:33:59,888:run_EUC:INFO:sim_198101_198106_v486i:Output dt: 1 days
+2020-05-28 14:33:59,888:run_EUC:INFO:sim_198101_198106_v486i:Output dt: 1 days
+2020-05-28 14:33:59,888:run_EUC:INFO:sim_198101_198106_v486i:Time periodic:181 days
+2020-05-28 14:33:59,888:run_EUC:INFO:sim_198101_198106_v486i:Output dt: 1 days
+2020-05-28 14:33:59,888:run_EUC:INFO:sim_198101_198106_v486i:Output dt: 1 days
+2020-05-28 14:33:59,888:run_EUC:INFO:sim_198101_198106_v486i:Output dt: 1 days
+2020-05-28 14:33:59,888:run_EUC:INFO:sim_198101_198106_v486i:Time periodic:181 days
+2020-05-28 14:33:59,888:run_EUC:INFO:sim_198101_198106_v486i:Output dt: 1 days
+2020-05-28 14:33:59,888:run_EUC:INFO:sim_198101_198106_v486i:Time periodic:181 days
+2020-05-28 14:33:59,888:run_EUC:INFO:sim_198101_198106_v486i:Output dt: 1 days
+2020-05-28 14:33:59,888:run_EUC:INFO:sim_198101_198106_v486i:Output dt: 1 days
+2020-05-28 14:33:59,888:run_EUC:INFO:sim_198101_198106_v486i:Output dt: 1 days
+2020-05-28 14:33:59,888:run_EUC:INFO:sim_198101_198106_v486i:Time periodic:181 days
+2020-05-28 14:33:59,888:run_EUC:INFO:sim_198101_198106_v486i:Time periodic:181 days
+2020-05-28 14:33:59,888:run_EUC:INFO:sim_198101_198106_v486i:Time periodic:181 days
+2020-05-28 14:33:59,888:run_EUC:INFO:sim_198101_198106_v486i:Time periodic:181 days
+2020-05-28 14:33:59,888:run_EUC:INFO:sim_198101_198106_v486i:Time periodic:181 days
+2020-05-28 14:33:59,888:run_EUC:INFO:sim_198101_198106_v486i:Output dt: 1 days
+2020-05-28 14:33:59,888:run_EUC:INFO:sim_198101_198106_v486i:Time periodic:181 days
+2020-05-28 14:33:59,888:run_EUC:INFO:sim_198101_198106_v486i:Output dt: 1 days
+2020-05-28 14:33:59,888:run_EUC:INFO:sim_198101_198106_v486i:Output dt: 1 days
+2020-05-28 14:33:59,889:run_EUC:INFO:sim_198101_198106_v486i:Time periodic:181 days
+2020-05-28 14:33:59,889:run_EUC:INFO:sim_198101_198106_v486i:Time periodic:181 days
+2020-05-28 14:33:59,889:run_EUC:INFO:sim_198101_198106_v486i:Time periodic:181 days
+2020-05-28 14:33:59,889:run_EUC:INFO:sim_198101_198106_v486i:Time periodic:181 days
+2020-05-28 14:33:59,889:run_EUC:INFO:sim_198101_198106_v486i:Time periodic:181 days
+2020-05-28 14:33:59,889:run_EUC:INFO:sim_198101_198106_v486i:Time periodic:181 days
+2020-05-28 14:33:59,889:run_EUC:INFO:sim_198101_198106_v486i:Time periodic:181 days
+2020-05-28 14:33:59,889:run_EUC:INFO:sim_198101_198106_v486i:Time periodic:181 days
+2020-05-28 14:33:59,889:run_EUC:INFO:sim_198101_198106_v486i:Time periodic:181 days
+2020-05-28 14:33:59,889:run_EUC:INFO:sim_198101_198106_v486i:Time periodic:181 days
+2020-05-28 14:33:59,889:run_EUC:INFO:sim_198101_198106_v486i:Time periodic:181 days
+2020-05-28 14:33:59,889:run_EUC:INFO:sim_198101_198106_v486i:Time periodic:181 days
+2020-05-28 14:33:59,889:run_EUC:INFO:sim_198101_198106_v486i:Time periodic:181 days
+2020-05-28 14:33:59,889:run_EUC:INFO:sim_198101_198106_v486i:Time periodic:181 days
+2020-05-28 14:33:59,889:run_EUC:INFO:sim_198101_198106_v486i:Time periodic:181 days
+2020-05-28 14:33:59,889:run_EUC:INFO:sim_198101_198106_v486i:Time periodic:181 days
+2020-05-28 14:33:59,889:run_EUC:INFO:sim_198101_198106_v486i:Time periodic:181 days
+2020-05-28 14:33:59,889:run_EUC:INFO:sim_198101_198106_v486i:Time periodic:181 days
+2020-05-28 14:33:59,889:run_EUC:INFO:sim_198101_198106_v486i:Time periodic:181 days
+2020-05-28 14:33:59,889:run_EUC:INFO:sim_198101_198106_v486i:Time periodic:181 days
+2020-05-28 14:33:59,889:run_EUC:INFO:sim_198101_198106_v486i:Time periodic:181 days
+2020-05-28 14:33:59,889:run_EUC:INFO:sim_198101_198106_v486i:Time periodic:181 days
+2020-05-28 14:33:59,889:run_EUC:INFO:sim_198101_198106_v486i:Time periodic:181 days
+2020-05-28 14:33:59,889:run_EUC:INFO:sim_198101_198106_v486i:Time periodic:181 days
+2020-05-28 14:33:59,889:run_EUC:INFO:sim_198101_198106_v486i:Time periodic:181 days
+2020-05-28 14:33:59,889:run_EUC:INFO:sim_198101_198106_v486i:Time periodic:181 days
+2020-05-28 14:33:59,889:run_EUC:INFO:sim_198101_198106_v486i:Time periodic:181 days
+2020-05-28 14:33:59,889:run_EUC:INFO:sim_198101_198106_v486i:Time periodic:181 days
+2020-05-28 14:33:59,890:run_EUC:INFO:sim_198101_198106_v486i:Repeat release: 6 days
+2020-05-28 14:33:59,890:run_EUC:INFO:sim_198101_198106_v486i:Time periodic:181 days
+2020-05-28 14:33:59,890:run_EUC:INFO:sim_198101_198106_v486i:Time periodic:181 days
+2020-05-28 14:33:59,890:run_EUC:INFO:sim_198101_198106_v486i:Time periodic:181 days
+2020-05-28 14:33:59,890:run_EUC:INFO:sim_198101_198106_v486i:Repeat release: 6 days
+2020-05-28 14:33:59,890:run_EUC:INFO:sim_198101_198106_v486i:Time periodic:181 days
+2020-05-28 14:33:59,890:run_EUC:INFO:sim_198101_198106_v486i:Repeat release: 6 days
+2020-05-28 14:33:59,890:run_EUC:INFO:sim_198101_198106_v486i:Time periodic:181 days
+2020-05-28 14:33:59,890:run_EUC:INFO:sim_198101_198106_v486i:Time periodic:181 days
+2020-05-28 14:33:59,890:run_EUC:INFO:sim_198101_198106_v486i:Time periodic:181 days
+2020-05-28 14:33:59,890:run_EUC:INFO:sim_198101_198106_v486i:Repeat release: 6 days
+2020-05-28 14:33:59,890:run_EUC:INFO:sim_198101_198106_v486i:Repeat release: 6 days
+2020-05-28 14:33:59,890:run_EUC:INFO:sim_198101_198106_v486i:Time periodic:181 days
+2020-05-28 14:33:59,890:run_EUC:INFO:sim_198101_198106_v486i:Repeat release: 6 days
+2020-05-28 14:33:59,890:run_EUC:INFO:sim_198101_198106_v486i:Repeat release: 6 days
+2020-05-28 14:33:59,890:run_EUC:INFO:sim_198101_198106_v486i:Repeat release: 6 days
+2020-05-28 14:33:59,890:run_EUC:INFO:sim_198101_198106_v486i:Repeat release: 6 days
+2020-05-28 14:33:59,890:run_EUC:INFO:sim_198101_198106_v486i:Time periodic:181 days
+2020-05-28 14:33:59,890:run_EUC:INFO:sim_198101_198106_v486i:Time periodic:181 days
+2020-05-28 14:33:59,890:run_EUC:INFO:sim_198101_198106_v486i:Time periodic:181 days
+2020-05-28 14:33:59,890:run_EUC:INFO:sim_198101_198106_v486i:Repeat release: 6 days
+2020-05-28 14:33:59,890:run_EUC:INFO:sim_198101_198106_v486i:Repeat release: 6 days
+2020-05-28 14:33:59,890:run_EUC:INFO:sim_198101_198106_v486i:Repeat release: 6 days
+2020-05-28 14:33:59,890:run_EUC:INFO:sim_198101_198106_v486i:Repeat release: 6 days
+2020-05-28 14:33:59,890:run_EUC:INFO:sim_198101_198106_v486i:Repeat release: 6 days
+2020-05-28 14:33:59,890:run_EUC:INFO:sim_198101_198106_v486i:Repeat release: 6 days
+2020-05-28 14:33:59,890:run_EUC:INFO:sim_198101_198106_v486i:Repeat release: 6 days
+2020-05-28 14:33:59,890:run_EUC:INFO:sim_198101_198106_v486i:Repeat release: 6 days
+2020-05-28 14:33:59,890:run_EUC:INFO:sim_198101_198106_v486i:Repeat release: 6 days
+2020-05-28 14:33:59,890:run_EUC:INFO:sim_198101_198106_v486i:Repeat release: 6 days
+2020-05-28 14:33:59,890:run_EUC:INFO:sim_198101_198106_v486i:Repeat release: 6 days
+2020-05-28 14:33:59,891:run_EUC:INFO:sim_198101_198106_v486i:Repeat release: 6 days
+2020-05-28 14:33:59,891:run_EUC:INFO:sim_198101_198106_v486i:Repeat release: 6 days
+2020-05-28 14:33:59,891:run_EUC:INFO:sim_198101_198106_v486i:Repeat release: 6 days
+2020-05-28 14:33:59,891:run_EUC:INFO:sim_198101_198106_v486i:Repeat release: 6 days
+2020-05-28 14:33:59,891:run_EUC:INFO:sim_198101_198106_v486i:Repeat release: 6 days
+2020-05-28 14:33:59,891:run_EUC:INFO:sim_198101_198106_v486i:Repeat release: 6 days
+2020-05-28 14:33:59,891:run_EUC:INFO:sim_198101_198106_v486i:Repeat release: 6 days
+2020-05-28 14:33:59,891:run_EUC:INFO:sim_198101_198106_v486i:Repeat release: 6 days
+2020-05-28 14:33:59,891:run_EUC:INFO:sim_198101_198106_v486i:Repeat release: 6 days
+2020-05-28 14:33:59,891:run_EUC:INFO:sim_198101_198106_v486i:Repeat release: 6 days
+2020-05-28 14:33:59,891:run_EUC:INFO:sim_198101_198106_v486i:Repeat release: 6 days
+2020-05-28 14:33:59,891:run_EUC:INFO:sim_198101_198106_v486i:Repeat release: 6 days
+2020-05-28 14:33:59,891:run_EUC:INFO:sim_198101_198106_v486i:Repeat release: 6 days
+2020-05-28 14:33:59,891:run_EUC:INFO:sim_198101_198106_v486i:Repeat release: 6 days
+2020-05-28 14:33:59,891:run_EUC:INFO:sim_198101_198106_v486i:Repeat release: 6 days
+2020-05-28 14:33:59,891:run_EUC:INFO:sim_198101_198106_v486i:Repeat release: 6 days
+2020-05-28 14:33:59,891:run_EUC:INFO:sim_198101_198106_v486i:Particles: Total: 23002 :/repeat: 742
+2020-05-28 14:33:59,891:run_EUC:INFO:sim_198101_198106_v486i:Repeat release: 6 days
+2020-05-28 14:33:59,891:run_EUC:INFO:sim_198101_198106_v486i:Repeat release: 6 days
+2020-05-28 14:33:59,891:run_EUC:INFO:sim_198101_198106_v486i:Repeat release: 6 days
+2020-05-28 14:33:59,891:run_EUC:INFO:sim_198101_198106_v486i:Particles: Total: 23002 :/repeat: 742
+2020-05-28 14:33:59,891:run_EUC:INFO:sim_198101_198106_v486i:Repeat release: 6 days
+2020-05-28 14:33:59,891:run_EUC:INFO:sim_198101_198106_v486i:Particles: Total: 23002 :/repeat: 742
+2020-05-28 14:33:59,891:run_EUC:INFO:sim_198101_198106_v486i:Repeat release: 6 days
+2020-05-28 14:33:59,891:run_EUC:INFO:sim_198101_198106_v486i:Repeat release: 6 days
+2020-05-28 14:33:59,891:run_EUC:INFO:sim_198101_198106_v486i:Repeat release: 6 days
+2020-05-28 14:33:59,891:run_EUC:INFO:sim_198101_198106_v486i:Particles: Total: 23002 :/repeat: 742
+2020-05-28 14:33:59,891:run_EUC:INFO:sim_198101_198106_v486i:Particles: Total: 23002 :/repeat: 742
+2020-05-28 14:33:59,891:run_EUC:INFO:sim_198101_198106_v486i:Repeat release: 6 days
+2020-05-28 14:33:59,891:run_EUC:INFO:sim_198101_198106_v486i:Particles: Total: 23002 :/repeat: 742
+2020-05-28 14:33:59,891:run_EUC:INFO:sim_198101_198106_v486i:Particles: Total: 23002 :/repeat: 742
+2020-05-28 14:33:59,891:run_EUC:INFO:sim_198101_198106_v486i:Repeat release: 6 days
+2020-05-28 14:33:59,891:run_EUC:INFO:sim_198101_198106_v486i:Particles: Total: 23002 :/repeat: 742
+2020-05-28 14:33:59,891:run_EUC:INFO:sim_198101_198106_v486i:Particles: Total: 23002 :/repeat: 742
+2020-05-28 14:33:59,891:run_EUC:INFO:sim_198101_198106_v486i:Repeat release: 6 days
+2020-05-28 14:33:59,891:run_EUC:INFO:sim_198101_198106_v486i:Repeat release: 6 days
+2020-05-28 14:33:59,892:run_EUC:INFO:sim_198101_198106_v486i:Repeat release: 6 days
+2020-05-28 14:33:59,892:run_EUC:INFO:sim_198101_198106_v486i:Particles: Total: 23002 :/repeat: 742
+2020-05-28 14:33:59,892:run_EUC:INFO:sim_198101_198106_v486i:Particles: Total: 23002 :/repeat: 742
+2020-05-28 14:33:59,892:run_EUC:INFO:sim_198101_198106_v486i:Particles: Total: 23002 :/repeat: 742
+2020-05-28 14:33:59,892:run_EUC:INFO:sim_198101_198106_v486i:Particles: Total: 23002 :/repeat: 742
+2020-05-28 14:33:59,892:run_EUC:INFO:sim_198101_198106_v486i:Particles: Total: 23002 :/repeat: 742
+2020-05-28 14:33:59,892:run_EUC:INFO:sim_198101_198106_v486i:Particles: Total: 23002 :/repeat: 742
+2020-05-28 14:33:59,892:run_EUC:INFO:sim_198101_198106_v486i:Particles: Total: 23002 :/repeat: 742
+2020-05-28 14:33:59,892:run_EUC:INFO:sim_198101_198106_v486i:Particles: Total: 23002 :/repeat: 742
+2020-05-28 14:33:59,892:run_EUC:INFO:sim_198101_198106_v486i:Particles: Total: 23002 :/repeat: 742
+2020-05-28 14:33:59,892:run_EUC:INFO:sim_198101_198106_v486i:Particles: Total: 23002 :/repeat: 742
+2020-05-28 14:33:59,892:run_EUC:INFO:sim_198101_198106_v486i:Particles: Total: 23002 :/repeat: 742
+2020-05-28 14:33:59,892:run_EUC:INFO:sim_198101_198106_v486i:Particles: Total: 23002 :/repeat: 742
+2020-05-28 14:33:59,892:run_EUC:INFO:sim_198101_198106_v486i:Particles: Total: 23002 :/repeat: 742
+2020-05-28 14:33:59,892:run_EUC:INFO:sim_198101_198106_v486i:Particles: Total: 23002 :/repeat: 742
+2020-05-28 14:33:59,892:run_EUC:INFO:sim_198101_198106_v486i:Particles: Total: 23002 :/repeat: 742
+2020-05-28 14:33:59,892:run_EUC:INFO:sim_198101_198106_v486i:Particles: Total: 23002 :/repeat: 742
+2020-05-28 14:33:59,892:run_EUC:INFO:sim_198101_198106_v486i:Particles: Total: 23002 :/repeat: 742
+2020-05-28 14:33:59,892:run_EUC:INFO:sim_198101_198106_v486i:Particles: Total: 23002 :/repeat: 742
+2020-05-28 14:33:59,892:run_EUC:INFO:sim_198101_198106_v486i:Particles: Total: 23002 :/repeat: 742
+2020-05-28 14:33:59,892:run_EUC:INFO:sim_198101_198106_v486i:Particles: Total: 23002 :/repeat: 742
+2020-05-28 14:33:59,892:run_EUC:INFO:sim_198101_198106_v486i:Particles: Total: 23002 :/repeat: 742
+2020-05-28 14:33:59,892:run_EUC:INFO:sim_198101_198106_v486i:Particles: Total: 23002 :/repeat: 742
+2020-05-28 14:33:59,892:run_EUC:INFO:sim_198101_198106_v486i:Particles: Total: 23002 :/repeat: 742
+2020-05-28 14:33:59,892:run_EUC:INFO:sim_198101_198106_v486i:Particles: Total: 23002 :/repeat: 742
+2020-05-28 14:33:59,893:run_EUC:INFO:sim_198101_198106_v486i:Particles: Total: 23002 :/repeat: 742
+2020-05-28 14:33:59,893:run_EUC:INFO:sim_198101_198106_v486i:Particles: Total: 23002 :/repeat: 742
+2020-05-28 14:33:59,893:run_EUC:INFO:sim_198101_198106_v486i:Particles: Total: 23002 :/repeat: 742
+2020-05-28 14:33:59,893:run_EUC:INFO:sim_198101_198106_v486i:Particles: Total: 23002 :/repeat: 742
+2020-05-28 14:33:59,893:run_EUC:INFO:sim_198101_198106_v486i:Particles: Total: 23002 :/repeat: 742
+2020-05-28 14:33:59,893:run_EUC:INFO:sim_198101_198106_v486i:Particles: Total: 23002 :/repeat: 742
+2020-05-28 14:33:59,893:run_EUC:INFO:sim_198101_198106_v486i:Particles: Total: 23002 :/repeat: 742
+2020-05-28 14:33:59,893:run_EUC:INFO:sim_198101_198106_v486i:Particles: Total: 23002 :/repeat: 742
+2020-05-28 14:33:59,893:run_EUC:INFO:sim_198101_198106_v486i:Particles: Total: 23002 :/repeat: 742
+2020-05-28 14:33:59,893:run_EUC:INFO:sim_198101_198106_v486i:Particles: Total: 23002 :/repeat: 742
+2020-05-28 14:33:59,893:run_EUC:INFO:sim_198101_198106_v486i:Particles: Total: 23002 :/repeat: 742
+2020-05-28 14:33:59,893:run_EUC:INFO:sim_198101_198106_v486i:Particles: Total: 23002 :/repeat: 742
+2020-05-28 14:33:59,893:run_EUC:INFO:sim_198101_198106_v486i:Particles: Total: 23002 :/repeat: 742
+2020-05-28 14:33:59,893:run_EUC:INFO:sim_198101_198106_v486i:Particles: Total: 23002 :/repeat: 742
+2020-05-28 14:33:59,893:run_EUC:INFO:sim_198101_198106_v486i:Particles: Total: 23002 :/repeat: 742
+2020-05-28 14:34:05,010:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:34:05,010:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:34:05,010:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:34:05,010:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:34:05,010:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:34:05,010:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:34:05,011:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:34:05,011:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:34:05,011:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:34:05,011:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:34:05,012:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:34:05,013:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:34:05,013:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:34:05,013:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:34:05,013:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:34:05,014:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:34:05,014:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:34:05,014:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:34:05,014:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:34:05,015:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:34:05,015:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:34:05,016:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:34:05,017:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:34:05,017:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:34:05,017:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:34:05,017:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:34:05,017:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:34:05,018:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:34:05,018:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:34:05,018:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:34:05,019:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:34:05,019:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:34:05,019:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:34:05,019:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:34:05,019:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:34:05,019:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:34:05,019:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:34:05,020:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:34:05,020:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:34:05,020:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:34:05,020:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:34:05,020:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:34:05,020:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:34:05,020:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:34:05,020:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:34:05,020:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:34:05,020:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:34:05,022:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:34:19,574:EUC_particles:DEBUG:sim_198101_198106_v486i:Initial pset size:14
+2020-05-28 14:34:19,650:EUC_particles:DEBUG:sim_198101_198106_v486i:Initial pset size:14
+2020-05-28 14:34:19,719:EUC_particles:DEBUG:sim_198101_198106_v486i:Initial pset size:14
+2020-05-28 14:34:19,778:EUC_particles:DEBUG:sim_198101_198106_v486i:Initial pset size:14
+2020-05-28 14:34:19,784:EUC_particles:DEBUG:sim_198101_198106_v486i:Initial pset size:14
+2020-05-28 14:34:19,850:EUC_particles:DEBUG:sim_198101_198106_v486i:Initial pset size:14
+2020-05-28 14:34:19,853:EUC_particles:DEBUG:sim_198101_198106_v486i:Initial pset size:14
+2020-05-28 14:34:19,854:EUC_particles:DEBUG:sim_198101_198106_v486i:Initial pset size:14
+2020-05-28 14:34:19,859:EUC_particles:DEBUG:sim_198101_198106_v486i:Initial pset size:14
+2020-05-28 14:34:19,898:EUC_particles:DEBUG:sim_198101_198106_v486i:Initial pset size:14
+2020-05-28 14:34:19,939:EUC_particles:DEBUG:sim_198101_198106_v486i:Initial pset size:14
+2020-05-28 14:34:19,940:EUC_particles:DEBUG:sim_198101_198106_v486i:Initial pset size:14
+2020-05-28 14:34:19,940:EUC_particles:DEBUG:sim_198101_198106_v486i:Initial pset size:14
+2020-05-28 14:34:19,948:EUC_particles:DEBUG:sim_198101_198106_v486i:Initial pset size:14
+2020-05-28 14:34:19,969:EUC_particles:DEBUG:sim_198101_198106_v486i:Initial pset size:14
+2020-05-28 14:34:20,026:EUC_particles:DEBUG:sim_198101_198106_v486i:Initial pset size:14
+2020-05-28 14:34:20,026:EUC_particles:DEBUG:sim_198101_198106_v486i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-JJHVCFFV
+2020-05-28 14:34:20,026:EUC_particles:DEBUG:sim_198101_198106_v486i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-JJHVCFFV
+2020-05-28 14:34:20,026:EUC_particles:DEBUG:sim_198101_198106_v486i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-JJHVCFFV
+2020-05-28 14:34:20,026:EUC_particles:DEBUG:sim_198101_198106_v486i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-JJHVCFFV
+2020-05-28 14:34:20,026:EUC_particles:INFO:sim_198101_198106_v486i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:34:20,026:EUC_particles:DEBUG:sim_198101_198106_v486i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-JJHVCFFV
+2020-05-28 14:34:20,026:EUC_particles:DEBUG:sim_198101_198106_v486i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-JJHVCFFV
+2020-05-28 14:34:20,026:EUC_particles:INFO:sim_198101_198106_v486i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:34:20,026:EUC_particles:DEBUG:sim_198101_198106_v486i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-JJHVCFFV
+2020-05-28 14:34:20,027:EUC_particles:INFO:sim_198101_198106_v486i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:34:20,027:EUC_particles:INFO:sim_198101_198106_v486i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:34:20,027:EUC_particles:INFO:sim_198101_198106_v486i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:34:20,026:EUC_particles:DEBUG:sim_198101_198106_v486i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-JJHVCFFV
+2020-05-28 14:34:20,027:EUC_particles:INFO:sim_198101_198106_v486i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:34:20,027:EUC_particles:INFO:sim_198101_198106_v486i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:34:20,027:EUC_particles:DEBUG:sim_198101_198106_v486i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-JJHVCFFV
+2020-05-28 14:34:20,027:EUC_particles:DEBUG:sim_198101_198106_v486i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-JJHVCFFV
+2020-05-28 14:34:20,027:EUC_particles:DEBUG:sim_198101_198106_v486i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-JJHVCFFV
+2020-05-28 14:34:20,027:EUC_particles:INFO:sim_198101_198106_v486i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:34:20,027:EUC_particles:INFO:sim_198101_198106_v486i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:34:20,027:EUC_particles:INFO:sim_198101_198106_v486i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:34:20,027:EUC_particles:INFO:sim_198101_198106_v486i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:34:20,205:EUC_particles:DEBUG:sim_198101_198106_v486i:Initial pset size:14
+2020-05-28 14:34:20,205:EUC_particles:DEBUG:sim_198101_198106_v486i:Initial pset size:14
+2020-05-28 14:34:20,208:EUC_particles:DEBUG:sim_198101_198106_v486i:Initial pset size:14
+2020-05-28 14:34:20,208:EUC_particles:DEBUG:sim_198101_198106_v486i:Initial pset size:14
+2020-05-28 14:34:20,208:EUC_particles:DEBUG:sim_198101_198106_v486i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-JJHVCFFV
+2020-05-28 14:34:20,208:EUC_particles:INFO:sim_198101_198106_v486i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:34:20,209:EUC_particles:DEBUG:sim_198101_198106_v486i:Initial pset size:14
+2020-05-28 14:34:20,209:EUC_particles:DEBUG:sim_198101_198106_v486i:Initial pset size:14
+2020-05-28 14:34:20,209:EUC_particles:DEBUG:sim_198101_198106_v486i:Initial pset size:14
+2020-05-28 14:34:20,211:EUC_particles:DEBUG:sim_198101_198106_v486i:Initial pset size:14
+2020-05-28 14:34:20,211:EUC_particles:DEBUG:sim_198101_198106_v486i:Initial pset size:14
+2020-05-28 14:34:20,267:EUC_particles:DEBUG:sim_198101_198106_v486i:Initial pset size:14
+2020-05-28 14:34:20,267:EUC_particles:DEBUG:sim_198101_198106_v486i:Initial pset size:14
+2020-05-28 14:34:20,267:EUC_particles:DEBUG:sim_198101_198106_v486i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-JJHVCFFV
+2020-05-28 14:34:20,268:EUC_particles:INFO:sim_198101_198106_v486i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:34:20,275:EUC_particles:DEBUG:sim_198101_198106_v486i:Initial pset size:14
+2020-05-28 14:34:20,456:EUC_particles:DEBUG:sim_198101_198106_v486i:Initial pset size:14
+2020-05-28 14:34:20,457:EUC_particles:DEBUG:sim_198101_198106_v486i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-JJHVCFFV
+2020-05-28 14:34:20,457:EUC_particles:INFO:sim_198101_198106_v486i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:34:20,457:EUC_particles:DEBUG:sim_198101_198106_v486i:Initial pset size:14
+2020-05-28 14:34:20,458:EUC_particles:DEBUG:sim_198101_198106_v486i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-JJHVCFFV
+2020-05-28 14:34:20,458:EUC_particles:INFO:sim_198101_198106_v486i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:34:20,458:EUC_particles:DEBUG:sim_198101_198106_v486i:Initial pset size:14
+2020-05-28 14:34:20,458:EUC_particles:DEBUG:sim_198101_198106_v486i:Initial pset size:14
+2020-05-28 14:34:20,459:EUC_particles:DEBUG:sim_198101_198106_v486i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-JJHVCFFV
+2020-05-28 14:34:20,459:EUC_particles:DEBUG:sim_198101_198106_v486i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-JJHVCFFV
+2020-05-28 14:34:20,459:EUC_particles:INFO:sim_198101_198106_v486i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:34:20,459:EUC_particles:INFO:sim_198101_198106_v486i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:34:20,459:EUC_particles:DEBUG:sim_198101_198106_v486i:Initial pset size:14
+2020-05-28 14:34:20,459:EUC_particles:DEBUG:sim_198101_198106_v486i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-JJHVCFFV
+2020-05-28 14:34:20,460:EUC_particles:INFO:sim_198101_198106_v486i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:34:20,470:EUC_particles:DEBUG:sim_198101_198106_v486i:Initial pset size:14
+2020-05-28 14:34:20,499:EUC_particles:DEBUG:sim_198101_198106_v486i:Initial pset size:14
+2020-05-28 14:34:20,500:EUC_particles:DEBUG:sim_198101_198106_v486i:Initial pset size:14
+2020-05-28 14:34:20,500:EUC_particles:DEBUG:sim_198101_198106_v486i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-JJHVCFFV
+2020-05-28 14:34:20,500:EUC_particles:INFO:sim_198101_198106_v486i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:34:20,601:EUC_particles:DEBUG:sim_198101_198106_v486i: Excecute particle set.
+2020-05-28 14:34:20,601:EUC_particles:DEBUG:sim_198101_198106_v486i: Excecute particle set.
+2020-05-28 14:34:20,601:EUC_particles:DEBUG:sim_198101_198106_v486i: Excecute particle set.
+2020-05-28 14:34:20,601:EUC_particles:DEBUG:sim_198101_198106_v486i: Excecute particle set.
+2020-05-28 14:34:20,601:EUC_particles:DEBUG:sim_198101_198106_v486i: Excecute particle set.
+2020-05-28 14:34:20,601:EUC_particles:DEBUG:sim_198101_198106_v486i: Excecute particle set.
+2020-05-28 14:34:20,602:EUC_particles:DEBUG:sim_198101_198106_v486i: Excecute particle set.
+2020-05-28 14:34:20,602:EUC_particles:DEBUG:sim_198101_198106_v486i: Excecute particle set.
+2020-05-28 14:34:20,602:EUC_particles:DEBUG:sim_198101_198106_v486i: Excecute particle set.
+2020-05-28 14:34:20,602:EUC_particles:DEBUG:sim_198101_198106_v486i: Excecute particle set.
+2020-05-28 14:34:20,602:EUC_particles:DEBUG:sim_198101_198106_v486i: Excecute particle set.
+2020-05-28 14:34:20,672:EUC_particles:DEBUG:sim_198101_198106_v486i:Initial pset size:14
+2020-05-28 14:34:20,684:EUC_particles:DEBUG:sim_198101_198106_v486i:Initial pset size:14
+2020-05-28 14:34:20,684:EUC_particles:DEBUG:sim_198101_198106_v486i:Initial pset size:14
+2020-05-28 14:34:20,684:EUC_particles:DEBUG:sim_198101_198106_v486i:Initial pset size:14
+2020-05-28 14:34:20,684:EUC_particles:DEBUG:sim_198101_198106_v486i:Initial pset size:14
+2020-05-28 14:34:20,684:EUC_particles:DEBUG:sim_198101_198106_v486i:Initial pset size:14
+2020-05-28 14:34:20,684:EUC_particles:DEBUG:sim_198101_198106_v486i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-JJHVCFFV
+2020-05-28 14:34:20,685:EUC_particles:INFO:sim_198101_198106_v486i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:34:20,685:EUC_particles:DEBUG:sim_198101_198106_v486i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-JJHVCFFV
+2020-05-28 14:34:20,685:EUC_particles:INFO:sim_198101_198106_v486i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:34:20,685:EUC_particles:DEBUG:sim_198101_198106_v486i:Initial pset size:14
+2020-05-28 14:34:20,685:EUC_particles:DEBUG:sim_198101_198106_v486i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-JJHVCFFV
+2020-05-28 14:34:20,685:EUC_particles:INFO:sim_198101_198106_v486i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:34:20,867:EUC_particles:DEBUG:sim_198101_198106_v486i: Excecute particle set.
+2020-05-28 14:34:21,099:EUC_particles:DEBUG:sim_198101_198106_v486i: Excecute particle set.
+2020-05-28 14:34:21,147:EUC_particles:DEBUG:sim_198101_198106_v486i: Excecute particle set.
+2020-05-28 14:34:21,147:EUC_particles:DEBUG:sim_198101_198106_v486i: Excecute particle set.
+2020-05-28 14:34:21,154:EUC_particles:DEBUG:sim_198101_198106_v486i: Excecute particle set.
+2020-05-28 14:34:21,161:EUC_particles:DEBUG:sim_198101_198106_v486i: Excecute particle set.
+2020-05-28 14:34:21,162:EUC_particles:DEBUG:sim_198101_198106_v486i: Excecute particle set.
+2020-05-28 14:34:21,172:EUC_particles:DEBUG:sim_198101_198106_v486i: Excecute particle set.
+2020-05-28 14:34:21,241:EUC_particles:DEBUG:sim_198101_198106_v486i: Excecute particle set.
+2020-05-28 14:34:21,241:EUC_particles:DEBUG:sim_198101_198106_v486i: Excecute particle set.
+2020-05-28 14:34:21,244:EUC_particles:DEBUG:sim_198101_198106_v486i: Excecute particle set.
+2020-05-28 14:34:26,294:EUC_particles:DEBUG:sim_198101_198106_v486i:Initial pset size:28
+2020-05-28 14:34:26,296:EUC_particles:DEBUG:sim_198101_198106_v486i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-JJHVCFFV
+2020-05-28 14:34:26,296:EUC_particles:DEBUG:sim_198101_198106_v486i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-JJHVCFFV
+2020-05-28 14:34:26,296:EUC_particles:DEBUG:sim_198101_198106_v486i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-JJHVCFFV
+2020-05-28 14:34:26,296:EUC_particles:DEBUG:sim_198101_198106_v486i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-JJHVCFFV
+2020-05-28 14:34:26,296:EUC_particles:DEBUG:sim_198101_198106_v486i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-JJHVCFFV
+2020-05-28 14:34:26,296:EUC_particles:DEBUG:sim_198101_198106_v486i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-JJHVCFFV
+2020-05-28 14:34:26,296:EUC_particles:INFO:sim_198101_198106_v486i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:34:26,296:EUC_particles:DEBUG:sim_198101_198106_v486i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-JJHVCFFV
+2020-05-28 14:34:26,296:EUC_particles:DEBUG:sim_198101_198106_v486i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-JJHVCFFV
+2020-05-28 14:34:26,296:EUC_particles:INFO:sim_198101_198106_v486i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:34:26,296:EUC_particles:DEBUG:sim_198101_198106_v486i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-JJHVCFFV
+2020-05-28 14:34:26,296:EUC_particles:INFO:sim_198101_198106_v486i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:34:26,296:EUC_particles:DEBUG:sim_198101_198106_v486i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-JJHVCFFV
+2020-05-28 14:34:26,296:EUC_particles:DEBUG:sim_198101_198106_v486i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-JJHVCFFV
+2020-05-28 14:34:26,296:EUC_particles:INFO:sim_198101_198106_v486i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:34:26,296:EUC_particles:DEBUG:sim_198101_198106_v486i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-JJHVCFFV
+2020-05-28 14:34:26,296:EUC_particles:INFO:sim_198101_198106_v486i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:34:26,296:EUC_particles:DEBUG:sim_198101_198106_v486i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-JJHVCFFV
+2020-05-28 14:34:26,296:EUC_particles:DEBUG:sim_198101_198106_v486i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-JJHVCFFV
+2020-05-28 14:34:26,296:EUC_particles:DEBUG:sim_198101_198106_v486i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-JJHVCFFV
+2020-05-28 14:34:26,296:EUC_particles:INFO:sim_198101_198106_v486i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:34:26,296:EUC_particles:DEBUG:sim_198101_198106_v486i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-JJHVCFFV
+2020-05-28 14:34:26,296:EUC_particles:DEBUG:sim_198101_198106_v486i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-JJHVCFFV
+2020-05-28 14:34:26,296:EUC_particles:DEBUG:sim_198101_198106_v486i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-JJHVCFFV
+2020-05-28 14:34:26,296:EUC_particles:DEBUG:sim_198101_198106_v486i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-JJHVCFFV
+2020-05-28 14:34:26,296:EUC_particles:DEBUG:sim_198101_198106_v486i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-JJHVCFFV
+2020-05-28 14:34:26,296:EUC_particles:DEBUG:sim_198101_198106_v486i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-JJHVCFFV
+2020-05-28 14:34:26,296:EUC_particles:DEBUG:sim_198101_198106_v486i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-JJHVCFFV
+2020-05-28 14:34:26,296:EUC_particles:INFO:sim_198101_198106_v486i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:34:26,296:EUC_particles:INFO:sim_198101_198106_v486i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:34:26,296:EUC_particles:INFO:sim_198101_198106_v486i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:34:26,296:EUC_particles:INFO:sim_198101_198106_v486i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:34:26,297:EUC_particles:INFO:sim_198101_198106_v486i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:34:26,297:EUC_particles:INFO:sim_198101_198106_v486i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:34:26,297:EUC_particles:INFO:sim_198101_198106_v486i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:34:26,297:EUC_particles:INFO:sim_198101_198106_v486i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:34:26,297:EUC_particles:INFO:sim_198101_198106_v486i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:34:26,297:EUC_particles:INFO:sim_198101_198106_v486i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:34:26,297:EUC_particles:INFO:sim_198101_198106_v486i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:34:26,297:EUC_particles:INFO:sim_198101_198106_v486i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:34:26,297:EUC_particles:INFO:sim_198101_198106_v486i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:34:26,297:EUC_particles:INFO:sim_198101_198106_v486i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:34:26,297:EUC_particles:INFO:sim_198101_198106_v486i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:34:26,297:EUC_particles:INFO:sim_198101_198106_v486i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:34:26,961:EUC_particles:DEBUG:sim_198101_198106_v486i:Initial pset size:28
+2020-05-28 14:34:26,962:EUC_particles:DEBUG:sim_198101_198106_v486i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-JJHVCFFV
+2020-05-28 14:34:26,962:EUC_particles:INFO:sim_198101_198106_v486i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:34:27,307:EUC_particles:DEBUG:sim_198101_198106_v486i:Initial pset size:28
+2020-05-28 14:34:27,308:EUC_particles:DEBUG:sim_198101_198106_v486i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-JJHVCFFV
+2020-05-28 14:34:27,308:EUC_particles:INFO:sim_198101_198106_v486i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:34:27,400:EUC_particles:DEBUG:sim_198101_198106_v486i:Initial pset size:28
+2020-05-28 14:34:27,401:EUC_particles:DEBUG:sim_198101_198106_v486i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-JJHVCFFV
+2020-05-28 14:34:27,401:EUC_particles:INFO:sim_198101_198106_v486i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:34:27,431:EUC_particles:DEBUG:sim_198101_198106_v486i: Excecute particle set.
+2020-05-28 14:34:27,431:EUC_particles:DEBUG:sim_198101_198106_v486i: Excecute particle set.
+2020-05-28 14:34:27,431:EUC_particles:DEBUG:sim_198101_198106_v486i: Excecute particle set.
+2020-05-28 14:34:27,431:EUC_particles:DEBUG:sim_198101_198106_v486i: Excecute particle set.
+2020-05-28 14:34:27,431:EUC_particles:DEBUG:sim_198101_198106_v486i: Excecute particle set.
+2020-05-28 14:34:27,431:EUC_particles:DEBUG:sim_198101_198106_v486i: Excecute particle set.
+2020-05-28 14:34:27,431:EUC_particles:DEBUG:sim_198101_198106_v486i: Excecute particle set.
+2020-05-28 14:34:27,433:EUC_particles:DEBUG:sim_198101_198106_v486i: Excecute particle set.
+2020-05-28 14:34:27,434:EUC_particles:DEBUG:sim_198101_198106_v486i: Excecute particle set.
+2020-05-28 14:34:27,437:EUC_particles:DEBUG:sim_198101_198106_v486i: Excecute particle set.
+2020-05-28 14:34:27,438:EUC_particles:DEBUG:sim_198101_198106_v486i: Excecute particle set.
+2020-05-28 14:34:27,439:EUC_particles:DEBUG:sim_198101_198106_v486i: Excecute particle set.
+2020-05-28 14:34:27,474:EUC_particles:DEBUG:sim_198101_198106_v486i: Excecute particle set.
+2020-05-28 14:34:27,474:EUC_particles:DEBUG:sim_198101_198106_v486i: Excecute particle set.
+2020-05-28 14:34:27,475:EUC_particles:DEBUG:sim_198101_198106_v486i: Excecute particle set.
+2020-05-28 14:34:27,478:EUC_particles:DEBUG:sim_198101_198106_v486i: Excecute particle set.
+2020-05-28 14:34:27,478:EUC_particles:DEBUG:sim_198101_198106_v486i: Excecute particle set.
+2020-05-28 14:34:27,478:EUC_particles:DEBUG:sim_198101_198106_v486i: Excecute particle set.
+2020-05-28 14:34:27,478:EUC_particles:DEBUG:sim_198101_198106_v486i: Excecute particle set.
+2020-05-28 14:34:27,478:EUC_particles:DEBUG:sim_198101_198106_v486i: Excecute particle set.
+2020-05-28 14:34:27,478:EUC_particles:DEBUG:sim_198101_198106_v486i: Excecute particle set.
+2020-05-28 14:34:27,479:EUC_particles:DEBUG:sim_198101_198106_v486i: Excecute particle set.
+2020-05-28 14:34:27,536:EUC_particles:DEBUG:sim_198101_198106_v486i:Initial pset size:28
+2020-05-28 14:34:27,536:EUC_particles:DEBUG:sim_198101_198106_v486i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-JJHVCFFV
+2020-05-28 14:34:27,536:EUC_particles:INFO:sim_198101_198106_v486i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:34:27,798:EUC_particles:DEBUG:sim_198101_198106_v486i: Excecute particle set.
+2020-05-28 14:34:27,879:EUC_particles:DEBUG:sim_198101_198106_v486i: Excecute particle set.
+2020-05-28 14:34:27,891:EUC_particles:DEBUG:sim_198101_198106_v486i: Excecute particle set.
+2020-05-28 14:34:27,968:EUC_particles:DEBUG:sim_198101_198106_v486i: Excecute particle set.
+2020-05-28 14:41:28,618:run_EUC:INFO:sim_198101_198106_v486i:Executing: 1981-01-01 to 1981-06-30
+2020-05-28 14:41:28,618:run_EUC:INFO:sim_198101_198106_v486i:Executing: 1981-01-01 to 1981-06-30
+2020-05-28 14:41:28,618:run_EUC:INFO:sim_198101_198106_v486i:Executing: 1981-01-01 to 1981-06-30
+2020-05-28 14:41:28,618:run_EUC:INFO:sim_198101_198106_v486i:Executing: 1981-01-01 to 1981-06-30
+2020-05-28 14:41:28,618:run_EUC:INFO:sim_198101_198106_v486i:Executing: 1981-01-01 to 1981-06-30
+2020-05-28 14:41:28,618:run_EUC:INFO:sim_198101_198106_v486i:Executing: 1981-01-01 to 1981-06-30
+2020-05-28 14:41:28,618:run_EUC:INFO:sim_198101_198106_v486i:Executing: 1981-01-01 to 1981-06-30
+2020-05-28 14:41:28,618:run_EUC:INFO:sim_198101_198106_v486i:Executing: 1981-01-01 to 1981-06-30
+2020-05-28 14:41:28,618:run_EUC:INFO:sim_198101_198106_v486i:Executing: 1981-01-01 to 1981-06-30
+2020-05-28 14:41:28,618:run_EUC:INFO:sim_198101_198106_v486i:Executing: 1981-01-01 to 1981-06-30
+2020-05-28 14:41:28,618:run_EUC:INFO:sim_198101_198106_v486i:Executing: 1981-01-01 to 1981-06-30
+2020-05-28 14:41:28,618:run_EUC:INFO:sim_198101_198106_v486i:Executing: 1981-01-01 to 1981-06-30
+2020-05-28 14:41:28,618:run_EUC:INFO:sim_198101_198106_v486i:Executing: 1981-01-01 to 1981-06-30
+2020-05-28 14:41:28,618:run_EUC:INFO:sim_198101_198106_v486i:Executing: 1981-01-01 to 1981-06-30
+2020-05-28 14:41:28,618:run_EUC:INFO:sim_198101_198106_v486i:Executing: 1981-01-01 to 1981-06-30
+2020-05-28 14:41:28,618:run_EUC:INFO:sim_198101_198106_v486i:Executing: 1981-01-01 to 1981-06-30
+2020-05-28 14:41:28,618:run_EUC:INFO:sim_198101_198106_v486i:Executing: 1981-01-01 to 1981-06-30
+2020-05-28 14:41:28,618:run_EUC:INFO:sim_198101_198106_v486i:Executing: 1981-01-01 to 1981-06-30
+2020-05-28 14:41:28,618:run_EUC:INFO:sim_198101_198106_v486i:Executing: 1981-01-01 to 1981-06-30
+2020-05-28 14:41:28,618:run_EUC:INFO:sim_198101_198106_v486i:Executing: 1981-01-01 to 1981-06-30
+2020-05-28 14:41:28,618:run_EUC:INFO:sim_198101_198106_v486i:Executing: 1981-01-01 to 1981-06-30
+2020-05-28 14:41:28,618:run_EUC:INFO:sim_198101_198106_v486i:Executing: 1981-01-01 to 1981-06-30
+2020-05-28 14:41:28,618:run_EUC:INFO:sim_198101_198106_v486i:Executing: 1981-01-01 to 1981-06-30
+2020-05-28 14:41:28,618:run_EUC:INFO:sim_198101_198106_v486i:Executing: 1981-01-01 to 1981-06-30
+2020-05-28 14:41:28,618:run_EUC:INFO:sim_198101_198106_v486i:Executing: 1981-01-01 to 1981-06-30
+2020-05-28 14:41:28,618:run_EUC:INFO:sim_198101_198106_v486i:Executing: 1981-01-01 to 1981-06-30
+2020-05-28 14:41:28,618:run_EUC:INFO:sim_198101_198106_v486i:Executing: 1981-01-01 to 1981-06-30
+2020-05-28 14:41:28,618:run_EUC:INFO:sim_198101_198106_v486i:Executing: 1981-01-01 to 1981-06-30
+2020-05-28 14:41:28,618:run_EUC:INFO:sim_198101_198106_v486i:Executing: 1981-01-01 to 1981-06-30
+2020-05-28 14:41:28,618:run_EUC:INFO:sim_198101_198106_v486i:Executing: 1981-01-01 to 1981-06-30
+2020-05-28 14:41:28,618:run_EUC:INFO:sim_198101_198106_v486i:Executing: 1981-01-01 to 1981-06-30
+2020-05-28 14:41:28,618:run_EUC:INFO:sim_198101_198106_v486i:Executing: 1981-01-01 to 1981-06-30
+2020-05-28 14:41:28,618:run_EUC:INFO:sim_198101_198106_v486i:Executing: 1981-01-01 to 1981-06-30
+2020-05-28 14:41:28,618:run_EUC:INFO:sim_198101_198106_v486i:Executing: 1981-01-01 to 1981-06-30
+2020-05-28 14:41:28,618:run_EUC:INFO:sim_198101_198106_v486i:Executing: 1981-01-01 to 1981-06-30
+2020-05-28 14:41:28,618:run_EUC:INFO:sim_198101_198106_v486i:Executing: 1981-01-01 to 1981-06-30
+2020-05-28 14:41:28,618:run_EUC:INFO:sim_198101_198106_v486i:Executing: 1981-01-01 to 1981-06-30
+2020-05-28 14:41:28,618:run_EUC:INFO:sim_198101_198106_v486i:Executing: 1981-01-01 to 1981-06-30
+2020-05-28 14:41:28,618:run_EUC:INFO:sim_198101_198106_v486i:Executing: 1981-01-01 to 1981-06-30
+2020-05-28 14:41:28,618:run_EUC:INFO:sim_198101_198106_v486i:Executing: 1981-01-01 to 1981-06-30
+2020-05-28 14:41:28,619:run_EUC:INFO:sim_198101_198106_v486i:Executing: 1981-01-01 to 1981-06-30
+2020-05-28 14:41:28,619:run_EUC:INFO:sim_198101_198106_v486i:Executing: 1981-01-01 to 1981-06-30
+2020-05-28 14:41:28,619:run_EUC:INFO:sim_198101_198106_v486i:Executing: 1981-01-01 to 1981-06-30
+2020-05-28 14:41:28,619:run_EUC:INFO:sim_198101_198106_v486i:Executing: 1981-01-01 to 1981-06-30
+2020-05-28 14:41:28,619:run_EUC:INFO:sim_198101_198106_v486i:Longitudes: 165
+2020-05-28 14:41:28,619:run_EUC:INFO:sim_198101_198106_v486i:Longitudes: 165
+2020-05-28 14:41:28,619:run_EUC:INFO:sim_198101_198106_v486i:Longitudes: 165
+2020-05-28 14:41:28,619:run_EUC:INFO:sim_198101_198106_v486i:Longitudes: 165
+2020-05-28 14:41:28,619:run_EUC:INFO:sim_198101_198106_v486i:Longitudes: 165
+2020-05-28 14:41:28,620:run_EUC:INFO:sim_198101_198106_v486i:Longitudes: 165
+2020-05-28 14:41:28,619:run_EUC:INFO:sim_198101_198106_v486i:Longitudes: 165
+2020-05-28 14:41:28,620:run_EUC:INFO:sim_198101_198106_v486i:Longitudes: 165
+2020-05-28 14:41:28,620:run_EUC:INFO:sim_198101_198106_v486i:Longitudes: 165
+2020-05-28 14:41:28,620:run_EUC:INFO:sim_198101_198106_v486i:Longitudes: 165
+2020-05-28 14:41:28,620:run_EUC:INFO:sim_198101_198106_v486i:Longitudes: 165
+2020-05-28 14:41:28,620:run_EUC:INFO:sim_198101_198106_v486i:Longitudes: 165
+2020-05-28 14:41:28,620:run_EUC:INFO:sim_198101_198106_v486i:Longitudes: 165
+2020-05-28 14:41:28,620:run_EUC:INFO:sim_198101_198106_v486i:Longitudes: 165
+2020-05-28 14:41:28,620:run_EUC:INFO:sim_198101_198106_v486i:Longitudes: 165
+2020-05-28 14:41:28,620:run_EUC:INFO:sim_198101_198106_v486i:Longitudes: 165
+2020-05-28 14:41:28,620:run_EUC:INFO:sim_198101_198106_v486i:Longitudes: 165
+2020-05-28 14:41:28,620:run_EUC:INFO:sim_198101_198106_v486i:Longitudes: 165
+2020-05-28 14:41:28,620:run_EUC:INFO:sim_198101_198106_v486i:Longitudes: 165
+2020-05-28 14:41:28,620:run_EUC:INFO:sim_198101_198106_v486i:Longitudes: 165
+2020-05-28 14:41:28,620:run_EUC:INFO:sim_198101_198106_v486i:Longitudes: 165
+2020-05-28 14:41:28,620:run_EUC:INFO:sim_198101_198106_v486i:Longitudes: 165
+2020-05-28 14:41:28,620:run_EUC:INFO:sim_198101_198106_v486i:Longitudes: 165
+2020-05-28 14:41:28,620:run_EUC:INFO:sim_198101_198106_v486i:Longitudes: 165
+2020-05-28 14:41:28,620:run_EUC:INFO:sim_198101_198106_v486i:Longitudes: 165
+2020-05-28 14:41:28,620:run_EUC:INFO:sim_198101_198106_v486i:Longitudes: 165
+2020-05-28 14:41:28,620:run_EUC:INFO:sim_198101_198106_v486i:Longitudes: 165
+2020-05-28 14:41:28,620:run_EUC:INFO:sim_198101_198106_v486i:Longitudes: 165
+2020-05-28 14:41:28,620:run_EUC:INFO:sim_198101_198106_v486i:Longitudes: 165
+2020-05-28 14:41:28,620:run_EUC:INFO:sim_198101_198106_v486i:Longitudes: 165
+2020-05-28 14:41:28,620:run_EUC:INFO:sim_198101_198106_v486i:Longitudes: 165
+2020-05-28 14:41:28,620:run_EUC:INFO:sim_198101_198106_v486i:Longitudes: 165
+2020-05-28 14:41:28,620:run_EUC:INFO:sim_198101_198106_v486i:Longitudes: 165
+2020-05-28 14:41:28,620:run_EUC:INFO:sim_198101_198106_v486i:Longitudes: 165
+2020-05-28 14:41:28,621:run_EUC:INFO:sim_198101_198106_v486i:Longitudes: 165
+2020-05-28 14:41:28,621:run_EUC:INFO:sim_198101_198106_v486i:Longitudes: 165
+2020-05-28 14:41:28,621:run_EUC:INFO:sim_198101_198106_v486i:Longitudes: 165
+2020-05-28 14:41:28,621:run_EUC:INFO:sim_198101_198106_v486i:Longitudes: 165
+2020-05-28 14:41:28,621:run_EUC:INFO:sim_198101_198106_v486i:Longitudes: 165
+2020-05-28 14:41:28,621:run_EUC:INFO:sim_198101_198106_v486i:Longitudes: 165
+2020-05-28 14:41:28,621:run_EUC:INFO:sim_198101_198106_v486i:Longitudes: 165
+2020-05-28 14:41:28,621:run_EUC:INFO:sim_198101_198106_v486i:Longitudes: 165
+2020-05-28 14:41:28,621:run_EUC:INFO:sim_198101_198106_v486i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:41:28,621:run_EUC:INFO:sim_198101_198106_v486i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:41:28,621:run_EUC:INFO:sim_198101_198106_v486i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:41:28,621:run_EUC:INFO:sim_198101_198106_v486i:Longitudes: 165
+2020-05-28 14:41:28,621:run_EUC:INFO:sim_198101_198106_v486i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:41:28,621:run_EUC:INFO:sim_198101_198106_v486i:Longitudes: 165
+2020-05-28 14:41:28,621:run_EUC:INFO:sim_198101_198106_v486i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:41:28,621:run_EUC:INFO:sim_198101_198106_v486i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:41:28,621:run_EUC:INFO:sim_198101_198106_v486i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:41:28,621:run_EUC:INFO:sim_198101_198106_v486i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:41:28,621:run_EUC:INFO:sim_198101_198106_v486i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:41:28,621:run_EUC:INFO:sim_198101_198106_v486i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:41:28,621:run_EUC:INFO:sim_198101_198106_v486i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:41:28,621:run_EUC:INFO:sim_198101_198106_v486i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:41:28,621:run_EUC:INFO:sim_198101_198106_v486i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:41:28,621:run_EUC:INFO:sim_198101_198106_v486i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:41:28,621:run_EUC:INFO:sim_198101_198106_v486i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:41:28,621:run_EUC:INFO:sim_198101_198106_v486i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:41:28,621:run_EUC:INFO:sim_198101_198106_v486i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:41:28,621:run_EUC:INFO:sim_198101_198106_v486i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:41:28,622:run_EUC:INFO:sim_198101_198106_v486i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:41:28,622:run_EUC:INFO:sim_198101_198106_v486i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:41:28,622:run_EUC:INFO:sim_198101_198106_v486i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:41:28,622:run_EUC:INFO:sim_198101_198106_v486i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:41:28,622:run_EUC:INFO:sim_198101_198106_v486i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:41:28,622:run_EUC:INFO:sim_198101_198106_v486i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:41:28,622:run_EUC:INFO:sim_198101_198106_v486i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:41:28,622:run_EUC:INFO:sim_198101_198106_v486i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:41:28,622:run_EUC:INFO:sim_198101_198106_v486i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:41:28,622:run_EUC:INFO:sim_198101_198106_v486i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:41:28,622:run_EUC:INFO:sim_198101_198106_v486i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:41:28,622:run_EUC:INFO:sim_198101_198106_v486i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:41:28,622:run_EUC:INFO:sim_198101_198106_v486i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:41:28,622:run_EUC:INFO:sim_198101_198106_v486i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:41:28,622:run_EUC:INFO:sim_198101_198106_v486i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:41:28,622:run_EUC:INFO:sim_198101_198106_v486i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:41:28,622:run_EUC:INFO:sim_198101_198106_v486i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:41:28,622:run_EUC:INFO:sim_198101_198106_v486i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:41:28,622:run_EUC:INFO:sim_198101_198106_v486i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:41:28,622:run_EUC:INFO:sim_198101_198106_v486i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:41:28,622:run_EUC:INFO:sim_198101_198106_v486i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:41:28,622:run_EUC:INFO:sim_198101_198106_v486i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:41:28,622:run_EUC:INFO:sim_198101_198106_v486i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:41:28,622:run_EUC:INFO:sim_198101_198106_v486i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:41:28,622:run_EUC:INFO:sim_198101_198106_v486i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:41:28,622:run_EUC:INFO:sim_198101_198106_v486i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:41:28,622:run_EUC:INFO:sim_198101_198106_v486i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:41:28,622:run_EUC:INFO:sim_198101_198106_v486i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:41:28,622:run_EUC:INFO:sim_198101_198106_v486i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:41:28,622:run_EUC:INFO:sim_198101_198106_v486i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:41:28,622:run_EUC:INFO:sim_198101_198106_v486i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:41:28,622:run_EUC:INFO:sim_198101_198106_v486i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:41:28,622:run_EUC:INFO:sim_198101_198106_v486i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:41:28,622:run_EUC:INFO:sim_198101_198106_v486i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:41:28,622:run_EUC:INFO:sim_198101_198106_v486i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:41:28,622:run_EUC:INFO:sim_198101_198106_v486i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:41:28,622:run_EUC:INFO:sim_198101_198106_v486i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:41:28,622:run_EUC:INFO:sim_198101_198106_v486i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:41:28,623:run_EUC:INFO:sim_198101_198106_v486i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:41:28,623:run_EUC:INFO:sim_198101_198106_v486i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:41:28,623:run_EUC:INFO:sim_198101_198106_v486i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:41:28,623:run_EUC:INFO:sim_198101_198106_v486i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:41:28,623:run_EUC:INFO:sim_198101_198106_v486i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:41:28,623:run_EUC:INFO:sim_198101_198106_v486i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:41:28,623:run_EUC:INFO:sim_198101_198106_v486i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:41:28,623:run_EUC:INFO:sim_198101_198106_v486i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:41:28,623:run_EUC:INFO:sim_198101_198106_v486i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:41:28,623:run_EUC:INFO:sim_198101_198106_v486i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:41:28,623:run_EUC:INFO:sim_198101_198106_v486i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:41:28,623:run_EUC:INFO:sim_198101_198106_v486i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:41:28,623:run_EUC:INFO:sim_198101_198106_v486i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:41:28,623:run_EUC:INFO:sim_198101_198106_v486i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:41:28,623:run_EUC:INFO:sim_198101_198106_v486i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:41:28,623:run_EUC:INFO:sim_198101_198106_v486i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:41:28,623:run_EUC:INFO:sim_198101_198106_v486i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:41:28,623:run_EUC:INFO:sim_198101_198106_v486i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:41:28,623:run_EUC:INFO:sim_198101_198106_v486i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:41:28,623:run_EUC:INFO:sim_198101_198106_v486i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:41:28,623:run_EUC:INFO:sim_198101_198106_v486i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:41:28,623:run_EUC:INFO:sim_198101_198106_v486i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:41:28,623:run_EUC:INFO:sim_198101_198106_v486i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:41:28,623:run_EUC:INFO:sim_198101_198106_v486i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:41:28,623:run_EUC:INFO:sim_198101_198106_v486i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:41:28,623:run_EUC:INFO:sim_198101_198106_v486i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:41:28,623:run_EUC:INFO:sim_198101_198106_v486i:Runtime: 181 days
+2020-05-28 14:41:28,623:run_EUC:INFO:sim_198101_198106_v486i:Runtime: 181 days
+2020-05-28 14:41:28,623:run_EUC:INFO:sim_198101_198106_v486i:Runtime: 181 days
+2020-05-28 14:41:28,623:run_EUC:INFO:sim_198101_198106_v486i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:41:28,623:run_EUC:INFO:sim_198101_198106_v486i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:41:28,623:run_EUC:INFO:sim_198101_198106_v486i:Runtime: 181 days
+2020-05-28 14:41:28,623:run_EUC:INFO:sim_198101_198106_v486i:Runtime: 181 days
+2020-05-28 14:41:28,623:run_EUC:INFO:sim_198101_198106_v486i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:41:28,623:run_EUC:INFO:sim_198101_198106_v486i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:41:28,623:run_EUC:INFO:sim_198101_198106_v486i:Runtime: 181 days
+2020-05-28 14:41:28,623:run_EUC:INFO:sim_198101_198106_v486i:Runtime: 181 days
+2020-05-28 14:41:28,623:run_EUC:INFO:sim_198101_198106_v486i:Runtime: 181 days
+2020-05-28 14:41:28,623:run_EUC:INFO:sim_198101_198106_v486i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:41:28,624:run_EUC:INFO:sim_198101_198106_v486i:Runtime: 181 days
+2020-05-28 14:41:28,624:run_EUC:INFO:sim_198101_198106_v486i:Runtime: 181 days
+2020-05-28 14:41:28,624:run_EUC:INFO:sim_198101_198106_v486i:Runtime: 181 days
+2020-05-28 14:41:28,624:run_EUC:INFO:sim_198101_198106_v486i:Runtime: 181 days
+2020-05-28 14:41:28,624:run_EUC:INFO:sim_198101_198106_v486i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:41:28,624:run_EUC:INFO:sim_198101_198106_v486i:Runtime: 181 days
+2020-05-28 14:41:28,624:run_EUC:INFO:sim_198101_198106_v486i:Runtime: 181 days
+2020-05-28 14:41:28,624:run_EUC:INFO:sim_198101_198106_v486i:Runtime: 181 days
+2020-05-28 14:41:28,624:run_EUC:INFO:sim_198101_198106_v486i:Runtime: 181 days
+2020-05-28 14:41:28,624:run_EUC:INFO:sim_198101_198106_v486i:Runtime: 181 days
+2020-05-28 14:41:28,624:run_EUC:INFO:sim_198101_198106_v486i:Runtime: 181 days
+2020-05-28 14:41:28,624:run_EUC:INFO:sim_198101_198106_v486i:Runtime: 181 days
+2020-05-28 14:41:28,624:run_EUC:INFO:sim_198101_198106_v486i:Runtime: 181 days
+2020-05-28 14:41:28,624:run_EUC:INFO:sim_198101_198106_v486i:Runtime: 181 days
+2020-05-28 14:41:28,624:run_EUC:INFO:sim_198101_198106_v486i:Runtime: 181 days
+2020-05-28 14:41:28,624:run_EUC:INFO:sim_198101_198106_v486i:Runtime: 181 days
+2020-05-28 14:41:28,624:run_EUC:INFO:sim_198101_198106_v486i:Runtime: 181 days
+2020-05-28 14:41:28,624:run_EUC:INFO:sim_198101_198106_v486i:Runtime: 181 days
+2020-05-28 14:41:28,624:run_EUC:INFO:sim_198101_198106_v486i:Runtime: 181 days
+2020-05-28 14:41:28,624:run_EUC:INFO:sim_198101_198106_v486i:Runtime: 181 days
+2020-05-28 14:41:28,624:run_EUC:INFO:sim_198101_198106_v486i:Runtime: 181 days
+2020-05-28 14:41:28,624:run_EUC:INFO:sim_198101_198106_v486i:Runtime: 181 days
+2020-05-28 14:41:28,624:run_EUC:INFO:sim_198101_198106_v486i:Runtime: 181 days
+2020-05-28 14:41:28,624:run_EUC:INFO:sim_198101_198106_v486i:Runtime: 181 days
+2020-05-28 14:41:28,624:run_EUC:INFO:sim_198101_198106_v486i:Executing: 1981-01-01 to 1981-06-30
+2020-05-28 14:41:28,625:run_EUC:INFO:sim_198101_198106_v486i:Runtime: 181 days
+2020-05-28 14:41:28,625:run_EUC:INFO:sim_198101_198106_v486i:Runtime: 181 days
+2020-05-28 14:41:28,625:run_EUC:INFO:sim_198101_198106_v486i:Runtime: 181 days
+2020-05-28 14:41:28,625:run_EUC:INFO:sim_198101_198106_v486i:Runtime: 181 days
+2020-05-28 14:41:28,625:run_EUC:INFO:sim_198101_198106_v486i:Runtime: 181 days
+2020-05-28 14:41:28,625:run_EUC:INFO:sim_198101_198106_v486i:Runtime: 181 days
+2020-05-28 14:41:28,625:run_EUC:INFO:sim_198101_198106_v486i:Timestep dt: 240 mins
+2020-05-28 14:41:28,625:run_EUC:INFO:sim_198101_198106_v486i:Timestep dt: 240 mins
+2020-05-28 14:41:28,625:run_EUC:INFO:sim_198101_198106_v486i:Timestep dt: 240 mins
+2020-05-28 14:41:28,625:run_EUC:INFO:sim_198101_198106_v486i:Runtime: 181 days
+2020-05-28 14:41:28,625:run_EUC:INFO:sim_198101_198106_v486i:Runtime: 181 days
+2020-05-28 14:41:28,625:run_EUC:INFO:sim_198101_198106_v486i:Timestep dt: 240 mins
+2020-05-28 14:41:28,625:run_EUC:INFO:sim_198101_198106_v486i:Timestep dt: 240 mins
+2020-05-28 14:41:28,625:run_EUC:INFO:sim_198101_198106_v486i:Runtime: 181 days
+2020-05-28 14:41:28,625:run_EUC:INFO:sim_198101_198106_v486i:Timestep dt: 240 mins
+2020-05-28 14:41:28,625:run_EUC:INFO:sim_198101_198106_v486i:Runtime: 181 days
+2020-05-28 14:41:28,625:run_EUC:INFO:sim_198101_198106_v486i:Runtime: 181 days
+2020-05-28 14:41:28,625:run_EUC:INFO:sim_198101_198106_v486i:Timestep dt: 240 mins
+2020-05-28 14:41:28,625:run_EUC:INFO:sim_198101_198106_v486i:Timestep dt: 240 mins
+2020-05-28 14:41:28,625:run_EUC:INFO:sim_198101_198106_v486i:Timestep dt: 240 mins
+2020-05-28 14:41:28,625:run_EUC:INFO:sim_198101_198106_v486i:Runtime: 181 days
+2020-05-28 14:41:28,625:run_EUC:INFO:sim_198101_198106_v486i:Timestep dt: 240 mins
+2020-05-28 14:41:28,625:run_EUC:INFO:sim_198101_198106_v486i:Timestep dt: 240 mins
+2020-05-28 14:41:28,625:run_EUC:INFO:sim_198101_198106_v486i:Timestep dt: 240 mins
+2020-05-28 14:41:28,625:run_EUC:INFO:sim_198101_198106_v486i:Timestep dt: 240 mins
+2020-05-28 14:41:28,625:run_EUC:INFO:sim_198101_198106_v486i:Runtime: 181 days
+2020-05-28 14:41:28,625:run_EUC:INFO:sim_198101_198106_v486i:Timestep dt: 240 mins
+2020-05-28 14:41:28,625:run_EUC:INFO:sim_198101_198106_v486i:Timestep dt: 240 mins
+2020-05-28 14:41:28,625:run_EUC:INFO:sim_198101_198106_v486i:Timestep dt: 240 mins
+2020-05-28 14:41:28,625:run_EUC:INFO:sim_198101_198106_v486i:Timestep dt: 240 mins
+2020-05-28 14:41:28,625:run_EUC:INFO:sim_198101_198106_v486i:Timestep dt: 240 mins
+2020-05-28 14:41:28,625:run_EUC:INFO:sim_198101_198106_v486i:Timestep dt: 240 mins
+2020-05-28 14:41:28,625:run_EUC:INFO:sim_198101_198106_v486i:Timestep dt: 240 mins
+2020-05-28 14:41:28,626:run_EUC:INFO:sim_198101_198106_v486i:Timestep dt: 240 mins
+2020-05-28 14:41:28,625:run_EUC:INFO:sim_198101_198106_v486i:Timestep dt: 240 mins
+2020-05-28 14:41:28,626:run_EUC:INFO:sim_198101_198106_v486i:Timestep dt: 240 mins
+2020-05-28 14:41:28,626:run_EUC:INFO:sim_198101_198106_v486i:Timestep dt: 240 mins
+2020-05-28 14:41:28,626:run_EUC:INFO:sim_198101_198106_v486i:Timestep dt: 240 mins
+2020-05-28 14:41:28,626:run_EUC:INFO:sim_198101_198106_v486i:Timestep dt: 240 mins
+2020-05-28 14:41:28,626:run_EUC:INFO:sim_198101_198106_v486i:Timestep dt: 240 mins
+2020-05-28 14:41:28,626:run_EUC:INFO:sim_198101_198106_v486i:Timestep dt: 240 mins
+2020-05-28 14:41:28,626:run_EUC:INFO:sim_198101_198106_v486i:Timestep dt: 240 mins
+2020-05-28 14:41:28,626:run_EUC:INFO:sim_198101_198106_v486i:Timestep dt: 240 mins
+2020-05-28 14:41:28,626:run_EUC:INFO:sim_198101_198106_v486i:Timestep dt: 240 mins
+2020-05-28 14:41:28,626:run_EUC:INFO:sim_198101_198106_v486i:Timestep dt: 240 mins
+2020-05-28 14:41:28,626:run_EUC:INFO:sim_198101_198106_v486i:Longitudes: 165
+2020-05-28 14:41:28,626:run_EUC:INFO:sim_198101_198106_v486i:Timestep dt: 240 mins
+2020-05-28 14:41:28,626:run_EUC:INFO:sim_198101_198106_v486i:Timestep dt: 240 mins
+2020-05-28 14:41:28,626:run_EUC:INFO:sim_198101_198106_v486i:Timestep dt: 240 mins
+2020-05-28 14:41:28,626:run_EUC:INFO:sim_198101_198106_v486i:Timestep dt: 240 mins
+2020-05-28 14:41:28,626:run_EUC:INFO:sim_198101_198106_v486i:Timestep dt: 240 mins
+2020-05-28 14:41:28,626:run_EUC:INFO:sim_198101_198106_v486i:Output dt: 1 days
+2020-05-28 14:41:28,626:run_EUC:INFO:sim_198101_198106_v486i:Output dt: 1 days
+2020-05-28 14:41:28,626:run_EUC:INFO:sim_198101_198106_v486i:Output dt: 1 days
+2020-05-28 14:41:28,626:run_EUC:INFO:sim_198101_198106_v486i:Timestep dt: 240 mins
+2020-05-28 14:41:28,626:run_EUC:INFO:sim_198101_198106_v486i:Output dt: 1 days
+2020-05-28 14:41:28,626:run_EUC:INFO:sim_198101_198106_v486i:Output dt: 1 days
+2020-05-28 14:41:28,626:run_EUC:INFO:sim_198101_198106_v486i:Timestep dt: 240 mins
+2020-05-28 14:41:28,626:run_EUC:INFO:sim_198101_198106_v486i:Output dt: 1 days
+2020-05-28 14:41:28,626:run_EUC:INFO:sim_198101_198106_v486i:Timestep dt: 240 mins
+2020-05-28 14:41:28,626:run_EUC:INFO:sim_198101_198106_v486i:Output dt: 1 days
+2020-05-28 14:41:28,626:run_EUC:INFO:sim_198101_198106_v486i:Timestep dt: 240 mins
+2020-05-28 14:41:28,626:run_EUC:INFO:sim_198101_198106_v486i:Output dt: 1 days
+2020-05-28 14:41:28,626:run_EUC:INFO:sim_198101_198106_v486i:Timestep dt: 240 mins
+2020-05-28 14:41:28,626:run_EUC:INFO:sim_198101_198106_v486i:Output dt: 1 days
+2020-05-28 14:41:28,626:run_EUC:INFO:sim_198101_198106_v486i:Output dt: 1 days
+2020-05-28 14:41:28,626:run_EUC:INFO:sim_198101_198106_v486i:Timestep dt: 240 mins
+2020-05-28 14:41:28,626:run_EUC:INFO:sim_198101_198106_v486i:Output dt: 1 days
+2020-05-28 14:41:28,626:run_EUC:INFO:sim_198101_198106_v486i:Output dt: 1 days
+2020-05-28 14:41:28,626:run_EUC:INFO:sim_198101_198106_v486i:Output dt: 1 days
+2020-05-28 14:41:28,627:run_EUC:INFO:sim_198101_198106_v486i:Output dt: 1 days
+2020-05-28 14:41:28,627:run_EUC:INFO:sim_198101_198106_v486i:Timestep dt: 240 mins
+2020-05-28 14:41:28,627:run_EUC:INFO:sim_198101_198106_v486i:Output dt: 1 days
+2020-05-28 14:41:28,627:run_EUC:INFO:sim_198101_198106_v486i:Output dt: 1 days
+2020-05-28 14:41:28,627:run_EUC:INFO:sim_198101_198106_v486i:Output dt: 1 days
+2020-05-28 14:41:28,627:run_EUC:INFO:sim_198101_198106_v486i:Output dt: 1 days
+2020-05-28 14:41:28,627:run_EUC:INFO:sim_198101_198106_v486i:Output dt: 1 days
+2020-05-28 14:41:28,627:run_EUC:INFO:sim_198101_198106_v486i:Output dt: 1 days
+2020-05-28 14:41:28,627:run_EUC:INFO:sim_198101_198106_v486i:Output dt: 1 days
+2020-05-28 14:41:28,627:run_EUC:INFO:sim_198101_198106_v486i:Output dt: 1 days
+2020-05-28 14:41:28,627:run_EUC:INFO:sim_198101_198106_v486i:Output dt: 1 days
+2020-05-28 14:41:28,627:run_EUC:INFO:sim_198101_198106_v486i:Output dt: 1 days
+2020-05-28 14:41:28,627:run_EUC:INFO:sim_198101_198106_v486i:Output dt: 1 days
+2020-05-28 14:41:28,627:run_EUC:INFO:sim_198101_198106_v486i:Output dt: 1 days
+2020-05-28 14:41:28,627:run_EUC:INFO:sim_198101_198106_v486i:Output dt: 1 days
+2020-05-28 14:41:28,627:run_EUC:INFO:sim_198101_198106_v486i:Output dt: 1 days
+2020-05-28 14:41:28,627:run_EUC:INFO:sim_198101_198106_v486i:Output dt: 1 days
+2020-05-28 14:41:28,627:run_EUC:INFO:sim_198101_198106_v486i:Output dt: 1 days
+2020-05-28 14:41:28,627:run_EUC:INFO:sim_198101_198106_v486i:Output dt: 1 days
+2020-05-28 14:41:28,628:run_EUC:INFO:sim_198101_198106_v486i:Output dt: 1 days
+2020-05-28 14:41:28,628:run_EUC:INFO:sim_198101_198106_v486i:Output dt: 1 days
+2020-05-28 14:41:28,628:run_EUC:INFO:sim_198101_198106_v486i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:41:28,628:run_EUC:INFO:sim_198101_198106_v486i:Output dt: 1 days
+2020-05-28 14:41:28,628:run_EUC:INFO:sim_198101_198106_v486i:Output dt: 1 days
+2020-05-28 14:41:28,628:run_EUC:INFO:sim_198101_198106_v486i:Time periodic:181 days
+2020-05-28 14:41:28,628:run_EUC:INFO:sim_198101_198106_v486i:Output dt: 1 days
+2020-05-28 14:41:28,628:run_EUC:INFO:sim_198101_198106_v486i:Time periodic:181 days
+2020-05-28 14:41:28,628:run_EUC:INFO:sim_198101_198106_v486i:Time periodic:181 days
+2020-05-28 14:41:28,628:run_EUC:INFO:sim_198101_198106_v486i:Output dt: 1 days
+2020-05-28 14:41:28,628:run_EUC:INFO:sim_198101_198106_v486i:Time periodic:181 days
+2020-05-28 14:41:28,628:run_EUC:INFO:sim_198101_198106_v486i:Time periodic:181 days
+2020-05-28 14:41:28,628:run_EUC:INFO:sim_198101_198106_v486i:Output dt: 1 days
+2020-05-28 14:41:28,628:run_EUC:INFO:sim_198101_198106_v486i:Time periodic:181 days
+2020-05-28 14:41:28,628:run_EUC:INFO:sim_198101_198106_v486i:Output dt: 1 days
+2020-05-28 14:41:28,628:run_EUC:INFO:sim_198101_198106_v486i:Time periodic:181 days
+2020-05-28 14:41:28,628:run_EUC:INFO:sim_198101_198106_v486i:Output dt: 1 days
+2020-05-28 14:41:28,628:run_EUC:INFO:sim_198101_198106_v486i:Time periodic:181 days
+2020-05-28 14:41:28,628:run_EUC:INFO:sim_198101_198106_v486i:Output dt: 1 days
+2020-05-28 14:41:28,628:run_EUC:INFO:sim_198101_198106_v486i:Time periodic:181 days
+2020-05-28 14:41:28,628:run_EUC:INFO:sim_198101_198106_v486i:Output dt: 1 days
+2020-05-28 14:41:28,628:run_EUC:INFO:sim_198101_198106_v486i:Time periodic:181 days
+2020-05-28 14:41:28,628:run_EUC:INFO:sim_198101_198106_v486i:Time periodic:181 days
+2020-05-28 14:41:28,628:run_EUC:INFO:sim_198101_198106_v486i:Time periodic:181 days
+2020-05-28 14:41:28,628:run_EUC:INFO:sim_198101_198106_v486i:Output dt: 1 days
+2020-05-28 14:41:28,628:run_EUC:INFO:sim_198101_198106_v486i:Time periodic:181 days
+2020-05-28 14:41:28,628:run_EUC:INFO:sim_198101_198106_v486i:Time periodic:181 days
+2020-05-28 14:41:28,628:run_EUC:INFO:sim_198101_198106_v486i:Output dt: 1 days
+2020-05-28 14:41:28,628:run_EUC:INFO:sim_198101_198106_v486i:Time periodic:181 days
+2020-05-28 14:41:28,628:run_EUC:INFO:sim_198101_198106_v486i:Time periodic:181 days
+2020-05-28 14:41:28,628:run_EUC:INFO:sim_198101_198106_v486i:Time periodic:181 days
+2020-05-28 14:41:28,628:run_EUC:INFO:sim_198101_198106_v486i:Time periodic:181 days
+2020-05-28 14:41:28,628:run_EUC:INFO:sim_198101_198106_v486i:Time periodic:181 days
+2020-05-28 14:41:28,628:run_EUC:INFO:sim_198101_198106_v486i:Time periodic:181 days
+2020-05-28 14:41:28,628:run_EUC:INFO:sim_198101_198106_v486i:Time periodic:181 days
+2020-05-28 14:41:28,628:run_EUC:INFO:sim_198101_198106_v486i:Time periodic:181 days
+2020-05-28 14:41:28,629:run_EUC:INFO:sim_198101_198106_v486i:Time periodic:181 days
+2020-05-28 14:41:28,629:run_EUC:INFO:sim_198101_198106_v486i:Time periodic:181 days
+2020-05-28 14:41:28,629:run_EUC:INFO:sim_198101_198106_v486i:Time periodic:181 days
+2020-05-28 14:41:28,629:run_EUC:INFO:sim_198101_198106_v486i:Time periodic:181 days
+2020-05-28 14:41:28,629:run_EUC:INFO:sim_198101_198106_v486i:Time periodic:181 days
+2020-05-28 14:41:28,629:run_EUC:INFO:sim_198101_198106_v486i:Time periodic:181 days
+2020-05-28 14:41:28,629:run_EUC:INFO:sim_198101_198106_v486i:Time periodic:181 days
+2020-05-28 14:41:28,629:run_EUC:INFO:sim_198101_198106_v486i:Time periodic:181 days
+2020-05-28 14:41:28,629:run_EUC:INFO:sim_198101_198106_v486i:Time periodic:181 days
+2020-05-28 14:41:28,629:run_EUC:INFO:sim_198101_198106_v486i:Time periodic:181 days
+2020-05-28 14:41:28,629:run_EUC:INFO:sim_198101_198106_v486i:Time periodic:181 days
+2020-05-28 14:41:28,629:run_EUC:INFO:sim_198101_198106_v486i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:41:28,629:run_EUC:INFO:sim_198101_198106_v486i:Repeat release: 6 days
+2020-05-28 14:41:28,629:run_EUC:INFO:sim_198101_198106_v486i:Time periodic:181 days
+2020-05-28 14:41:28,629:run_EUC:INFO:sim_198101_198106_v486i:Time periodic:181 days
+2020-05-28 14:41:28,629:run_EUC:INFO:sim_198101_198106_v486i:Repeat release: 6 days
+2020-05-28 14:41:28,629:run_EUC:INFO:sim_198101_198106_v486i:Repeat release: 6 days
+2020-05-28 14:41:28,629:run_EUC:INFO:sim_198101_198106_v486i:Time periodic:181 days
+2020-05-28 14:41:28,629:run_EUC:INFO:sim_198101_198106_v486i:Time periodic:181 days
+2020-05-28 14:41:28,629:run_EUC:INFO:sim_198101_198106_v486i:Repeat release: 6 days
+2020-05-28 14:41:28,629:run_EUC:INFO:sim_198101_198106_v486i:Repeat release: 6 days
+2020-05-28 14:41:28,629:run_EUC:INFO:sim_198101_198106_v486i:Repeat release: 6 days
+2020-05-28 14:41:28,629:run_EUC:INFO:sim_198101_198106_v486i:Time periodic:181 days
+2020-05-28 14:41:28,629:run_EUC:INFO:sim_198101_198106_v486i:Repeat release: 6 days
+2020-05-28 14:41:28,629:run_EUC:INFO:sim_198101_198106_v486i:Time periodic:181 days
+2020-05-28 14:41:28,629:run_EUC:INFO:sim_198101_198106_v486i:Repeat release: 6 days
+2020-05-28 14:41:28,629:run_EUC:INFO:sim_198101_198106_v486i:Time periodic:181 days
+2020-05-28 14:41:28,629:run_EUC:INFO:sim_198101_198106_v486i:Repeat release: 6 days
+2020-05-28 14:41:28,629:run_EUC:INFO:sim_198101_198106_v486i:Time periodic:181 days
+2020-05-28 14:41:28,629:run_EUC:INFO:sim_198101_198106_v486i:Repeat release: 6 days
+2020-05-28 14:41:28,629:run_EUC:INFO:sim_198101_198106_v486i:Time periodic:181 days
+2020-05-28 14:41:28,629:run_EUC:INFO:sim_198101_198106_v486i:Repeat release: 6 days
+2020-05-28 14:41:28,629:run_EUC:INFO:sim_198101_198106_v486i:Repeat release: 6 days
+2020-05-28 14:41:28,629:run_EUC:INFO:sim_198101_198106_v486i:Repeat release: 6 days
+2020-05-28 14:41:28,629:run_EUC:INFO:sim_198101_198106_v486i:Repeat release: 6 days
+2020-05-28 14:41:28,629:run_EUC:INFO:sim_198101_198106_v486i:Time periodic:181 days
+2020-05-28 14:41:28,629:run_EUC:INFO:sim_198101_198106_v486i:Repeat release: 6 days
+2020-05-28 14:41:28,629:run_EUC:INFO:sim_198101_198106_v486i:Time periodic:181 days
+2020-05-28 14:41:28,629:run_EUC:INFO:sim_198101_198106_v486i:Repeat release: 6 days
+2020-05-28 14:41:28,630:run_EUC:INFO:sim_198101_198106_v486i:Repeat release: 6 days
+2020-05-28 14:41:28,630:run_EUC:INFO:sim_198101_198106_v486i:Repeat release: 6 days
+2020-05-28 14:41:28,630:run_EUC:INFO:sim_198101_198106_v486i:Repeat release: 6 days
+2020-05-28 14:41:28,630:run_EUC:INFO:sim_198101_198106_v486i:Repeat release: 6 days
+2020-05-28 14:41:28,630:run_EUC:INFO:sim_198101_198106_v486i:Repeat release: 6 days
+2020-05-28 14:41:28,630:run_EUC:INFO:sim_198101_198106_v486i:Repeat release: 6 days
+2020-05-28 14:41:28,630:run_EUC:INFO:sim_198101_198106_v486i:Repeat release: 6 days
+2020-05-28 14:41:28,630:run_EUC:INFO:sim_198101_198106_v486i:Repeat release: 6 days
+2020-05-28 14:41:28,630:run_EUC:INFO:sim_198101_198106_v486i:Repeat release: 6 days
+2020-05-28 14:41:28,630:run_EUC:INFO:sim_198101_198106_v486i:Repeat release: 6 days
+2020-05-28 14:41:28,630:run_EUC:INFO:sim_198101_198106_v486i:Repeat release: 6 days
+2020-05-28 14:41:28,630:run_EUC:INFO:sim_198101_198106_v486i:Repeat release: 6 days
+2020-05-28 14:41:28,630:run_EUC:INFO:sim_198101_198106_v486i:Repeat release: 6 days
+2020-05-28 14:41:28,630:run_EUC:INFO:sim_198101_198106_v486i:Repeat release: 6 days
+2020-05-28 14:41:28,630:run_EUC:INFO:sim_198101_198106_v486i:Repeat release: 6 days
+2020-05-28 14:41:28,630:run_EUC:INFO:sim_198101_198106_v486i:Repeat release: 6 days
+2020-05-28 14:41:28,630:run_EUC:INFO:sim_198101_198106_v486i:Particles: Total: 23002 :/repeat: 742
+2020-05-28 14:41:28,630:run_EUC:INFO:sim_198101_198106_v486i:Repeat release: 6 days
+2020-05-28 14:41:28,630:run_EUC:INFO:sim_198101_198106_v486i:Repeat release: 6 days
+2020-05-28 14:41:28,630:run_EUC:INFO:sim_198101_198106_v486i:Runtime: 181 days
+2020-05-28 14:41:28,630:run_EUC:INFO:sim_198101_198106_v486i:Particles: Total: 23002 :/repeat: 742
+2020-05-28 14:41:28,630:run_EUC:INFO:sim_198101_198106_v486i:Particles: Total: 23002 :/repeat: 742
+2020-05-28 14:41:28,630:run_EUC:INFO:sim_198101_198106_v486i:Repeat release: 6 days
+2020-05-28 14:41:28,630:run_EUC:INFO:sim_198101_198106_v486i:Repeat release: 6 days
+2020-05-28 14:41:28,630:run_EUC:INFO:sim_198101_198106_v486i:Repeat release: 6 days
+2020-05-28 14:41:28,630:run_EUC:INFO:sim_198101_198106_v486i:Particles: Total: 23002 :/repeat: 742
+2020-05-28 14:41:28,630:run_EUC:INFO:sim_198101_198106_v486i:Particles: Total: 23002 :/repeat: 742
+2020-05-28 14:41:28,630:run_EUC:INFO:sim_198101_198106_v486i:Particles: Total: 23002 :/repeat: 742
+2020-05-28 14:41:28,630:run_EUC:INFO:sim_198101_198106_v486i:Particles: Total: 23002 :/repeat: 742
+2020-05-28 14:41:28,630:run_EUC:INFO:sim_198101_198106_v486i:Repeat release: 6 days
+2020-05-28 14:41:28,630:run_EUC:INFO:sim_198101_198106_v486i:Particles: Total: 23002 :/repeat: 742
+2020-05-28 14:41:28,630:run_EUC:INFO:sim_198101_198106_v486i:Repeat release: 6 days
+2020-05-28 14:41:28,630:run_EUC:INFO:sim_198101_198106_v486i:Particles: Total: 23002 :/repeat: 742
+2020-05-28 14:41:28,630:run_EUC:INFO:sim_198101_198106_v486i:Repeat release: 6 days
+2020-05-28 14:41:28,630:run_EUC:INFO:sim_198101_198106_v486i:Particles: Total: 23002 :/repeat: 742
+2020-05-28 14:41:28,630:run_EUC:INFO:sim_198101_198106_v486i:Repeat release: 6 days
+2020-05-28 14:41:28,631:run_EUC:INFO:sim_198101_198106_v486i:Particles: Total: 23002 :/repeat: 742
+2020-05-28 14:41:28,631:run_EUC:INFO:sim_198101_198106_v486i:Particles: Total: 23002 :/repeat: 742
+2020-05-28 14:41:28,631:run_EUC:INFO:sim_198101_198106_v486i:Repeat release: 6 days
+2020-05-28 14:41:28,631:run_EUC:INFO:sim_198101_198106_v486i:Particles: Total: 23002 :/repeat: 742
+2020-05-28 14:41:28,631:run_EUC:INFO:sim_198101_198106_v486i:Particles: Total: 23002 :/repeat: 742
+2020-05-28 14:41:28,631:run_EUC:INFO:sim_198101_198106_v486i:Particles: Total: 23002 :/repeat: 742
+2020-05-28 14:41:28,631:run_EUC:INFO:sim_198101_198106_v486i:Repeat release: 6 days
+2020-05-28 14:41:28,631:run_EUC:INFO:sim_198101_198106_v486i:Repeat release: 6 days
+2020-05-28 14:41:28,631:run_EUC:INFO:sim_198101_198106_v486i:Particles: Total: 23002 :/repeat: 742
+2020-05-28 14:41:28,631:run_EUC:INFO:sim_198101_198106_v486i:Particles: Total: 23002 :/repeat: 742
+2020-05-28 14:41:28,631:run_EUC:INFO:sim_198101_198106_v486i:Particles: Total: 23002 :/repeat: 742
+2020-05-28 14:41:28,631:run_EUC:INFO:sim_198101_198106_v486i:Particles: Total: 23002 :/repeat: 742
+2020-05-28 14:41:28,631:run_EUC:INFO:sim_198101_198106_v486i:Particles: Total: 23002 :/repeat: 742
+2020-05-28 14:41:28,631:run_EUC:INFO:sim_198101_198106_v486i:Particles: Total: 23002 :/repeat: 742
+2020-05-28 14:41:28,631:run_EUC:INFO:sim_198101_198106_v486i:Particles: Total: 23002 :/repeat: 742
+2020-05-28 14:41:28,631:run_EUC:INFO:sim_198101_198106_v486i:Particles: Total: 23002 :/repeat: 742
+2020-05-28 14:41:28,631:run_EUC:INFO:sim_198101_198106_v486i:Particles: Total: 23002 :/repeat: 742
+2020-05-28 14:41:28,631:run_EUC:INFO:sim_198101_198106_v486i:Particles: Total: 23002 :/repeat: 742
+2020-05-28 14:41:28,631:run_EUC:INFO:sim_198101_198106_v486i:Particles: Total: 23002 :/repeat: 742
+2020-05-28 14:41:28,631:run_EUC:INFO:sim_198101_198106_v486i:Particles: Total: 23002 :/repeat: 742
+2020-05-28 14:41:28,631:run_EUC:INFO:sim_198101_198106_v486i:Particles: Total: 23002 :/repeat: 742
+2020-05-28 14:41:28,631:run_EUC:INFO:sim_198101_198106_v486i:Particles: Total: 23002 :/repeat: 742
+2020-05-28 14:41:28,631:run_EUC:INFO:sim_198101_198106_v486i:Particles: Total: 23002 :/repeat: 742
+2020-05-28 14:41:28,631:run_EUC:INFO:sim_198101_198106_v486i:Particles: Total: 23002 :/repeat: 742
+2020-05-28 14:41:28,631:run_EUC:INFO:sim_198101_198106_v486i:Particles: Total: 23002 :/repeat: 742
+2020-05-28 14:41:28,631:run_EUC:INFO:sim_198101_198106_v486i:Particles: Total: 23002 :/repeat: 742
+2020-05-28 14:41:28,631:run_EUC:INFO:sim_198101_198106_v486i:Particles: Total: 23002 :/repeat: 742
+2020-05-28 14:41:28,631:run_EUC:INFO:sim_198101_198106_v486i:Timestep dt: 240 mins
+2020-05-28 14:41:28,631:run_EUC:INFO:sim_198101_198106_v486i:Particles: Total: 23002 :/repeat: 742
+2020-05-28 14:41:28,631:run_EUC:INFO:sim_198101_198106_v486i:Particles: Total: 23002 :/repeat: 742
+2020-05-28 14:41:28,631:run_EUC:INFO:sim_198101_198106_v486i:Particles: Total: 23002 :/repeat: 742
+2020-05-28 14:41:28,632:run_EUC:INFO:sim_198101_198106_v486i:Particles: Total: 23002 :/repeat: 742
+2020-05-28 14:41:28,632:run_EUC:INFO:sim_198101_198106_v486i:Particles: Total: 23002 :/repeat: 742
+2020-05-28 14:41:28,632:run_EUC:INFO:sim_198101_198106_v486i:Particles: Total: 23002 :/repeat: 742
+2020-05-28 14:41:28,632:run_EUC:INFO:sim_198101_198106_v486i:Particles: Total: 23002 :/repeat: 742
+2020-05-28 14:41:28,632:run_EUC:INFO:sim_198101_198106_v486i:Particles: Total: 23002 :/repeat: 742
+2020-05-28 14:41:28,632:run_EUC:INFO:sim_198101_198106_v486i:Particles: Total: 23002 :/repeat: 742
+2020-05-28 14:41:28,632:run_EUC:INFO:sim_198101_198106_v486i:Particles: Total: 23002 :/repeat: 742
+2020-05-28 14:41:28,633:run_EUC:INFO:sim_198101_198106_v486i:Output dt: 1 days
+2020-05-28 14:41:28,633:run_EUC:INFO:sim_198101_198106_v486i:Time periodic:181 days
+2020-05-28 14:41:28,633:run_EUC:INFO:sim_198101_198106_v486i:Executing: 1981-01-01 to 1981-06-30
+2020-05-28 14:41:28,633:run_EUC:INFO:sim_198101_198106_v486i:Repeat release: 6 days
+2020-05-28 14:41:28,633:run_EUC:INFO:sim_198101_198106_v486i:Longitudes: 165
+2020-05-28 14:41:28,633:run_EUC:INFO:sim_198101_198106_v486i:Particles: Total: 23002 :/repeat: 742
+2020-05-28 14:41:28,633:run_EUC:INFO:sim_198101_198106_v486i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:41:28,633:run_EUC:INFO:sim_198101_198106_v486i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:41:28,633:run_EUC:INFO:sim_198101_198106_v486i:Runtime: 181 days
+2020-05-28 14:41:28,634:run_EUC:INFO:sim_198101_198106_v486i:Timestep dt: 240 mins
+2020-05-28 14:41:28,634:run_EUC:INFO:sim_198101_198106_v486i:Output dt: 1 days
+2020-05-28 14:41:28,634:run_EUC:INFO:sim_198101_198106_v486i:Time periodic:181 days
+2020-05-28 14:41:28,634:run_EUC:INFO:sim_198101_198106_v486i:Repeat release: 6 days
+2020-05-28 14:41:28,634:run_EUC:INFO:sim_198101_198106_v486i:Particles: Total: 23002 :/repeat: 742
+2020-05-28 14:41:28,673:run_EUC:INFO:sim_198101_198106_v486i:Executing: 1981-01-01 to 1981-06-30
+2020-05-28 14:41:28,673:run_EUC:INFO:sim_198101_198106_v486i:Longitudes: 165
+2020-05-28 14:41:28,674:run_EUC:INFO:sim_198101_198106_v486i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:41:28,674:run_EUC:INFO:sim_198101_198106_v486i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:41:28,674:run_EUC:INFO:sim_198101_198106_v486i:Runtime: 181 days
+2020-05-28 14:41:28,674:run_EUC:INFO:sim_198101_198106_v486i:Timestep dt: 240 mins
+2020-05-28 14:41:28,674:run_EUC:INFO:sim_198101_198106_v486i:Output dt: 1 days
+2020-05-28 14:41:28,674:run_EUC:INFO:sim_198101_198106_v486i:Time periodic:181 days
+2020-05-28 14:41:28,674:run_EUC:INFO:sim_198101_198106_v486i:Repeat release: 6 days
+2020-05-28 14:41:28,674:run_EUC:INFO:sim_198101_198106_v486i:Particles: Total: 23002 :/repeat: 742
+2020-05-28 14:41:28,710:run_EUC:INFO:sim_198101_198106_v486i:Executing: 1981-01-01 to 1981-06-30
+2020-05-28 14:41:28,710:run_EUC:INFO:sim_198101_198106_v486i:Longitudes: 165
+2020-05-28 14:41:28,710:run_EUC:INFO:sim_198101_198106_v486i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:41:28,711:run_EUC:INFO:sim_198101_198106_v486i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:41:28,711:run_EUC:INFO:sim_198101_198106_v486i:Runtime: 181 days
+2020-05-28 14:41:28,711:run_EUC:INFO:sim_198101_198106_v486i:Timestep dt: 240 mins
+2020-05-28 14:41:28,711:run_EUC:INFO:sim_198101_198106_v486i:Output dt: 1 days
+2020-05-28 14:41:28,711:run_EUC:INFO:sim_198101_198106_v486i:Time periodic:181 days
+2020-05-28 14:41:28,711:run_EUC:INFO:sim_198101_198106_v486i:Repeat release: 6 days
+2020-05-28 14:41:28,711:run_EUC:INFO:sim_198101_198106_v486i:Particles: Total: 23002 :/repeat: 742
+2020-05-28 14:41:29,557:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:41:29,557:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:41:29,557:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:41:29,557:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:41:29,558:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:41:29,558:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:41:29,558:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:41:29,558:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:41:29,558:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:41:29,558:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:41:29,558:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:41:29,558:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:41:29,559:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:41:29,560:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:41:29,560:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:41:29,560:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:41:29,560:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:41:29,560:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:41:29,560:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:41:29,561:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:41:29,561:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:41:29,563:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:41:29,563:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:41:29,563:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:41:29,564:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:41:29,564:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:41:29,564:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:41:29,564:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:41:29,564:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:41:29,564:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:41:29,564:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:41:29,564:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:41:29,564:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:41:29,564:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:41:29,564:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:41:29,565:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:41:29,565:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:41:29,565:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:41:29,565:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:41:29,565:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:41:29,567:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:41:29,567:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:41:29,567:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:41:29,567:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:41:29,567:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:41:29,567:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:41:29,567:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:41:29,567:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:41:44,372:EUC_particles:DEBUG:sim_198101_198106_v486i:Initial pset size:14
+2020-05-28 14:41:44,446:EUC_particles:DEBUG:sim_198101_198106_v486i:Initial pset size:14
+2020-05-28 14:41:44,513:EUC_particles:DEBUG:sim_198101_198106_v486i:Initial pset size:14
+2020-05-28 14:41:44,678:EUC_particles:DEBUG:sim_198101_198106_v486i:Initial pset size:14
+2020-05-28 14:41:44,700:EUC_particles:DEBUG:sim_198101_198106_v486i:Initial pset size:14
+2020-05-28 14:41:44,701:EUC_particles:DEBUG:sim_198101_198106_v486i:Initial pset size:14
+2020-05-28 14:41:44,701:EUC_particles:DEBUG:sim_198101_198106_v486i:Initial pset size:14
+2020-05-28 14:41:44,702:EUC_particles:DEBUG:sim_198101_198106_v486i:Initial pset size:14
+2020-05-28 14:41:44,704:EUC_particles:DEBUG:sim_198101_198106_v486i:Initial pset size:14
+2020-05-28 14:41:44,704:EUC_particles:DEBUG:sim_198101_198106_v486i:Initial pset size:14
+2020-05-28 14:41:44,738:EUC_particles:DEBUG:sim_198101_198106_v486i:Initial pset size:14
+2020-05-28 14:41:44,749:EUC_particles:DEBUG:sim_198101_198106_v486i:Initial pset size:14
+2020-05-28 14:41:44,752:EUC_particles:DEBUG:sim_198101_198106_v486i:Initial pset size:14
+2020-05-28 14:41:44,763:EUC_particles:DEBUG:sim_198101_198106_v486i:Initial pset size:14
+2020-05-28 14:41:44,766:EUC_particles:DEBUG:sim_198101_198106_v486i:Initial pset size:14
+2020-05-28 14:41:44,794:EUC_particles:DEBUG:sim_198101_198106_v486i:Initial pset size:14
+2020-05-28 14:41:44,823:EUC_particles:DEBUG:sim_198101_198106_v486i:Initial pset size:14
+2020-05-28 14:41:44,823:EUC_particles:DEBUG:sim_198101_198106_v486i:Initial pset size:14
+2020-05-28 14:41:44,824:EUC_particles:DEBUG:sim_198101_198106_v486i:Initial pset size:14
+2020-05-28 14:41:44,858:EUC_particles:DEBUG:sim_198101_198106_v486i:Initial pset size:14
+2020-05-28 14:41:44,858:EUC_particles:DEBUG:sim_198101_198106_v486i:Initial pset size:14
+2020-05-28 14:41:44,880:EUC_particles:DEBUG:sim_198101_198106_v486i:Initial pset size:14
+2020-05-28 14:41:44,880:EUC_particles:DEBUG:sim_198101_198106_v486i:Initial pset size:14
+2020-05-28 14:41:44,880:EUC_particles:DEBUG:sim_198101_198106_v486i:Initial pset size:14
+2020-05-28 14:41:44,880:EUC_particles:DEBUG:sim_198101_198106_v486i:Initial pset size:14
+2020-05-28 14:41:44,887:EUC_particles:DEBUG:sim_198101_198106_v486i:Initial pset size:14
+2020-05-28 14:41:44,888:EUC_particles:DEBUG:sim_198101_198106_v486i:Initial pset size:14
+2020-05-28 14:41:45,117:EUC_particles:DEBUG:sim_198101_198106_v486i:Initial pset size:14
+2020-05-28 14:41:45,122:EUC_particles:DEBUG:sim_198101_198106_v486i:Initial pset size:14
+2020-05-28 14:41:45,124:EUC_particles:DEBUG:sim_198101_198106_v486i:Initial pset size:14
+2020-05-28 14:41:45,126:EUC_particles:DEBUG:sim_198101_198106_v486i:Initial pset size:14
+2020-05-28 14:41:45,128:EUC_particles:DEBUG:sim_198101_198106_v486i:Initial pset size:14
+2020-05-28 14:41:45,133:EUC_particles:DEBUG:sim_198101_198106_v486i:Initial pset size:14
+2020-05-28 14:41:45,134:EUC_particles:DEBUG:sim_198101_198106_v486i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-IYXSXLTH
+2020-05-28 14:41:45,134:EUC_particles:DEBUG:sim_198101_198106_v486i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-IYXSXLTH
+2020-05-28 14:41:45,134:EUC_particles:DEBUG:sim_198101_198106_v486i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-IYXSXLTH
+2020-05-28 14:41:45,134:EUC_particles:DEBUG:sim_198101_198106_v486i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-IYXSXLTH
+2020-05-28 14:41:45,134:EUC_particles:DEBUG:sim_198101_198106_v486i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-IYXSXLTH
+2020-05-28 14:41:45,134:EUC_particles:DEBUG:sim_198101_198106_v486i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-IYXSXLTH
+2020-05-28 14:41:45,134:EUC_particles:DEBUG:sim_198101_198106_v486i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-IYXSXLTH
+2020-05-28 14:41:45,134:EUC_particles:INFO:sim_198101_198106_v486i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:41:45,134:EUC_particles:INFO:sim_198101_198106_v486i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:41:45,134:EUC_particles:INFO:sim_198101_198106_v486i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:41:45,134:EUC_particles:INFO:sim_198101_198106_v486i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:41:45,134:EUC_particles:DEBUG:sim_198101_198106_v486i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-IYXSXLTH
+2020-05-28 14:41:45,134:EUC_particles:DEBUG:sim_198101_198106_v486i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-IYXSXLTH
+2020-05-28 14:41:45,134:EUC_particles:DEBUG:sim_198101_198106_v486i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-IYXSXLTH
+2020-05-28 14:41:45,134:EUC_particles:INFO:sim_198101_198106_v486i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:41:45,134:EUC_particles:DEBUG:sim_198101_198106_v486i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-IYXSXLTH
+2020-05-28 14:41:45,134:EUC_particles:DEBUG:sim_198101_198106_v486i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-IYXSXLTH
+2020-05-28 14:41:45,134:EUC_particles:INFO:sim_198101_198106_v486i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:41:45,134:EUC_particles:INFO:sim_198101_198106_v486i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:41:45,134:EUC_particles:DEBUG:sim_198101_198106_v486i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-IYXSXLTH
+2020-05-28 14:41:45,134:EUC_particles:DEBUG:sim_198101_198106_v486i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-IYXSXLTH
+2020-05-28 14:41:45,134:EUC_particles:INFO:sim_198101_198106_v486i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:41:45,134:EUC_particles:INFO:sim_198101_198106_v486i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:41:45,134:EUC_particles:INFO:sim_198101_198106_v486i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:41:45,134:EUC_particles:INFO:sim_198101_198106_v486i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:41:45,134:EUC_particles:INFO:sim_198101_198106_v486i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:41:45,134:EUC_particles:INFO:sim_198101_198106_v486i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:41:45,134:EUC_particles:INFO:sim_198101_198106_v486i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:41:45,166:EUC_particles:DEBUG:sim_198101_198106_v486i:Initial pset size:14
+2020-05-28 14:41:45,166:EUC_particles:DEBUG:sim_198101_198106_v486i:Initial pset size:14
+2020-05-28 14:41:45,173:EUC_particles:DEBUG:sim_198101_198106_v486i:Initial pset size:14
+2020-05-28 14:41:45,173:EUC_particles:DEBUG:sim_198101_198106_v486i:Initial pset size:14
+2020-05-28 14:41:45,173:EUC_particles:DEBUG:sim_198101_198106_v486i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-IYXSXLTH
+2020-05-28 14:41:45,173:EUC_particles:INFO:sim_198101_198106_v486i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:41:45,173:EUC_particles:DEBUG:sim_198101_198106_v486i:Initial pset size:14
+2020-05-28 14:41:45,173:EUC_particles:DEBUG:sim_198101_198106_v486i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-IYXSXLTH
+2020-05-28 14:41:45,173:EUC_particles:INFO:sim_198101_198106_v486i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:41:45,174:EUC_particles:DEBUG:sim_198101_198106_v486i:Initial pset size:14
+2020-05-28 14:41:45,174:EUC_particles:DEBUG:sim_198101_198106_v486i:Initial pset size:14
+2020-05-28 14:41:45,174:EUC_particles:DEBUG:sim_198101_198106_v486i:Initial pset size:14
+2020-05-28 14:41:45,174:EUC_particles:DEBUG:sim_198101_198106_v486i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-IYXSXLTH
+2020-05-28 14:41:45,174:EUC_particles:INFO:sim_198101_198106_v486i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:41:45,174:EUC_particles:DEBUG:sim_198101_198106_v486i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-IYXSXLTH
+2020-05-28 14:41:45,174:EUC_particles:DEBUG:sim_198101_198106_v486i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-IYXSXLTH
+2020-05-28 14:41:45,174:EUC_particles:INFO:sim_198101_198106_v486i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:41:45,174:EUC_particles:INFO:sim_198101_198106_v486i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:41:45,174:EUC_particles:DEBUG:sim_198101_198106_v486i:Initial pset size:14
+2020-05-28 14:41:45,175:EUC_particles:DEBUG:sim_198101_198106_v486i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-IYXSXLTH
+2020-05-28 14:41:45,175:EUC_particles:INFO:sim_198101_198106_v486i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:41:45,175:EUC_particles:DEBUG:sim_198101_198106_v486i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-IYXSXLTH
+2020-05-28 14:41:45,175:EUC_particles:INFO:sim_198101_198106_v486i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:41:45,175:EUC_particles:DEBUG:sim_198101_198106_v486i:Initial pset size:14
+2020-05-28 14:41:45,175:EUC_particles:DEBUG:sim_198101_198106_v486i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-IYXSXLTH
+2020-05-28 14:41:45,175:EUC_particles:INFO:sim_198101_198106_v486i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:41:46,261:EUC_particles:DEBUG:sim_198101_198106_v486i: Excecute particle set.
+2020-05-28 14:41:46,261:EUC_particles:DEBUG:sim_198101_198106_v486i: Excecute particle set.
+2020-05-28 14:41:46,261:EUC_particles:DEBUG:sim_198101_198106_v486i: Excecute particle set.
+2020-05-28 14:41:46,261:EUC_particles:DEBUG:sim_198101_198106_v486i: Excecute particle set.
+2020-05-28 14:41:46,261:EUC_particles:DEBUG:sim_198101_198106_v486i: Excecute particle set.
+2020-05-28 14:41:46,261:EUC_particles:DEBUG:sim_198101_198106_v486i: Excecute particle set.
+2020-05-28 14:41:46,261:EUC_particles:DEBUG:sim_198101_198106_v486i: Excecute particle set.
+2020-05-28 14:41:46,261:EUC_particles:DEBUG:sim_198101_198106_v486i: Excecute particle set.
+2020-05-28 14:41:46,261:EUC_particles:DEBUG:sim_198101_198106_v486i: Excecute particle set.
+2020-05-28 14:41:46,261:EUC_particles:DEBUG:sim_198101_198106_v486i: Excecute particle set.
+2020-05-28 14:41:46,261:EUC_particles:DEBUG:sim_198101_198106_v486i: Excecute particle set.
+2020-05-28 14:41:46,261:EUC_particles:DEBUG:sim_198101_198106_v486i: Excecute particle set.
+2020-05-28 14:41:46,261:EUC_particles:DEBUG:sim_198101_198106_v486i: Excecute particle set.
+2020-05-28 14:41:46,262:EUC_particles:DEBUG:sim_198101_198106_v486i: Excecute particle set.
+2020-05-28 14:41:46,265:EUC_particles:DEBUG:sim_198101_198106_v486i: Excecute particle set.
+2020-05-28 14:41:46,265:EUC_particles:DEBUG:sim_198101_198106_v486i: Excecute particle set.
+2020-05-28 14:41:46,265:EUC_particles:DEBUG:sim_198101_198106_v486i: Excecute particle set.
+2020-05-28 14:41:46,266:EUC_particles:DEBUG:sim_198101_198106_v486i: Excecute particle set.
+2020-05-28 14:41:46,266:EUC_particles:DEBUG:sim_198101_198106_v486i: Excecute particle set.
+2020-05-28 14:41:46,266:EUC_particles:DEBUG:sim_198101_198106_v486i: Excecute particle set.
+2020-05-28 14:41:46,267:EUC_particles:DEBUG:sim_198101_198106_v486i: Excecute particle set.
+2020-05-28 14:41:46,267:EUC_particles:DEBUG:sim_198101_198106_v486i: Excecute particle set.
+2020-05-28 14:41:51,337:EUC_particles:DEBUG:sim_198101_198106_v486i:Initial pset size:28
+2020-05-28 14:41:51,453:EUC_particles:DEBUG:sim_198101_198106_v486i:Initial pset size:28
+2020-05-28 14:41:51,454:EUC_particles:DEBUG:sim_198101_198106_v486i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-IYXSXLTH
+2020-05-28 14:41:51,454:EUC_particles:DEBUG:sim_198101_198106_v486i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-IYXSXLTH
+2020-05-28 14:41:51,454:EUC_particles:DEBUG:sim_198101_198106_v486i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-IYXSXLTH
+2020-05-28 14:41:51,454:EUC_particles:DEBUG:sim_198101_198106_v486i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-IYXSXLTH
+2020-05-28 14:41:51,454:EUC_particles:DEBUG:sim_198101_198106_v486i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-IYXSXLTH
+2020-05-28 14:41:51,454:EUC_particles:DEBUG:sim_198101_198106_v486i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-IYXSXLTH
+2020-05-28 14:41:51,454:EUC_particles:DEBUG:sim_198101_198106_v486i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-IYXSXLTH
+2020-05-28 14:41:51,454:EUC_particles:DEBUG:sim_198101_198106_v486i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-IYXSXLTH
+2020-05-28 14:41:51,454:EUC_particles:INFO:sim_198101_198106_v486i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:41:51,454:EUC_particles:INFO:sim_198101_198106_v486i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:41:51,454:EUC_particles:INFO:sim_198101_198106_v486i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:41:51,454:EUC_particles:INFO:sim_198101_198106_v486i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:41:51,454:EUC_particles:INFO:sim_198101_198106_v486i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:41:51,454:EUC_particles:DEBUG:sim_198101_198106_v486i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-IYXSXLTH
+2020-05-28 14:41:51,454:EUC_particles:DEBUG:sim_198101_198106_v486i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-IYXSXLTH
+2020-05-28 14:41:51,454:EUC_particles:INFO:sim_198101_198106_v486i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:41:51,454:EUC_particles:DEBUG:sim_198101_198106_v486i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-IYXSXLTH
+2020-05-28 14:41:51,454:EUC_particles:DEBUG:sim_198101_198106_v486i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-IYXSXLTH
+2020-05-28 14:41:51,454:EUC_particles:DEBUG:sim_198101_198106_v486i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-IYXSXLTH
+2020-05-28 14:41:51,454:EUC_particles:DEBUG:sim_198101_198106_v486i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-IYXSXLTH
+2020-05-28 14:41:51,454:EUC_particles:INFO:sim_198101_198106_v486i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:41:51,454:EUC_particles:DEBUG:sim_198101_198106_v486i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-IYXSXLTH
+2020-05-28 14:41:51,454:EUC_particles:INFO:sim_198101_198106_v486i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:41:51,454:EUC_particles:DEBUG:sim_198101_198106_v486i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-IYXSXLTH
+2020-05-28 14:41:51,454:EUC_particles:DEBUG:sim_198101_198106_v486i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-IYXSXLTH
+2020-05-28 14:41:51,454:EUC_particles:INFO:sim_198101_198106_v486i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:41:51,454:EUC_particles:DEBUG:sim_198101_198106_v486i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-IYXSXLTH
+2020-05-28 14:41:51,454:EUC_particles:INFO:sim_198101_198106_v486i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:41:51,454:EUC_particles:DEBUG:sim_198101_198106_v486i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-IYXSXLTH
+2020-05-28 14:41:51,454:EUC_particles:DEBUG:sim_198101_198106_v486i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-IYXSXLTH
+2020-05-28 14:41:51,454:EUC_particles:INFO:sim_198101_198106_v486i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:41:51,454:EUC_particles:DEBUG:sim_198101_198106_v486i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-IYXSXLTH
+2020-05-28 14:41:51,454:EUC_particles:INFO:sim_198101_198106_v486i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:41:51,454:EUC_particles:DEBUG:sim_198101_198106_v486i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-IYXSXLTH
+2020-05-28 14:41:51,454:EUC_particles:DEBUG:sim_198101_198106_v486i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-IYXSXLTH
+2020-05-28 14:41:51,454:EUC_particles:INFO:sim_198101_198106_v486i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:41:51,454:EUC_particles:INFO:sim_198101_198106_v486i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:41:51,454:EUC_particles:INFO:sim_198101_198106_v486i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:41:51,455:EUC_particles:INFO:sim_198101_198106_v486i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:41:51,455:EUC_particles:INFO:sim_198101_198106_v486i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:41:51,455:EUC_particles:INFO:sim_198101_198106_v486i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:41:51,455:EUC_particles:INFO:sim_198101_198106_v486i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:41:51,455:EUC_particles:INFO:sim_198101_198106_v486i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:41:51,455:EUC_particles:INFO:sim_198101_198106_v486i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:41:51,455:EUC_particles:INFO:sim_198101_198106_v486i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:41:51,455:EUC_particles:INFO:sim_198101_198106_v486i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:41:51,741:EUC_particles:DEBUG:sim_198101_198106_v486i:Initial pset size:28
+2020-05-28 14:41:51,741:EUC_particles:DEBUG:sim_198101_198106_v486i:Initial pset size:28
+2020-05-28 14:41:51,741:EUC_particles:DEBUG:sim_198101_198106_v486i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-IYXSXLTH
+2020-05-28 14:41:51,741:EUC_particles:INFO:sim_198101_198106_v486i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:41:51,741:EUC_particles:DEBUG:sim_198101_198106_v486i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-IYXSXLTH
+2020-05-28 14:41:51,741:EUC_particles:INFO:sim_198101_198106_v486i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:41:51,806:EUC_particles:DEBUG:sim_198101_198106_v486i:Initial pset size:28
+2020-05-28 14:41:51,806:EUC_particles:DEBUG:sim_198101_198106_v486i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-IYXSXLTH
+2020-05-28 14:41:51,806:EUC_particles:INFO:sim_198101_198106_v486i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:41:52,773:EUC_particles:DEBUG:sim_198101_198106_v486i: Excecute particle set.
+2020-05-28 14:41:52,773:EUC_particles:DEBUG:sim_198101_198106_v486i: Excecute particle set.
+2020-05-28 14:41:52,773:EUC_particles:DEBUG:sim_198101_198106_v486i: Excecute particle set.
+2020-05-28 14:41:52,773:EUC_particles:DEBUG:sim_198101_198106_v486i: Excecute particle set.
+2020-05-28 14:41:52,773:EUC_particles:DEBUG:sim_198101_198106_v486i: Excecute particle set.
+2020-05-28 14:41:52,773:EUC_particles:DEBUG:sim_198101_198106_v486i: Excecute particle set.
+2020-05-28 14:41:52,773:EUC_particles:DEBUG:sim_198101_198106_v486i: Excecute particle set.
+2020-05-28 14:41:52,773:EUC_particles:DEBUG:sim_198101_198106_v486i: Excecute particle set.
+2020-05-28 14:41:52,773:EUC_particles:DEBUG:sim_198101_198106_v486i: Excecute particle set.
+2020-05-28 14:41:52,773:EUC_particles:DEBUG:sim_198101_198106_v486i: Excecute particle set.
+2020-05-28 14:41:52,773:EUC_particles:DEBUG:sim_198101_198106_v486i: Excecute particle set.
+2020-05-28 14:41:52,773:EUC_particles:DEBUG:sim_198101_198106_v486i: Excecute particle set.
+2020-05-28 14:41:52,773:EUC_particles:DEBUG:sim_198101_198106_v486i: Excecute particle set.
+2020-05-28 14:41:52,773:EUC_particles:DEBUG:sim_198101_198106_v486i: Excecute particle set.
+2020-05-28 14:41:52,773:EUC_particles:DEBUG:sim_198101_198106_v486i: Excecute particle set.
+2020-05-28 14:41:52,773:EUC_particles:DEBUG:sim_198101_198106_v486i: Excecute particle set.
+2020-05-28 14:41:52,773:EUC_particles:DEBUG:sim_198101_198106_v486i: Excecute particle set.
+2020-05-28 14:41:52,776:EUC_particles:DEBUG:sim_198101_198106_v486i: Excecute particle set.
+2020-05-28 14:41:52,777:EUC_particles:DEBUG:sim_198101_198106_v486i: Excecute particle set.
+2020-05-28 14:41:52,777:EUC_particles:DEBUG:sim_198101_198106_v486i: Excecute particle set.
+2020-05-28 14:41:52,777:EUC_particles:DEBUG:sim_198101_198106_v486i: Excecute particle set.
+2020-05-28 14:41:52,777:EUC_particles:DEBUG:sim_198101_198106_v486i: Excecute particle set.
+2020-05-28 14:41:52,777:EUC_particles:DEBUG:sim_198101_198106_v486i: Excecute particle set.
+2020-05-28 14:41:52,825:EUC_particles:DEBUG:sim_198101_198106_v486i: Excecute particle set.
+2020-05-28 14:41:52,825:EUC_particles:DEBUG:sim_198101_198106_v486i: Excecute particle set.
+2020-05-28 14:41:52,839:EUC_particles:DEBUG:sim_198101_198106_v486i: Excecute particle set.
+2020-05-28 14:52:02,033:run_EUC:INFO:sim_198101_198106_v42i:Executing: 1981-01-01 to 1981-06-30
+2020-05-28 14:52:02,064:run_EUC:INFO:sim_198101_198106_v42i:Longitudes: 165
+2020-05-28 14:52:02,064:run_EUC:INFO:sim_198101_198106_v42i:Latitudes: 53 dy=0.1 [-2.6 to 2.6]
+2020-05-28 14:52:02,064:run_EUC:INFO:sim_198101_198106_v42i:Depths: 14 dz=25 [25 to 350]
+2020-05-28 14:52:02,064:run_EUC:INFO:sim_198101_198106_v42i:Runtime: 181 days
+2020-05-28 14:52:02,064:run_EUC:INFO:sim_198101_198106_v42i:Timestep dt: 240 mins
+2020-05-28 14:52:02,064:run_EUC:INFO:sim_198101_198106_v42i:Output dt: 1 days
+2020-05-28 14:52:02,064:run_EUC:INFO:sim_198101_198106_v42i:Time periodic:181 days
+2020-05-28 14:52:02,065:run_EUC:INFO:sim_198101_198106_v42i:Repeat release: 6 days
+2020-05-28 14:52:02,065:run_EUC:INFO:sim_198101_198106_v42i:Particles: Total: 23002 :/repeat: 742
+2020-05-28 14:52:06,415:ofam_fieldset:INFO:Field import=b_grid, Chunks=auto
+2020-05-28 14:57:54,496:EUC_particles:DEBUG:sim_198101_198106_v42i:Initial pset size:742
+2020-05-28 14:57:54,497:EUC_particles:DEBUG:sim_198101_198106_v42i:Temp write dir:/g/data/e14/as3189/OFAM/data/out-AVDOQKTD
+2020-05-28 14:57:54,497:EUC_particles:INFO:sim_198101_198106_v42i:pset.Kernel(Age)+AdvectionRK4_3D
+2020-05-28 14:57:54,828:EUC_particles:DEBUG:sim_198101_198106_v42i: Excecute particle set.
+2020-05-28 20:52:14,164:EUC_particles:DEBUG:sim_198101_198103_v14i:Final pset size:189
+2020-05-28 20:52:14,164:EUC_particles:DEBUG:sim_198101_198103_v14i:Final pset size:624
+2020-05-28 20:52:14,164:EUC_particles:DEBUG:sim_198101_198103_v14i:Final pset size:452
+2020-05-28 20:52:14,164:EUC_particles:DEBUG:sim_198101_198103_v14i:Final pset size:298
+2020-05-28 20:52:14,164:EUC_particles:DEBUG:sim_198101_198103_v14i:Final pset size:624
+2020-05-28 20:52:14,164:EUC_particles:DEBUG:sim_198101_198103_v14i:Final pset size:609
+2020-05-28 20:52:14,164:EUC_particles:DEBUG:sim_198101_198103_v14i:Final pset size:361
+2020-05-28 20:52:14,164:EUC_particles:DEBUG:sim_198101_198103_v14i:Final pset size:611
+2020-05-28 20:52:14,164:EUC_particles:DEBUG:sim_198101_198103_v14i:Final pset size:621
+2020-05-28 20:52:14,164:EUC_particles:DEBUG:sim_198101_198103_v14i:Final pset size:567
+2020-05-28 20:52:14,164:EUC_particles:DEBUG:sim_198101_198103_v14i:Final pset size:781
+2020-05-28 20:52:14,164:EUC_particles:DEBUG:sim_198101_198103_v14i:Final pset size:509
+2020-05-28 20:52:14,164:EUC_particles:DEBUG:sim_198101_198103_v14i:Final pset size:449
+2020-05-28 20:52:14,181:EUC_particles:INFO:sim_198101_198103_v14i: Completed.
+2020-05-28 20:52:14,181:EUC_particles:INFO:sim_198101_198103_v14i: Completed.
+2020-05-28 20:52:14,181:EUC_particles:INFO:sim_198101_198103_v14i: Completed.
+2020-05-28 20:52:14,181:EUC_particles:INFO:sim_198101_198103_v14i: Completed.
+2020-05-28 20:52:14,181:EUC_particles:INFO:sim_198101_198103_v14i: Completed.
+2020-05-28 20:52:14,181:EUC_particles:INFO:sim_198101_198103_v14i: Completed.
+2020-05-28 20:52:14,181:EUC_particles:INFO:sim_198101_198103_v14i: Completed.
+2020-05-28 20:52:14,181:EUC_particles:INFO:sim_198101_198103_v14i: Completed.
+2020-05-28 20:52:14,181:EUC_particles:INFO:sim_198101_198103_v14i: Completed.
+2020-05-28 20:52:14,181:EUC_particles:INFO:sim_198101_198103_v14i: Completed.
+2020-05-28 20:52:14,181:EUC_particles:INFO:sim_198101_198103_v14i: Completed.
+2020-05-28 20:52:14,181:EUC_particles:INFO:sim_198101_198103_v14i: Completed.
+2020-05-28 20:52:14,181:EUC_particles:INFO:sim_198101_198103_v14i: Completed.
+2020-05-28 20:52:14,182:timed:INFO:EUC_particles: 6:38:35.19 total: 23915.19 seconds.
+2020-05-28 20:52:14,182:timed:INFO:EUC_particles: 6:38:35.19 total: 23915.19 seconds.
+2020-05-28 20:52:14,182:timed:INFO:EUC_particles: 6:38:35.19 total: 23915.19 seconds.
+2020-05-28 20:52:14,182:timed:INFO:EUC_particles: 6:38:35.19 total: 23915.19 seconds.
+2020-05-28 20:52:14,182:timed:INFO:EUC_particles: 6:38:35.19 total: 23915.19 seconds.
+2020-05-28 20:52:14,182:timed:INFO:EUC_particles: 6:38:35.19 total: 23915.19 seconds.
+2020-05-28 20:52:14,182:timed:INFO:EUC_particles: 6:38:35.19 total: 23915.19 seconds.
+2020-05-28 20:52:14,182:timed:INFO:EUC_particles: 6:38:35.19 total: 23915.19 seconds.
+2020-05-28 20:52:14,182:timed:INFO:EUC_particles: 6:38:35.19 total: 23915.19 seconds.
+2020-05-28 20:52:14,182:timed:INFO:EUC_particles: 6:38:35.18 total: 23915.18 seconds.
+2020-05-28 20:52:14,182:timed:INFO:EUC_particles: 6:38:35.19 total: 23915.19 seconds.
+2020-05-28 20:52:14,182:timed:INFO:run_EUC: 6:38:35.54 total: 23915.54 seconds.
+2020-05-28 20:52:14,182:timed:INFO:run_EUC: 6:38:35.54 total: 23915.54 seconds.
+2020-05-28 20:52:14,182:timed:INFO:run_EUC: 6:38:35.54 total: 23915.54 seconds.
+2020-05-28 20:52:14,182:timed:INFO:run_EUC: 6:38:35.54 total: 23915.54 seconds.
+2020-05-28 20:52:14,182:timed:INFO:run_EUC: 6:38:35.54 total: 23915.54 seconds.
+2020-05-28 20:52:14,182:timed:INFO:run_EUC: 6:38:35.54 total: 23915.54 seconds.
+2020-05-28 20:52:14,182:timed:INFO:EUC_particles: 6:38:35.19 total: 23915.19 seconds.
+2020-05-28 20:52:14,182:timed:INFO:EUC_particles: 6:38:35.18 total: 23915.18 seconds.
+2020-05-28 20:52:14,182:timed:INFO:run_EUC: 6:38:35.54 total: 23915.54 seconds.
+2020-05-28 20:52:14,182:timed:INFO:run_EUC: 6:38:35.54 total: 23915.54 seconds.
+2020-05-28 20:52:14,182:timed:INFO:run_EUC: 6:38:35.54 total: 23915.54 seconds.
+2020-05-28 20:52:14,182:timed:INFO:run_EUC: 6:38:35.54 total: 23915.54 seconds.
+2020-05-28 20:52:14,182:timed:INFO:run_EUC: 6:38:35.54 total: 23915.54 seconds.
+2020-05-28 20:52:14,182:timed:INFO:run_EUC: 6:38:35.54 total: 23915.54 seconds.
+2020-05-28 20:52:14,182:timed:INFO:run_EUC: 6:38:35.54 total: 23915.54 seconds.
+2020-05-28 20:52:47,389:EUC_particles:DEBUG:sim_198101_198103_v14i:Final pset size:617
+2020-05-28 20:52:47,389:EUC_particles:INFO:sim_198101_198103_v14i: Completed.
+2020-05-28 20:52:56,387:timed:INFO:EUC_particles: 6:39:17.39 total: 23957.39 seconds.
+2020-05-28 20:52:56,387:timed:INFO:run_EUC: 6:39:17.75 total: 23957.75 seconds.
