@@ -143,12 +143,23 @@ def ofam_fieldset(date_bnds, field_method='b_grid', time_periodic=False,
 
     fieldset.add_field(zfield, 'zone')
 
+    # Set fieldset minimum depth.
+    fieldset.mindepth = fieldset.U.depth[0]
     return fieldset
 
-
-def generate_sim_id(date_bnds, ifile=0, parallel=False):
+u = [cfg.ofam/'ocean_u_1981_01.nc']
+v = [cfg.ofam/'ocean_v_1981_01.nc']
+w = [cfg.ofam/'ocean_w_1981_01.nc']
+files = {'U': {'depth': w[0], 'lat': u[0], 'lon': u[0], 'data': u},
+         'V': {'depth': w[0], 'lat': u[0], 'lon': u[0], 'data': v},
+         'W': {'depth': w[0], 'lat': u[0], 'lon': u[0], 'data': w}}
+variables = {'U': 'u', 'V': 'v', 'W': 'w'}
+dimensions = {'time': 'Time', 'depth': 'sw_ocean', 'lat': 'yu_ocean', 'lon': 'xu_ocean'}
+fieldset = FieldSet.from_b_grid_dataset(files, variables, dimensions, mesh='spherical',
+                                        field_chunksize="auto")
+def generate_sim_id(date_bnds, lon, ifile=0, parallel=False):
     """Create name to save particle file (looks for unsaved filename)."""
-    dsr = 'sim_{}_{}'.format(*[str(i)[:7].replace('-', '') for i in date_bnds])
+    dsr = 'sim_{}_{}_{}'.format(*[str(i)[:7].replace('-', '') for i in date_bnds], int(lon))
     i = 0 if parallel else random.randint(0, 200)
 
     while (cfg.data/'{}_v{}i.nc'.format(dsr, i)).exists():
@@ -388,7 +399,7 @@ def plot3D(sim_id):
 
     """
     ds = xr.open_dataset(sim_id, decode_cf=True)
-    ds = ds.where(ds.u >= 0, drop=True)
+    ds = ds.where(ds.u > 0, drop=True)
     fig = plt.figure(figsize=(13, 10))
     ax = fig.add_subplot(111, projection='3d')
     colors = plt.cm.rainbow(np.linspace(0, 1, len(ds.traj)))
