@@ -39,7 +39,6 @@ def run_EUC(dy=0.4, dz=25, lon=165, lat=2.6, year=[1981, 2012], m1=1, m2=12,
 
     # Meridional distance between released particles.
     p_lats = np.round(np.arange(-lat, lat + 0.05, dy), 2)
-    # p_lats = [lat]
 
     # Vertical distance between released particles.
     p_depths = np.arange(25, 350 + 20, dz)
@@ -59,9 +58,6 @@ def run_EUC(dy=0.4, dz=25, lon=165, lat=2.6, year=[1981, 2012], m1=1, m2=12,
         runtime = timedelta(days=(date_bnds[1] - date_bnds[0]).days + 1)
     else:
         runtime = timedelta(days=int(runtime_days))
-
-    time_periodic = timedelta(days=(date_bnds[1] - date_bnds[0]).days + 1)
-    # time_periodic = False
 
     # Advection steps to write.
     outputdt = timedelta(days=outputdt_days)
@@ -85,7 +81,9 @@ def run_EUC(dy=0.4, dz=25, lon=165, lat=2.6, year=[1981, 2012], m1=1, m2=12,
                 .format(sim_id.stem, Z * X * Y * math.ceil(runtime.days/repeatdt.days), Z * X * Y))
 
     # Create fieldset.
-    fieldset = main.ofam_fieldset(date_bnds, chunks=chunks, field_method=field_method,
+    ft_bnds = [get_date(1981, 1, 1), get_date(2012, 12, 31)]
+    time_periodic = timedelta(days=(ft_bnds[1] - ft_bnds[0]).days + 1)
+    fieldset = main.ofam_fieldset(ft_bnds, chunks=chunks, field_method=field_method,
                                   time_periodic=time_periodic)
 
     # Set fieldset minimum depth.

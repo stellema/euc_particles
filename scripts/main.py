@@ -147,16 +147,7 @@ def ofam_fieldset(date_bnds, field_method='b_grid', time_periodic=False,
     fieldset.mindepth = fieldset.U.depth[0]
     return fieldset
 
-u = [cfg.ofam/'ocean_u_1981_01.nc']
-v = [cfg.ofam/'ocean_v_1981_01.nc']
-w = [cfg.ofam/'ocean_w_1981_01.nc']
-files = {'U': {'depth': w[0], 'lat': u[0], 'lon': u[0], 'data': u},
-         'V': {'depth': w[0], 'lat': u[0], 'lon': u[0], 'data': v},
-         'W': {'depth': w[0], 'lat': u[0], 'lon': u[0], 'data': w}}
-variables = {'U': 'u', 'V': 'v', 'W': 'w'}
-dimensions = {'time': 'Time', 'depth': 'sw_ocean', 'lat': 'yu_ocean', 'lon': 'xu_ocean'}
-fieldset = FieldSet.from_b_grid_dataset(files, variables, dimensions, mesh='spherical',
-                                        field_chunksize="auto")
+
 def generate_sim_id(date_bnds, lon, ifile=0, parallel=False):
     """Create name to save particle file (looks for unsaved filename)."""
     dsr = 'sim_{}_{}_{}'.format(*[str(i)[:7].replace('-', '') for i in date_bnds], int(lon))
