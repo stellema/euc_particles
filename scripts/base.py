@@ -62,6 +62,10 @@ def run_EUC(dy=0.4, dz=25, lon=165, lat=2.6, year=[1981, 2012], m1=1, m2=12,
     # Advection steps to write.
     outputdt = timedelta(days=outputdt_days)
 
+    # Fieldset bounds.
+    ft_bnds = [get_date(1981, 1, 1), get_date(2012, 12, 31)]
+    time_periodic = timedelta(days=(ft_bnds[1] - ft_bnds[0]).days + 1)
+
     # Generate file name for experiment.
     sim_id = main.generate_sim_id(date_bnds, lon, ifile=ifile, parallel=parallel)
 
@@ -81,8 +85,6 @@ def run_EUC(dy=0.4, dz=25, lon=165, lat=2.6, year=[1981, 2012], m1=1, m2=12,
                 .format(sim_id.stem, Z * X * Y * math.ceil(runtime.days/repeatdt.days), Z * X * Y))
 
     # Create fieldset.
-    ft_bnds = [get_date(1981, 1, 1), get_date(2012, 12, 31)]
-    time_periodic = timedelta(days=(ft_bnds[1] - ft_bnds[0]).days + 1)
     fieldset = main.ofam_fieldset(ft_bnds, chunks=chunks, field_method=field_method,
                                   time_periodic=time_periodic)
 
@@ -147,7 +149,7 @@ else:
     ifile = 0
     parallel = False
     fieldset = run_EUC(dy=dy, dz=dz, lon=lon, lat=lat, year=year,
-                       dt_mins=240, repeatdt_days=6, outputdt_days=1, month=month,
+                       dt_mins=240, repeatdt_days=6, outputdt_days=1, m2=month,
                        runtime_days=runtime_days,
                        field_method=field_method, chunks=chunks,
                        add_transport=False, write_fieldset=False)
