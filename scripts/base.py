@@ -29,8 +29,7 @@ logger = tools.mlogger('base', parcels=True)
 @timeit
 def run_EUC(dy=0.4, dz=25, lon=165, lat=2.6, year=[1981, 2012], m1=1, m2=12,
             dt_mins=240, repeatdt_days=6, outputdt_days=1, day='max', runtime_days='all',
-            ifile=0, field_method='b_grid', chunks='auto',
-            add_transport=True, write_fieldset=False, parallel=False):
+            ifile=0, field_method='b_grid', chunks='auto', parallel=False):
     """Run Lagrangian EUC particle experiment."""
     # Define Fieldset and ParticleSet parameters.
 
@@ -64,6 +63,7 @@ def run_EUC(dy=0.4, dz=25, lon=165, lat=2.6, year=[1981, 2012], m1=1, m2=12,
 
     # Fieldset bounds.
     ft_bnds = [get_date(1981, 1, 1), get_date(2012, 12, 31)]
+    # ft_bnds = [get_date(1981, 1, 1), get_date(1981, 12, 31)]
     time_periodic = timedelta(days=(ft_bnds[1] - ft_bnds[0]).days + 1)
 
     # Generate file name for experiment.
@@ -72,21 +72,21 @@ def run_EUC(dy=0.4, dz=25, lon=165, lat=2.6, year=[1981, 2012], m1=1, m2=12,
     # Number of particles release in each dimension.
     Z, Y, X = len(p_depths), len(p_lats), len(p_lons)
 
-    logger.info('{}:Executing: {} to {}'.format(sim_id.stem, *[str(i)[:10] for i in date_bnds]))
-    logger.info('{}:Longitudes: {}'.format(sim_id.stem, *p_lons))
-    logger.info('{}:Latitudes: {} dy={} [{} to {}]'.format(sim_id.stem, Y, dy, *p_lats[::Y-1]))
-    logger.info('{}:Depths: {} dz={} [{} to {}]'.format(sim_id.stem, Z, dz, *p_depths[::Z-1]))
-    logger.info('{}:Runtime: {} days'.format(sim_id.stem, runtime.days))
-    logger.info('{}:Timestep dt: {:.0f} mins'.format(sim_id.stem, 1440 - dt.seconds/60))
-    logger.info('{}:Output dt: {:.0f} days'.format(sim_id.stem, outputdt.days))
-    logger.info('{}:Time periodic:{} days'.format(sim_id.stem, time_periodic.days))
-    logger.info('{}:Repeat release: {} days'.format(sim_id.stem, repeatdt.days))
-    logger.info('{}:Particles: Total: {} :/repeat: {}'
-                .format(sim_id.stem, Z * X * Y * math.ceil(runtime.days/repeatdt.days), Z * X * Y))
+    logger.info('{}:Executing:{} to {}: Runtime={} days'
+                .format(sim_id.stem, *[str(i)[:10] for i in date_bnds], runtime.days))
+    logger.info('{}:Lons={}: Lats={} [{}-{} x{}]: Depths={} [{}-{}m x{}]'
+                .format(sim_id.stem, *p_lons, Y, *p_lats[::Y-1], dy, Z, *p_depths[::Z-1], dz))
+    logger.info('{}:Repeat={} days: Timestep={:.0f} mins: Output={:.0f} days'
+                .format(sim_id.stem, repeatdt.days, 1440 - dt.seconds/60, outputdt.days))
+    logger.info('{}:Particles: /repeat={}: Total={}'
+                .format(sim_id.stem, Z * X * Y, Z * X * Y * math.ceil(runtime.days/repeatdt.days)))
 
     # Create fieldset.
     fieldset = main.ofam_fieldset(ft_bnds, chunks=chunks, field_method=field_method,
                                   time_periodic=time_periodic)
+    logger.info('{}:Field={}: Chunks={}: Range={}-{}: Periodic={} days'
+                .format(sim_id.stem, field_method, chunks, ft_bnds[0].year, ft_bnds[1].year,
+                        time_periodic.days))
 
     # Set fieldset minimum depth.
     fieldset.mindepth = fieldset.U.depth[0]
@@ -100,17 +100,7 @@ def run_EUC(dy=0.4, dz=25, lon=165, lat=2.6, year=[1981, 2012], m1=1, m2=12,
     main.EUC_particles(fieldset, date_bnds, p_lats, p_lons, p_depths,
                        dt, pset_start, repeatdt, runtime, outputdt, sim_id)
 
-    # Calculate initial transport of particle and save altered ParticleFile.
-    if add_transport:
-        df = main.ParticleFile_transport(sim_id, dy, dz, save=True)
-        df.close()
-
-    # Save the fieldset.
-    if write_fieldset:
-        fieldset.write(cfg.data/'fieldset_ofam_3D_{}_{}'
-                       .format(*[str(i)[:7] for i in date_bnds]))
-
-    return fieldset
+    return
 
 
 if __name__ == "__main__" and cfg.home != Path('E:/'):
@@ -127,29 +117,23 @@ if __name__ == "__main__" and cfg.home != Path('E:/'):
     p.add_argument('-run', '--runtime', default='all', type=str, help='Runtime [day].')
     p.add_argument('-m1', '--month1', default=1, type=int, help='Final month (of final year).')
     p.add_argument('-m2', '--month2', default=12, type=int, help='Final month (of final year).')
-    p.add_argument('-t', '--transport', default=False, type=bool, help='Write transport file.')
-    p.add_argument('-w', '--fset', default=False, type=bool, help='Write fieldset.')
     p.add_argument('-p', '--parallel', default=False, type=bool, help='Parallel execution.')
     p.add_argument('-ix', '--ifile', default=0, type=int, help='File Index.')
     args = p.parse_args()
 
     run_EUC(dy=args.dy, dz=args.dz, lon=args.lon, lat=args.lat, m1=args.month1, m2=args.month2,
-            year=[args.yri, args.yrf], dt_mins=args.dt,
-            repeatdt_days=args.repeatdt, outputdt_days=args.outputdt, runtime_days=args.runtime,
-            ifile=args.ifile,
-            add_transport=args.transport, write_fieldset=args.fset, parallel=args.parallel)
+            year=[args.yri, args.yrf], dt_mins=args.dt, repeatdt_days=args.repeatdt,
+            outputdt_days=args.outputdt, runtime_days=args.runtime,
+            ifile=args.ifile, parallel=args.parallel)
 else:
-    dy, dz = 0.1, 25
+    dy, dz = 2, 200
     lon, lat = 165, 2.6
     year, month, day = [1981, 1981], 1, 'max'
-    dt_mins, repeatdt_days, outputdt_days, runtime_days = 240, 6, 1, 2
+    dt_mins, repeatdt_days, outputdt_days, runtime_days = 240, 6, 1, 6
     add_transport, write_fieldset = False, False
     field_method = 'b_grid'
     chunks = 'auto'
     ifile = 0
-    parallel = False
-    fieldset = run_EUC(dy=dy, dz=dz, lon=lon, lat=lat, year=year,
-                       dt_mins=240, repeatdt_days=6, outputdt_days=1, m2=month,
-                       runtime_days=runtime_days,
-                       field_method=field_method, chunks=chunks,
-                       add_transport=False, write_fieldset=False)
+    run_EUC(dy=dy, dz=dz, lon=lon, lat=lat, year=year,
+            dt_mins=240, repeatdt_days=6, outputdt_days=1, m2=month,
+            runtime_days=runtime_days, field_method=field_method, chunks=chunks)

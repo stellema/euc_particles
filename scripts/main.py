@@ -135,8 +135,6 @@ def ofam_fieldset(date_bnds, field_method='b_grid', time_periodic=False,
         fieldset = FieldSet.from_xarray_dataset(ds, variables, dims, mesh='spherical',
                                                 time_periodic=time_periodic, field_chunksize=chunks,
                                                 allow_time_extrapolation=time_ext)
-
-    logger.info('Field import={}, Chunks={}'.format(field_method, chunks))
     zfield = Field.from_netcdf(str(cfg.data/'OFAM3_zones.nc'), 'zone',
                                {'time': 'Time', 'lat': 'yu_ocean', 'lon': 'xu_ocean'},
                                field_chunksize='auto', allow_time_extrapolation=True)
@@ -156,12 +154,12 @@ def generate_sim_id(date_bnds, lon, ifile=0, parallel=False):
     while (cfg.data/'{}_v{}i.nc'.format(dsr, i)).exists():
         i = i + 1 if parallel else random.randint(0, 200)
     if ifile != 0:
-        if not (cfg.data/'{}_v{}i.nc'.format(dsr, ifile)).exists():
+        if not (cfg.data/'{}_v{}.nc'.format(dsr, ifile)).exists():
             i = ifile
         else:
             i = ifile + 1
 
-    sim_id = cfg.data/'{}_v{}i.nc'.format(dsr, i)
+    sim_id = cfg.data/'{}_v{}.nc'.format(dsr, i)
     return sim_id
 
 
@@ -290,23 +288,20 @@ def EUC_particles(fieldset, date_bnds, p_lats, p_lons, p_depths,
 
     # Create particle set.
     pset = EUC_pset(fieldset, zParticle, p_lats, p_lons, p_depths, pset_start, repeatdt)
-    logger.debug('{}:Initial pset size:{}'.format(sim_id.stem, pset.size))
 
     # Output particle file p_name and time steps to save.
     output_file = pset.ParticleFile(cfg.data/sim_id.stem, outputdt=outputdt)
-    logger.debug('{}:Temp write dir:{}'.format(sim_id.stem, output_file.tempwritedir_base))
+    logger.debug('{}:Age+RK4_3D: Tmp directory={}: #Particles={}'
+                 .format(sim_id.stem, output_file.tempwritedir_base[-8:], pset.size))
 
-    logger.info('{}:pset.Kernel(Age)+AdvectionRK4_3D'.format(sim_id.stem))
     kernels = pset.Kernel(Age) + AdvectionRK4_3D
 
-    logger.debug('{}: Excecute particle set.'.format(sim_id.stem))
     pset.execute(kernels, runtime=runtime, dt=dt, output_file=output_file,
                  recovery={ErrorCode.ErrorOutOfBounds: DeleteParticle,
                            ErrorCode.ErrorThroughSurface: SubmergeParticle},
                  verbose_progress=True)
     output_file.export()
-    logger.debug('{}:Final pset size:{}'.format(sim_id.stem, pset.size))
-    logger.info('{}: Completed.'.format(sim_id.stem))
+    logger.info('{}: Completed!: #Particles={}'.format(sim_id.stem, pset.size))
 
     return
 
