@@ -241,8 +241,8 @@ def EUC_pset(fieldset, pclass, p_lats, p_lons, p_depths, pset_start, repeatdt):
     p_depths = [p_depths] if type(p_depths) not in [list, np.array, np.ndarray] else p_depths
     p_lons = [p_lons] if type(p_lons) not in [list, np.array, np.ndarray] else p_lons
 
-    lats = np.tile(p_lats, len(p_depths)*len(p_lons))
-    depths = np.tile(np.repeat(p_depths, len(p_lats)), len(p_lons))
+    lats = np.repeat(p_lats, len(p_depths)*len(p_lons))
+    depths = np.repeat(np.tile(p_depths, len(p_lats)), len(p_lons))
     lons = np.repeat(p_lons, len(p_depths)*len(p_lats))
     pset = ParticleSet.from_list(fieldset=fieldset, pclass=pclass,
                                  lon=lons, lat=lats, depth=depths,

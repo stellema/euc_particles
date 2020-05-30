@@ -137,7 +137,7 @@ if __name__ == "__main__" and cfg.home != Path('E:/'):
             ifile=args.ifile,
             add_transport=args.transport, write_fieldset=args.fset, parallel=args.parallel)
 else:
-    dy, dz = 1, 200
+    dy, dz = 0.1, 25
     lon, lat = 165, 2.6
     year, month, day = [1981, 1981], 1, 'max'
     dt_mins, repeatdt_days, outputdt_days, runtime_days = 240, 6, 1, 2
