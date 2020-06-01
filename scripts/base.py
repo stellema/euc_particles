@@ -84,9 +84,6 @@ def run_EUC(dy=0.1, dz=25, lon=165, lat=2.6, year=2012, month=12, day='max',
     fieldset = main.ofam_fieldset(ft_bnds, chunks=chunks, field_method=field_method,
                                   time_periodic=time_periodic)
 
-    # Set ParticleSet start depth as last fieldset time.
-    pset_start = fieldset.U.grid.time[-1]
-
     class zParticle(cfg.ptype['jit']):
         """Particle class that saves particle age and zonal velocity."""
 
@@ -98,14 +95,17 @@ def run_EUC(dy=0.1, dz=25, lon=165, lat=2.6, year=2012, month=12, day='max',
 
         # The 'zone' of the particle.
         zone = Variable('zone', dtype=np.float32, initial=fieldset.zone)
-
+    # Set ParticleSet start depth as last fieldset time.
+    pset_start = fieldset.U.grid.time[-1]
     # Create particle set.
     if pfile is None:
+
         pset = main.EUC_pset(fieldset, zParticle, p_lats, p_lons, p_depths, pset_start, repeatdt)
     else:
         pset = main.particleset_from_particlefile(fieldset, pclass=zParticle, filename=pfile,
-                                                  repeatdt=repeatdt, restart=True,
-                                                  restarttime=np.nanmin)
+                                                  restart=True, restarttime=np.nanmin)
+        psetx = main.EUC_pset(fieldset, zParticle, p_lats, p_lons, p_depths, pset_start, repeatdt)
+        pset.add(psetx)
 
     # Output particle file p_name and time steps to save.
     output_file = pset.ParticleFile(cfg.data/sim_id.stem, outputdt=outputdt)
