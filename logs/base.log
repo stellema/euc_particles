@@ -5694,3 +5694,73 @@
 2020-05-30 19:11:47,001:run_EUC:INFO:sim_201207_201212_165_v41:Lons=165: Lats=53 [-2.6-2.6 x0.1]: Depths=14 [25-350m x25]
 2020-05-30 19:11:47,001:run_EUC:INFO:sim_201207_201212_165_v41:Repeat=6 days: Timestep=240 mins: Output=1 days
 2020-05-30 19:11:47,001:run_EUC:INFO:sim_201207_201212_165_v41:Particles: /repeat=742: Total=23002
+2020-05-30 19:24:33,469:run_EUC:INFO:sim_201207_201212_165_v41:Field=b_grid: Chunks=auto: Range=1981-2012: Periodic=11688 days
+2020-05-30 19:24:33,469:run_EUC:INFO:sim_201207_201212_165_v41:Field=b_grid: Chunks=auto: Range=1981-2012: Periodic=11688 days
+2020-05-30 19:24:33,469:run_EUC:INFO:sim_201207_201212_165_v41:Field=b_grid: Chunks=auto: Range=1981-2012: Periodic=11688 days
+2020-05-30 19:24:33,469:run_EUC:INFO:sim_201207_201212_165_v41:Field=b_grid: Chunks=auto: Range=1981-2012: Periodic=11688 days
+2020-05-30 19:24:33,469:run_EUC:INFO:sim_201207_201212_165_v41:Field=b_grid: Chunks=auto: Range=1981-2012: Periodic=11688 days
+2020-05-30 19:24:33,469:run_EUC:INFO:sim_201207_201212_165_v41:Field=b_grid: Chunks=auto: Range=1981-2012: Periodic=11688 days
+2020-05-30 19:24:33,469:run_EUC:INFO:sim_201207_201212_165_v41:Field=b_grid: Chunks=auto: Range=1981-2012: Periodic=11688 days
+2020-05-30 19:24:33,469:run_EUC:INFO:sim_201207_201212_165_v41:Field=b_grid: Chunks=auto: Range=1981-2012: Periodic=11688 days
+2020-05-30 19:24:33,469:run_EUC:INFO:sim_201207_201212_165_v41:Field=b_grid: Chunks=auto: Range=1981-2012: Periodic=11688 days
+2020-05-30 19:24:33,469:run_EUC:INFO:sim_201207_201212_165_v41:Field=b_grid: Chunks=auto: Range=1981-2012: Periodic=11688 days
+2020-05-30 19:24:33,469:run_EUC:INFO:sim_201207_201212_165_v41:Field=b_grid: Chunks=auto: Range=1981-2012: Periodic=11688 days
+2020-05-30 19:24:33,469:run_EUC:INFO:sim_201207_201212_165_v41:Field=b_grid: Chunks=auto: Range=1981-2012: Periodic=11688 days
+2020-05-30 19:24:33,469:run_EUC:INFO:sim_201207_201212_165_v41:Field=b_grid: Chunks=auto: Range=1981-2012: Periodic=11688 days
+2020-05-30 19:24:33,470:run_EUC:INFO:sim_201207_201212_165_v41:Field=b_grid: Chunks=auto: Range=1981-2012: Periodic=11688 days
+2020-05-30 19:25:02,953:EUC_particles:DEBUG:sim_201207_201212_165_v41:Age+RK4_3D: Tmp directory=AHBCBYNR: #Particles=42
+2020-05-30 19:25:02,953:EUC_particles:DEBUG:sim_201207_201212_165_v41:Age+RK4_3D: Tmp directory=AHBCBYNR: #Particles=42
+2020-05-30 19:25:09,838:EUC_particles:DEBUG:sim_201207_201212_165_v41:Age+RK4_3D: Tmp directory=AHBCBYNR: #Particles=56
+2020-05-30 19:25:09,838:EUC_particles:DEBUG:sim_201207_201212_165_v41:Age+RK4_3D: Tmp directory=AHBCBYNR: #Particles=56
+2020-05-30 19:25:09,838:EUC_particles:DEBUG:sim_201207_201212_165_v41:Age+RK4_3D: Tmp directory=AHBCBYNR: #Particles=56
+2020-05-30 19:25:09,838:EUC_particles:DEBUG:sim_201207_201212_165_v41:Age+RK4_3D: Tmp directory=AHBCBYNR: #Particles=56
+2020-05-30 19:25:09,838:EUC_particles:DEBUG:sim_201207_201212_165_v41:Age+RK4_3D: Tmp directory=AHBCBYNR: #Particles=56
+2020-05-30 19:25:09,838:EUC_particles:DEBUG:sim_201207_201212_165_v41:Age+RK4_3D: Tmp directory=AHBCBYNR: #Particles=42
+2020-05-30 19:25:10,120:EUC_particles:DEBUG:sim_201207_201212_165_v41:Age+RK4_3D: Tmp directory=AHBCBYNR: #Particles=56
+2020-05-30 19:25:10,120:EUC_particles:DEBUG:sim_201207_201212_165_v41:Age+RK4_3D: Tmp directory=AHBCBYNR: #Particles=56
+2020-05-30 19:25:10,310:EUC_particles:DEBUG:sim_201207_201212_165_v41:Age+RK4_3D: Tmp directory=AHBCBYNR: #Particles=56
+2020-05-30 19:25:10,310:EUC_particles:DEBUG:sim_201207_201212_165_v41:Age+RK4_3D: Tmp directory=AHBCBYNR: #Particles=42
+2020-05-30 19:25:10,439:EUC_particles:DEBUG:sim_201207_201212_165_v41:Age+RK4_3D: Tmp directory=AHBCBYNR: #Particles=56
+2020-05-30 19:25:19,101:EUC_particles:DEBUG:sim_201207_201212_165_v41:Age+RK4_3D: Tmp directory=AHBCBYNR: #Particles=70
+2020-05-31 15:17:55,510:EUC_particles:INFO:sim_201207_201212_165_v41: Completed!: #Particles=1494
+2020-05-31 15:17:55,510:EUC_particles:INFO:sim_201207_201212_165_v41: Completed!: #Particles=424
+2020-05-31 15:17:55,510:EUC_particles:INFO:sim_201207_201212_165_v41: Completed!: #Particles=1158
+2020-05-31 15:17:55,510:EUC_particles:INFO:sim_201207_201212_165_v41: Completed!: #Particles=1084
+2020-05-31 15:17:55,510:EUC_particles:INFO:sim_201207_201212_165_v41: Completed!: #Particles=1416
+2020-05-31 15:17:55,510:EUC_particles:INFO:sim_201207_201212_165_v41: Completed!: #Particles=1230
+2020-05-31 15:17:55,510:EUC_particles:INFO:sim_201207_201212_165_v41: Completed!: #Particles=732
+2020-05-31 15:17:55,520:EUC_particles:INFO:sim_201207_201212_165_v41: Completed!: #Particles=822
+2020-05-31 15:17:55,520:EUC_particles:INFO:sim_201207_201212_165_v41: Completed!: #Particles=1588
+2020-05-31 15:17:55,520:EUC_particles:INFO:sim_201207_201212_165_v41: Completed!: #Particles=676
+2020-05-31 15:17:55,520:EUC_particles:INFO:sim_201207_201212_165_v41: Completed!: #Particles=1054
+2020-05-31 15:17:55,520:EUC_particles:INFO:sim_201207_201212_165_v41: Completed!: #Particles=1062
+2020-05-31 15:17:55,520:EUC_particles:INFO:sim_201207_201212_165_v41: Completed!: #Particles=1063
+2020-05-31 15:17:55,527:timed:INFO:EUC_particles: 19:53:22.06 total: 71602.06 seconds.
+2020-05-31 15:17:55,527:timed:INFO:EUC_particles: 19:53:22.06 total: 71602.06 seconds.
+2020-05-31 15:17:55,527:timed:INFO:EUC_particles: 19:53:22.06 total: 71602.06 seconds.
+2020-05-31 15:17:55,527:timed:INFO:EUC_particles: 19:53:22.06 total: 71602.06 seconds.
+2020-05-31 15:17:55,527:timed:INFO:EUC_particles: 19:53:22.06 total: 71602.06 seconds.
+2020-05-31 15:17:55,527:timed:INFO:EUC_particles: 19:53:22.06 total: 71602.06 seconds.
+2020-05-31 15:17:55,527:timed:INFO:EUC_particles: 19:53:22.06 total: 71602.06 seconds.
+2020-05-31 15:17:55,527:timed:INFO:EUC_particles: 19:53:22.06 total: 71602.06 seconds.
+2020-05-31 15:17:55,527:timed:INFO:EUC_particles: 19:53:22.06 total: 71602.06 seconds.
+2020-05-31 15:17:55,527:timed:INFO:EUC_particles: 19:53:22.06 total: 71602.06 seconds.
+2020-05-31 15:17:55,527:timed:INFO:EUC_particles: 19:53:22.06 total: 71602.06 seconds.
+2020-05-31 15:17:55,527:timed:INFO:EUC_particles: 19:53:22.06 total: 71602.06 seconds.
+2020-05-31 15:17:55,527:timed:INFO:run_EUC: 20:6:08.71 total: 72368.71 seconds.
+2020-05-31 15:17:55,527:timed:INFO:run_EUC: 20:6:08.71 total: 72368.71 seconds.
+2020-05-31 15:17:55,527:timed:INFO:run_EUC: 20:6:08.53 total: 72368.53 seconds.
+2020-05-31 15:17:55,527:timed:INFO:EUC_particles: 19:53:22.06 total: 71602.06 seconds.
+2020-05-31 15:17:55,527:timed:INFO:run_EUC: 20:6:08.64 total: 72368.64 seconds.
+2020-05-31 15:17:55,527:timed:INFO:run_EUC: 20:6:08.71 total: 72368.71 seconds.
+2020-05-31 15:17:55,527:timed:INFO:run_EUC: 20:6:08.71 total: 72368.71 seconds.
+2020-05-31 15:17:55,527:timed:INFO:run_EUC: 20:6:08.71 total: 72368.71 seconds.
+2020-05-31 15:17:55,527:timed:INFO:run_EUC: 20:6:08.71 total: 72368.71 seconds.
+2020-05-31 15:17:55,527:timed:INFO:run_EUC: 20:6:08.71 total: 72368.71 seconds.
+2020-05-31 15:17:55,527:timed:INFO:run_EUC: 20:6:08.71 total: 72368.71 seconds.
+2020-05-31 15:17:55,527:timed:INFO:run_EUC: 20:6:08.71 total: 72368.71 seconds.
+2020-05-31 15:17:55,527:timed:INFO:run_EUC: 20:6:08.71 total: 72368.71 seconds.
+2020-05-31 15:17:55,527:timed:INFO:run_EUC: 20:6:08.64 total: 72368.64 seconds.
+2020-05-31 15:19:05,861:EUC_particles:INFO:sim_201207_201212_165_v41: Completed!: #Particles=1019
+2020-05-31 15:19:24,393:timed:INFO:EUC_particles: 19:54:50.92 total: 71690.92 seconds.
+2020-05-31 15:19:24,393:timed:INFO:run_EUC: 20:7:37.57 total: 72457.57 seconds.
