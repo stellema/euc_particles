@@ -4,9 +4,12 @@ created: Mon May 25 10:00:49 2020
 
 author: Annette Stellema (astellemas@gmail.com)
 
-
+Define start date (basded on pfile)
+Specify runtime (so ends on repeat day?)
+Input previous sim_id
 """
 import main
+import xarray as xr
 import cftime
 import cfg
 import tools
@@ -18,74 +21,60 @@ from datetime import timedelta
 from argparse import ArgumentParser
 from parcels import (FieldSet, Field, ParticleSet, JITParticle,
                      ErrorCode, Variable, AdvectionRK4_3D, AdvectionRK4)
-year = [1981, 1981]
+
+
+logger = tools.mlogger('base', parcels=True)
+
+
+dt_mins, repeatdt_days, outputdt_days = 240, 6, 1
+runtime_days = 182
+sim_id = cfg.data/'sim_201207_201212_165_v41.nc'
+sim_id = cfg.data/'sim_198101_198103_v33i.nc'
+field_method = 'b_grid'
+chunks = 'auto'
+# Start and end dates.
+# date_bnds = [get_date(year[0], m1, 1), get_date(year[1], m2, day)]
+
 # Advection step (negative because running backwards).
-dt = -timedelta(minutes=240)
+dt = -timedelta(minutes=dt_mins)
 
 # Repeat particle release time.
-repeatdt = timedelta(days=6)
+repeatdt = timedelta(days=repeatdt_days)
 
 # Advection steps to write.
-outputdt = timedelta(days=1)
+outputdt = timedelta(days=outputdt_days)
 
-date_bnds2 = [get_date(year[0], 1, 1), get_date(year[1], 3, 'max')]
+runtime = timedelta(days=int(runtime_days))
 
-# Run for the number of days between date bounds.
-runtime = timedelta(days=(date_bnds2[1] - date_bnds2[0]).days)
+# Fieldset bounds.
+ft_bnds = [get_date(1981, 1, 1), get_date(2012, 12, 31)]
+time_periodic = timedelta(days=(ft_bnds[1] - ft_bnds[0]).days + 1)
+ft_bnds = [get_date(1981, 1, 1), get_date(1981, 3, 31)]
+time_periodic = timedelta(days=(ft_bnds[1] - ft_bnds[0]).days + 1)
 
-fieldset2 = main.ofam_fieldset(date_bnds2, chunks='auto', field_method='b_grid')
+# Create fieldset.
+fieldset = main.ofam_fieldset(ft_bnds, chunks=chunks, field_method=field_method,
+                              time_periodic=time_periodic)
 
-# Set fieldset minimum depth.
-fieldset2.mindepth = 2.5
-
-# Set ParticleSet start depth as last fieldset time.
-pset_start = fieldset2.U.grid.time[-1]
-
-# fieldset.computeTimeChunk(fieldset.time_origin.reltime(get_date(year[1], month, day)), -240*60)
-# fieldset.computeTimeChunk(2592000, -240*60)
-# fieldset.computeTimeChunk(fieldset.time_origin.reltime(
-#     get_date(year[1], 1, 31-runtime_days+2))+12*3600, -240*60)
-# fieldset.computeTimeChunk(fieldset.time_origin.reltime(
-#     get_date(year[1], 1, 31))+12*3600, -240*60)
-# fieldset.computeTimeChunk(fieldset.U.grid.time_full[0], 1)
-
-
-class zParticle(JITParticle):
+class zParticle(cfg.ptype['jit']):
     """Particle class that saves particle age and zonal velocity."""
-
-    # The age of the particle.
     age = Variable('age', dtype=np.float32, initial=0.)
-
-    # The velocity of the particle.
-    u = Variable('u', dtype=np.float32, initial=fieldset2.U, to_write='once')
-
-    zone = Variable('zone', dtype=np.float32, initial=fieldset2.zone)
+    u = Variable('u', dtype=np.float32, initial=fieldset.U, to_write='once')
+    zone = Variable('zone', dtype=np.float32, initial=fieldset.zone)
 
 
-# Need to computer nearest time chunk of fieldset when executing again
-psetx = ParticleSet.from_list(fieldset=fieldset2, pclass=cfg.ptype['scipy'],
-                              lon=[165], lat=[2], depth=[100], time=pset_start)
+pset = main.particleset_from_particlefile(fieldset, pclass=zParticle, filename=sim_id,
+                                          repeatdt=repeatdt, restart=True, restarttime=np.nanmin)
+print(pset.size)
+# Output particle file p_name and time steps to save.
+# output_file = pset.ParticleFile(cfg.data/sim_id.stem, outputdt=outputdt)
+# logger.debug('{}:Age+RK4_3D: Tmp directory={}: #Particles={}'
+             # .format(sim_id.stem, output_file.tempwritedir_base[-8:], pset.size))
+kernels = pset.Kernel(main.Age) + AdvectionRK4_3D
 
-psetx.execute(AdvectionRK4_3D, runtime=timedelta(days=int(1)), dt=dt,
-              recovery={ErrorCode.ErrorOutOfBounds: main.DeleteParticle,
-                        ErrorCode.ErrorThroughSurface: main.SubmergeParticle},
-              verbose_progress=True)
-
-sim_id = Path('E:\GitHub\OFAM\data\sim_198101_198103_v33i.nc')
-
-tmp_time = fieldset2.time_origin.time_origin
-tmp_cal = fieldset2.time_origin.calendar
-# fieldset2.time_origin.time_origin = np.datetime64(fieldset2.time_origin.time_origin)
-# fieldset2.time_origin.calendar = 'np_datetime64'
-
-pset2 = ParticleSet.from_particlefile(fieldset2, pclass=zParticle, filename=sim_id, restart=True)
-
-fieldset2.time_origin.time_origin = tmp_time
-fieldset2.time_origin.calendar = tmp_cal
-kernels = pset2.Kernel(main.Age) + AdvectionRK4_3D
-output_file = pset2.ParticleFile(Path('E:\GitHub\OFAM\data\sim_198101_198103_tmpi.nc'),
-                                 outputdt=outputdt)
-pset2.execute(kernels, runtime=timedelta(days=int(6)), dt=dt,
-              recovery={ErrorCode.ErrorOutOfBounds: main.DeleteParticle,
-                        ErrorCode.ErrorThroughSurface: main.SubmergeParticle},
-              verbose_progress=True)
+pset.execute(kernels, runtime=timedelta(days=int(2)), dt=dt, #outputfile=outputfile,
+             recovery={ErrorCode.ErrorOutOfBounds: main.DeleteParticle,
+                       ErrorCode.ErrorThroughSurface: main.SubmergeParticle},
+             verbose_progress=True)
+# output_file.export()
+# logger.info('{}: Completed!: #Particles={}'.format(sim_id.stem, pset.size))

@@ -55,6 +55,71 @@ def get_wsc(data='jra55', flux='bulk', res=0.1, mean_t=True, interp=''):
     return tx, ty, phi
 
 
+def zonal_sverdrup(curl, lat, lon, SFinit=0):
+    """Zonal Sverdrup transport from wind stress curl.
+
+    Once you have calculated the stramfunction at all latitudes, you can calculate the
+    depth integrated zonal flow e.g. sverdrup at 2S,180E minus sverdrup at 2N,180E will
+    give the depth integrated zonal transport between +/-2o across the date line.
+
+    function sverdrup=sverdrup_from_curl(lat,lon,curl,SFinit);
+
+    % sverdrup=sverdrup_from_curl(lat,lon,curl,SFinit);
+    % only works for a single latitude across a basin
+    % SFinit Streamfunction value at easternmost point (normally 0)
+
+    dlon=diff(lon);dlon=dlon(1); %only for regular grid
+    curl=fliplr(curl);
+    dx=(dlon/360)*2*pi*6400000*cosd(lat);
+    [f,b]=coriolis(lat);
+    curl=(1/b)*nancumsum(curl)*dx; %cumsum from east to west
+    curl=fliplr(curl);
+    sverdrup=SFinit+curl/1e6/1027;
+
+    TODO: How to calculate streamfunction value at easternmost point (normally 0)
+    TODO: Should curl be multiplied by negative one?
+    TODO: Remove east of americans
+
+    Args:
+        wsc (array-like: Wind stress curl.
+        lat (array-like): Latitude.
+        lon (array-like): Longitude.
+
+    Returns:
+        None.
+
+    """
+    # Distance between longitudes in degrees.
+    dlon = np.diff(lon)
+    dlon = dlon[0]
+
+    # Distance between longitudes in metres.
+    dx = (dlon/180)*np.pi*cfg.EARTH_RADIUS*np.cos(np.radians(lat))
+
+    beta = tools.coriolis(lat)[1]  # Rossby parameter at each latitude.
+
+    curl = np.fliplr(curl)  # Reverse curl by longitude.
+    curl = np.nancumsum(curl, axis=1)  # Cumsum from east to west.
+    curl = np.fliplr(curl)  # Reverse curl back to original.
+    dxr = (dx/(beta*cfg.RHO)).values[:, np.newaxis]
+    curl = curl*dxr
+    sverdrup = -(SFinit + curl)/1e6
+
+    # # Attempt at finding SFinit.
+    # ix = np.fliplr(np.isnan(phi1)).argmin(axis=1)*-1
+    # eblon = phi1.lon[ix - 1] # Longitudes of eastern boundary.
+
+    # # Multiply curl at eastern boundary by boundary gradient.
+    # eb = eblon.copy()*0
+    # for y in range(len(phi1.lat)-1):
+    #     eb[y] = -curl[y, ix[y] - 1]*np.diff(eblon)[y]
+    # sverdrup = (eb.values[:, np.newaxis] + curl)/1e6
+
+    # Convert back to xr.DataArray.
+    sverdrup = xr.DataArray(sverdrup, coords={'lat': lat, 'lon': lon},
+                            dims=['lat', 'lon'])
+    return sverdrup
+
 
 def plot_winds(varz, title, units, vmax, save_name, plot_map):
     """Plot WSC or WS."""
@@ -77,14 +142,14 @@ def plot_winds(varz, title, units, vmax, save_name, plot_map):
             ax.coastlines()
             ax.add_feature(cartopy.feature.LAND, zorder=2, edgecolor='k',
                            facecolor='lightgrey')
-            ax.gridlines(xlocs=[110, 120, 160, 200, 240, 280, 290],
+            ax.gridlines(xlocs=[110, 120, 160, -160, -120, -80, -60],
                          ylocs=[-20, -10, 0, 10, 20], color=lcolor)
             gl = ax.gridlines(draw_labels=True, linewidth=0.001,
                               xlocs=[120, 160, -160, -120, -80],
                               ylocs=[-10, 0, 10], color=lcolor)
-            gl.xlabels_bottom = True
-            gl.xlabels_top = False
-            gl.ylabels_right = False
+            gl.bottom_labels = True
+            gl.top_labels = False
+            gl.right_labels = False
             gl.xformatter = LONGITUDE_FORMATTER
             gl.yformatter = LATITUDE_FORMATTER
             cbar = fig.colorbar(cs, shrink=0.9, pad=0.02, extend='both')
@@ -121,70 +186,46 @@ def plot_winds(varz, title, units, vmax, save_name, plot_map):
 data = ['jra55', 'erai']
 flux = ['bulk', 'erai', 'static', 'GILL', 'LARGE_approx']
 f1, f2, res = 0, 1, 0.1
-tx1, ty1, phi1 = get_wsc(data=data[0], flux=flux[f1], res=res, interp='cubic')
-tx2, ty2, phi2 = get_wsc(data=data[1], flux=flux[f2], res=res, interp='cubic')
+tx1, ty1, wsc1 = get_wsc(data=data[0], flux=flux[f1], res=res, interp='cubic')
+tx2, ty2, wsc2 = get_wsc(data=data[1], flux=flux[f2], res=res, interp='cubic')
+
+svu1 = zonal_sverdrup(curl=wsc1, lat=wsc1.lat, lon=wsc1.lon, SFinit=0)
+svu2 = zonal_sverdrup(wsc2, wsc2.lat, wsc2.lon, SFinit=0)
+
+# cs = plt.pcolormesh(wsc1.lon, wsc1.lat, svu1, vmax=30, vmin=-30, cmap=plt.cm.seismic)
+# plt.colorbar()
 
 
-ix = np.fliplr(np.isnan(phi1)).argmin(axis=1)*-1
-eb = phi1.lon[ix-1]
-ceb=eb.copy()*0
-for y in range(len(phi1.lat)-1):
-    # ceb[y] = phi1[y, ix[y]-1]*np.flip(np.diff(np.flip(eb)))[y]
-    ceb[y] = np.flip(np.diff(np.flip(eb)))[y]
-# lat = phi1.lat[0]
-# curl = phi1.sel(lat=lat)
-# dlon = 0.1
-# curl = np.flip(curl)
-# dx = (dlon/360)*2*np.pi*6400000*np.cos(np.radians(lat))
-
-# f, beta = tools.coriolis(lat)
-# curl = np.nancumsum(curl)
-# curl = curl*(dx/(beta*cfg.RHO)).item()
-# curl = np.flip(curl)
-
-
-
-lat = phi1.lat
-curl = phi1
-dlon = 0.1
-curl = np.fliplr(curl)
-dx = (dlon/360)*2*np.pi*6400000*np.cos(np.radians(lat))
-f, beta = tools.coriolis(lat)
-curl = np.nancumsum(curl, axis=1) # cumsum from east to west
-dxr = (dx/(beta)).values[:, np.newaxis]
-
-curl = np.fliplr(curl)
-curl = curl*dxr
-ix = np.fliplr(np.isnan(phi1)).argmin(axis=1)*-1
-eb = phi1.lon[ix-1]
-ceb = eb.copy()*0
-for y in range(len(phi1.lat)-1):
-    ceb[y] = curl[y, ix[y]-1]*np.diff(eb)[y]
-sverdrup = (-ceb.values[:, np.newaxis]+curl)/cfg.SV/cfg.RHO
-sverdrup = (-curl)/cfg.SV/cfg.RHO
-
-cs = plt.pcolormesh(phi1.lon, phi1.lat, sverdrup, vmax=30, vmin=-30, cmap=plt.cm.seismic)
-plt.colorbar()
-
-# Wind stress line graph in first subplot and WSC for next three.
-title = ['Equatorial zonal wind stress', 'JRA-55 wind stress curl',
-         'ERA-Interim wind stress curl',
-         'Wind stress curl difference (JRA-55 minus ERA-Interim)']
-units = ['[N/m$^{2}$]', *['[x10$^{-7}$ N/m$^{3}$]' for i in range(3)]]
+# Wind stress line graph in first subplot and SVERDRUP for next three.
+title = ['Equatorial zonal wind stress', 'JRA-55 U Sverdrup',
+         'ERA-Interim U Sverdrup', 'U Sverdrup difference (JRA-55 minus ERA-Interim)']
+units = ['[N/m$^{2}$]', *['[Sv]' for i in range(3)]]
 varz = [[tx1.sel(lat=slice(-2, 2)).mean('lat'),
          tx2.sel(lat=slice(-2, 2)).mean('lat')],
-        phi1*1e7, phi2*1e7, (phi1 - phi2.values)*1e7]
-vmax = [0.07, 1.5, 1.5, 0.5]
-plot_map = [False, *[True]*3]
-save_name = 'WSC_{}_{}_{:02.0f}'.format(flux[f1], flux[f2], res*10)
-plot_winds(varz, title, units, vmax, save_name, plot_map)
+        svu1, svu2, (svu1 - svu2.values)]
+vmax = [0.07, 40, 40, 30]
+save_name = 'SVU_{}_{}_{:02.0f}'.format(flux[f1], flux[f2], res*10)
+plot_winds(varz, title, units, vmax, save_name, plot_map=[False, *[True]*3])
 
-# Wind stress.
-title = ['JRA-55 wind stress', 'ERA-Interim wind stress',
-         'Wind stress difference (JRA-55 minus ERA-Interim)']
-units = ['[N/m$^{2}$]' for i in range(3)]
-varz = [tx1, tx2, (tx1 - tx2.values)]
-vmax = [0.08, 0.08, 0.04]
-plot_map = [True]*3
-save_name = 'WS_{}_{}_{:02.0f}'.format(flux[f1], flux[f2], res*10)
-plot_winds(varz, title, units, vmax, save_name, plot_map)
+# # Wind stress line graph in first subplot and WSC for next three.
+# title = ['Equatorial zonal wind stress', 'JRA-55 wind stress curl',
+#           'ERA-Interim wind stress curl',
+#           'Wind stress curl difference (JRA-55 minus ERA-Interim)']
+# units = ['[N/m$^{2}$]', *['[x10$^{-7}$ N/m$^{3}$]' for i in range(3)]]
+# varz = [[tx1.sel(lat=slice(-2, 2)).mean('lat'),
+#           tx2.sel(lat=slice(-2, 2)).mean('lat')],
+#         phi1*1e7, phi2*1e7, (phi1 - phi2.values)*1e7]
+# vmax = [0.07, 1.5, 1.5, 0.5]
+# plot_map = [False, *[True]*3]
+# save_name = 'WSC_{}_{}_{:02.0f}'.format(flux[f1], flux[f2], res*10)
+# plot_winds(varz, title, units, vmax, save_name, plot_map)
+
+# # Wind stress.
+# title = ['JRA-55 wind stress', 'ERA-Interim wind stress',
+#           'Wind stress difference (JRA-55 minus ERA-Interim)']
+# units = ['[N/m$^{2}$]' for i in range(3)]
+# varz = [tx1, tx2, (tx1 - tx2.values)]
+# vmax = [0.08, 0.08, 0.04]
+# plot_map = [True]*3
+# save_name = 'WS_{}_{}_{:02.0f}'.format(flux[f1], flux[f2], res*10)
+# plot_winds(varz, title, units, vmax, save_name, plot_map)

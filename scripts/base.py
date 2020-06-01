@@ -13,7 +13,6 @@
 
 # """
 import main
-import cftime
 import cfg
 import tools
 import math
@@ -22,19 +21,26 @@ from pathlib import Path
 from tools import get_date, timeit
 from datetime import timedelta
 from argparse import ArgumentParser
+from parcels import (FieldSet, Field, ParticleSet, JITParticle,
+                     ErrorCode, Variable, AdvectionRK4_3D, AdvectionRK4)
 
 logger = tools.mlogger('base', parcels=True)
 
 
 @timeit
-def run_EUC(dy=0.4, dz=25, lon=165, lat=2.6, year=[1981, 2012], m1=1, m2=12,
-            dt_mins=240, repeatdt_days=6, outputdt_days=1, day='max', runtime_days='all',
-            ifile=0, field_method='b_grid', chunks='auto', parallel=False):
+def run_EUC(dy=0.1, dz=25, lon=165, lat=2.6, year=2012, month=12, day='max',
+            dt_mins=240, repeatdt_days=6, outputdt_days=1, runtime_days=240, ifile=0,
+            field_method='b_grid', chunks='auto', pfile=None, parallel=False):
     """Run Lagrangian EUC particle experiment."""
     # Define Fieldset and ParticleSet parameters.
 
+    # Make sure run ends on a repeat day, otherwise increase until it does.
+    while runtime_days % repeatdt_days != 0:
+        runtime_days += 1
+    runtime = timedelta(days=int(runtime_days))
     # Start and end dates.
-    date_bnds = [get_date(year[0], m1, 1), get_date(year[1], m2, day)]
+    start_date = get_date(year, month, day)
+    date_bnds = [start_date - runtime, start_date]
 
     # Meridional distance between released particles.
     p_lats = np.round(np.arange(-lat, lat + 0.05, dy), 2)
@@ -52,18 +58,11 @@ def run_EUC(dy=0.4, dz=25, lon=165, lat=2.6, year=[1981, 2012], m1=1, m2=12,
     # Repeat particle release time.
     repeatdt = timedelta(days=repeatdt_days)
 
-    # Run for the number of days between date bounds.
-    if runtime_days == 'all':
-        runtime = timedelta(days=(date_bnds[1] - date_bnds[0]).days + 1)
-    else:
-        runtime = timedelta(days=int(runtime_days))
-
     # Advection steps to write.
     outputdt = timedelta(days=outputdt_days)
 
     # Fieldset bounds.
-    ft_bnds = [get_date(1981, 1, 1), get_date(2012, 12, 31)]
-    # ft_bnds = [get_date(1981, 1, 1), get_date(1981, 12, 31)]
+    ft_bnds = [get_date(1981, 1, 1), get_date(1981, 12, 31)]
     time_periodic = timedelta(days=(ft_bnds[1] - ft_bnds[0]).days + 1)
 
     # Generate file name for experiment.
@@ -84,21 +83,43 @@ def run_EUC(dy=0.4, dz=25, lon=165, lat=2.6, year=[1981, 2012], m1=1, m2=12,
     # Create fieldset.
     fieldset = main.ofam_fieldset(ft_bnds, chunks=chunks, field_method=field_method,
                                   time_periodic=time_periodic)
-    logger.info('{}:Field={}: Chunks={}: Range={}-{}: Periodic={} days'
-                .format(sim_id.stem, field_method, chunks, ft_bnds[0].year, ft_bnds[1].year,
-                        time_periodic.days))
-
-    # Set fieldset minimum depth.
-    fieldset.mindepth = fieldset.U.depth[0]
 
     # Set ParticleSet start depth as last fieldset time.
     pset_start = fieldset.U.grid.time[-1]
 
-    fieldset.add_constant('pset_start', pset_start)
+    class zParticle(cfg.ptype['jit']):
+        """Particle class that saves particle age and zonal velocity."""
 
-    # Create ParticleSet and execute.
-    main.EUC_particles(fieldset, date_bnds, p_lats, p_lons, p_depths,
-                       dt, pset_start, repeatdt, runtime, outputdt, sim_id)
+        # The age of the particle.
+        age = Variable('age', dtype=np.float32, initial=0.)
+
+        # The velocity of the particle.
+        u = Variable('u', dtype=np.float32, initial=fieldset.U, to_write='once')
+
+        # The 'zone' of the particle.
+        zone = Variable('zone', dtype=np.float32, initial=fieldset.zone)
+
+    # Create particle set.
+    if pfile is None:
+        pset = main.EUC_pset(fieldset, zParticle, p_lats, p_lons, p_depths, pset_start, repeatdt)
+    else:
+        pset = main.particleset_from_particlefile(fieldset, pclass=zParticle, filename=pfile,
+                                                  repeatdt=repeatdt, restart=True,
+                                                  restarttime=np.nanmin)
+
+    # Output particle file p_name and time steps to save.
+    output_file = pset.ParticleFile(cfg.data/sim_id.stem, outputdt=outputdt)
+    logger.debug('{}:Age+RK4_3D: Tmp directory={}: #Particles={}'
+                 .format(sim_id.stem, output_file.tempwritedir_base[-8:], pset.size))
+
+    kernels = pset.Kernel(main.Age) + AdvectionRK4_3D
+
+    pset.execute(kernels, runtime=runtime, dt=dt, output_file=output_file,
+                 recovery={ErrorCode.ErrorOutOfBounds: main.DeleteParticle,
+                           ErrorCode.ErrorThroughSurface: main.SubmergeParticle},
+                 verbose_progress=True)
+    output_file.export()
+    logger.info('{}: Completed!: #Particles={}'.format(sim_id.stem, pset.size))
 
     return
 
@@ -109,31 +130,27 @@ if __name__ == "__main__" and cfg.home != Path('E:/'):
     p.add_argument('-dz', '--dz', default=25, type=int, help='Particle depth spacing [m].')
     p.add_argument('-lon', '--lon', default=165, type=str, help='Particle start longitude(s).')
     p.add_argument('-lat', '--lat', default=2.6, type=float, help='Latitude bounds [deg].')
-    p.add_argument('-i', '--yri', default=2012, type=int, help='Simulation start year.')
-    p.add_argument('-f', '--yrf', default=2012, type=int, help='Simulation end year.')
+    p.add_argument('-y', '--year', default=2012, type=int, help='Simulation start year.')
+    p.add_argument('-m', '--month', default=12, type=int, help='Final month (of final year).')
+    p.add_argument('-run', '--runtime', default=240, type=int, help='Runtime days.')
     p.add_argument('-dt', '--dt', default=240, type=int, help='Advection timestep [min].')
     p.add_argument('-r', '--repeatdt', default=6, type=int, help='Release repeat [day].')
     p.add_argument('-out', '--outputdt', default=1, type=int, help='Advection write freq [day].')
-    p.add_argument('-run', '--runtime', default='all', type=str, help='Runtime [day].')
-    p.add_argument('-m1', '--month1', default=1, type=int, help='Final month (of final year).')
-    p.add_argument('-m2', '--month2', default=12, type=int, help='Final month (of final year).')
     p.add_argument('-p', '--parallel', default=False, type=bool, help='Parallel execution.')
     p.add_argument('-ix', '--ifile', default=0, type=int, help='File Index.')
     args = p.parse_args()
 
-    run_EUC(dy=args.dy, dz=args.dz, lon=args.lon, lat=args.lat, m1=args.month1, m2=args.month2,
-            year=[args.yri, args.yrf], dt_mins=args.dt, repeatdt_days=args.repeatdt,
-            outputdt_days=args.outputdt, runtime_days=args.runtime,
-            ifile=args.ifile, parallel=args.parallel)
+    run_EUC(dy=args.dy, dz=args.dz, lon=args.lon, lat=args.lat, year=args.year, month=args.month,
+            runtime_days=args.runtime, dt_mins=args.dt, repeatdt_days=args.repeatdt,
+            outputdt_days=args.outputdt, ifile=args.ifile, parallel=args.parallel)
 else:
     dy, dz = 2, 200
     lon, lat = 165, 2.6
-    year, month, day = [1981, 1981], 1, 'max'
+    year, month, day = 1981, 1, 'max'
     dt_mins, repeatdt_days, outputdt_days, runtime_days = 240, 6, 1, 6
-    add_transport, write_fieldset = False, False
     field_method = 'b_grid'
     chunks = 'auto'
     ifile = 0
     run_EUC(dy=dy, dz=dz, lon=lon, lat=lat, year=year,
-            dt_mins=240, repeatdt_days=6, outputdt_days=1, m2=month,
+            dt_mins=240, repeatdt_days=6, outputdt_days=1, month=month, day=day,
             runtime_days=runtime_days, field_method=field_method, chunks=chunks)

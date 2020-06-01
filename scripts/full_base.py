@@ -143,16 +143,16 @@ runtime = timedelta(days=(run_bnds[1] - run_bnds[0]).days + 1)
 fieldset2 = main.ofam_fieldset(date_bnds, chunks=chunks, field_method=field_method,
                                time_periodic=time_periodic)
 
-pfile = xr.open_dataset(str(sim_id), decode_cf=False)
-pfile = pfile.where(pfile.u >= 0, drop=True)
-pfile['lon'] = pfile.lon.ffill(dim='obs')
-pfile['lat'] = pfile.lat.ffill(dim='obs')
-pfile['z'] = pfile.z.ffill(dim='obs')
-pfile['time'] = pfile.time.ffill(dim='obs')
-pfile['age'] = pfile.age.ffill(dim='obs')
-pfile['trajectory'] = pfile.trajectory.where(pfile.trajectory>0).ffill(dim='obs')
-pfile.to_netcdf(cfg.data/(sim_id.stem+'x.nc'))
-sim_idx = cfg.data/(sim_id.stem+'x.nc')
+# pfile = xr.open_dataset(str(sim_id), decode_cf=False)
+# pfile = pfile.where(pfile.u >= 0, drop=True)
+# pfile['lon'] = pfile.lon.ffill(dim='obs')
+# pfile['lat'] = pfile.lat.ffill(dim='obs')
+# pfile['z'] = pfile.z.ffill(dim='obs')
+# pfile['time'] = pfile.time.ffill(dim='obs')
+# pfile['age'] = pfile.age.ffill(dim='obs')
+# pfile['trajectory'] = pfile.trajectory.where(pfile.trajectory>0).ffill(dim='obs')
+# pfile.to_netcdf(cfg.data/(sim_id.stem+'x.nc'))
+# sim_idx = cfg.data/(sim_id.stem+'x.nc')
 
 
 class zParticle(cfg.ptype['jit']):
@@ -163,13 +163,13 @@ class zParticle(cfg.ptype['jit']):
     zone = Variable('zone', dtype=np.float32, initial=fieldset2.zone)
 
 
-pset2 = ParticleSet.from_particlefile(fieldset2, pclass=zParticle, filename=sim_idx,
-                                      restart=True)
+pset2 = ParticleSet.from_particlefile(fieldset2, pclass=zParticle, filename=sim_id,
+                                      restart=True, restarttime=np.nanmin)
 
-for t in range(len(pfile.trajectory)):
-    pset2[t].age = pfile.isel(traj=t).age[-1]
-psetx = EUC_pset(fieldset2, zParticle, p_lats, p_lons, p_depths, pset_start, repeatdt)
-pset2.add(psetx)
+# for t in range(len(pfile.trajectory)):
+#     pset2[t].age = pfile.isel(traj=t).age[-1]
+# psetx = EUC_pset(fieldset2, zParticle, p_lats, p_lons, p_depths, pset_start, repeatdt)
+# pset2.add(psetx)
 sim_id2 = main.generate_sim_id(date_bnds, lon, ifile=ifile, parallel=parallel)
 output_file2 = pset2.ParticleFile(sim_id2, outputdt=outputdt)
 logger.debug('{}:Temp write dir:{}'.format(sim_id2.stem, output_file2.tempwritedir_base))

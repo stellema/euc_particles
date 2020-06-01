@@ -44,7 +44,7 @@ logger.propagate = False
 """
 import sys
 import cfg
-import gsw
+# import gsw
 import tools
 import math
 import random
@@ -143,6 +143,7 @@ def ofam_fieldset(date_bnds, field_method='b_grid', time_periodic=False,
 
     # Set fieldset minimum depth.
     fieldset.mindepth = fieldset.U.depth[0]
+
     return fieldset
 
 
@@ -161,6 +162,49 @@ def generate_sim_id(date_bnds, lon, ifile=0, parallel=False):
 
     sim_id = cfg.data/'{}_v{}.nc'.format(dsr, i)
     return sim_id
+
+
+def particleset_from_particlefile(fieldset, pclass, filename, repeatdt,
+                                  restart=True, restarttime=np.nanmin, lonlatdepth_dtype=None, **kwargs):
+    pfile = xr.open_dataset(str(filename), decode_cf=False)
+    pfile_vars = [v for v in pfile.data_vars]
+
+    vars = {}
+    for v in pclass.getPType().variables:
+        if v.name in pfile_vars:
+            vars[v.name] = np.ma.filled(pfile.variables[v.name], np.nan)
+        elif v.name not in ['xi', 'yi', 'zi', 'ti', 'dt', '_next_dt', 'depth', 'pid', 'id', 'fileid', 'state']:
+            raise RuntimeError('Variable %s is in pclass but not in the particlefile' % v.name)
+    vars['depth'] = np.ma.filled(pfile.variables['z'], np.nan)
+    vars['pid'] = np.ma.filled(pfile.variables['trajectory'], np.nan)
+
+    if isinstance(vars['time'][0, 0], np.timedelta64):
+        vars['time'] = np.array([t/np.timedelta64(1, 's') for t in vars['time']])
+
+    if restarttime is None:
+        restarttime = np.nanmax(vars['time'])
+    elif callable(restarttime):
+        restarttime = restarttime(vars['time'])
+    else:
+        restarttime = restarttime
+
+    inds = np.where(vars['time'] == restarttime)
+    for v in vars:
+        if vars[v].ndim >= 2:
+            vars[v] = vars[v][inds]
+        else:
+            vars[v] = vars[v][[i for i in inds][1]]
+        if v not in ['lon', 'lat', 'depth', 'time', 'pid']:
+            kwargs[v] = vars[v]
+
+    if restart:
+        pclass.setLastID(0)  # reset to zero offset
+    else:
+        vars['pid'] = None
+    pset = ParticleSet(fieldset=fieldset, pclass=pclass, lon=vars['lon'], lat=vars['lat'],
+                       depth=vars['depth'], time=vars['time'], pid_orig=vars['pid'],
+                       lonlatdepth_dtype=lonlatdepth_dtype, repeatdt=repeatdt, **kwargs)
+    return pset
 
 
 def DeleteParticle(particle, fieldset, time):
@@ -251,8 +295,7 @@ def EUC_pset(fieldset, pclass, p_lats, p_lons, p_depths, pset_start, repeatdt):
 
 @timeit
 def EUC_particles(fieldset, date_bnds, p_lats, p_lons, p_depths,
-                  dt, pset_start, repeatdt, runtime, outputdt,
-                  sim_id):
+                  dt, pset_start, repeatdt, runtime, outputdt, sim_id):
     """Create and execute a ParticleSet (created using EUC_pset).
 
     Args:
