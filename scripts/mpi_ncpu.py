@@ -51,8 +51,8 @@ for mpi_rank in range(mpi_size):
 # My particle setup is in multiples of 14 because I repeat the depths (len=14) for each lat.
 # Made a partition based on 26 CPUs that each have 28 particles (except the last cpu which has 42).
 mpi_size = 26
-p = np.arange(0, mpi_size)
-partitions = np.append(np.repeat(p, 28),  np.ones(14)*(mpi_size-1))
+p = np.arange(0, mpi_size, dtype=int)
+partitions = np.append(np.repeat(p, 28),  np.ones(14, dtype=int)*(mpi_size-1))
 
 print('CPUs={}, Particles={}'.format(mpi_size, lon.size))
 for mpi_rank in range(mpi_size):

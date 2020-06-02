@@ -26,21 +26,12 @@ from parcels import (FieldSet, Field, ParticleSet, JITParticle,
 
 logger = tools.mlogger('base', parcels=True)
 
-def log_sim_setup():
-    logger.info('{}:Executing:{} to {}: Runtime={} days: Particles: /repeat={}: Total={}'
-                .format(sim_id.stem, *[str(i)[:10] for i in date_bnds], runtime.days,
-                        Z * X * Y, Z * X * Y * math.ceil(runtime.days/repeatdt.days)))
-    logger.info('{}:Lons={}: Lats={} [{}-{} x{}]: Depths={} [{}-{}m x{}]'
-                .format(sim_id.stem, *p_lons, Y, *p_lats[::Y-1], dy, Z, *p_depths[::Z-1], dz))
-    logger.info('{}:Repeat={} days: Timestep={:.0f} mins: Output={:.0f} days'
-                .format(sim_id.stem, repeatdt.days, 1440 - dt.seconds/60, outputdt.days))
-    logger.info('{}:Field={}: Chunks={}: Range={}-{}: Periodic={} days'
-                .format(sim_id.stem, field_method, chunks, ft_bnds[0].year, ft_bnds[1].year,
-                        time_periodic.days))
+
 @timeit
 def run_EUC(dy=0.1, dz=25, lon=165, lat=2.6, year=2012, month=12, day='max',
             dt_mins=240, repeatdt_days=6, outputdt_days=1, runtime_days=240, ifile=0,
-            field_method='b_grid', chunks='auto', pfile=None, parallel=False):
+            field_method='b_grid', chunks='specific', partition='specific',
+            pfile=None, parallel=False):
     """Run Lagrangian EUC particle experiment."""
     # Define Fieldset and ParticleSet parameters.
 
@@ -70,8 +61,26 @@ def run_EUC(dy=0.1, dz=25, lon=165, lat=2.6, year=2012, month=12, day='max',
     ft_bnds = [get_date(1981, 1, 1), get_date(y2, 12, 31)]
     time_periodic = timedelta(days=(ft_bnds[1] - ft_bnds[0]).days + 1)
 
+    if partition == 'specific':
+        mpi_size = 26
+        p = np.arange(0, mpi_size, dtype=int)
+        partitions = np.append(np.repeat(p, 28),  np.ones(14, dtype=int)*(mpi_size-1))
+    else:
+        partitions = None
+
     # Generate file name for experiment.
     sim_id = main.generate_sim_id(date_bnds, lon, ifile=ifile, parallel=parallel)
+
+    logger.info('{}:Executing:{} to {}: Runtime={} days: Particles: /repeat={}: Total={}'
+                .format(sim_id.stem, *[str(i)[:10] for i in date_bnds], runtime.days,
+                        Z * X * Y, Z * X * Y * math.ceil(runtime.days/repeatdt.days)))
+    logger.info('{}:Lons={}: Lats={} [{}-{} x{}]: Depths={} [{}-{}m x{}]'
+                .format(sim_id.stem, *p_lons, Y, *p_lats[::Y-1], dy, Z, *p_depths[::Z-1], dz))
+    logger.info('{}:Repeat={} days: Timestep={:.0f} mins: Output={:.0f} days'
+                .format(sim_id.stem, repeatdt.days, 1440 - dt.seconds/60, outputdt.days))
+    logger.info('{}:Field={}: Chunks={} 1750/300: Range={}-{}: Periodic={} days: Partitions={}'
+                .format(sim_id.stem, field_method, chunks, ft_bnds[0].year, ft_bnds[1].year,
+                        time_periodic.days, partition))
 
     # Create fieldset.
     fieldset = main.ofam_fieldset(ft_bnds, chunks=chunks, field_method=field_method,
@@ -89,11 +98,13 @@ def run_EUC(dy=0.1, dz=25, lon=165, lat=2.6, year=2012, month=12, day='max',
         # The 'zone' of the particle.
         zone = Variable('zone', dtype=np.float32, initial=fieldset.zone)
 
+
     # Create particle set.
     if pfile is None:
         # Set ParticleSet start as last fieldset time.
         pset_start = fieldset.U.grid.time[-1]
-        pset = main.EUC_pset(fieldset, zParticle, p_lats, p_lons, p_depths, pset_start, repeatdt)
+        pset = main.EUC_pset(fieldset, zParticle, p_lats, p_lons, p_depths, pset_start,
+                             repeatdt, partitions)
 
     # Create particle set from particlefile.
     else:
@@ -147,16 +158,10 @@ else:
     year, month, day = 1981, 1, 'max'
     dt_mins, repeatdt_days, outputdt_days, runtime_days = 240, 6, 1, 6
     field_method = 'b_grid'
-    chunks = 'auto'
+    chunks = 'specific'
+    partition = None
     # pfile = cfg.data/'sim_198101_198103_v14i.nc'
     ifile = 0
     run_EUC(dy=dy, dz=dz, lon=lon, lat=lat, year=year,
             dt_mins=240, repeatdt_days=6, outputdt_days=1, month=month,
-            runtime_days=runtime_days, field_method=field_method, chunks=chunks)
-
-
-N=742
-P=24
-n = np.zeros(NP, dtype=int)
-[NI/NP + (1 if P < NI%NP else 0) for P in range(0,NP)]
-while P > 0:
+            runtime_days=runtime_days, field_method=field_method, chunks=chunks, partition=partition)

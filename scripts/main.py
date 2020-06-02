@@ -54,6 +54,7 @@ import pandas as pd
 from pathlib import Path
 import matplotlib.pyplot as plt
 from collections import OrderedDict
+import parcels
 from parcels import (FieldSet, Field, ParticleSet, JITParticle,
                      ErrorCode, Variable, AdvectionRK4_3D, AdvectionRK4)
 from tools import timeit
@@ -80,8 +81,10 @@ def ofam_fieldset(date_bnds, field_method='b_grid', time_periodic=False,
         fieldset (parcels.Fieldset)
 
     """
-    # Chunk size for lat and lon.
-    cs = 300
+    parcels.field.NetcdfFileBuffer._name_maps = {"lon": ["xu_ocean", "xt_ocean"],
+                                                 "lat": ["yu_ocean", "yt_ocean"],
+                                                 "depth": ["st_ocean", "sw_ocean"],
+                                                 "time": ["time"]}
 
     # Create list of files for each variable based on selected years and months.
     u, v, w = [], [], []
@@ -106,8 +109,9 @@ def ofam_fieldset(date_bnds, field_method='b_grid', time_periodic=False,
                  'W': {'depth': w[0], 'lat': u[0], 'lon': u[0], 'data': w}}
 
         if chunks == 'specific':
-            chunks = ((1,), 1, (cs,), (cs,))  # (1, 1, 300, 1750)
-            chunks = {dims['time']: 1, dims['depth']: 1, dims['lon']: cs, dims['lat']: cs}
+            chunks = {"Time": 1, "st_ocean": 1, "sw_ocean": 1,
+                      "xt_ocean": 1750, "xu_ocean": 1750,
+                      "yt_ocean": 300, "yu_ocean": 300}
 
     if field_method == 'netcdf':
         fieldset = FieldSet.from_netcdf(files, variables, dimensions, field_chunksize=chunks,
@@ -276,7 +280,7 @@ def remove_westward_particles(pset):
         logger.debug('Particles travelling in the wrong direction.')
 
 
-def EUC_pset(fieldset, pclass, p_lats, p_lons, p_depths, pset_start, repeatdt):
+def EUC_pset(fieldset, pclass, p_lats, p_lons, p_depths, pset_start, repeatdt, partitions=None):
     """Create a ParticleSet."""
     # Convert to lists if float or int.
     p_lats = [p_lats] if type(p_lats) not in [list, np.array, np.ndarray] else p_lats
@@ -288,7 +292,7 @@ def EUC_pset(fieldset, pclass, p_lats, p_lons, p_depths, pset_start, repeatdt):
     lons = np.repeat(p_lons, len(p_depths)*len(p_lats))
     pset = ParticleSet.from_list(fieldset=fieldset, pclass=pclass,
                                  lon=lons, lat=lats, depth=depths,
-                                 time=pset_start, repeatdt=repeatdt)
+                                 time=pset_start, repeatdt=repeatdt, partitions=partitions)
 
     return pset
 
