@@ -30,7 +30,7 @@ logger = tools.mlogger('base', parcels=True)
 @timeit
 def run_EUC(dy=0.1, dz=25, lon=165, lat=2.6, year=2012, month=12, day='max',
             dt_mins=240, repeatdt_days=6, outputdt_days=1, runtime_days=240, ifile=0,
-            field_method='b_grid', chunks='specific', partition='specific',
+            field_method='b_grid', chunks='specific', partition=None,
             pfile=None, parallel=False):
     """Run Lagrangian EUC particle experiment."""
     # Define Fieldset and ParticleSet parameters.
