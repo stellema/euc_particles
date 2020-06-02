@@ -164,8 +164,8 @@ def generate_sim_id(date_bnds, lon, ifile=0, parallel=False):
     return sim_id
 
 
-def particleset_from_particlefile(fieldset, pclass, filename, repeatdt,
-                                  restart=True, restarttime=np.nanmin, lonlatdepth_dtype=None, **kwargs):
+def particleset_from_particlefile(fieldset, pclass, filename, repeatdt=None, restart=True,
+                                  restarttime=np.nanmin, lonlatdepth_dtype=None, **kwargs):
     pfile = xr.open_dataset(str(filename), decode_cf=False)
     pfile_vars = [v for v in pfile.data_vars]
 

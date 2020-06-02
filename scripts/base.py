@@ -26,7 +26,17 @@ from parcels import (FieldSet, Field, ParticleSet, JITParticle,
 
 logger = tools.mlogger('base', parcels=True)
 
-
+def log_sim_setup():
+    logger.info('{}:Executing:{} to {}: Runtime={} days: Particles: /repeat={}: Total={}'
+                .format(sim_id.stem, *[str(i)[:10] for i in date_bnds], runtime.days,
+                        Z * X * Y, Z * X * Y * math.ceil(runtime.days/repeatdt.days)))
+    logger.info('{}:Lons={}: Lats={} [{}-{} x{}]: Depths={} [{}-{}m x{}]'
+                .format(sim_id.stem, *p_lons, Y, *p_lats[::Y-1], dy, Z, *p_depths[::Z-1], dz))
+    logger.info('{}:Repeat={} days: Timestep={:.0f} mins: Output={:.0f} days'
+                .format(sim_id.stem, repeatdt.days, 1440 - dt.seconds/60, outputdt.days))
+    logger.info('{}:Field={}: Chunks={}: Range={}-{}: Periodic={} days'
+                .format(sim_id.stem, field_method, chunks, ft_bnds[0].year, ft_bnds[1].year,
+                        time_periodic.days))
 @timeit
 def run_EUC(dy=0.1, dz=25, lon=165, lat=2.6, year=2012, month=12, day='max',
             dt_mins=240, repeatdt_days=6, outputdt_days=1, runtime_days=240, ifile=0,
@@ -34,51 +44,34 @@ def run_EUC(dy=0.1, dz=25, lon=165, lat=2.6, year=2012, month=12, day='max',
     """Run Lagrangian EUC particle experiment."""
     # Define Fieldset and ParticleSet parameters.
 
+    # Particle release latitudes, depths and longitudes.
+    p_lats = np.round(np.arange(-lat, lat + 0.05, dy), 2)
+    p_depths = np.arange(25, 350 + 20, dz)
+    p_lons = np.array([lon])
+
+    # Number of particles released in each dimension.
+    Z, Y, X = len(p_depths), len(p_lats), len(p_lons)
+
     # Make sure run ends on a repeat day, otherwise increase until it does.
     while runtime_days % repeatdt_days != 0:
         runtime_days += 1
     runtime = timedelta(days=int(runtime_days))
+
     # Start and end dates.
     start_date = get_date(year, month, day)
     date_bnds = [start_date - runtime, start_date]
 
-    # Meridional distance between released particles.
-    p_lats = np.round(np.arange(-lat, lat + 0.05, dy), 2)
-
-    # Vertical distance between released particles.
-    p_depths = np.arange(25, 350 + 20, dz)
-    # p_depths = 200
-    # Longitudes to release particles.
-    lon = lon if type(lon) == 'str' else str(lon)  # Convert to string.
-    p_lons = np.array([int(item) for item in lon.split(',')])
-
-    # Advection step (negative because running backwards).
-    dt = -timedelta(minutes=dt_mins)
-
-    # Repeat particle release time.
-    repeatdt = timedelta(days=repeatdt_days)
-
-    # Advection steps to write.
-    outputdt = timedelta(days=outputdt_days)
+    dt = -timedelta(minutes=dt_mins)  # Advection step (negative for backwards).
+    repeatdt = timedelta(days=repeatdt_days)  # Repeat particle release time.
+    outputdt = timedelta(days=outputdt_days)  # Advection steps to write.
 
     # Fieldset bounds.
-    ft_bnds = [get_date(1981, 1, 1), get_date(1981, 12, 31)]
+    y2 = 2012 if cfg.home != Path('E:/') else 1981
+    ft_bnds = [get_date(1981, 1, 1), get_date(y2, 12, 31)]
     time_periodic = timedelta(days=(ft_bnds[1] - ft_bnds[0]).days + 1)
 
     # Generate file name for experiment.
     sim_id = main.generate_sim_id(date_bnds, lon, ifile=ifile, parallel=parallel)
-
-    # Number of particles release in each dimension.
-    Z, Y, X = len(p_depths), len(p_lats), len(p_lons)
-
-    logger.info('{}:Executing:{} to {}: Runtime={} days'
-                .format(sim_id.stem, *[str(i)[:10] for i in date_bnds], runtime.days))
-    logger.info('{}:Lons={}: Lats={} [{}-{} x{}]: Depths={} [{}-{}m x{}]'
-                .format(sim_id.stem, *p_lons, Y, *p_lats[::Y-1], dy, Z, *p_depths[::Z-1], dz))
-    logger.info('{}:Repeat={} days: Timestep={:.0f} mins: Output={:.0f} days'
-                .format(sim_id.stem, repeatdt.days, 1440 - dt.seconds/60, outputdt.days))
-    logger.info('{}:Particles: /repeat={}: Total={}'
-                .format(sim_id.stem, Z * X * Y, Z * X * Y * math.ceil(runtime.days/repeatdt.days)))
 
     # Create fieldset.
     fieldset = main.ofam_fieldset(ft_bnds, chunks=chunks, field_method=field_method,
@@ -95,15 +88,20 @@ def run_EUC(dy=0.1, dz=25, lon=165, lat=2.6, year=2012, month=12, day='max',
 
         # The 'zone' of the particle.
         zone = Variable('zone', dtype=np.float32, initial=fieldset.zone)
-    # Set ParticleSet start depth as last fieldset time.
-    pset_start = fieldset.U.grid.time[-1]
+
     # Create particle set.
     if pfile is None:
-
+        # Set ParticleSet start as last fieldset time.
+        pset_start = fieldset.U.grid.time[-1]
         pset = main.EUC_pset(fieldset, zParticle, p_lats, p_lons, p_depths, pset_start, repeatdt)
+
+    # Create particle set from particlefile.
     else:
         pset = main.particleset_from_particlefile(fieldset, pclass=zParticle, filename=pfile,
                                                   restart=True, restarttime=np.nanmin)
+        pset_start = pset.time[0]
+        if (pset.age[pset.time == pset_start] == 0.).sum() == Z * X * Y:
+            pset_start = pset_start - repeatdt_days*24*60*60
         psetx = main.EUC_pset(fieldset, zParticle, p_lats, p_lons, p_depths, pset_start, repeatdt)
         pset.add(psetx)
 
@@ -128,7 +126,7 @@ if __name__ == "__main__" and cfg.home != Path('E:/'):
     p = ArgumentParser(description="""Run EUC Lagrangian experiment.""")
     p.add_argument('-dy', '--dy', default=0.1, type=float, help='Particle latitude spacing [deg].')
     p.add_argument('-dz', '--dz', default=25, type=int, help='Particle depth spacing [m].')
-    p.add_argument('-lon', '--lon', default=165, type=str, help='Particle start longitude(s).')
+    p.add_argument('-lon', '--lon', default=165, type=int, help='Particle start longitude(s).')
     p.add_argument('-lat', '--lat', default=2.6, type=float, help='Latitude bounds [deg].')
     p.add_argument('-y', '--year', default=2012, type=int, help='Simulation start year.')
     p.add_argument('-m', '--month', default=12, type=int, help='Final month (of final year).')
@@ -150,7 +148,15 @@ else:
     dt_mins, repeatdt_days, outputdt_days, runtime_days = 240, 6, 1, 6
     field_method = 'b_grid'
     chunks = 'auto'
+    # pfile = cfg.data/'sim_198101_198103_v14i.nc'
     ifile = 0
     run_EUC(dy=dy, dz=dz, lon=lon, lat=lat, year=year,
-            dt_mins=240, repeatdt_days=6, outputdt_days=1, month=month, day=day,
+            dt_mins=240, repeatdt_days=6, outputdt_days=1, month=month,
             runtime_days=runtime_days, field_method=field_method, chunks=chunks)
+
+
+N=742
+P=24
+n = np.zeros(NP, dtype=int)
+[NI/NP + (1 if P < NI%NP else 0) for P in range(0,NP)]
+while P > 0:
