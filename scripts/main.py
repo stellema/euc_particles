@@ -63,8 +63,8 @@ from operator import attrgetter
 logger = tools.mlogger(Path(sys.argv[0]).stem)
 
 
-def ofam_fieldset(date_bnds, field_method='b_grid', time_periodic=False,
-                  deferred_load=True, chunks='specific', time_ext=False):
+def ofam_fieldset(date_bnds, field_method='b_grid', chunks='specific', cs=300,
+                  time_periodic=False, deferred_load=True, time_ext=False):
     """Create a 3D parcels fieldset from OFAM model output.
 
     Between two dates useing FieldSet.from_b_grid_dataset.
@@ -81,6 +81,7 @@ def ofam_fieldset(date_bnds, field_method='b_grid', time_periodic=False,
         fieldset (parcels.Fieldset)
 
     """
+    # Add OFAM dimension names to NetcdfFileBuffer name maps (chunking workaround).
     parcels.field.NetcdfFileBuffer._name_maps = {"lon": ["xu_ocean", "xt_ocean"],
                                                  "lat": ["yu_ocean", "yt_ocean"],
                                                  "depth": ["st_ocean", "sw_ocean"],
@@ -88,57 +89,40 @@ def ofam_fieldset(date_bnds, field_method='b_grid', time_periodic=False,
 
     # Create list of files for each variable based on selected years and months.
     u, v, w = [], [], []
-
     for y in range(date_bnds[0].year, date_bnds[1].year + 1):
-
         for m in range(date_bnds[0].month, date_bnds[1].month + 1):
             u.append(str(cfg.ofam/('ocean_u_{}_{:02d}.nc'.format(y, m))))
             v.append(str(cfg.ofam/('ocean_v_{}_{:02d}.nc'.format(y, m))))
             w.append(str(cfg.ofam/('ocean_w_{}_{:02d}.nc'.format(y, m))))
 
     variables = {'U': 'u', 'V': 'v', 'W': 'w'}
-    dims = {'time': 'Time', 'depth': 'sw_ocean', 'lat': 'yu_ocean', 'lon': 'xu_ocean'}
-    dimensions = {'U': {'time': 'Time', 'depth': 'sw_ocean', 'lat': 'yu_ocean', 'lon': 'xu_ocean'},
-                  'V': {'time': 'Time', 'depth': 'sw_ocean', 'lat': 'yu_ocean', 'lon': 'xu_ocean'},
-                  'W': {'time': 'Time', 'depth': 'sw_ocean', 'lat': 'yu_ocean', 'lon': 'xu_ocean'}}
-    # timestamps = stamps  #np.expand_dims(np.array(stamps), axis=1)
+    dimensions = {'time': 'Time', 'depth': 'sw_ocean',
+                  'lat': 'yu_ocean', 'lon': 'xu_ocean'}
 
-    if field_method != 'xarray':
-        files = {'U': {'depth': w[0], 'lat': u[0], 'lon': u[0], 'data': u},
-                 'V': {'depth': w[0], 'lat': u[0], 'lon': u[0], 'data': v},
-                 'W': {'depth': w[0], 'lat': u[0], 'lon': u[0], 'data': w}}
+    files = {'U': {'depth': w[0], 'lat': u[0], 'lon': u[0], 'data': u},
+             'V': {'depth': w[0], 'lat': u[0], 'lon': u[0], 'data': v},
+             'W': {'depth': w[0], 'lat': u[0], 'lon': u[0], 'data': w}}
 
-        if chunks == 'specific':
-            chunks = {"Time": 1, "st_ocean": 1, "sw_ocean": 1,
-                      "xt_ocean": 1750, "xu_ocean": 1750,
-                      "yt_ocean": 300, "yu_ocean": 300}
+    if chunks == 'specific':
+        chunks = {'Time': 1, 'st_ocean': 1, 'sw_ocean': 1,
+                  'yt_ocean': cs, 'yu_ocean': cs,
+                  'xt_ocean': cs, 'xu_ocean': cs}
 
-    if field_method == 'netcdf':
-        fieldset = FieldSet.from_netcdf(files, variables, dimensions, field_chunksize=chunks,
-                                        allow_time_extrapolation=time_ext)
-
-    elif field_method == 'b_grid':
+    if field_method == 'b_grid':
         fieldset = FieldSet.from_b_grid_dataset(files, variables, dimensions, mesh='spherical',
-                                                time_periodic=time_periodic, field_chunksize=chunks,
+                                                field_chunksize=chunks, time_periodic=time_periodic,
                                                 allow_time_extrapolation=time_ext)
+    elif field_method == 'netcdf':
+        fieldset = FieldSet.from_netcdf(files, variables, dimensions, time_periodic=time_periodic,
+                                        field_chunksize=chunks, allow_time_extrapolation=time_ext)
+
     elif field_method == 'xarray':
-        def pre_drop(ds):
-            if hasattr(ds, 'w'):
-                ds['w'] = ds['w'].swap_dims({"yt_ocean": "yu_ocean", "xt_ocean": "xu_ocean"})
-            elif hasattr(ds, 'u'):
-                ds['u'] = ds['u'].swap_dims({"st_ocean": "sw_ocean"})
-            elif hasattr(ds, 'v'):
-                ds['v'] = ds['v'].swap_dims({"st_ocean": "sw_ocean"})
-
-            return ds
-
-        if chunks == 'specific':
-            chunks = {dims['time']: 1, dims['depth']: 1, dims['lon']: cs, dims['lat']: cs}
-        ds = xr.open_mfdataset(u + v + w, combine='by_coords',
-                               concat_dim="Time", preprocess=pre_drop)
-        fieldset = FieldSet.from_xarray_dataset(ds, variables, dims, mesh='spherical',
+        ds = xr.open_mfdataset(u + v + w, combine='by_coords', concat_dim='Time')
+        fieldset = FieldSet.from_xarray_dataset(ds, variables, dimensions, mesh='spherical',
                                                 time_periodic=time_periodic, field_chunksize=chunks,
                                                 allow_time_extrapolation=time_ext)
+
+    # Add EUC boundary zones to fieldset.
     zfield = Field.from_netcdf(str(cfg.data/'OFAM3_zones.nc'), 'zone',
                                {'time': 'Time', 'lat': 'yu_ocean', 'lon': 'xu_ocean'},
                                field_chunksize='auto', allow_time_extrapolation=True)
