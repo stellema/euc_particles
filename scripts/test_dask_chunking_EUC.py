@@ -90,8 +90,7 @@ for cs in chunksize:
                        lon=[fieldset.U.lon[800]], lat=[fieldset.U.lat[151]],
                        depth=[fieldset.U.depth[16]], time=[fieldset.U.grid.time[0]])
     tic = time.time()
-    pset.execute(pset.Kernel(AdvectionRK4_3D), dt=delta(hours=1),
-                 runtime=delta(days=6))
+    pset.execute(pset.Kernel(AdvectionRK4_3D), dt=delta(hours=1), runtime=delta(days=6))
     func_time.append(time.time()-tic)
     process = psutil.Process(os.getpid())
     mem_B_used = process.memory_info().rss

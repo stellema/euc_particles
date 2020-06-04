@@ -12,6 +12,14 @@ from sklearn.cluster import KMeans
 # Lat and lon of particles (whatever goes into your ParticleSet).
 # Doesn't matter if repeatdt is not None, only the pset size at the start counts.
 
+mpi_size = 3
+lat = np.arange(9)
+lon = np.arange(120, 129)
+coords = np.vstack((lon, lat)).transpose()
+kmeans = KMeans(n_clusters=mpi_size, random_state=0).fit(coords)
+partitions = kmeans.labels_
+
+
 p_lats = np.round(np.arange(-2.6, 2.6 + 0.05, 0.1), 2)
 p_depths = np.arange(25, 350 + 20, 25)
 p_lons = np.array([165])
@@ -58,3 +66,12 @@ print('CPUs={}, Particles={}'.format(mpi_size, lon.size))
 for mpi_rank in range(mpi_size):
     lonx = lon[partitions == mpi_rank]
     print(mpi_rank, lonx.size, 'error')
+
+
+mpi_size = 24
+p0 = np.zeros(42, dtype=int)
+p1 = np.ones(42, dtype=int)
+p2 = np.arange(2, 22, dtype=int)
+p3 = np.ones(42, dtype=int)*22
+p4 = np.ones(56, dtype=int)*23
+partitions = np.append(np.repeat(p, 28),  np.ones(28, dtype=int)*(mpi_size-1))

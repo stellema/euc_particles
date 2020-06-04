@@ -96,12 +96,12 @@ def ofam_fieldset(date_bnds, field_method='b_grid', chunks='specific', cs=300,
             w.append(str(cfg.ofam/('ocean_w_{}_{:02d}.nc'.format(y, m))))
 
     variables = {'U': 'u', 'V': 'v', 'W': 'w'}
-    dimensions = {'time': 'Time', 'depth': 'sw_ocean',
+    dimensions = {'time': 'Time', 'depth': 'st_ocean',
                   'lat': 'yu_ocean', 'lon': 'xu_ocean'}
 
-    files = {'U': {'depth': w[0], 'lat': u[0], 'lon': u[0], 'data': u},
-             'V': {'depth': w[0], 'lat': u[0], 'lon': u[0], 'data': v},
-             'W': {'depth': w[0], 'lat': u[0], 'lon': u[0], 'data': w}}
+    files = {'U': {'depth': u[0], 'lat': u[0], 'lon': u[0], 'data': u},
+             'V': {'depth': u[0], 'lat': u[0], 'lon': u[0], 'data': v},
+             'W': {'depth': u[0], 'lat': u[0], 'lon': u[0], 'data': w}}
 
     if chunks == 'specific':
         chunks = {'Time': 1, 'st_ocean': 1, 'sw_ocean': 1,
@@ -131,6 +131,7 @@ def ofam_fieldset(date_bnds, field_method='b_grid', chunks='specific', cs=300,
 
     # Set fieldset minimum depth.
     fieldset.mindepth = fieldset.U.depth[0]
+    interp_method = 'linear_invdist_land_tracer'
 
     return fieldset
 
@@ -416,7 +417,7 @@ def plot3D(sim_id):
 
     """
     ds = xr.open_dataset(sim_id, decode_cf=True)
-    ds = ds.where(ds.u > 0, drop=True)
+    ds = ds.where(ds.u >= 0, drop=True)
     fig = plt.figure(figsize=(13, 10))
     ax = fig.add_subplot(111, projection='3d')
     colors = plt.cm.rainbow(np.linspace(0, 1, len(ds.traj)))
@@ -437,6 +438,23 @@ def plot3D(sim_id):
 
     return
 
+# dx=ds.sel(traj=1058)
+
+# fig = plt.figure(figsize=(13, 10))
+# ax = fig.add_subplot(111, projection='3d')
+# ax.scatter(dx.lon, dx.lat, dx.z, s=5, marker="o")
+# ax.set_xlabel("Longitude")
+# ax.set_ylabel("Latitude")
+# ax.set_zlabel("Depth [m]")
+# ax.set_zlim(np.max(z), np.min(z))
+
+# fig = plt.figure(figsize=(13, 10))
+# ax = fig.add_subplot(111)
+# ax.scatter(dx.lon, dx.lat, s=5, marker="o")
+# ax.set_xlabel("Longitude")
+# ax.set_ylabel("Latitude")
+# ax.set_zlabel("Depth [m]")
+# ax.set_zlim(np.max(z), np.min(z))
 
 ##############################################################################
 # VALIDATION

@@ -29,7 +29,7 @@ logger = tools.mlogger('base', parcels=True)
 
 @timeit
 def run_EUC(dy=0.1, dz=25, lon=165, lat=2.6, year=2012, month=12, day='max',
-            dt_mins=240, repeatdt_days=6, outputdt_days=1, runtime_days=240, ifile=0,
+            dt_mins=60, repeatdt_days=6, outputdt_days=1, runtime_days=185, ifile=0,
             field_method='b_grid', chunks='specific', partition=None,
             pfile=None, parallel=False):
     """Run Lagrangian EUC particle experiment."""
@@ -44,8 +44,8 @@ def run_EUC(dy=0.1, dz=25, lon=165, lat=2.6, year=2012, month=12, day='max',
     Z, Y, X = len(p_depths), len(p_lats), len(p_lons)
 
     # Make sure run ends on a repeat day, otherwise increase until it does.
-    while runtime_days % repeatdt_days != 0:
-        runtime_days += 1
+    # while runtime_days % repeatdt_days != 0:
+    #     runtime_days += 1
     runtime = timedelta(days=int(runtime_days))
 
     # Start and end dates.
@@ -78,9 +78,9 @@ def run_EUC(dy=0.1, dz=25, lon=165, lat=2.6, year=2012, month=12, day='max',
                 .format(sim_id.stem, *p_lons, Y, *p_lats[::Y-1], dy, Z, *p_depths[::Z-1], dz))
     logger.info('{}:Repeat={} days: Timestep={:.0f} mins: Output={:.0f} days'
                 .format(sim_id.stem, repeatdt.days, 1440 - dt.seconds/60, outputdt.days))
-    logger.info('{}:Field={}: Chunks={} 1750/300: Range={}-{}: Periodic={} days: Partitions={}'
+    logger.info('{}:Field={}: Chunks={}300: Range={}-{}: Periodic={} days: invdist interp'
                 .format(sim_id.stem, field_method, chunks, ft_bnds[0].year, ft_bnds[1].year,
-                        time_periodic.days, partition))
+                        time_periodic.days))
 
     # Create fieldset.
     fieldset = main.ofam_fieldset(ft_bnds, chunks=chunks, field_method=field_method,
