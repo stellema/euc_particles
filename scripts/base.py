@@ -142,7 +142,7 @@ if __name__ == "__main__" and cfg.home != Path('E:/'):
     p.add_argument('-y', '--year', default=2012, type=int, help='Simulation start year.')
     p.add_argument('-m', '--month', default=12, type=int, help='Final month (of final year).')
     p.add_argument('-run', '--runtime', default=240, type=int, help='Runtime days.')
-    p.add_argument('-dt', '--dt', default=240, type=int, help='Advection timestep [min].')
+    p.add_argument('-dt', '--dt', default=60, type=int, help='Advection timestep [min].')
     p.add_argument('-r', '--repeatdt', default=6, type=int, help='Release repeat [day].')
     p.add_argument('-out', '--outputdt', default=1, type=int, help='Advection write freq [day].')
     p.add_argument('-p', '--parallel', default=False, type=bool, help='Parallel execution.')
