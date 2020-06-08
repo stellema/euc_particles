@@ -31,7 +31,7 @@ logger = tools.mlogger('base', parcels=True)
 def run_EUC(dy=0.1, dz=25, lon=165, lat=2.6, year=2012, month=12, day='max',
             dt_mins=60, repeatdt_days=6, outputdt_days=1, runtime_days=185, ifile=0,
             field_method='b_grid', chunks='specific', partition=None,
-            pfile=None, parallel=False):
+            pfile='', parallel=False):
     """Run Lagrangian EUC particle experiment."""
     # Define Fieldset and ParticleSet parameters.
 
@@ -98,9 +98,8 @@ def run_EUC(dy=0.1, dz=25, lon=165, lat=2.6, year=2012, month=12, day='max',
         # The 'zone' of the particle.
         zone = Variable('zone', dtype=np.float32, initial=fieldset.zone)
 
-
     # Create particle set.
-    if pfile is None:
+    if pfile != '':
         # Set ParticleSet start as last fieldset time.
         pset_start = fieldset.U.grid.time[-1]
         pset = main.EUC_pset(fieldset, zParticle, p_lats, p_lons, p_depths, pset_start,
@@ -108,11 +107,14 @@ def run_EUC(dy=0.1, dz=25, lon=165, lat=2.6, year=2012, month=12, day='max',
 
     # Create particle set from particlefile.
     else:
+        pfile = cfg.data/pfile
         pset = main.particleset_from_particlefile(fieldset, pclass=zParticle, filename=pfile,
                                                   restart=True, restarttime=np.nanmin)
-        pset_start = pset.time[0]
-        if (pset.age[pset.time == pset_start] == 0.).sum() == Z * X * Y:
-            pset_start = pset_start - repeatdt_days*24*60*60
+        pset_start = np.nanmin(pset.time) - 24*60*60
+        # if (pset.age[pset.time == pset_start] == 0.).sum() == Z * X * Y:
+        #     pset_start = pset_start - repeatdt_days*24*60*60
+        logger.info('{}:Starting from {}: start={}: fsetstart={}'
+                    .format(sim_id.stem, pfile.stem, pset_start, fieldset.U.grid.time[-1]))
         psetx = main.EUC_pset(fieldset, zParticle, p_lats, p_lons, p_depths, pset_start, repeatdt)
         pset.add(psetx)
 
@@ -147,11 +149,12 @@ if __name__ == "__main__" and cfg.home != Path('E:/'):
     p.add_argument('-out', '--outputdt', default=1, type=int, help='Advection write freq [day].')
     p.add_argument('-p', '--parallel', default=False, type=bool, help='Parallel execution.')
     p.add_argument('-ix', '--ifile', default=0, type=int, help='File Index.')
+    p.add_argument('-f', '--pfile', default='', type=str, help='Particle file.')
     args = p.parse_args()
 
     run_EUC(dy=args.dy, dz=args.dz, lon=args.lon, lat=args.lat, year=args.year, month=args.month,
             runtime_days=args.runtime, dt_mins=args.dt, repeatdt_days=args.repeatdt,
-            outputdt_days=args.outputdt, ifile=args.ifile, parallel=args.parallel)
+            outputdt_days=args.outputdt, ifile=args.ifile, parallel=args.parallel, pfile=args.pfile)
 else:
     dy, dz = 2, 200
     lon, lat = 165, 2.6
@@ -160,7 +163,7 @@ else:
     field_method = 'b_grid'
     chunks = 'specific'
     partition = None
-    # pfile = cfg.data/'sim_198101_198103_v14i.nc'
+    pfile = 'sim_201206_201212_165_v8c.nc'
     ifile = 0
     run_EUC(dy=dy, dz=dz, lon=lon, lat=lat, year=year,
             dt_mins=240, repeatdt_days=6, outputdt_days=1, month=month,
