@@ -31,11 +31,8 @@ from parcels import (FieldSet, Field, ParticleSet, JITParticle,
 
 try:
     from mpi4py import MPI
-    from sklearn.cluster import KMeans
-
 except:
     MPI = None
-
 
 logger = tools.mlogger('base', parcels=True)
 
@@ -47,14 +44,6 @@ def run_EUC(dy=0.1, dz=25, lon=165, lat=2.6, year=2012, month=12, day='max',
     """Run Lagrangian EUC particle experiment."""
     # Define Fieldset and ParticleSet parameters.
 
-    # Particle release latitudes, depths and longitudes.
-    p_lats = np.round(np.arange(-lat, lat + 0.05, dy), 2)
-    p_depths = np.arange(25, 350 + 20, dz)
-    p_lons = np.array([lon])
-
-    # Number of particles released in each dimension.
-    Z, Y, X = len(p_depths), len(p_lats), len(p_lons)
-
     # Make sure run ends before a repeat day, otherwise increase until it does.
     while runtime_days % repeatdt_days != (repeatdt_days - 1):
         runtime_days += 1
@@ -63,6 +52,15 @@ def run_EUC(dy=0.1, dz=25, lon=165, lat=2.6, year=2012, month=12, day='max',
     dt = -timedelta(minutes=dt_mins)  # Advection step (negative for backwards).
     repeatdt = timedelta(days=repeatdt_days)  # Repeat particle release time.
     outputdt = timedelta(days=outputdt_days)  # Advection steps to write.
+
+    # Particle release latitudes, depths and longitudes.
+    p_lats = np.round(np.arange(-lat, lat + 0.05, dy), 2)
+    p_depths = np.arange(25, 350 + 20, dz)
+    p_lons = np.array([lon])
+
+    # Number of particles released in each dimension.
+    Z, Y, X = len(p_depths), len(p_lats), len(p_lons)
+    npart = Z * X * Y * math.ceil(runtime.days/repeatdt.days)
 
     # Create fieldset.
     y2 = 2012 if cfg.home != Path('E:/') else 1981
@@ -80,54 +78,65 @@ def run_EUC(dy=0.1, dz=25, lon=165, lat=2.6, year=2012, month=12, day='max',
         # Set ParticleSet start as last fieldset time.
         pset_start = fieldset.U.grid.time[-1]
         pset = main.EUC_pset(fieldset, zParticle, p_lats, p_lons, p_depths, pset_start, repeatdt)
+
+        # Particle set start and end time.
         start = get_date(year, month, day)
         end = start - runtime
+
     # Create particle set from particlefile.
     else:
-        sim = cfg.data/pfile
-        sim_id = cfg.data/(sim.stem[:-1] + str(int(sim.stem[-1]) + 1) + '.nc')
         pfile = cfg.data/pfile
+        sim_id = cfg.data/(pfile.stem[:-1] + str(int(pfile.stem[-1]) + 1) + '.nc')
+
+        # Duplicate pfile with new name as sim_id.
+        if not sim_id.is_file():
+            shutil.copy(str(pfile), str(sim_id))
 
         pset = main.particleset_from_particlefile(fieldset, pclass=zParticle, filename=pfile,
                                                   restart=True, restarttime=np.nanmin)
-        pset_start = np.nanmin(pset.time) - 24*60*60
-        # if (pset.age[pset.time == pset_start] == 0.).sum() == Z * X * Y:
-        #     pset_start = pset_start - repeatdt_days*24*60*60
 
+        # Particle set start and end time.
         start = fieldset.time_origin.time_origin + timedelta(seconds=np.nanmin(pset.time))
         end = start - runtime
 
+        # Update the number of particles.
+        npart = npart + pset.size
+
+        # Add particles on the next day that regularly repeat.
+        pset_start = np.nanmin(pset.time) - 24*60*60
         psetx = main.EUC_pset(fieldset, zParticle, p_lats, p_lons, p_depths, pset_start, repeatdt)
         pset.add(psetx)
 
-        # Output particle file p_name and time steps to save.
-        output_file = pset.ParticleFile(pfile, outputdt=outputdt)
-
     # Output particle file p_name and time steps to save.
     output_file = pset.ParticleFile(cfg.data/sim_id.stem, outputdt=outputdt)
+
     if MPI:
         rank = MPI.COMM_WORLD.Get_rank()
-        if rank == 1:
+        if rank == 0:
             logger.info('{}:{}-{}: Runtime={} days'.format(sim_id.stem, start, end, runtime.days))
             logger.info('{}:Particles: /repeat={}: Total={}'
-                        .format(sim_id.stem, Z * X * Y, Z * X * Y * math.ceil(runtime.days/repeatdt.days)))
+                        .format(sim_id.stem, Z * X * Y, npart))
             logger.info('{}:Lon={}: Lat=[{}-{} x{}]: Depth=[{}-{}m x{}]'
                         .format(sim_id.stem, *p_lons, *p_lats[::Y-1], dy, *p_depths[::Z-1], dz))
             logger.info('{}:Repeat={} days: Step={:.0f} mins: Output={:.0f} day'
                         .format(sim_id.stem, repeatdt.days, 1440 - dt.seconds/60, outputdt.days))
-            logger.info('{}:Chunks={}: Time={}-{}: Interp={}'
-                        .format(sim_id.stem, chunks, time_bnds[0].year, time_bnds[1].year, interp_method))
-        logger.info('{}: Temp={}: Rank={}: #Particles={}'
+            logger.info('{}:Chunks={}: Time={}-{}: Interp={}'.format(
+                sim_id.stem, chunks, time_bnds[0].year, time_bnds[1].year, interp_method))
+        logger.info('{}:Temp={}: Rank={}: #Particles={}'
                     .format(sim_id.stem, output_file.tempwritedir_base[-8:], rank, pset.size))
+
+    # Kernels.
     kernels = pset.Kernel(main.Age) + AdvectionRK4_3D
 
     pset.execute(kernels, runtime=runtime, dt=dt, output_file=output_file,
                  recovery={ErrorCode.ErrorOutOfBounds: main.DeleteParticle,
                            ErrorCode.ErrorThroughSurface: main.SubmergeParticle},
                  verbose_progress=True)
-    output_file.export()
-    logger.info('{}: Completed!: #Particles={}'.format(sim, pset.size))
 
+    # Save to netcdf.
+    output_file.export()
+
+    logger.info('{}: Completed!: #Particles={}'.format(sim_id.stem, pset.size))
     return
 
 
@@ -159,7 +168,7 @@ else:
     chunks = 300
     pfile = 'sim_201206_201212_165_v8c.nc'
     v = 0
-    interp_method='linear_invdist_land_tracer'
+    interp_method = 'linear_invdist_land_tracer'
     run_EUC(dy=dy, dz=dz, lon=lon, lat=lat, year=year,
             dt_mins=240, repeatdt_days=6, outputdt_days=1, month=month,
             runtime_days=runtime_days, chunks=chunks)
