@@ -70,17 +70,17 @@ def run_EUC(dy=0.1, dz=25, lon=165, lat=2.6, year=2012, month=12, day='max',
 
     # Generate file name for experiment.
     sim_id = main.generate_sim_id(date_bnds, lon, ifile=ifile, parallel=parallel)
+    sim = sim_id.stem if pfile == '' else (cfg.data/pfile).stem
 
     logger.info('{}:Executing:{} to {}: Runtime={} days: Particles: /repeat={}: Total={}'
-                .format(sim_id.stem, *[str(i)[:10] for i in date_bnds], runtime.days,
+                .format(sim, *[str(i)[:10] for i in date_bnds], runtime.days,
                         Z * X * Y, Z * X * Y * math.ceil(runtime.days/repeatdt.days)))
     logger.info('{}:Lons={}: Lats={} [{}-{} x{}]: Depths={} [{}-{}m x{}]'
-                .format(sim_id.stem, *p_lons, Y, *p_lats[::Y-1], dy, Z, *p_depths[::Z-1], dz))
-    logger.info('{}:Repeat={} days: Timestep={:.0f} mins: Output={:.0f} days'
-                .format(sim_id.stem, repeatdt.days, 1440 - dt.seconds/60, outputdt.days))
-    logger.info('{}:Field={}: Chunks={}300: Range={}-{}: Periodic={} days: invdist interp'
-                .format(sim_id.stem, field_method, chunks, ft_bnds[0].year, ft_bnds[1].year,
-                        time_periodic.days))
+                .format(sim, *p_lons, Y, *p_lats[::Y-1], dy, Z, *p_depths[::Z-1], dz))
+    logger.info('{}:Repeat={} days: Step={:.0f} mins: Output={:.0f} day'
+                .format(sim, repeatdt.days, 1440 - dt.seconds/60, outputdt.days))
+    logger.info('{}:Field={}: Chunks={}300: Range={}-{}: invdist'
+                .format(sim, field_method, chunks, ft_bnds[0].year, ft_bnds[1].year))
 
     # Create fieldset.
     fieldset = main.ofam_fieldset(ft_bnds, chunks=chunks, field_method=field_method,
@@ -99,12 +99,13 @@ def run_EUC(dy=0.1, dz=25, lon=165, lat=2.6, year=2012, month=12, day='max',
         zone = Variable('zone', dtype=np.float32, initial=fieldset.zone)
 
     # Create particle set.
-    if pfile != '':
+    if pfile == '':
         # Set ParticleSet start as last fieldset time.
         pset_start = fieldset.U.grid.time[-1]
         pset = main.EUC_pset(fieldset, zParticle, p_lats, p_lons, p_depths, pset_start,
                              repeatdt, partitions)
-
+        # Output particle file p_name and time steps to save.
+        output_file = pset.ParticleFile(cfg.data/sim_id.stem, outputdt=outputdt)
     # Create particle set from particlefile.
     else:
         pfile = cfg.data/pfile
@@ -114,14 +115,14 @@ def run_EUC(dy=0.1, dz=25, lon=165, lat=2.6, year=2012, month=12, day='max',
         # if (pset.age[pset.time == pset_start] == 0.).sum() == Z * X * Y:
         #     pset_start = pset_start - repeatdt_days*24*60*60
         logger.info('{}:Starting from {}: start={}: fsetstart={}'
-                    .format(sim_id.stem, pfile.stem, pset_start, fieldset.U.grid.time[-1]))
+                    .format(sim, pfile.stem, pset_start, fieldset.U.grid.time[-1]))
         psetx = main.EUC_pset(fieldset, zParticle, p_lats, p_lons, p_depths, pset_start, repeatdt)
         pset.add(psetx)
+        # Output particle file p_name and time steps to save.
+        output_file = pset.ParticleFile(pfile, outputdt=outputdt)
 
-    # Output particle file p_name and time steps to save.
-    output_file = pset.ParticleFile(cfg.data/sim_id.stem, outputdt=outputdt)
-    logger.debug('{}:Age+RK4_3D: Tmp directory={}: #Particles={}'
-                 .format(sim_id.stem, output_file.tempwritedir_base[-8:], pset.size))
+    logger.debug('{}: dir={}: #Particles={}'.format(sim, output_file.tempwritedir_base[-8:],
+                                                    pset.size))
 
     kernels = pset.Kernel(main.Age) + AdvectionRK4_3D
 
@@ -130,7 +131,7 @@ def run_EUC(dy=0.1, dz=25, lon=165, lat=2.6, year=2012, month=12, day='max',
                            ErrorCode.ErrorThroughSurface: main.SubmergeParticle},
                  verbose_progress=True)
     output_file.export()
-    logger.info('{}: Completed!: #Particles={}'.format(sim_id.stem, pset.size))
+    logger.info('{}: Completed!: #Particles={}'.format(sim, pset.size))
 
     return
 

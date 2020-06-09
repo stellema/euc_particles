@@ -138,7 +138,8 @@ def ofam_fieldset(date_bnds, field_method='b_grid', chunks='specific', cs=300,
 
 def generate_sim_id(date_bnds, lon, ifile=0, parallel=False):
     """Create name to save particle file (looks for unsaved filename)."""
-    dsr = 'sim_{}_{}_{}'.format(*[str(i)[:7].replace('-', '') for i in date_bnds], int(lon))
+    # dsr = 'sim_{}_{}_{}'.format(*[str(i)[:7].replace('-', '') for i in date_bnds], int(lon))
+    dsr = 'sim_{}'.format(int(lon))
     i = 0 if parallel else random.randint(0, 200)
 
     while (cfg.data/'{}_v{}i.nc'.format(dsr, i)).exists():
@@ -199,7 +200,7 @@ def particleset_from_particlefile(fieldset, pclass, filename, repeatdt=None, res
     if restart:
         pclass.setLastID(0)  # reset to zero offset
     else:
-        vars['pid'] = None
+        vars['id'] = None
 
     pset = ParticleSet(fieldset=fieldset, pclass=pclass, lon=vars['lon'], lat=vars['lat'],
                        depth=vars['depth'], time=vars['time'], pid_orig=vars['id'],
@@ -293,6 +294,22 @@ def EUC_pset(fieldset, pclass, p_lats, p_lons, p_depths, pset_start, repeatdt, p
     return pset
 
 
+def get_zParticle(fieldset):
+    class zParticle(cfg.ptype['jit']):
+        """Particle class that saves particle age and zonal velocity."""
+
+        # The age of the particle.
+        age = Variable('age', dtype=np.float32, initial=0.)
+
+        # The velocity of the particle.
+        u = Variable('u', dtype=np.float32, initial=fieldset.U, to_write='once')
+
+        # The 'zone' of the particle.
+        zone = Variable('zone', dtype=np.float32, initial=fieldset.zone)
+
+    return zParticle
+
+
 @timeit
 def EUC_particles(fieldset, date_bnds, p_lats, p_lons, p_depths,
                   dt, pset_start, repeatdt, runtime, outputdt, sim_id):
@@ -334,7 +351,7 @@ def EUC_particles(fieldset, date_bnds, p_lats, p_lons, p_depths,
 
     # Output particle file p_name and time steps to save.
     output_file = pset.ParticleFile(cfg.data/sim_id.stem, outputdt=outputdt)
-    logger.debug('{}:Age+RK4_3D: Tmp directory={}: #Particles={}'
+    logger.debug('{}: Dir={}: #Particles={}'
                  .format(sim_id.stem, output_file.tempwritedir_base[-8:], pset.size))
 
     kernels = pset.Kernel(Age) + AdvectionRK4_3D
@@ -466,6 +483,8 @@ def plot3D(sim_id):
 # ax.set_ylabel("Latitude")
 # ax.set_zlabel("Depth [m]")
 # ax.set_zlim(np.max(z), np.min(z))
+
+
 
 ##############################################################################
 # VALIDATION
