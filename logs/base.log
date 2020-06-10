@@ -7740,3 +7740,33 @@
 2020-06-09 19:18:10,631:run_EUC:INFO:sim_250_v0r0:Repeat=6 days: Step=60 mins: Output=1 day
 2020-06-09 19:18:10,631:run_EUC:INFO:sim_250_v0r0:Chunks=300: Time=1981-2012: Interp=linear_invdist_land_tracer
 2020-06-09 19:18:10,631:run_EUC:INFO:sim_250_v0r0:Temp=IQMQCPCD: Rank=0: #Particles=56
+2020-06-10 11:47:15,412:run_EUC:INFO:sim_165_v9r1:Temp=OMLCUIQL: Rank=18: #Particles=55
+2020-06-10 11:47:15,412:run_EUC:INFO:sim_165_v9r1:Temp=OMLCUIQL: Rank=16: #Particles=564
+2020-06-10 11:47:15,412:run_EUC:INFO:sim_165_v9r1:Temp=OMLCUIQL: Rank=1: #Particles=1215
+2020-06-10 11:47:15,412:run_EUC:INFO:sim_165_v9r1:2012-06-30 12:00:00-2012-05-26 12:00:00: Runtime=35 days
+2020-06-10 11:47:15,412:run_EUC:INFO:sim_165_v9r1:Temp=OMLCUIQL: Rank=10: #Particles=373
+2020-06-10 11:47:15,412:run_EUC:INFO:sim_165_v9r1:Temp=OMLCUIQL: Rank=2: #Particles=502
+2020-06-10 11:47:15,412:run_EUC:INFO:sim_165_v9r1:Temp=OMLCUIQL: Rank=8: #Particles=966
+2020-06-10 11:47:15,412:run_EUC:INFO:sim_165_v9r1:Temp=OMLCUIQL: Rank=20: #Particles=275
+2020-06-10 11:47:15,412:run_EUC:INFO:sim_165_v9r1:Temp=OMLCUIQL: Rank=4: #Particles=131
+2020-06-10 11:47:15,412:run_EUC:INFO:sim_165_v9r1:Temp=OMLCUIQL: Rank=14: #Particles=349
+2020-06-10 11:47:15,412:run_EUC:INFO:sim_165_v9r1:Temp=OMLCUIQL: Rank=17: #Particles=1158
+2020-06-10 11:47:15,412:run_EUC:INFO:sim_165_v9r1:Temp=OMLCUIQL: Rank=6: #Particles=888
+2020-06-10 11:47:15,412:run_EUC:INFO:sim_165_v9r1:Temp=OMLCUIQL: Rank=9: #Particles=533
+2020-06-10 11:47:15,412:run_EUC:INFO:sim_165_v9r1:Temp=OMLCUIQL: Rank=5: #Particles=1170
+2020-06-10 11:47:15,412:run_EUC:INFO:sim_165_v9r1:Temp=OMLCUIQL: Rank=22: #Particles=1112
+2020-06-10 11:47:15,412:run_EUC:INFO:sim_165_v9r1:Temp=OMLCUIQL: Rank=21: #Particles=868
+2020-06-10 11:47:15,412:run_EUC:INFO:sim_165_v9r1:Temp=OMLCUIQL: Rank=13: #Particles=592
+2020-06-10 11:47:15,412:run_EUC:INFO:sim_165_v9r1:Temp=OMLCUIQL: Rank=24: #Particles=379
+2020-06-10 11:47:15,413:run_EUC:INFO:sim_165_v9r1:Particles: /repeat=742: Total=5011
+2020-06-10 11:47:15,414:run_EUC:INFO:sim_165_v9r1:Lon=165: Lat=[-2.6-2.6 x0.1]: Depth=[25-350m x25]
+2020-06-10 11:47:15,414:run_EUC:INFO:sim_165_v9r1:Repeat=6 days: Step=60 mins: Output=1 day
+2020-06-10 11:47:15,414:run_EUC:INFO:sim_165_v9r1:Chunks=300: Time=1981-2012: Interp=linear_invdist_land_tracer
+2020-06-10 11:47:15,414:run_EUC:INFO:sim_165_v9r1:Temp=OMLCUIQL: Rank=0: #Particles=601
+2020-06-10 11:47:15,454:run_EUC:INFO:sim_165_v9r1:Temp=OMLCUIQL: Rank=12: #Particles=352
+2020-06-10 11:47:15,559:run_EUC:INFO:sim_165_v9r1:Temp=OMLCUIQL: Rank=3: #Particles=587
+2020-06-10 11:47:15,559:run_EUC:INFO:sim_165_v9r1:Temp=OMLCUIQL: Rank=19: #Particles=214
+2020-06-10 11:47:15,559:run_EUC:INFO:sim_165_v9r1:Temp=OMLCUIQL: Rank=15: #Particles=937
+2020-06-10 11:47:15,559:run_EUC:INFO:sim_165_v9r1:Temp=OMLCUIQL: Rank=11: #Particles=784
+2020-06-10 11:47:15,559:run_EUC:INFO:sim_165_v9r1:Temp=OMLCUIQL: Rank=23: #Particles=692
+2020-06-10 11:47:15,559:run_EUC:INFO:sim_165_v9r1:Temp=OMLCUIQL: Rank=7: #Particles=177
