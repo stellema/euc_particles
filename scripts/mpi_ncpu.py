@@ -87,19 +87,12 @@ def test_cpu_lim(coords, cpu_lim=None):
             ncpu.append(mpi_size)
             print(mpi_size, end=', ')
     print('max ncpu =', max(ncpu))
-
     return ncpu
 
 
 # Lat and lon of particles (whatever goes into your ParticleSet).
 # Doesn't matter if repeatdt is not None, only the pset size at the start counts.
-filename = cfg.data/'sim_201206_201212_165_v8.nc'
+filename = cfg.data/'sim_165_v0r0.nc'
 lat, lon, coords = get_coords(filename)
-# varz = main.particlefile_vars(filename)
-# lon = varz['lon']
-# lat = varz['lat']
-# coords = np.vstack((lon, lat)).transpose()
+ncpu = test_cpu_lim(coords, cpu_lim=52)
 partitions = test_ncpu(coords, mpi_size=50)
-# ncpu = test_cpu_lim(coords, cpu_lim=48)
-
-

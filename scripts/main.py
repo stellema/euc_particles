@@ -64,8 +64,7 @@ logger = tools.mlogger(Path(sys.argv[0]).stem)
 
 
 def ofam_fieldset(time_bnds='full', chunks=300, time_periodic=True,
-                  deferred_load=True, time_ext=False,
-                  interp_method='linear_invdist_land_tracer'):
+                  deferred_load=True, time_ext=False):
     """Create a 3D parcels fieldset from OFAM model output.
 
     Between two dates useing FieldSet.from_b_grid_dataset.
@@ -128,7 +127,6 @@ def ofam_fieldset(time_bnds='full', chunks=300, time_periodic=True,
 
     # Set fieldset minimum depth.
     fieldset.mindepth = fieldset.U.depth[0]
-    fieldset.interp_method = interp_method
 
     return fieldset
 
@@ -443,40 +441,63 @@ def plot3D(sim_id):
     """
     ds = xr.open_dataset(sim_id, decode_cf=True)
     ds = ds.where(ds.u >= 0, drop=True)
+    ds = ds.where(ds.z > 400, drop=True)
     fig = plt.figure(figsize=(13, 10))
     ax = fig.add_subplot(111, projection='3d')
     colors = plt.cm.rainbow(np.linspace(0, 1, len(ds.traj)))
-    x = ds.lon
-    y = ds.lat
-    z = ds.z
+    x, y, z = ds.lon, ds.lat, ds.z
+
     for i in range(len(ds.traj)):
-        ax.scatter(x[i], y[i], z[i], s=5, marker="o", c=np.tile(colors[i], (len(x[i]), 1)))
+        ax.plot3D(x[i], y[i], z[i], color=colors[i])
 
     ax.set_xlabel("Longitude")
     ax.set_ylabel("Latitude")
     ax.set_zlabel("Depth [m]")
     ax.set_zlim(np.max(z), np.min(z))
-    fig.savefig(cfg.fig/(sim_id.stem + cfg.im_ext))
+    fig.savefig(cfg.fig/(sim_id.stem + '400' + cfg.im_ext))
     plt.show()
     plt.close()
     ds.close()
 
     return
 
-# dx=ds.sel(traj=1058)
 
-# fig = plt.figure(figsize=(13, 10))
-# ax = fig.add_subplot(111, projection='3d')
-# ax.scatter(dx.lon, dx.lat, dx.z, s=5, marker="o")
-# ax.set_xlabel("Longitude")
-# ax.set_ylabel("Latitude")
-# ax.set_zlabel("Depth [m]")
-# ax.set_zlim(np.max(z), np.min(z))
+def particlefile_vars(filename):
+    """Initialise the ParticleSet from a netcdf ParticleFile.
 
-# fig = plt.figure(figsize=(13, 10))
-# ax = fig.add_subplot(111)
-# ax.scatter(dx.lon, dx.lat, s=5, marker="o")
-# ax.set_xlabel("Longitude")
-# ax.set_ylabel("Latitude")
-# ax.set_zlabel("Depth [m]")
-# ax.set_zlim(np.max(z), np.min(z))
+    This creates a new ParticleSet based on locations of all particles written
+    in a netcdf ParticleFile at a certain time. Particle IDs are preserved if restart=True
+    """
+    pfile = xr.open_dataset(str(filename), decode_cf=False)
+    pfile_vars = [v for v in pfile.data_vars]
+
+    vars = {}
+    to_write = {}
+
+    fieldset = ofam_fieldset(time_bnds='full', chunks='auto')
+    zParticle = get_zParticle(fieldset)
+    pclass = zParticle
+    for v in pclass.getPType().variables:
+        if v.name in pfile_vars:
+            vars[v.name] = np.ma.filled(pfile.variables[v.name], np.nan)
+        elif v.name not in ['xi', 'yi', 'zi', 'ti', 'dt', '_next_dt',
+                            'depth', 'id', 'fileid', 'state'] \
+                and v.to_write:
+            raise RuntimeError('Variable %s is in pclass but not in the particlefile' % v.name)
+        to_write[v.name] = v.to_write
+    vars['depth'] = np.ma.filled(pfile.variables['z'], np.nan)
+    vars['id'] = np.ma.filled(pfile.variables['trajectory'], np.nan)
+
+    if isinstance(vars['time'][0, 0], np.timedelta64):
+        vars['time'] = np.array([t/np.timedelta64(1, 's') for t in vars['time']])
+
+    restarttime = np.nanmin(vars['time'])
+
+    inds = np.where(vars['time'] == restarttime)
+    for v in vars:
+        if to_write[v] is True:
+            vars[v] = vars[v][inds]
+        elif to_write[v] == 'once':
+            vars[v] = vars[v][inds[0]]
+
+    return vars
