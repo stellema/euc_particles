@@ -56,7 +56,7 @@ def particlefile_vars(filename, lon, add_particles=True):
     psetx = main.particleset_from_particlefile(fieldset, pclass=zParticle, filename=filename,
                                                restart=True, restarttime=np.nanmin)
     print('EUC particles.')
-    pset_start = np.nanmin(psetx.time) - 24*60*60
+    pset_start = np.nanmin(psetx.time)
     pset = main.EUC_pset(fieldset, zParticle, p_lats, p_lons, p_depths,
                          pset_start, repeatdt=timedelta(days=6))
 
@@ -146,9 +146,9 @@ if __name__ == "__main__" and cfg.home != Path('E:/'):
 else:
     # Lat and lon of particles (whatever goes into your ParticleSet).
     # Doesn't matter if repeatdt is not None, only the pset size at the start counts.
-    filename = cfg.data/'sim_190_v0r0.nc'
-    mpi_size = 25
-    lon = 190
+    filename = cfg.data/'sim_165_v0r0.nc'
+    mpi_size = 36
+    lon = 165
     fieldset = main.ofam_fieldset(time_bnds='full', chunks=300, time_ext=True, time_periodic=False)
 
 
@@ -158,14 +158,20 @@ p_lons = np.array([lon])
 
 zParticle = main.get_zParticle(fieldset)
 
-# Add particles on the next day that regularly repeat.
-print('Particlefile particles.')
-psetx = main.particleset_from_particlefile(fieldset, pclass=zParticle, filename=filename,
-                                           restart=True, restarttime=np.nanmin)
+# # Add particles on the next day that regularly repeat.
+# print('Particlefile particles.')
+# psetx = main.particleset_from_particlefile(fieldset, pclass=zParticle, filename=filename,
+#                                            restart=True, restarttime=np.nanmin)
+# lonx = psetx.particle_data['lon']
+# latx = psetx.particle_data['lat']
+# coordsx = np.vstack((lonx, latx)).transpose()
+
+
 print('EUC particles.')
-pset_start = np.nanmin(psetx.time) - 24*60*60
-pset = main.EUC_pset(fieldset, zParticle, p_lats, p_lons, p_depths,
-                     pset_start, repeatdt=timedelta(days=6))
+# pset_start = np.nanmin(psetx.time)
+repeats = 30
+pset = main.pset_euc(fieldset, zParticle, p_lats, p_lons, p_depths,
+                     timedelta(days=6), fieldset.U.grid.time[-1], repeats)
 
 # print('Adding particles.')
 # pset.add(psetx)
@@ -174,11 +180,8 @@ lon = pset.particle_data['lon']
 lat = pset.particle_data['lat']
 coords = np.vstack((lon, lat)).transpose()
 
-lonx = psetx.particle_data['lon']
-latx = psetx.particle_data['lat']
-coordsx = np.vstack((lonx, latx)).transpose()
-
-# lat, lon, coords = particlefile_vars(filename, lon=lon)
-partitionsx = test_ncpu(coords, lon, lonx=lonx, coordsx=coordsx)
-
-ncpu = test_cpu_lim(coords, lon, cpu_lim=50, coordsx=coordsx, lonx=lonx)
+print('Testing.')
+# partitionsx = test_ncpu(mpi_size, coords, lon, lonx=lonx, coordsx=coordsx)
+# ncpu = test_cpu_lim(coords, lon, cpu_lim=50, coordsx=coordsx, lonx=lonx)
+partitionsx = test_ncpu(mpi_size, coords, lon)
+ncpu = test_cpu_lim(coords, lon, cpu_lim=50)

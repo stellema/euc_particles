@@ -259,7 +259,6 @@ def remove_westward_particles(pset):
     """
     ix = []
     for p in pset:
-        print(p.u, p.age)
         if p.u < 0. and p.age == 0.:
             ix.append(np.where([pi.id == p.id for pi in pset])[0][0])
     pset.remove_indices(ix)
@@ -286,6 +285,43 @@ def EUC_pset(fieldset, pclass, p_lats, p_lons, p_depths, pset_start, repeatdt=No
                                  time=pset_start, repeatdt=repeatdt, partitions=partitions)
 
     return pset
+
+
+def pset_euc(fieldset, pclass, py, px, pz, repeatdt, start, repeats):
+    """Create a ParticleSet."""
+    # Each repeat.
+    lats = np.repeat(py, pz.size*px.size)
+    depths = np.repeat(np.tile(pz, py.size), px.size)
+    lons = np.repeat(px, pz.size*py.size)
+
+    # Duplicate for each repeat.
+    tr = start - (np.arange(0, repeats) * repeatdt.total_seconds())
+    time = np.repeat(tr, lons.size)
+    depth = np.tile(depths, repeats)
+    lon = np.tile(lons, repeats)
+    lat = np.tile(lats, repeats)
+    pset = ParticleSet.from_list(fieldset=fieldset, pclass=pclass,
+                                 lon=lon, lat=lat, depth=depth, time=time)
+
+    return pset
+
+
+def EUCm_pset(fieldset, pclass, p_lats, p_lons, p_depths, pset_start, repeatdt=None, partitions=None):
+    """Create a ParticleSet."""
+    # Convert to lists if float or int.
+    p_lats = [p_lats] if type(p_lats) not in [list, np.array, np.ndarray] else p_lats
+    p_depths = [p_depths] if type(p_depths) not in [list, np.array, np.ndarray] else p_depths
+    p_lons = [p_lons] if type(p_lons) not in [list, np.array, np.ndarray] else p_lons
+
+    lats = np.repeat(p_lats, len(p_depths)*len(p_lons))
+    depths = np.repeat(np.tile(p_depths, len(p_lats)), len(p_lons))
+    lons = np.repeat(p_lons, len(p_depths)*len(p_lats))
+    pset = ParticleSet.from_list(fieldset=fieldset, pclass=pclass,
+                                 lon=lons, lat=lats, depth=depths,
+                                 time=pset_start, repeatdt=repeatdt, partitions=partitions)
+
+    return pset
+
 
 
 def get_zParticle(fieldset):
