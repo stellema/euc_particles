@@ -30,22 +30,39 @@ import main
 import cfg
 import numpy as np
 from sklearn.cluster import KMeans
+from datetime import timedelta
 
 
-def get_coords(filename=None):
-    """Get lat, lon coords based on pstart."""
+def particlefile_vars(filename, lon, add_particles=True):
+    """Initialise the ParticleSet from a netcdf ParticleFile.
+
+    This creates a new ParticleSet based on locations of all particles written
+    in a netcdf ParticleFile at a certain time. Particle IDs are preserved if restart=True
+    """
+    # Particle release latitudes, depths and longitudes.
     p_lats = np.round(np.arange(-2.6, 2.6 + 0.05, 0.1), 2)
-    p_depths = np.arange(25., 350. + 20, 25)
-    p_lons = np.array([165], dtype=np.float32)
-    lat = np.repeat(p_lats, len(p_depths)*len(p_lons)).astype(np.float32)
-    # depths = np.repeat(np.tile(p_depths, len(p_lats)), len(p_lons))
-    lon = np.repeat(p_lons, len(p_depths)*len(p_lats)).astype(np.float32)
+    p_depths = np.arange(25, 350 + 20, 25)
+    p_lons = np.array([lon])
 
-    if filename is not None:
-        varz = main.particlefile_vars(filename)
-        lon = np.concatenate((varz['lon'], lon))
-        lat = np.concatenate((varz['lat'], lat))
+    fieldset = main.ofam_fieldset(time_bnds='full', chunks=300, time_ext=True, time_periodic=False)
+    zParticle = main.get_zParticle(fieldset)
+
+    # Add particles on the next day that regularly repeat.
+    print('Particlefile particles (swap).')
+    pset = main.particleset_from_particlefile(fieldset, pclass=zParticle, filename=filename,
+                                              restart=True, restarttime=np.nanmin)
+    print('EUC particles.')
+    pset_start = np.nanmin(pset.time) - 24*60*60
+    psetx = main.EUC_pset(fieldset, zParticle, p_lats, p_lons, p_depths, pset_start)
+    # repeatdt=timedelta(days=6))
+
+    print('Adding particles.')
+    pset.add(psetx)
+
+    lon = pset.particle_data['lon']
+    lat = pset.particle_data['lat']
     coords = np.vstack((lon, lat)).transpose()
+
     return lat, lon, coords
 
 
@@ -92,7 +109,8 @@ def test_cpu_lim(coords, cpu_lim=None):
 
 # Lat and lon of particles (whatever goes into your ParticleSet).
 # Doesn't matter if repeatdt is not None, only the pset size at the start counts.
-filename = cfg.data/'sim_165_v0r0.nc'
-lat, lon, coords = get_coords(filename)
+filename = cfg.data/'sim_190_v0r0.nc'
+lat, lon, coords = particlefile_vars(filename, lon=190)
+
+partitions = test_ncpu(coords, mpi_size=25)
 ncpu = test_cpu_lim(coords, cpu_lim=52)
-partitions = test_ncpu(coords, mpi_size=50)

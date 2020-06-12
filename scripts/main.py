@@ -271,7 +271,7 @@ def remove_westward_particles(pset):
         logger.debug('Particles travelling in the wrong direction.')
 
 
-def EUC_pset(fieldset, pclass, p_lats, p_lons, p_depths, pset_start, repeatdt, partitions=None):
+def EUC_pset(fieldset, pclass, p_lats, p_lons, p_depths, pset_start, repeatdt=None, partitions=None):
     """Create a ParticleSet."""
     # Convert to lists if float or int.
     p_lats = [p_lats] if type(p_lats) not in [list, np.array, np.ndarray] else p_lats
@@ -461,43 +461,3 @@ def plot3D(sim_id):
 
     return
 
-
-def particlefile_vars(filename):
-    """Initialise the ParticleSet from a netcdf ParticleFile.
-
-    This creates a new ParticleSet based on locations of all particles written
-    in a netcdf ParticleFile at a certain time. Particle IDs are preserved if restart=True
-    """
-    pfile = xr.open_dataset(str(filename), decode_cf=False)
-    pfile_vars = [v for v in pfile.data_vars]
-
-    vars = {}
-    to_write = {}
-
-    fieldset = ofam_fieldset(time_bnds='full', chunks='auto')
-    zParticle = get_zParticle(fieldset)
-    pclass = zParticle
-    for v in pclass.getPType().variables:
-        if v.name in pfile_vars:
-            vars[v.name] = np.ma.filled(pfile.variables[v.name], np.nan)
-        elif v.name not in ['xi', 'yi', 'zi', 'ti', 'dt', '_next_dt',
-                            'depth', 'id', 'fileid', 'state'] \
-                and v.to_write:
-            raise RuntimeError('Variable %s is in pclass but not in the particlefile' % v.name)
-        to_write[v.name] = v.to_write
-    vars['depth'] = np.ma.filled(pfile.variables['z'], np.nan)
-    vars['id'] = np.ma.filled(pfile.variables['trajectory'], np.nan)
-
-    if isinstance(vars['time'][0, 0], np.timedelta64):
-        vars['time'] = np.array([t/np.timedelta64(1, 's') for t in vars['time']])
-
-    restarttime = np.nanmin(vars['time'])
-
-    inds = np.where(vars['time'] == restarttime)
-    for v in vars:
-        if to_write[v] is True:
-            vars[v] = vars[v][inds]
-        elif to_write[v] == 'once':
-            vars[v] = vars[v][inds[0]]
-
-    return vars

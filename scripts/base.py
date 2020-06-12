@@ -164,7 +164,6 @@ else:
     chunks = 300
     pfile = 'sim_201206_201212_165_v8c.nc'
     v = 0
-    interp_method = 'linear_invdist_land_tracer'
     run_EUC(dy=dy, dz=dz, lon=lon, lat=lat, year=year,
             dt_mins=240, repeatdt_days=6, outputdt_days=1, month=month,
             runtime_days=runtime_days, chunks=chunks)
