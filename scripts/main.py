@@ -209,7 +209,7 @@ def DeleteParticle(particle, fieldset, time):
 
 def SubmergeParticle(particle, fieldset, time):
     """Run 2D advection if particle goes through surface."""
-    particle.depth = fieldset.mindepth
+    particle.depth = fieldset.mindepth + 0.1
     # Perform 2D advection as vertical flow will always push up in this case.
     AdvectionRK4(particle, fieldset, time)
     # Increase time to not trigger kernels again, otherwise infinite loop.
