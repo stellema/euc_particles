@@ -152,9 +152,9 @@ else:
     fieldset = main.ofam_fieldset(time_bnds='full', chunks=300, time_ext=True, time_periodic=False)
 
 
-p_lats = np.round(np.arange(-2.6, 2.6 + 0.05, 0.1), 2)
-p_depths = np.arange(25, 350 + 20, 25)
-p_lons = np.array([lon])
+py = np.round(np.arange(-2.6, 2.6 + 0.05, 0.1), 2)
+pz = np.arange(25, 350 + 20, 25)
+px = np.array([lon])
 
 zParticle = main.get_zParticle(fieldset)
 
@@ -170,8 +170,8 @@ zParticle = main.get_zParticle(fieldset)
 print('EUC particles.')
 # pset_start = np.nanmin(psetx.time)
 repeats = 30
-pset = main.pset_euc(fieldset, zParticle, p_lats, p_lons, p_depths,
-                     timedelta(days=6), fieldset.U.grid.time[-1], repeats)
+pset = main.pset_euc(fieldset, zParticle, py, px, pz,
+                      timedelta(days=6), fieldset.U.grid.time[-1], repeats)
 
 # print('Adding particles.')
 # pset.add(psetx)
@@ -184,4 +184,4 @@ print('Testing.')
 # partitionsx = test_ncpu(mpi_size, coords, lon, lonx=lonx, coordsx=coordsx)
 # ncpu = test_cpu_lim(coords, lon, cpu_lim=50, coordsx=coordsx, lonx=lonx)
 partitionsx = test_ncpu(mpi_size, coords, lon)
-ncpu = test_cpu_lim(coords, lon, cpu_lim=50)
+ncpu = test_cpu_lim(coords, lon, cpu_lim=84)
