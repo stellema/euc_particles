@@ -117,7 +117,7 @@ if __name__ == "__main__" and cfg.home != Path('E:/'):
     p.add_argument('-n', '--mpi_size', default=25, type=int, help='Number of CPUs.')
     p.add_argument('-x', '--lon', default=190, type=int, help='Longitude.')
     args = p.parse_args()
-    filename = args.filename
+    filename = cfg.data/args.filename
     mpi_size = args.mpi_size
     lon = args.lon
 
