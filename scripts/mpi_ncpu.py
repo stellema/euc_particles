@@ -29,8 +29,10 @@ author: Annette Stellema (astellemas@gmail.com)
 import main
 import cfg
 import numpy as np
-from sklearn.cluster import KMeans
+from pathlib import Path
 from datetime import timedelta
+from sklearn.cluster import KMeans
+from argparse import ArgumentParser
 
 
 def particlefile_vars(filename, lon, add_particles=True):
@@ -44,17 +46,19 @@ def particlefile_vars(filename, lon, add_particles=True):
     p_depths = np.arange(25, 350 + 20, 25)
     p_lons = np.array([lon])
 
-    fieldset = main.ofam_fieldset(time_bnds='full', chunks=300, time_ext=True, time_periodic=False)
+    fieldset = main.ofam_fieldset(time_bnds='full', chunks=300)
+    #, time_ext=True, time_periodic=False)
+
     zParticle = main.get_zParticle(fieldset)
 
     # Add particles on the next day that regularly repeat.
-    print('Particlefile particles (swap).')
-    pset = main.particleset_from_particlefile(fieldset, pclass=zParticle, filename=filename,
-                                              restart=True, restarttime=np.nanmin)
+    print('Particlefile particles.')
+    psetx = main.particleset_from_particlefile(fieldset, pclass=zParticle, filename=filename,
+                                               restart=True, restarttime=np.nanmin)
     print('EUC particles.')
-    pset_start = np.nanmin(pset.time) - 24*60*60
-    psetx = main.EUC_pset(fieldset, zParticle, p_lats, p_lons, p_depths, pset_start)
-    # repeatdt=timedelta(days=6))
+    pset_start = np.nanmin(psetx.time) - 24*60*60
+    pset = main.EUC_pset(fieldset, zParticle, p_lats, p_lons, p_depths,
+                         pset_start, repeatdt=timedelta(days=6))
 
     print('Adding particles.')
     pset.add(psetx)
@@ -107,10 +111,23 @@ def test_cpu_lim(coords, cpu_lim=None):
     return ncpu
 
 
-# Lat and lon of particles (whatever goes into your ParticleSet).
-# Doesn't matter if repeatdt is not None, only the pset size at the start counts.
-filename = cfg.data/'sim_190_v0r0.nc'
-lat, lon, coords = particlefile_vars(filename, lon=190)
+if __name__ == "__main__" and cfg.home != Path('E:/'):
+    p = ArgumentParser(description="""Run EUC Lagrangian experiment.""")
+    p.add_argument('-f', '--filename', default='sim_190_v0r0.nc', type=str, help='Filename.')
+    p.add_argument('-n', '--mpi_size', default=25, type=int, help='Number of CPUs.')
+    p.add_argument('-x', '--lon', default=190, type=int, help='Longitude.')
+    args = p.parse_args()
+    filename = args.filename
+    mpi_size = args.mpi_size
+    lon = args.lon
 
-partitions = test_ncpu(coords, mpi_size=25)
+else:
+    # Lat and lon of particles (whatever goes into your ParticleSet).
+    # Doesn't matter if repeatdt is not None, only the pset size at the start counts.
+    filename = cfg.data/'sim_190_v0r0.nc'
+    mpi_size = 25
+    lon = 190
+
+lat, lon, coords = particlefile_vars(filename, lon=lon)
+partitions = test_ncpu(coords, mpi_size=mpi_size)
 ncpu = test_cpu_lim(coords, cpu_lim=52)

@@ -9,7 +9,7 @@
 # module load conda/analysis3-19.07
 
 # qsub -I -l walltime=5:00:00,mem=400GB,ncpus=7 -P e14 -q hugemem -X -l wd
-# qsub -I -l walltime=7:00:00,ncpus=1,mem=20GB -P e14 -q normal -l wd
+# qsub -I -l walltime=2:00:00,ncpus=1,mem=25GB -P e14 -q normal -l wd -l storage=gdata/hh5+gdata/e14
 
 # if partitions is not None:
 #     mpi_size = 26
