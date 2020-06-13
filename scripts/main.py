@@ -103,11 +103,11 @@ def ofam_fieldset(time_bnds='full', chunks=300, time_periodic=True,
             w.append(str(cfg.ofam/('ocean_w_{}_{:02d}.nc'.format(y, m))))
 
     variables = {'U': 'u', 'V': 'v', 'W': 'w'}
-    dimensions = {'time': 'Time', 'depth': 'st_ocean', 'lat': 'yu_ocean', 'lon': 'xu_ocean'}
+    dimensions = {'time': 'Time', 'depth': 'sw_ocean', 'lat': 'yu_ocean', 'lon': 'xu_ocean'}
 
-    files = {'U': {'depth': u[0], 'lat': u[0], 'lon': u[0], 'data': u},
-             'V': {'depth': u[0], 'lat': u[0], 'lon': u[0], 'data': v},
-             'W': {'depth': u[0], 'lat': u[0], 'lon': u[0], 'data': w}}
+    files = {'U': {'depth': w[0], 'lat': u[0], 'lon': u[0], 'data': u},
+             'V': {'depth': w[0], 'lat': u[0], 'lon': u[0], 'data': v},
+             'W': {'depth': w[0], 'lat': u[0], 'lon': u[0], 'data': w}}
 
     if chunks not in ['auto', False]:
         chunks = {'Time': 1, 'st_ocean': 1, 'sw_ocean': 1,
@@ -149,7 +149,7 @@ def generate_sim_id(lon, v=0, parallel=False):
 
 
 def particleset_from_particlefile(fieldset, pclass, filename, repeatdt=None, restart=True,
-                                  restarttime=np.nanmin, lonlatdepth_dtype=None, **kwargs):
+                                  restarttime=np.nanmin, lonlatdepth_dtype=np.float64, **kwargs):
     """Initialise the ParticleSet from a netcdf ParticleFile.
 
     This creates a new ParticleSet based on locations of all particles written
@@ -263,11 +263,11 @@ def remove_westward_particles(pset):
             ix.append(np.where([pi.id == p.id for pi in pset])[0][0])
     pset.remove_indices(ix)
 
-    logger.debug('Particles removed: {}'.format(len(ix)))
-
     # Warn if there are remaining intial westward particles.
     if any([p.u < 0 and p.age == 0 for p in pset]):
         logger.debug('Particles travelling in the wrong direction.')
+
+    return ix
 
 
 def EUC_pset(fieldset, pclass, p_lats, p_lons, p_depths, pset_start, repeatdt=None, partitions=None):
@@ -302,7 +302,8 @@ def pset_euc(fieldset, pclass, py, px, pz, repeatdt, start, repeats):
     lon = np.tile(lons, repeats)
     lat = np.tile(lats, repeats)
     pset = ParticleSet.from_list(fieldset=fieldset, pclass=pclass,
-                                 lon=lon, lat=lat, depth=depth, time=time)
+                                 lon=lon, lat=lat, depth=depth, time=time,
+                                 lonlatdepth_dtype=np.float64)
 
     return pset
 
@@ -460,7 +461,7 @@ def plot3D(sim_id):
     """
     ds = xr.open_dataset(sim_id, decode_cf=True)
     ds = ds.where(ds.u >= 0, drop=True)
-    ds = ds.where(ds.z > 400, drop=True)
+    # ds = ds.where(ds.z > 400, drop=True)
     fig = plt.figure(figsize=(13, 10))
     ax = fig.add_subplot(111, projection='3d')
     colors = plt.cm.rainbow(np.linspace(0, 1, len(ds.traj)))

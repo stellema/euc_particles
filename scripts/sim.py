@@ -70,7 +70,7 @@ def run_EUC(dy=0.1, dz=25, lon=165, lat=2.6, year=2012, month=12, day='max',
         pset = main.pset_euc(fieldset, zParticle, py, px, pz, repeatdt, pset_start, repeats)
 
         # Particle set start and end time.
-        start = fieldset.time_origin.time_origin + timedelta(seconds=fieldset.U.grid.time[-1])
+        start = fieldset.time_origin.time_origin + timedelta(seconds=pset_start)
         end = start - runtime
 
     # Create particle set from particlefile.
@@ -94,7 +94,7 @@ def run_EUC(dy=0.1, dz=25, lon=165, lat=2.6, year=2012, month=12, day='max',
         pset = main.pset_euc(fieldset, zParticle, py, px, pz, repeatdt, pset_start, repeats)
         pset.add(psetx)
 
-    main.remove_westward_particles(pset)
+    pdel = len(main.remove_westward_particles(pset))
 
     # Output particle file p_name and time steps to save.
     output_file = pset.ParticleFile(cfg.data/sim_id.stem, outputdt=outputdt, convert_at_end=False)
@@ -111,8 +111,9 @@ def run_EUC(dy=0.1, dz=25, lon=165, lat=2.6, year=2012, month=12, day='max',
                     .format(sim_id.stem, repeatdt.days, 1440 - dt.seconds/60, outputdt.days))
         logger.info('{}:Field=b-grid: Chunks={}: Time={}-{}'.format(
             sim_id.stem, chunks, time_bnds[0].year, time_bnds[1].year))
-    logger.info('{}:Temp={}: Rank={}: #Particles={}'
-                .format(sim_id.stem, output_file.tempwritedir_base[-8:], rank, pset.size))
+    logger.info('{}:Temp={}: Rank={}: #Particles={}+{}={}'
+                .format(sim_id.stem, output_file.tempwritedir_base[-8:], rank,
+                        pset.size, pdel, pset.size + pdel))
 
     # Kernels.
     kernels = pset.Kernel(main.Age) + AdvectionRK4_3D

@@ -92,7 +92,7 @@ def run_EUC(dy=0.1, dz=25, lon=165, lat=2.6, year=2012, month=12, day='max',
             shutil.copy(str(pfile), str(sim_id))
 
         psetx = main.particleset_from_particlefile(fieldset, pclass=zParticle, filename=pfile,
-                                                    restart=True, restarttime=np.nanmin)
+                                                   restart=True, restarttime=np.nanmin)
 
         # Particle set start and end time.
         start = fieldset.time_origin.time_origin + timedelta(seconds=np.nanmin(psetx.time))
@@ -116,7 +116,7 @@ def run_EUC(dy=0.1, dz=25, lon=165, lat=2.6, year=2012, month=12, day='max',
                     .format(sim_id.stem, *p_lons, *p_lats[::Y-1], dy, *p_depths[::Z-1], dz))
         logger.info('{}:Repeat={} days: Step={:.0f} mins: Output={:.0f} day'
                     .format(sim_id.stem, repeatdt.days, 1440 - dt.seconds/60, outputdt.days))
-        logger.info('{}:Field=b-grid: Chunks={}: Time={}-{}'.format(
+        logger.info('{}:Field=b-grid: Chunks={}: Time={}-{} (wdep, f64)'.format(
             sim_id.stem, chunks, time_bnds[0].year, time_bnds[1].year))
     logger.info('{}:Temp={}: Rank={}: #Particles={}'
                 .format(sim_id.stem, output_file.tempwritedir_base[-8:], rank, pset.size))
@@ -125,9 +125,9 @@ def run_EUC(dy=0.1, dz=25, lon=165, lat=2.6, year=2012, month=12, day='max',
     kernels = pset.Kernel(main.Age) + AdvectionRK4_3D
 
     pset.execute(kernels, runtime=runtime, dt=dt, output_file=output_file,
-                  recovery={ErrorCode.ErrorOutOfBounds: main.DeleteParticle,
-                            ErrorCode.ErrorThroughSurface: main.SubmergeParticle},
-                  verbose_progress=True, convert_at_end=False)
+                 recovery={ErrorCode.ErrorOutOfBounds: main.DeleteParticle,
+                           ErrorCode.ErrorThroughSurface: main.SubmergeParticle},
+                 verbose_progress=True, convert_at_end=False)
 
     # Save to netcdf.
     output_file.close(delete_tempfiles=False)
