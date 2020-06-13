@@ -147,7 +147,7 @@ else:
     # Lat and lon of particles (whatever goes into your ParticleSet).
     # Doesn't matter if repeatdt is not None, only the pset size at the start counts.
     filename = cfg.data/'sim_165_v0r0.nc'
-    mpi_size = 36
+    mpi_size = 53
     lon = 165
     fieldset = main.ofam_fieldset(time_bnds='full', chunks=300, time_ext=True, time_periodic=False)
 
@@ -167,21 +167,33 @@ zParticle = main.get_zParticle(fieldset)
 # coordsx = np.vstack((lonx, latx)).transpose()
 
 
-print('EUC particles.')
-# pset_start = np.nanmin(psetx.time)
-repeats = 30
-pset = main.pset_euc(fieldset, zParticle, py, px, pz,
-                      timedelta(days=6), fieldset.U.grid.time[-1], repeats)
+# print('EUC particles.')
+# # pset_start = np.nanmin(psetx.time)
+# repeats = 110
+# pset = main.pset_euc(fieldset, zParticle, py, px, pz,
+#                       timedelta(days=6), fieldset.U.grid.time[-1], repeats)
 
-# print('Adding particles.')
-# pset.add(psetx)
+# # print('Adding particles.')
+# # pset.add(psetx)
 
-lon = pset.particle_data['lon']
-lat = pset.particle_data['lat']
+# lon = pset.particle_data['lon']
+# lat = pset.particle_data['lat']
+lats = np.repeat(py, pz.size*px.size)
+depths = np.repeat(np.tile(pz, py.size), px.size)
+lons = np.repeat(px, pz.size*py.size)
+
+# Duplicate for each repeat.
+tr = start - (np.arange(0, repeats) * repeatdt.total_seconds())
+time = np.repeat(tr, lons.size)
+# depth = np.tile(depths, repeats)
+lon = np.tile(lons, repeats)
+lat = np.tile(lats, repeats)
 coords = np.vstack((lon, lat)).transpose()
 
 print('Testing.')
 # partitionsx = test_ncpu(mpi_size, coords, lon, lonx=lonx, coordsx=coordsx)
 # ncpu = test_cpu_lim(coords, lon, cpu_lim=50, coordsx=coordsx, lonx=lonx)
+
 partitionsx = test_ncpu(mpi_size, coords, lon)
-ncpu = test_cpu_lim(coords, lon, cpu_lim=84)
+
+ncpu = test_cpu_lim(coords, lon, cpu_lim=96)

@@ -111,9 +111,9 @@ def run_EUC(dy=0.1, dz=25, lon=165, lat=2.6, year=2012, month=12, day='max',
                     .format(sim_id.stem, repeatdt.days, 1440 - dt.seconds/60, outputdt.days))
         logger.info('{}:Field=b-grid: Chunks={}: Time={}-{}'.format(
             sim_id.stem, chunks, time_bnds[0].year, time_bnds[1].year))
-    logger.info('{}:Temp={}: Rank={}: #Particles={}+{}={}'
+    logger.info('{}:Temp={}: Rank={}: #Particles={}-{}={}'
                 .format(sim_id.stem, output_file.tempwritedir_base[-8:], rank,
-                        pset.size, pdel, pset.size + pdel))
+                        pset.size, pdel, pset.size - pdel))
 
     # Kernels.
     kernels = pset.Kernel(main.Age) + AdvectionRK4_3D
