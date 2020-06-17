@@ -224,7 +224,7 @@ plot_winds(varz, title, units, vmax, save_name, plot_map=[False, *[True]*3])
 
 
 c = 1
-y1, y2 = 2, -3
+y1, y2 = 1, -1
 fig = plt.figure(figsize=(10, 8))
 plt.plot(svu1.lon, (svu1.sel(lat=y2, method='nearest') -
                     svu1.sel(lat=y1, method='nearest'))*c, color='black', label='JRA-55')

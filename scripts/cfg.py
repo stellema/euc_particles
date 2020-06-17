@@ -117,7 +117,7 @@ zones = {'VS': [147.7, 149, j1, j1],
          'NI': [128.5 + dx, e4 + dx, j2, j2],
          'SI': [155, e4 + dx, j1, j1]}
 zone_names = ['Vitiaz Strait', 'Solomon Strait', 'Mindanao Current',
-              'EUC recirculation', 'North of EUC', 'South of EUC',
+              'EUC recirculation', 'South of EUC', 'North of EUC',
               'Indonesian Seas', 'North Interior', 'South Interior']
 # Suppress scientific notation when printing.
 np.set_printoptions(suppress=True)

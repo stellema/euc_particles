@@ -574,10 +574,12 @@ def zone_fieldset(plot=True):
                          ~np.isnan(d), n + 1, d)
 
     if plot:
+        d = d.isel(Time=0, sw_ocean=0)
         d = d.sel(yu_ocean=slice(-7.5, 10), xu_ocean=slice(120, 255))
 
-        cmap = colors.ListedColormap(['darkorange', 'deeppink', 'mediumspringgreen', 'deepskyblue',
-                                      'seagreen', 'blue', 'red', 'darkviolet', 'k'])
+        cmap = colors.ListedColormap(['darkorange', 'deeppink', 'mediumspringgreen',
+                                      'deepskyblue', 'seagreen', 'blue',
+                                      'red', 'darkviolet', 'k'])
         cmap.set_bad('grey')
         cmap.set_under('white')
         fig = plt.figure(figsize=(16, 9))
@@ -589,7 +591,8 @@ def zone_fieldset(plot=True):
             np.arange(d.yu_ocean[0], d.yu_ocean[-1] + 2.5, 2.5), 'lat'))
         cbar = fig.colorbar(cs, ticks=np.arange(1, 10), orientation='horizontal',
                             boundaries=np.arange(0.5, 9.6), pad=0.075)
-        cbar.ax.set_xticklabels(cfg.zone_names)
+        znames = ['{}:{}'.format(i + 1, z) for i, z in enumerate(cfg.zone_names)]
+        cbar.ax.set_xticklabels(znames, fontsize=10)
 
         plt.savefig(cfg.fig/'particle_boundaries.png')
     if not plot:

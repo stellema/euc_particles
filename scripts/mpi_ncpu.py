@@ -151,7 +151,8 @@ else:
     lon = 165
     fieldset = main.ofam_fieldset(time_bnds='full', chunks=300, time_ext=True, time_periodic=False)
 
-
+mpi_size =96
+repeats = 110
 py = np.round(np.arange(-2.6, 2.6 + 0.05, 0.1), 2)
 pz = np.arange(25, 350 + 20, 25)
 px = np.array([lon])
