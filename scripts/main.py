@@ -44,7 +44,6 @@ logger.propagate = False
 """
 import sys
 import cfg
-# import gsw
 import tools
 import math
 import random
@@ -267,23 +266,6 @@ def remove_westward_particles(pset):
     return len(pidx)
 
 
-# def EUC_pset(fieldset, pclass, p_lats, p_lons, p_depths, pset_start, repeatdt=None, partitions=None):
-#     """Create a ParticleSet."""
-#     # Convert to lists if float or int.
-#     p_lats = [p_lats] if type(p_lats) not in [list, np.array, np.ndarray] else p_lats
-#     p_depths = [p_depths] if type(p_depths) not in [list, np.array, np.ndarray] else p_depths
-#     p_lons = [p_lons] if type(p_lons) not in [list, np.array, np.ndarray] else p_lons
-
-#     lats = np.repeat(p_lats, len(p_depths)*len(p_lons))
-#     depths = np.repeat(np.tile(p_depths, len(p_lats)), len(p_lons))
-#     lons = np.repeat(p_lons, len(p_depths)*len(p_lats))
-#     pset = ParticleSet.from_list(fieldset=fieldset, pclass=pclass,
-#                                  lon=lons, lat=lats, depth=depths,
-#                                  time=pset_start, repeatdt=repeatdt, partitions=partitions)
-
-#     return pset
-
-
 def pset_euc(fieldset, pclass, py, px, pz, repeatdt, start, repeats):
     """Create a ParticleSet."""
     repeats = 1 if repeats <= 0 else repeats
@@ -333,131 +315,76 @@ def get_zParticle(fieldset):
     return zParticle
 
 
-# @timeit
-# def EUC_particles(fieldset, date_bnds, p_lats, p_lons, p_depths,
-#                   dt, pset_start, repeatdt, runtime, outputdt, sim_id):
-#     """Create and execute a ParticleSet (created using EUC_pset).
+def get_bParticle(fieldset):
+    """Get zParticle class."""
+    class zParticle(cfg.ptype['jit']):
+        """Particle class that saves particle age and zonal velocity."""
 
-#     Args:
-#         fieldset (parcels.fieldset.FieldSet): Velocity to sample.
-#         date_bnds (list): Start and end date (in datetime format).
-#         p_lats (array): Latitudes to insert partciles.
-#         p_lons (array): Longitudes to insert partciles.
-#         p_depths (array): Depths to insert partciles.
-#         runtime (datetime.timedelta): Length of the timestepping loop.
-#         dt (datetime.timedelta): Timestep interval to be passed to the kernel.
-#         repeatdt (datetime.timedelta): Interval (in seconds) on which to
-#             repeat the release of the ParticleSet.
-#         outputdt (datetime.timedelta):
-#         remove_westward (bool, optional): Delete particles that are intially
-#             westward. Defaults to True.
+        # The age of the particle.
+        age = Variable('age', dtype=np.float32, initial=0.)
 
-#     Returns:
-#         sim_id (pathlib.Path): Path to created ParticleFile.
+        # The velocity of the particle.
+        u = Variable('u', dtype=np.float64, initial=fieldset.U, to_write='once')
 
-#     """
+        # The 'zone' of the particle.
+        zone = Variable('zone', dtype=np.float32, initial=0.)
 
-#     class zParticle(cfg.ptype['jit']):
-#         """Particle class that saves particle age and zonal velocity."""
-
-#         # The age of the particle.
-#         age = Variable('age', dtype=np.float32, initial=0.)
-
-#         # The velocity of the particle.
-#         u = Variable('u', dtype=np.float32, initial=fieldset.U, to_write='once')
-
-#         # The 'zone' of the particle.
-#         zone = Variable('zone', dtype=np.float32, initial=fieldset.zone)
-
-#     # Create particle set.
-#     pset = EUC_pset(fieldset, zParticle, p_lats, p_lons, p_depths, pset_start, repeatdt)
-
-#     # Output particle file p_name and time steps to save.
-#     output_file = pset.ParticleFile(cfg.data/sim_id.stem, outputdt=outputdt)
-#     logger.debug('{}: Dir={}: #Particles={}'
-#                  .format(sim_id.stem, output_file.tempwritedir_base[-8:], pset.size))
-
-#     kernels = pset.Kernel(Age) + AdvectionRK4_3D
-
-#     pset.execute(kernels, runtime=runtime, dt=dt, output_file=output_file,
-#                  recovery={ErrorCode.ErrorOutOfBounds: DeleteParticle,
-#                            ErrorCode.ErrorThroughSurface: SubmergeParticle},
-#                  verbose_progress=True)
-#     output_file.export()
-#     logger.info('{}: Completed!: #Particles={}'.format(sim_id.stem, pset.size))
-
-#     return
+    return zParticle
 
 
-# @timeit
-# def ParticleFile_transport(sim_id, dy, dz, save=True):
-#     """Remove westward particles and calculate transport.
+@timeit
+def ParticleFile_transport(sim_id, dy, dz, save=True):
+    """Remove westward particles and calculate transport.
 
-#     Remove particles that were intially travellling westward and
-#     calculates the intial volume transport of each particle.
-#     Requires zonal velocity 'u' to be saved to the particle file.
-#     Saves new particle file with the same name (minus the 'i').
+    Remove particles that were intially travellling westward and
+    calculates the intial volume transport of each particle.
+    Requires zonal velocity 'u' to be saved to the particle file.
+    Saves new particle file with the same name (minus the 'i').
 
-#     Args:
-#         file: Path to initial particle file.
-#         dy: Meridional distance (in metres): between particles.
-#         dz: Vertical distance (in metres) between particles.
-#         save (bool, optional): Save the created dataset. Defaults to True.
+    Args:
+        file: Path to initial particle file.
+        dy: Meridional distance (in metres): between particles.
+        dz: Vertical distance (in metres) between particles.
+        save (bool, optional): Save the created dataset. Defaults to True.
 
-#     Returns:
-#         df (xarray.Dataset): Dataset of particle obs and trajectory with
-#         initial volume transport of particles.
+    Returns:
+        df (xarray.Dataset): Dataset of particle obs and trajectory with
+        initial volume transport of particles.
 
-#     """
-#     # Open the output Particle File.
-#     ds = xr.open_dataset(sim_id, decode_times=False)
+    """
+    # Open the output Particle File.
+    df = xr.open_dataset(sim_id, decode_times=False)
 
-#     # Create copy of particle file with initally westward partciles removed.
-#     df = xr.Dataset()
-#     df.attrs = ds.attrs  # Copy partcile file attributes.
-#     # Indexes of particles that were intially westward.
-#     ix = np.argwhere(ds.u.values < 0).flatten().tolist()
-#     # Copy particle file variables (without westward) and attributes.
-#     for v in ds.variables:
-#         df[v] = (('traj', 'obs'), np.delete(ds[v].values, ix, axis=0))
-#         df[v].attrs = ds[v].attrs
-#     ds.close()
+    # Number of particles.
+    N = len(df.traj)
 
-#     # Print how many initial westward particles were removed.
-#     logger.info('Particles removed (final): {}'.format(len(ix)))
-#     # Number of particles.
-#     N = len(df.traj)
+    # Add initial volume transport to the dataset (filled with zeros).
+    df['uvo'] = (['traj'], np.zeros(N))
 
-#     # Add initial volume transport to the dataset (filled with zeros).
-#     df['uvo'] = (['traj'], np.zeros(N))
+    # Calculate inital volume transport of each particle.
+    for traj in range(N):
+        # Zonal transport (velocity x lat width x depth width).
+        df.uvo[traj] = df.u.isel(traj=traj).item()*cfg.LAT_DEG*dy*dz
 
-#     # Calculate inital volume transport of each particle.
-#     for traj in range(N):
-#         # Zonal transport (velocity x lat width x depth width).
-#         df.uvo[traj] = df.u.isel(traj=traj, obs=0).item()*cfg.LAT_DEG*dy*dz
+    # Add transport metadata.
+    df['uvo'].attrs = OrderedDict([('long_name', 'Initial zonal volume transport'),
+                                   ('units', 'm3/sec'),
+                                   ('standard_name', 'sea_water_x_transport')])
 
-#     # Add transport metadata.
-#     df['uvo'].attrs = OrderedDict([('long_name',
-#                                     'Initial zonal volume transport'),
-#                                    ('units', 'm3/sec'),
-#                                    ('standard_name',
-#                                     'sea_water_x_transport')])
+    # Adding missing zonal velocity attributes (copied from data).
+    df.u.attrs['long_name'] = 'i-current'
+    df.u.attrs['units'] = 'm/sec'
+    df.u.attrs['valid_range'] = [-32767, 32767]
+    df.u.attrs['packing'] = 4
+    df.u.attrs['cell_methods'] = 'time: mean'
+    df.u.attrs['coordinates'] = 'geolon_c geolat_c'
+    df.u.attrs['standard_name'] = 'sea_water_x_velocity'
 
-#     # Adding missing zonal velocity attributes (copied from data).
-#     df.u.attrs['long_name'] = 'i-current'
-#     df.u.attrs['units'] = 'm/sec'
-#     df.u.attrs['valid_range'] = [-32767, 32767]
-#     df.u.attrs['packing'] = 4
-#     df.u.attrs['cell_methods'] = 'time: mean'
-#     df.u.attrs['coordinates'] = 'geolon_c geolat_c'
-#     df.u.attrs['standard_name'] = 'sea_water_x_velocity'
+    if save:
+        # Saves with same file name, with 't' appended.
+        df.to_netcdf(cfg.data/(sim_id.stem + 't.nc'))
 
-#     if save:
-#         # Saves with same file name, but with the last 'i' removed.
-#         # E.g. ParticleFile_2010-2011_v0i.nc -> ParticleFile_2010-2011_v0.nc
-#         df.to_netcdf(cfg.data/(sim_id.stem[:-1] + sim_id.suffix))
-
-#     return df
+    return df
 
 
 def plot3D(sim_id):

@@ -4,16 +4,13 @@ created: Fri Jun 12 18:45:35 2020
 
 author: Annette Stellema (astellemas@gmail.com)
 
-
 """
 import main
 import cfg
 import tools
 import math
-import shutil
 import numpy as np
 from pathlib import Path
-from tools import get_date, timeit
 from datetime import datetime, timedelta
 from argparse import ArgumentParser
 from parcels import (FieldSet, Field, ParticleSet, JITParticle,
@@ -27,11 +24,31 @@ except:
 logger = tools.mlogger('sim', parcels=True)
 
 
-@timeit
+@tools.timeit
 def run_EUC(dy=0.1, dz=25, lon=165, year=2012, month=12, day='max',
             dt_mins=60, repeatdt_days=6, outputdt_days=1, runtime_days=186,
             v=1, chunks=300, pfile='None'):
-    """Run Lagrangian EUC particle experiment."""
+    """Run Lagrangian EUC particle experiment.
+
+    Args:
+        dy (float, optional): Particle latitude spacing [deg]. Defaults to 0.1.
+        dz (float, optional): Particle depth spacing [m]. Defaults to 25.
+        lon (int, optional): Longitude(s) to insert partciles. Defaults to 165.
+        year (int, optional): Start year. Defaults to 2012.
+        month (int, optional): Start month. Defaults to 12.
+        day (int, optional): Start day. Defaults to 'max'.
+        dt_mins (int, optional): Advection timestep. Defaults to 60.
+        repeatdt_days (int, optional): Particle repeat release interval [days]. Defaults to 6.
+        outputdt_days (int, optional): Advection write freq [day]. Defaults to 1.
+        runtime_days (int, optional): Execution runtime [days]. Defaults to 186.
+        v (int, optional): Version number to save file. Defaults to 1.
+        chunks ({int, 'auto', False}, optional): Chunk method or chunksize. Defaults to 300.
+        pfile (str, optional): Restart ParticleFile. Defaults to 'None'.
+
+    Returns:
+        None.
+
+    """
     # Define Fieldset and ParticleSet parameters.
 
     # Ensure run ends on a repeat day.
@@ -135,6 +152,7 @@ def run_EUC(dy=0.1, dz=25, lon=165, year=2012, month=12, day='max',
     output_file.close(delete_tempfiles=False)
 
     logger.info('{}:Completed!: Rank={}: #Particles={}'.format(sim_id.stem, rank, pset.size))
+
     return
 
 

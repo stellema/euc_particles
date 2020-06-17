@@ -37,6 +37,23 @@ except:
 logger = tools.mlogger('base', parcels=True)
 
 
+def EUC_pset(fieldset, pclass, p_lats, p_lons, p_depths, pset_start, repeatdt=None, partitions=None):
+    """Create a ParticleSet."""
+    # Convert to lists if float or int.
+    p_lats = [p_lats] if type(p_lats) not in [list, np.array, np.ndarray] else p_lats
+    p_depths = [p_depths] if type(p_depths) not in [list, np.array, np.ndarray] else p_depths
+    p_lons = [p_lons] if type(p_lons) not in [list, np.array, np.ndarray] else p_lons
+
+    lats = np.repeat(p_lats, len(p_depths)*len(p_lons))
+    depths = np.repeat(np.tile(p_depths, len(p_lats)), len(p_lons))
+    lons = np.repeat(p_lons, len(p_depths)*len(p_lats))
+    pset = ParticleSet.from_list(fieldset=fieldset, pclass=pclass,
+                                  lon=lons, lat=lats, depth=depths,
+                                  time=pset_start, repeatdt=repeatdt, partitions=partitions)
+
+    return pset
+
+
 @timeit
 def run_EUC(dy=0.1, dz=25, lon=165, lat=2.6, year=2012, month=12, day='max',
             dt_mins=60, repeatdt_days=6, outputdt_days=1, runtime_days=185, v=0,
@@ -76,7 +93,7 @@ def run_EUC(dy=0.1, dz=25, lon=165, lat=2.6, year=2012, month=12, day='max',
 
         # Set ParticleSet start as last fieldset time.
         pset_start = fieldset.U.grid.time[-1]
-        pset = main.EUC_pset(fieldset, zParticle, p_lats, p_lons, p_depths, pset_start, repeatdt)
+        pset = EUC_pset(fieldset, zParticle, p_lats, p_lons, p_depths, pset_start, repeatdt)
 
         # Particle set start and end time.
         start = get_date(year, month, day)
@@ -100,7 +117,7 @@ def run_EUC(dy=0.1, dz=25, lon=165, lat=2.6, year=2012, month=12, day='max',
 
         # Add particles on the next day that regularly repeat.
         pset_start = np.nanmin(psetx.time) - 24*60*60
-        pset = main.EUC_pset(fieldset, zParticle, p_lats, p_lons, p_depths, pset_start, repeatdt)
+        pset = EUC_pset(fieldset, zParticle, p_lats, p_lons, p_depths, pset_start, repeatdt)
         pset.add(psetx)
 
     # Output particle file p_name and time steps to save.
