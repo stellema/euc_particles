@@ -76,7 +76,7 @@ def run_EUC(dy=0.1, dz=25, lon=165, year=2012, month=12, day='max',
     fieldset = main.ofam_fieldset(time_bnds, chunks=300, time_periodic=True)
 
     # Define the ParticleSet pclass.
-    zParticle = main.get_zParticle(fieldset)
+    zParticle = main.get_bParticle(fieldset)
 
     # Create particle set.
     if pfile == 'None':
@@ -140,8 +140,8 @@ def run_EUC(dy=0.1, dz=25, lon=165, year=2012, month=12, day='max',
                         pset_isize, pdel, pset.size))
 
     # Kernels.
-    kernels = (pset.Kernel(main.Age) + pset.Kernel(main.SampleZone) +
-               pset.Kernel(main.Distance) + AdvectionRK4_3D)
+    kernels = (pset.Kernel(main.Age) + pset.Kernel(main.SampleZone) + AdvectionRK4_3D)
+               # pset.Kernel(main.Distance) + AdvectionRK4_3D)
 
     pset.execute(kernels, runtime=runtime, dt=dt, output_file=output_file,
                  recovery={ErrorCode.ErrorOutOfBounds: main.DeleteParticle,

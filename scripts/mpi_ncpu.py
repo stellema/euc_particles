@@ -148,11 +148,12 @@ else:
     # Doesn't matter if repeatdt is not None, only the pset size at the start counts.
     filename = cfg.data/'sim_165_v0r0.nc'
     mpi_size = 53
-    lon = 165
+    lon = 190
     fieldset = main.ofam_fieldset(time_bnds='full', chunks=300, time_ext=True, time_periodic=False)
 
-mpi_size =96
-repeats = 110
+mpi_size = 48
+repeats = 5
+repeatdt = timedelta(days=6)  # Repeat particle release time.
 py = np.round(np.arange(-2.6, 2.6 + 0.05, 0.1), 2)
 pz = np.arange(25, 350 + 20, 25)
 px = np.array([lon])
@@ -184,9 +185,8 @@ depths = np.repeat(np.tile(pz, py.size), px.size)
 lons = np.repeat(px, pz.size*py.size)
 
 # Duplicate for each repeat.
-tr = start - (np.arange(0, repeats) * repeatdt.total_seconds())
+tr = fieldset.U.grid.time[-1] - (np.arange(0, repeats) * repeatdt.total_seconds())
 time = np.repeat(tr, lons.size)
-# depth = np.tile(depths, repeats)
 lon = np.tile(lons, repeats)
 lat = np.tile(lats, repeats)
 coords = np.vstack((lon, lat)).transpose()
@@ -197,4 +197,4 @@ print('Testing.')
 
 partitionsx = test_ncpu(mpi_size, coords, lon)
 
-ncpu = test_cpu_lim(coords, lon, cpu_lim=96)
+ncpu = test_cpu_lim(coords, lon, cpu_lim=48)
