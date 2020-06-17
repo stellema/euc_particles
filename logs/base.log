@@ -4404,3 +4404,281 @@
 2020-06-10 11:47:15,559:run_EUC:INFO:sim_165_v9r1:Temp=OMLCUIQL: Rank=11: #Particles=784
 2020-06-10 11:47:15,559:run_EUC:INFO:sim_165_v9r1:Temp=OMLCUIQL: Rank=23: #Particles=692
 2020-06-10 11:47:15,559:run_EUC:INFO:sim_165_v9r1:Temp=OMLCUIQL: Rank=7: #Particles=177
+2020-06-10 23:29:31,711:run_EUC:INFO:sim_165_v0r1:Temp=MYIFRYYJ: Rank=17: #Particles=1158
+2020-06-10 23:29:31,711:run_EUC:INFO:sim_165_v0r1:Temp=MYIFRYYJ: Rank=20: #Particles=275
+2020-06-10 23:29:31,711:run_EUC:INFO:sim_165_v0r1:Temp=MYIFRYYJ: Rank=18: #Particles=55
+2020-06-10 23:29:31,711:run_EUC:INFO:sim_165_v0r1:Temp=MYIFRYYJ: Rank=24: #Particles=379
+2020-06-10 23:29:31,711:run_EUC:INFO:sim_165_v0r1:Temp=MYIFRYYJ: Rank=16: #Particles=564
+2020-06-10 23:29:31,711:run_EUC:INFO:sim_165_v0r1:Temp=MYIFRYYJ: Rank=2: #Particles=502
+2020-06-10 23:29:31,711:run_EUC:INFO:sim_165_v0r1:Temp=MYIFRYYJ: Rank=12: #Particles=352
+2020-06-10 23:29:31,711:run_EUC:INFO:sim_165_v0r1:Temp=MYIFRYYJ: Rank=4: #Particles=131
+2020-06-10 23:29:31,711:run_EUC:INFO:sim_165_v0r1:Temp=MYIFRYYJ: Rank=22: #Particles=1112
+2020-06-10 23:29:31,711:run_EUC:INFO:sim_165_v0r1:Temp=MYIFRYYJ: Rank=8: #Particles=966
+2020-06-10 23:29:31,711:run_EUC:INFO:sim_165_v0r1:Temp=MYIFRYYJ: Rank=13: #Particles=592
+2020-06-10 23:29:31,711:run_EUC:INFO:sim_165_v0r1:Temp=MYIFRYYJ: Rank=14: #Particles=349
+2020-06-10 23:29:31,711:run_EUC:INFO:sim_165_v0r1:Temp=MYIFRYYJ: Rank=6: #Particles=888
+2020-06-10 23:29:31,711:run_EUC:INFO:sim_165_v0r1:Temp=MYIFRYYJ: Rank=5: #Particles=1170
+2020-06-10 23:29:31,711:run_EUC:INFO:sim_165_v0r1:Temp=MYIFRYYJ: Rank=21: #Particles=868
+2020-06-10 23:29:31,711:run_EUC:INFO:sim_165_v0r1:Temp=MYIFRYYJ: Rank=10: #Particles=373
+2020-06-10 23:29:31,711:run_EUC:INFO:sim_165_v0r1:Temp=MYIFRYYJ: Rank=1: #Particles=1215
+2020-06-10 23:29:31,711:run_EUC:INFO:sim_165_v0r1:Temp=MYIFRYYJ: Rank=9: #Particles=533
+2020-06-10 23:29:31,712:run_EUC:INFO:sim_165_v0r1:2012-06-30 12:00:00-2012-05-20 12:00:00: Runtime=41 days
+2020-06-10 23:29:31,713:run_EUC:INFO:sim_165_v0r1:Particles: /repeat=742: Total=5753
+2020-06-10 23:29:31,713:run_EUC:INFO:sim_165_v0r1:Lon=165: Lat=[-2.6-2.6 x0.1]: Depth=[25-350m x25]
+2020-06-10 23:29:31,713:run_EUC:INFO:sim_165_v0r1:Repeat=6 days: Step=60 mins: Output=1 day
+2020-06-10 23:29:31,713:run_EUC:INFO:sim_165_v0r1:Chunks=300: Time=1981-2012: Interp=linear_invdist_land_tracer
+2020-06-10 23:29:31,713:run_EUC:INFO:sim_165_v0r1:Temp=MYIFRYYJ: Rank=0: #Particles=601
+2020-06-10 23:29:31,785:run_EUC:INFO:sim_165_v0r1:Temp=MYIFRYYJ: Rank=11: #Particles=784
+2020-06-10 23:29:31,785:run_EUC:INFO:sim_165_v0r1:Temp=MYIFRYYJ: Rank=19: #Particles=214
+2020-06-10 23:29:31,785:run_EUC:INFO:sim_165_v0r1:Temp=MYIFRYYJ: Rank=3: #Particles=587
+2020-06-10 23:29:31,805:run_EUC:INFO:sim_165_v0r1:Temp=MYIFRYYJ: Rank=15: #Particles=937
+2020-06-10 23:29:31,805:run_EUC:INFO:sim_165_v0r1:Temp=MYIFRYYJ: Rank=23: #Particles=692
+2020-06-10 23:29:31,805:run_EUC:INFO:sim_165_v0r1:Temp=MYIFRYYJ: Rank=7: #Particles=177
+2020-06-10 23:29:33,250:run_EUC:INFO:sim_190_v0r1:Temp=QLWGNBXB: Rank=12: #Particles=397
+2020-06-10 23:29:33,250:run_EUC:INFO:sim_190_v0r1:Temp=QLWGNBXB: Rank=8: #Particles=174
+2020-06-10 23:29:33,250:run_EUC:INFO:sim_190_v0r1:Temp=QLWGNBXB: Rank=2: #Particles=280
+2020-06-10 23:29:33,250:run_EUC:INFO:sim_190_v0r1:Temp=QLWGNBXB: Rank=4: #Particles=148
+2020-06-10 23:29:33,250:run_EUC:INFO:sim_190_v0r1:Temp=QLWGNBXB: Rank=6: #Particles=340
+2020-06-10 23:29:33,250:run_EUC:INFO:sim_190_v0r1:Temp=QLWGNBXB: Rank=1: #Particles=319
+2020-06-10 23:29:33,250:run_EUC:INFO:sim_190_v0r1:Temp=QLWGNBXB: Rank=10: #Particles=388
+2020-06-10 23:29:33,250:run_EUC:INFO:sim_190_v0r1:Temp=QLWGNBXB: Rank=5: #Particles=494
+2020-06-10 23:29:33,250:run_EUC:INFO:sim_190_v0r1:Temp=QLWGNBXB: Rank=9: #Particles=200
+2020-06-10 23:29:33,250:run_EUC:INFO:sim_190_v0r1:Temp=QLWGNBXB: Rank=17: #Particles=36
+2020-06-10 23:29:33,250:run_EUC:INFO:sim_190_v0r1:Temp=QLWGNBXB: Rank=20: #Particles=185
+2020-06-10 23:29:33,250:run_EUC:INFO:sim_190_v0r1:Temp=QLWGNBXB: Rank=18: #Particles=407
+2020-06-10 23:29:33,250:run_EUC:INFO:sim_190_v0r1:Temp=QLWGNBXB: Rank=14: #Particles=498
+2020-06-10 23:29:33,250:run_EUC:INFO:sim_190_v0r1:Temp=QLWGNBXB: Rank=13: #Particles=298
+2020-06-10 23:29:33,250:run_EUC:INFO:sim_190_v0r1:Temp=QLWGNBXB: Rank=7: #Particles=532
+2020-06-10 23:29:33,250:run_EUC:INFO:sim_190_v0r1:Temp=QLWGNBXB: Rank=3: #Particles=116
+2020-06-10 23:29:33,250:run_EUC:INFO:sim_190_v0r1:Temp=QLWGNBXB: Rank=15: #Particles=555
+2020-06-10 23:29:33,250:run_EUC:INFO:sim_190_v0r1:Temp=QLWGNBXB: Rank=24: #Particles=511
+2020-06-10 23:29:33,250:run_EUC:INFO:sim_190_v0r1:Temp=QLWGNBXB: Rank=21: #Particles=281
+2020-06-10 23:29:33,250:run_EUC:INFO:sim_190_v0r1:Temp=QLWGNBXB: Rank=16: #Particles=238
+2020-06-10 23:29:33,250:run_EUC:INFO:sim_190_v0r1:Temp=QLWGNBXB: Rank=22: #Particles=265
+2020-06-10 23:29:33,250:run_EUC:INFO:sim_190_v0r1:Temp=QLWGNBXB: Rank=11: #Particles=179
+2020-06-10 23:29:33,250:run_EUC:INFO:sim_190_v0r1:Temp=QLWGNBXB: Rank=23: #Particles=181
+2020-06-10 23:29:33,250:run_EUC:INFO:sim_190_v0r1:2012-08-11 12:00:00-2012-07-01 12:00:00: Runtime=41 days
+2020-06-10 23:29:33,250:run_EUC:INFO:sim_190_v0r1:Temp=QLWGNBXB: Rank=19: #Particles=408
+2020-06-10 23:29:33,252:run_EUC:INFO:sim_190_v0r1:Particles: /repeat=742: Total=5479
+2020-06-10 23:29:33,252:run_EUC:INFO:sim_190_v0r1:Lon=190: Lat=[-2.6-2.6 x0.1]: Depth=[25-350m x25]
+2020-06-10 23:29:33,252:run_EUC:INFO:sim_190_v0r1:Repeat=6 days: Step=60 mins: Output=1 day
+2020-06-10 23:29:33,252:run_EUC:INFO:sim_190_v0r1:Chunks=300: Time=1981-2012: Interp=linear_invdist_land_tracer
+2020-06-10 23:29:33,252:run_EUC:INFO:sim_190_v0r1:Temp=QLWGNBXB: Rank=0: #Particles=327
+2020-06-12 07:19:45,534:run_EUC:INFO:sim_190_v0r1: Completed!: #Particles=553
+2020-06-12 07:19:45,534:run_EUC:INFO:sim_190_v0r1: Completed!: #Particles=406
+2020-06-12 07:19:45,534:run_EUC:INFO:sim_190_v0r1: Completed!: #Particles=401
+2020-06-12 07:19:45,534:run_EUC:INFO:sim_190_v0r1: Completed!: #Particles=269
+2020-06-12 07:19:45,534:run_EUC:INFO:sim_190_v0r1: Completed!: #Particles=521
+2020-06-12 07:19:45,534:run_EUC:INFO:sim_190_v0r1: Completed!: #Particles=224
+2020-06-12 07:19:45,534:run_EUC:INFO:sim_190_v0r1: Completed!: #Particles=190
+2020-06-12 07:19:45,534:run_EUC:INFO:sim_190_v0r1: Completed!: #Particles=160
+2020-06-12 07:19:45,534:run_EUC:INFO:sim_190_v0r1: Completed!: #Particles=385
+2020-06-12 07:19:45,534:run_EUC:INFO:sim_190_v0r1: Completed!: #Particles=317
+2020-06-12 07:19:45,534:run_EUC:INFO:sim_190_v0r1: Completed!: #Particles=132
+2020-06-12 07:19:45,534:run_EUC:INFO:sim_190_v0r1: Completed!: #Particles=106
+2020-06-12 07:19:45,534:run_EUC:INFO:sim_190_v0r1: Completed!: #Particles=268
+2020-06-12 07:19:45,534:run_EUC:INFO:sim_190_v0r1: Completed!: #Particles=312
+2020-06-12 07:19:45,534:run_EUC:INFO:sim_190_v0r1: Completed!: #Particles=24
+2020-06-12 07:19:45,534:run_EUC:INFO:sim_190_v0r1: Completed!: #Particles=237
+2020-06-12 07:19:45,534:run_EUC:INFO:sim_190_v0r1: Completed!: #Particles=180
+2020-06-12 07:19:45,534:run_EUC:INFO:sim_190_v0r1: Completed!: #Particles=272
+2020-06-12 07:19:45,534:run_EUC:INFO:sim_190_v0r1: Completed!: #Particles=494
+2020-06-12 07:19:45,534:run_EUC:INFO:sim_190_v0r1: Completed!: #Particles=169
+2020-06-12 07:19:45,534:run_EUC:INFO:sim_190_v0r1: Completed!: #Particles=489
+2020-06-12 07:19:45,534:run_EUC:INFO:sim_190_v0r1: Completed!: #Particles=383
+2020-06-12 07:19:45,534:run_EUC:INFO:sim_190_v0r1: Completed!: #Particles=492
+2020-06-12 07:19:45,534:run_EUC:INFO:sim_190_v0r1: Completed!: #Particles=164
+2020-06-12 07:19:45,552:timed:INFO:run_EUC: 31:54:17.66 total: 114857.66 seconds.
+2020-06-12 07:19:45,552:timed:INFO:run_EUC: 31:54:17.60 total: 114857.60 seconds.
+2020-06-12 07:19:45,552:timed:INFO:run_EUC: 31:54:17.66 total: 114857.66 seconds.
+2020-06-12 07:19:45,552:timed:INFO:run_EUC: 31:54:17.66 total: 114857.66 seconds.
+2020-06-12 07:19:45,552:timed:INFO:run_EUC: 31:54:17.66 total: 114857.66 seconds.
+2020-06-12 07:19:45,552:timed:INFO:run_EUC: 31:54:17.66 total: 114857.66 seconds.
+2020-06-12 07:19:45,552:timed:INFO:run_EUC: 31:54:17.66 total: 114857.66 seconds.
+2020-06-12 07:19:45,552:timed:INFO:run_EUC: 31:54:17.66 total: 114857.66 seconds.
+2020-06-12 07:19:45,552:timed:INFO:run_EUC: 31:54:17.66 total: 114857.66 seconds.
+2020-06-12 07:19:45,552:timed:INFO:run_EUC: 31:54:17.66 total: 114857.66 seconds.
+2020-06-12 07:19:45,552:timed:INFO:run_EUC: 31:54:17.66 total: 114857.66 seconds.
+2020-06-12 07:19:45,552:timed:INFO:run_EUC: 31:54:17.66 total: 114857.66 seconds.
+2020-06-12 07:19:45,552:timed:INFO:run_EUC: 31:54:17.66 total: 114857.66 seconds.
+2020-06-12 07:19:45,552:timed:INFO:run_EUC: 31:54:17.66 total: 114857.66 seconds.
+2020-06-12 07:19:45,552:timed:INFO:run_EUC: 31:54:17.66 total: 114857.66 seconds.
+2020-06-12 07:19:45,552:timed:INFO:run_EUC: 31:54:17.66 total: 114857.66 seconds.
+2020-06-12 07:19:45,552:timed:INFO:run_EUC: 31:54:17.66 total: 114857.66 seconds.
+2020-06-12 07:19:45,552:timed:INFO:run_EUC: 31:54:17.66 total: 114857.66 seconds.
+2020-06-12 07:19:45,552:timed:INFO:run_EUC: 31:54:17.66 total: 114857.66 seconds.
+2020-06-12 07:19:45,552:timed:INFO:run_EUC: 31:54:17.66 total: 114857.66 seconds.
+2020-06-12 07:19:45,552:timed:INFO:run_EUC: 31:54:17.66 total: 114857.66 seconds.
+2020-06-12 07:19:45,552:timed:INFO:run_EUC: 31:54:17.66 total: 114857.66 seconds.
+2020-06-12 07:19:45,552:timed:INFO:run_EUC: 31:54:17.66 total: 114857.66 seconds.
+2020-06-12 07:19:45,552:timed:INFO:run_EUC: 31:54:17.66 total: 114857.66 seconds.
+2020-06-12 07:20:11,367:run_EUC:INFO:sim_190_v0r1: Completed!: #Particles=292
+2020-06-12 07:20:17,922:timed:INFO:run_EUC: 31:54:50.03 total: 114890.03 seconds.
+2020-06-12 09:00:34,604:run_EUC:INFO:sim_165_v0r1: Completed!: #Particles=530
+2020-06-12 09:00:34,604:run_EUC:INFO:sim_165_v0r1: Completed!: #Particles=780
+2020-06-12 09:00:34,605:run_EUC:INFO:sim_165_v0r1: Completed!: #Particles=570
+2020-06-12 09:00:34,604:run_EUC:INFO:sim_165_v0r1: Completed!: #Particles=966
+2020-06-12 09:00:34,604:run_EUC:INFO:sim_165_v0r1: Completed!: #Particles=564
+2020-06-12 09:00:34,604:run_EUC:INFO:sim_165_v0r1: Completed!: #Particles=1170
+2020-06-12 09:00:34,604:run_EUC:INFO:sim_165_v0r1: Completed!: #Particles=868
+2020-06-12 09:00:34,604:run_EUC:INFO:sim_165_v0r1: Completed!: #Particles=275
+2020-06-12 09:00:34,604:run_EUC:INFO:sim_165_v0r1: Completed!: #Particles=348
+2020-06-12 09:00:34,604:run_EUC:INFO:sim_165_v0r1: Completed!: #Particles=373
+2020-06-12 09:00:34,604:run_EUC:INFO:sim_165_v0r1: Completed!: #Particles=176
+2020-06-12 09:00:34,604:run_EUC:INFO:sim_165_v0r1: Completed!: #Particles=1153
+2020-06-12 09:00:34,604:run_EUC:INFO:sim_165_v0r1: Completed!: #Particles=373
+2020-06-12 09:00:34,605:run_EUC:INFO:sim_165_v0r1: Completed!: #Particles=866
+2020-06-12 09:00:34,604:run_EUC:INFO:sim_165_v0r1: Completed!: #Particles=1090
+2020-06-12 09:00:34,604:run_EUC:INFO:sim_165_v0r1: Completed!: #Particles=53
+2020-06-12 09:00:34,605:run_EUC:INFO:sim_165_v0r1: Completed!: #Particles=937
+2020-06-12 09:00:34,604:run_EUC:INFO:sim_165_v0r1: Completed!: #Particles=1215
+2020-06-12 09:00:34,604:run_EUC:INFO:sim_165_v0r1: Completed!: #Particles=127
+2020-06-12 09:00:34,604:run_EUC:INFO:sim_165_v0r1: Completed!: #Particles=581
+2020-06-12 09:00:34,604:run_EUC:INFO:sim_165_v0r1: Completed!: #Particles=213
+2020-06-12 09:00:34,604:run_EUC:INFO:sim_165_v0r1: Completed!: #Particles=685
+2020-06-12 09:00:34,604:run_EUC:INFO:sim_165_v0r1: Completed!: #Particles=502
+2020-06-12 09:00:34,607:timed:INFO:run_EUC: 33:37:12.59 total: 121032.59 seconds.
+2020-06-12 09:00:34,607:timed:INFO:run_EUC: 33:37:12.59 total: 121032.59 seconds.
+2020-06-12 09:00:34,607:timed:INFO:run_EUC: 33:37:12.59 total: 121032.59 seconds.
+2020-06-12 09:00:34,607:timed:INFO:run_EUC: 33:37:12.59 total: 121032.59 seconds.
+2020-06-12 09:00:34,607:timed:INFO:run_EUC: 33:37:12.59 total: 121032.59 seconds.
+2020-06-12 09:00:34,607:timed:INFO:run_EUC: 33:37:12.59 total: 121032.59 seconds.
+2020-06-12 09:00:34,607:timed:INFO:run_EUC: 33:37:12.50 total: 121032.50 seconds.
+2020-06-12 09:00:34,607:timed:INFO:run_EUC: 33:37:12.59 total: 121032.59 seconds.
+2020-06-12 09:00:34,607:timed:INFO:run_EUC: 33:37:12.59 total: 121032.59 seconds.
+2020-06-12 09:00:34,607:timed:INFO:run_EUC: 33:37:12.59 total: 121032.59 seconds.
+2020-06-12 09:00:34,607:timed:INFO:run_EUC: 33:37:12.59 total: 121032.59 seconds.
+2020-06-12 09:00:34,607:timed:INFO:run_EUC: 33:37:12.59 total: 121032.59 seconds.
+2020-06-12 09:00:34,607:timed:INFO:run_EUC: 33:37:12.59 total: 121032.59 seconds.
+2020-06-12 09:00:34,607:timed:INFO:run_EUC: 33:37:12.59 total: 121032.59 seconds.
+2020-06-12 09:00:34,607:timed:INFO:run_EUC: 33:37:12.59 total: 121032.59 seconds.
+2020-06-12 09:00:34,607:timed:INFO:run_EUC: 33:37:12.59 total: 121032.59 seconds.
+2020-06-12 09:00:34,607:timed:INFO:run_EUC: 33:37:12.59 total: 121032.59 seconds.
+2020-06-12 09:00:34,607:timed:INFO:run_EUC: 33:37:12.59 total: 121032.59 seconds.
+2020-06-12 09:00:34,607:timed:INFO:run_EUC: 33:37:12.59 total: 121032.59 seconds.
+2020-06-12 09:00:34,607:timed:INFO:run_EUC: 33:37:12.59 total: 121032.59 seconds.
+2020-06-12 09:00:34,607:timed:INFO:run_EUC: 33:37:12.59 total: 121032.59 seconds.
+2020-06-12 09:00:34,607:timed:INFO:run_EUC: 33:37:12.59 total: 121032.59 seconds.
+2020-06-12 09:00:34,607:timed:INFO:run_EUC: 33:37:12.59 total: 121032.59 seconds.
+2020-06-12 09:00:58,841:run_EUC:INFO:sim_165_v0r1: Completed!: #Particles=588
+2020-06-12 12:49:11,675:run_EUC:INFO:sim_190_v0r1:Temp=FFADIJZC: Rank=2: #Particles=123
+2020-06-12 12:49:11,675:run_EUC:INFO:sim_190_v0r1:Temp=FFADIJZC: Rank=18: #Particles=179
+2020-06-12 12:49:11,675:run_EUC:INFO:sim_190_v0r1:Temp=FFADIJZC: Rank=32: #Particles=303
+2020-06-12 12:49:11,675:run_EUC:INFO:sim_190_v0r1:Temp=FFADIJZC: Rank=34: #Particles=217
+2020-06-12 12:49:11,676:run_EUC:INFO:sim_190_v0r1:2012-08-11 12:00:00-2012-07-01 12:00:00: Runtime=41 days
+2020-06-12 12:49:11,694:run_EUC:INFO:sim_190_v0r1:Particles: /repeat=742: Total=4452
+2020-06-12 12:49:11,695:run_EUC:INFO:sim_190_v0r1:Lon=190: Lat=[-2.6-2.6 x0.1]: Depth=[25-350m x25]
+2020-06-12 12:49:11,695:run_EUC:INFO:sim_190_v0r1:Repeat=6 days: Step=60 mins: Output=1 day
+2020-06-12 12:49:11,695:run_EUC:INFO:sim_190_v0r1:Field=b-grid: Chunks=300: Time=1981-2012
+2020-06-12 12:49:11,695:run_EUC:INFO:sim_190_v0r1:Temp=FFADIJZC: Rank=0: #Particles=489
+2020-06-12 12:49:11,700:run_EUC:INFO:sim_190_v0r1:Temp=FFADIJZC: Rank=33: #Particles=202
+2020-06-12 12:49:11,700:run_EUC:INFO:sim_190_v0r1:Temp=FFADIJZC: Rank=25: #Particles=86
+2020-06-12 12:49:11,700:run_EUC:INFO:sim_190_v0r1:Temp=FFADIJZC: Rank=17: #Particles=22
+2020-06-12 12:49:11,700:run_EUC:INFO:sim_190_v0r1:Temp=FFADIJZC: Rank=9: #Particles=445
+2020-06-12 12:49:11,700:run_EUC:INFO:sim_190_v0r1:Temp=FFADIJZC: Rank=5: #Particles=280
+2020-06-12 12:49:11,700:run_EUC:INFO:sim_190_v0r1:Temp=FFADIJZC: Rank=1: #Particles=188
+2020-06-12 12:49:11,758:run_EUC:INFO:sim_190_v0r1:Temp=FFADIJZC: Rank=29: #Particles=93
+2020-06-12 12:49:11,758:run_EUC:INFO:sim_190_v0r1:Temp=FFADIJZC: Rank=16: #Particles=281
+2020-06-12 12:49:11,758:run_EUC:INFO:sim_190_v0r1:Temp=FFADIJZC: Rank=21: #Particles=233
+2020-06-12 12:49:11,758:run_EUC:INFO:sim_190_v0r1:Temp=FFADIJZC: Rank=13: #Particles=311
+2020-06-12 12:49:11,760:run_EUC:INFO:sim_190_v0r1:Temp=FFADIJZC: Rank=24: #Particles=373
+2020-06-12 12:49:11,760:run_EUC:INFO:sim_190_v0r1:Temp=FFADIJZC: Rank=8: #Particles=64
+2020-06-12 12:49:11,761:run_EUC:INFO:sim_190_v0r1:Temp=FFADIJZC: Rank=12: #Particles=114
+2020-06-12 12:49:11,761:run_EUC:INFO:sim_190_v0r1:Temp=FFADIJZC: Rank=28: #Particles=247
+2020-06-12 12:49:11,761:run_EUC:INFO:sim_190_v0r1:Temp=FFADIJZC: Rank=20: #Particles=163
+2020-06-12 12:49:11,761:run_EUC:INFO:sim_190_v0r1:Temp=FFADIJZC: Rank=4: #Particles=183
+2020-06-12 12:49:11,846:run_EUC:INFO:sim_190_v0r1:Temp=FFADIJZC: Rank=22: #Particles=185
+2020-06-12 12:49:11,846:run_EUC:INFO:sim_190_v0r1:Temp=FFADIJZC: Rank=30: #Particles=116
+2020-06-12 12:49:11,846:run_EUC:INFO:sim_190_v0r1:Temp=FFADIJZC: Rank=14: #Particles=450
+2020-06-12 12:49:11,846:run_EUC:INFO:sim_190_v0r1:Temp=FFADIJZC: Rank=6: #Particles=192
+2020-06-12 12:49:11,847:run_EUC:INFO:sim_190_v0r1:Temp=FFADIJZC: Rank=10: #Particles=139
+2020-06-12 12:49:11,847:run_EUC:INFO:sim_190_v0r1:Temp=FFADIJZC: Rank=26: #Particles=156
+2020-06-12 12:49:11,847:run_EUC:INFO:sim_190_v0r1:Temp=FFADIJZC: Rank=3: #Particles=248
+2020-06-12 12:49:11,847:run_EUC:INFO:sim_190_v0r1:Temp=FFADIJZC: Rank=35: #Particles=469
+2020-06-12 12:49:11,847:run_EUC:INFO:sim_190_v0r1:Temp=FFADIJZC: Rank=15: #Particles=236
+2020-06-12 12:49:11,847:run_EUC:INFO:sim_190_v0r1:Temp=FFADIJZC: Rank=11: #Particles=172
+2020-06-12 12:49:11,847:run_EUC:INFO:sim_190_v0r1:Temp=FFADIJZC: Rank=27: #Particles=129
+2020-06-12 12:49:11,847:run_EUC:INFO:sim_190_v0r1:Temp=FFADIJZC: Rank=19: #Particles=188
+2020-06-12 12:49:11,847:run_EUC:INFO:sim_190_v0r1:Temp=FFADIJZC: Rank=23: #Particles=187
+2020-06-12 12:49:11,847:run_EUC:INFO:sim_190_v0r1:Temp=FFADIJZC: Rank=7: #Particles=183
+2020-06-12 12:49:11,847:run_EUC:INFO:sim_190_v0r1:Temp=FFADIJZC: Rank=31: #Particles=111
+2020-06-12 16:01:16,492:run_EUC:INFO:sim_165_v0r1:Temp=NKAUZAFQ: Rank=1: #Particles=760
+2020-06-12 16:01:16,492:run_EUC:INFO:sim_165_v0r1:Temp=NKAUZAFQ: Rank=3: #Particles=565
+2020-06-12 16:01:16,492:run_EUC:INFO:sim_165_v0r1:Temp=NKAUZAFQ: Rank=2: #Particles=344
+2020-06-12 16:01:16,492:run_EUC:INFO:sim_165_v0r1:Temp=NKAUZAFQ: Rank=32: #Particles=127
+2020-06-12 16:01:16,492:run_EUC:INFO:sim_165_v0r1:Temp=NKAUZAFQ: Rank=18: #Particles=646
+2020-06-12 16:01:16,492:run_EUC:INFO:sim_165_v0r1:Temp=NKAUZAFQ: Rank=34: #Particles=559
+2020-06-12 16:01:16,492:run_EUC:INFO:sim_165_v0r1:Temp=NKAUZAFQ: Rank=33: #Particles=682
+2020-06-12 16:01:16,492:run_EUC:INFO:sim_165_v0r1:Temp=NKAUZAFQ: Rank=25: #Particles=555
+2020-06-12 16:01:16,492:run_EUC:INFO:sim_165_v0r1:Temp=NKAUZAFQ: Rank=17: #Particles=119
+2020-06-12 16:01:16,492:run_EUC:INFO:sim_165_v0r1:Temp=NKAUZAFQ: Rank=23: #Particles=676
+2020-06-12 16:01:16,492:run_EUC:INFO:sim_165_v0r1:Temp=NKAUZAFQ: Rank=19: #Particles=227
+2020-06-12 16:01:16,492:run_EUC:INFO:sim_165_v0r1:Temp=NKAUZAFQ: Rank=9: #Particles=421
+2020-06-12 16:01:16,492:run_EUC:INFO:sim_165_v0r1:Temp=NKAUZAFQ: Rank=5: #Particles=721
+2020-06-12 16:01:16,492:run_EUC:INFO:sim_165_v0r1:Temp=NKAUZAFQ: Rank=7: #Particles=296
+2020-06-12 16:01:16,492:run_EUC:INFO:sim_165_v0r1:2012-06-30 12:00:00-2012-06-01 12:00:00: Runtime=29 days
+2020-06-12 16:01:16,496:run_EUC:INFO:sim_165_v0r1:Particles: /repeat=742: Total=2968
+2020-06-12 16:01:16,496:run_EUC:INFO:sim_165_v0r1:Lon=165: Lat=[-2.6-2.6 x0.1]: Depth=[25-350m x25]
+2020-06-12 16:01:16,497:run_EUC:INFO:sim_165_v0r1:Repeat=6 days: Step=60 mins: Output=1 day
+2020-06-12 16:01:16,497:run_EUC:INFO:sim_165_v0r1:Field=b-grid: Chunks=300: Time=1981-2012
+2020-06-12 16:01:16,497:run_EUC:INFO:sim_165_v0r1:Temp=NKAUZAFQ: Rank=0: #Particles=417
+2020-06-12 16:01:16,791:run_EUC:INFO:sim_165_v0r1:Temp=NKAUZAFQ: Rank=21: #Particles=430
+2020-06-12 16:01:16,822:run_EUC:INFO:sim_165_v0r1:Temp=NKAUZAFQ: Rank=6: #Particles=240
+2020-06-12 16:01:16,822:run_EUC:INFO:sim_165_v0r1:Temp=NKAUZAFQ: Rank=30: #Particles=468
+2020-06-12 16:01:16,823:run_EUC:INFO:sim_165_v0r1:Temp=NKAUZAFQ: Rank=8: #Particles=486
+2020-06-12 16:01:16,822:run_EUC:INFO:sim_165_v0r1:Temp=NKAUZAFQ: Rank=14: #Particles=35
+2020-06-12 16:01:16,834:run_EUC:INFO:sim_165_v0r1:Temp=NKAUZAFQ: Rank=35: #Particles=739
+2020-06-12 16:01:16,836:run_EUC:INFO:sim_165_v0r1:Temp=NKAUZAFQ: Rank=15: #Particles=460
+2020-06-12 16:01:16,836:run_EUC:INFO:sim_165_v0r1:Temp=NKAUZAFQ: Rank=16: #Particles=137
+2020-06-12 16:01:16,836:run_EUC:INFO:sim_165_v0r1:Temp=NKAUZAFQ: Rank=31: #Particles=539
+2020-06-12 16:01:16,836:run_EUC:INFO:sim_165_v0r1:Temp=NKAUZAFQ: Rank=22: #Particles=309
+2020-06-12 16:01:16,837:run_EUC:INFO:sim_165_v0r1:Temp=NKAUZAFQ: Rank=12: #Particles=280
+2020-06-12 16:01:16,837:run_EUC:INFO:sim_165_v0r1:Temp=NKAUZAFQ: Rank=4: #Particles=411
+2020-06-12 16:01:16,837:run_EUC:INFO:sim_165_v0r1:Temp=NKAUZAFQ: Rank=28: #Particles=277
+2020-06-12 16:01:16,837:run_EUC:INFO:sim_165_v0r1:Temp=NKAUZAFQ: Rank=20: #Particles=706
+2020-06-12 16:01:16,852:run_EUC:INFO:sim_165_v0r1:Temp=NKAUZAFQ: Rank=10: #Particles=213
+2020-06-12 16:01:16,853:run_EUC:INFO:sim_165_v0r1:Temp=NKAUZAFQ: Rank=26: #Particles=472
+2020-06-12 16:01:16,876:run_EUC:INFO:sim_165_v0r1:Temp=NKAUZAFQ: Rank=24: #Particles=460
+2020-06-12 16:01:16,883:run_EUC:INFO:sim_165_v0r1:Temp=NKAUZAFQ: Rank=13: #Particles=531
+2020-06-12 16:01:16,884:run_EUC:INFO:sim_165_v0r1:Temp=NKAUZAFQ: Rank=29: #Particles=41
+2020-06-12 16:01:16,884:run_EUC:INFO:sim_165_v0r1:Temp=NKAUZAFQ: Rank=11: #Particles=629
+2020-06-12 16:01:16,884:run_EUC:INFO:sim_165_v0r1:Temp=NKAUZAFQ: Rank=27: #Particles=496
+2020-06-12 16:03:28,149:run_EUC:INFO:sim_190_v0r1:Temp=DITCERPO: Rank=32: #Particles=191
+2020-06-12 16:03:28,149:run_EUC:INFO:sim_190_v0r1:Temp=DITCERPO: Rank=8: #Particles=283
+2020-06-12 16:03:28,149:run_EUC:INFO:sim_190_v0r1:Temp=DITCERPO: Rank=24: #Particles=219
+2020-06-12 16:03:28,149:run_EUC:INFO:sim_190_v0r1:Temp=DITCERPO: Rank=16: #Particles=364
+2020-06-12 16:03:28,150:run_EUC:INFO:sim_190_v0r1:2012-08-11 12:00:00-2012-07-01 12:00:00: Runtime=41 days
+2020-06-12 16:03:28,151:run_EUC:INFO:sim_190_v0r1:Particles: /repeat=742: Total=4452
+2020-06-12 16:03:28,151:run_EUC:INFO:sim_190_v0r1:Lon=190: Lat=[-2.6-2.6 x0.1]: Depth=[25-350m x25]
+2020-06-12 16:03:28,151:run_EUC:INFO:sim_190_v0r1:Repeat=6 days: Step=60 mins: Output=1 day
+2020-06-12 16:03:28,151:run_EUC:INFO:sim_190_v0r1:Field=b-grid: Chunks=300: Time=1981-2012
+2020-06-12 16:03:28,151:run_EUC:INFO:sim_190_v0r1:Temp=DITCERPO: Rank=0: #Particles=314
+2020-06-12 16:03:28,168:run_EUC:INFO:sim_190_v0r1:Temp=DITCERPO: Rank=1: #Particles=223
+2020-06-12 16:03:28,168:run_EUC:INFO:sim_190_v0r1:Temp=DITCERPO: Rank=33: #Particles=234
+2020-06-12 16:03:28,168:run_EUC:INFO:sim_190_v0r1:Temp=DITCERPO: Rank=25: #Particles=163
+2020-06-12 16:03:28,168:run_EUC:INFO:sim_190_v0r1:Temp=DITCERPO: Rank=17: #Particles=185
+2020-06-12 16:03:28,168:run_EUC:INFO:sim_190_v0r1:Temp=DITCERPO: Rank=9: #Particles=446
+2020-06-12 16:03:28,169:run_EUC:INFO:sim_190_v0r1:Temp=DITCERPO: Rank=4: #Particles=515
+2020-06-12 16:03:28,169:run_EUC:INFO:sim_190_v0r1:Temp=DITCERPO: Rank=12: #Particles=63
+2020-06-12 16:03:28,169:run_EUC:INFO:sim_190_v0r1:Temp=DITCERPO: Rank=20: #Particles=334
+2020-06-12 16:03:28,169:run_EUC:INFO:sim_190_v0r1:Temp=DITCERPO: Rank=28: #Particles=252
+2020-06-12 16:03:28,179:run_EUC:INFO:sim_190_v0r1:Temp=DITCERPO: Rank=5: #Particles=108
+2020-06-12 16:03:28,179:run_EUC:INFO:sim_190_v0r1:Temp=DITCERPO: Rank=13: #Particles=146
+2020-06-12 16:03:28,179:run_EUC:INFO:sim_190_v0r1:Temp=DITCERPO: Rank=29: #Particles=96
+2020-06-12 16:03:28,179:run_EUC:INFO:sim_190_v0r1:Temp=DITCERPO: Rank=21: #Particles=206
+2020-06-12 16:03:28,233:run_EUC:INFO:sim_190_v0r1:Temp=DITCERPO: Rank=6: #Particles=190
+2020-06-12 16:03:28,233:run_EUC:INFO:sim_190_v0r1:Temp=DITCERPO: Rank=2: #Particles=181
+2020-06-12 16:03:28,233:run_EUC:INFO:sim_190_v0r1:Temp=DITCERPO: Rank=10: #Particles=184
+2020-06-12 16:03:28,233:run_EUC:INFO:sim_190_v0r1:Temp=DITCERPO: Rank=14: #Particles=164
+2020-06-12 16:03:28,233:run_EUC:INFO:sim_190_v0r1:Temp=DITCERPO: Rank=18: #Particles=179
+2020-06-12 16:03:28,233:run_EUC:INFO:sim_190_v0r1:Temp=DITCERPO: Rank=26: #Particles=343
+2020-06-12 16:03:28,233:run_EUC:INFO:sim_190_v0r1:Temp=DITCERPO: Rank=22: #Particles=118
+2020-06-12 16:03:28,233:run_EUC:INFO:sim_190_v0r1:Temp=DITCERPO: Rank=30: #Particles=207
+2020-06-12 16:03:28,271:run_EUC:INFO:sim_190_v0r1:Temp=DITCERPO: Rank=11: #Particles=271
+2020-06-12 16:03:28,271:run_EUC:INFO:sim_190_v0r1:Temp=DITCERPO: Rank=3: #Particles=124
+2020-06-12 16:03:28,271:run_EUC:INFO:sim_190_v0r1:Temp=DITCERPO: Rank=7: #Particles=485
+2020-06-12 16:03:28,271:run_EUC:INFO:sim_190_v0r1:Temp=DITCERPO: Rank=19: #Particles=36
+2020-06-12 16:03:28,271:run_EUC:INFO:sim_190_v0r1:Temp=DITCERPO: Rank=31: #Particles=408
+2020-06-12 16:03:28,271:run_EUC:INFO:sim_190_v0r1:Temp=DITCERPO: Rank=15: #Particles=101
+2020-06-12 16:03:28,271:run_EUC:INFO:sim_190_v0r1:Temp=DITCERPO: Rank=27: #Particles=224
+2020-06-12 16:03:28,271:run_EUC:INFO:sim_190_v0r1:Temp=DITCERPO: Rank=23: #Particles=200
