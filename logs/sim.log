@@ -637,3 +637,210 @@
 2020-06-13 22:39:40,086:run_EUC:INFO:sim_165_v2r0:Temp=VXJESMWP: Rank=51: #Particles=0-0=0
 2020-06-13 22:39:40,086:run_EUC:INFO:sim_165_v2r0:Temp=VXJESMWP: Rank=27: #Particles=2045-489=1556
 2020-06-13 22:39:40,087:run_EUC:INFO:sim_165_v2r0:Temp=VXJESMWP: Rank=71: #Particles=0-0=0
+2020-06-17 10:26:21,593:remove_westward_particles:DEBUG:Particles travelling in the wrong direction.
+2020-06-17 10:26:21,605:remove_westward_particles:DEBUG:Particles travelling in the wrong direction.
+2020-06-17 10:26:21,606:remove_westward_particles:DEBUG:Particles travelling in the wrong direction.
+2020-06-17 10:26:21,606:remove_westward_particles:DEBUG:Particles travelling in the wrong direction.
+2020-06-17 10:26:21,633:remove_westward_particles:DEBUG:Particles travelling in the wrong direction.
+2020-06-17 10:26:21,654:remove_westward_particles:DEBUG:Particles travelling in the wrong direction.
+2020-06-17 10:26:21,681:remove_westward_particles:DEBUG:Particles travelling in the wrong direction.
+2020-06-17 10:26:21,681:remove_westward_particles:DEBUG:Particles travelling in the wrong direction.
+2020-06-17 10:26:21,681:remove_westward_particles:DEBUG:Particles travelling in the wrong direction.
+2020-06-17 10:26:21,681:remove_westward_particles:DEBUG:Particles travelling in the wrong direction.
+2020-06-17 10:26:21,682:run_EUC:INFO:sim_165_v2r0:Temp=VMKOKGBH: Rank=6: #Particles=835-197=638
+2020-06-17 10:26:21,682:run_EUC:INFO:sim_165_v2r0:Temp=VMKOKGBH: Rank=2: #Particles=834-248=586
+2020-06-17 10:26:21,682:run_EUC:INFO:sim_165_v2r0:Temp=VMKOKGBH: Rank=1: #Particles=834-290=544
+2020-06-17 10:26:21,682:run_EUC:INFO:sim_165_v2r0:Temp=VMKOKGBH: Rank=8: #Particles=835-269=566
+2020-06-17 10:26:21,682:run_EUC:INFO:sim_165_v2r0:Temp=VMKOKGBH: Rank=5: #Particles=835-274=561
+2020-06-17 10:26:21,682:run_EUC:INFO:sim_165_v2r0:Temp=VMKOKGBH: Rank=10: #Particles=834-236=598
+2020-06-17 10:26:21,682:run_EUC:INFO:sim_165_v2r0:2013-01-01 12:00:00-2012-01-01 12:00:00: Runtime=366 days
+2020-06-17 10:26:21,682:run_EUC:INFO:sim_165_v2r0:Particles: /repeat=742: Total=44520
+2020-06-17 10:26:21,682:run_EUC:INFO:sim_165_v2r0:Lon=165: Lat=[-2.6-2.6 x0.1]: Depth=[25-350m x25]
+2020-06-17 10:26:21,682:run_EUC:INFO:sim_165_v2r0:Repeat=6 days: Step=60 mins: Output=1 day
+2020-06-17 10:26:21,682:run_EUC:INFO:sim_165_v2r0:Field=b-grid: Chunks=300: Time=1981-2012
+2020-06-17 10:26:21,682:run_EUC:INFO:sim_165_v2r0:Temp=VMKOKGBH: Rank=0: #Particles=835-166=669
+2020-06-17 10:26:21,686:remove_westward_particles:DEBUG:Particles travelling in the wrong direction.
+2020-06-17 10:26:21,687:run_EUC:INFO:sim_165_v2r0:Temp=VMKOKGBH: Rank=13: #Particles=836-110=726
+2020-06-17 10:26:21,687:remove_westward_particles:DEBUG:Particles travelling in the wrong direction.
+2020-06-17 10:26:21,687:run_EUC:INFO:sim_165_v2r0:Temp=VMKOKGBH: Rank=18: #Particles=835-157=678
+2020-06-17 10:26:21,689:remove_westward_particles:DEBUG:Particles travelling in the wrong direction.
+2020-06-17 10:26:21,689:remove_westward_particles:DEBUG:Particles travelling in the wrong direction.
+2020-06-17 10:26:21,689:remove_westward_particles:DEBUG:Particles travelling in the wrong direction.
+2020-06-17 10:26:21,689:run_EUC:INFO:sim_165_v2r0:Temp=VMKOKGBH: Rank=16: #Particles=834-260=574
+2020-06-17 10:26:21,689:run_EUC:INFO:sim_165_v2r0:Temp=VMKOKGBH: Rank=22: #Particles=834-268=566
+2020-06-17 10:26:21,689:remove_westward_particles:DEBUG:Particles travelling in the wrong direction.
+2020-06-17 10:26:21,692:remove_westward_particles:DEBUG:Particles travelling in the wrong direction.
+2020-06-17 10:26:21,693:remove_westward_particles:DEBUG:Particles travelling in the wrong direction.
+2020-06-17 10:26:21,704:remove_westward_particles:DEBUG:Particles travelling in the wrong direction.
+2020-06-17 10:26:21,704:run_EUC:INFO:sim_165_v2r0:Temp=VMKOKGBH: Rank=21: #Particles=815-569=246
+2020-06-17 10:26:21,705:remove_westward_particles:DEBUG:Particles travelling in the wrong direction.
+2020-06-17 10:26:21,705:run_EUC:INFO:sim_165_v2r0:Temp=VMKOKGBH: Rank=14: #Particles=835-223=612
+2020-06-17 10:26:21,773:remove_westward_particles:DEBUG:Particles travelling in the wrong direction.
+2020-06-17 10:26:21,773:remove_westward_particles:DEBUG:Particles travelling in the wrong direction.
+2020-06-17 10:26:21,773:run_EUC:INFO:sim_165_v2r0:Temp=VMKOKGBH: Rank=29: #Particles=834-258=576
+2020-06-17 10:26:21,773:run_EUC:INFO:sim_165_v2r0:Temp=VMKOKGBH: Rank=30: #Particles=834-243=591
+2020-06-17 10:26:21,792:remove_westward_particles:DEBUG:Particles travelling in the wrong direction.
+2020-06-17 10:26:21,793:run_EUC:INFO:sim_165_v2r0:Temp=VMKOKGBH: Rank=33: #Particles=833-358=475
+2020-06-17 10:26:21,794:remove_westward_particles:DEBUG:Particles travelling in the wrong direction.
+2020-06-17 10:26:21,795:remove_westward_particles:DEBUG:Particles travelling in the wrong direction.
+2020-06-17 10:26:21,797:remove_westward_particles:DEBUG:Particles travelling in the wrong direction.
+2020-06-17 10:26:21,798:remove_westward_particles:DEBUG:Particles travelling in the wrong direction.
+2020-06-17 10:26:21,820:remove_westward_particles:DEBUG:Particles travelling in the wrong direction.
+2020-06-17 10:26:21,821:run_EUC:INFO:sim_165_v2r0:Temp=VMKOKGBH: Rank=32: #Particles=834-259=575
+2020-06-17 10:26:21,821:remove_westward_particles:DEBUG:Particles travelling in the wrong direction.
+2020-06-17 10:26:21,842:remove_westward_particles:DEBUG:Particles travelling in the wrong direction.
+2020-06-17 10:26:21,842:run_EUC:INFO:sim_165_v2r0:Temp=VMKOKGBH: Rank=26: #Particles=837-96=741
+2020-06-17 10:26:21,853:remove_westward_particles:DEBUG:Particles travelling in the wrong direction.
+2020-06-17 10:26:21,853:run_EUC:INFO:sim_165_v2r0:Temp=VMKOKGBH: Rank=37: #Particles=835-220=615
+2020-06-17 10:26:21,854:remove_westward_particles:DEBUG:Particles travelling in the wrong direction.
+2020-06-17 10:26:21,854:remove_westward_particles:DEBUG:Particles travelling in the wrong direction.
+2020-06-17 10:26:21,854:remove_westward_particles:DEBUG:Particles travelling in the wrong direction.
+2020-06-17 10:26:21,854:run_EUC:INFO:sim_165_v2r0:Temp=VMKOKGBH: Rank=42: #Particles=835-273=562
+2020-06-17 10:26:21,854:run_EUC:INFO:sim_165_v2r0:Temp=VMKOKGBH: Rank=45: #Particles=834-301=533
+2020-06-17 10:26:21,862:remove_westward_particles:DEBUG:Particles travelling in the wrong direction.
+2020-06-17 10:26:21,862:run_EUC:INFO:sim_165_v2r0:Temp=VMKOKGBH: Rank=40: #Particles=835-211=624
+2020-06-17 10:26:21,863:remove_westward_particles:DEBUG:Particles travelling in the wrong direction.
+2020-06-17 10:26:21,864:run_EUC:INFO:sim_165_v2r0:Temp=VMKOKGBH: Rank=38: #Particles=837-95=742
+2020-06-17 10:26:21,873:remove_westward_particles:DEBUG:Particles travelling in the wrong direction.
+2020-06-17 10:26:21,886:remove_westward_particles:DEBUG:Particles travelling in the wrong direction.
+2020-06-17 10:26:21,886:run_EUC:INFO:sim_165_v2r0:Temp=VMKOKGBH: Rank=46: #Particles=835-142=693
+2020-06-17 10:26:21,886:remove_westward_particles:DEBUG:Particles travelling in the wrong direction.
+2020-06-17 10:26:21,887:remove_westward_particles:DEBUG:Particles travelling in the wrong direction.
+2020-06-17 10:26:21,890:remove_westward_particles:DEBUG:Particles travelling in the wrong direction.
+2020-06-17 10:26:21,890:remove_westward_particles:DEBUG:Particles travelling in the wrong direction.
+2020-06-17 10:26:21,890:run_EUC:INFO:sim_165_v2r0:Temp=VMKOKGBH: Rank=34: #Particles=835-269=566
+2020-06-17 10:26:21,914:remove_westward_particles:DEBUG:Particles travelling in the wrong direction.
+2020-06-17 10:26:21,914:run_EUC:INFO:sim_165_v2r0:Temp=VMKOKGBH: Rank=24: #Particles=834-243=591
+2020-06-17 10:28:23,159:remove_westward_particles:DEBUG:Particles travelling in the wrong direction.
+2020-06-17 10:28:23,160:run_EUC:INFO:sim_165_v2r0:Temp=VMKOKGBH: Rank=17: #Particles=1657-305=1352
+2020-06-17 10:28:23,276:remove_westward_particles:DEBUG:Particles travelling in the wrong direction.
+2020-06-17 10:28:30,031:remove_westward_particles:DEBUG:Particles travelling in the wrong direction.
+2020-06-17 10:28:30,032:run_EUC:INFO:sim_165_v2r0:Temp=VMKOKGBH: Rank=25: #Particles=815-598=217
+2020-06-17 10:28:30,032:run_EUC:INFO:sim_165_v2r0:Temp=VMKOKGBH: Rank=41: #Particles=834-266=568
+2020-06-17 10:28:30,032:run_EUC:INFO:sim_165_v2r0:Temp=VMKOKGBH: Rank=9: #Particles=1664-202=1462
+2020-06-17 10:28:30,234:remove_westward_particles:DEBUG:Particles travelling in the wrong direction.
+2020-06-17 10:28:30,234:run_EUC:INFO:sim_165_v2r0:Temp=VMKOKGBH: Rank=19: #Particles=1624-843=781
+2020-06-17 10:28:30,234:run_EUC:INFO:sim_165_v2r0:Temp=VMKOKGBH: Rank=3: #Particles=1659-243=1416
+2020-06-17 10:28:30,234:run_EUC:INFO:sim_165_v2r0:Temp=VMKOKGBH: Rank=43: #Particles=834-252=582
+2020-06-17 10:28:30,234:run_EUC:INFO:sim_165_v2r0:Temp=VMKOKGBH: Rank=39: #Particles=835-180=655
+2020-06-17 10:28:30,235:run_EUC:INFO:sim_165_v2r0:Temp=VMKOKGBH: Rank=11: #Particles=816-547=269
+2020-06-17 10:28:30,235:run_EUC:INFO:sim_165_v2r0:Temp=VMKOKGBH: Rank=7: #Particles=834-262=572
+2020-06-17 10:28:30,235:run_EUC:INFO:sim_165_v2r0:Temp=VMKOKGBH: Rank=27: #Particles=835-272=563
+2020-06-17 10:28:30,235:run_EUC:INFO:sim_165_v2r0:Temp=VMKOKGBH: Rank=35: #Particles=834-273=561
+2020-06-17 10:28:30,235:run_EUC:INFO:sim_165_v2r0:Temp=VMKOKGBH: Rank=23: #Particles=834-280=554
+2020-06-17 10:28:30,235:run_EUC:INFO:sim_165_v2r0:Temp=VMKOKGBH: Rank=15: #Particles=835-271=564
+2020-06-17 10:28:30,235:run_EUC:INFO:sim_165_v2r0:Temp=VMKOKGBH: Rank=31: #Particles=834-231=603
+2020-06-17 10:28:30,235:run_EUC:INFO:sim_165_v2r0:Temp=VMKOKGBH: Rank=47: #Particles=835-127=708
+2020-06-17 10:28:31,094:remove_westward_particles:DEBUG:Particles travelling in the wrong direction.
+2020-06-17 10:28:31,095:run_EUC:INFO:sim_165_v2r0:Temp=VMKOKGBH: Rank=12: #Particles=832-338=494
+2020-06-17 10:28:31,095:run_EUC:INFO:sim_165_v2r0:Temp=VMKOKGBH: Rank=36: #Particles=833-313=520
+2020-06-17 10:28:31,095:run_EUC:INFO:sim_165_v2r0:Temp=VMKOKGBH: Rank=20: #Particles=834-275=559
+2020-06-17 10:28:31,095:run_EUC:INFO:sim_165_v2r0:Temp=VMKOKGBH: Rank=44: #Particles=834-228=606
+2020-06-17 10:28:31,095:run_EUC:INFO:sim_165_v2r0:Temp=VMKOKGBH: Rank=28: #Particles=835-270=565
+2020-06-17 10:28:31,095:run_EUC:INFO:sim_165_v2r0:Temp=VMKOKGBH: Rank=4: #Particles=1614-1005=609
+2020-06-17 12:02:36,233:run_EUC:INFO:sim_190_v1r0:Temp=IDFXTNEE: Rank=30: #Particles=840-158=682
+2020-06-17 12:02:36,233:run_EUC:INFO:sim_190_v1r0:2013-01-01 12:00:00-2012-01-01 12:00:00: Runtime=366 days
+2020-06-17 12:02:36,233:run_EUC:INFO:sim_190_v1r0:Temp=IDFXTNEE: Rank=6: #Particles=840-197=643
+2020-06-17 12:02:36,233:run_EUC:INFO:sim_190_v1r0:Temp=IDFXTNEE: Rank=16: #Particles=840-183=657
+2020-06-17 12:02:36,233:run_EUC:INFO:sim_190_v1r0:Temp=IDFXTNEE: Rank=18: #Particles=840-233=607
+2020-06-17 12:02:36,233:run_EUC:INFO:sim_190_v1r0:Temp=IDFXTNEE: Rank=14: #Particles=840-157=683
+2020-06-17 12:02:36,233:run_EUC:INFO:sim_190_v1r0:Temp=IDFXTNEE: Rank=2: #Particles=840-161=679
+2020-06-17 12:02:36,233:run_EUC:INFO:sim_190_v1r0:Temp=IDFXTNEE: Rank=10: #Particles=840-151=689
+2020-06-17 12:02:36,235:run_EUC:INFO:sim_190_v1r0:Particles: /repeat=742: Total=44520
+2020-06-17 12:02:36,235:run_EUC:INFO:sim_190_v1r0:Lon=190: Lat=[-2.6-2.6 x0.1]: Depth=[25-350m x25]
+2020-06-17 12:02:36,235:run_EUC:INFO:sim_190_v1r0:Repeat=6 days: Step=60 mins: Output=1 day
+2020-06-17 12:02:36,235:run_EUC:INFO:sim_190_v1r0:Field=b-grid: Chunks=300: Time=1981-2012
+2020-06-17 12:02:36,235:run_EUC:INFO:sim_190_v1r0:Temp=IDFXTNEE: Rank=0: #Particles=840-218=622
+2020-06-17 12:02:36,259:run_EUC:INFO:sim_190_v1r0:Temp=IDFXTNEE: Rank=22: #Particles=840-233=607
+2020-06-17 12:02:36,268:run_EUC:INFO:sim_190_v1r0:Temp=IDFXTNEE: Rank=32: #Particles=840-196=644
+2020-06-17 12:02:36,292:run_EUC:INFO:sim_190_v1r0:Temp=IDFXTNEE: Rank=46: #Particles=840-245=595
+2020-06-17 12:02:36,317:run_EUC:INFO:sim_190_v1r0:Temp=IDFXTNEE: Rank=24: #Particles=840-154=686
+2020-06-17 12:02:36,317:run_EUC:INFO:sim_190_v1r0:Temp=IDFXTNEE: Rank=8: #Particles=840-337=503
+2020-06-17 12:02:36,317:run_EUC:INFO:sim_190_v1r0:Temp=IDFXTNEE: Rank=40: #Particles=840-184=656
+2020-06-17 12:02:36,416:run_EUC:INFO:sim_190_v1r0:Temp=IDFXTNEE: Rank=42: #Particles=840-272=568
+2020-06-17 12:02:36,445:run_EUC:INFO:sim_190_v1r0:Temp=IDFXTNEE: Rank=26: #Particles=840-320=520
+2020-06-17 12:02:36,502:run_EUC:INFO:sim_190_v1r0:Temp=IDFXTNEE: Rank=34: #Particles=840-360=480
+2020-06-17 12:02:36,536:run_EUC:INFO:sim_190_v1r0:Temp=IDFXTNEE: Rank=38: #Particles=840-355=485
+2020-06-17 12:02:36,636:run_EUC:INFO:sim_190_v1r0:Temp=IDFXTNEE: Rank=37: #Particles=840-169=671
+2020-06-17 12:02:36,636:run_EUC:INFO:sim_190_v1r0:Temp=IDFXTNEE: Rank=29: #Particles=840-188=652
+2020-06-17 12:02:36,636:run_EUC:INFO:sim_190_v1r0:Temp=IDFXTNEE: Rank=1: #Particles=840-516=324
+2020-06-17 12:02:36,636:run_EUC:INFO:sim_190_v1r0:Temp=IDFXTNEE: Rank=5: #Particles=840-259=581
+2020-06-17 12:02:36,636:run_EUC:INFO:sim_190_v1r0:Temp=IDFXTNEE: Rank=13: #Particles=840-287=553
+2020-06-17 12:02:36,729:run_EUC:INFO:sim_190_v1r0:Temp=IDFXTNEE: Rank=45: #Particles=840-561=279
+2020-06-17 12:02:36,780:run_EUC:INFO:sim_190_v1r0:Temp=IDFXTNEE: Rank=21: #Particles=840-640=200
+2020-06-17 12:02:36,842:run_EUC:INFO:sim_190_v1r0:Temp=IDFXTNEE: Rank=33: #Particles=840-630=210
+2020-06-17 12:04:41,650:run_EUC:INFO:sim_190_v1r0:Temp=IDFXTNEE: Rank=17: #Particles=1680-856=824
+2020-06-17 12:04:41,797:run_EUC:INFO:sim_190_v1r0:Temp=IDFXTNEE: Rank=25: #Particles=840-628=212
+2020-06-17 12:04:41,797:run_EUC:INFO:sim_190_v1r0:Temp=IDFXTNEE: Rank=41: #Particles=840-223=617
+2020-06-17 12:04:41,797:run_EUC:INFO:sim_190_v1r0:Temp=IDFXTNEE: Rank=9: #Particles=1680-774=906
+2020-06-17 12:04:43,354:run_EUC:INFO:sim_190_v1r0:Temp=IDFXTNEE: Rank=27: #Particles=840-300=540
+2020-06-17 12:04:43,354:run_EUC:INFO:sim_190_v1r0:Temp=IDFXTNEE: Rank=39: #Particles=840-213=627
+2020-06-17 12:04:43,354:run_EUC:INFO:sim_190_v1r0:Temp=IDFXTNEE: Rank=35: #Particles=840-247=593
+2020-06-17 12:04:43,354:run_EUC:INFO:sim_190_v1r0:Temp=IDFXTNEE: Rank=47: #Particles=840-265=575
+2020-06-17 12:04:43,354:run_EUC:INFO:sim_190_v1r0:Temp=IDFXTNEE: Rank=19: #Particles=1680-1293=387
+2020-06-17 12:04:43,354:run_EUC:INFO:sim_190_v1r0:Temp=IDFXTNEE: Rank=15: #Particles=840-287=553
+2020-06-17 12:04:43,354:run_EUC:INFO:sim_190_v1r0:Temp=IDFXTNEE: Rank=23: #Particles=840-440=400
+2020-06-17 12:04:43,354:run_EUC:INFO:sim_190_v1r0:Temp=IDFXTNEE: Rank=3: #Particles=1680-831=849
+2020-06-17 12:04:43,355:run_EUC:INFO:sim_190_v1r0:Temp=IDFXTNEE: Rank=43: #Particles=840-172=668
+2020-06-17 12:04:43,355:run_EUC:INFO:sim_190_v1r0:Temp=IDFXTNEE: Rank=7: #Particles=840-214=626
+2020-06-17 12:04:43,355:run_EUC:INFO:sim_190_v1r0:Temp=IDFXTNEE: Rank=11: #Particles=840-646=194
+2020-06-17 12:04:43,355:run_EUC:INFO:sim_190_v1r0:Temp=IDFXTNEE: Rank=31: #Particles=840-155=685
+2020-06-17 12:04:44,009:run_EUC:INFO:sim_190_v1r0:Temp=IDFXTNEE: Rank=20: #Particles=840-391=449
+2020-06-17 12:04:44,009:run_EUC:INFO:sim_190_v1r0:Temp=IDFXTNEE: Rank=12: #Particles=840-604=236
+2020-06-17 12:04:44,009:run_EUC:INFO:sim_190_v1r0:Temp=IDFXTNEE: Rank=28: #Particles=840-317=523
+2020-06-17 12:04:44,009:run_EUC:INFO:sim_190_v1r0:Temp=IDFXTNEE: Rank=44: #Particles=840-155=685
+2020-06-17 12:04:44,009:run_EUC:INFO:sim_190_v1r0:Temp=IDFXTNEE: Rank=36: #Particles=840-581=259
+2020-06-17 12:04:44,009:run_EUC:INFO:sim_190_v1r0:Temp=IDFXTNEE: Rank=4: #Particles=1680-1299=381
+2020-06-17 12:14:05,484:run_EUC:INFO:sim_165_v2r0:Temp=JBZVVXPP: Rank=16: #Particles=840-260=580
+2020-06-17 12:14:05,484:run_EUC:INFO:sim_165_v2r0:Temp=JBZVVXPP: Rank=1: #Particles=840-290=550
+2020-06-17 12:14:05,484:run_EUC:INFO:sim_165_v2r0:Temp=JBZVVXPP: Rank=8: #Particles=840-269=571
+2020-06-17 12:14:05,484:run_EUC:INFO:sim_165_v2r0:Temp=JBZVVXPP: Rank=6: #Particles=840-197=643
+2020-06-17 12:14:05,484:run_EUC:INFO:sim_165_v2r0:Temp=JBZVVXPP: Rank=2: #Particles=840-248=592
+2020-06-17 12:14:05,484:run_EUC:INFO:sim_165_v2r0:Temp=JBZVVXPP: Rank=14: #Particles=840-223=617
+2020-06-17 12:14:05,484:run_EUC:INFO:sim_165_v2r0:Temp=JBZVVXPP: Rank=22: #Particles=840-268=572
+2020-06-17 12:14:05,484:run_EUC:INFO:sim_165_v2r0:Temp=JBZVVXPP: Rank=13: #Particles=840-110=730
+2020-06-17 12:14:05,484:run_EUC:INFO:sim_165_v2r0:Temp=JBZVVXPP: Rank=5: #Particles=840-274=566
+2020-06-17 12:14:05,484:run_EUC:INFO:sim_165_v2r0:Temp=JBZVVXPP: Rank=10: #Particles=840-236=604
+2020-06-17 12:14:05,484:run_EUC:INFO:sim_165_v2r0:Temp=JBZVVXPP: Rank=29: #Particles=840-258=582
+2020-06-17 12:14:05,484:run_EUC:INFO:sim_165_v2r0:Temp=JBZVVXPP: Rank=45: #Particles=840-301=539
+2020-06-17 12:14:05,484:run_EUC:INFO:sim_165_v2r0:Temp=JBZVVXPP: Rank=26: #Particles=840-96=744
+2020-06-17 12:14:05,484:run_EUC:INFO:sim_165_v2r0:Temp=JBZVVXPP: Rank=38: #Particles=840-95=745
+2020-06-17 12:14:05,484:run_EUC:INFO:sim_165_v2r0:Temp=JBZVVXPP: Rank=18: #Particles=840-157=683
+2020-06-17 12:14:05,484:run_EUC:INFO:sim_165_v2r0:Temp=JBZVVXPP: Rank=46: #Particles=840-142=698
+2020-06-17 12:14:05,484:run_EUC:INFO:sim_165_v2r0:Temp=JBZVVXPP: Rank=32: #Particles=840-259=581
+2020-06-17 12:14:05,484:run_EUC:INFO:sim_165_v2r0:Temp=JBZVVXPP: Rank=40: #Particles=840-211=629
+2020-06-17 12:14:05,484:run_EUC:INFO:sim_165_v2r0:Temp=JBZVVXPP: Rank=33: #Particles=840-358=482
+2020-06-17 12:14:05,484:run_EUC:INFO:sim_165_v2r0:2013-01-01 12:00:00-2012-01-01 12:00:00: Runtime=366 days
+2020-06-17 12:14:05,488:run_EUC:INFO:sim_165_v2r0:Temp=JBZVVXPP: Rank=21: #Particles=840-569=271
+2020-06-17 12:14:05,505:run_EUC:INFO:sim_165_v2r0:Particles: /repeat=742: Total=44520
+2020-06-17 12:14:05,505:run_EUC:INFO:sim_165_v2r0:Lon=165: Lat=[-2.6-2.6 x0.1]: Depth=[25-350m x25]
+2020-06-17 12:14:05,505:run_EUC:INFO:sim_165_v2r0:Repeat=6 days: Step=60 mins: Output=1 day
+2020-06-17 12:14:05,505:run_EUC:INFO:sim_165_v2r0:Field=b-grid: Chunks=300: Time=1981-2012
+2020-06-17 12:14:05,505:run_EUC:INFO:sim_165_v2r0:Temp=JBZVVXPP: Rank=0: #Particles=840-166=674
+2020-06-17 12:14:05,517:run_EUC:INFO:sim_165_v2r0:Temp=JBZVVXPP: Rank=30: #Particles=840-243=597
+2020-06-17 12:14:05,646:run_EUC:INFO:sim_165_v2r0:Temp=JBZVVXPP: Rank=37: #Particles=840-220=620
+2020-06-17 12:14:05,869:run_EUC:INFO:sim_165_v2r0:Temp=JBZVVXPP: Rank=34: #Particles=840-269=571
+2020-06-17 12:14:06,027:run_EUC:INFO:sim_165_v2r0:Temp=JBZVVXPP: Rank=42: #Particles=840-273=567
+2020-06-17 12:14:06,653:run_EUC:INFO:sim_165_v2r0:Temp=JBZVVXPP: Rank=24: #Particles=840-243=597
+2020-06-17 12:16:36,130:run_EUC:INFO:sim_165_v2r0:Temp=JBZVVXPP: Rank=17: #Particles=1680-305=1375
+2020-06-17 12:16:37,810:run_EUC:INFO:sim_165_v2r0:Temp=JBZVVXPP: Rank=25: #Particles=840-598=242
+2020-06-17 12:16:37,810:run_EUC:INFO:sim_165_v2r0:Temp=JBZVVXPP: Rank=41: #Particles=840-266=574
+2020-06-17 12:16:37,810:run_EUC:INFO:sim_165_v2r0:Temp=JBZVVXPP: Rank=9: #Particles=1680-202=1478
+2020-06-17 12:16:40,866:run_EUC:INFO:sim_165_v2r0:Temp=JBZVVXPP: Rank=20: #Particles=840-275=565
+2020-06-17 12:16:40,866:run_EUC:INFO:sim_165_v2r0:Temp=JBZVVXPP: Rank=12: #Particles=840-338=502
+2020-06-17 12:16:40,866:run_EUC:INFO:sim_165_v2r0:Temp=JBZVVXPP: Rank=44: #Particles=840-228=612
+2020-06-17 12:16:40,866:run_EUC:INFO:sim_165_v2r0:Temp=JBZVVXPP: Rank=36: #Particles=840-313=527
+2020-06-17 12:16:40,866:run_EUC:INFO:sim_165_v2r0:Temp=JBZVVXPP: Rank=28: #Particles=840-270=570
+2020-06-17 12:16:40,866:run_EUC:INFO:sim_165_v2r0:Temp=JBZVVXPP: Rank=4: #Particles=1680-1005=675
+2020-06-17 12:16:40,968:run_EUC:INFO:sim_165_v2r0:Temp=JBZVVXPP: Rank=11: #Particles=840-547=293
+2020-06-17 12:16:40,968:run_EUC:INFO:sim_165_v2r0:Temp=JBZVVXPP: Rank=19: #Particles=1680-843=837
+2020-06-17 12:16:40,968:run_EUC:INFO:sim_165_v2r0:Temp=JBZVVXPP: Rank=7: #Particles=840-262=578
+2020-06-17 12:16:40,968:run_EUC:INFO:sim_165_v2r0:Temp=JBZVVXPP: Rank=23: #Particles=840-280=560
+2020-06-17 12:16:40,968:run_EUC:INFO:sim_165_v2r0:Temp=JBZVVXPP: Rank=27: #Particles=840-272=568
+2020-06-17 12:16:40,968:run_EUC:INFO:sim_165_v2r0:Temp=JBZVVXPP: Rank=35: #Particles=840-273=567
+2020-06-17 12:16:40,968:run_EUC:INFO:sim_165_v2r0:Temp=JBZVVXPP: Rank=39: #Particles=840-180=660
+2020-06-17 12:16:40,968:run_EUC:INFO:sim_165_v2r0:Temp=JBZVVXPP: Rank=15: #Particles=840-271=569
+2020-06-17 12:16:40,968:run_EUC:INFO:sim_165_v2r0:Temp=JBZVVXPP: Rank=31: #Particles=840-231=609
+2020-06-17 12:16:40,968:run_EUC:INFO:sim_165_v2r0:Temp=JBZVVXPP: Rank=47: #Particles=840-127=713
+2020-06-17 12:16:40,968:run_EUC:INFO:sim_165_v2r0:Temp=JBZVVXPP: Rank=43: #Particles=840-252=588
+2020-06-17 12:16:40,968:run_EUC:INFO:sim_165_v2r0:Temp=JBZVVXPP: Rank=3: #Particles=1680-243=1437
