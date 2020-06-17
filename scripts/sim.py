@@ -98,6 +98,8 @@ def run_EUC(dy=0.1, dz=25, lon=165, year=2012, month=12, day='max',
         pset = main.pset_euc(fieldset, zParticle, py, px, pz, repeatdt, pset_start, repeats)
         pset.add(psetx)
 
+    pset_isize = pset.size
+
     # Remove particles initially travelling westward and log number of deleted.
     pdel = main.remove_westward_particles(pset)
 
@@ -118,7 +120,7 @@ def run_EUC(dy=0.1, dz=25, lon=165, year=2012, month=12, day='max',
             sim_id.stem, chunks, time_bnds[0].year, time_bnds[1].year))
     logger.info('{}:Temp={}: Rank={}: #Particles={}-{}={}'
                 .format(sim_id.stem, output_file.tempwritedir_base[-8:], rank,
-                        pset.size, pdel, pset.size - pdel))
+                        pset_isize, pdel, pset.size))
 
     # Kernels.
     kernels = (pset.Kernel(main.Age) + pset.Kernel(main.SampleZone) +

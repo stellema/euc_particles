@@ -256,12 +256,12 @@ def remove_westward_particles(pset):
     pidx = []
     for particle in pset:
         if particle.u <= 0. and particle.age == 0.:
-            pidx.append(particle.id)
+            pidx.append(np.where([pi.id == particle.id for pi in pset])[0][0])
 
     pset.remove_indices(pidx)
 
     # Warn if there are remaining intial westward particles.
-    if any([particle.u <= 0 and particle.age == 0 for particle in pset]):
+    if any([particle.u <= 0. and particle.age == 0. for particle in pset]):
         logger.debug('Particles travelling in the wrong direction.')
 
     return len(pidx)
