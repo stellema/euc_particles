@@ -47,18 +47,19 @@ import cfg
 import tools
 import math
 import random
+import parcels
 import numpy as np
 import xarray as xr
-import pandas as pd
+# import pandas as pd
+from tools import timeit
 from pathlib import Path
+from operator import attrgetter
 import matplotlib.pyplot as plt
 from collections import OrderedDict
-import parcels
+from datetime import datetime, timedelta
 from parcels import (FieldSet, Field, ParticleSet, JITParticle,
                      ErrorCode, Variable, AdvectionRK4_3D, AdvectionRK4)
-from tools import timeit
-from datetime import datetime, timedelta
-from operator import attrgetter
+
 logger = tools.mlogger(Path(sys.argv[0]).stem)
 
 
@@ -102,13 +103,14 @@ def ofam_fieldset(time_bnds='full', chunks=300, time_periodic=True,
             w.append(str(cfg.ofam/('ocean_w_{}_{:02d}.nc'.format(y, m))))
 
     variables = {'U': 'u', 'V': 'v', 'W': 'w'}
-    dimensions = {'time': 'Time', 'depth': 'sw_ocean', 'lat': 'yu_ocean', 'lon': 'xu_ocean'}
+    dimensions = {'time': 'Time', 'depth': 'sw_ocean',
+                  'lat': 'yu_ocean', 'lon': 'xu_ocean'}
 
     files = {'U': {'depth': w[0], 'lat': u[0], 'lon': u[0], 'data': u},
              'V': {'depth': w[0], 'lat': u[0], 'lon': u[0], 'data': v},
              'W': {'depth': w[0], 'lat': u[0], 'lon': u[0], 'data': w}}
 
-    zchunks = {'Time': 1, 'yu_ocean': chunks, 'xu_ocean': chunks}
+    zchunks = {'Time': 1, 'sw_ocean': 1, 'yt_ocean': chunks, 'xt_ocean': chunks}
 
     if chunks not in ['auto', False]:
         chunks = {'Time': 1, 'st_ocean': 1, 'sw_ocean': 1,
@@ -121,8 +123,9 @@ def ofam_fieldset(time_bnds='full', chunks=300, time_periodic=True,
 
     # Add EUC boundary zones to fieldset.
 
-    zfield = Field.from_netcdf(str(cfg.data/'OFAM3_zones.nc'), 'zone',
-                               {'time': 'Time', 'lat': 'yu_ocean', 'lon': 'xu_ocean'},
+    zfield = Field.from_netcdf(str(cfg.data/'OFAM3_tcell_zones.nc'), 'zone',
+                               {'time': 'Time', 'depth': 'sw_ocean',
+                                'lat': 'yt_ocean', 'lon': 'xt_ocean'},
                                field_chunksize=zchunks, allow_time_extrapolation=True)
 
     fieldset.add_field(zfield, 'zone')
@@ -227,10 +230,10 @@ def Distance(particle, fieldset, time):
     """Calculate distance travelled by particle."""
     # Calculate the distance in latitudinal direction,
     # using 1.11e2 kilometer per degree latitude).
-    lat_dist = (particle.lat - particle.prev_lat) * 111111
+    lat_dist = (particle.lat - particle.prev_lat) * 111319.49
     # Calculate the distance in longitudinal direction,
     # using cosine(latitude) - spherical earth.
-    lon_dist = ((particle.lon - particle.prev_lon) * 111111 *
+    lon_dist = ((particle.lon - particle.prev_lon) * 111319.49 *
                 math.cos(particle.lat * math.pi / 180))
     # Calculate the total Euclidean distance travelled by the particle.
     particle.distance += math.sqrt(math.pow(lon_dist, 2) +
@@ -243,7 +246,13 @@ def Distance(particle, fieldset, time):
 
 def SampleZone(particle, fieldset, time):
     """Sample zone."""
-    particle.zone = fieldset.zone[time, particle.depth, particle.lat, particle.lon]
+    particle.zone = fieldset.zone[0., 5., particle.lat, particle.lon]
+
+
+def AgeZone(particle, fieldset, time):
+    """Update particle age and zone."""
+    particle.age = particle.age + math.fabs(particle.dt)
+    particle.zone = fieldset.zone[0., 5., particle.lat, particle.lon]
 
 
 def remove_westward_particles(pset):
@@ -287,16 +296,16 @@ def pset_euc(fieldset, pclass, py, px, pz, repeatdt, start, repeats):
     return pset
 
 
-def get_zParticle(fieldset):
+def get_zdParticle(fieldset):
     """Get zParticle class."""
-    class zParticle(cfg.ptype['jit']):
+    class zdParticle(cfg.ptype['jit']):
         """Particle class that saves particle age and zonal velocity."""
 
         # The age of the particle.
         age = Variable('age', dtype=np.float32, initial=0.)
 
         # The velocity of the particle.
-        u = Variable('u', dtype=np.float64, initial=fieldset.U, to_write='once')
+        u = Variable('u', dtype=np.float32, initial=fieldset.U, to_write='once')
 
         # The 'zone' of the particle.
         zone = Variable('zone', dtype=np.float32, initial=0.)
@@ -312,10 +321,10 @@ def get_zParticle(fieldset):
         prev_lat = Variable('prev_lat', dtype=np.float32, to_write=False,
                             initial=attrgetter('lat'))
 
-    return zParticle
+    return zdParticle
 
 
-def get_bParticle(fieldset):
+def get_zParticle(fieldset):
     """Get zParticle class."""
     class zParticle(cfg.ptype['jit']):
         """Particle class that saves particle age and zonal velocity."""
@@ -324,7 +333,7 @@ def get_bParticle(fieldset):
         age = Variable('age', dtype=np.float32, initial=0.)
 
         # The velocity of the particle.
-        u = Variable('u', dtype=np.float64, initial=fieldset.U, to_write='once')
+        u = Variable('u', dtype=np.float32, initial=fieldset.U, to_write='once')
 
         # The 'zone' of the particle.
         zone = Variable('zone', dtype=np.float32, initial=0.)
@@ -395,8 +404,6 @@ def plot3D(sim_id):
 
     """
     ds = xr.open_dataset(sim_id, decode_cf=True)
-    # ds = ds.where(ds.u >= 0, drop=True)
-    # ds = ds.where(ds.z > 400, drop=True)
     fig = plt.figure(figsize=(13, 10))
     ax = fig.add_subplot(111, projection='3d')
     colors = plt.cm.rainbow(np.linspace(0, 1, len(ds.traj)))

@@ -76,7 +76,7 @@ def run_EUC(dy=0.1, dz=25, lon=165, year=2012, month=12, day='max',
     fieldset = main.ofam_fieldset(time_bnds, chunks=300, time_periodic=True)
 
     # Define the ParticleSet pclass.
-    zParticle = main.get_bParticle(fieldset)
+    zParticle = main.get_zParticle(fieldset)
 
     # Create particle set.
     if pfile == 'None':
@@ -140,8 +140,8 @@ def run_EUC(dy=0.1, dz=25, lon=165, year=2012, month=12, day='max',
                         pset_isize, pdel, pset.size))
 
     # Kernels.
-    kernels = (pset.Kernel(main.Age) + pset.Kernel(main.SampleZone) + AdvectionRK4_3D)
-               # pset.Kernel(main.Distance) + AdvectionRK4_3D)
+    kernels = (AdvectionRK4_3D + pset.Kernel(main.AgeZone))
+    # + pset.Kernel(main.SampleZone) + pset.Kernel(main.Distance))
 
     pset.execute(kernels, runtime=runtime, dt=dt, output_file=output_file,
                  recovery={ErrorCode.ErrorOutOfBounds: main.DeleteParticle,
@@ -175,14 +175,14 @@ if __name__ == "__main__" and cfg.home != Path('E:/'):
             runtime_days=args.runtime, dt_mins=args.dt, repeatdt_days=args.repeatdt,
             outputdt_days=args.outputdt, v=args.version, pfile=args.pfile)
 else:
-    dy, dz = 2, 200
-    lon = 165
+    dy, dz = 0.4, 50
+    lon = 190
     year, month, day = 1981, 1, 'max'
-    dt_mins, repeatdt_days, outputdt_days, runtime_days = 60, 6, 1, 7
+    dt_mins, repeatdt_days, outputdt_days, runtime_days = 60, 6, 1, 6
     chunks = 300
     pfile = 'None'
     # pfile = 'sim_165_v45r0.nc'
-    v = 0
+    v = 8
     run_EUC(dy=dy, dz=dz, lon=lon, year=year, month=month, day=day,
             dt_mins=dt_mins, repeatdt_days=repeatdt_days, outputdt_days=outputdt_days,
             v=v, runtime_days=runtime_days, pfile=pfile, chunks=chunks)

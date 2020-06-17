@@ -556,21 +556,20 @@ def tidy_files(logs=True, jobs=True):
 def zone_fieldset(plot=True):
     """Create fieldset or plot zone definitions."""
     # Copy 2D empty OFGAM3 velocity grid.
-    d = xr.open_dataset(cfg.ofam/'ocean_u_1981_01.nc')
+    d = xr.open_dataset(cfg.ofam/'ocean_temp_1981_01.nc')
     d = d.isel(st_ocean=slice(0, 1), Time=slice(0, 1))
-    d = d.u.where(np.isnan(d.u), 0)
+    d = d.temp.where(np.isnan(d.temp), 0)
     d = d.rename({'st_ocean': 'sw_ocean'})
     d.coords['sw_ocean'] = np.array([5.0])
-    # d = d.drop('st_ocean')
-    # d = d.drop('Time')
+
     eps = 0 if not plot else 0.1  # Add a bit of padding to the plotted lines.
     for n, zone in enumerate(cfg.zones):
         coords = cfg.zones[zone] if type(cfg.zones[zone][0]) == list else [cfg.zones[zone]]
         for c in coords:
-            xx = [d.xu_ocean[idx(d.xu_ocean, i+ep)].item() for i, ep in zip(c[0:2], [-eps, eps])]
-            yy = [d.yu_ocean[idx(d.yu_ocean, i)].item() for i in c[2:4]]
-            d = xr.where((d.xu_ocean >= xx[0]) & (d.xu_ocean <= xx[1]) &
-                         (d.yu_ocean >= yy[0]) & (d.yu_ocean <= yy[1]) &
+            xx = [d.xt_ocean[idx(d.xt_ocean, i+ep)].item() for i, ep in zip(c[0:2], [-eps, eps])]
+            yy = [d.yt_ocean[idx(d.yt_ocean, i)].item() for i in c[2:4]]
+            d = xr.where((d.xt_ocean >= xx[0]) & (d.xt_ocean <= xx[1]) &
+                         (d.yt_ocean >= yy[0]) & (d.yt_ocean <= yy[1]) &
                          ~np.isnan(d), n + 1, d)
 
     if plot:
@@ -583,12 +582,12 @@ def zone_fieldset(plot=True):
         cmap.set_bad('grey')
         cmap.set_under('white')
         fig = plt.figure(figsize=(16, 9))
-        cs = plt.pcolormesh(d.xu_ocean.values, d.yu_ocean.values, d.T,
+        cs = plt.pcolormesh(d.xt_ocean.values, d.yt_ocean.values, d.T,
                             cmap=cmap, snap=False, linewidth=2, vmin=0.5)
 
-        plt.xticks(d.xu_ocean[::100], coord_formatter(d.xu_ocean[::100], 'lon'))
-        plt.yticks(d.yu_ocean[::25], coord_formatter(
-            np.arange(d.yu_ocean[0], d.yu_ocean[-1] + 2.5, 2.5), 'lat'))
+        plt.xticks(d.xt_ocean[::100], coord_formatter(d.xt_ocean[::100], 'lon'))
+        plt.yticks(d.yt_ocean[::25], coord_formatter(
+            np.arange(d.yt_ocean[0], d.yt_ocean[-1] + 2.5, 2.5), 'lat'))
         cbar = fig.colorbar(cs, ticks=np.arange(1, 10), orientation='horizontal',
                             boundaries=np.arange(0.5, 9.6), pad=0.075)
         znames = ['{}:{}'.format(i + 1, z) for i, z in enumerate(cfg.zone_names)]
@@ -596,9 +595,10 @@ def zone_fieldset(plot=True):
 
         plt.savefig(cfg.fig/'particle_boundaries.png')
     if not plot:
-        ds = d.to_dataset(name='zone').transpose('Time', 'sw_ocean', 'yu_ocean', 'xu_ocean')
+        ds = d.to_dataset(name='zone').transpose('Time', 'sw_ocean', 'yt_ocean', 'xt_ocean')
         ds.attrs['history'] = 'Created {}.'.format(datetime.now().strftime("%Y-%m-%d"))
-        ds.to_netcdf(cfg.data/'OFAM3_zones.nc')
+        ds.to_netcdf(cfg.data/'OFAM3_tcell_zones.nc')
+
     d.close()
     return
 
