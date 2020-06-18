@@ -76,7 +76,7 @@ def run_EUC(dy=0.1, dz=25, lon=165, year=2012, month=12, day='max',
     fieldset = main.ofam_fieldset(time_bnds, chunks=300, time_periodic=True)
 
     # Define the ParticleSet pclass.
-    zParticle = main.get_zParticle(fieldset)
+    zParticle = main.get_zdParticle(fieldset)
 
     # Create particle set.
     if pfile == 'None':
@@ -99,10 +99,6 @@ def run_EUC(dy=0.1, dz=25, lon=165, year=2012, month=12, day='max',
         # Increment run index for new output file.
         sim_id = cfg.data/(pfile.stem[:-1] + str(int(pfile.stem[-1]) + 1) + '.nc')
 
-        # # Duplicate pfile with new name as sim_id.
-        # if not sim_id.is_file():
-        #     shutil.copy(str(pfile), str(sim_id))
-
         psetx = main.particleset_from_particlefile(fieldset, pclass=zParticle, filename=pfile,
                                                    restart=True, restarttime=np.nanmin)
 
@@ -117,6 +113,8 @@ def run_EUC(dy=0.1, dz=25, lon=165, year=2012, month=12, day='max',
 
     pset_isize = pset.size
 
+    endtime = int(pset_start - runtime.total_seconds())
+
     # Remove particles initially travelling westward and log number of deleted.
     pdel = main.remove_westward_particles(pset)
 
@@ -124,9 +122,9 @@ def run_EUC(dy=0.1, dz=25, lon=165, year=2012, month=12, day='max',
     output_file = pset.ParticleFile(cfg.data/sim_id.stem, outputdt=outputdt, convert_at_end=False)
 
     # Get MPI rank or set to zero.
-    rank = MPI.COMM_WORLD.Get_rank() if MPI else 0
+    proc = MPI.COMM_WORLD.Get_rank() if MPI else 0
 
-    if rank == 0:
+    if proc == 0:
         logger.info('{}:{}-{}: Runtime={} days'.format(sim_id.stem, start, end, runtime.days))
         logger.info('{}:Particles: /repeat={}: Total={}'.format(sim_id.stem, Z * X * Y, npart))
         logger.info('{}:Lon={}: Lat=[{}-{} x{}]: Depth=[{}-{}m x{}]'
@@ -135,23 +133,21 @@ def run_EUC(dy=0.1, dz=25, lon=165, year=2012, month=12, day='max',
                     .format(sim_id.stem, repeatdt.days, 1440 - dt.seconds/60, outputdt.days))
         logger.info('{}:Field=b-grid: Chunks={}: Time={}-{}'.format(
             sim_id.stem, chunks, time_bnds[0].year, time_bnds[1].year))
-    logger.info('{}:Temp={}: Rank={}: #Particles={}-{}={}'
-                .format(sim_id.stem, output_file.tempwritedir_base[-8:], rank,
-                        pset_isize, pdel, pset.size))
-
+    logger.info('{}:Temp={}: Start={:< 2.0f}: Rank={:< 2}: #Particles={}-{}={}'
+                .format(sim_id.stem, output_file.tempwritedir_base[-8:],
+                        pset.particle_data['time'].max(), proc, pset_isize, pdel, pset.size))
     # Kernels.
-    kernels = (AdvectionRK4_3D + pset.Kernel(main.AgeZone))
-    # + pset.Kernel(main.SampleZone) + pset.Kernel(main.Distance))
+    kernels = (AdvectionRK4_3D + pset.Kernel(main.AgeZone) + pset.Kernel(main.Distance))
 
-    pset.execute(kernels, runtime=runtime, dt=dt, output_file=output_file,
+    pset.execute(kernels, endtime=endtime, dt=dt, output_file=output_file,
                  recovery={ErrorCode.ErrorOutOfBounds: main.DeleteParticle,
                            ErrorCode.ErrorThroughSurface: main.SubmergeParticle},
                  verbose_progress=True)
 
     # Save to netcdf.
-    output_file.close(delete_tempfiles=False)
+    output_file.close(delete_tempfiles=True)
 
-    logger.info('{}:Completed!: Rank={}: #Particles={}'.format(sim_id.stem, rank, pset.size))
+    logger.info('{}:Completed!: Rank={}: #Particles={}'.format(sim_id.stem, proc, pset.size))
 
     return
 
@@ -175,14 +171,14 @@ if __name__ == "__main__" and cfg.home != Path('E:/'):
             runtime_days=args.runtime, dt_mins=args.dt, repeatdt_days=args.repeatdt,
             outputdt_days=args.outputdt, v=args.version, pfile=args.pfile)
 else:
-    dy, dz = 0.4, 50
+    dy, dz = 0.4, 100
     lon = 190
     year, month, day = 1981, 1, 'max'
-    dt_mins, repeatdt_days, outputdt_days, runtime_days = 60, 6, 1, 6
+    dt_mins, repeatdt_days, outputdt_days, runtime_days = 60, 6, 1, 30
     chunks = 300
     pfile = 'None'
     # pfile = 'sim_165_v45r0.nc'
-    v = 8
+    v = 55
     run_EUC(dy=dy, dz=dz, lon=lon, year=year, month=month, day=day,
             dt_mins=dt_mins, repeatdt_days=repeatdt_days, outputdt_days=outputdt_days,
             v=v, runtime_days=runtime_days, pfile=pfile, chunks=chunks)

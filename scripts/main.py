@@ -221,11 +221,6 @@ def SubmergeParticle(particle, fieldset, time):
     particle.set_state(ErrorCode.Success)
 
 
-def Age(particle, fieldset, time):
-    """Update particle age."""
-    particle.age = particle.age + math.fabs(particle.dt)
-
-
 def Distance(particle, fieldset, time):
     """Calculate distance travelled by particle."""
     # Calculate the distance in latitudinal direction,
@@ -242,6 +237,11 @@ def Distance(particle, fieldset, time):
     # Set the stored values for next iteration.
     particle.prev_lon = particle.lon
     particle.prev_lat = particle.lat
+
+
+def Age(particle, fieldset, time):
+    """Update particle age."""
+    particle.age = particle.age + math.fabs(particle.dt)
 
 
 def SampleZone(particle, fieldset, time):
@@ -275,7 +275,7 @@ def remove_westward_particles(pset):
     return len(pidx)
 
 
-def pset_euc(fieldset, pclass, py, px, pz, repeatdt, start, repeats):
+def pset_euc(fieldset, pclass, py, px, pz, repeatdt, pset_start, repeats):
     """Create a ParticleSet."""
     repeats = 1 if repeats <= 0 else repeats
     # Each repeat.
@@ -284,7 +284,7 @@ def pset_euc(fieldset, pclass, py, px, pz, repeatdt, start, repeats):
     lons = np.repeat(px, pz.size*py.size)
 
     # Duplicate for each repeat.
-    tr = start - (np.arange(0, repeats) * repeatdt.total_seconds())
+    tr = pset_start - (np.arange(0, repeats) * repeatdt.total_seconds())
     time = np.repeat(tr, lons.size)
     depth = np.tile(depths, repeats)
     lon = np.tile(lons, repeats)
@@ -311,7 +311,7 @@ def get_zdParticle(fieldset):
         zone = Variable('zone', dtype=np.float32, initial=0.)
 
         # The distance travelled
-        distance = Variable('distance', initial=0., dtype=np.float32)
+        distance = Variable('distance', dtype=np.float32, initial=0.)
 
         # The previous longitude
         prev_lon = Variable('prev_lon', dtype=np.float32, to_write=False,
