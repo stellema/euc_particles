@@ -119,7 +119,7 @@ def run_EUC(dy=0.1, dz=25, lon=165, year=2012, month=12, day='max',
     pdel = main.remove_westward_particles(pset)
 
     # Output particle file p_name and time steps to save.
-    output_file = pset.ParticleFile(cfg.data/sim_id.stem, outputdt=outputdt, convert_at_end=False)
+    output_file = pset.ParticleFile(cfg.data/sim_id.stem, outputdt=outputdt)
 
     # Get MPI rank or set to zero.
     proc = MPI.COMM_WORLD.Get_rank() if MPI else 0
@@ -133,7 +133,7 @@ def run_EUC(dy=0.1, dz=25, lon=165, year=2012, month=12, day='max',
                     .format(sim_id.stem, repeatdt.days, 1440 - dt.seconds/60, outputdt.days))
         logger.info('{}:Field=b-grid: Chunks={}: Time={}-{}'.format(
             sim_id.stem, chunks, time_bnds[0].year, time_bnds[1].year))
-    logger.info('{}:Temp={}: Start={:< 2.0f}: Rank={:< 2}: #Particles={}-{}={}'
+    logger.info('{}:Temp={}: Start={:< 2.0f}: Rank={:> 2}: #Particles={}-{}={}'
                 .format(sim_id.stem, output_file.tempwritedir_base[-8:],
                         pset.particle_data['time'].max(), proc, pset_isize, pdel, pset.size))
     # Kernels.
@@ -145,7 +145,7 @@ def run_EUC(dy=0.1, dz=25, lon=165, year=2012, month=12, day='max',
                  verbose_progress=True)
 
     # Save to netcdf.
-    output_file.close(delete_tempfiles=True)
+    output_file.export()
 
     logger.info('{}:Completed!: Rank={}: #Particles={}'.format(sim_id.stem, proc, pset.size))
 
@@ -171,10 +171,10 @@ if __name__ == "__main__" and cfg.home != Path('E:/'):
             runtime_days=args.runtime, dt_mins=args.dt, repeatdt_days=args.repeatdt,
             outputdt_days=args.outputdt, v=args.version, pfile=args.pfile)
 else:
-    dy, dz = 0.4, 100
+    dy, dz = 0.2, 50
     lon = 190
     year, month, day = 1981, 1, 'max'
-    dt_mins, repeatdt_days, outputdt_days, runtime_days = 60, 6, 1, 30
+    dt_mins, repeatdt_days, outputdt_days, runtime_days = 60, 6, 1, 6
     chunks = 300
     pfile = 'None'
     # pfile = 'sim_165_v45r0.nc'
