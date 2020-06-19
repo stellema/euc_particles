@@ -95,7 +95,7 @@ def current_time(print_time=False):
     return time
 
 
-def timer(ts, method=None):
+def timer(ts, method=None, show=False):
     """Print the execution time (starting from ts).
 
     Args:
@@ -107,11 +107,12 @@ def timer(ts, method=None):
     h, rem = divmod(te - ts, 3600)
     m, s = divmod(rem, 60)
     # Print method name if given.
-    arg = '' if method is None else ' ({})'.format(method)
-    print('Timer{}: {:} hours, {:} mins, {:05.2f} secs'
-          .format(arg, int(h), int(m), s, current_time(False)))
+    arg = '' if method is None else ' {}: '.format(method)
+    tstr = '{}{:02d}:{:02d}:{:02.0f}'.format(arg, int(h), int(m), s)
+    if show:
+        print(tstr)
 
-    return
+    return tstr
 
 
 def timeit(method):

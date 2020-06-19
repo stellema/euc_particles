@@ -5,6 +5,7 @@ created: Fri Jun 12 18:45:35 2020
 author: Annette Stellema (astellemas@gmail.com)
 
 """
+import time
 import main
 import cfg
 import tools
@@ -124,6 +125,7 @@ def run_EUC(dy=0.1, dz=25, lon=165, year=2012, month=12, day='max',
     # Get MPI rank or set to zero.
     proc = MPI.COMM_WORLD.Get_rank() if MPI else 0
 
+
     if proc == 0:
         logger.info('{}:{}-{}: Runtime={} days'.format(sim_id.stem, start, end, runtime.days))
         logger.info('{}:Particles: /repeat={}: Total={}'.format(sim_id.stem, Z * X * Y, npart))
@@ -138,16 +140,16 @@ def run_EUC(dy=0.1, dz=25, lon=165, year=2012, month=12, day='max',
                         pset.particle_data['time'].max(), proc, pset_isize, pdel, pset.size))
     # Kernels.
     kernels = (AdvectionRK4_3D + pset.Kernel(main.AgeZone) + pset.Kernel(main.Distance))
-
+    ts = time.time()
     pset.execute(kernels, endtime=endtime, dt=dt, output_file=output_file,
                  recovery={ErrorCode.ErrorOutOfBounds: main.DeleteParticle,
-                           ErrorCode.ErrorThroughSurface: main.SubmergeParticle},
-                 verbose_progress=True)
-
+                           ErrorCode.ErrorThroughSurface: main.SubmergeParticle})
+    # verbose_progress=True
+    timed = tools.timer(ts)
+    logger.info('{}:Completed!: Rank={}: {}: #Particles={}'.format(sim_id.stem, proc,
+                                                                   timed, pset.size))
     # Save to netcdf.
     output_file.export()
-
-    logger.info('{}:Completed!: Rank={}: #Particles={}'.format(sim_id.stem, proc, pset.size))
 
     return
 
