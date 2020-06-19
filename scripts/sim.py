@@ -125,7 +125,6 @@ def run_EUC(dy=0.1, dz=25, lon=165, year=2012, month=12, day='max',
     # Get MPI rank or set to zero.
     proc = MPI.COMM_WORLD.Get_rank() if MPI else 0
 
-
     if proc == 0:
         logger.info('{}:{}-{}: Runtime={} days'.format(sim_id.stem, start, end, runtime.days))
         logger.info('{}:Particles: /repeat={}: Total={}'.format(sim_id.stem, Z * X * Y, npart))
@@ -135,7 +134,7 @@ def run_EUC(dy=0.1, dz=25, lon=165, year=2012, month=12, day='max',
                     .format(sim_id.stem, repeatdt.days, 1440 - dt.seconds/60, outputdt.days))
         logger.info('{}:Field=b-grid: Chunks={}: Time={}-{}'.format(
             sim_id.stem, chunks, time_bnds[0].year, time_bnds[1].year))
-    logger.info('{}:Temp={}: Start={:< 2.0f}: Rank={:> 2}: #Particles={}-{}={}'
+    logger.info('{}:Temp={}: Start={:>2.0f}: Rank={:>2}: #Particles={}-{}={}'
                 .format(sim_id.stem, output_file.tempwritedir_base[-8:],
                         pset.particle_data['time'].max(), proc, pset_isize, pdel, pset.size))
     # Kernels.
@@ -143,11 +142,11 @@ def run_EUC(dy=0.1, dz=25, lon=165, year=2012, month=12, day='max',
     ts = time.time()
     pset.execute(kernels, endtime=endtime, dt=dt, output_file=output_file,
                  recovery={ErrorCode.ErrorOutOfBounds: main.DeleteParticle,
-                           ErrorCode.ErrorThroughSurface: main.SubmergeParticle})
-    # verbose_progress=True
+                           ErrorCode.ErrorThroughSurface: main.SubmergeParticle},
+                 verbose_progress=False)
     timed = tools.timer(ts)
-    logger.info('{}:Completed!: Rank={}: {}: #Particles={}'.format(sim_id.stem, proc,
-                                                                   timed, pset.size))
+    logger.info('{}:Completed!: Rank={:>2}: {}: #Particles={}'.format(sim_id.stem, proc,
+                                                                      timed, pset.size))
     # Save to netcdf.
     output_file.export()
 
