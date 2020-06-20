@@ -118,7 +118,7 @@ def run_EUC(dy=0.1, dz=25, lon=165, year=2012, month=12, day='max',
 
     # Remove particles initially travelling westward and log number of deleted.
     # pdel = main.remove_westward_particles(pset, final=False)
-
+    qdel = 0
     # Output particle file p_name and time steps to save.
     output_file = pset.ParticleFile(cfg.data/sim_id.stem, outputdt=outputdt)
 
