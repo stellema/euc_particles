@@ -138,7 +138,7 @@ def run_EUC(dy=0.1, dz=25, lon=165, year=2012, month=12, day='max',
     kernels = (AdvectionRK4_3D + pset.Kernel(main.AgeZone) + pset.Kernel(main.Distance))
     ts = time.time()
     pset.execute(kernels, endtime=endtime, dt=dt, output_file=output_file,
-                 recovery={ErrorCode.Error: DeleteParticle,
+                 recovery={ErrorCode.Error: main.DeleteParticle,
                            ErrorCode.ErrorOutOfBounds: main.DeleteParticle,
                            ErrorCode.ErrorThroughSurface: main.SubmergeParticle},
                  verbose_progress=False)
