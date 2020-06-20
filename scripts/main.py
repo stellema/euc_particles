@@ -265,7 +265,7 @@ def remove_westward_particles(pset, final=False):
     """
     pidx = []
     for particle in pset:
-        if particle.u <= 0. and particle.age == 0.:
+        if particle.u < 0. and particle.age == 0.:
             pidx.append(np.where([pi.id == particle.id for pi in pset])[0][0])
 
     # Make sure
