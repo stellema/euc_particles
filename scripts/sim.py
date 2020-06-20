@@ -116,9 +116,6 @@ def run_EUC(dy=0.1, dz=25, lon=165, year=2012, month=12, day='max',
 
     endtime = int(pset_start - runtime.total_seconds())
 
-    # Remove particles initially travelling westward and log number of deleted.
-    # pdel = main.remove_westward_particles(pset, final=False)
-    pdel = 0
     # Output particle file p_name and time steps to save.
     output_file = pset.ParticleFile(cfg.data/sim_id.stem, outputdt=outputdt)
 
@@ -134,9 +131,9 @@ def run_EUC(dy=0.1, dz=25, lon=165, year=2012, month=12, day='max',
                     .format(sim_id.stem, repeatdt.days, 1440 - dt.seconds/60, outputdt.days))
         logger.info('{}:Field=b-grid: Chunks={}: Time={}-{}'.format(
             sim_id.stem, chunks, time_bnds[0].year, time_bnds[1].year))
-    logger.info('{}:Temp={}: Start={:>2.0f}: Rank={:>2}: #Particles={}-{}={}'
+    logger.info('{}:Temp={}: Start={:>2.0f}: Rank={:>2}: #Particles={}'
                 .format(sim_id.stem, output_file.tempwritedir_base[-8:],
-                        pset.particle_data['time'].max(), proc, pset_isize, pdel, pset.size))
+                        pset.particle_data['time'].max(), proc, pset.size))
     # Kernels.
     kernels = (AdvectionRK4_3D + pset.Kernel(main.AgeZone) + pset.Kernel(main.Distance))
     ts = time.time()
@@ -145,9 +142,12 @@ def run_EUC(dy=0.1, dz=25, lon=165, year=2012, month=12, day='max',
                            ErrorCode.ErrorThroughSurface: main.SubmergeParticle},
                  verbose_progress=False)
     timed = tools.timer(ts)
-    logger.info('{}:Completed!: Rank={:>2}: {}: #Particles={}'.format(sim_id.stem, proc,
-                                                                      timed, pset.size))
-    # pdel = main.remove_westward_particles(pset, final=True)
+
+    # Remove particles initially travelling westward and log number of deleted.
+    pdel = main.remove_westward_particles(pset, final=True)
+    logger.info('{}:Completed!: {}: Rank={:>2}: #Particles={}-{}={}'
+                .format(sim_id.stem, timed, proc, pset_isize, pdel, pset.size))
+
     # Save to netcdf.
     output_file.export()
 

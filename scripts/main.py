@@ -251,6 +251,8 @@ def SampleZone(particle, fieldset, time):
 
 def AgeZone(particle, fieldset, time):
     """Update particle age and zone."""
+    if particle.age == 0. and particle.u <= 0.:
+        particle.delete()
     particle.age = particle.age + math.fabs(particle.dt)
     particle.zone = fieldset.zone[0., 5., particle.lat, particle.lon]
 
