@@ -5,7 +5,6 @@ created: Fri Jun 12 18:45:35 2020
 author: Annette Stellema (astellemas@gmail.com)
 
 """
-import time
 import main
 import cfg
 import tools
@@ -136,18 +135,17 @@ def run_EUC(dy=0.1, dz=25, lon=165, year=2012, month=12, day='max',
                         pset.particle_data['time'].max(), proc, pset.size))
     # Kernels.
     kernels = (AdvectionRK4_3D + pset.Kernel(main.AgeZone) + pset.Kernel(main.Distance))
-    ts = time.time()
+
     pset.execute(kernels, endtime=endtime, dt=dt, output_file=output_file,
                  recovery={ErrorCode.Error: main.DeleteParticle,
                            ErrorCode.ErrorOutOfBounds: main.DeleteParticle,
                            ErrorCode.ErrorThroughSurface: main.SubmergeParticle},
-                 verbose_progress=False)
-    timed = tools.timer(ts)
+                 verbose_progress=True)
 
     # Remove particles initially travelling westward and log number of deleted.
     pdel = main.remove_westward_particles(pset, final=True)
-    logger.info('{}:Completed!: {}: Rank={:>2}: #Particles={}-{}={}'
-                .format(sim_id.stem, timed, proc, pset_isize, pdel, pset.size))
+    logger.info('{}:Completed!: Rank={:>2}: #Particles={}-{}={}'
+                .format(sim_id.stem, proc, pset_isize, pdel, pset.size))
 
     # Save to netcdf.
     output_file.export()
