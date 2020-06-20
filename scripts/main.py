@@ -255,7 +255,7 @@ def AgeZone(particle, fieldset, time):
     particle.zone = fieldset.zone[0., 5., particle.lat, particle.lon]
 
 
-def remove_westward_particles(pset):
+def remove_westward_particles(pset, final=False):
     """Delete initially westward particles from the ParticleSet.
 
     Requires zonal velocity 'u' and partcile age in pset.
@@ -266,10 +266,16 @@ def remove_westward_particles(pset):
         if particle.u <= 0. and particle.age == 0.:
             pidx.append(np.where([pi.id == particle.id for pi in pset])[0][0])
 
+    # Make sure
+    if not final:
+        starttime = np.nanmax(pset.time)
+        ptime = np.unique([p.time for p in pset if p.id not in pidx])
+        if starttime not in ptime:
+            pidx = pidx[1:]
     pset.remove_indices(pidx)
 
     # Warn if there are remaining intial westward particles.
-    if any([particle.u <= 0. and particle.age == 0. for particle in pset]):
+    if final and any([p.u <= 0. and p.age == 0. for p in pset]):
         logger.debug('Particles travelling in the wrong direction.')
 
     return len(pidx)

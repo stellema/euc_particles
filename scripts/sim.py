@@ -117,7 +117,7 @@ def run_EUC(dy=0.1, dz=25, lon=165, year=2012, month=12, day='max',
     endtime = int(pset_start - runtime.total_seconds())
 
     # Remove particles initially travelling westward and log number of deleted.
-    pdel = main.remove_westward_particles(pset)
+    pdel = main.remove_westward_particles(pset, final=False)
 
     # Output particle file p_name and time steps to save.
     output_file = pset.ParticleFile(cfg.data/sim_id.stem, outputdt=outputdt)
@@ -147,6 +147,7 @@ def run_EUC(dy=0.1, dz=25, lon=165, year=2012, month=12, day='max',
     timed = tools.timer(ts)
     logger.info('{}:Completed!: Rank={:>2}: {}: #Particles={}'.format(sim_id.stem, proc,
                                                                       timed, pset.size))
+    pdel = main.remove_westward_particles(pset, final=True)
     # Save to netcdf.
     output_file.export()
 
@@ -172,14 +173,14 @@ if __name__ == "__main__" and cfg.home != Path('E:/'):
             runtime_days=args.runtime, dt_mins=args.dt, repeatdt_days=args.repeatdt,
             outputdt_days=args.outputdt, v=args.version, pfile=args.pfile)
 else:
-    dy, dz = 0.2, 50
+    dy, dz = 0.4, 100
     lon = 190
     year, month, day = 1981, 1, 'max'
-    dt_mins, repeatdt_days, outputdt_days, runtime_days = 60, 6, 1, 6
+    dt_mins, repeatdt_days, outputdt_days, runtime_days = 60, 6, 1, 18
     chunks = 300
     pfile = 'None'
     # pfile = 'sim_165_v45r0.nc'
     v = 55
-    run_EUC(dy=dy, dz=dz, lon=lon, year=year, month=month, day=day,
-            dt_mins=dt_mins, repeatdt_days=repeatdt_days, outputdt_days=outputdt_days,
-            v=v, runtime_days=runtime_days, pfile=pfile, chunks=chunks)
+    # run_EUC(dy=dy, dz=dz, lon=lon, year=year, month=month, day=day,
+    #         dt_mins=dt_mins, repeatdt_days=repeatdt_days, outputdt_days=outputdt_days,
+    #         v=v, runtime_days=runtime_days, pfile=pfile, chunks=chunks)
