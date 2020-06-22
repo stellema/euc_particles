@@ -49,7 +49,9 @@ def run_EUC(dy=0.1, dz=25, lon=165, year=2012, month=12, day='max',
         None.
 
     """
-    # Define Fieldset and ParticleSet parameters.
+
+    # Get MPI rank or set to zero.
+    rank = MPI.COMM_WORLD.Get_rank() if MPI else 0
 
     # Ensure run ends on a repeat day.
     while runtime_days % repeatdt_days != 0:
@@ -60,15 +62,6 @@ def run_EUC(dy=0.1, dz=25, lon=165, year=2012, month=12, day='max',
     repeatdt = timedelta(days=repeatdt_days)  # Repeat particle release time.
     outputdt = timedelta(days=outputdt_days)  # Advection steps to write.
     repeats = math.floor(runtime/repeatdt) - 1
-
-    # Particle release latitudes, depths and longitudes.
-    py = np.round(np.arange(-2.6, 2.6 + 0.05, dy), 2)
-    pz = np.arange(25, 350 + 20, dz)
-    px = np.array([lon])
-
-    # Number of particles released in each dimension.
-    Z, Y, X = pz.size, py.size, px.size
-    npart = Z * X * Y * repeats
 
     # Create fieldset.
     y2 = 2012 if cfg.home != Path('E:/') else 1981
@@ -86,7 +79,8 @@ def run_EUC(dy=0.1, dz=25, lon=165, year=2012, month=12, day='max',
 
         # Set ParticleSet start as last fieldset time.
         pset_start = fieldset.U.grid.time[-1]
-        pset = main.pset_euc(fieldset, zParticle, py, px, pz, repeatdt, pset_start, repeats)
+        pset = main.pset_euc(fieldset, zParticle, lon, dy, dz, repeatdt, pset_start, repeats,
+                             sim_id, eastward=True, rank=rank, MPI=MPI)
 
         # Particle set start and end time.
         start = fieldset.time_origin.time_origin + timedelta(seconds=pset_start)
@@ -108,7 +102,8 @@ def run_EUC(dy=0.1, dz=25, lon=165, year=2012, month=12, day='max',
 
         # Add particles on the next day that regularly repeat.
         pset_start = np.nanmin(psetx.time)
-        pset = main.pset_euc(fieldset, zParticle, py, px, pz, repeatdt, pset_start, repeats)
+        pset = main.pset_euc(fieldset, zParticle, lon, dy, dz, repeatdt, pset_start, repeats,
+                             sim_id, eastward=True, rank=rank, MPI=MPI)
         pset.add(psetx)
 
     pset_isize = pset.size
@@ -118,21 +113,15 @@ def run_EUC(dy=0.1, dz=25, lon=165, year=2012, month=12, day='max',
     # Output particle file p_name and time steps to save.
     output_file = pset.ParticleFile(cfg.data/sim_id.stem, outputdt=outputdt)
 
-    # Get MPI rank or set to zero.
-    proc = MPI.COMM_WORLD.Get_rank() if MPI else 0
-
-    if proc == 0:
+    if rank == 0:
         logger.info('{}:{}-{}: Runtime={} days'.format(sim_id.stem, start, end, runtime.days))
-        logger.info('{}:Particles: /repeat={}: Total={}'.format(sim_id.stem, Z * X * Y, npart))
-        logger.info('{}:Lon={}: Lat=[{}-{} x{}]: Depth=[{}-{}m x{}]'
-                    .format(sim_id.stem, *px, *py[::Y-1], dy, *pz[::Z-1], dz))
         logger.info('{}:Repeat={} days: Step={:.0f} mins: Output={:.0f} day'
                     .format(sim_id.stem, repeatdt.days, 1440 - dt.seconds/60, outputdt.days))
         logger.info('{}:Field=b-grid: Chunks={}: Time={}-{}'.format(
             sim_id.stem, chunks, time_bnds[0].year, time_bnds[1].year))
     logger.info('{}:Temp={}: Start={:>2.0f}: Rank={:>2}: #Particles={}'
                 .format(sim_id.stem, output_file.tempwritedir_base[-8:],
-                        pset.particle_data['time'].max(), proc, pset.size))
+                        pset.particle_data['time'].max(), rank, pset.size))
     # Kernels.
     kernels = (AdvectionRK4_3D + pset.Kernel(main.AgeZone) + pset.Kernel(main.Distance))
 
@@ -143,7 +132,7 @@ def run_EUC(dy=0.1, dz=25, lon=165, year=2012, month=12, day='max',
                  verbose_progress=True)
 
     logger.info('{}:Completed!: Rank={:>2}: #Particles={}={}'
-                .format(sim_id.stem, proc, pset_isize, pset.size))
+                .format(sim_id.stem, rank, pset_isize, pset.size))
 
     # Save to netcdf.
     output_file.export()
@@ -178,6 +167,6 @@ else:
     pfile = 'None'
     # pfile = 'sim_165_v45r0.nc'
     v = 55
-    # run_EUC(dy=dy, dz=dz, lon=lon, year=year, month=month, day=day,
-    #         dt_mins=dt_mins, repeatdt_days=repeatdt_days, outputdt_days=outputdt_days,
-    #         v=v, runtime_days=runtime_days, pfile=pfile, chunks=chunks)
+    run_EUC(dy=dy, dz=dz, lon=lon, year=year, month=month, day=day,
+            dt_mins=dt_mins, repeatdt_days=repeatdt_days, outputdt_days=outputdt_days,
+            v=v, runtime_days=runtime_days, pfile=pfile, chunks=chunks)

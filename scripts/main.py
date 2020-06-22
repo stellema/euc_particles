@@ -122,7 +122,6 @@ def ofam_fieldset(time_bnds='full', chunks=300, time_periodic=True,
                                             allow_time_extrapolation=time_ext)
 
     # Add EUC boundary zones to fieldset.
-
     zfield = Field.from_netcdf(str(cfg.data/'OFAM3_tcell_zones.nc'), 'zone',
                                {'time': 'Time', 'depth': 'sw_ocean',
                                 'lat': 'yt_ocean', 'lon': 'xt_ocean'},
@@ -241,6 +240,8 @@ def Distance(particle, fieldset, time):
 
 def Age(particle, fieldset, time):
     """Update particle age."""
+    if particle.age == 0. and particle.u <= 0.:
+        particle.delete()
     particle.age = particle.age + math.fabs(particle.dt)
 
 
@@ -251,13 +252,11 @@ def SampleZone(particle, fieldset, time):
 
 def AgeZone(particle, fieldset, time):
     """Update particle age and zone."""
-    if particle.age == 0. and particle.u <= 0.:
-        particle.delete()
     particle.age = particle.age + math.fabs(particle.dt)
     particle.zone = fieldset.zone[0., 5., particle.lat, particle.lon]
 
 
-def remove_westward_particles(pset, final=False):
+def remove_westward_particles(pset):
     """Delete initially westward particles from the ParticleSet.
 
     Requires zonal velocity 'u' and partcile age in pset.
@@ -268,40 +267,13 @@ def remove_westward_particles(pset, final=False):
         if particle.u < 0. and particle.age == 0.:
             pidx.append(np.where([pi.id == particle.id for pi in pset])[0][0])
 
-    # Make sure
-    if not final:
-        starttime = np.nanmax(pset.time)
-        ptime = np.unique([p.time for p in pset if p.id not in pidx])
-        if starttime not in ptime:
-            pidx = pidx[1:]
     pset.remove_indices(pidx)
 
     # Warn if there are remaining intial westward particles.
-    if final and any([p.u <= 0. and p.age == 0. for p in pset]):
+    if any([p.u <= 0. and p.age == 0. for p in pset]):
         logger.debug('Particles travelling in the wrong direction.')
 
     return len(pidx)
-
-
-def pset_euc(fieldset, pclass, py, px, pz, repeatdt, pset_start, repeats):
-    """Create a ParticleSet."""
-    repeats = 1 if repeats <= 0 else repeats
-    # Each repeat.
-    lats = np.repeat(py, pz.size*px.size)
-    depths = np.repeat(np.tile(pz, py.size), px.size)
-    lons = np.repeat(px, pz.size*py.size)
-
-    # Duplicate for each repeat.
-    tr = pset_start - (np.arange(0, repeats) * repeatdt.total_seconds())
-    time = np.repeat(tr, lons.size)
-    depth = np.tile(depths, repeats)
-    lon = np.tile(lons, repeats)
-    lat = np.tile(lats, repeats)
-    pset = ParticleSet.from_list(fieldset=fieldset, pclass=pclass,
-                                 lon=lon, lat=lat, depth=depth, time=time,
-                                 lonlatdepth_dtype=np.float64)
-
-    return pset
 
 
 def get_zdParticle(fieldset):
@@ -347,6 +319,65 @@ def get_zParticle(fieldset):
         zone = Variable('zone', dtype=np.float32, initial=0.)
 
     return zParticle
+
+
+def pset_euc(fieldset, pclass, lon, dy, dz, repeatdt, pset_start, repeats,
+             sim_id=None, eastward=True, rank=0, MPI=None):
+    """Create a ParticleSet."""
+    # Particle release latitudes, depths and longitudes.
+    py = np.round(np.arange(-2.6, 2.6 + 0.05, dy), 2)
+    pz = np.arange(25, 350 + 20, dz)
+    px = np.array([lon])
+
+    # Number of particles released in each dimension.
+    Z, Y, X = pz.size, py.size, px.size
+    npart = Z * X * Y * repeats
+
+    repeats = 1 if repeats <= 0 else repeats
+
+    # Each repeat.
+    lats = np.repeat(py, pz.size*px.size)
+    depths = np.repeat(np.tile(pz, py.size), px.size)
+    lons = np.repeat(px, pz.size*py.size)
+
+    # Duplicate for each repeat.
+    tr = pset_start - (np.arange(0, repeats) * repeatdt.total_seconds())
+    time = np.repeat(tr, lons.size)
+    depth = np.tile(depths, repeats)
+    lon = np.tile(lons, repeats)
+    lat = np.tile(lats, repeats)
+
+    if eastward:
+        if rank == 0:
+            lastID = pclass.lastID
+            psetx = ParticleSet.from_list(fieldset=fieldset, pclass=pclass,
+                                          lon=lon, lat=lat, depth=depth, time=time)
+            pdel = remove_westward_particles(psetx)
+            time = psetx.particle_data['time']
+            lat = psetx.particle_data['lat']
+            lon = psetx.particle_data['lon']
+            depth = psetx.particle_data['depth']
+            pclass.lastID = lastID
+
+        else:
+            time, lat, lon, depth = None, None, None, None
+
+        if MPI:
+            mpi_comm = MPI.COMM_WORLD
+            time = mpi_comm.bcast(time, root=0)
+            lat = mpi_comm.bcast(lat, root=0)
+            lon = mpi_comm.bcast(lon, root=0)
+            depth = mpi_comm.bcast(depth, root=0)
+
+    pset = ParticleSet.from_list(fieldset=fieldset, pclass=pclass,
+                                 lon=lon, lat=lat, depth=depth, time=time,
+                                 lonlatdepth_dtype=np.float64)
+    if sim_id and rank == 0:
+        logger.info('{}:Particles: /repeat={}: Total={}-{}={}'
+                    .format(sim_id.stem, Z * X * Y, npart, pdel, npart-pdel))
+        logger.info('{}:Lon={}: Lat=[{}-{} x{}]: Depth=[{}-{}m x{}]'
+                    .format(sim_id.stem, *px, *py[::Y-1], dy, *pz[::Z-1], dz))
+    return pset
 
 
 @timeit
@@ -412,6 +443,7 @@ def plot3D(sim_id):
 
     """
     ds = xr.open_dataset(sim_id, decode_cf=True)
+    ds = ds.where(ds.u >= 0., drop=True)
     fig = plt.figure(figsize=(13, 10))
     ax = fig.add_subplot(111, projection='3d')
     colors = plt.cm.rainbow(np.linspace(0, 1, len(ds.traj)))
