@@ -142,10 +142,8 @@ def run_EUC(dy=0.1, dz=25, lon=165, year=2012, month=12, day='max',
                            ErrorCode.ErrorThroughSurface: main.SubmergeParticle},
                  verbose_progress=True)
 
-    # Remove particles initially travelling westward and log number of deleted.
-    pdel = main.remove_westward_particles(pset, final=True)
-    logger.info('{}:Completed!: Rank={:>2}: #Particles={}-{}={}'
-                .format(sim_id.stem, proc, pset_isize, pdel, pset.size))
+    logger.info('{}:Completed!: Rank={:>2}: #Particles={}={}'
+                .format(sim_id.stem, proc, pset_isize, pset.size))
 
     # Save to netcdf.
     output_file.export()
