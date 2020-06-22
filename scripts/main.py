@@ -351,7 +351,7 @@ def pset_euc(fieldset, pclass, lon, dy, dz, repeatdt, pset_start, repeats,
         if rank == 0:
             lastID = pclass.lastID
             psetx = ParticleSet.from_list(fieldset=fieldset, pclass=pclass,
-                                          lon=lon, lat=lat, depth=depth, time=time)
+                                          lon=lon, lat=lat, depth=depth, time=time, partitions=False)
             pdel = remove_westward_particles(psetx)
             time = psetx.particle_data['time']
             lat = psetx.particle_data['lat']
