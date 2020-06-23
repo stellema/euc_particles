@@ -11,6 +11,7 @@ import tools
 import math
 import numpy as np
 from pathlib import Path
+from operator import attrgetter
 from datetime import datetime, timedelta
 from argparse import ArgumentParser
 from parcels import (FieldSet, Field, ParticleSet, JITParticle,
@@ -25,7 +26,7 @@ logger = tools.mlogger('sim', parcels=True)
 
 
 @tools.timeit
-def run_EUC(dy=0.1, dz=25, lon=165, year=2012, month=12, day='max',
+def run_EUC(dy=0.1, dz=25, lon=165, year=2012, month=12, day='max', exp='hist',
             dt_mins=60, repeatdt_days=6, outputdt_days=1, runtime_days=186,
             v=1, chunks=300, pfile='None'):
     """Run Lagrangian EUC particle experiment.
@@ -51,7 +52,14 @@ def run_EUC(dy=0.1, dz=25, lon=165, year=2012, month=12, day='max',
     """
 
     # Get MPI rank or set to zero.
-    rank = MPI.COMM_WORLD.Get_rank() if MPI else 0
+    if MPI:
+        comm = MPI.COMM_WORLD
+        size = comm.Get_size()
+        rank = comm.Get_rank()
+    else:
+        rank = 0
+
+    restart = False if pfile == 'None' else True
 
     # Ensure run ends on a repeat day.
     while runtime_days % repeatdt_days != 0:
@@ -64,27 +72,48 @@ def run_EUC(dy=0.1, dz=25, lon=165, year=2012, month=12, day='max',
     repeats = math.floor(runtime/repeatdt) - 1
 
     # Create fieldset.
-    y2 = 2012 if cfg.home != Path('E:/') else 1981
-    time_bnds = [datetime(1981, 1, 1), datetime(y2, 12, 31)]
+    if exp == 'hist':
+        y2 = 2012 if cfg.home != Path('E:/') else 1981
+        time_bnds = [datetime(1981, 1, 1), datetime(y2, 12, 31)]
+    elif exp == 'rcp':
+        time_bnds = [datetime(2070, 1, 1), datetime(2101, 12, 31)]
     fieldset = main.ofam_fieldset(time_bnds, chunks=300, time_periodic=True)
 
     # Define the ParticleSet pclass.
-    zParticle = main.get_zdParticle(fieldset)
+    class zdParticle(cfg.ptype['jit']):
+        """Particle class that saves particle age and zonal velocity."""
+
+        # The age of the particle.
+        age = Variable('age', dtype=np.float32, initial=0.)
+
+        # The velocity of the particle.
+        u = Variable('u', dtype=np.float32, initial=fieldset.U, to_write='once')
+
+        # The 'zone' of the particle.
+        zone = Variable('zone', dtype=np.float32, initial=0.)
+
+        # The distance travelled
+        distance = Variable('distance', dtype=np.float32, initial=0.)
+
+        # The previous longitude. to_write=False
+        prev_lon = Variable('prev_lon', dtype=np.float32, initial=attrgetter('lon'))
+
+        # The previous latitude. to_write=False,
+        prev_lat = Variable('prev_lat', dtype=np.float32, initial=attrgetter('lat'))
+
+    pclass = zdParticle
 
     # Create particle set.
-    if pfile == 'None':
+    if not restart:
         # Generate file name for experiment.
         randomise = False if MPI else True
         sim_id = main.generate_sim_id(lon, v, randomise=randomise)
 
         # Set ParticleSet start as last fieldset time.
         pset_start = fieldset.U.grid.time[-1]
-        pset = main.pset_euc(fieldset, zParticle, lon, dy, dz, repeatdt, pset_start, repeats,
-                             sim_id, eastward=True, rank=rank, MPI=MPI)
 
         # Particle set start and end time.
         start = fieldset.time_origin.time_origin + timedelta(seconds=pset_start)
-        end = start - runtime
 
     # Create particle set from particlefile and add new repeats.
     else:
@@ -93,20 +122,37 @@ def run_EUC(dy=0.1, dz=25, lon=165, year=2012, month=12, day='max',
         # Increment run index for new output file.
         sim_id = cfg.data/(pfile.stem[:-1] + str(int(pfile.stem[-1]) + 1) + '.nc')
 
-        psetx = main.particleset_from_particlefile(fieldset, pclass=zParticle, filename=pfile,
+        psetx = main.particleset_from_particlefile(fieldset, pclass=pclass, filename=pfile,
                                                    restart=True, restarttime=np.nanmin)
 
         # Particle set start and end time.
         start = fieldset.time_origin.time_origin + timedelta(seconds=np.nanmin(psetx.time))
-        end = start - runtime
 
+    if rank == 0:
+        psetz = main.pset_euc(fieldset, pclass, lon, dy, dz, repeatdt, pset_start, repeats,
+                              sim_id, rank=rank, pdel=None, partitions=False)
+        lastID = pclass.lastID
+        main.remove_westward_particles(psetz)
+        time = psetz.particle_data['time']
+        depth = psetz.particle_data['depth']
+        lat = psetz.particle_data['lat']
+        lon = psetz.particle_data['lon']
+        pclass.lastID = lastID
+    else:
+        time, depth, lat, lon = None, None, None, None
+
+    if MPI:
+        time = comm.bcast(time, root=0)
+        depth = comm.bcast(depth, root=0)
+        lat = comm.bcast(lat, root=0)
+        lon = comm.bcast(lon, root=0)
+
+    pset = ParticleSet.from_list(fieldset=fieldset, pclass=pclass,
+                                 lon=lon, lat=lat, depth=depth, time=time,
+                                 lonlatdepth_dtype=np.float64)
+    if restart:
         # Add particles on the next day that regularly repeat.
-        pset_start = np.nanmin(psetx.time)
-        pset = main.pset_euc(fieldset, zParticle, lon, dy, dz, repeatdt, pset_start, repeats,
-                             sim_id, eastward=True, rank=rank, MPI=MPI)
         pset.add(psetx)
-
-    pset_isize = pset.size
 
     endtime = int(pset_start - runtime.total_seconds())
 
@@ -114,7 +160,7 @@ def run_EUC(dy=0.1, dz=25, lon=165, year=2012, month=12, day='max',
     output_file = pset.ParticleFile(cfg.data/sim_id.stem, outputdt=outputdt)
 
     if rank == 0:
-        logger.info('{}:{}-{}: Runtime={} days'.format(sim_id.stem, start, end, runtime.days))
+        logger.info('{}:{}-{}: Runtime={} days'.format(sim_id.stem, start, start - runtime, runtime.days))
         logger.info('{}:Repeat={} days: Step={:.0f} mins: Output={:.0f} day'
                     .format(sim_id.stem, repeatdt.days, 1440 - dt.seconds/60, outputdt.days))
         logger.info('{}:Field=b-grid: Chunks={}: Time={}-{}'.format(
@@ -131,8 +177,8 @@ def run_EUC(dy=0.1, dz=25, lon=165, year=2012, month=12, day='max',
                            ErrorCode.ErrorThroughSurface: main.SubmergeParticle},
                  verbose_progress=True)
 
-    logger.info('{}:Completed!: Rank={:>2}: #Particles={}={}'
-                .format(sim_id.stem, rank, pset_isize, pset.size))
+    logger.info('{}:Completed!: Rank={:>2}: #Particles={}'
+                .format(sim_id.stem, rank, pset.size))
 
     # Save to netcdf.
     output_file.export()
@@ -147,6 +193,7 @@ if __name__ == "__main__" and cfg.home != Path('E:/'):
     p.add_argument('-x', '--lon', default=165, type=int, help='Particle start longitude(s).')
     p.add_argument('-y', '--year', default=2012, type=int, help='Simulation start year.')
     p.add_argument('-m', '--month', default=12, type=int, help='Final month (of final year).')
+    p.add_argument('-e', '--exp', default='hist', type=str, help='Scenario.')
     p.add_argument('-r', '--runtime', default=240, type=int, help='Runtime days.')
     p.add_argument('-dt', '--dt', default=60, type=int, help='Advection timestep [min].')
     p.add_argument('-rdt', '--repeatdt', default=6, type=int, help='Release repeat [day].')
@@ -156,8 +203,9 @@ if __name__ == "__main__" and cfg.home != Path('E:/'):
     args = p.parse_args()
 
     run_EUC(dy=args.dy, dz=args.dz, lon=args.lon, year=args.year, month=args.month,
-            runtime_days=args.runtime, dt_mins=args.dt, repeatdt_days=args.repeatdt,
-            outputdt_days=args.outputdt, v=args.version, pfile=args.pfile)
+            exp=args.exp, runtime_days=args.runtime, dt_mins=args.dt,
+            repeatdt_days=args.repeatdt, outputdt_days=args.outputdt,
+            v=args.version, pfile=args.pfile)
 else:
     dy, dz = 0.4, 100
     lon = 190
@@ -165,8 +213,9 @@ else:
     dt_mins, repeatdt_days, outputdt_days, runtime_days = 60, 6, 1, 18
     chunks = 300
     pfile = 'None'
-    # pfile = 'sim_165_v45r0.nc'
+    # pfile = 'sim_hist_190_v24r0.nc'
     v = 55
+    exp = 'hist'
     run_EUC(dy=dy, dz=dz, lon=lon, year=year, month=month, day=day,
             dt_mins=dt_mins, repeatdt_days=repeatdt_days, outputdt_days=outputdt_days,
             v=v, runtime_days=runtime_days, pfile=pfile, chunks=chunks)

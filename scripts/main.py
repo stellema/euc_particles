@@ -63,7 +63,7 @@ from parcels import (FieldSet, Field, ParticleSet, JITParticle,
 logger = tools.mlogger(Path(sys.argv[0]).stem)
 
 
-def ofam_fieldset(time_bnds='full', chunks=300, time_periodic=True,
+def ofam_fieldset(time_bnds='full', exp='hist', chunks=300, time_periodic=True,
                   deferred_load=True, time_ext=False):
     """Create a 3D parcels fieldset from OFAM model output.
 
@@ -87,9 +87,12 @@ def ofam_fieldset(time_bnds='full', chunks=300, time_periodic=True,
                                                  "depth": ["st_ocean", "sw_ocean"],
                                                  "time": ["time"]}
 
-    if time_bnds == 'full':
+    if time_bnds == 'full' and exp == 'hist':
         y2 = 2012 if cfg.home != Path('E:/') else 1981
         time_bnds = [datetime(1981, 1, 1), datetime(y2, 12, 31)]
+
+    elif time_bnds == 'full' and exp == 'rcp':
+        time_bnds = [datetime(2070, 1, 1), datetime(2101, 12, 31)]
 
     if time_periodic is True:
         time_periodic = timedelta(days=(time_bnds[1] - time_bnds[0]).days + 1)
@@ -136,9 +139,9 @@ def ofam_fieldset(time_bnds='full', chunks=300, time_periodic=True,
     return fieldset
 
 
-def generate_sim_id(lon, v=0, randomise=False):
+def generate_sim_id(lon, v=0, exp='hist', randomise=False):
     """Create name to save particle file (looks for unsaved filename)."""
-    head = 'sim_{}_v'.format(int(lon))  # Start of filename.
+    head = 'sim_{}_{}_v'.format(exp, int(lon))  # Start of filename.
 
     # Copy given index or find a random number.
     i = random.randint(0, 100) if randomise else v
@@ -202,6 +205,7 @@ def particleset_from_particlefile(fieldset, pclass, filename, repeatdt=None, res
     pset = ParticleSet(fieldset=fieldset, pclass=pclass, lon=vars['lon'], lat=vars['lat'],
                        depth=vars['depth'], time=vars['time'], pid_orig=vars['id'],
                        lonlatdepth_dtype=lonlatdepth_dtype, repeatdt=repeatdt, **kwargs)
+
     return pset
 
 
@@ -252,8 +256,9 @@ def SampleZone(particle, fieldset, time):
 
 def AgeZone(particle, fieldset, time):
     """Update particle age and zone."""
-    particle.age = particle.age + math.fabs(particle.dt)
-    particle.zone = fieldset.zone[0., 5., particle.lat, particle.lon]
+    if particle.state == ErrorCode.Evaluate:
+        particle.age = particle.age + math.fabs(particle.dt)
+        particle.zone = fieldset.zone[0., 5., particle.lat, particle.lon]
 
 
 def remove_westward_particles(pset):
@@ -264,7 +269,7 @@ def remove_westward_particles(pset):
     """
     pidx = []
     for particle in pset:
-        if particle.u < 0. and particle.age == 0.:
+        if particle.u <= 0. and particle.age == 0.:
             pidx.append(np.where([pi.id == particle.id for pi in pset])[0][0])
 
     pset.remove_indices(pidx)
@@ -273,7 +278,7 @@ def remove_westward_particles(pset):
     if any([p.u <= 0. and p.age == 0. for p in pset]):
         logger.debug('Particles travelling in the wrong direction.')
 
-    return len(pidx)
+    return
 
 
 def get_zdParticle(fieldset):
@@ -322,7 +327,7 @@ def get_zParticle(fieldset):
 
 
 def pset_euc(fieldset, pclass, lon, dy, dz, repeatdt, pset_start, repeats,
-             sim_id=None, eastward=True, rank=0, MPI=None):
+             sim_id=None, rank=0, pdel=None, partitions=None):
     """Create a ParticleSet."""
     # Particle release latitudes, depths and longitudes.
     py = np.round(np.arange(-2.6, 2.6 + 0.05, dy), 2)
@@ -347,34 +352,16 @@ def pset_euc(fieldset, pclass, lon, dy, dz, repeatdt, pset_start, repeats,
     lon = np.tile(lons, repeats)
     lat = np.tile(lats, repeats)
 
-    if eastward:
-        if rank == 0:
-            lastID = pclass.lastID
-            psetx = ParticleSet.from_list(fieldset=fieldset, pclass=pclass,
-                                          lon=lon, lat=lat, depth=depth, time=time, partitions=False)
-            pdel = remove_westward_particles(psetx)
-            time = psetx.particle_data['time']
-            lat = psetx.particle_data['lat']
-            lon = psetx.particle_data['lon']
-            depth = psetx.particle_data['depth']
-            pclass.lastID = lastID
-
-        else:
-            time, lat, lon, depth = None, None, None, None
-
-        if MPI:
-            mpi_comm = MPI.COMM_WORLD
-            time = mpi_comm.bcast(time, root=0)
-            lat = mpi_comm.bcast(lat, root=0)
-            lon = mpi_comm.bcast(lon, root=0)
-            depth = mpi_comm.bcast(depth, root=0)
-
     pset = ParticleSet.from_list(fieldset=fieldset, pclass=pclass,
                                  lon=lon, lat=lat, depth=depth, time=time,
-                                 lonlatdepth_dtype=np.float64)
+                                 lonlatdepth_dtype=np.float64, partitions=partitions)
     if sim_id and rank == 0:
-        logger.info('{}:Particles: /repeat={}: Total={}-{}={}'
-                    .format(sim_id.stem, Z * X * Y, npart, pdel, npart-pdel))
+        if pdel:
+            logger.info('{}:Particles: /repeat={}: Total={}-{}={}'
+                        .format(sim_id.stem, Z * X * Y, npart, pdel, npart-pdel))
+        else:
+            logger.info('{}:Particles: /repeat={}: Total={}'
+                        .format(sim_id.stem, Z * X * Y, npart))
         logger.info('{}:Lon={}: Lat=[{}-{} x{}]: Depth=[{}-{}m x{}]'
                     .format(sim_id.stem, *px, *py[::Y-1], dy, *pz[::Z-1], dz))
     return pset
