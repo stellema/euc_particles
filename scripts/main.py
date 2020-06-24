@@ -41,6 +41,10 @@ formatter = logging.Formatter(
 handler.setFormatter(formatter)
 logger.addHandler(handler)
 logger.propagate = False
+
+TODO: Delete particles during execution, after pset creation or save locations to file?
+TODO: Get around not writing prev_lat/prev_lon?
+TODO: Add new EUC particles in from_particlefile?
 """
 import sys
 import cfg
@@ -210,12 +214,11 @@ def particleset_from_particlefile(fieldset, pclass, filename, repeatdt=None, res
 
 
 def DeleteParticle(particle, fieldset, time):
-    """Delete particle."""
     particle.delete()
 
 
 def SubmergeParticle(particle, fieldset, time):
-    """Run 2D advection if particle goes through surface."""
+    # Run 2D advection if particle goes through surface.
     particle.depth = fieldset.mindepth + 0.1
     # Perform 2D advection as vertical flow will always push up in this case.
     AdvectionRK4(particle, fieldset, time)
@@ -225,7 +228,7 @@ def SubmergeParticle(particle, fieldset, time):
 
 
 def Distance(particle, fieldset, time):
-    """Calculate distance travelled by particle."""
+    # Calculate distance travelled by particle.
     # Calculate the distance in latitudinal direction,
     # using 1.11e2 kilometer per degree latitude).
     lat_dist = (particle.lat - particle.prev_lat) * 111319.49
@@ -255,7 +258,9 @@ def SampleZone(particle, fieldset, time):
 
 
 def AgeZone(particle, fieldset, time):
-    """Update particle age and zone."""
+    # Update particle age and zone.
+    if particle.age == 0. and particle.u <= 0.:
+        particle.delete()
     if particle.state == ErrorCode.Evaluate:
         particle.age = particle.age + math.fabs(particle.dt)
         particle.zone = fieldset.zone[0., 5., particle.lat, particle.lon]
@@ -451,36 +456,55 @@ def plot3D(sim_id):
     return
 
 
-def particlefile_merge(sim_id1, sim_id2):
+def particlefile_merge(sim_id):
     """Merge continued ParticleFiles.
 
     Args:
-        sim_id1 (pathlib.Path): Path to first ParticleFile.
-        sim_id2 (pathlib.Path): Path to next ParticleFile.
+        sim_id (pathlib.Path): Path to a ParticleFile.
 
     Returns:
         dm (DataSet): Merged dataset.
 
     """
-    # Open datasets.
-    ds1 = xr.open_dataset(sim_id1, decode_cf=False)
-    ds2 = xr.open_dataset(sim_id2, decode_cf=False)
+    def merged(sim_id1, sim_id2):
+        """Merge two ParticleFiles."""
+        # Open datasets.
+        try:
+            ds1 = xr.open_dataset(sim_id1, decode_cf=False)
+        except AttributeError:
+            ds1 = sim_id1
+        ds2 = xr.open_dataset(sim_id2, decode_cf=False)
 
-    # Number of trajectories.
-    ntraj1 = ds1.traj.size
-    ntraj2 = ds2.traj.size
+        ds1 = ds1.where(ds1.u >= 0., drop=True)
+        ds2 = ds2.where(ds2.u >= 0., drop=True)
 
-    # Concat observations of trajs that are in both datasets.
-    dm1 = xr.concat([ds1.isel(traj=slice(0, ntraj2), obs=slice(0, -1)),
-                     ds2.isel(traj=slice(0, ntraj1))], dim='obs')
+        # Number of trajectories.
+        ntraj1, ntraj2 = ds1.traj.size, ds2.traj.size
 
-    # Pad RHS of trajs that are only in ds2.
-    dm2 = ds2.pad({'obs': (0, ds1.obs.size - 1)}).isel(traj=slice(ntraj1, ntraj2))
+        # Concat observations of trajs that are in both datasets (cutting off duplicate end).
+        lhs = ds1.isel(traj=slice(0, ntraj2), obs=slice(0, -1))
+        rhs = ds2.isel(traj=slice(0, ntraj1))
+        if not all(lhs.trajectory[:, 0] == rhs.trajectory[:, 0]):
+            print('Error: Concat trajectories do not match')
 
-    # Fill trajectory variable (shouldn't be NaN).
-    dm2['trajectory'] = dm2['trajectory'].ffill(dim='obs')
+        dm1 = xr.concat([lhs, rhs], dim='obs')
 
-    # Merge the two datasets.
-    dm = xr.concat((dm1, dm2), dim='traj')
+        # Pad RHS of trajs that are only in ds2.
+        dm2 = ds2.pad({'obs': (0, ds1.obs.size - 1)}).isel(traj=slice(ntraj1, ntraj2))
+
+        # Fill trajectory variable (shouldn't be NaN).
+        dm2['trajectory'] = dm2['trajectory'].ffill(dim='obs')
+
+        # Merge the two datasets.
+        dm = xr.concat((dm1, dm2), dim='traj')
+
+        return dm
+
+    sims = [s for s in sim_id.parent.glob(str(sim_id.stem[:-1]) + '*.nc')]
+    dm = merged(sims[0], sims[1])
+
+    if len(sims) >= 3:
+        for i in range(2, len(sims)):
+            dm = merged(dm, sims[i])
 
     return dm

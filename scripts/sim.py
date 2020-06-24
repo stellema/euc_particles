@@ -50,15 +50,10 @@ def run_EUC(dy=0.1, dz=25, lon=165, year=2012, month=12, day='max', exp='hist',
         None.
 
     """
-
     # Get MPI rank or set to zero.
-    if MPI:
-        comm = MPI.COMM_WORLD
-        size = comm.Get_size()
-        rank = comm.Get_rank()
-    else:
-        rank = 0
+    rank = MPI.COMM_WORLD.Get_rank() if MPI else 0
 
+    # Start from end of Fieldset time or restart from ParticleFile.
     restart = False if pfile == 'None' else True
 
     # Ensure run ends on a repeat day.
@@ -71,12 +66,13 @@ def run_EUC(dy=0.1, dz=25, lon=165, year=2012, month=12, day='max', exp='hist',
     outputdt = timedelta(days=outputdt_days)  # Advection steps to write.
     repeats = math.floor(runtime/repeatdt) - 1
 
-    # Create fieldset.
+    # Create time bounds for fieldset based on experiment.
     if exp == 'hist':
         y2 = 2012 if cfg.home != Path('E:/') else 1981
         time_bnds = [datetime(1981, 1, 1), datetime(y2, 12, 31)]
     elif exp == 'rcp':
         time_bnds = [datetime(2070, 1, 1), datetime(2101, 12, 31)]
+
     fieldset = main.ofam_fieldset(time_bnds, chunks=300, time_periodic=True)
 
     # Define the ParticleSet pclass.
@@ -103,82 +99,77 @@ def run_EUC(dy=0.1, dz=25, lon=165, year=2012, month=12, day='max', exp='hist',
 
     pclass = zdParticle
 
-    # Create particle set.
+    # Create ParticleSet.
     if not restart:
-        # Generate file name for experiment.
+        # Generate file name for experiment (random number if run doesn't use MPI).
         randomise = False if MPI else True
         sim_id = main.generate_sim_id(lon, v, randomise=randomise)
 
         # Set ParticleSet start as last fieldset time.
         pset_start = fieldset.U.grid.time[-1]
 
-        # Particle set start and end time.
+        # ParticleSet start time (for log).
         start = fieldset.time_origin.time_origin + timedelta(seconds=pset_start)
 
     # Create particle set from particlefile and add new repeats.
     else:
+        # Add path to given ParticleFile name.
         pfile = cfg.data/pfile
 
-        # Increment run index for new output file.
-        sim_id = cfg.data/(pfile.stem[:-1] + str(int(pfile.stem[-1]) + 1) + '.nc')
+        # Increment run index for new output file name.
+        sim_id = cfg.data/'{}{}.nc'.format(pfile.stem[:-1], int(pfile.stem[-1]) + 1)
 
+        # Change to the latest run if it was not given.
+        if sim_id.exists():
+            sims = [s for s in sim_id.parent.glob(str(sim_id.stem[:-1]) + '*.nc')]
+            rmax = max([int(sim.stem[-1]) for sim in sims])
+            pfile = cfg.data/'{}{}.nc'.format(pfile.stem[:-1], rmax)
+            sim_id = cfg.data/'{}{}.nc'.format(pfile.stem[:-1], rmax + 1)
+
+        # Create ParticleSet from the given ParticleFile.
         psetx = main.particleset_from_particlefile(fieldset, pclass=pclass, filename=pfile,
                                                    restart=True, restarttime=np.nanmin)
+        # Start date to add new EUC particles.
+        pset_start = np.nanmin(psetx.time)
 
-        # Particle set start and end time.
+        # ParticleSet start time (for log).
         start = fieldset.time_origin.time_origin + timedelta(seconds=np.nanmin(psetx.time))
 
-    if rank == 0:
-        psetz = main.pset_euc(fieldset, pclass, lon, dy, dz, repeatdt, pset_start, repeats,
-                              sim_id, rank=rank, pdel=None, partitions=False)
-        lastID = pclass.lastID
-        main.remove_westward_particles(psetz)
-        time = psetz.particle_data['time']
-        depth = psetz.particle_data['depth']
-        lat = psetz.particle_data['lat']
-        lon = psetz.particle_data['lon']
-        pclass.lastID = lastID
-    else:
-        time, depth, lat, lon = None, None, None, None
+    # Create ParticleSet.
+    pset = main.pset_euc(fieldset, pclass, lon, dy, dz, repeatdt, pset_start, repeats,
+                         sim_id, rank=rank, pdel=None, partitions=None)
 
-    if MPI:
-        time = comm.bcast(time, root=0)
-        depth = comm.bcast(depth, root=0)
-        lat = comm.bcast(lat, root=0)
-        lon = comm.bcast(lon, root=0)
-
-    pset = ParticleSet.from_list(fieldset=fieldset, pclass=pclass,
-                                 lon=lon, lat=lat, depth=depth, time=time,
-                                 lonlatdepth_dtype=np.float64)
+    # Add particles from ParticleFile.
     if restart:
-        # Add particles on the next day that regularly repeat.
         pset.add(psetx)
 
-    endtime = int(pset_start - runtime.total_seconds())
+    # ParticleSet size before execution.
+    psize = pset.size
 
-    # Output particle file p_name and time steps to save.
+    # Create output ParticleFile p_name and time steps to write output.
     output_file = pset.ParticleFile(cfg.data/sim_id.stem, outputdt=outputdt)
 
+    # Log experiment details.
     if rank == 0:
-        logger.info('{}:{}-{}: Runtime={} days'.format(sim_id.stem, start, start - runtime, runtime.days))
-        logger.info('{}:Repeat={} days: Step={:.0f} mins: Output={:.0f} day'
-                    .format(sim_id.stem, repeatdt.days, 1440 - dt.seconds/60, outputdt.days))
-        logger.info('{}:Field=b-grid: Chunks={}: Time={}-{}'.format(
-            sim_id.stem, chunks, time_bnds[0].year, time_bnds[1].year))
-    logger.info('{}:Temp={}: Start={:>2.0f}: Rank={:>2}: #Particles={}'
-                .format(sim_id.stem, output_file.tempwritedir_base[-8:],
-                        pset.particle_data['time'].max(), rank, pset.size))
-    # Kernels.
-    kernels = (AdvectionRK4_3D + pset.Kernel(main.AgeZone) + pset.Kernel(main.Distance))
+        logger.info('{}:{}-{}: Runtime={} days'.format(sim_id.stem, start.strftime('%Y-%m-%d'), (start - runtime).strftime('%Y-%m-%d'), runtime.days))
+        logger.info('{}:Repeat={} days: Step={:.0f} mins: Output={:.0f} day'.format(sim_id.stem, repeatdt.days, dt_mins, outputdt.days))
+        logger.info('{}:Field=b-grid: Chunks={}: Time={}-{}'.format(sim_id.stem, chunks, time_bnds[0].year, time_bnds[1].year))
+    logger.info('{}:Temp={}: Start={:>2.0f}: Rank={:>2}: #Particles={}'.format(sim_id.stem, output_file.tempwritedir_base[-8:], pset.particle_data['time'].max(), rank, psize))
 
-    pset.execute(kernels, endtime=endtime, dt=dt, output_file=output_file,
+    # Kernels.
+    kernels = (pset.Kernel(main.AgeZone) + AdvectionRK4_3D + pset.Kernel(main.Distance))
+
+    # ParticleSet execution endtime.
+    endtime = int(pset_start - runtime.total_seconds())
+
+    # Execute ParticleSet.
+    pset.execute(kernels, endtime=endtime, dt=dt, output_file=output_file, verbose_progress=True,
                  recovery={ErrorCode.Error: main.DeleteParticle,
                            ErrorCode.ErrorOutOfBounds: main.DeleteParticle,
-                           ErrorCode.ErrorThroughSurface: main.SubmergeParticle},
-                 verbose_progress=True)
+                           ErrorCode.ErrorThroughSurface: main.SubmergeParticle})
 
-    logger.info('{}:Completed!: Rank={:>2}: #Particles={}'
-                .format(sim_id.stem, rank, pset.size))
+    logger.info('{}:Completed!: Rank={:>2}: #Particles={}-{}={}'
+                .format(sim_id.stem, rank, psize, psize - pset.size, pset.size))
 
     # Save to netcdf.
     output_file.export()
@@ -213,7 +204,7 @@ else:
     dt_mins, repeatdt_days, outputdt_days, runtime_days = 60, 6, 1, 18
     chunks = 300
     pfile = 'None'
-    # pfile = 'sim_hist_190_v24r0.nc'
+    pfile = 'sim_hist_190_v21r1.nc'
     v = 55
     exp = 'hist'
     run_EUC(dy=dy, dz=dz, lon=lon, year=year, month=month, day=day,
