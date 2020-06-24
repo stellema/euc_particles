@@ -1,0 +1,733 @@
+WARNING: Casting lon data to np.float32
+WARNING: Casting lat data to np.float32
+WARNING: Casting depth data to np.float32
+WARNING: Casting lon data to np.float32
+WARNING: Casting lat data to np.float32
+WARNING: Casting lon data to np.float32
+WARNING: Casting depth data to np.float32
+WARNING: Casting lat data to np.float32
+WARNING: Casting depth data to np.float32
+WARNING: Casting lon data to np.float32
+WARNING: Casting lat data to np.float32
+WARNING: Casting depth data to np.float32
+WARNING: Casting lon data to np.float32
+WARNING: Casting lat data to np.float32
+WARNING: Casting depth data to np.float32
+WARNING: Casting lon data to np.float32
+WARNING: Casting lat data to np.float32
+WARNING: Casting depth data to np.float32
+WARNING: Casting lon data to np.float32
+WARNING: Casting lat data to np.float32
+WARNING: Casting depth data to np.float32
+WARNING: Casting lon data to np.float32
+WARNING: Casting lat data to np.float32
+WARNING: Casting depth data to np.float32
+WARNING: Casting lon data to np.float32
+WARNING: Casting lat data to np.float32
+WARNING: Casting lon data to np.float32
+WARNING: Casting lat data to np.float32
+WARNING: Casting depth data to np.float32
+WARNING: Casting depth data to np.float32
+WARNING: Casting lon data to np.float32
+WARNING: Casting lon data to np.float32
+WARNING: Casting lon data to np.float32
+WARNING: Casting lat data to np.float32
+WARNING: Casting lon data to np.float32
+WARNING: Casting lat data to np.float32
+WARNING: Casting lat data to np.float32
+WARNING: Casting lat data to np.float32
+WARNING: Casting depth data to np.float32
+WARNING: Casting depth data to np.float32
+WARNING: Casting depth data to np.float32
+WARNING: Casting depth data to np.float32
+WARNING: Casting lon data to np.float32
+WARNING: Casting lat data to np.float32
+WARNING: Casting lon data to np.float32
+WARNING: Casting lat data to np.float32
+WARNING: Casting depth data to np.float32
+WARNING: Casting lon data to np.float32
+WARNING: Casting lat data to np.float32
+WARNING: Casting depth data to np.float32
+WARNING: Casting depth data to np.float32
+WARNING: Casting lon data to np.float32
+WARNING: Casting lat data to np.float32
+WARNING: Casting depth data to np.float32
+WARNING: Casting lon data to np.float32
+WARNING: Casting lat data to np.float32
+WARNING: Casting depth data to np.float32
+WARNING: Casting lon data to np.float32
+WARNING: Casting lat data to np.float32
+WARNING: Casting depth data to np.float32
+WARNING: Casting lon data to np.float32
+WARNING: Casting lat data to np.float32
+WARNING: Casting depth data to np.float32
+WARNING: Casting lon data to np.float32
+WARNING: Casting lat data to np.float32
+WARNING: Casting depth data to np.float32
+WARNING: Casting lon data to np.float32
+WARNING: Casting lat data to np.float32
+WARNING: Casting depth data to np.float32
+WARNING: Casting lon data to np.float32
+WARNING: Casting lat data to np.float32
+WARNING: Casting lon data to np.float32
+WARNING: Casting lat data to np.float32
+WARNING: Casting depth data to np.float32
+WARNING: Casting lon data to np.float32
+WARNING: Casting depth data to np.float32
+WARNING: Casting lat data to np.float32
+WARNING: Casting depth data to np.float32
+WARNING: Casting lon data to np.float32
+WARNING: Casting lat data to np.float32
+WARNING: Casting depth data to np.float32
+WARNING: Casting lon data to np.float32
+WARNING: Casting lat data to np.float32
+WARNING: Casting depth data to np.float32
+WARNING: Casting lon data to np.float32
+WARNING: Casting lat data to np.float32
+WARNING: Casting depth data to np.float32
+WARNING: Casting lon data to np.float32
+WARNING: Casting lon data to np.float32
+WARNING: Casting lat data to np.float32
+WARNING: Casting lat data to np.float32
+WARNING: Casting depth data to np.float32
+WARNING: Casting depth data to np.float32
+WARNING: Casting lon data to np.float32
+WARNING: Casting lat data to np.float32
+WARNING: Casting depth data to np.float32
+WARNING: Casting lon data to np.float32
+WARNING: Casting lat data to np.float32
+WARNING: Casting lon data to np.float32
+WARNING: Casting lat data to np.float32
+WARNING: Casting depth data to np.float32
+WARNING: Casting depth data to np.float32
+WARNING: Casting lon data to np.float32
+WARNING: Casting lat data to np.float32
+WARNING: Casting depth data to np.float32
+WARNING: Casting lon data to np.float32
+WARNING: Casting lat data to np.float32
+WARNING: Casting depth data to np.float32
+WARNING: Casting lon data to np.float32
+WARNING: Casting lat data to np.float32
+WARNING: Casting depth data to np.float32
+WARNING: Casting lon data to np.float32
+WARNING: Casting lat data to np.float32
+WARNING: Casting depth data to np.float32
+WARNING: Casting lon data to np.float32
+WARNING: Casting lat data to np.float32
+WARNING: Casting depth data to np.float32
+WARNING: Casting lon data to np.float32
+WARNING: Casting lat data to np.float32
+WARNING: Casting depth data to np.float32
+WARNING: Casting lon data to np.float32
+WARNING: Casting lat data to np.float32
+WARNING: Casting depth data to np.float32
+WARNING: Casting lon data to np.float32
+WARNING: Casting lat data to np.float32
+WARNING: Casting depth data to np.float32
+WARNING: Casting lon data to np.float32
+WARNING: Casting lat data to np.float32
+WARNING: Casting depth data to np.float32
+WARNING: Casting lon data to np.float32
+WARNING: Casting lat data to np.float32
+WARNING: Casting depth data to np.float32
+WARNING: Casting lon data to np.float32
+WARNING: Casting lat data to np.float32
+WARNING: Casting depth data to np.float32
+WARNING: Casting lon data to np.float32
+WARNING: Casting lat data to np.float32
+WARNING: Casting depth data to np.float32
+WARNING: Casting lon data to np.float32
+WARNING: Casting lat data to np.float32
+WARNING: Casting depth data to np.float32
+WARNING: Casting lon data to np.float32
+WARNING: Casting lat data to np.float32
+WARNING: Casting depth data to np.float32
+WARNING: Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+WARNING: Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+WARNING: Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+WARNING: Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+WARNING: Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+WARNING: Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+WARNING: Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+WARNING: Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+WARNING: Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+WARNING: Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+WARNING: Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+WARNING: Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+WARNING: Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+WARNING: Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+WARNING: Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+WARNING: Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+WARNING: Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+WARNING: Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+WARNING: Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+WARNING: Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+WARNING: Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+WARNING: Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+WARNING: Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+WARNING: Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+WARNING: Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+WARNING: Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+WARNING: Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+WARNING: Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+WARNING: Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+WARNING: Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+WARNING: Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+WARNING: Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+WARNING: Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+WARNING: Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+WARNING: Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+WARNING: Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+WARNING: Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+WARNING: Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+WARNING: Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+WARNING: Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+WARNING: Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+WARNING: Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+WARNING: Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+WARNING: Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+WARNING: Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+WARNING: Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+WARNING: Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+WARNING: Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+WARNING: Particle initialisation from field can be very slow as it is computed in scipy mode.
+WARNING: Particle initialisation from field can be very slow as it is computed in scipy mode.
+WARNING: Particle initialisation from field can be very slow as it is computed in scipy mode.
+WARNING: Particle initialisation from field can be very slow as it is computed in scipy mode.
+WARNING: Particle initialisation from field can be very slow as it is computed in scipy mode.
+WARNING: Particle initialisation from field can be very slow as it is computed in scipy mode.
+WARNING: Particle initialisation from field can be very slow as it is computed in scipy mode.
+WARNING: Particle initialisation from field can be very slow as it is computed in scipy mode.
+WARNING: Particle initialisation from field can be very slow as it is computed in scipy mode.
+WARNING: Particle initialisation from field can be very slow as it is computed in scipy mode.
+WARNING: Particle initialisation from field can be very slow as it is computed in scipy mode.
+WARNING: Particle initialisation from field can be very slow as it is computed in scipy mode.
+WARNING: Particle initialisation from field can be very slow as it is computed in scipy mode.
+WARNING: Particle initialisation from field can be very slow as it is computed in scipy mode.
+WARNING: Particle initialisation from field can be very slow as it is computed in scipy mode.
+WARNING: Particle initialisation from field can be very slow as it is computed in scipy mode.
+WARNING: Particle initialisation from field can be very slow as it is computed in scipy mode.
+WARNING: Particle initialisation from field can be very slow as it is computed in scipy mode.
+WARNING: Particle initialisation from field can be very slow as it is computed in scipy mode.
+WARNING: Particle initialisation from field can be very slow as it is computed in scipy mode.
+WARNING: Particle initialisation from field can be very slow as it is computed in scipy mode.
+WARNING: Particle initialisation from field can be very slow as it is computed in scipy mode.
+WARNING: Particle initialisation from field can be very slow as it is computed in scipy mode.
+WARNING: Particle initialisation from field can be very slow as it is computed in scipy mode.
+WARNING: Particle initialisation from field can be very slow as it is computed in scipy mode.
+WARNING: Particle initialisation from field can be very slow as it is computed in scipy mode.
+WARNING: Particle initialisation from field can be very slow as it is computed in scipy mode.
+WARNING: Particle initialisation from field can be very slow as it is computed in scipy mode.
+WARNING: Particle initialisation from field can be very slow as it is computed in scipy mode.
+WARNING: Particle initialisation from field can be very slow as it is computed in scipy mode.
+WARNING: Particle initialisation from field can be very slow as it is computed in scipy mode.
+WARNING: Particle initialisation from field can be very slow as it is computed in scipy mode.
+WARNING: Particle initialisation from field can be very slow as it is computed in scipy mode.
+WARNING: Particle initialisation from field can be very slow as it is computed in scipy mode.
+WARNING: Particle initialisation from field can be very slow as it is computed in scipy mode.
+WARNING: Particle initialisation from field can be very slow as it is computed in scipy mode.
+WARNING: Particle initialisation from field can be very slow as it is computed in scipy mode.
+WARNING: Particle initialisation from field can be very slow as it is computed in scipy mode.
+WARNING: Particle initialisation from field can be very slow as it is computed in scipy mode.
+WARNING: Particle initialisation from field can be very slow as it is computed in scipy mode.
+WARNING: Particle initialisation from field can be very slow as it is computed in scipy mode.
+WARNING: Particle initialisation from field can be very slow as it is computed in scipy mode.
+WARNING: Particle initialisation from field can be very slow as it is computed in scipy mode.
+WARNING: Particle initialisation from field can be very slow as it is computed in scipy mode.
+WARNING: Particle initialisation from field can be very slow as it is computed in scipy mode.
+WARNING: Particle initialisation from field can be very slow as it is computed in scipy mode.
+WARNING: Particle initialisation from field can be very slow as it is computed in scipy mode.
+WARNING: Particle initialisation from field can be very slow as it is computed in scipy mode.
+sim:INFO:sim_190_v889r0:Temp=RRKGVLBM: Start=1009843200: Rank= 1: #Particles=56-34=22
+sim:INFO:sim_190_v889r0:Temp=RRKGVLBM: Start=1009843200: Rank= 8: #Particles=56-17=39
+sim:INFO:sim_190_v889r0:Temp=RRKGVLBM: Start=1009843200: Rank=24: #Particles=56-31=25
+sim:INFO:sim_190_v889r0:Temp=RRKGVLBM: Start=1009843200: Rank=32: #Particles=56-15=41
+sim:INFO:sim_190_v889r0:Temp=RRKGVLBM: Start=1009843200: Rank=40: #Particles=56-38=18
+sim:INFO:sim_190_v889r0:Temp=RRKGVLBM: Start=1009843200: Rank=33: #Particles=56-17=39
+sim:INFO:sim_190_v889r0:2013-01-01 12:00:00-2012-12-02 12:00:00: Runtime=30 days
+sim:INFO:sim_190_v889r0:Particles: /repeat=742: Total=2968
+sim:INFO:sim_190_v889r0:Lon=190: Lat=[-2.6-2.6 x0.1]: Depth=[25-350m x25]
+sim:INFO:sim_190_v889r0:Repeat=6 days: Step=60 mins: Output=1 day
+sim:INFO:sim_190_v889r0:Field=b-grid: Chunks=300: Time=1981-2012
+sim:INFO:sim_190_v889r0:Temp=RRKGVLBM: Start=1009843200: Rank= 0: #Particles=56-19=37
+sim:INFO:sim_190_v889r0:Temp=RRKGVLBM: Start=1009843200: Rank= 2: #Particles=56-49=7
+sim:INFO:sim_190_v889r0:Temp=RRKGVLBM: Start=1009843200: Rank=38: #Particles=56-23=33
+sim:INFO:sim_190_v889r0:Temp=RRKGVLBM: Start=1009843200: Rank=34: #Particles=56-14=42
+sim:INFO:sim_190_v889r0:Temp=RRKGVLBM: Start=1009843200: Rank= 6: #Particles=56-44=12
+sim:INFO:sim_190_v889r0:Temp=RRKGVLBM: Start=1009324800: Rank=16: #Particles=56-50=6
+sim:INFO:sim_190_v889r0:Temp=RRKGVLBM: Start=1009843200: Rank=10: #Particles=56-23=33
+sim:INFO:sim_190_v889r0:Temp=RRKGVLBM: Start=1009843200: Rank=42: #Particles=56-22=34
+sim:INFO:sim_190_v889r0:Temp=RRKGVLBM: Start=1009843200: Rank=26: #Particles=56-25=31
+sim:INFO:sim_190_v889r0:Temp=RRKGVLBM: Start=1009843200: Rank= 3: #Particles=56-16=40
+sim:INFO:sim_190_v889r0:Temp=RRKGVLBM: Start=1009843200: Rank=35: #Particles=56-19=37
+sim:INFO:sim_190_v889r0:Temp=RRKGVLBM: Start=1009843200: Rank=39: #Particles=56-22=34
+sim:INFO:sim_190_v889r0:Temp=RRKGVLBM: Start=1009843200: Rank=27: #Particles=56-20=36
+sim:INFO:sim_190_v889r0:Temp=RRKGVLBM: Start=1009843200: Rank=11: #Particles=56-19=37
+sim:INFO:sim_190_v889r0:Temp=RRKGVLBM: Start=1009843200: Rank=43: #Particles=56-52=4
+sim:INFO:sim_190_v889r0:Temp=RRKGVLBM: Start=1009843200: Rank= 7: #Particles=56-22=34
+sim:INFO:sim_190_v889r0:Temp=RRKGVLBM: Start=1009843200: Rank=14: #Particles=56-14=42
+sim:INFO:sim_190_v889r0:Temp=RRKGVLBM: Start=1009843200: Rank=46: #Particles=56-29=27
+sim:INFO:sim_190_v889r0:Temp=RRKGVLBM: Start=1009324800: Rank=30: #Particles=56-51=5
+sim:INFO:sim_190_v889r0:Temp=RRKGVLBM: Start=1009843200: Rank=22: #Particles=56-26=30
+sim:INFO:sim_190_v889r0:Temp=RRKGVLBM: Start=1009843200: Rank=17: #Particles=56-26=30
+sim:INFO:sim_190_v889r0:Temp=RRKGVLBM: Start=1009843200: Rank=19: #Particles=56-42=14
+sim:INFO:sim_190_v889r0:Temp=RRKGVLBM: Start=1009843200: Rank=23: #Particles=56-18=38
+sim:INFO:sim_190_v889r0:Temp=RRKGVLBM: Start=1009843200: Rank=18: #Particles=56-23=33
+INFO: Compiled zdParticleAdvectionRK4_3DAgeZoneDistance ==> /jobfs/7416367.gadi-pbs/parcels-12904/df37918e96b72c4aede7ebd7d8e4ac06_38.so
+INFO: Compiled zdParticleAdvectionRK4_3DAgeZoneDistance ==> /jobfs/7416367.gadi-pbs/parcels-12904/df37918e96b72c4aede7ebd7d8e4ac06_42.so
+INFO: Compiled zdParticleAdvectionRK4_3DAgeZoneDistance ==> /jobfs/7416367.gadi-pbs/parcels-12904/df37918e96b72c4aede7ebd7d8e4ac06_43.so
+INFO: Compiled zdParticleAdvectionRK4_3DAgeZoneDistance ==> /jobfs/7416367.gadi-pbs/parcels-12904/df37918e96b72c4aede7ebd7d8e4ac06_46.so
+INFO: Compiled zdParticleAdvectionRK4_3DAgeZoneDistance ==> /jobfs/7416367.gadi-pbs/parcels-12904/df37918e96b72c4aede7ebd7d8e4ac06_39.so
+INFO: Compiled zdParticleAdvectionRK4_3DAgeZoneDistance ==> /jobfs/7416367.gadi-pbs/parcels-12904/df37918e96b72c4aede7ebd7d8e4ac06_30.so
+INFO: Compiled zdParticleAdvectionRK4_3DAgeZoneDistance ==> /jobfs/7416367.gadi-pbs/parcels-12904/df37918e96b72c4aede7ebd7d8e4ac06_40.so
+INFO: Compiled zdParticleAdvectionRK4_3DAgeZoneDistance ==> /jobfs/7416367.gadi-pbs/parcels-12904/df37918e96b72c4aede7ebd7d8e4ac06_16.so
+INFO: Compiled zdParticleAdvectionRK4_3DAgeZoneDistance ==> /jobfs/7416367.gadi-pbs/parcels-12904/df37918e96b72c4aede7ebd7d8e4ac06_33.so
+INFO: Compiled zdParticleAdvectionRK4_3DAgeZoneDistance ==> /jobfs/7416367.gadi-pbs/parcels-12904/df37918e96b72c4aede7ebd7d8e4ac06_34.so
+INFO: Compiled zdParticleAdvectionRK4_3DAgeZoneDistance ==> /jobfs/7416367.gadi-pbs/parcels-12904/df37918e96b72c4aede7ebd7d8e4ac06_32.so
+INFO: Compiled zdParticleAdvectionRK4_3DAgeZoneDistance ==> /jobfs/7416367.gadi-pbs/parcels-12904/df37918e96b72c4aede7ebd7d8e4ac06_17.so
+INFO: Compiled zdParticleAdvectionRK4_3DAgeZoneDistance ==> /jobfs/7416367.gadi-pbs/parcels-12904/df37918e96b72c4aede7ebd7d8e4ac06_22.so
+INFO: Compiled zdParticleAdvectionRK4_3DAgeZoneDistance ==> /jobfs/7416367.gadi-pbs/parcels-12904/df37918e96b72c4aede7ebd7d8e4ac06_23.so
+INFO: Compiled zdParticleAdvectionRK4_3DAgeZoneDistance ==> /jobfs/7416367.gadi-pbs/parcels-12904/df37918e96b72c4aede7ebd7d8e4ac06_19.so
+INFO: Compiled zdParticleAdvectionRK4_3DAgeZoneDistance ==> /jobfs/7416367.gadi-pbs/parcels-12904/df37918e96b72c4aede7ebd7d8e4ac06_14.so
+INFO: Compiled zdParticleAdvectionRK4_3DAgeZoneDistance ==> /jobfs/7416367.gadi-pbs/parcels-12904/df37918e96b72c4aede7ebd7d8e4ac06_35.so
+INFO: Compiled zdParticleAdvectionRK4_3DAgeZoneDistance ==> /jobfs/7416367.gadi-pbs/parcels-12904/df37918e96b72c4aede7ebd7d8e4ac06_18.so
+INFO: Compiled zdParticleAdvectionRK4_3DAgeZoneDistance ==> /jobfs/7416367.gadi-pbs/parcels-12904/df37918e96b72c4aede7ebd7d8e4ac06_26.so
+INFO: Compiled zdParticleAdvectionRK4_3DAgeZoneDistance ==> /jobfs/7416367.gadi-pbs/parcels-12904/df37918e96b72c4aede7ebd7d8e4ac06_27.so
+INFO: Compiled zdParticleAdvectionRK4_3DAgeZoneDistance ==> /jobfs/7416367.gadi-pbs/parcels-12904/df37918e96b72c4aede7ebd7d8e4ac06_24.so
+INFO: Compiled zdParticleAdvectionRK4_3DAgeZoneDistance ==> /jobfs/7416367.gadi-pbs/parcels-12904/df37918e96b72c4aede7ebd7d8e4ac06_1.so
+INFO: Compiled zdParticleAdvectionRK4_3DAgeZoneDistance ==> /jobfs/7416367.gadi-pbs/parcels-12904/df37918e96b72c4aede7ebd7d8e4ac06_7.so
+INFO: Compiled zdParticleAdvectionRK4_3DAgeZoneDistance ==> /jobfs/7416367.gadi-pbs/parcels-12904/df37918e96b72c4aede7ebd7d8e4ac06_8.so
+INFO: Compiled zdParticleAdvectionRK4_3DAgeZoneDistance ==> /jobfs/7416367.gadi-pbs/parcels-12904/df37918e96b72c4aede7ebd7d8e4ac06_6.so
+INFO: Compiled zdParticleAdvectionRK4_3DAgeZoneDistance ==> /jobfs/7416367.gadi-pbs/parcels-12904/df37918e96b72c4aede7ebd7d8e4ac06_10.so
+INFO: Compiled zdParticleAdvectionRK4_3DAgeZoneDistance ==> /jobfs/7416367.gadi-pbs/parcels-12904/df37918e96b72c4aede7ebd7d8e4ac06_2.so
+INFO: Compiled zdParticleAdvectionRK4_3DAgeZoneDistance ==> /jobfs/7416367.gadi-pbs/parcels-12904/df37918e96b72c4aede7ebd7d8e4ac06_11.so
+INFO: Compiled zdParticleAdvectionRK4_3DAgeZoneDistance ==> /jobfs/7416367.gadi-pbs/parcels-12904/df37918e96b72c4aede7ebd7d8e4ac06_3.so
+INFO: Compiled zdParticleAdvectionRK4_3DAgeZoneDistance ==> /jobfs/7416367.gadi-pbs/parcels-12904/df37918e96b72c4aede7ebd7d8e4ac06_0.so
+sim:INFO:sim_190_v889r0:Temp=RRKGVLBM: Start=1009324800: Rank=15: #Particles=112-102=10
+sim:INFO:sim_190_v889r0:Temp=RRKGVLBM: Start=1009843200: Rank=47: #Particles=56-49=7
+sim:INFO:sim_190_v889r0:Temp=RRKGVLBM: Start=1009843200: Rank=31: #Particles=56-23=33
+sim:INFO:sim_190_v889r0:Temp=RRKGVLBM: Start=1009843200: Rank=36: #Particles=56-15=41
+sim:INFO:sim_190_v889r0:Temp=RRKGVLBM: Start=1009843200: Rank=44: #Particles=56-47=9
+sim:INFO:sim_190_v889r0:Temp=RRKGVLBM: Start=1009843200: Rank=12: #Particles=56-20=36
+sim:INFO:sim_190_v889r0:Temp=RRKGVLBM: Start=1009843200: Rank=28: #Particles=56-24=32
+sim:INFO:sim_190_v889r0:Temp=RRKGVLBM: Start=1009843200: Rank=37: #Particles=56-21=35
+sim:INFO:sim_190_v889r0:Temp=RRKGVLBM: Start=1009843200: Rank=20: #Particles=56-15=41
+sim:INFO:sim_190_v889r0:Temp=RRKGVLBM: Start=1009324800: Rank= 5: #Particles=112-105=7
+sim:INFO:sim_190_v889r0:Temp=RRKGVLBM: Start=1009843200: Rank=45: #Particles=56-15=41
+sim:INFO:sim_190_v889r0:Temp=RRKGVLBM: Start=1009843200: Rank= 4: #Particles=112-97=15
+sim:INFO:sim_190_v889r0:Temp=RRKGVLBM: Start=1009843200: Rank=13: #Particles=56-50=6
+sim:INFO:sim_190_v889r0:Temp=RRKGVLBM: Start=1009843200: Rank=21: #Particles=56-52=4
+sim:INFO:sim_190_v889r0:Temp=RRKGVLBM: Start=1009843200: Rank=29: #Particles=112-90=22
+sim:INFO:sim_190_v889r0:Temp=RRKGVLBM: Start=1009843200: Rank=25: #Particles=56-13=43
+sim:INFO:sim_190_v889r0:Temp=RRKGVLBM: Start=1009324800: Rank= 9: #Particles=112-99=13
+sim:INFO:sim_190_v889r0:Temp=RRKGVLBM: Start=1009843200: Rank=41: #Particles=56-20=36
+INFO: Compiled zdParticleAdvectionRK4_3DAgeZoneDistance ==> /jobfs/7416367.gadi-pbs/parcels-12904/df37918e96b72c4aede7ebd7d8e4ac06_47.so
+INFO: Compiled zdParticleAdvectionRK4_3DAgeZoneDistance ==> /jobfs/7416367.gadi-pbs/parcels-12904/df37918e96b72c4aede7ebd7d8e4ac06_31.so
+INFO: Compiled zdParticleAdvectionRK4_3DAgeZoneDistance ==> /jobfs/7416367.gadi-pbs/parcels-12904/df37918e96b72c4aede7ebd7d8e4ac06_15.so
+INFO: Compiled zdParticleAdvectionRK4_3DAgeZoneDistance ==> /jobfs/7416367.gadi-pbs/parcels-12904/df37918e96b72c4aede7ebd7d8e4ac06_29.so
+INFO: Compiled zdParticleAdvectionRK4_3DAgeZoneDistance ==> /jobfs/7416367.gadi-pbs/parcels-12904/df37918e96b72c4aede7ebd7d8e4ac06_28.so
+INFO: Compiled zdParticleAdvectionRK4_3DAgeZoneDistance ==> /jobfs/7416367.gadi-pbs/parcels-12904/df37918e96b72c4aede7ebd7d8e4ac06_37.so
+INFO: Compiled zdParticleAdvectionRK4_3DAgeZoneDistance ==> /jobfs/7416367.gadi-pbs/parcels-12904/df37918e96b72c4aede7ebd7d8e4ac06_45.so
+INFO: Compiled zdParticleAdvectionRK4_3DAgeZoneDistance ==> /jobfs/7416367.gadi-pbs/parcels-12904/df37918e96b72c4aede7ebd7d8e4ac06_44.so
+INFO: Compiled zdParticleAdvectionRK4_3DAgeZoneDistance ==> /jobfs/7416367.gadi-pbs/parcels-12904/df37918e96b72c4aede7ebd7d8e4ac06_36.so
+INFO: Compiled zdParticleAdvectionRK4_3DAgeZoneDistance ==> /jobfs/7416367.gadi-pbs/parcels-12904/df37918e96b72c4aede7ebd7d8e4ac06_13.so
+INFO: Compiled zdParticleAdvectionRK4_3DAgeZoneDistance ==> /jobfs/7416367.gadi-pbs/parcels-12904/df37918e96b72c4aede7ebd7d8e4ac06_20.so
+INFO: Compiled zdParticleAdvectionRK4_3DAgeZoneDistance ==> /jobfs/7416367.gadi-pbs/parcels-12904/df37918e96b72c4aede7ebd7d8e4ac06_25.so
+INFO: Compiled zdParticleAdvectionRK4_3DAgeZoneDistance ==> /jobfs/7416367.gadi-pbs/parcels-12904/df37918e96b72c4aede7ebd7d8e4ac06_4.so
+INFO: Compiled zdParticleAdvectionRK4_3DAgeZoneDistance ==> /jobfs/7416367.gadi-pbs/parcels-12904/df37918e96b72c4aede7ebd7d8e4ac06_5.so
+INFO: Compiled zdParticleAdvectionRK4_3DAgeZoneDistance ==> /jobfs/7416367.gadi-pbs/parcels-12904/df37918e96b72c4aede7ebd7d8e4ac06_41.so
+INFO: Compiled zdParticleAdvectionRK4_3DAgeZoneDistance ==> /jobfs/7416367.gadi-pbs/parcels-12904/df37918e96b72c4aede7ebd7d8e4ac06_12.so
+INFO: Compiled zdParticleAdvectionRK4_3DAgeZoneDistance ==> /jobfs/7416367.gadi-pbs/parcels-12904/df37918e96b72c4aede7ebd7d8e4ac06_21.so
+INFO: Compiled zdParticleAdvectionRK4_3DAgeZoneDistance ==> /jobfs/7416367.gadi-pbs/parcels-12904/df37918e96b72c4aede7ebd7d8e4ac06_9.so
+sim:INFO:sim_190_v889r0:Completed!: Rank= 2: 00:00:22: #Particles=7
+sim:INFO:sim_190_v889r0:Completed!: Rank=42: 00:00:22: #Particles=34
+sim:INFO:sim_190_v889r0:Completed!: Rank=43: 00:00:22: #Particles=4
+sim:INFO:sim_190_v889r0:Completed!: Rank=27: 00:00:22: #Particles=36
+sim:INFO:sim_190_v889r0:Completed!: Rank= 6: 00:00:22: #Particles=12
+sim:INFO:sim_190_v889r0:Completed!: Rank=24: 00:00:22: #Particles=25
+sim:INFO:sim_190_v889r0:Completed!: Rank=18: 00:00:22: #Particles=33
+sim:INFO:sim_190_v889r0:Completed!: Rank=14: 00:00:22: #Particles=42
+sim:INFO:sim_190_v889r0:Completed!: Rank=38: 00:00:22: #Particles=33
+sim:INFO:sim_190_v889r0:Completed!: Rank= 7: 00:00:22: #Particles=34
+sim:INFO:sim_190_v889r0:Completed!: Rank=34: 00:00:23: #Particles=42
+sim:INFO:sim_190_v889r0:Completed!: Rank= 3: 00:00:23: #Particles=40
+sim:INFO:sim_190_v889r0:Completed!: Rank=22: 00:00:23: #Particles=30
+sim:INFO:sim_190_v889r0:Completed!: Rank=10: 00:00:23: #Particles=33
+sim:INFO:sim_190_v889r0:Completed!: Rank=35: 00:00:23: #Particles=37
+sim:INFO:sim_190_v889r0:Completed!: Rank= 0: 00:00:24: #Particles=37
+sim:INFO:sim_190_v889r0:Completed!: Rank= 8: 00:00:24: #Particles=39
+sim:INFO:sim_190_v889r0:Completed!: Rank=23: 00:00:24: #Particles=38
+sim:INFO:sim_190_v889r0:Completed!: Rank=17: 00:00:26: #Particles=30
+sim:INFO:sim_190_v889r0:Completed!: Rank=19: 00:00:26: #Particles=14
+sim:INFO:sim_190_v889r0:Completed!: Rank=46: 00:00:26: #Particles=27
+sim:INFO:sim_190_v889r0:Completed!: Rank=40: 00:00:26: #Particles=18
+sim:INFO:sim_190_v889r0:Completed!: Rank= 1: 00:00:26: #Particles=22
+sim:INFO:sim_190_v889r0:Completed!: Rank=31: 00:00:18: #Particles=33
+sim:INFO:sim_190_v889r0:Completed!: Rank=47: 00:00:18: #Particles=7
+sim:INFO:sim_190_v889r0:Completed!: Rank=37: 00:00:18: #Particles=35
+sim:INFO:sim_190_v889r0:Completed!: Rank=44: 00:00:18: #Particles=9
+sim:INFO:sim_190_v889r0:Completed!: Rank=45: 00:00:18: #Particles=41
+sim:INFO:sim_190_v889r0:Completed!: Rank=41: 00:00:18: #Particles=36
+sim:INFO:sim_190_v889r0:Completed!: Rank=21: 00:00:19: #Particles=4
+sim:INFO:sim_190_v889r0:Completed!: Rank=12: 00:00:18: #Particles=36
+sim:INFO:sim_190_v889r0:Completed!: Rank=25: 00:00:20: #Particles=43
+sim:INFO:sim_190_v889r0:Completed!: Rank=28: 00:00:20: #Particles=32
+sim:INFO:sim_190_v889r0:Completed!: Rank=36: 00:00:20: #Particles=41
+sim:INFO:sim_190_v889r0:Completed!: Rank=20: 00:00:20: #Particles=41
+sim:INFO:sim_190_v889r0:Completed!: Rank=29: 00:00:35: #Particles=22
+sim:INFO:sim_190_v889r0:Completed!: Rank=13: 00:02:02: #Particles=6
+sim:INFO:sim_190_v889r0:Completed!: Rank= 4: 00:02:31: #Particles=15
+sim:INFO:sim_190_v889r0:Completed!: Rank=33: 00:03:53: #Particles=39
+sim:INFO:sim_190_v889r0:Completed!: Rank=26: 00:04:08: #Particles=31
+sim:INFO:sim_190_v889r0:Completed!: Rank=11: 00:07:01: #Particles=37
+sim:INFO:sim_190_v889r0:Completed!: Rank=32: 00:07:18: #Particles=41
+sim:INFO:sim_190_v889r0:Completed!: Rank=39: 00:07:38: #Particles=34
+
+------------------------------------------------------------------------
+Job 7416367 has exceeded memory allocation on node gadi-cpu-clx-2102.gadi.nci.org.au
+Process "bash", pid 30819, rss 3379200, vmem 238637056
+Process "7416367.gadi-pb", pid 31159, rss 3129344, vmem 228110336
+Process "mpirun", pid 31166, rss 20570112, vmem 674365440
+Process "python3", pid 31179, rss 561496064, vmem 1692098560
+Process "python3", pid 31180, rss 561287168, vmem 1690865664
+Process "python3", pid 31181, rss 423108608, vmem 1567846400
+Process "python3", pid 31182, rss 561127424, vmem 1691672576
+Process "python3", pid 31183, rss 562417664, vmem 1693130752
+Process "python3", pid 31184, rss 7320109056, vmem 8509960192
+Process "python3", pid 31185, rss 428359680, vmem 1572802560
+Process "python3", pid 31186, rss 428150784, vmem 1572798464
+Process "python3", pid 31187, rss 566456320, vmem 1696137216
+Process "python3", pid 31188, rss 7417073664, vmem 8606371840
+Process "python3", pid 31189, rss 568414208, vmem 1699151872
+Process "python3", pid 31190, rss 563728384, vmem 1693220864
+Process "python3", pid 31191, rss 562122752, vmem 1693859840
+Process "python3", pid 31192, rss 425594880, vmem 1570172928
+Process "python3", pid 31193, rss 7434616832, vmem 8624779264
+Process "python3", pid 31194, rss 422821888, vmem 1569693696
+Process "python3", pid 31195, rss 560578560, vmem 1687392256
+Process "python3", pid 31196, rss 7492083712, vmem 8677597184
+Process "python3", pid 31197, rss 560984064, vmem 1689538560
+Process "python3", pid 31198, rss 428191744, vmem 1570656256
+Process "python3", pid 31199, rss 425443328, vmem 1569107968
+Process "python3", pid 31200, rss 563556352, vmem 1693224960
+Process "python3", pid 31201, rss 560963584, vmem 1691672576
+Process "python3", pid 31202, rss 561045504, vmem 1691668480
+Process "python3", pid 31203, rss 563683328, vmem 1694289920
+Process "python3", pid 31204, rss 422748160, vmem 1567555584
+Process "python3", pid 31205, rss 423010304, vmem 1568624640
+Process "python3", pid 31206, rss 561651712, vmem 1693261824
+Process "python3", pid 31207, rss 562860032, vmem 1694793728
+Process "python3", pid 31208, rss 563634176, vmem 1695358976
+Process "python3", pid 31209, rss 422981632, vmem 1565413376
+Process "python3", pid 31210, rss 7659847680, vmem 8848691200
+Process "python3", pid 31211, rss 562524160, vmem 1689116672
+Process "python3", pid 31212, rss 563892224, vmem 1690415104
+Process "python3", pid 31213, rss 561053696, vmem 1689538560
+Process "python3", pid 31214, rss 563892224, vmem 1692413952
+Process "python3", pid 31215, rss 422903808, vmem 1565417472
+Process "python3", pid 31216, rss 561078272, vmem 1689538560
+Process "python3", pid 31217, rss 563773440, vmem 1694515200
+Process "python3", pid 31218, rss 427999232, vmem 1572810752
+Process "python3", pid 31219, rss 422621184, vmem 1566490624
+Process "python3", pid 31220, rss 563363840, vmem 1693224960
+Process "python3", pid 31221, rss 422723584, vmem 1567551488
+Process "python3", pid 31222, rss 422793216, vmem 1567633408
+Process "python3", pid 31223, rss 422887424, vmem 1567563776
+Process "python3", pid 31224, rss 422641664, vmem 1567551488
+Process "python3", pid 31225, rss 560775168, vmem 1692745728
+Process "python3", pid 31226, rss 422752256, vmem 1568628736
+------------------------------------------------------------------------
+For more information visit https://opus.nci.org.au/x/SwGRAQ
+------------------------------------------------------------------------
+
+------------------------------------------------------------------------
+Job 7416367 has exceeded memory allocation on node gadi-cpu-clx-2102.gadi.nci.org.au
+Process "bash", pid 30819, rss 3379200, vmem 238637056
+Process "7416367.gadi-pb", pid 31159, rss 3129344, vmem 228110336
+Process "mpirun", pid 31166, rss 20570112, vmem 674365440
+Process "python3", pid 31179, rss 561426432, vmem 1692098560
+Process "python3", pid 31180, rss 561020928, vmem 1690865664
+Process "python3", pid 31181, rss 422850560, vmem 1567846400
+Process "python3", pid 31182, rss 560889856, vmem 1691672576
+Process "python3", pid 31183, rss 562364416, vmem 1693130752
+Process "python3", pid 31184, rss 7319633920, vmem 8510222336
+Process "python3", pid 31185, rss 428269568, vmem 1572802560
+Process "python3", pid 31186, rss 427986944, vmem 1572798464
+Process "python3", pid 31187, rss 566243328, vmem 1696137216
+Process "python3", pid 31188, rss 7416938496, vmem 8606371840
+Process "python3", pid 31189, rss 568242176, vmem 1699151872
+Process "python3", pid 31190, rss 563466240, vmem 1693220864
+Process "python3", pid 31191, rss 562036736, vmem 1693859840
+Process "python3", pid 31192, rss 425328640, vmem 1570172928
+Process "python3", pid 31193, rss 7434715136, vmem 8624779264
+Process "python3", pid 31194, rss 422625280, vmem 1569693696
+Process "python3", pid 31195, rss 560480256, vmem 1687392256
+Process "python3", pid 31196, rss 7491792896, vmem 8677859328
+Process "python3", pid 31197, rss 560910336, vmem 1689538560
+Process "python3", pid 31198, rss 428113920, vmem 1570656256
+Process "python3", pid 31199, rss 425385984, vmem 1569107968
+Process "python3", pid 31200, rss 563404800, vmem 1693224960
+Process "python3", pid 31201, rss 560791552, vmem 1691672576
+Process "python3", pid 31202, rss 560959488, vmem 1691668480
+Process "python3", pid 31203, rss 563617792, vmem 1694289920
+Process "python3", pid 31204, rss 422555648, vmem 1567555584
+Process "python3", pid 31205, rss 422854656, vmem 1568624640
+Process "python3", pid 31206, rss 561483776, vmem 1693261824
+Process "python3", pid 31207, rss 562663424, vmem 1694793728
+Process "python3", pid 31208, rss 563482624, vmem 1695358976
+Process "python3", pid 31209, rss 422760448, vmem 1565413376
+Process "python3", pid 31210, rss 7659192320, vmem 8848691200
+Process "python3", pid 31211, rss 562294784, vmem 1689116672
+Process "python3", pid 31212, rss 563728384, vmem 1690415104
+Process "python3", pid 31213, rss 560869376, vmem 1689538560
+Process "python3", pid 31214, rss 563646464, vmem 1692413952
+Process "python3", pid 31215, rss 422854656, vmem 1565417472
+Process "python3", pid 31216, rss 560877568, vmem 1689538560
+Process "python3", pid 31217, rss 563511296, vmem 1694515200
+Process "python3", pid 31218, rss 427945984, vmem 1572810752
+Process "python3", pid 31219, rss 422596608, vmem 1566490624
+Process "python3", pid 31220, rss 563339264, vmem 1693224960
+Process "python3", pid 31221, rss 422510592, vmem 1567551488
+Process "python3", pid 31222, rss 422727680, vmem 1567633408
+Process "python3", pid 31223, rss 422703104, vmem 1567563776
+Process "python3", pid 31224, rss 422436864, vmem 1567551488
+Process "python3", pid 31225, rss 560521216, vmem 1692745728
+Process "python3", pid 31226, rss 422645760, vmem 1568628736
+------------------------------------------------------------------------
+For more information visit https://opus.nci.org.au/x/SwGRAQ
+------------------------------------------------------------------------
+
+------------------------------------------------------------------------
+Job 7416367 has exceeded memory allocation on node gadi-cpu-clx-2102.gadi.nci.org.au
+Process "bash", pid 30819, rss 3379200, vmem 238637056
+Process "7416367.gadi-pb", pid 31159, rss 3129344, vmem 228110336
+Process "mpirun", pid 31166, rss 20570112, vmem 674365440
+Process "python3", pid 31179, rss 561377280, vmem 1692098560
+Process "python3", pid 31180, rss 561053696, vmem 1690865664
+Process "python3", pid 31181, rss 422977536, vmem 1567846400
+Process "python3", pid 31182, rss 560943104, vmem 1691672576
+Process "python3", pid 31183, rss 562225152, vmem 1693130752
+Process "python3", pid 31184, rss 7319089152, vmem 8509698048
+Process "python3", pid 31185, rss 428220416, vmem 1572802560
+Process "python3", pid 31186, rss 427913216, vmem 1572798464
+Process "python3", pid 31187, rss 566308864, vmem 1696137216
+Process "python3", pid 31188, rss 7416922112, vmem 8606371840
+Process "python3", pid 31189, rss 568303616, vmem 1699151872
+Process "python3", pid 31190, rss 563568640, vmem 1693220864
+Process "python3", pid 31191, rss 561991680, vmem 1693859840
+Process "python3", pid 31192, rss 425394176, vmem 1570172928
+Process "python3", pid 31193, rss 7434674176, vmem 8624779264
+Process "python3", pid 31194, rss 422694912, vmem 1569693696
+Process "python3", pid 31195, rss 560394240, vmem 1687392256
+Process "python3", pid 31196, rss 7492030464, vmem 8678121472
+Process "python3", pid 31197, rss 560812032, vmem 1689538560
+Process "python3", pid 31198, rss 427982848, vmem 1570656256
+Process "python3", pid 31199, rss 425242624, vmem 1569107968
+Process "python3", pid 31200, rss 563441664, vmem 1693224960
+Process "python3", pid 31201, rss 560828416, vmem 1691672576
+Process "python3", pid 31202, rss 560971776, vmem 1691668480
+Process "python3", pid 31203, rss 563544064, vmem 1694289920
+Process "python3", pid 31204, rss 422633472, vmem 1567555584
+Process "python3", pid 31205, rss 422756352, vmem 1568624640
+Process "python3", pid 31206, rss 561422336, vmem 1693261824
+Process "python3", pid 31207, rss 562708480, vmem 1694793728
+Process "python3", pid 31208, rss 563523584, vmem 1695358976
+Process "python3", pid 31209, rss 422879232, vmem 1565413376
+Process "python3", pid 31210, rss 7659384832, vmem 8848953344
+Process "python3", pid 31211, rss 562401280, vmem 1689116672
+Process "python3", pid 31212, rss 563773440, vmem 1690415104
+Process "python3", pid 31213, rss 560848896, vmem 1689538560
+Process "python3", pid 31214, rss 563769344, vmem 1692413952
+Process "python3", pid 31215, rss 422739968, vmem 1565417472
+Process "python3", pid 31216, rss 560951296, vmem 1689538560
+Process "python3", pid 31217, rss 563630080, vmem 1694515200
+Process "python3", pid 31218, rss 427937792, vmem 1572810752
+Process "python3", pid 31219, rss 422445056, vmem 1566490624
+Process "python3", pid 31220, rss 563236864, vmem 1693224960
+Process "python3", pid 31221, rss 422608896, vmem 1567551488
+Process "python3", pid 31222, rss 422600704, vmem 1567633408
+Process "python3", pid 31223, rss 422785024, vmem 1567563776
+Process "python3", pid 31224, rss 422522880, vmem 1567551488
+Process "python3", pid 31225, rss 560656384, vmem 1692745728
+Process "python3", pid 31226, rss 422682624, vmem 1568628736
+------------------------------------------------------------------------
+For more information visit https://opus.nci.org.au/x/SwGRAQ
+------------------------------------------------------------------------
+
+------------------------------------------------------------------------
+Job 7416367 has exceeded memory allocation on node gadi-cpu-clx-2102.gadi.nci.org.au
+Process "bash", pid 30819, rss 3379200, vmem 238637056
+Process "7416367.gadi-pb", pid 31159, rss 3129344, vmem 228110336
+Process "mpirun", pid 31166, rss 20570112, vmem 674365440
+Process "python3", pid 31179, rss 561565696, vmem 1692098560
+Process "python3", pid 31180, rss 561221632, vmem 1690865664
+Process "python3", pid 31181, rss 423129088, vmem 1567846400
+Process "python3", pid 31182, rss 561106944, vmem 1691672576
+Process "python3", pid 31183, rss 562569216, vmem 1693130752
+Process "python3", pid 31184, rss 7320100864, vmem 8509960192
+Process "python3", pid 31185, rss 428359680, vmem 1572802560
+Process "python3", pid 31186, rss 428265472, vmem 1572798464
+Process "python3", pid 31187, rss 566460416, vmem 1696137216
+Process "python3", pid 31188, rss 7416922112, vmem 8606371840
+Process "python3", pid 31189, rss 568487936, vmem 1699151872
+Process "python3", pid 31190, rss 563720192, vmem 1693220864
+Process "python3", pid 31191, rss 562135040, vmem 1693859840
+Process "python3", pid 31192, rss 425709568, vmem 1570172928
+Process "python3", pid 31193, rss 7434682368, vmem 8624779264
+Process "python3", pid 31194, rss 422907904, vmem 1569693696
+Process "python3", pid 31195, rss 560533504, vmem 1687392256
+Process "python3", pid 31196, rss 7492788224, vmem 8678383616
+Process "python3", pid 31197, rss 561147904, vmem 1689538560
+Process "python3", pid 31198, rss 428290048, vmem 1570656256
+Process "python3", pid 31199, rss 425541632, vmem 1569107968
+Process "python3", pid 31200, rss 563662848, vmem 1693224960
+Process "python3", pid 31201, rss 560996352, vmem 1691672576
+Process "python3", pid 31202, rss 561156096, vmem 1691668480
+Process "python3", pid 31203, rss 563695616, vmem 1694289920
+Process "python3", pid 31204, rss 422813696, vmem 1567555584
+Process "python3", pid 31205, rss 423075840, vmem 1568624640
+Process "python3", pid 31206, rss 561741824, vmem 1693261824
+Process "python3", pid 31207, rss 562855936, vmem 1694793728
+Process "python3", pid 31208, rss 563671040, vmem 1695358976
+Process "python3", pid 31209, rss 423043072, vmem 1565413376
+Process "python3", pid 31210, rss 7660281856, vmem 8849215488
+Process "python3", pid 31211, rss 562581504, vmem 1689116672
+Process "python3", pid 31212, rss 563994624, vmem 1690415104
+Process "python3", pid 31213, rss 561008640, vmem 1689538560
+Process "python3", pid 31214, rss 563957760, vmem 1692413952
+Process "python3", pid 31215, rss 422879232, vmem 1565417472
+Process "python3", pid 31216, rss 561139712, vmem 1689538560
+Process "python3", pid 31217, rss 563785728, vmem 1694515200
+Process "python3", pid 31218, rss 428167168, vmem 1572810752
+Process "python3", pid 31219, rss 422604800, vmem 1566490624
+Process "python3", pid 31220, rss 563359744, vmem 1693224960
+Process "python3", pid 31221, rss 422785024, vmem 1567551488
+Process "python3", pid 31222, rss 422731776, vmem 1567633408
+Process "python3", pid 31223, rss 422924288, vmem 1567563776
+Process "python3", pid 31224, rss 422703104, vmem 1567551488
+Process "python3", pid 31225, rss 560775168, vmem 1692745728
+Process "python3", pid 31226, rss 422912000, vmem 1568628736
+------------------------------------------------------------------------
+For more information visit https://opus.nci.org.au/x/SwGRAQ
+------------------------------------------------------------------------
+
+------------------------------------------------------------------------
+Job 7416367 has exceeded memory allocation on node gadi-cpu-clx-2102.gadi.nci.org.au
+Process "bash", pid 30819, rss 3379200, vmem 238637056
+Process "7416367.gadi-pb", pid 31159, rss 3129344, vmem 228110336
+Process "mpirun", pid 31166, rss 20570112, vmem 674365440
+Process "python3", pid 31179, rss 561676288, vmem 1692098560
+Process "python3", pid 31180, rss 561401856, vmem 1690865664
+Process "python3", pid 31181, rss 423165952, vmem 1567846400
+Process "python3", pid 31182, rss 561065984, vmem 1691672576
+Process "python3", pid 31183, rss 562552832, vmem 1693130752
+Process "python3", pid 31184, rss 7320887296, vmem 8510746624
+Process "python3", pid 31185, rss 428490752, vmem 1572802560
+Process "python3", pid 31186, rss 428208128, vmem 1572798464
+Process "python3", pid 31187, rss 566562816, vmem 1696137216
+Process "python3", pid 31188, rss 7417245696, vmem 8606371840
+Process "python3", pid 31189, rss 568541184, vmem 1699151872
+Process "python3", pid 31190, rss 563892224, vmem 1693220864
+Process "python3", pid 31191, rss 562212864, vmem 1693859840
+Process "python3", pid 31192, rss 425603072, vmem 1570172928
+Process "python3", pid 31193, rss 7434940416, vmem 8624779264
+Process "python3", pid 31194, rss 422748160, vmem 1569693696
+Process "python3", pid 31195, rss 560697344, vmem 1687392256
+Process "python3", pid 31196, rss 7492636672, vmem 8678383616
+Process "python3", pid 31197, rss 561102848, vmem 1689538560
+Process "python3", pid 31198, rss 428249088, vmem 1570656256
+Process "python3", pid 31199, rss 425521152, vmem 1569107968
+Process "python3", pid 31200, rss 563593216, vmem 1693224960
+Process "python3", pid 31201, rss 561135616, vmem 1691672576
+Process "python3", pid 31202, rss 561012736, vmem 1691668480
+Process "python3", pid 31203, rss 563666944, vmem 1694289920
+Process "python3", pid 31204, rss 422739968, vmem 1567555584
+Process "python3", pid 31205, rss 423145472, vmem 1568624640
+Process "python3", pid 31206, rss 561754112, vmem 1693261824
+Process "python3", pid 31207, rss 563019776, vmem 1694793728
+Process "python3", pid 31208, rss 563666944, vmem 1695358976
+Process "python3", pid 31209, rss 423018496, vmem 1565413376
+Process "python3", pid 31210, rss 7659999232, vmem 8849215488
+Process "python3", pid 31211, rss 562573312, vmem 1689116672
+Process "python3", pid 31212, rss 563965952, vmem 1690415104
+Process "python3", pid 31213, rss 561135616, vmem 1689538560
+Process "python3", pid 31214, rss 563884032, vmem 1692413952
+Process "python3", pid 31215, rss 423059456, vmem 1565417472
+Process "python3", pid 31216, rss 561065984, vmem 1689538560
+Process "python3", pid 31217, rss 563740672, vmem 1694515200
+Process "python3", pid 31218, rss 428187648, vmem 1572810752
+Process "python3", pid 31219, rss 422686720, vmem 1566490624
+Process "python3", pid 31220, rss 563404800, vmem 1693224960
+Process "python3", pid 31221, rss 422731776, vmem 1567551488
+Process "python3", pid 31222, rss 422772736, vmem 1567633408
+Process "python3", pid 31223, rss 422977536, vmem 1567563776
+Process "python3", pid 31224, rss 422744064, vmem 1567551488
+Process "python3", pid 31225, rss 560979968, vmem 1692745728
+Process "python3", pid 31226, rss 422850560, vmem 1568628736
+------------------------------------------------------------------------
+For more information visit https://opus.nci.org.au/x/SwGRAQ
+------------------------------------------------------------------------
+
+------------------------------------------------------------------------
+Job 7416367 has exceeded memory allocation on node gadi-cpu-clx-2102.gadi.nci.org.au
+Process "bash", pid 30819, rss 3379200, vmem 238637056
+Process "7416367.gadi-pb", pid 31159, rss 3129344, vmem 228110336
+Process "mpirun", pid 31166, rss 20570112, vmem 674365440
+Process "python3", pid 31179, rss 561590272, vmem 1692098560
+Process "python3", pid 31180, rss 561315840, vmem 1690865664
+Process "python3", pid 31181, rss 423284736, vmem 1567846400
+Process "python3", pid 31182, rss 561213440, vmem 1691672576
+Process "python3", pid 31183, rss 562466816, vmem 1693130752
+Process "python3", pid 31184, rss 7320797184, vmem 8510746624
+Process "python3", pid 31185, rss 428404736, vmem 1572802560
+Process "python3", pid 31186, rss 428310528, vmem 1572798464
+Process "python3", pid 31187, rss 566476800, vmem 1696137216
+Process "python3", pid 31188, rss 7417331712, vmem 8606371840
+Process "python3", pid 31189, rss 568455168, vmem 1699151872
+Process "python3", pid 31190, rss 563806208, vmem 1693220864
+Process "python3", pid 31191, rss 562327552, vmem 1693859840
+Process "python3", pid 31192, rss 425713664, vmem 1570172928
+Process "python3", pid 31193, rss 7434895360, vmem 8624779264
+Process "python3", pid 31194, rss 422899712, vmem 1569693696
+Process "python3", pid 31195, rss 560611328, vmem 1687392256
+Process "python3", pid 31196, rss 7492890624, vmem 8678645760
+Process "python3", pid 31197, rss 561016832, vmem 1689538560
+Process "python3", pid 31198, rss 428371968, vmem 1570656256
+Process "python3", pid 31199, rss 425639936, vmem 1569107968
+Process "python3", pid 31200, rss 563716096, vmem 1693224960
+Process "python3", pid 31201, rss 561049600, vmem 1691672576
+Process "python3", pid 31202, rss 561156096, vmem 1691668480
+Process "python3", pid 31203, rss 563802112, vmem 1694289920
+Process "python3", pid 31204, rss 422875136, vmem 1567555584
+Process "python3", pid 31205, rss 423059456, vmem 1568624640
+Process "python3", pid 31206, rss 561668096, vmem 1693261824
+Process "python3", pid 31207, rss 562933760, vmem 1694793728
+Process "python3", pid 31208, rss 563798016, vmem 1695358976
+Process "python3", pid 31209, rss 423133184, vmem 1565413376
+Process "python3", pid 31210, rss 7660224512, vmem 8849477632
+Process "python3", pid 31211, rss 562688000, vmem 1689116672
+Process "python3", pid 31212, rss 563879936, vmem 1690415104
+Process "python3", pid 31213, rss 561049600, vmem 1689538560
+Process "python3", pid 31214, rss 564027392, vmem 1692413952
+Process "python3", pid 31215, rss 422973440, vmem 1565417472
+Process "python3", pid 31216, rss 561201152, vmem 1689538560
+Process "python3", pid 31217, rss 563884032, vmem 1694515200
+Process "python3", pid 31218, rss 428101632, vmem 1572810752
+Process "python3", pid 31219, rss 422805504, vmem 1566490624
+Process "python3", pid 31220, rss 563527680, vmem 1693224960
+Process "python3", pid 31221, rss 422871040, vmem 1567551488
+Process "python3", pid 31222, rss 422912000, vmem 1567633408
+Process "python3", pid 31223, rss 422891520, vmem 1567563776
+Process "python3", pid 31224, rss 422658048, vmem 1567551488
+Process "python3", pid 31225, rss 560893952, vmem 1692745728
+Process "python3", pid 31226, rss 422764544, vmem 1568628736
+------------------------------------------------------------------------
+For more information visit https://opus.nci.org.au/x/SwGRAQ
+------------------------------------------------------------------------
+--------------------------------------------------------------------------
+Primary job  terminated normally, but 1 process returned
+a non-zero exit code. Per user-direction, the job has been aborted.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+mpirun noticed that process rank 30 with PID 0 on node gadi-cpu-clx-2102 exited on signal 9 (Killed).
+--------------------------------------------------------------------------

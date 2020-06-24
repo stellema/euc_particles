@@ -1,0 +1,640 @@
+WARNING: Casting lon data to np.float32
+WARNING: Casting lat data to np.float32
+WARNING: Casting depth data to np.float32
+WARNING: Casting lon data to np.float32
+WARNING: Casting lat data to np.float32
+WARNING: Casting depth data to np.float32
+WARNING: Casting lon data to np.float32
+WARNING: Casting lat data to np.float32
+WARNING: Casting depth data to np.float32
+WARNING: Casting lon data to np.float32
+WARNING: Casting lat data to np.float32
+WARNING: Casting depth data to np.float32
+WARNING: Casting lon data to np.float32
+WARNING: Casting lat data to np.float32
+WARNING: Casting lon data to np.float32
+WARNING: Casting lat data to np.float32
+WARNING: Casting depth data to np.float32
+WARNING: Casting depth data to np.float32
+WARNING: Casting lon data to np.float32
+WARNING: Casting lat data to np.float32
+WARNING: Casting depth data to np.float32
+WARNING: Casting lon data to np.float32
+WARNING: Casting lat data to np.float32
+WARNING: Casting depth data to np.float32
+WARNING: Casting lon data to np.float32
+WARNING: Casting lat data to np.float32
+WARNING: Casting depth data to np.float32
+WARNING: Casting lon data to np.float32
+WARNING: Casting lat data to np.float32
+WARNING: Casting depth data to np.float32
+WARNING: Casting lon data to np.float32
+WARNING: Casting lat data to np.float32
+WARNING: Casting depth data to np.float32
+WARNING: Casting lon data to np.float32
+WARNING: Casting lat data to np.float32
+WARNING: Casting depth data to np.float32
+WARNING: Casting lon data to np.float32
+WARNING: Casting lat data to np.float32
+WARNING: Casting lon data to np.float32
+WARNING: Casting depth data to np.float32
+WARNING: Casting lon data to np.float32
+WARNING: Casting lat data to np.float32
+WARNING: Casting lat data to np.float32
+WARNING: Casting depth data to np.float32
+WARNING: Casting lon data to np.float32
+WARNING: Casting lat data to np.float32
+WARNING: Casting depth data to np.float32
+WARNING: Casting lon data to np.float32
+WARNING: Casting depth data to np.float32
+WARNING: Casting lat data to np.float32
+WARNING: Casting depth data to np.float32
+WARNING: Casting lon data to np.float32
+WARNING: Casting lat data to np.float32
+WARNING: Casting depth data to np.float32
+WARNING: Casting lon data to np.float32
+WARNING: Casting lat data to np.float32
+WARNING: Casting depth data to np.float32
+WARNING: Casting lon data to np.float32
+WARNING: Casting lat data to np.float32
+WARNING: Casting depth data to np.float32
+WARNING: Casting lon data to np.float32
+WARNING: Casting lat data to np.float32
+WARNING: Casting depth data to np.float32
+WARNING: Casting lon data to np.float32
+WARNING: Casting lat data to np.float32
+WARNING: Casting depth data to np.float32
+WARNING: Casting lon data to np.float32
+WARNING: Casting lat data to np.float32
+WARNING: Casting lon data to np.float32
+WARNING: Casting depth data to np.float32
+WARNING: Casting lat data to np.float32
+WARNING: Casting lon data to np.float32
+WARNING: Casting lat data to np.float32
+WARNING: Casting depth data to np.float32
+WARNING: Casting depth data to np.float32
+WARNING: Casting lon data to np.float32
+WARNING: Casting lat data to np.float32
+WARNING: Casting depth data to np.float32
+WARNING: Casting lon data to np.float32
+WARNING: Casting lat data to np.float32
+WARNING: Casting lon data to np.float32
+WARNING: Casting lat data to np.float32
+WARNING: Casting depth data to np.float32
+WARNING: Casting depth data to np.float32
+WARNING: Casting lon data to np.float32
+WARNING: Casting lat data to np.float32
+WARNING: Casting depth data to np.float32
+WARNING: Casting lon data to np.float32
+WARNING: Casting lat data to np.float32
+WARNING: Casting depth data to np.float32
+WARNING: Casting lon data to np.float32
+WARNING: Casting lat data to np.float32
+WARNING: Casting depth data to np.float32
+WARNING: Casting lon data to np.float32
+WARNING: Casting lat data to np.float32
+WARNING: Casting depth data to np.float32
+WARNING: Casting lon data to np.float32
+WARNING: Casting lat data to np.float32
+WARNING: Casting depth data to np.float32
+WARNING: Casting lon data to np.float32
+WARNING: Casting lat data to np.float32
+WARNING: Casting depth data to np.float32
+WARNING: Casting lon data to np.float32
+WARNING: Casting lat data to np.float32
+WARNING: Casting depth data to np.float32
+WARNING: Casting lon data to np.float32
+WARNING: Casting lat data to np.float32
+WARNING: Casting depth data to np.float32
+WARNING: Casting lon data to np.float32
+WARNING: Casting lat data to np.float32
+WARNING: Casting depth data to np.float32
+WARNING: Casting lon data to np.float32
+WARNING: Casting lat data to np.float32
+WARNING: Casting depth data to np.float32
+WARNING: Casting lon data to np.float32
+WARNING: Casting lat data to np.float32
+WARNING: Casting depth data to np.float32
+WARNING: Casting lon data to np.float32
+WARNING: Casting lat data to np.float32
+WARNING: Casting depth data to np.float32
+WARNING: Casting lon data to np.float32
+WARNING: Casting lat data to np.float32
+WARNING: Casting depth data to np.float32
+WARNING: Casting lon data to np.float32
+WARNING: Casting lat data to np.float32
+WARNING: Casting depth data to np.float32
+WARNING: Casting lon data to np.float32
+WARNING: Casting lat data to np.float32
+WARNING: Casting depth data to np.float32
+WARNING: Casting lon data to np.float32
+WARNING: Casting lat data to np.float32
+WARNING: Casting depth data to np.float32
+WARNING: Casting lon data to np.float32
+WARNING: Casting lat data to np.float32
+WARNING: Casting depth data to np.float32
+WARNING: Casting lon data to np.float32
+WARNING: Casting lat data to np.float32
+WARNING: Casting depth data to np.float32
+WARNING: Casting lon data to np.float32
+WARNING: Casting lat data to np.float32
+WARNING: Casting depth data to np.float32
+WARNING: Casting lon data to np.float32
+WARNING: Casting lat data to np.float32
+WARNING: Casting depth data to np.float32
+WARNING: Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+WARNING: Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+WARNING: Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+WARNING: Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+WARNING: Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+WARNING: Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+WARNING: Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+WARNING: Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+WARNING: Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+WARNING: Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+WARNING: Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+WARNING: Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+WARNING: Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+WARNING: Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+WARNING: Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+WARNING: Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+WARNING: Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+WARNING: Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+WARNING: Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+WARNING: Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+WARNING: Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+WARNING: Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+WARNING: Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+WARNING: Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+WARNING: Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+WARNING: Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+WARNING: Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+WARNING: Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+WARNING: Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+WARNING: Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+WARNING: Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+WARNING: Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+WARNING: Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+WARNING: Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+WARNING: Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+WARNING: Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+WARNING: Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+WARNING: Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+WARNING: Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+WARNING: Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+WARNING: Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+WARNING: Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+WARNING: Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+WARNING: Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+WARNING: Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+WARNING: Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+WARNING: Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+WARNING: Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+WARNING: Particle initialisation from field can be very slow as it is computed in scipy mode.
+WARNING: Particle initialisation from field can be very slow as it is computed in scipy mode.
+WARNING: Particle initialisation from field can be very slow as it is computed in scipy mode.
+WARNING: Particle initialisation from field can be very slow as it is computed in scipy mode.
+WARNING: Particle initialisation from field can be very slow as it is computed in scipy mode.
+WARNING: Particle initialisation from field can be very slow as it is computed in scipy mode.
+WARNING: Particle initialisation from field can be very slow as it is computed in scipy mode.
+WARNING: Particle initialisation from field can be very slow as it is computed in scipy mode.
+WARNING: Particle initialisation from field can be very slow as it is computed in scipy mode.
+WARNING: Particle initialisation from field can be very slow as it is computed in scipy mode.
+WARNING: Particle initialisation from field can be very slow as it is computed in scipy mode.
+WARNING: Particle initialisation from field can be very slow as it is computed in scipy mode.
+WARNING: Particle initialisation from field can be very slow as it is computed in scipy mode.
+WARNING: Particle initialisation from field can be very slow as it is computed in scipy mode.
+WARNING: Particle initialisation from field can be very slow as it is computed in scipy mode.
+WARNING: Particle initialisation from field can be very slow as it is computed in scipy mode.
+WARNING: Particle initialisation from field can be very slow as it is computed in scipy mode.
+WARNING: Particle initialisation from field can be very slow as it is computed in scipy mode.
+WARNING: Particle initialisation from field can be very slow as it is computed in scipy mode.
+WARNING: Particle initialisation from field can be very slow as it is computed in scipy mode.
+WARNING: Particle initialisation from field can be very slow as it is computed in scipy mode.
+WARNING: Particle initialisation from field can be very slow as it is computed in scipy mode.
+WARNING: Particle initialisation from field can be very slow as it is computed in scipy mode.
+WARNING: Particle initialisation from field can be very slow as it is computed in scipy mode.
+WARNING: Particle initialisation from field can be very slow as it is computed in scipy mode.
+WARNING: Particle initialisation from field can be very slow as it is computed in scipy mode.
+WARNING: Particle initialisation from field can be very slow as it is computed in scipy mode.
+WARNING: Particle initialisation from field can be very slow as it is computed in scipy mode.
+WARNING: Particle initialisation from field can be very slow as it is computed in scipy mode.
+WARNING: Particle initialisation from field can be very slow as it is computed in scipy mode.
+WARNING: Particle initialisation from field can be very slow as it is computed in scipy mode.
+WARNING: Particle initialisation from field can be very slow as it is computed in scipy mode.
+WARNING: Particle initialisation from field can be very slow as it is computed in scipy mode.
+WARNING: Particle initialisation from field can be very slow as it is computed in scipy mode.
+WARNING: Particle initialisation from field can be very slow as it is computed in scipy mode.
+WARNING: Particle initialisation from field can be very slow as it is computed in scipy mode.
+WARNING: Particle initialisation from field can be very slow as it is computed in scipy mode.
+WARNING: Particle initialisation from field can be very slow as it is computed in scipy mode.
+WARNING: Particle initialisation from field can be very slow as it is computed in scipy mode.
+WARNING: Particle initialisation from field can be very slow as it is computed in scipy mode.
+WARNING: Particle initialisation from field can be very slow as it is computed in scipy mode.
+WARNING: Particle initialisation from field can be very slow as it is computed in scipy mode.
+WARNING: Particle initialisation from field can be very slow as it is computed in scipy mode.
+WARNING: Particle initialisation from field can be very slow as it is computed in scipy mode.
+WARNING: Particle initialisation from field can be very slow as it is computed in scipy mode.
+WARNING: Particle initialisation from field can be very slow as it is computed in scipy mode.
+WARNING: Particle initialisation from field can be very slow as it is computed in scipy mode.
+WARNING: Particle initialisation from field can be very slow as it is computed in scipy mode.
+sim:INFO:sim_190_v889r0:2013-01-01 12:00:00-2012-12-02 12:00:00: Runtime=30 days
+sim:INFO:sim_190_v889r0:Particles: /repeat=742: Total=2968
+sim:INFO:sim_190_v889r0:Lon=190: Lat=[-2.6-2.6 x0.1]: Depth=[25-350m x25]
+sim:INFO:sim_190_v889r0:Repeat=6 days: Step=60 mins: Output=1 day
+sim:INFO:sim_190_v889r0:Field=b-grid: Chunks=300: Time=1981-2012
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 174, in <module>
+    outputdt_days=args.outputdt, v=args.version, pfile=args.pfile)
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 123, in timed
+    result = method(*args, **kw)
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 139, in run_EUC
+    pset.particle_data['time'].max(), proc, pset_isize, pdel, pset.size))
+NameError: name 'pdel' is not defined
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 174, in <module>
+    outputdt_days=args.outputdt, v=args.version, pfile=args.pfile)
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 123, in timed
+    result = method(*args, **kw)
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 139, in run_EUC
+    pset.particle_data['time'].max(), proc, pset_isize, pdel, pset.size))
+NameError: name 'pdel' is not defined
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 174, in <module>
+    outputdt_days=args.outputdt, v=args.version, pfile=args.pfile)
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 123, in timed
+    result = method(*args, **kw)
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 139, in run_EUC
+    pset.particle_data['time'].max(), proc, pset_isize, pdel, pset.size))
+NameError: name 'pdel' is not defined
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 174, in <module>
+    outputdt_days=args.outputdt, v=args.version, pfile=args.pfile)
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 123, in timed
+    result = method(*args, **kw)
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 139, in run_EUC
+    pset.particle_data['time'].max(), proc, pset_isize, pdel, pset.size))
+NameError: name 'pdel' is not defined
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 174, in <module>
+    outputdt_days=args.outputdt, v=args.version, pfile=args.pfile)
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 123, in timed
+    result = method(*args, **kw)
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 139, in run_EUC
+    pset.particle_data['time'].max(), proc, pset_isize, pdel, pset.size))
+NameError: name 'pdel' is not defined
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 174, in <module>
+    outputdt_days=args.outputdt, v=args.version, pfile=args.pfile)
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 123, in timed
+    result = method(*args, **kw)
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 139, in run_EUC
+    pset.particle_data['time'].max(), proc, pset_isize, pdel, pset.size))
+NameError: name 'pdel' is not defined
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 174, in <module>
+    outputdt_days=args.outputdt, v=args.version, pfile=args.pfile)
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 123, in timed
+    result = method(*args, **kw)
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 139, in run_EUC
+    pset.particle_data['time'].max(), proc, pset_isize, pdel, pset.size))
+NameError: name 'pdel' is not defined
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 174, in <module>
+    outputdt_days=args.outputdt, v=args.version, pfile=args.pfile)
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 123, in timed
+    result = method(*args, **kw)
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 139, in run_EUC
+    pset.particle_data['time'].max(), proc, pset_isize, pdel, pset.size))
+NameError: name 'pdel' is not defined
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 174, in <module>
+    outputdt_days=args.outputdt, v=args.version, pfile=args.pfile)
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 123, in timed
+    result = method(*args, **kw)
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 139, in run_EUC
+    pset.particle_data['time'].max(), proc, pset_isize, pdel, pset.size))
+NameError: name 'pdel' is not defined
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 174, in <module>
+    outputdt_days=args.outputdt, v=args.version, pfile=args.pfile)
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 123, in timed
+    result = method(*args, **kw)
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 139, in run_EUC
+    pset.particle_data['time'].max(), proc, pset_isize, pdel, pset.size))
+NameError: name 'pdel' is not defined
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 174, in <module>
+    outputdt_days=args.outputdt, v=args.version, pfile=args.pfile)
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 123, in timed
+    result = method(*args, **kw)
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 139, in run_EUC
+    pset.particle_data['time'].max(), proc, pset_isize, pdel, pset.size))
+NameError: name 'pdel' is not defined
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 174, in <module>
+    outputdt_days=args.outputdt, v=args.version, pfile=args.pfile)
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 123, in timed
+    result = method(*args, **kw)
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 139, in run_EUC
+    pset.particle_data['time'].max(), proc, pset_isize, pdel, pset.size))
+NameError: name 'pdel' is not defined
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 174, in <module>
+    outputdt_days=args.outputdt, v=args.version, pfile=args.pfile)
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 123, in timed
+    result = method(*args, **kw)
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 139, in run_EUC
+    pset.particle_data['time'].max(), proc, pset_isize, pdel, pset.size))
+NameError: name 'pdel' is not defined
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 174, in <module>
+    outputdt_days=args.outputdt, v=args.version, pfile=args.pfile)
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 123, in timed
+    result = method(*args, **kw)
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 139, in run_EUC
+    pset.particle_data['time'].max(), proc, pset_isize, pdel, pset.size))
+NameError: name 'pdel' is not defined
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 174, in <module>
+    outputdt_days=args.outputdt, v=args.version, pfile=args.pfile)
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 123, in timed
+    result = method(*args, **kw)
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 139, in run_EUC
+    pset.particle_data['time'].max(), proc, pset_isize, pdel, pset.size))
+NameError: name 'pdel' is not defined
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 174, in <module>
+    outputdt_days=args.outputdt, v=args.version, pfile=args.pfile)
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 123, in timed
+    result = method(*args, **kw)
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 139, in run_EUC
+    pset.particle_data['time'].max(), proc, pset_isize, pdel, pset.size))
+NameError: name 'pdel' is not defined
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 174, in <module>
+    outputdt_days=args.outputdt, v=args.version, pfile=args.pfile)
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 123, in timed
+    result = method(*args, **kw)
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 139, in run_EUC
+    pset.particle_data['time'].max(), proc, pset_isize, pdel, pset.size))
+NameError: name 'pdel' is not defined
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 174, in <module>
+    outputdt_days=args.outputdt, v=args.version, pfile=args.pfile)
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 123, in timed
+    result = method(*args, **kw)
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 139, in run_EUC
+    pset.particle_data['time'].max(), proc, pset_isize, pdel, pset.size))
+NameError: name 'pdel' is not defined
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 174, in <module>
+    outputdt_days=args.outputdt, v=args.version, pfile=args.pfile)
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 123, in timed
+    result = method(*args, **kw)
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 139, in run_EUC
+    pset.particle_data['time'].max(), proc, pset_isize, pdel, pset.size))
+NameError: name 'pdel' is not defined
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 174, in <module>
+    outputdt_days=args.outputdt, v=args.version, pfile=args.pfile)
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 123, in timed
+    result = method(*args, **kw)
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 139, in run_EUC
+    pset.particle_data['time'].max(), proc, pset_isize, pdel, pset.size))
+NameError: name 'pdel' is not defined
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 174, in <module>
+    outputdt_days=args.outputdt, v=args.version, pfile=args.pfile)
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 123, in timed
+    result = method(*args, **kw)
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 139, in run_EUC
+    pset.particle_data['time'].max(), proc, pset_isize, pdel, pset.size))
+NameError: name 'pdel' is not defined
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 174, in <module>
+    outputdt_days=args.outputdt, v=args.version, pfile=args.pfile)
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 123, in timed
+    result = method(*args, **kw)
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 139, in run_EUC
+    pset.particle_data['time'].max(), proc, pset_isize, pdel, pset.size))
+NameError: name 'pdel' is not defined
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 174, in <module>
+    outputdt_days=args.outputdt, v=args.version, pfile=args.pfile)
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 123, in timed
+    result = method(*args, **kw)
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 139, in run_EUC
+    pset.particle_data['time'].max(), proc, pset_isize, pdel, pset.size))
+NameError: name 'pdel' is not defined
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 174, in <module>
+    outputdt_days=args.outputdt, v=args.version, pfile=args.pfile)
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 123, in timed
+    result = method(*args, **kw)
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 139, in run_EUC
+    pset.particle_data['time'].max(), proc, pset_isize, pdel, pset.size))
+NameError: name 'pdel' is not defined
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 174, in <module>
+    outputdt_days=args.outputdt, v=args.version, pfile=args.pfile)
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 123, in timed
+    result = method(*args, **kw)
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 139, in run_EUC
+    pset.particle_data['time'].max(), proc, pset_isize, pdel, pset.size))
+NameError: name 'pdel' is not defined
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 174, in <module>
+    outputdt_days=args.outputdt, v=args.version, pfile=args.pfile)
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 123, in timed
+    result = method(*args, **kw)
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 139, in run_EUC
+    pset.particle_data['time'].max(), proc, pset_isize, pdel, pset.size))
+NameError: name 'pdel' is not defined
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 174, in <module>
+    outputdt_days=args.outputdt, v=args.version, pfile=args.pfile)
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 123, in timed
+    result = method(*args, **kw)
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 139, in run_EUC
+    pset.particle_data['time'].max(), proc, pset_isize, pdel, pset.size))
+NameError: name 'pdel' is not defined
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 174, in <module>
+    outputdt_days=args.outputdt, v=args.version, pfile=args.pfile)
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 123, in timed
+    result = method(*args, **kw)
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 139, in run_EUC
+    pset.particle_data['time'].max(), proc, pset_isize, pdel, pset.size))
+NameError: name 'pdel' is not defined
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 174, in <module>
+    outputdt_days=args.outputdt, v=args.version, pfile=args.pfile)
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 123, in timed
+    result = method(*args, **kw)
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 139, in run_EUC
+    pset.particle_data['time'].max(), proc, pset_isize, pdel, pset.size))
+NameError: name 'pdel' is not defined
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 174, in <module>
+    outputdt_days=args.outputdt, v=args.version, pfile=args.pfile)
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 123, in timed
+    result = method(*args, **kw)
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 139, in run_EUC
+    pset.particle_data['time'].max(), proc, pset_isize, pdel, pset.size))
+NameError: name 'pdel' is not defined
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 174, in <module>
+    outputdt_days=args.outputdt, v=args.version, pfile=args.pfile)
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 123, in timed
+    result = method(*args, **kw)
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 139, in run_EUC
+    pset.particle_data['time'].max(), proc, pset_isize, pdel, pset.size))
+NameError: name 'pdel' is not defined
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 174, in <module>
+    outputdt_days=args.outputdt, v=args.version, pfile=args.pfile)
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 123, in timed
+    result = method(*args, **kw)
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 139, in run_EUC
+    pset.particle_data['time'].max(), proc, pset_isize, pdel, pset.size))
+NameError: name 'pdel' is not defined
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 174, in <module>
+    outputdt_days=args.outputdt, v=args.version, pfile=args.pfile)
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 123, in timed
+    result = method(*args, **kw)
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 139, in run_EUC
+    pset.particle_data['time'].max(), proc, pset_isize, pdel, pset.size))
+NameError: name 'pdel' is not defined
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 174, in <module>
+    outputdt_days=args.outputdt, v=args.version, pfile=args.pfile)
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 123, in timed
+    result = method(*args, **kw)
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 139, in run_EUC
+    pset.particle_data['time'].max(), proc, pset_isize, pdel, pset.size))
+NameError: name 'pdel' is not defined
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 174, in <module>
+    outputdt_days=args.outputdt, v=args.version, pfile=args.pfile)
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 123, in timed
+    result = method(*args, **kw)
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 139, in run_EUC
+    pset.particle_data['time'].max(), proc, pset_isize, pdel, pset.size))
+NameError: name 'pdel' is not defined
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 174, in <module>
+    outputdt_days=args.outputdt, v=args.version, pfile=args.pfile)
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 123, in timed
+    result = method(*args, **kw)
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 139, in run_EUC
+    pset.particle_data['time'].max(), proc, pset_isize, pdel, pset.size))
+NameError: name 'pdel' is not defined
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 174, in <module>
+    outputdt_days=args.outputdt, v=args.version, pfile=args.pfile)
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 123, in timed
+    result = method(*args, **kw)
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 139, in run_EUC
+    pset.particle_data['time'].max(), proc, pset_isize, pdel, pset.size))
+NameError: name 'pdel' is not defined
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 174, in <module>
+    outputdt_days=args.outputdt, v=args.version, pfile=args.pfile)
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 123, in timed
+    result = method(*args, **kw)
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 139, in run_EUC
+    pset.particle_data['time'].max(), proc, pset_isize, pdel, pset.size))
+NameError: name 'pdel' is not defined
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 174, in <module>
+    outputdt_days=args.outputdt, v=args.version, pfile=args.pfile)
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 123, in timed
+    result = method(*args, **kw)
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 139, in run_EUC
+    pset.particle_data['time'].max(), proc, pset_isize, pdel, pset.size))
+NameError: name 'pdel' is not defined
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 174, in <module>
+    outputdt_days=args.outputdt, v=args.version, pfile=args.pfile)
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 123, in timed
+    result = method(*args, **kw)
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 139, in run_EUC
+    pset.particle_data['time'].max(), proc, pset_isize, pdel, pset.size))
+NameError: name 'pdel' is not defined
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 174, in <module>
+    outputdt_days=args.outputdt, v=args.version, pfile=args.pfile)
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 123, in timed
+    result = method(*args, **kw)
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 139, in run_EUC
+    pset.particle_data['time'].max(), proc, pset_isize, pdel, pset.size))
+NameError: name 'pdel' is not defined
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 174, in <module>
+    outputdt_days=args.outputdt, v=args.version, pfile=args.pfile)
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 123, in timed
+    result = method(*args, **kw)
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 139, in run_EUC
+    pset.particle_data['time'].max(), proc, pset_isize, pdel, pset.size))
+NameError: name 'pdel' is not defined
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 174, in <module>
+    outputdt_days=args.outputdt, v=args.version, pfile=args.pfile)
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 123, in timed
+    result = method(*args, **kw)
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 139, in run_EUC
+    pset.particle_data['time'].max(), proc, pset_isize, pdel, pset.size))
+NameError: name 'pdel' is not defined
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 174, in <module>
+    outputdt_days=args.outputdt, v=args.version, pfile=args.pfile)
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 123, in timed
+    result = method(*args, **kw)
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 139, in run_EUC
+    pset.particle_data['time'].max(), proc, pset_isize, pdel, pset.size))
+NameError: name 'pdel' is not defined
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 174, in <module>
+    outputdt_days=args.outputdt, v=args.version, pfile=args.pfile)
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 123, in timed
+    result = method(*args, **kw)
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 139, in run_EUC
+    pset.particle_data['time'].max(), proc, pset_isize, pdel, pset.size))
+NameError: name 'pdel' is not defined
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 174, in <module>
+    outputdt_days=args.outputdt, v=args.version, pfile=args.pfile)
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 123, in timed
+    result = method(*args, **kw)
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 139, in run_EUC
+    pset.particle_data['time'].max(), proc, pset_isize, pdel, pset.size))
+NameError: name 'pdel' is not defined
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 174, in <module>
+    outputdt_days=args.outputdt, v=args.version, pfile=args.pfile)
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 123, in timed
+    result = method(*args, **kw)
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 139, in run_EUC
+    pset.particle_data['time'].max(), proc, pset_isize, pdel, pset.size))
+NameError: name 'pdel' is not defined
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 174, in <module>
+    outputdt_days=args.outputdt, v=args.version, pfile=args.pfile)
+  File "/g/data/e14/as3189/OFAM/scripts/tools.py", line 123, in timed
+    result = method(*args, **kw)
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 139, in run_EUC
+    pset.particle_data['time'].max(), proc, pset_isize, pdel, pset.size))
+NameError: name 'pdel' is not defined
+--------------------------------------------------------------------------
+Primary job  terminated normally, but 1 process returned
+a non-zero exit code. Per user-direction, the job has been aborted.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+mpirun detected that one or more processes exited with non-zero status, thus causing
+the job to be terminated. The first process to do so was:
+
+  Process name: [[57311,1],33]
+  Exit code:    1
+--------------------------------------------------------------------------
