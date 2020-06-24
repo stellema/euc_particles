@@ -5,6 +5,7 @@ created: Fri Jun 12 18:45:35 2020
 author: Annette Stellema (astellemas@gmail.com)
 
 """
+import time
 import main
 import cfg
 import tools
@@ -50,6 +51,8 @@ def run_EUC(dy=0.1, dz=25, lon=165, year=2012, month=12, day='max', exp='hist',
         None.
 
     """
+    ts = time.time()
+
     # Get MPI rank or set to zero.
     rank = MPI.COMM_WORLD.Get_rank() if MPI else 0
 
@@ -151,11 +154,13 @@ def run_EUC(dy=0.1, dz=25, lon=165, year=2012, month=12, day='max', exp='hist',
 
     # Log experiment details.
     if rank == 0:
-        logger.info('{}:{}-{}: Runtime={} days'.format(sim_id.stem, start.strftime('%Y-%m-%d'), (start - runtime).strftime('%Y-%m-%d'), runtime.days))
+        logger.info('{}:{} to {}: Runtime={} days'.format(sim_id.stem, start.strftime('%Y-%m-%d'), (start - runtime).strftime('%Y-%m-%d'), runtime.days))
         logger.info('{}:Repeat={} days: Step={:.0f} mins: Output={:.0f} day'.format(sim_id.stem, repeatdt.days, dt_mins, outputdt.days))
         logger.info('{}:Field=b-grid: Chunks={}: Time={}-{}'.format(sim_id.stem, chunks, time_bnds[0].year, time_bnds[1].year))
-    logger.info('{}:Temp={}: Start={:>2.0f}: Rank={:>2}: #Particles={}'.format(sim_id.stem, output_file.tempwritedir_base[-8:], pset.particle_data['time'].max(), rank, psize))
+    logger.info('{}:Temp={}: Rank={:>2}: #Particles={}'.format(sim_id.stem, output_file.tempwritedir_base[-8:], rank, psize))
 
+    if pset.particle_data['time'].max() != pset_start:
+        logger.info('{}:Rank={:>2}: Start={:>2.0f}: Pstart={}'.format(sim_id.stem, rank, pset_start, pset.particle_data['time'].max()))
     # Kernels.
     kernels = (pset.Kernel(main.AgeZone) + AdvectionRK4_3D + pset.Kernel(main.Distance))
 
@@ -167,9 +172,9 @@ def run_EUC(dy=0.1, dz=25, lon=165, year=2012, month=12, day='max', exp='hist',
                  recovery={ErrorCode.Error: main.DeleteParticle,
                            ErrorCode.ErrorOutOfBounds: main.DeleteParticle,
                            ErrorCode.ErrorThroughSurface: main.SubmergeParticle})
-
-    logger.info('{}:Completed!: Rank={:>2}: #Particles={}-{}={}'
-                .format(sim_id.stem, rank, psize, psize - pset.size, pset.size))
+    timed = tools.timer(ts)
+    logger.info('{}:Completed!: {}: Rank={:>2}: #Particles={}-{}={}'
+                .format(sim_id.stem, timed, rank, psize, psize - pset.size, pset.size))
 
     # Save to netcdf.
     output_file.export()
