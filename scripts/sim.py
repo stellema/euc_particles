@@ -5,18 +5,19 @@ created: Fri Jun 12 18:45:35 2020
 author: Annette Stellema (astellemas@gmail.com)
 
 """
-import time
+import time as Time
 import main
 import cfg
 import tools
 import math
+# import parcels
 import numpy as np
+import xarray as xr
 from pathlib import Path
 from operator import attrgetter
 from datetime import datetime, timedelta
 from argparse import ArgumentParser
-from parcels import (FieldSet, Field, ParticleSet, JITParticle,
-                     ErrorCode, Variable, AdvectionRK4_3D, AdvectionRK4)
+from parcels import (AdvectionRK4_3D, ErrorCode, Variable)
 
 try:
     from mpi4py import MPI
@@ -29,7 +30,7 @@ logger = tools.mlogger('sim', parcels=True)
 @tools.timeit
 def run_EUC(dy=0.1, dz=25, lon=165, year=2012, month=12, day='max', exp='hist',
             dt_mins=60, repeatdt_days=6, outputdt_days=1, runtime_days=186,
-            v=1, chunks=300, pfile='None'):
+            v=1, chunks=300, unbeach=True, pfile='None'):
     """Run Lagrangian EUC particle experiment.
 
     Args:
@@ -51,7 +52,7 @@ def run_EUC(dy=0.1, dz=25, lon=165, year=2012, month=12, day='max', exp='hist',
         None.
 
     """
-    ts = time.time()
+    ts = Time.time()
 
     # Get MPI rank or set to zero.
     rank = MPI.COMM_WORLD.Get_rank() if MPI else 0
@@ -75,8 +76,9 @@ def run_EUC(dy=0.1, dz=25, lon=165, year=2012, month=12, day='max', exp='hist',
         time_bnds = [datetime(1981, 1, 1), datetime(y2, 12, 31)]
     elif exp == 'rcp':
         time_bnds = [datetime(2070, 1, 1), datetime(2101, 12, 31)]
-
-    fieldset = main.ofam_fieldset(time_bnds, chunks=300, time_periodic=True)
+    time_bnds = [datetime(2012, 9, 1), datetime(2012, 12, 31)]
+    fieldset = main.ofam_fieldset(time_bnds, exp, vcoord='sw_edges_ocean', chunks=True, cs=300,
+                                  time_periodic=True, add_zone=True, add_unbeach_vel=unbeach)
 
     # Define the ParticleSet pclass.
     class zdParticle(cfg.ptype['jit']):
@@ -99,6 +101,11 @@ def run_EUC(dy=0.1, dz=25, lon=165, year=2012, month=12, day='max', exp='hist',
 
         # The previous latitude. to_write=False,
         prev_lat = Variable('prev_lat', dtype=np.float32, initial=attrgetter('lat'))
+
+        # beached : 0 sea, 1 beached, 2 after non-beach dyn, 3 after beach dyn, 4 please unbeach
+        beached = Variable('beached', dtype=np.int32, initial=0.)
+
+        unbeachCount = Variable('unbeachCount', dtype=np.int32, initial=0.)
 
     pclass = zdParticle
 
@@ -140,7 +147,7 @@ def run_EUC(dy=0.1, dz=25, lon=165, year=2012, month=12, day='max', exp='hist',
 
     # Create ParticleSet.
     pset = main.pset_euc(fieldset, pclass, lon, dy, dz, repeatdt, pset_start, repeats,
-                         sim_id, rank=rank, pdel=None, partitions=None)
+                         sim_id, rank=rank, pdel=None)
 
     # Add particles from ParticleFile.
     if restart:
@@ -161,23 +168,35 @@ def run_EUC(dy=0.1, dz=25, lon=165, year=2012, month=12, day='max', exp='hist',
 
     if pset.particle_data['time'].max() != pset_start:
         logger.info('{}:Rank={:>2}: Start={:>2.0f}: Pstart={}'.format(sim_id.stem, rank, pset_start, pset.particle_data['time'].max()))
+
     # Kernels.
-    kernels = (pset.Kernel(main.AgeZone) + AdvectionRK4_3D + pset.Kernel(main.Distance))
+    if unbeach:
+        kernels = (pset.Kernel(main.AgeZone) + pset.Kernel(main.AdvectionRK4_3Db) +
+                   pset.Kernel(main.UnBeaching) + pset.Kernel(main.Distance))
+    else:
+        kernels = (pset.Kernel(main.AgeZone) + pset.Kernel(AdvectionRK4_3D) + pset.Kernel(main.Distance))
 
     # ParticleSet execution endtime.
     endtime = int(pset_start - runtime.total_seconds())
 
     # Execute ParticleSet.
+    recovery_kernels = {ErrorCode.Error: main.DeleteParticle,
+                        ErrorCode.ErrorOutOfBounds: main.DeleteParticle,
+                        ErrorCode.ErrorThroughSurface: main.SubmergeParticle}
     pset.execute(kernels, endtime=endtime, dt=dt, output_file=output_file, verbose_progress=True,
-                 recovery={ErrorCode.Error: main.DeleteParticle,
-                           ErrorCode.ErrorOutOfBounds: main.DeleteParticle,
-                           ErrorCode.ErrorThroughSurface: main.SubmergeParticle})
+                 recovery=recovery_kernels)
+
     timed = tools.timer(ts)
     logger.info('{}:Completed!: {}: Rank={:>2}: #Particles={}-{}={}'
                 .format(sim_id.stem, timed, rank, psize, psize - pset.size, pset.size))
 
     # Save to netcdf.
     output_file.export()
+    if rank == 0:
+        ds = xr.open_dataset(sim_id, decode_cf=True)
+        main.plot3D(sim_id, del_west=False)
+        print(np.nanmax(ds.unbeachCount))
+        ds.close()
 
     return
 
@@ -203,15 +222,17 @@ if __name__ == "__main__" and cfg.home != Path('E:/'):
             repeatdt_days=args.repeatdt, outputdt_days=args.outputdt,
             v=args.version, pfile=args.pfile)
 else:
-    dy, dz = 0.4, 100
+    dy, dz = 0.8, 150
     lon = 190
     year, month, day = 1981, 1, 'max'
-    dt_mins, repeatdt_days, outputdt_days, runtime_days = 60, 6, 1, 18
+    dt_mins, repeatdt_days, outputdt_days, runtime_days = 60, 6, 1, 100
     chunks = 300
     pfile = 'None'
-    pfile = 'sim_hist_190_v21r1.nc'
+    # pfile = 'sim_hist_190_v21r1.nc'
     v = 55
     exp = 'hist'
+    unbeach = True
+    print(unbeach)
     run_EUC(dy=dy, dz=dz, lon=lon, year=year, month=month, day=day,
             dt_mins=dt_mins, repeatdt_days=repeatdt_days, outputdt_days=outputdt_days,
-            v=v, runtime_days=runtime_days, pfile=pfile, chunks=chunks)
+            v=v, runtime_days=runtime_days, pfile=pfile, unbeach=unbeach, chunks=chunks)

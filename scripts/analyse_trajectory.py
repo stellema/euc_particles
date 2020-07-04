@@ -66,48 +66,55 @@ def plot_traj(traj, ds, dv, sim_id, var='u'):
     return
 
 
-du = xr.open_dataset(cfg.ofam/'ocean_u_1981_01.nc').u.isel(Time=0)
-dv = xr.open_dataset(cfg.ofam/'ocean_v_1981_01.nc').v.isel(Time=0)
-dw = xr.open_dataset(cfg.ofam/'ocean_w_1981_01.nc').w.isel(Time=0)
-dt = xr.open_dataset(cfg.ofam/'ocean_temp_1981_01.nc').temp.isel(Time=0)
-
 cmap = plt.cm.seismic
 cmap.set_bad('grey')
 
-# sim_id = cfg.data/'sim_190_v0r0.nc'
-# df = xr.open_dataset(sim_id, decode_cf=True)
-sim_id = cfg.data/'sim_165_v1r0.nc'
-ds = xr.open_dataset(sim_id, decode_cf=True)
+# sim_id = cfg.data/'sim_hist_190_v0r0.nc'
+# ds = xr.open_dataset(sim_id, decode_cf=True)
 # ds = ds.where(ds.u >= 0, drop=True)
 
 # Plot trajectories of particles that go deeper than a certain depth.
-tr = np.unique(ds.where(ds.z > 600).trajectory)[0:14]
+tr = np.unique(ds.where(ds.z > 330).trajectory)[0:14]
 print(tr)
 colors = plt.cm.rainbow(np.linspace(0, 1, len(tr)))
 fig = plt.figure(figsize=(11, 8))
 ax = fig.add_subplot(111, projection='3d')
 for i, t in enumerate(tr):
-    dx = ds.where(ds.trajectory == int(t), drop=True).isel(traj=0)
-    ax.plot3D(dx.lon, dx.lat, dx.z, color=colors[i])
+    if ~np.isnan(t):
+        dx = ds.where(ds.trajectory == int(t), drop=True).isel(traj=0)
+        ax.plot3D(dx.lon, dx.lat, dx.z, color=colors[i])
 ax.set_xlabel("Longitude")
 ax.set_ylabel("Latitude")
 ax.set_zlabel("Depth [m]")
 ax.set_zlim(600, 200)
 
-
-traj = 1367
+traj = 230
 dx = ds.where(ds.trajectory == traj, drop=True).isel(traj=0)
 X = [np.round(dx.lon.min(), 1)-1, np.round(dx.lon.max(), 1)+1]
 Y = [np.round(dx.lat.min(), 1)-1, np.round(dx.lat.max(), 1)+1]
-Z = 320
-u = du.sel(xu_ocean=slice(X[0], X[1]),
-            yu_ocean=slice(Y[0], Y[1])).sel(
-                st_ocean=Z, method='nearest')
-v = dv.sel(xu_ocean=slice(X[0], X[1]),
-            yu_ocean=slice(Y[0], Y[1])).sel(
-                st_ocean=Z, method='nearest')
-w = dw.sel(xt_ocean=slice(X[0], X[1]),
-            yt_ocean=slice(Y[0], Y[1])).sel(
-                sw_ocean=Z, method='nearest')
+Z = 290
 
-plot_traj(traj, ds, w, sim_id, var='w')
+i = np.argmin(dx.lat)
+t = dx.time[i]
+t = 22
+du = xr.open_dataset(cfg.ofam/'ocean_u_2012_09.nc').u.isel(Time=t)
+dv = xr.open_dataset(cfg.ofam/'ocean_v_2012_09.nc').v.isel(Time=t)
+dw = xr.open_dataset(cfg.ofam/'ocean_w_2012_09.nc').w.isel(Time=t)
+dt = xr.open_dataset(cfg.ofam/'ocean_temp_1981_01.nc').temp.isel(Time=t)
+
+u = du.sel(xu_ocean=slice(X[0], X[1]), yu_ocean=slice(Y[0], Y[1])).sel(st_ocean=Z, method='nearest')
+v = dv.sel(xu_ocean=slice(X[0], X[1]), yu_ocean=slice(Y[0], Y[1])).sel(st_ocean=Z, method='nearest')
+w = dw.sel(xt_ocean=slice(X[0], X[1]), yt_ocean=slice(Y[0], Y[1])).sel(sw_ocean=Z, method='nearest')
+
+plot_traj(traj, ds, u, sim_id, var='u')
+
+Z=10
+du.sel(yu_ocean=slice(-1.0, -0.67),
+        xu_ocean=slice(185.17, 185.5)).sel(st_ocean=Z, method='nearest')
+du.sel(yu_ocean=slice(-0.9, -0.79),
+        xu_ocean=slice(185.27, 185.45)).sel(st_ocean=Z, method='nearest')
+
+
+du.isel(yu_ocean=slice(140, 144), xu_ocean=slice(652, 656), st_ocean=28)
+dt.isel(yt_ocean=slice(140, 144), xt_ocean=slice(652, 656), st_ocean=28)
+dw.isel(yt_ocean=slice(140, 144), xt_ocean=slice(652, 656), sw_ocean=28)
