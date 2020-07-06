@@ -77,7 +77,7 @@ def run_EUC(dy=0.1, dz=25, lon=165, year=2012, month=12, day='max', exp='hist',
         time_bnds = [datetime(1981, 1, 1), datetime(y2, 12, 31)]
     elif exp == 'rcp':
         time_bnds = [datetime(2070, 1, 1), datetime(2101, 12, 31)]
-    time_bnds = [datetime(2012, 9, 1), datetime(2012, 12, 31)]
+
     fieldset = main.ofam_fieldset(time_bnds, exp, vcoord='sw_edges_ocean', chunks=True, cs=300,
                                   time_periodic=True, add_zone=True, add_unbeach_vel=unbeach)
 
