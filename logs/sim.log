@@ -2991,3 +2991,36 @@
 2020-07-04 15:05:49,282:run_EUC:INFO:sim_hist_190_v87r0:Temp=KAKAMQFR: Rank= 0: #Particles=18
 2020-07-04 15:05:51,032:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DbUnBeachingAgeSampleZoneDistance ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\9a1339b2f809c9a5cf606b15c093501a_0.dll
 2020-07-04 15:07:45,902:run_EUC:INFO:sim_hist_190_v87r0:Completed!: 00:02:12: Rank= 0: #Particles=18-1=17
+2020-07-06 10:55:44,216:__init__:WARNING:Casting lon data to np.float32
+2020-07-06 10:55:44,218:__init__:WARNING:Casting lat data to np.float32
+2020-07-06 10:55:44,218:__init__:WARNING:Casting depth data to np.float32
+2020-07-06 10:55:44,251:__init__:WARNING:Casting lon data to np.float32
+2020-07-06 10:55:44,252:__init__:WARNING:Casting lat data to np.float32
+2020-07-06 10:55:44,252:__init__:WARNING:Casting depth data to np.float32
+2020-07-06 10:55:44,343:__init__:WARNING:Casting lon data to np.float32
+2020-07-06 10:55:44,344:__init__:WARNING:Casting lat data to np.float32
+2020-07-06 10:55:44,344:__init__:WARNING:Casting depth data to np.float32
+2020-07-06 10:55:44,435:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-06 10:55:44,435:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-06 10:55:44,435:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-06 11:00:08,880:__init__:WARNING:Casting time data to np.float64
+2020-07-06 11:00:08,881:__init__:WARNING:Casting time data to np.float64
+2020-07-06 11:00:08,956:__init__:WARNING:Casting time data to np.float64
+2020-07-06 11:00:09,355:reshape:WARNING:Casting field data to np.float32
+2020-07-06 11:00:09,508:reshape:WARNING:Casting field data to np.float32
+2020-07-06 11:00:09,553:reshape:WARNING:Casting field data to np.float32
+2020-07-06 11:00:11,319:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-06 11:00:11,324:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-06 11:00:11,329:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-06 11:03:32,222:run_EUC:INFO:sim_hist_165_v40r0:2013-01-01 to 2012-12-02: Runtime=30 days
+2020-07-06 11:03:32,222:run_EUC:INFO:sim_hist_165_v40r0:Repeat=6 days: Step=60 mins: Output=1 day
+2020-07-06 11:03:32,222:run_EUC:INFO:sim_hist_165_v40r0:Field=b-grid: Chunks=300: Time=1981-2012
+2020-07-06 11:03:32,223:run_EUC:INFO:sim_hist_165_v40r0:Temp=ZEMPTQZW: Rank= 0: #Particles=1008
+2020-07-06 11:03:36,502:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8033874.gadi-pbs/parcels-12904/506e47fa40b92d0297fdae2a9dc6fc8a_0.so
+2020-07-06 11:03:37,117:run_EUC:INFO:sim_hist_165_v40r0:Temp=ZEMPTQZW: Rank= 2: #Particles=952
+2020-07-06 11:03:39,996:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8033874.gadi-pbs/parcels-12904/506e47fa40b92d0297fdae2a9dc6fc8a_2.so
+2020-07-06 11:03:57,184:run_EUC:INFO:sim_hist_165_v40r0:Temp=ZEMPTQZW: Rank= 1: #Particles=1008
+2020-07-06 11:04:00,142:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8033874.gadi-pbs/parcels-12904/506e47fa40b92d0297fdae2a9dc6fc8a_1.so
+2020-07-06 11:04:24,405:run_EUC:INFO:sim_hist_165_v40r0:Completed!: 00:11:03: Rank= 0: #Particles=1008-368=640
+2020-07-06 11:04:24,471:run_EUC:INFO:sim_hist_165_v40r0:Completed!: 00:11:03: Rank= 2: #Particles=952-541=411
+2020-07-06 11:24:17,166:run_EUC:INFO:sim_hist_165_v40r0:Completed!: 00:30:55: Rank= 1: #Particles=1008-261=747
