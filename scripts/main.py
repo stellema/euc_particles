@@ -89,7 +89,7 @@ def ofam_fieldset(time_bnds='full', exp='hist', vcoord='sw_edges_ocean', chunks=
 
     """
     # Add OFAM dimension names to NetcdfFileBuffer name maps (chunking workaround).
-    parcels.field.NetcdfFileBuffer._name_maps = {"time": ["time"],
+    parcels.field.NetcdfFileBuffer._name_maps = {"time": ["Time"],
                                                  "lon": ["xu_ocean", "xt_ocean"],
                                                  "lat": ["yu_ocean", "yt_ocean"],
                                                  "depth": ["st_ocean", "sw_ocean",
@@ -141,10 +141,10 @@ def ofam_fieldset(time_bnds='full', exp='hist', vcoord='sw_edges_ocean', chunks=
     if add_zone:
         files = str(cfg.data/'OFAM3_tcell_zones.nc')
         dimensions = {'time': 'Time', 'depth': 'sw_ocean', 'lat': 'yt_ocean', 'lon': 'xt_ocean'}
-        if chunks not in ['auto', False]:
-            zchunks = {'Time': 1, 'sw_ocean': 1, 'yt_ocean': cs, 'xt_ocean': cs}
+        # if chunks not in ['auto', False]:
+        #     zchunks = {'Time': 1, 'sw_ocean': 1, 'yt_ocean': cs, 'xt_ocean': cs}
         zfield = Field.from_netcdf(files, 'zone', dimensions,
-                                   field_chunksize=zchunks, allow_time_extrapolation=True)
+                                   field_chunksize=chunks, allow_time_extrapolation=True)
         fieldset.add_field(zfield, 'zone')
         fieldset.zone.interp_method = 'nearest'
 
@@ -158,8 +158,8 @@ def ofam_fieldset(time_bnds='full', exp='hist', vcoord='sw_edges_ocean', chunks=
                         'unBeachV': {'depth': np.append(np.arange(0, n, dtype=int), n-1).tolist()}}
         else:
             bindices = None
-        if chunks not in ['auto', False]:
-            chunks = {'Time': 1, vcoord: 1, 'st_ocean': 1, 'yu_ocean': cs, 'xu_ocean': cs}
+        # if chunks not in ['auto', False]:
+        #     chunks = {'Time': 1, vcoord: 1, 'st_ocean': 1, 'yu_ocean': cs, 'xu_ocean': cs}
 
         fieldsetUnBeach = FieldSet.from_b_grid_dataset(file, variables, dimensions,
                                                        indices=bindices, field_chunksize=chunks,
@@ -249,33 +249,6 @@ def SubmergeParticle(particle, fieldset, time):
     # Increase time to not trigger kernels again, otherwise infinite loop.
     particle.time = time + particle.dt
     particle.set_state(ErrorCode.Success)
-
-
-def get_zParticle(fieldset):
-    class zdParticle(cfg.ptype['jit']):
-        """Particle class that saves particle age and zonal velocity."""
-
-        # The age of the particle.
-        age = Variable('age', initial=0., dtype=np.float32)
-
-        # The velocity of the particle.
-        u = Variable('u', initial=fieldset.U, to_write='once', dtype=np.float32)
-
-        # The 'zone' of the particle.
-        zone = Variable('zone', initial=0., dtype=np.float32)
-
-        # The distance travelled
-        distance = Variable('distance', initial=0., dtype=np.float32)
-
-        # The previous longitude. to_write=False
-        prev_lon = Variable('prev_lon', initial=attrgetter('lon'), to_write=False, dtype=np.float32)
-
-        # The previous latitude. to_write=False,
-        prev_lat = Variable('prev_lat', initial=attrgetter('lat'), to_write=False, dtype=np.float32)
-
-        unbeachCount = Variable('unbeachCount', initial=0., dtype=np.float32)
-
-    return zdParticle
 
 
 def pset_euc(fieldset, pclass, lon, dy, dz, repeatdt, pset_start, repeats,

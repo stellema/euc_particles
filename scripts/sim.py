@@ -14,14 +14,14 @@ from pathlib import Path
 from operator import attrgetter
 from datetime import datetime, timedelta
 from argparse import ArgumentParser
-from parcels import (AdvectionRK4_3D, ErrorCode, Variable, ParticleSet)
+from parcels import (AdvectionRK4_3D, ErrorCode, Variable, JITParticle)
 
 try:
     from mpi4py import MPI
 except ImportError:
     MPI = None
 
-log_name = 'sim' if cfg.home != Path('E:/') else 'test_sim'
+log_name = 'sim' #if cfg.home != Path('E:/') else 'test_sim'
 logger = tools.mlogger(log_name, parcels=True)
 
 
@@ -45,11 +45,11 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
         None.
 
     """
+    logger.debug('Starting')
     ts = datetime.now()
-
     # Get MPI rank or set to zero.
     rank = MPI.COMM_WORLD.Get_rank() if MPI else 0
-
+    logger.debug('Rank={}'.format(rank))
     # Start from end of Fieldset time or restart from ParticleFile.
     restart = False if pfile == 'None' else True
 
@@ -72,9 +72,9 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
 
     fieldset = main.ofam_fieldset(time_bnds, exp, vcoord='sw_edges_ocean', chunks=True, cs=chunks,
                                   time_periodic=True, add_zone=True, add_unbeach_vel=unbeach)
-
+    logger.debug('Rank={}: Opened fieldset'.format(rank))
     # Define the ParticleSet pclass.
-    class zdParticle(cfg.ptype['jit']):
+    class zdParticle(JITParticle):
         """Particle class that saves particle age and zonal velocity."""
 
         # The age of the particle.
@@ -138,7 +138,7 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
     # Create ParticleSet.
     pset = main.pset_euc(fieldset, pclass, lon, dy, dz, repeatdt, pset_start, repeats,
                          sim_id, rank=rank)
-
+    logger.debug('Rank={}: Created ParticleSet'.format(rank))
     # Add particles from ParticleFile.
     if restart:
         pset.add(psetx)
@@ -188,7 +188,8 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
     return
 
 
-if __name__ == "__main__" and cfg.home != Path('E:/'):
+# if __name__ == "__main__" and cfg.home != Path('E:/'):
+if cfg.home != Path('E:/'):
     p = ArgumentParser(description="""Run EUC Lagrangian experiment.""")
     p.add_argument('-dy', '--dy', default=0.1, type=float, help='Particle latitude spacing [deg].')
     p.add_argument('-dz', '--dz', default=25, type=int, help='Particle depth spacing [m].')
@@ -201,7 +202,7 @@ if __name__ == "__main__" and cfg.home != Path('E:/'):
     p.add_argument('-v', '--version', default=0, type=int, help='File Index.')
     p.add_argument('-f', '--pfile', default='None', type=str, help='Particle file.')
     args = p.parse_args()
-
+    logger.debug('Args parsed')
     run_EUC(dy=args.dy, dz=args.dz, lon=args.lon, exp=args.exp, runtime_days=args.runtime,
             dt_mins=args.dt, repeatdt_days=args.repeatdt, outputdt_days=args.outputdt,
             v=args.version, pfile=args.pfile)
@@ -213,6 +214,7 @@ else:
     exp = 'hist'
     unbeach = True
     chunks = 300
+    logger.debug('Args parsed')
     run_EUC(dy=dy, dz=dz, lon=lon, dt_mins=dt_mins, repeatdt_days=repeatdt_days,
             outputdt_days=outputdt_days, v=v, runtime_days=runtime_days,
             unbeach=unbeach, pfile=pfile)

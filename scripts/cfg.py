@@ -63,8 +63,6 @@ lb = [r"$\bf{{{}}}$".format(i) for i in list(string.ascii_lowercase)]
 
 loggers = {}
 
-ptype = {'scipy': ScipyParticle, 'jit': JITParticle}
-
 # Sverdrup.
 SV = 1e6
 
