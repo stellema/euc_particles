@@ -5,14 +5,13 @@ created: Fri Jun 12 18:45:35 2020
 author: Annette Stellema (astellemas@gmail.com)
 
 """
-import time as Time
+import time
 import main
 import cfg
 import tools
 import math
 # import parcels
 import numpy as np
-import xarray as xr
 from pathlib import Path
 from operator import attrgetter
 from datetime import datetime, timedelta
@@ -24,7 +23,7 @@ try:
 except ImportError:
     MPI = None
 
-log_name = 'sim' if cfg.home != Path('E:/') else 'test_sim'
+log_name = 'sim' #if cfg.home != Path('E:/') else 'test_sim'
 logger = tools.mlogger(log_name, parcels=True)
 
 
@@ -53,7 +52,7 @@ def run_EUC(dy=0.1, dz=25, lon=165, year=2012, month=12, day='max', exp='hist',
         None.
 
     """
-    ts = Time.time()
+    ts = time.time()
 
     # Get MPI rank or set to zero.
     rank = MPI.COMM_WORLD.Get_rank() if MPI else 0
