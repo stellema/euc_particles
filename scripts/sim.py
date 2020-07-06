@@ -18,47 +18,11 @@ from parcels import (AdvectionRK4_3D, ErrorCode, Variable, ParticleSet)
 
 try:
     from mpi4py import MPI
-except:
+except ImportError:
     MPI = None
 
 log_name = 'sim' if cfg.home != Path('E:/') else 'test_sim'
 logger = tools.mlogger(log_name, parcels=True)
-
-
-def pset_euc(fieldset, pclass, lon, dy, dz, repeatdt, pset_start, repeats,
-             sim_id=None, rank=0):
-    """Create a ParticleSet."""
-    repeats = 1 if repeats <= 0 else repeats
-    # Particle release latitudes, depths and longitudes.
-    py = np.round(np.arange(-2.6, 2.6 + 0.05, dy), 2)
-    pz = np.arange(25, 350 + 20, dz)
-    px = np.array([lon])
-
-    # Number of particles released in each dimension.
-    Z, Y, X = pz.size, py.size, px.size
-    npart = Z * X * Y * repeats
-
-    # Each repeat.
-    lats = np.repeat(py, pz.size*px.size)
-    depths = np.repeat(np.tile(pz, py.size), px.size)
-    lons = np.repeat(px, pz.size*py.size)
-
-    # Duplicate for each repeat.
-    tr = pset_start - (np.arange(0, repeats) * repeatdt.total_seconds())
-    time = np.repeat(tr, lons.size)
-    depth = np.tile(depths, repeats)
-    lon = np.tile(lons, repeats)
-    lat = np.tile(lats, repeats)
-
-    pset = ParticleSet.from_list(fieldset=fieldset, pclass=pclass,
-                                 lon=lon, lat=lat, depth=depth, time=time,
-                                 lonlatdepth_dtype=np.float64)
-    # if rank == 0:
-    logger.info('{}:Particles: /repeat={}: Total={}'
-                .format(sim_id.stem, Z * X * Y, npart))
-    logger.info('{}:Lon={}: Lat=[{}-{} x{}]: Depth=[{}-{}m x{}]'
-                .format(sim_id.stem, *px, py[0], py[Y-1], dy, pz[0], pz[Z-1], dz))
-    return pset
 
 
 @tools.timeit
@@ -84,7 +48,7 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
     ts = datetime.now()
 
     # Get MPI rank or set to zero.
-    rank = 0  #MPI.COMM_WORLD.Get_rank() if MPI else 0
+    rank = MPI.COMM_WORLD.Get_rank() if MPI else 0
 
     # Start from end of Fieldset time or restart from ParticleFile.
     restart = False if pfile == 'None' else True
@@ -172,8 +136,8 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
         start = fieldset.time_origin.time_origin + timedelta(seconds=np.nanmin(psetx.time))
 
     # Create ParticleSet.
-    pset = pset_euc(fieldset, pclass, lon, dy, dz, repeatdt, pset_start, repeats,
-                    sim_id, rank=rank)
+    pset = main.pset_euc(fieldset, pclass, lon, dy, dz, repeatdt, pset_start, repeats,
+                         sim_id, rank=rank)
 
     # Add particles from ParticleFile.
     if restart:
@@ -186,10 +150,10 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
     output_file = pset.ParticleFile(cfg.data/sim_id.stem, outputdt=outputdt)
 
     # Log experiment details.
-    # if rank == 0:
-    logger.info('{}:{} to {}: Runtime={} days'.format(sim_id.stem, start.strftime('%Y-%m-%d'), (start - runtime).strftime('%Y-%m-%d'), runtime.days))
-    logger.info('{}:Repeat={} days: Step={:.0f} mins: Output={:.0f} day'.format(sim_id.stem, repeatdt.days, dt_mins, outputdt.days))
-    logger.info('{}:Field=b-grid: Chunks={}: Time={}-{}'.format(sim_id.stem, chunks, time_bnds[0].year, time_bnds[1].year))
+    if rank == 0:
+        logger.info('{}:{} to {}: Runtime={} days'.format(sim_id.stem, start.strftime('%Y-%m-%d'), (start - runtime).strftime('%Y-%m-%d'), runtime.days))
+        logger.info('{}:Repeat={} days: Step={:.0f} mins: Output={:.0f} day'.format(sim_id.stem, repeatdt.days, dt_mins, outputdt.days))
+        logger.info('{}:Field=b-grid: Chunks={}: Time={}-{}'.format(sim_id.stem, chunks, time_bnds[0].year, time_bnds[1].year))
     logger.info('{}:Temp={}: Rank={:>2}: #Particles={}'.format(sim_id.stem, output_file.tempwritedir_base[-8:], rank, psize))
 
     if pset.particle_data['time'].max() != pset_start:

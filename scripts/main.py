@@ -60,19 +60,17 @@ import parcels
 import numpy as np
 import xarray as xr
 # import pandas as pd
-from tools import timeit
 from pathlib import Path
 from operator import attrgetter
 import matplotlib.pyplot as plt
-from collections import OrderedDict
 from datetime import datetime, timedelta
-from parcels import (FieldSet, Field, ParticleSet, JITParticle, VectorField,
-                     ErrorCode, Variable, AdvectionRK4, AdvectionRK4_3D)
+from parcels import (FieldSet, Field, ParticleSet, VectorField,
+                     ErrorCode, Variable, AdvectionRK4)
 
-logger = tools.mlogger('misc')
+logger = tools.mlogger(Path(sys.argv[0]).stem)
 
 
-def ofam_fieldset(time_bnds='full', exp='hist', vcoord='st_edges_ocean', chunks=True, cs=300,
+def ofam_fieldset(time_bnds='full', exp='hist', vcoord='sw_edges_ocean', chunks=True, cs=300,
                   time_periodic=True, add_zone=True, add_unbeach_vel=True):
     """Create a 3D parcels fieldset from OFAM model output.
 
@@ -155,9 +153,13 @@ def ofam_fieldset(time_bnds='full', exp='hist', vcoord='st_edges_ocean', chunks=
         file = str(cfg.data/'OFAM3_unbeach_vel_ucell.nc')
         variables = {'unBeachU': 'unBeachU', 'unBeachV': 'unBeachV'}
         dimensions = {'time': 'Time', 'depth': vcoord, 'lat': 'yu_ocean', 'lon': 'xu_ocean'}
-        bindices = indices['U'] if indices else None
+        if vcoord in ['sw_edges_ocean', 'st_edges_ocean']:
+            bindices = {'unBeachU': {'depth': np.append(np.arange(0, n, dtype=int), n-1).tolist()},
+                        'unBeachV': {'depth': np.append(np.arange(0, n, dtype=int), n-1).tolist()}}
+        else:
+            bindices = None
         if chunks not in ['auto', False]:
-            chunks = {'Time': 1, vcoord: 1, 'yu_ocean': cs, 'xu_ocean': cs}
+            chunks = {'Time': 1, vcoord: 1, 'st_ocean': 1, 'yu_ocean': cs, 'xu_ocean': cs}
 
         fieldsetUnBeach = FieldSet.from_b_grid_dataset(file, variables, dimensions,
                                                        indices=bindices, field_chunksize=chunks,
@@ -274,6 +276,42 @@ def get_zParticle(fieldset):
         unbeachCount = Variable('unbeachCount', initial=0., dtype=np.float32)
 
     return zdParticle
+
+
+def pset_euc(fieldset, pclass, lon, dy, dz, repeatdt, pset_start, repeats,
+             sim_id=None, rank=0):
+    """Create a ParticleSet."""
+    repeats = 1 if repeats <= 0 else repeats
+    # Particle release latitudes, depths and longitudes.
+    py = np.round(np.arange(-2.6, 2.6 + 0.05, dy), 2)
+    pz = np.arange(25, 350 + 20, dz)
+    px = np.array([lon])
+
+    # Number of particles released in each dimension.
+    Z, Y, X = pz.size, py.size, px.size
+    npart = Z * X * Y * repeats
+
+    # Each repeat.
+    lats = np.repeat(py, pz.size*px.size)
+    depths = np.repeat(np.tile(pz, py.size), px.size)
+    lons = np.repeat(px, pz.size*py.size)
+
+    # Duplicate for each repeat.
+    tr = pset_start - (np.arange(0, repeats) * repeatdt.total_seconds())
+    time = np.repeat(tr, lons.size)
+    depth = np.tile(depths, repeats)
+    lon = np.tile(lons, repeats)
+    lat = np.tile(lats, repeats)
+
+    pset = ParticleSet.from_list(fieldset=fieldset, pclass=pclass,
+                                 lon=lon, lat=lat, depth=depth, time=time,
+                                 lonlatdepth_dtype=np.float64)
+    if sim_id and rank == 0:
+        logger.info('{}:Particles: /repeat={}: Total={}'
+                    .format(sim_id.stem, Z * X * Y, npart))
+        logger.info('{}:Lon={}: Lat=[{}-{} x{}]: Depth=[{}-{}m x{}]'
+                    .format(sim_id.stem, *px, py[0], py[Y-1], dy, pz[0], pz[Z-1], dz))
+    return pset
 
 
 def particleset_from_particlefile(fieldset, pclass, filename, repeatdt=None, restart=True,

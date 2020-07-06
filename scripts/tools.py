@@ -72,7 +72,7 @@ def mlogger(name, parcels=False):
     return logger
 
 
-logger = mlogger('misc')
+logger = mlogger(Path(sys.argv[0]).stem)
 
 
 def current_time(print_time=False):
