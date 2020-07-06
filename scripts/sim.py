@@ -21,10 +21,11 @@ from parcels import (AdvectionRK4_3D, ErrorCode, Variable)
 
 try:
     from mpi4py import MPI
-except:
+except ImportError:
     MPI = None
 
-logger = tools.mlogger('sim', parcels=True)
+log_name = 'sim' if cfg.home != Path('E:/') else 'test_sim'
+logger = tools.mlogger(log_name, parcels=True)
 
 
 @tools.timeit
@@ -85,27 +86,24 @@ def run_EUC(dy=0.1, dz=25, lon=165, year=2012, month=12, day='max', exp='hist',
         """Particle class that saves particle age and zonal velocity."""
 
         # The age of the particle.
-        age = Variable('age', dtype=np.float32, initial=0.)
+        age = Variable('age', initial=0., dtype=np.float32)
 
         # The velocity of the particle.
-        u = Variable('u', dtype=np.float32, initial=fieldset.U, to_write='once')
+        u = Variable('u', initial=fieldset.U, to_write='once', dtype=np.float32)
 
         # The 'zone' of the particle.
-        zone = Variable('zone', dtype=np.float32, initial=0.)
+        zone = Variable('zone', initial=0., dtype=np.float32)
 
         # The distance travelled
-        distance = Variable('distance', dtype=np.float32, initial=0.)
+        distance = Variable('distance', initial=0., dtype=np.float32)
 
         # The previous longitude. to_write=False
-        prev_lon = Variable('prev_lon', dtype=np.float32, initial=attrgetter('lon'))
+        prev_lon = Variable('prev_lon', initial=attrgetter('lon'), to_write=False, dtype=np.float32)
 
         # The previous latitude. to_write=False,
-        prev_lat = Variable('prev_lat', dtype=np.float32, initial=attrgetter('lat'))
+        prev_lat = Variable('prev_lat', initial=attrgetter('lat'), to_write=False, dtype=np.float32)
 
-        # beached : 0 sea, 1 beached, 2 after non-beach dyn, 3 after beach dyn, 4 please unbeach
-        beached = Variable('beached', dtype=np.int32, initial=0.)
-
-        unbeachCount = Variable('unbeachCount', dtype=np.int32, initial=0.)
+        unbeachCount = Variable('unbeachCount', initial=0., dtype=np.float32)
 
     pclass = zdParticle
 
@@ -170,19 +168,21 @@ def run_EUC(dy=0.1, dz=25, lon=165, year=2012, month=12, day='max', exp='hist',
         logger.info('{}:Rank={:>2}: Start={:>2.0f}: Pstart={}'.format(sim_id.stem, rank, pset_start, pset.particle_data['time'].max()))
 
     # Kernels.
+    kernels = pset.Kernel(main.DelWest) + pset.Kernel(AdvectionRK4_3D)
+
     if unbeach:
-        kernels = (pset.Kernel(main.AgeZone) + pset.Kernel(main.AdvectionRK4_3Db) +
-                   pset.Kernel(main.UnBeaching) + pset.Kernel(main.Distance))
-    else:
-        kernels = (pset.Kernel(main.AgeZone) + pset.Kernel(AdvectionRK4_3D) + pset.Kernel(main.Distance))
+        kernels += pset.Kernel(main.UnBeaching)
+
+    kernels += pset.Kernel(main.AgeZone) + pset.Kernel(main.Distance)
 
     # ParticleSet execution endtime.
     endtime = int(pset_start - runtime.total_seconds())
 
     # Execute ParticleSet.
-    recovery_kernels = {ErrorCode.Error: main.DeleteParticle,
-                        ErrorCode.ErrorOutOfBounds: main.DeleteParticle,
+    recovery_kernels = {ErrorCode.ErrorOutOfBounds: main.DeleteParticle,
+                        # ErrorCode.Error: main.DeleteParticle,
                         ErrorCode.ErrorThroughSurface: main.SubmergeParticle}
+
     pset.execute(kernels, endtime=endtime, dt=dt, output_file=output_file, verbose_progress=True,
                  recovery=recovery_kernels)
 
@@ -192,11 +192,6 @@ def run_EUC(dy=0.1, dz=25, lon=165, year=2012, month=12, day='max', exp='hist',
 
     # Save to netcdf.
     output_file.export()
-    if rank == 0:
-        ds = xr.open_dataset(sim_id, decode_cf=True)
-        main.plot3D(sim_id, del_west=False)
-        print(np.nanmax(ds.unbeachCount))
-        ds.close()
 
     return
 
@@ -225,14 +220,14 @@ else:
     dy, dz = 0.8, 150
     lon = 190
     year, month, day = 1981, 1, 'max'
-    dt_mins, repeatdt_days, outputdt_days, runtime_days = 60, 6, 1, 100
+    dt_mins, repeatdt_days, outputdt_days, runtime_days = 60, 6, 1, 114
     chunks = 300
     pfile = 'None'
     # pfile = 'sim_hist_190_v21r1.nc'
     v = 55
     exp = 'hist'
     unbeach = True
-    print(unbeach)
-    run_EUC(dy=dy, dz=dz, lon=lon, year=year, month=month, day=day,
-            dt_mins=dt_mins, repeatdt_days=repeatdt_days, outputdt_days=outputdt_days,
-            v=v, runtime_days=runtime_days, pfile=pfile, unbeach=unbeach, chunks=chunks)
+    sim_id, ds, dx = run_EUC(dy=dy, dz=dz, lon=lon, year=year, month=month, day=day,
+                             dt_mins=dt_mins, repeatdt_days=repeatdt_days,
+                             outputdt_days=outputdt_days, v=v, runtime_days=runtime_days,
+                             pfile=pfile, unbeach=unbeach, chunks=chunks)

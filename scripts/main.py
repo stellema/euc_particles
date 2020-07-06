@@ -48,6 +48,8 @@ TODO: Add new EUC particles in from_particlefile?
 TODO: Test unbeaching code.
 
 MUST use pset.Kernel(AdvectionRK4_3D)
+# if particle.state == ErrorCode.Evaluate:
+* 1000. * 1.852 * 60. * cos(y * pi / 180)
 """
 import sys
 import cfg
@@ -67,7 +69,7 @@ from datetime import datetime, timedelta
 from parcels import (FieldSet, Field, ParticleSet, JITParticle, VectorField,
                      ErrorCode, Variable, AdvectionRK4, AdvectionRK4_3D)
 
-logger = tools.mlogger(Path(sys.argv[0]).stem)
+logger = tools.mlogger('misc')
 
 
 def ofam_fieldset(time_bnds='full', exp='hist', vcoord='st_edges_ocean', chunks=True, cs=300,
@@ -168,6 +170,8 @@ def ofam_fieldset(time_bnds='full', exp='hist', vcoord='st_edges_ocean', chunks=
         fieldsetUnBeach.time_origin.calendar = fieldset.time_origin.calendar
         fieldset.add_field(fieldsetUnBeach.unBeachU, 'unBeachU')
         fieldset.add_field(fieldsetUnBeach.unBeachV, 'unBeachV')
+        fieldset.unBeachU.units = parcels.tools.converters.GeographicPolar()
+        fieldset.unBeachV.units = parcels.tools.converters.GeographicPolar()
         UVunbeach = VectorField('UVunbeach', fieldset.unBeachU, fieldset.unBeachV)
         fieldset.add_vector_field(UVunbeach)
 
@@ -189,56 +193,36 @@ def generate_sim_id(lon, v=0, exp='hist', randomise=False):
     return sim_id
 
 
-def AdvectionRK4_3Db(particle, fieldset, time):
-    """Advection of particles using 3D fourth-order Runge-Kutta integration.
-
-    Function needs to be converted to Kernel object before execution.
-    """
-    if particle.beached == 0:
-        (u1, v1, w1) = fieldset.UVW[time, particle.depth, particle.lat, particle.lon]
-        lon1 = particle.lon + u1*.5*particle.dt
-        lat1 = particle.lat + v1*.5*particle.dt
-        dep1 = particle.depth + w1*.5*particle.dt
-        (u2, v2, w2) = fieldset.UVW[time + .5 * particle.dt, dep1, lat1, lon1]
-        lon2 = particle.lon + u2*.5*particle.dt
-        lat2 = particle.lat + v2*.5*particle.dt
-        dep2 = particle.depth + w2*.5*particle.dt
-        (u3, v3, w3) = fieldset.UVW[time + .5 * particle.dt, dep2, lat2, lon2]
-        lon3 = particle.lon + u3*particle.dt
-        lat3 = particle.lat + v3*particle.dt
-        dep3 = particle.depth + w3*particle.dt
-        (u4, v4, w4) = fieldset.UVW[time + particle.dt, dep3, lat3, lon3]
-        particle.lon += (u1 + 2*u2 + 2*u3 + u4) / 6. * particle.dt
-        particle.lat += (v1 + 2*v2 + 2*v3 + v4) / 6. * particle.dt
-        particle.depth += (w1 + 2*w2 + 2*w3 + w4) / 6. * particle.dt
-        particle.beached = 2
-
-
-def SubmergeParticle(particle, fieldset, time):
-    # Run 2D advection if particle goes through surface.
-    particle.depth = fieldset.mindepth + 0.1
-    # Perform 2D advection as vertical flow will always push up in this case.
-    AdvectionRK4(particle, fieldset, time)
-    # Increase time to not trigger kernels again, otherwise infinite loop.
-    particle.time = time + particle.dt
-    particle.set_state(ErrorCode.Success)
-
-
 def UnBeaching(particle, fieldset, time):
-    if particle.beached == 2:
-        (u, v, w) = fieldset.UVW[time, particle.depth, particle.lat, particle.lon]
-        if math.fabs(u) < 1e-14 and math.fabs(v) < 1e-14:
-            (ub, vb) = fieldset.UVunbeach[0., particle.depth, particle.lat, particle.lon]
+    (uu, vv, ww) = fieldset.UVW[time, particle.depth, particle.lat, particle.lon]
+    if math.fabs(uu) < 0.5e-8 and math.fabs(vv) < 0.5e-8:
+        (ub, vb) = fieldset.UVunbeach[0., particle.depth, particle.lat, particle.lon]
+        if math.fabs(ub) > 0 or math.fabs(vb) > 0:
             particle.lon += ub * particle.dt
             particle.lat += vb * particle.dt
-            particle.beached = 0
             particle.unbeachCount += 1
-        else:
-            particle.beached = 0
 
 
 def DeleteParticle(particle, fieldset, time):
     particle.delete()
+
+
+def DelWest(particle, fieldset, time):
+    if particle.age == 0. and particle.u <= 0.:
+        particle.delete()
+
+
+def Age(particle, fieldset, time):
+    particle.age = particle.age + math.fabs(particle.dt)
+
+
+def SampleZone(particle, fieldset, time):
+    particle.zone = fieldset.zone[0., 5., particle.lat, particle.lon]
+
+
+def AgeZone(particle, fieldset, time):
+    particle.age = particle.age + math.fabs(particle.dt)
+    particle.zone = fieldset.zone[0., 5., particle.lat, particle.lon]
 
 
 def Distance(particle, fieldset, time):
@@ -258,40 +242,29 @@ def Distance(particle, fieldset, time):
     particle.prev_lat = particle.lat
 
 
-def Age(particle, fieldset, time):
-    if particle.age == 0. and particle.u <= 0.:
-        particle.delete()
-    if particle.state == ErrorCode.Evaluate:
-        particle.age = particle.age + math.fabs(particle.dt)
+def SubmergeParticle(particle, fieldset, time):
+    # Run 2D advection if particle goes through surface.
+    particle.depth = fieldset.mindepth + 0.1
+    # Perform 2D advection as vertical flow will always push up in this case.
+    AdvectionRK4(particle, fieldset, time)
+    # Increase time to not trigger kernels again, otherwise infinite loop.
+    particle.time = time + particle.dt
+    particle.set_state(ErrorCode.Success)
 
-
-def SampleZone(particle, fieldset, time):
-    if particle.state == ErrorCode.Evaluate:
-        particle.zone = fieldset.zone[0., 5., particle.lat, particle.lon]
-
-
-def AgeZone(particle, fieldset, time):
-    if particle.age == 0. and particle.u <= 0.:
-        particle.delete()
-    if particle.state == ErrorCode.Evaluate:
-        particle.age = particle.age + math.fabs(particle.dt)
-        particle.zone = fieldset.zone[0., 5., particle.lat, particle.lon]
 
 
 def pset_euc(fieldset, pclass, lon, dy, dz, repeatdt, pset_start, repeats,
              sim_id=None, rank=0, pdel=None):
     """Create a ParticleSet."""
+    repeats = 1 if repeats <= 0 else repeats
     # Particle release latitudes, depths and longitudes.
     py = np.round(np.arange(-2.6, 2.6 + 0.05, dy), 2)
     pz = np.arange(25, 350 + 20, dz)
     px = np.array([lon])
-    py = np.array([-0.7])
-    pz = np.array([300])
+
     # Number of particles released in each dimension.
     Z, Y, X = pz.size, py.size, px.size
     npart = Z * X * Y * repeats
-
-    repeats = 1 if repeats <= 0 else repeats
 
     # Each repeat.
     lats = np.repeat(py, pz.size*px.size)

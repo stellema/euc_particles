@@ -2900,3 +2900,94 @@
 2020-06-27 22:13:43,093:run_EUC:INFO:sim_hist_190_v0r1:Completed!: 35:20:33: Rank=35: #Particles=633-106=527
 2020-06-27 23:46:26,210:run_EUC:INFO:sim_hist_190_v0r1:Completed!: 36:53:16: Rank=34: #Particles=979-75=904
 2020-06-28 00:55:55,624:run_EUC:INFO:sim_hist_190_v0r1:Completed!: 38:02:46: Rank=43: #Particles=805-82=723
+2020-07-04 11:47:05,736:__init__:WARNING:Casting lon data to np.float32
+2020-07-04 11:47:05,737:__init__:WARNING:Casting lat data to np.float32
+2020-07-04 11:47:05,738:__init__:WARNING:Casting depth data to np.float32
+2020-07-04 11:47:05,740:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-04 11:47:05,968:__init__:WARNING:Casting time data to np.float64
+2020-07-04 11:47:06,702:reshape:WARNING:Casting field data to np.float32
+2020-07-04 11:47:08,367:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-04 11:47:18,746:run_EUC:INFO:sim_hist_190_v41r0:2013-01-01 to 2012-09-21: Runtime=102 days
+2020-07-04 11:47:18,746:run_EUC:INFO:sim_hist_190_v41r0:Repeat=6 days: Step=60 mins: Output=1 day
+2020-07-04 11:47:18,747:run_EUC:INFO:sim_hist_190_v41r0:Field=b-grid: Chunks=300: Time=2012-2012
+2020-07-04 11:47:18,748:run_EUC:INFO:sim_hist_190_v41r0:Temp=ZHWRFIOO: Rank= 0: #Particles=16
+2020-07-04 11:47:20,638:compile:INFO:Compiled zdParticleAgeZoneAdvectionRK4_3DbUnBeachingDistance ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\bdcf76d5fc93ea3b81360d518f43592e_0.dll
+2020-07-04 11:47:57,473:__init__:WARNING:Casting lon data to np.float32
+2020-07-04 11:47:57,475:__init__:WARNING:Casting lat data to np.float32
+2020-07-04 11:47:57,476:__init__:WARNING:Casting depth data to np.float32
+2020-07-04 11:47:57,478:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-04 11:47:57,664:__init__:WARNING:Casting time data to np.float64
+2020-07-04 11:47:58,029:reshape:WARNING:Casting field data to np.float32
+2020-07-04 11:47:59,241:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-04 11:48:11,429:run_EUC:INFO:sim_hist_190_v30r0:2013-01-01 to 2012-09-09: Runtime=114 days
+2020-07-04 11:48:11,430:run_EUC:INFO:sim_hist_190_v30r0:Repeat=6 days: Step=60 mins: Output=1 day
+2020-07-04 11:48:11,431:run_EUC:INFO:sim_hist_190_v30r0:Field=b-grid: Chunks=300: Time=2012-2012
+2020-07-04 11:48:11,431:run_EUC:INFO:sim_hist_190_v30r0:Temp=KNIPJWBZ: Rank= 0: #Particles=18
+2020-07-04 11:48:13,420:compile:INFO:Compiled zdParticleAgeZoneAdvectionRK4_3DbUnBeachingDistance ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\3e780d77c21d84c579ad445026b7c409_0.dll
+2020-07-04 11:48:59,827:run_EUC:INFO:sim_hist_190_v41r0:Completed!: 00:01:54: Rank= 0: #Particles=16-1=15
+2020-07-04 11:50:09,259:run_EUC:INFO:sim_hist_190_v30r0:Completed!: 00:02:12: Rank= 0: #Particles=18-1=17
+2020-07-04 12:12:23,593:run_EUC:INFO:sim_hist_190_v7r0:2013-01-01 to 2012-09-09: Runtime=114 days
+2020-07-04 12:12:23,594:run_EUC:INFO:sim_hist_190_v7r0:Repeat=6 days: Step=60 mins: Output=1 day
+2020-07-04 12:12:23,594:run_EUC:INFO:sim_hist_190_v7r0:Field=b-grid: Chunks=300: Time=2012-2012
+2020-07-04 12:12:23,595:run_EUC:INFO:sim_hist_190_v7r0:Temp=HMXPWRTK: Rank= 0: #Particles=18
+2020-07-04 12:12:25,254:compile:INFO:Compiled zdParticleAgeZoneAdvectionRK4_3DbUnBeachingDistance ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\78e2f3e2882602ab67551ec532532ba7_0.dll
+2020-07-04 12:14:20,144:run_EUC:INFO:sim_hist_190_v7r0:Completed!: 00:02:11: Rank= 0: #Particles=18-2=16
+2020-07-04 12:42:19,176:run_EUC:INFO:sim_hist_190_v1r0:2013-01-01 to 2012-09-09: Runtime=114 days
+2020-07-04 12:42:19,176:run_EUC:INFO:sim_hist_190_v1r0:Repeat=6 days: Step=60 mins: Output=1 day
+2020-07-04 12:42:19,177:run_EUC:INFO:sim_hist_190_v1r0:Field=b-grid: Chunks=300: Time=2012-2012
+2020-07-04 12:42:19,177:run_EUC:INFO:sim_hist_190_v1r0:Temp=EHFAPYBF: Rank= 0: #Particles=18
+2020-07-04 12:42:20,872:compile:INFO:Compiled zdParticleAgeZoneAdvectionRK4_3DbUnBeachingDistance ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\6c0e180fc9494109b7ab751a19618ba4_0.dll
+2020-07-04 12:44:15,140:run_EUC:INFO:sim_hist_190_v1r0:Completed!: 00:02:10: Rank= 0: #Particles=18-1=17
+2020-07-04 12:47:05,848:__init__:WARNING:Casting lon data to np.float32
+2020-07-04 12:47:05,850:__init__:WARNING:Casting lat data to np.float32
+2020-07-04 12:47:05,851:__init__:WARNING:Casting depth data to np.float32
+2020-07-04 12:47:05,853:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-04 12:47:06,063:__init__:WARNING:Casting time data to np.float64
+2020-07-04 12:47:06,829:reshape:WARNING:Casting field data to np.float32
+2020-07-04 12:47:08,483:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-04 12:47:20,343:run_EUC:INFO:sim_hist_190_v69r0:2013-01-01 to 2012-09-09: Runtime=114 days
+2020-07-04 12:47:20,344:run_EUC:INFO:sim_hist_190_v69r0:Repeat=6 days: Step=60 mins: Output=1 day
+2020-07-04 12:47:20,344:run_EUC:INFO:sim_hist_190_v69r0:Field=b-grid: Chunks=300: Time=2012-2012
+2020-07-04 12:47:20,345:run_EUC:INFO:sim_hist_190_v69r0:Temp=EYMRXXKG: Rank= 0: #Particles=18
+2020-07-04 12:47:22,234:compile:INFO:Compiled zdParticleAgeZoneAdvectionRK4_3DbUnBeachingDistance ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\596775093c72de0e5023e590668a0b72_0.dll
+2020-07-04 12:49:13,395:run_EUC:INFO:sim_hist_190_v69r0:Completed!: 00:02:08: Rank= 0: #Particles=18-1=17
+2020-07-04 12:52:24,062:run_EUC:INFO:sim_hist_190_v40r0:2013-01-01 to 2012-09-09: Runtime=114 days
+2020-07-04 12:52:24,063:run_EUC:INFO:sim_hist_190_v40r0:Repeat=6 days: Step=60 mins: Output=1 day
+2020-07-04 12:52:24,063:run_EUC:INFO:sim_hist_190_v40r0:Field=b-grid: Chunks=300: Time=2012-2012
+2020-07-04 12:52:24,064:run_EUC:INFO:sim_hist_190_v40r0:Temp=GPZNTQEV: Rank= 0: #Particles=18
+2020-07-04 12:52:47,530:run_EUC:INFO:sim_hist_190_v94r0:2013-01-01 to 2012-09-09: Runtime=114 days
+2020-07-04 12:52:47,530:run_EUC:INFO:sim_hist_190_v94r0:Repeat=6 days: Step=60 mins: Output=1 day
+2020-07-04 12:52:47,531:run_EUC:INFO:sim_hist_190_v94r0:Field=b-grid: Chunks=300: Time=2012-2012
+2020-07-04 12:52:47,531:run_EUC:INFO:sim_hist_190_v94r0:Temp=KPMBPOPP: Rank= 0: #Particles=18
+2020-07-04 12:52:49,165:compile:INFO:Compiled zdParticleAgeZoneAdvectionRK4_3DbUnBeachingDistance ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\dee0e3b670dd50794a562b3c3a5bcf7b_0.dll
+2020-07-04 12:54:41,412:run_EUC:INFO:sim_hist_190_v94r0:Completed!: 00:02:07: Rank= 0: #Particles=18-0=18
+2020-07-04 13:05:30,160:run_EUC:INFO:sim_hist_190_v19r0:2013-01-01 to 2012-09-09: Runtime=114 days
+2020-07-04 13:05:30,161:run_EUC:INFO:sim_hist_190_v19r0:Repeat=6 days: Step=60 mins: Output=1 day
+2020-07-04 13:05:30,162:run_EUC:INFO:sim_hist_190_v19r0:Field=b-grid: Chunks=300: Time=2012-2012
+2020-07-04 13:05:30,162:run_EUC:INFO:sim_hist_190_v19r0:Temp=FBMLLAUI: Rank= 0: #Particles=18
+2020-07-04 13:05:32,261:compile:INFO:Compiled zdParticleinitSampleAdvectionRK4_3DbUnBeachingAgeSampleZoneDistance ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\6b9fc35707bc193f653c19552327af2f_0.dll
+2020-07-04 13:07:26,704:run_EUC:INFO:sim_hist_190_v19r0:Completed!: 00:01:59: Rank= 0: #Particles=18-1=17
+2020-07-04 13:18:19,815:run_EUC:INFO:sim_hist_190_v86r0:2013-01-01 to 2012-09-09: Runtime=114 days
+2020-07-04 13:18:19,816:run_EUC:INFO:sim_hist_190_v86r0:Repeat=6 days: Step=60 mins: Output=1 day
+2020-07-04 13:18:19,816:run_EUC:INFO:sim_hist_190_v86r0:Field=b-grid: Chunks=300: Time=2012-2012
+2020-07-04 13:18:19,817:run_EUC:INFO:sim_hist_190_v86r0:Temp=YHRUSYTJ: Rank= 0: #Particles=18
+2020-07-04 13:18:21,587:compile:INFO:Compiled zdParticleinitSampleAdvectionRK4_3DbUnBeachingAgeSampleZoneDistance ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\88008aef5f52d6d61b1537b4a2185828_0.dll
+2020-07-04 13:20:15,498:run_EUC:INFO:sim_hist_190_v86r0:Completed!: 00:02:11: Rank= 0: #Particles=18-1=17
+2020-07-04 13:25:57,627:run_EUC:INFO:sim_hist_190_v60r0:2013-01-01 to 2012-09-09: Runtime=114 days
+2020-07-04 13:25:57,628:run_EUC:INFO:sim_hist_190_v60r0:Repeat=6 days: Step=60 mins: Output=1 day
+2020-07-04 13:25:57,629:run_EUC:INFO:sim_hist_190_v60r0:Field=b-grid: Chunks=300: Time=2012-2012
+2020-07-04 13:25:57,629:run_EUC:INFO:sim_hist_190_v60r0:Temp=EHLCUGGB: Rank= 0: #Particles=18
+2020-07-04 13:25:59,381:compile:INFO:Compiled zdParticleinitSampleAdvectionRK4_3DbUnBeachingAgeSampleZoneDistance ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\bd17221c0c3999fd7b46cd4170b0b78e_0.dll
+2020-07-04 13:27:53,764:run_EUC:INFO:sim_hist_190_v60r0:Completed!: 00:02:11: Rank= 0: #Particles=18-1=17
+2020-07-04 14:54:47,395:run_EUC:INFO:sim_hist_190_v33r0:2013-01-01 to 2012-09-09: Runtime=114 days
+2020-07-04 14:54:47,395:run_EUC:INFO:sim_hist_190_v33r0:Repeat=6 days: Step=60 mins: Output=1 day
+2020-07-04 14:54:47,396:run_EUC:INFO:sim_hist_190_v33r0:Field=b-grid: Chunks=300: Time=2012-2012
+2020-07-04 14:54:47,397:run_EUC:INFO:sim_hist_190_v33r0:Temp=LYTJIVEX: Rank= 0: #Particles=18
+2020-07-04 14:54:49,145:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DbUnBeachingAgeSampleZoneDistance ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\b08a80f81970f5f924c8dc18d1bf106d_0.dll
+2020-07-04 14:56:44,403:run_EUC:INFO:sim_hist_190_v33r0:Completed!: 00:02:12: Rank= 0: #Particles=18-1=17
+2020-07-04 15:05:49,280:run_EUC:INFO:sim_hist_190_v87r0:2013-01-01 to 2012-09-09: Runtime=114 days
+2020-07-04 15:05:49,281:run_EUC:INFO:sim_hist_190_v87r0:Repeat=6 days: Step=60 mins: Output=1 day
+2020-07-04 15:05:49,282:run_EUC:INFO:sim_hist_190_v87r0:Field=b-grid: Chunks=300: Time=2012-2012
+2020-07-04 15:05:49,282:run_EUC:INFO:sim_hist_190_v87r0:Temp=KAKAMQFR: Rank= 0: #Particles=18
+2020-07-04 15:05:51,032:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DbUnBeachingAgeSampleZoneDistance ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\9a1339b2f809c9a5cf606b15c093501a_0.dll
+2020-07-04 15:07:45,902:run_EUC:INFO:sim_hist_190_v87r0:Completed!: 00:02:12: Rank= 0: #Particles=18-1=17
