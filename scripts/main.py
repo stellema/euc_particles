@@ -95,9 +95,9 @@ def ofam_fieldset(time_bnds='full', exp='hist', vcoord='st_edges_ocean', chunks=
                                                  "lon": ["xu_ocean", "xt_ocean"],
                                                  "lat": ["yu_ocean", "yt_ocean"],
                                                  "depth": ["st_ocean", "sw_ocean",
-                                                           "st_edges_ocean", "sw_edges_ocean"]}
+                                                           "sw_edges_ocean"]}
     if chunks not in ['auto', False]:
-        chunks = {'Time': 1, 'st_ocean': 1, 'sw_ocean': 1,
+        chunks = {'Time': 1, 'st_ocean': 1, 'sw_ocean': 1, 'sw_edges_ocean': 1,
                   'yt_ocean': cs, 'yu_ocean': cs,
                   'xt_ocean': cs, 'xu_ocean': cs}
     if time_bnds == 'full':
@@ -144,7 +144,7 @@ def ofam_fieldset(time_bnds='full', exp='hist', vcoord='st_edges_ocean', chunks=
         files = str(cfg.data/'OFAM3_tcell_zones.nc')
         dimensions = {'time': 'Time', 'depth': 'sw_ocean', 'lat': 'yt_ocean', 'lon': 'xt_ocean'}
         if chunks not in ['auto', False]:
-            zchunks = {'Time': 1, vcoord: 1, 'yt_ocean': cs, 'xt_ocean': cs}
+            zchunks = {'Time': 1, 'sw_ocean': 1, 'yt_ocean': cs, 'xt_ocean': cs}
         zfield = Field.from_netcdf(files, 'zone', dimensions,
                                    field_chunksize=zchunks, allow_time_extrapolation=True)
         fieldset.add_field(zfield, 'zone')
@@ -153,16 +153,13 @@ def ofam_fieldset(time_bnds='full', exp='hist', vcoord='st_edges_ocean', chunks=
     if add_unbeach_vel:
         """Add Unbeach velocity vectorfield to fieldset."""
         file = str(cfg.data/'OFAM3_unbeach_vel_ucell.nc')
-        files = {'unBeachU': {'depth': vc, 'lat': file, 'lon': file, 'data': file},
-                 'unBeachV': {'depth': vc, 'lat': file, 'lon': file, 'data': file}}
-
         variables = {'unBeachU': 'unBeachU', 'unBeachV': 'unBeachV'}
-        dimensions = {'depth': vcoord, 'lat': 'yu_ocean', 'lon': 'xu_ocean'}
+        dimensions = {'time': 'Time', 'depth': vcoord, 'lat': 'yu_ocean', 'lon': 'xu_ocean'}
         bindices = indices['U'] if indices else None
         if chunks not in ['auto', False]:
-            chunks = {vcoord: 1, 'yu_ocean': cs, 'xu_ocean': cs}
+            chunks = {'Time': 1, vcoord: 1, 'yu_ocean': cs, 'xu_ocean': cs}
 
-        fieldsetUnBeach = FieldSet.from_b_grid_dataset(files, variables, dimensions,
+        fieldsetUnBeach = FieldSet.from_b_grid_dataset(file, variables, dimensions,
                                                        indices=bindices, field_chunksize=chunks,
                                                        allow_time_extrapolation=True)
         fieldsetUnBeach.time_origin = fieldset.time_origin
@@ -252,41 +249,31 @@ def SubmergeParticle(particle, fieldset, time):
     particle.set_state(ErrorCode.Success)
 
 
+def get_zParticle(fieldset):
+    class zdParticle(cfg.ptype['jit']):
+        """Particle class that saves particle age and zonal velocity."""
 
-def pset_euc(fieldset, pclass, lon, dy, dz, repeatdt, pset_start, repeats,
-             sim_id=None, rank=0):
-    """Create a ParticleSet."""
-    repeats = 1 if repeats <= 0 else repeats
-    # Particle release latitudes, depths and longitudes.
-    py = np.round(np.arange(-2.6, 2.6 + 0.05, dy), 2)
-    pz = np.arange(25, 350 + 20, dz)
-    px = np.array([lon])
+        # The age of the particle.
+        age = Variable('age', initial=0., dtype=np.float32)
 
-    # Number of particles released in each dimension.
-    Z, Y, X = pz.size, py.size, px.size
-    npart = Z * X * Y * repeats
+        # The velocity of the particle.
+        u = Variable('u', initial=fieldset.U, to_write='once', dtype=np.float32)
 
-    # Each repeat.
-    lats = np.repeat(py, pz.size*px.size)
-    depths = np.repeat(np.tile(pz, py.size), px.size)
-    lons = np.repeat(px, pz.size*py.size)
+        # The 'zone' of the particle.
+        zone = Variable('zone', initial=0., dtype=np.float32)
 
-    # Duplicate for each repeat.
-    tr = pset_start - (np.arange(0, repeats) * repeatdt.total_seconds())
-    time = np.repeat(tr, lons.size)
-    depth = np.tile(depths, repeats)
-    lon = np.tile(lons, repeats)
-    lat = np.tile(lats, repeats)
+        # The distance travelled
+        distance = Variable('distance', initial=0., dtype=np.float32)
 
-    pset = ParticleSet.from_list(fieldset=fieldset, pclass=pclass,
-                                 lon=lon, lat=lat, depth=depth, time=time,
-                                 lonlatdepth_dtype=np.float64)
-    if sim_id and rank == 0:
-        logger.info('{}:Particles: /repeat={}: Total={}'
-                    .format(sim_id.stem, Z * X * Y, npart))
-        logger.info('{}:Lon={}: Lat=[{}-{} x{}]: Depth=[{}-{}m x{}]'
-                    .format(sim_id.stem, *px, py[0], py[Y-1], dy, pz[0], pz[Z-1], dz))
-    return pset
+        # The previous longitude. to_write=False
+        prev_lon = Variable('prev_lon', initial=attrgetter('lon'), to_write=False, dtype=np.float32)
+
+        # The previous latitude. to_write=False,
+        prev_lat = Variable('prev_lat', initial=attrgetter('lat'), to_write=False, dtype=np.float32)
+
+        unbeachCount = Variable('unbeachCount', initial=0., dtype=np.float32)
+
+    return zdParticle
 
 
 def particleset_from_particlefile(fieldset, pclass, filename, repeatdt=None, restart=True,

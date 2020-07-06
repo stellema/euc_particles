@@ -46,8 +46,7 @@ def particlefile_vars(filename, lon, add_particles=True):
     p_depths = np.arange(25, 350 + 20, 25)
     p_lons = np.array([lon])
 
-    fieldset = main.ofam_fieldset(time_bnds='full', chunks=300)
-    #, time_ext=True, time_periodic=False)
+    fieldset = main.ofam_fieldset(time_bnds='full')
 
     zParticle = main.get_zParticle(fieldset)
 
@@ -149,7 +148,7 @@ else:
     filename = cfg.data/'sim_165_v0r0.nc'
     mpi_size = 53
     lon = 190
-    fieldset = main.ofam_fieldset(time_bnds='full', chunks=300, time_ext=True, time_periodic=False)
+    fieldset = main.ofam_fieldset(time_bnds='full')
 
 mpi_size = 48
 repeats = 5

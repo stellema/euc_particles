@@ -73,6 +73,15 @@ dsUnBeachV = xr.DataArray(unBeachV, name='unBeachV',
 db = xr.Dataset()
 db[dsUnBeachU.name] = dsUnBeachU
 db[dsUnBeachV.name] = dsUnBeachV
+
+db[ds.st_edges_ocean.name] = ds.st_edges_ocean
+db[ds.sw_edges_ocean.name] = ds.sw_edges_ocean
+db[ds.xt_ocean.name] = ds.xt_ocean
+db[ds.yt_ocean.name] = ds.yt_ocean
+db[ds.xu_ocean.name] = ds.xu_ocean
+db[ds.yu_ocean.name] = ds.yu_ocean
+db[ds.st_ocean.name] = ds.st_ocean
+db[ds.sw_ocean.name] = ds.sw_ocean
 db.attrs = ds.attrs
 db.attrs['history'] = ('Created {}.'.format(datetime.now().strftime("%Y-%m-%d")) +
                        db.attrs['history'])
