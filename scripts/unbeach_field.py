@@ -27,6 +27,7 @@ depth = ds.st_ocean
 
 U = np.array(ds.u)*0 + 1
 V = np.array(ds.v)*0 + 1
+W = np.array(ds.v)*0 + 1
 U[np.isnan(U)] = 0
 V[np.isnan(V)] = 0
 unBeachU = np.zeros(ds.u.shape)
@@ -89,7 +90,6 @@ db.to_netcdf(path=cfg.data/'OFAM3_unbeach_vel_ucell.nc')
 
 # Checks W points and uses same unBeach flags.
 # db.to_netcdf(cfg.data/'OFAM3_unbeach_vel_tcell.nc')
-
 
 # db.to_netcdf(path=cfg.data/'OFAM3_unbeach_vel_ucellz.nc', engine='scipy')
 # db.unBeachU.isel(st_ocean=40).plot()

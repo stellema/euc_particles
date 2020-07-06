@@ -9,7 +9,7 @@ author: Annette Stellema (astellemas@gmail.com)
 import os
 import sys
 import cfg
-import time
+# import time
 import math
 import logging
 import calendar
@@ -103,8 +103,8 @@ def timer(ts, method=None, show=False):
         method (str, optional): Method name to print. Defaults to None.
 
     """
-    te = time.time()
-    h, rem = divmod(te - ts, 3600)
+    te = (datetime.now() - ts).total_seconds()
+    h, rem = divmod(te, 3600)
     m, s = divmod(rem, 60)
     # Print method name if given.
     arg = '' if method is None else ' {}: '.format(method)
@@ -119,14 +119,14 @@ def timeit(method):
     """Wrap function to time method execution time."""
     @wraps(method)
     def timed(*args, **kw):
-        ts = time.time()
+        ts = datetime.now()
         result = method(*args, **kw)
-        te = time.time()
-        h, rem = divmod(te - ts, 3600)
+        te = datetime.now()
+        h, rem = divmod((te - ts).total_seconds(), 3600)
         m, s = divmod(rem, 60)
 
         logger.info('{}: {:}:{:}:{:05.2f} total: {:.2f} seconds.'.format(
-                method.__name__, int(h), int(m), s, te - ts))
+                method.__name__, int(h), int(m), s, (te - ts).total_seconds()))
 
         return result
 

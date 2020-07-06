@@ -197,7 +197,7 @@ def UnBeaching(particle, fieldset, time):
     (uu, vv, ww) = fieldset.UVW[time, particle.depth, particle.lat, particle.lon]
     if math.fabs(uu) < 0.5e-8 and math.fabs(vv) < 0.5e-8:
         (ub, vb) = fieldset.UVunbeach[0., particle.depth, particle.lat, particle.lon]
-        if math.fabs(ub) > 0 or math.fabs(vb) > 0:
+        if math.fabs(ub) > 0. or math.fabs(vb) > 0.:
             particle.lon += ub * particle.dt
             particle.lat += vb * particle.dt
             particle.unbeachCount += 1
@@ -254,7 +254,7 @@ def SubmergeParticle(particle, fieldset, time):
 
 
 def pset_euc(fieldset, pclass, lon, dy, dz, repeatdt, pset_start, repeats,
-             sim_id='', rank=0):
+             sim_id=None, rank=0):
     """Create a ParticleSet."""
     repeats = 1 if repeats <= 0 else repeats
     # Particle release latitudes, depths and longitudes.
@@ -281,7 +281,7 @@ def pset_euc(fieldset, pclass, lon, dy, dz, repeatdt, pset_start, repeats,
     pset = ParticleSet.from_list(fieldset=fieldset, pclass=pclass,
                                  lon=lon, lat=lat, depth=depth, time=time,
                                  lonlatdepth_dtype=np.float64)
-    if rank == 0:
+    if sim_id and rank == 0:
         logger.info('{}:Particles: /repeat={}: Total={}'
                     .format(sim_id.stem, Z * X * Y, npart))
         logger.info('{}:Lon={}: Lat=[{}-{} x{}]: Depth=[{}-{}m x{}]'

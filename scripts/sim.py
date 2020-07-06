@@ -5,12 +5,10 @@ created: Fri Jun 12 18:45:35 2020
 author: Annette Stellema (astellemas@gmail.com)
 
 """
-import time
 import main
 import cfg
 import tools
 import math
-# import parcels
 import numpy as np
 from pathlib import Path
 from operator import attrgetter
@@ -23,36 +21,31 @@ try:
 except ImportError:
     MPI = None
 
-log_name = 'sim' #if cfg.home != Path('E:/') else 'test_sim'
+log_name = 'sim' if cfg.home != Path('E:/') else 'test_sim'
 logger = tools.mlogger(log_name, parcels=True)
 
 
 @tools.timeit
-def run_EUC(dy=0.1, dz=25, lon=165, year=2012, month=12, day='max', exp='hist',
-            dt_mins=60, repeatdt_days=6, outputdt_days=1, runtime_days=186,
-            v=1, chunks=300, unbeach=True, pfile='None'):
+def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
+            outputdt_days=1, runtime_days=186, v=1, chunks=300, unbeach=True, pfile='None'):
     """Run Lagrangian EUC particle experiment.
 
     Args:
         dy (float, optional): Particle latitude spacing [deg]. Defaults to 0.1.
         dz (float, optional): Particle depth spacing [m]. Defaults to 25.
         lon (int, optional): Longitude(s) to insert partciles. Defaults to 165.
-        year (int, optional): Start year. Defaults to 2012.
-        month (int, optional): Start month. Defaults to 12.
-        day (int, optional): Start day. Defaults to 'max'.
         dt_mins (int, optional): Advection timestep. Defaults to 60.
         repeatdt_days (int, optional): Particle repeat release interval [days]. Defaults to 6.
         outputdt_days (int, optional): Advection write freq [day]. Defaults to 1.
         runtime_days (int, optional): Execution runtime [days]. Defaults to 186.
         v (int, optional): Version number to save file. Defaults to 1.
-        chunks ({int, 'auto', False}, optional): Chunk method or chunksize. Defaults to 300.
         pfile (str, optional): Restart ParticleFile. Defaults to 'None'.
 
     Returns:
         None.
 
     """
-    ts = time.time()
+    ts = datetime.now()
 
     # Get MPI rank or set to zero.
     rank = MPI.COMM_WORLD.Get_rank() if MPI else 0
@@ -77,7 +70,7 @@ def run_EUC(dy=0.1, dz=25, lon=165, year=2012, month=12, day='max', exp='hist',
     elif exp == 'rcp':
         time_bnds = [datetime(2070, 1, 1), datetime(2101, 12, 31)]
 
-    fieldset = main.ofam_fieldset(time_bnds, exp, vcoord='sw_edges_ocean', chunks=True, cs=300,
+    fieldset = main.ofam_fieldset(time_bnds, exp, vcoord='sw_edges_ocean', chunks=True, cs=chunks,
                                   time_periodic=True, add_zone=True, add_unbeach_vel=unbeach)
 
     # Define the ParticleSet pclass.
@@ -200,8 +193,6 @@ if __name__ == "__main__" and cfg.home != Path('E:/'):
     p.add_argument('-dy', '--dy', default=0.1, type=float, help='Particle latitude spacing [deg].')
     p.add_argument('-dz', '--dz', default=25, type=int, help='Particle depth spacing [m].')
     p.add_argument('-x', '--lon', default=165, type=int, help='Particle start longitude(s).')
-    p.add_argument('-y', '--year', default=2012, type=int, help='Simulation start year.')
-    p.add_argument('-m', '--month', default=12, type=int, help='Final month (of final year).')
     p.add_argument('-e', '--exp', default='hist', type=str, help='Scenario.')
     p.add_argument('-r', '--runtime', default=240, type=int, help='Runtime days.')
     p.add_argument('-dt', '--dt', default=60, type=int, help='Advection timestep [min].')
@@ -211,22 +202,17 @@ if __name__ == "__main__" and cfg.home != Path('E:/'):
     p.add_argument('-f', '--pfile', default='None', type=str, help='Particle file.')
     args = p.parse_args()
 
-    run_EUC(dy=args.dy, dz=args.dz, lon=args.lon, year=args.year, month=args.month,
-            exp=args.exp, runtime_days=args.runtime, dt_mins=args.dt,
-            repeatdt_days=args.repeatdt, outputdt_days=args.outputdt,
+    run_EUC(dy=args.dy, dz=args.dz, lon=args.lon, exp=args.exp, runtime_days=args.runtime,
+            dt_mins=args.dt, repeatdt_days=args.repeatdt, outputdt_days=args.outputdt,
             v=args.version, pfile=args.pfile)
 else:
-    dy, dz = 0.8, 150
-    lon = 190
-    year, month, day = 1981, 1, 'max'
-    dt_mins, repeatdt_days, outputdt_days, runtime_days = 60, 6, 1, 114
-    chunks = 300
-    pfile = 'None'
-    # pfile = 'sim_hist_190_v21r1.nc'
+    dy, dz, lon = 0.8, 150, 190
+    dt_mins, repeatdt_days, outputdt_days, runtime_days = 60, 6, 1, 10
+    pfile = 'None'  # 'sim_hist_190_v21r1.nc'
     v = 55
     exp = 'hist'
     unbeach = True
-    sim_id, ds, dx = run_EUC(dy=dy, dz=dz, lon=lon, year=year, month=month, day=day,
-                             dt_mins=dt_mins, repeatdt_days=repeatdt_days,
-                             outputdt_days=outputdt_days, v=v, runtime_days=runtime_days,
-                             pfile=pfile, unbeach=unbeach, chunks=chunks)
+    chunks = 300
+    run_EUC(dy=dy, dz=dz, lon=lon, dt_mins=dt_mins, repeatdt_days=repeatdt_days,
+            outputdt_days=outputdt_days, v=v, runtime_days=runtime_days,
+            unbeach=unbeach, pfile=pfile)
