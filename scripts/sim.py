@@ -144,7 +144,7 @@ def run_EUC(dy=0.1, dz=25, lon=165, year=2012, month=12, day='max', exp='hist',
 
     # Create ParticleSet.
     pset = main.pset_euc(fieldset, pclass, lon, dy, dz, repeatdt, pset_start, repeats,
-                         sim_id, rank=rank, pdel=None)
+                         sim_id, rank=rank)
 
     # Add particles from ParticleFile.
     if restart:

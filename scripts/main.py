@@ -254,7 +254,7 @@ def SubmergeParticle(particle, fieldset, time):
 
 
 def pset_euc(fieldset, pclass, lon, dy, dz, repeatdt, pset_start, repeats,
-             sim_id=None, rank=0, pdel=None):
+             sim_id='', rank=0):
     """Create a ParticleSet."""
     repeats = 1 if repeats <= 0 else repeats
     # Particle release latitudes, depths and longitudes.
@@ -281,13 +281,9 @@ def pset_euc(fieldset, pclass, lon, dy, dz, repeatdt, pset_start, repeats,
     pset = ParticleSet.from_list(fieldset=fieldset, pclass=pclass,
                                  lon=lon, lat=lat, depth=depth, time=time,
                                  lonlatdepth_dtype=np.float64)
-    if sim_id and rank == 0:
-        if pdel:
-            logger.info('{}:Particles: /repeat={}: Total={}-{}={}'
-                        .format(sim_id.stem, Z * X * Y, npart, pdel, npart-pdel))
-        else:
-            logger.info('{}:Particles: /repeat={}: Total={}'
-                        .format(sim_id.stem, Z * X * Y, npart))
+    if rank == 0:
+        logger.info('{}:Particles: /repeat={}: Total={}'
+                    .format(sim_id.stem, Z * X * Y, npart))
         logger.info('{}:Lon={}: Lat=[{}-{} x{}]: Depth=[{}-{}m x{}]'
                     .format(sim_id.stem, *px, py[0], py[Y-1], dy, pz[0], pz[Z-1], dz))
     return pset
