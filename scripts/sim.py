@@ -232,7 +232,7 @@ if __name__ == "__main__" and cfg.home != Path('E:/'):
     p.add_argument('-v', '--version', default=0, type=int, help='File Index.')
     p.add_argument('-f', '--pfile', default='None', type=str, help='Particle file.')
     args = p.parse_args()
-    logger = tools.mlogger('sim0', parcels=True, misc=False)
+    logger = tools.mlogger('sim', parcels=True, misc=False)
     run_EUC(dy=args.dy, dz=args.dz, lon=args.lon, exp=args.exp, runtime_days=args.runtime,
             dt_mins=args.dt, repeatdt_days=args.repeatdt, outputdt_days=args.outputdt,
             v=args.version, pfile=args.pfile)
