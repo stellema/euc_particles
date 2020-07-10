@@ -9,7 +9,6 @@ author: Annette Stellema (astellemas@gmail.com)
 import os
 import sys
 import cfg
-# import time
 import math
 import logging
 import calendar
@@ -25,7 +24,7 @@ import matplotlib.colors as colors
 from matplotlib.offsetbox import AnchoredText
 
 
-def mlogger(name, parcels=False):
+def mlogger(name, parcels=False, misc=True):
     """Create a logger.
 
     Args:
@@ -39,6 +38,7 @@ def mlogger(name, parcels=False):
     global loggers
 
     loggers = cfg.loggers
+    name = 'misc' if misc else name
 
     # logger = logging.getLogger(__name__)
     if loggers.get(name):

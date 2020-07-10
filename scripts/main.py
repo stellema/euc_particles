@@ -61,11 +61,11 @@ import numpy as np
 import xarray as xr
 # import pandas as pd
 from pathlib import Path
-from operator import attrgetter
+# from operator import attrgetter
 import matplotlib.pyplot as plt
 from datetime import datetime, timedelta
 from parcels import (FieldSet, Field, ParticleSet, VectorField,
-                     ErrorCode, Variable, AdvectionRK4)
+                     ErrorCode, AdvectionRK4)
 
 logger = tools.mlogger(Path(sys.argv[0]).stem)
 
