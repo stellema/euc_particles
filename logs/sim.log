@@ -3024,3 +3024,357 @@
 2020-07-06 11:04:24,405:run_EUC:INFO:sim_hist_165_v40r0:Completed!: 00:11:03: Rank= 0: #Particles=1008-368=640
 2020-07-06 11:04:24,471:run_EUC:INFO:sim_hist_165_v40r0:Completed!: 00:11:03: Rank= 2: #Particles=952-541=411
 2020-07-06 11:24:17,166:run_EUC:INFO:sim_hist_165_v40r0:Completed!: 00:30:55: Rank= 1: #Particles=1008-261=747
+2020-07-08 11:40:14,955:<module>:DEBUG:Args parsed
+2020-07-08 11:40:14,955:<module>:DEBUG:Args parsed
+2020-07-08 11:40:14,957:<module>:DEBUG:Args parsed
+2020-07-08 11:40:14,965:run_EUC:DEBUG:Starting
+2020-07-08 11:40:14,965:run_EUC:DEBUG:Starting
+2020-07-08 11:40:14,966:run_EUC:DEBUG:Starting
+2020-07-08 11:40:14,966:run_EUC:DEBUG:Rank=2
+2020-07-08 11:40:14,966:run_EUC:DEBUG:Rank=0
+2020-07-08 11:40:14,966:run_EUC:DEBUG:Rank=1
+2020-07-08 11:48:16,011:run_EUC:DEBUG:Rank=1: Opened fieldset
+2020-07-08 11:48:16,014:run_EUC:DEBUG:Rank=2: Opened fieldset
+2020-07-08 11:48:16,037:run_EUC:DEBUG:Rank=0: Opened fieldset
+2020-07-08 11:51:18,129:run_EUC:DEBUG:Rank=2: Created ParticleSet
+2020-07-08 11:51:28,163:run_EUC:DEBUG:Rank=1: Created ParticleSet
+2020-07-08 11:51:28,252:pset_euc:INFO:sim_hist_165_v41r0:Particles: /repeat=742: Total=2968
+2020-07-08 11:51:28,252:pset_euc:INFO:sim_hist_165_v41r0:Lon=165: Lat=[-2.6-2.6 x0.1]: Depth=[25-350m x25]
+2020-07-08 11:51:28,252:run_EUC:DEBUG:Rank=0: Created ParticleSet
+2020-07-08 11:51:28,253:run_EUC:INFO:sim_hist_165_v41r0:Temp=AARJSLZJ: Rank= 1: #Particles=1008
+2020-07-08 11:51:28,253:run_EUC:INFO:sim_hist_165_v41r0:Temp=AARJSLZJ: Rank= 2: #Particles=952
+2020-07-08 11:51:28,255:run_EUC:INFO:sim_hist_165_v41r0:2013-01-01 to 2012-12-02: Runtime=30 days
+2020-07-08 11:51:28,255:run_EUC:INFO:sim_hist_165_v41r0:Repeat=6 days: Step=60 mins: Output=1 day
+2020-07-08 11:51:28,255:run_EUC:INFO:sim_hist_165_v41r0:Field=b-grid: Chunks=300: Time=1981-2012
+2020-07-08 11:51:28,255:run_EUC:INFO:sim_hist_165_v41r0:Temp=AARJSLZJ: Rank= 0: #Particles=1008
+2020-07-08 11:55:22,915:run_EUC:INFO:sim_hist_165_v41r0:Completed!: 00:15:08: Rank= 0: #Particles=1008-368=640
+2020-07-08 11:55:23,455:run_EUC:INFO:sim_hist_165_v41r0:Completed!: 00:15:08: Rank= 2: #Particles=952-541=411
+2020-07-08 12:14:21,170:run_EUC:INFO:sim_hist_165_v41r0:Completed!: 00:34:06: Rank= 1: #Particles=1008-261=747
+2020-07-08 12:14:21,174:timed:INFO:run_EUC: 0:34:06.21 total: 2046.21 seconds.
+2020-07-08 12:14:21,175:timed:INFO:run_EUC: 0:34:06.21 total: 2046.21 seconds.
+2020-07-08 12:14:23,107:timed:INFO:run_EUC: 0:34:08.14 total: 2048.14 seconds.
+2020-07-10 12:55:35,832:<module>:DEBUG:Args parsed
+2020-07-10 12:55:35,832:<module>:DEBUG:Args parsed
+2020-07-10 12:55:35,832:<module>:DEBUG:Args parsed
+2020-07-10 12:55:35,832:<module>:DEBUG:Args parsed
+2020-07-10 12:55:35,832:<module>:DEBUG:Args parsed
+2020-07-10 12:55:35,832:<module>:DEBUG:Args parsed
+2020-07-10 12:55:35,832:<module>:DEBUG:Args parsed
+2020-07-10 12:55:35,832:<module>:DEBUG:Args parsed
+2020-07-10 12:55:35,832:<module>:DEBUG:Args parsed
+2020-07-10 12:55:35,832:<module>:DEBUG:Args parsed
+2020-07-10 12:55:35,832:<module>:DEBUG:Args parsed
+2020-07-10 12:55:35,832:<module>:DEBUG:Args parsed
+2020-07-10 12:55:35,832:<module>:DEBUG:Args parsed
+2020-07-10 12:55:35,832:<module>:DEBUG:Args parsed
+2020-07-10 12:55:35,832:<module>:DEBUG:Args parsed
+2020-07-10 12:55:35,832:<module>:DEBUG:Args parsed
+2020-07-10 12:55:35,832:<module>:DEBUG:Args parsed
+2020-07-10 12:55:35,833:<module>:DEBUG:Args parsed
+2020-07-10 12:55:35,833:<module>:DEBUG:Args parsed
+2020-07-10 12:55:35,833:<module>:DEBUG:Args parsed
+2020-07-10 12:55:35,833:<module>:DEBUG:Args parsed
+2020-07-10 12:55:35,833:<module>:DEBUG:Args parsed
+2020-07-10 12:55:35,833:<module>:DEBUG:Args parsed
+2020-07-10 12:55:35,833:<module>:DEBUG:Args parsed
+2020-07-10 12:55:35,833:<module>:DEBUG:Args parsed
+2020-07-10 12:55:35,833:<module>:DEBUG:Args parsed
+2020-07-10 12:55:35,833:<module>:DEBUG:Args parsed
+2020-07-10 12:55:35,833:<module>:DEBUG:Args parsed
+2020-07-10 12:55:35,833:<module>:DEBUG:Args parsed
+2020-07-10 12:55:35,833:<module>:DEBUG:Args parsed
+2020-07-10 12:55:35,833:<module>:DEBUG:Args parsed
+2020-07-10 12:55:35,833:<module>:DEBUG:Args parsed
+2020-07-10 12:55:35,833:<module>:DEBUG:Args parsed
+2020-07-10 12:55:35,833:<module>:DEBUG:Args parsed
+2020-07-10 12:55:35,833:<module>:DEBUG:Args parsed
+2020-07-10 12:55:35,833:<module>:DEBUG:Args parsed
+2020-07-10 12:55:35,833:<module>:DEBUG:Args parsed
+2020-07-10 12:55:35,833:<module>:DEBUG:Args parsed
+2020-07-10 12:55:35,833:<module>:DEBUG:Args parsed
+2020-07-10 12:55:35,833:<module>:DEBUG:Args parsed
+2020-07-10 12:55:35,833:<module>:DEBUG:Args parsed
+2020-07-10 12:55:35,833:<module>:DEBUG:Args parsed
+2020-07-10 12:55:35,833:<module>:DEBUG:Args parsed
+2020-07-10 12:55:35,833:<module>:DEBUG:Args parsed
+2020-07-10 12:55:35,833:<module>:DEBUG:Args parsed
+2020-07-10 12:55:35,833:<module>:DEBUG:Args parsed
+2020-07-10 12:55:35,833:<module>:DEBUG:Args parsed
+2020-07-10 12:55:35,833:<module>:DEBUG:Args parsed
+2020-07-10 12:55:35,847:run_EUC:DEBUG:Starting
+2020-07-10 12:55:35,847:run_EUC:DEBUG:Starting
+2020-07-10 12:55:35,847:run_EUC:DEBUG:Starting
+2020-07-10 12:55:35,847:run_EUC:DEBUG:Starting
+2020-07-10 12:55:35,847:run_EUC:DEBUG:Starting
+2020-07-10 12:55:35,847:run_EUC:DEBUG:Starting
+2020-07-10 12:55:35,847:run_EUC:DEBUG:Starting
+2020-07-10 12:55:35,847:run_EUC:DEBUG:Starting
+2020-07-10 12:55:35,847:run_EUC:DEBUG:Starting
+2020-07-10 12:55:35,847:run_EUC:DEBUG:Starting
+2020-07-10 12:55:35,847:run_EUC:DEBUG:Starting
+2020-07-10 12:55:35,847:run_EUC:DEBUG:Starting
+2020-07-10 12:55:35,847:run_EUC:DEBUG:Starting
+2020-07-10 12:55:35,847:run_EUC:DEBUG:Starting
+2020-07-10 12:55:35,847:run_EUC:DEBUG:Starting
+2020-07-10 12:55:35,847:run_EUC:DEBUG:Starting
+2020-07-10 12:55:35,847:run_EUC:DEBUG:Starting
+2020-07-10 12:55:35,847:run_EUC:DEBUG:Starting
+2020-07-10 12:55:35,847:run_EUC:DEBUG:Starting
+2020-07-10 12:55:35,847:run_EUC:DEBUG:Starting
+2020-07-10 12:55:35,847:run_EUC:DEBUG:Starting
+2020-07-10 12:55:35,847:run_EUC:DEBUG:Starting
+2020-07-10 12:55:35,848:run_EUC:DEBUG:Starting
+2020-07-10 12:55:35,848:run_EUC:DEBUG:Starting
+2020-07-10 12:55:35,848:run_EUC:DEBUG:Starting
+2020-07-10 12:55:35,848:run_EUC:DEBUG:Starting
+2020-07-10 12:55:35,848:run_EUC:DEBUG:Starting
+2020-07-10 12:55:35,848:run_EUC:DEBUG:Starting
+2020-07-10 12:55:35,848:run_EUC:DEBUG:Starting
+2020-07-10 12:55:35,848:run_EUC:DEBUG:Starting
+2020-07-10 12:55:35,848:run_EUC:DEBUG:Starting
+2020-07-10 12:55:35,848:run_EUC:DEBUG:Starting
+2020-07-10 12:55:35,848:run_EUC:DEBUG:Starting
+2020-07-10 12:55:35,848:run_EUC:DEBUG:Starting
+2020-07-10 12:55:35,848:run_EUC:DEBUG:Starting
+2020-07-10 12:55:35,848:run_EUC:DEBUG:Starting
+2020-07-10 12:55:35,848:run_EUC:DEBUG:Starting
+2020-07-10 12:55:35,848:run_EUC:DEBUG:Starting
+2020-07-10 12:55:35,848:run_EUC:DEBUG:Starting
+2020-07-10 12:55:35,848:run_EUC:DEBUG:Starting
+2020-07-10 12:55:35,848:run_EUC:DEBUG:Starting
+2020-07-10 12:55:35,848:run_EUC:DEBUG:Starting
+2020-07-10 12:55:35,848:run_EUC:DEBUG:Starting
+2020-07-10 12:55:35,848:run_EUC:DEBUG:Starting
+2020-07-10 12:55:35,849:run_EUC:DEBUG:Starting
+2020-07-10 12:55:35,849:run_EUC:DEBUG:Starting
+2020-07-10 12:55:35,849:run_EUC:DEBUG:Starting
+2020-07-10 12:55:35,849:run_EUC:DEBUG:Starting
+2020-07-10 12:55:35,849:run_EUC:DEBUG:Rank=17
+2020-07-10 12:55:35,849:run_EUC:DEBUG:Rank=2
+2020-07-10 12:55:35,849:run_EUC:DEBUG:Rank=9
+2020-07-10 12:55:35,849:run_EUC:DEBUG:Rank=26
+2020-07-10 12:55:35,849:run_EUC:DEBUG:Rank=22
+2020-07-10 12:55:35,849:run_EUC:DEBUG:Rank=47
+2020-07-10 12:55:35,849:run_EUC:DEBUG:Rank=44
+2020-07-10 12:55:35,849:run_EUC:DEBUG:Rank=6
+2020-07-10 12:55:35,849:run_EUC:DEBUG:Rank=20
+2020-07-10 12:55:35,849:run_EUC:DEBUG:Rank=38
+2020-07-10 12:55:35,849:run_EUC:DEBUG:Rank=41
+2020-07-10 12:55:35,849:run_EUC:DEBUG:Rank=1
+2020-07-10 12:55:35,849:run_EUC:DEBUG:Rank=30
+2020-07-10 12:55:35,849:run_EUC:DEBUG:Rank=31
+2020-07-10 12:55:35,849:run_EUC:DEBUG:Rank=37
+2020-07-10 12:55:35,849:run_EUC:DEBUG:Rank=40
+2020-07-10 12:55:35,849:run_EUC:DEBUG:Rank=25
+2020-07-10 12:55:35,849:run_EUC:DEBUG:Rank=13
+2020-07-10 12:55:35,849:run_EUC:DEBUG:Rank=43
+2020-07-10 12:55:35,849:run_EUC:DEBUG:Rank=34
+2020-07-10 12:55:35,849:run_EUC:DEBUG:Rank=27
+2020-07-10 12:55:35,849:run_EUC:DEBUG:Rank=29
+2020-07-10 12:55:35,849:run_EUC:DEBUG:Rank=46
+2020-07-10 12:55:35,850:run_EUC:DEBUG:Rank=36
+2020-07-10 12:55:35,850:run_EUC:DEBUG:Rank=10
+2020-07-10 12:55:35,850:run_EUC:DEBUG:Rank=7
+2020-07-10 12:55:35,850:run_EUC:DEBUG:Rank=24
+2020-07-10 12:55:35,850:run_EUC:DEBUG:Rank=11
+2020-07-10 12:55:35,850:run_EUC:DEBUG:Rank=8
+2020-07-10 12:55:35,850:run_EUC:DEBUG:Rank=28
+2020-07-10 12:55:35,850:run_EUC:DEBUG:Rank=4
+2020-07-10 12:55:35,850:run_EUC:DEBUG:Rank=35
+2020-07-10 12:55:35,850:run_EUC:DEBUG:Rank=32
+2020-07-10 12:55:35,850:run_EUC:DEBUG:Rank=5
+2020-07-10 12:55:35,850:run_EUC:DEBUG:Rank=33
+2020-07-10 12:55:35,850:run_EUC:DEBUG:Rank=19
+2020-07-10 12:55:35,850:run_EUC:DEBUG:Rank=21
+2020-07-10 12:55:35,850:run_EUC:DEBUG:Rank=12
+2020-07-10 12:55:35,850:run_EUC:DEBUG:Rank=42
+2020-07-10 12:55:35,850:run_EUC:DEBUG:Rank=16
+2020-07-10 12:55:35,850:run_EUC:DEBUG:Rank=0
+2020-07-10 12:55:35,850:run_EUC:DEBUG:Rank=14
+2020-07-10 12:55:35,850:run_EUC:DEBUG:Rank=15
+2020-07-10 12:55:35,850:run_EUC:DEBUG:Rank=18
+2020-07-10 12:55:35,850:run_EUC:DEBUG:Rank=3
+2020-07-10 12:55:35,850:run_EUC:DEBUG:Rank=23
+2020-07-10 12:55:35,850:run_EUC:DEBUG:Rank=39
+2020-07-10 12:55:35,850:run_EUC:DEBUG:Rank=45
+2020-07-10 13:05:50,313:run_EUC:DEBUG:Rank=28: Opened fieldset
+2020-07-10 13:05:50,314:run_EUC:DEBUG:Rank=30: Opened fieldset
+2020-07-10 13:05:50,315:run_EUC:DEBUG:Rank=33: Opened fieldset
+2020-07-10 13:05:50,315:run_EUC:DEBUG:Rank=31: Opened fieldset
+2020-07-10 13:05:50,316:run_EUC:DEBUG:Rank=25: Opened fieldset
+2020-07-10 13:05:50,316:run_EUC:DEBUG:Rank=34: Opened fieldset
+2020-07-10 13:05:50,321:run_EUC:DEBUG:Rank=24: Opened fieldset
+2020-07-10 13:05:50,323:run_EUC:DEBUG:Rank=32: Opened fieldset
+2020-07-10 13:05:50,324:run_EUC:DEBUG:Rank=45: Opened fieldset
+2020-07-10 13:05:50,325:run_EUC:DEBUG:Rank=47: Opened fieldset
+2020-07-10 13:05:50,324:run_EUC:DEBUG:Rank=46: Opened fieldset
+2020-07-10 13:05:50,325:run_EUC:DEBUG:Rank=29: Opened fieldset
+2020-07-10 13:05:50,325:run_EUC:DEBUG:Rank=41: Opened fieldset
+2020-07-10 13:05:50,325:run_EUC:DEBUG:Rank=40: Opened fieldset
+2020-07-10 13:05:50,325:run_EUC:DEBUG:Rank=44: Opened fieldset
+2020-07-10 13:05:50,326:run_EUC:DEBUG:Rank=26: Opened fieldset
+2020-07-10 13:05:50,326:run_EUC:DEBUG:Rank=27: Opened fieldset
+2020-07-10 13:05:50,326:run_EUC:DEBUG:Rank=35: Opened fieldset
+2020-07-10 13:05:50,326:run_EUC:DEBUG:Rank=38: Opened fieldset
+2020-07-10 13:05:50,326:run_EUC:DEBUG:Rank=36: Opened fieldset
+2020-07-10 13:05:50,327:run_EUC:DEBUG:Rank=42: Opened fieldset
+2020-07-10 13:05:50,327:run_EUC:DEBUG:Rank=39: Opened fieldset
+2020-07-10 13:05:50,327:run_EUC:DEBUG:Rank=37: Opened fieldset
+2020-07-10 13:05:50,330:run_EUC:DEBUG:Rank=43: Opened fieldset
+2020-07-10 13:05:50,332:run_EUC:DEBUG:Rank=7: Opened fieldset
+2020-07-10 13:05:50,333:run_EUC:DEBUG:Rank=5: Opened fieldset
+2020-07-10 13:05:50,336:run_EUC:DEBUG:Rank=9: Opened fieldset
+2020-07-10 13:05:50,336:run_EUC:DEBUG:Rank=3: Opened fieldset
+2020-07-10 13:05:50,336:run_EUC:DEBUG:Rank=4: Opened fieldset
+2020-07-10 13:05:50,337:run_EUC:DEBUG:Rank=6: Opened fieldset
+2020-07-10 13:05:50,336:run_EUC:DEBUG:Rank=8: Opened fieldset
+2020-07-10 13:05:50,337:run_EUC:DEBUG:Rank=1: Opened fieldset
+2020-07-10 13:05:50,337:run_EUC:DEBUG:Rank=2: Opened fieldset
+2020-07-10 13:05:50,338:run_EUC:DEBUG:Rank=10: Opened fieldset
+2020-07-10 13:05:50,338:run_EUC:DEBUG:Rank=11: Opened fieldset
+2020-07-10 13:05:50,339:run_EUC:DEBUG:Rank=14: Opened fieldset
+2020-07-10 13:05:50,339:run_EUC:DEBUG:Rank=0: Opened fieldset
+2020-07-10 13:05:50,340:run_EUC:DEBUG:Rank=22: Opened fieldset
+2020-07-10 13:05:50,340:run_EUC:DEBUG:Rank=23: Opened fieldset
+2020-07-10 13:05:50,340:run_EUC:DEBUG:Rank=13: Opened fieldset
+2020-07-10 13:05:50,341:run_EUC:DEBUG:Rank=15: Opened fieldset
+2020-07-10 13:05:50,341:run_EUC:DEBUG:Rank=16: Opened fieldset
+2020-07-10 13:05:50,341:run_EUC:DEBUG:Rank=17: Opened fieldset
+2020-07-10 13:05:50,341:run_EUC:DEBUG:Rank=21: Opened fieldset
+2020-07-10 13:05:50,342:run_EUC:DEBUG:Rank=19: Opened fieldset
+2020-07-10 13:05:50,341:run_EUC:DEBUG:Rank=20: Opened fieldset
+2020-07-10 13:05:50,342:run_EUC:DEBUG:Rank=18: Opened fieldset
+2020-07-10 13:05:50,344:run_EUC:DEBUG:Rank=12: Opened fieldset
+2020-07-10 13:08:08,345:run_EUC:DEBUG:Rank=5: Created ParticleSet
+2020-07-10 13:08:08,345:run_EUC:DEBUG:Rank=4: Created ParticleSet
+2020-07-10 13:08:08,345:run_EUC:DEBUG:Rank=8: Created ParticleSet
+2020-07-10 13:08:08,346:run_EUC:DEBUG:Rank=11: Created ParticleSet
+2020-07-10 13:08:08,346:run_EUC:DEBUG:Rank=2: Created ParticleSet
+2020-07-10 13:08:08,346:run_EUC:DEBUG:Rank=3: Created ParticleSet
+2020-07-10 13:08:08,346:run_EUC:DEBUG:Rank=10: Created ParticleSet
+2020-07-10 13:08:08,356:run_EUC:DEBUG:Rank=1: Created ParticleSet
+2020-07-10 13:08:08,458:run_EUC:DEBUG:Rank=13: Created ParticleSet
+2020-07-10 13:08:08,458:run_EUC:DEBUG:Rank=16: Created ParticleSet
+2020-07-10 13:08:08,458:run_EUC:DEBUG:Rank=20: Created ParticleSet
+2020-07-10 13:08:08,458:run_EUC:DEBUG:Rank=21: Created ParticleSet
+2020-07-10 13:08:08,458:run_EUC:DEBUG:Rank=18: Created ParticleSet
+2020-07-10 13:08:08,458:run_EUC:DEBUG:Rank=15: Created ParticleSet
+2020-07-10 13:08:08,458:run_EUC:DEBUG:Rank=23: Created ParticleSet
+2020-07-10 13:08:08,458:run_EUC:DEBUG:Rank=19: Created ParticleSet
+2020-07-10 13:08:08,458:run_EUC:DEBUG:Rank=14: Created ParticleSet
+2020-07-10 13:08:08,458:run_EUC:DEBUG:Rank=22: Created ParticleSet
+2020-07-10 13:08:08,458:run_EUC:DEBUG:Rank=17: Created ParticleSet
+2020-07-10 13:08:08,459:run_EUC:DEBUG:Rank=12: Created ParticleSet
+2020-07-10 13:08:08,694:run_EUC:DEBUG:Rank=46: Created ParticleSet
+2020-07-10 13:08:08,694:run_EUC:DEBUG:Rank=40: Created ParticleSet
+2020-07-10 13:08:08,694:run_EUC:DEBUG:Rank=42: Created ParticleSet
+2020-07-10 13:08:08,694:run_EUC:DEBUG:Rank=41: Created ParticleSet
+2020-07-10 13:08:08,694:run_EUC:DEBUG:Rank=39: Created ParticleSet
+2020-07-10 13:08:08,694:run_EUC:DEBUG:Rank=44: Created ParticleSet
+2020-07-10 13:08:08,698:run_EUC:DEBUG:Rank=28: Created ParticleSet
+2020-07-10 13:08:08,698:run_EUC:DEBUG:Rank=32: Created ParticleSet
+2020-07-10 13:08:08,698:run_EUC:DEBUG:Rank=26: Created ParticleSet
+2020-07-10 13:08:08,698:run_EUC:DEBUG:Rank=30: Created ParticleSet
+2020-07-10 13:08:08,698:run_EUC:DEBUG:Rank=29: Created ParticleSet
+2020-07-10 13:08:08,698:run_EUC:DEBUG:Rank=27: Created ParticleSet
+2020-07-10 13:08:08,698:run_EUC:DEBUG:Rank=31: Created ParticleSet
+2020-07-10 13:08:08,698:run_EUC:DEBUG:Rank=33: Created ParticleSet
+2020-07-10 13:08:08,698:run_EUC:DEBUG:Rank=35: Created ParticleSet
+2020-07-10 13:08:08,698:run_EUC:DEBUG:Rank=25: Created ParticleSet
+2020-07-10 13:08:08,698:run_EUC:DEBUG:Rank=34: Created ParticleSet
+2020-07-10 13:08:08,707:run_EUC:DEBUG:Rank=36: Created ParticleSet
+2020-07-10 13:08:08,707:run_EUC:DEBUG:Rank=37: Created ParticleSet
+2020-07-10 13:08:08,709:run_EUC:DEBUG:Rank=43: Created ParticleSet
+2020-07-10 13:08:08,709:run_EUC:DEBUG:Rank=47: Created ParticleSet
+2020-07-10 13:08:08,709:run_EUC:DEBUG:Rank=38: Created ParticleSet
+2020-07-10 13:08:08,709:run_EUC:DEBUG:Rank=45: Created ParticleSet
+2020-07-10 13:08:28,875:run_EUC:DEBUG:Rank=6: Created ParticleSet
+2020-07-10 13:08:29,109:run_EUC:DEBUG:Rank=7: Created ParticleSet
+2020-07-10 13:08:29,266:run_EUC:DEBUG:Rank=9: Created ParticleSet
+2020-07-10 13:08:29,266:pset_euc:INFO:sim_hist_190_v1r0:Particles: /repeat=742: Total=21518
+2020-07-10 13:08:29,266:pset_euc:INFO:sim_hist_190_v1r0:Lon=190: Lat=[-2.6-2.6 x0.1]: Depth=[25-350m x25]
+2020-07-10 13:08:29,266:run_EUC:DEBUG:Rank=0: Created ParticleSet
+2020-07-10 13:08:29,267:run_EUC:INFO:sim_hist_190_v1r0:Temp=CEHEYIQT: Rank= 7: #Particles=812
+2020-07-10 13:08:29,267:run_EUC:INFO:sim_hist_190_v1r0:Temp=CEHEYIQT: Rank= 9: #Particles=812
+2020-07-10 13:08:29,267:run_EUC:INFO:sim_hist_190_v1r0:Temp=CEHEYIQT: Rank= 6: #Particles=812
+2020-07-10 13:08:29,267:run_EUC:INFO:sim_hist_190_v1r0:Temp=CEHEYIQT: Rank=20: #Particles=406
+2020-07-10 13:08:29,267:run_EUC:INFO:sim_hist_190_v1r0:Temp=CEHEYIQT: Rank=30: #Particles=406
+2020-07-10 13:08:29,267:run_EUC:INFO:sim_hist_190_v1r0:Temp=CEHEYIQT: Rank= 1: #Particles=406
+2020-07-10 13:08:29,267:run_EUC:INFO:sim_hist_190_v1r0:Temp=CEHEYIQT: Rank=43: #Particles=406
+2020-07-10 13:08:29,267:run_EUC:INFO:sim_hist_190_v1r0:Temp=CEHEYIQT: Rank=39: #Particles=406
+2020-07-10 13:08:29,267:run_EUC:INFO:sim_hist_190_v1r0:Temp=CEHEYIQT: Rank=46: #Particles=406
+2020-07-10 13:08:29,267:run_EUC:INFO:sim_hist_190_v1r0:Temp=CEHEYIQT: Rank=47: #Particles=406
+2020-07-10 13:08:29,267:run_EUC:INFO:sim_hist_190_v1r0:Temp=CEHEYIQT: Rank=16: #Particles=406
+2020-07-10 13:08:29,267:run_EUC:INFO:sim_hist_190_v1r0:Temp=CEHEYIQT: Rank=22: #Particles=406
+2020-07-10 13:08:29,267:run_EUC:INFO:sim_hist_190_v1r0:Temp=CEHEYIQT: Rank=45: #Particles=406
+2020-07-10 13:08:29,267:run_EUC:INFO:sim_hist_190_v1r0:Temp=CEHEYIQT: Rank=17: #Particles=406
+2020-07-10 13:08:29,267:run_EUC:INFO:sim_hist_190_v1r0:Temp=CEHEYIQT: Rank=14: #Particles=406
+2020-07-10 13:08:29,267:run_EUC:INFO:sim_hist_190_v1r0:Temp=CEHEYIQT: Rank=35: #Particles=406
+2020-07-10 13:08:29,267:run_EUC:INFO:sim_hist_190_v1r0:Temp=CEHEYIQT: Rank=27: #Particles=406
+2020-07-10 13:08:29,267:run_EUC:INFO:sim_hist_190_v1r0:Temp=CEHEYIQT: Rank=10: #Particles=406
+2020-07-10 13:08:29,267:run_EUC:INFO:sim_hist_190_v1r0:Temp=CEHEYIQT: Rank=19: #Particles=406
+2020-07-10 13:08:29,267:run_EUC:INFO:sim_hist_190_v1r0:Temp=CEHEYIQT: Rank=31: #Particles=406
+2020-07-10 13:08:29,267:run_EUC:INFO:sim_hist_190_v1r0:Temp=CEHEYIQT: Rank= 8: #Particles=406
+2020-07-10 13:08:29,267:run_EUC:INFO:sim_hist_190_v1r0:Temp=CEHEYIQT: Rank= 3: #Particles=406
+2020-07-10 13:08:29,267:run_EUC:INFO:sim_hist_190_v1r0:Temp=CEHEYIQT: Rank=21: #Particles=406
+2020-07-10 13:08:29,267:run_EUC:INFO:sim_hist_190_v1r0:Temp=CEHEYIQT: Rank=23: #Particles=406
+2020-07-10 13:08:29,267:run_EUC:INFO:sim_hist_190_v1r0:Temp=CEHEYIQT: Rank= 5: #Particles=406
+2020-07-10 13:08:29,267:run_EUC:INFO:sim_hist_190_v1r0:Temp=CEHEYIQT: Rank=15: #Particles=406
+2020-07-10 13:08:29,267:run_EUC:INFO:sim_hist_190_v1r0:Temp=CEHEYIQT: Rank=11: #Particles=406
+2020-07-10 13:08:29,267:run_EUC:INFO:sim_hist_190_v1r0:Temp=CEHEYIQT: Rank=29: #Particles=406
+2020-07-10 13:08:29,267:run_EUC:INFO:sim_hist_190_v1r0:Temp=CEHEYIQT: Rank=13: #Particles=406
+2020-07-10 13:08:29,267:run_EUC:INFO:sim_hist_190_v1r0:Temp=CEHEYIQT: Rank=18: #Particles=406
+2020-07-10 13:08:29,267:run_EUC:INFO:sim_hist_190_v1r0:Temp=CEHEYIQT: Rank= 4: #Particles=406
+2020-07-10 13:08:29,267:run_EUC:INFO:sim_hist_190_v1r0:Temp=CEHEYIQT: Rank=25: #Particles=406
+2020-07-10 13:08:29,267:run_EUC:INFO:sim_hist_190_v1r0:Temp=CEHEYIQT: Rank=44: #Particles=406
+2020-07-10 13:08:29,267:run_EUC:INFO:sim_hist_190_v1r0:Temp=CEHEYIQT: Rank=38: #Particles=406
+2020-07-10 13:08:29,267:run_EUC:INFO:sim_hist_190_v1r0:Temp=CEHEYIQT: Rank=32: #Particles=406
+2020-07-10 13:08:29,267:run_EUC:INFO:sim_hist_190_v1r0:Temp=CEHEYIQT: Rank=36: #Particles=406
+2020-07-10 13:08:29,267:run_EUC:INFO:sim_hist_190_v1r0:Temp=CEHEYIQT: Rank=41: #Particles=406
+2020-07-10 13:08:29,267:run_EUC:INFO:sim_hist_190_v1r0:Temp=CEHEYIQT: Rank=34: #Particles=406
+2020-07-10 13:08:29,267:run_EUC:INFO:sim_hist_190_v1r0:Temp=CEHEYIQT: Rank=42: #Particles=406
+2020-07-10 13:08:29,267:run_EUC:INFO:sim_hist_190_v1r0:Temp=CEHEYIQT: Rank=33: #Particles=406
+2020-07-10 13:08:29,267:run_EUC:INFO:sim_hist_190_v1r0:Temp=CEHEYIQT: Rank=40: #Particles=406
+2020-07-10 13:08:29,267:run_EUC:INFO:sim_hist_190_v1r0:Temp=CEHEYIQT: Rank=28: #Particles=406
+2020-07-10 13:08:29,267:run_EUC:INFO:sim_hist_190_v1r0:Temp=CEHEYIQT: Rank=37: #Particles=406
+2020-07-10 13:08:29,267:run_EUC:INFO:sim_hist_190_v1r0:Temp=CEHEYIQT: Rank=26: #Particles=406
+2020-07-10 13:08:29,267:run_EUC:INFO:sim_hist_190_v1r0:Temp=CEHEYIQT: Rank= 2: #Particles=406
+2020-07-10 13:08:29,267:run_EUC:INFO:sim_hist_190_v1r0:Temp=CEHEYIQT: Rank=12: #Particles=406
+2020-07-10 13:08:29,268:run_EUC:INFO:sim_hist_190_v1r0:2013-01-01 to 2012-07-05: Runtime=180 days
+2020-07-10 13:08:29,269:run_EUC:INFO:sim_hist_190_v1r0:Repeat=6 days: Step=60 mins: Output=1 day
+2020-07-10 13:08:29,269:run_EUC:INFO:sim_hist_190_v1r0:Field=b-grid: Chunks=300: Time=1981-2012
+2020-07-10 13:08:29,269:run_EUC:INFO:sim_hist_190_v1r0:Temp=CEHEYIQT: Rank= 0: #Particles=812
+2020-07-10 13:08:33,184:run_EUC:DEBUG:Rank=24: Created ParticleSet
+2020-07-10 13:08:33,185:run_EUC:INFO:sim_hist_190_v1r0:Temp=CEHEYIQT: Rank=24: #Particles=812
+2020-07-10 13:16:07,820:run_EUC:INFO:sim_hist_190_v1r0:Completed!: 00:20:32: Rank=16: #Particles=406-397=9
+2020-07-10 13:16:07,832:run_EUC:INFO:sim_hist_190_v1r0:Completed!: 00:20:32: Rank=11: #Particles=406-386=20
+2020-07-10 13:16:07,832:run_EUC:INFO:sim_hist_190_v1r0:Completed!: 00:20:32: Rank=10: #Particles=406-402=4
+2020-07-10 13:16:08,017:run_EUC:INFO:sim_hist_190_v1r0:Completed!: 00:20:32: Rank=33: #Particles=406-231=175
+2020-07-10 13:16:08,018:run_EUC:INFO:sim_hist_190_v1r0:Completed!: 00:20:32: Rank=27: #Particles=406-391=15
+2020-07-10 13:16:08,019:run_EUC:INFO:sim_hist_190_v1r0:Completed!: 00:20:32: Rank=22: #Particles=406-201=205
+2020-07-10 13:16:08,045:run_EUC:INFO:sim_hist_190_v1r0:Completed!: 00:20:32: Rank=28: #Particles=406-242=164
+2020-07-10 13:16:08,067:run_EUC:INFO:sim_hist_190_v1r0:Completed!: 00:20:32: Rank=44: #Particles=406-398=8
+2020-07-10 13:16:08,071:run_EUC:INFO:sim_hist_190_v1r0:Completed!: 00:20:32: Rank= 8: #Particles=406-217=189
+2020-07-10 13:16:08,074:run_EUC:INFO:sim_hist_190_v1r0:Completed!: 00:20:32: Rank= 2: #Particles=406-184=222
+2020-07-10 13:16:08,075:run_EUC:INFO:sim_hist_190_v1r0:Completed!: 00:20:32: Rank= 0: #Particles=812-786=26
+2020-07-10 13:16:08,081:run_EUC:INFO:sim_hist_190_v1r0:Completed!: 00:20:32: Rank=40: #Particles=406-171=235
+2020-07-10 13:16:08,084:run_EUC:INFO:sim_hist_190_v1r0:Completed!: 00:20:32: Rank=43: #Particles=406-189=217
+2020-07-10 13:16:08,096:run_EUC:INFO:sim_hist_190_v1r0:Completed!: 00:20:32: Rank=45: #Particles=406-384=22
+2020-07-10 13:16:08,097:run_EUC:INFO:sim_hist_190_v1r0:Completed!: 00:20:32: Rank=36: #Particles=406-283=123
+2020-07-10 13:16:08,108:run_EUC:INFO:sim_hist_190_v1r0:Completed!: 00:20:32: Rank=14: #Particles=406-258=148
+2020-07-10 13:16:08,131:run_EUC:INFO:sim_hist_190_v1r0:Completed!: 00:20:32: Rank=21: #Particles=406-195=211
+2020-07-10 13:16:08,214:run_EUC:INFO:sim_hist_190_v1r0:Completed!: 00:20:32: Rank=47: #Particles=406-395=11
+2020-07-10 13:16:08,228:run_EUC:INFO:sim_hist_190_v1r0:Completed!: 00:20:32: Rank=23: #Particles=406-374=32
+2020-07-10 13:16:08,320:run_EUC:INFO:sim_hist_190_v1r0:Completed!: 00:20:32: Rank=46: #Particles=406-355=51
+2020-07-10 13:16:09,095:run_EUC:INFO:sim_hist_190_v1r0:Completed!: 00:20:33: Rank= 5: #Particles=406-324=82
+2020-07-10 13:25:49,187:run_EUC:INFO:sim_hist_190_v1r0:Completed!: 00:30:13: Rank=39: #Particles=406-161=245
+2020-07-10 13:31:58,898:run_EUC:INFO:sim_hist_190_v1r0:Completed!: 00:36:23: Rank=12: #Particles=406-145=261
+2020-07-10 13:33:16,947:run_EUC:INFO:sim_hist_190_v1r0:Completed!: 00:37:41: Rank=38: #Particles=406-150=256
+2020-07-10 13:54:02,975:run_EUC:INFO:sim_hist_190_v1r0:Completed!: 00:58:27: Rank=18: #Particles=406-152=254
+2020-07-10 14:03:46,056:run_EUC:INFO:sim_hist_190_v1r0:Completed!: 01:08:10: Rank=35: #Particles=406-143=263
+2020-07-10 14:08:15,845:run_EUC:INFO:sim_hist_190_v1r0:Completed!: 01:12:40: Rank= 4: #Particles=406-136=270
+2020-07-10 14:18:49,811:run_EUC:INFO:sim_hist_190_v1r0:Completed!: 01:23:14: Rank=37: #Particles=406-141=265
+2020-07-10 15:11:38,783:run_EUC:INFO:sim_hist_190_v1r0:Completed!: 02:16:03: Rank=32: #Particles=406-120=286
+2020-07-10 15:32:20,861:run_EUC:INFO:sim_hist_190_v1r0:Completed!: 02:36:45: Rank=25: #Particles=406-273=133
+2020-07-10 15:33:05,907:run_EUC:INFO:sim_hist_190_v1r0:Completed!: 02:37:30: Rank=15: #Particles=406-126=280
+2020-07-10 15:46:30,904:run_EUC:INFO:sim_hist_190_v1r0:Completed!: 02:50:55: Rank=41: #Particles=406-123=283
