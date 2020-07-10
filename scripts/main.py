@@ -51,9 +51,7 @@ MUST use pset.Kernel(AdvectionRK4_3D)
 # if particle.state == ErrorCode.Evaluate:
 * 1000. * 1.852 * 60. * cos(y * pi / 180)
 """
-import sys
 import cfg
-import tools
 import math
 import random
 import parcels
@@ -66,8 +64,6 @@ import matplotlib.pyplot as plt
 from datetime import datetime, timedelta
 from parcels import (FieldSet, Field, ParticleSet, VectorField,
                      ErrorCode, AdvectionRK4)
-
-logger = tools.mlogger(Path(sys.argv[0]).stem)
 
 
 def ofam_fieldset(time_bnds='full', exp='hist', vcoord='sw_edges_ocean', chunks=True, cs=300,
@@ -249,42 +245,6 @@ def SubmergeParticle(particle, fieldset, time):
     # Increase time to not trigger kernels again, otherwise infinite loop.
     particle.time = time + particle.dt
     particle.set_state(ErrorCode.Success)
-
-
-def pset_euc(fieldset, pclass, lon, dy, dz, repeatdt, pset_start, repeats,
-             sim_id=None, rank=0):
-    """Create a ParticleSet."""
-    repeats = 1 if repeats <= 0 else repeats
-    # Particle release latitudes, depths and longitudes.
-    py = np.round(np.arange(-2.6, 2.6 + 0.05, dy), 2)
-    pz = np.arange(25, 350 + 20, dz)
-    px = np.array([lon])
-
-    # Number of particles released in each dimension.
-    Z, Y, X = pz.size, py.size, px.size
-    npart = Z * X * Y * repeats
-
-    # Each repeat.
-    lats = np.repeat(py, pz.size*px.size)
-    depths = np.repeat(np.tile(pz, py.size), px.size)
-    lons = np.repeat(px, pz.size*py.size)
-
-    # Duplicate for each repeat.
-    tr = pset_start - (np.arange(0, repeats) * repeatdt.total_seconds())
-    time = np.repeat(tr, lons.size)
-    depth = np.tile(depths, repeats)
-    lon = np.tile(lons, repeats)
-    lat = np.tile(lats, repeats)
-
-    pset = ParticleSet.from_list(fieldset=fieldset, pclass=pclass,
-                                 lon=lon, lat=lat, depth=depth, time=time,
-                                 lonlatdepth_dtype=np.float64)
-    if sim_id and rank == 0:
-        logger.info('{}:Particles: /repeat={}: Total={}'
-                    .format(sim_id.stem, Z * X * Y, npart))
-        logger.info('{}:Lon={}: Lat=[{}-{} x{}]: Depth=[{}-{}m x{}]'
-                    .format(sim_id.stem, *px, py[0], py[Y-1], dy, pz[0], pz[Z-1], dz))
-    return pset
 
 
 def particleset_from_particlefile(fieldset, pclass, filename, repeatdt=None, restart=True,

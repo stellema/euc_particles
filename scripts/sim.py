@@ -15,12 +15,48 @@ from pathlib import Path
 from operator import attrgetter
 from datetime import datetime, timedelta
 from argparse import ArgumentParser
-from parcels import (AdvectionRK4_3D, ErrorCode, Variable, JITParticle)
+from parcels import (AdvectionRK4_3D, ParticleSet, ErrorCode, Variable, JITParticle)
 
 try:
     from mpi4py import MPI
 except ImportError:
     MPI = None
+
+
+def pset_euc(fieldset, pclass, lon, dy, dz, repeatdt, pset_start, repeats,
+             sim_id=None, rank=0):
+    """Create a ParticleSet."""
+    repeats = 1 if repeats <= 0 else repeats
+    # Particle release latitudes, depths and longitudes.
+    py = np.round(np.arange(-2.6, 2.6 + 0.05, dy), 2)
+    pz = np.arange(25, 350 + 20, dz)
+    px = np.array([lon])
+
+    # Number of particles released in each dimension.
+    Z, Y, X = pz.size, py.size, px.size
+    npart = Z * X * Y * repeats
+
+    # Each repeat.
+    lats = np.repeat(py, pz.size*px.size)
+    depths = np.repeat(np.tile(pz, py.size), px.size)
+    lons = np.repeat(px, pz.size*py.size)
+
+    # Duplicate for each repeat.
+    tr = pset_start - (np.arange(0, repeats) * repeatdt.total_seconds())
+    time = np.repeat(tr, lons.size)
+    depth = np.tile(depths, repeats)
+    lon = np.tile(lons, repeats)
+    lat = np.tile(lats, repeats)
+
+    pset = ParticleSet.from_list(fieldset=fieldset, pclass=pclass,
+                                 lon=lon, lat=lat, depth=depth, time=time,
+                                 lonlatdepth_dtype=np.float64)
+    if sim_id and rank == 0:
+        logger.info('{}:Particles: /repeat={}: Total={}'
+                    .format(sim_id.stem, Z * X * Y, npart))
+        logger.info('{}:Lon={}: Lat=[{}-{} x{}]: Depth=[{}-{}m x{}]'
+                    .format(sim_id.stem, *px, py[0], py[Y-1], dy, pz[0], pz[Z-1], dz))
+    return pset
 
 
 @tools.timeit
@@ -132,8 +168,8 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
         start = fieldset.time_origin.time_origin + timedelta(seconds=np.nanmin(psetx.time))
 
     # Create ParticleSet.
-    pset = main.pset_euc(fieldset, pclass, lon, dy, dz, repeatdt, pset_start, repeats,
-                         sim_id, rank=rank)
+    pset = pset_euc(fieldset, pclass, lon, dy, dz, repeatdt, pset_start, repeats,
+                    sim_id, rank=rank)
     # Add particles from ParticleFile.
     if restart:
         pset.add(psetx)
@@ -200,7 +236,7 @@ if __name__ == "__main__" and cfg.home != Path('E:/'):
     run_EUC(dy=args.dy, dz=args.dz, lon=args.lon, exp=args.exp, runtime_days=args.runtime,
             dt_mins=args.dt, repeatdt_days=args.repeatdt, outputdt_days=args.outputdt,
             v=args.version, pfile=args.pfile)
-else:
+elif __name__ == "__main__":
     logger = tools.mlogger('test_sim', parcels=True, misc=False)
     dy, dz, lon = 0.8, 150, 190
     dt_mins, repeatdt_days, outputdt_days, runtime_days = 60, 6, 1, 10
