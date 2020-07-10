@@ -39,9 +39,9 @@ dv = xr.open_dataset(cfg.ofam/'ocean_v_2012_09.nc').v.isel(Time=t)
 dw = xr.open_dataset(cfg.ofam/'ocean_w_2012_09.nc').w.isel(Time=t)
 dt = xr.open_dataset(cfg.ofam/'ocean_temp_1981_01.nc').temp.isel(Time=t)
 
-sim_id = cfg.data/'sim_hist_190_v5r0.nc'
-ds, dx = plot_traj(sim_id, var='w', traj=40, t=2, Z=290)
+sim_id = cfg.data/'sim_hist_190_v1r0.nc'
 
+ds, dx = plot_traj(sim_id, var='w', traj=6212, t=2, Z=290)
 cmap = plt.cm.seismic
 cmap.set_bad('grey')
 dww = xr.open_dataset(cfg.ofam/'ocean_w_1981-2012_climo.nc').w.mean('Time')

@@ -189,10 +189,10 @@ def generate_sim_id(lon, v=0, exp='hist', randomise=False):
 
 
 def UnBeaching(particle, fieldset, time):
-    (uu, vv, ww) = fieldset.UVW[time, particle.depth, particle.lat, particle.lon]
-    if math.fabs(uu) < 0.5e-8 and math.fabs(vv) < 0.5e-8:
-        (ub, vb) = fieldset.UVunbeach[0., particle.depth, particle.lat, particle.lon]
-        if math.fabs(ub) > 0. or math.fabs(vb) > 0.:
+    (ub, vb) = fieldset.UVunbeach[0., particle.depth, particle.lat, particle.lon]
+    if math.fabs(ub) > 0. or math.fabs(vb) > 0.:
+        (uu, vv, ww) = fieldset.UVW[time, particle.depth, particle.lat, particle.lon]
+        if math.fabs(uu) < 1e-8 and math.fabs(vv) < 1e-8:
             particle.lon += ub * particle.dt
             particle.lat += vb * particle.dt
             particle.unbeachCount += 1
