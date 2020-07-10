@@ -83,3 +83,1460 @@
 2020-07-10 15:32:20,861:run_EUC:INFO:sim_hist_190_v1r0:Completed!: 02:36:45: Rank=25: #Particles=406-273=133
 2020-07-10 15:33:05,907:run_EUC:INFO:sim_hist_190_v1r0:Completed!: 02:37:30: Rank=15: #Particles=406-126=280
 2020-07-10 15:46:30,904:run_EUC:INFO:sim_hist_190_v1r0:Completed!: 02:50:55: Rank=41: #Particles=406-123=283
+2020-07-10 16:55:39,004:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 16:55:39,005:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 16:55:39,006:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 16:55:39,006:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 16:55:39,006:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 16:55:39,006:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 16:55:39,007:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 16:55:39,008:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 16:55:39,008:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 16:55:39,010:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 16:55:39,011:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 16:55:39,011:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 16:55:39,011:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 16:55:39,011:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 16:55:39,011:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 16:55:39,012:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 16:55:39,012:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 16:55:39,012:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 16:55:39,012:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 16:55:39,012:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 16:55:39,012:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 16:55:39,012:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 16:55:39,012:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 16:55:39,013:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 16:55:39,013:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 16:55:39,013:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 16:55:39,013:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 16:55:39,013:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 16:55:39,014:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 16:55:39,014:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 16:55:39,017:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 16:55:39,017:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 16:55:39,017:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 16:55:39,017:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 16:55:39,017:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 16:55:39,017:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 16:55:39,017:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 16:55:39,017:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 16:55:39,018:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 16:55:39,018:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 16:55:39,018:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 16:55:39,018:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 16:55:39,018:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 16:55:39,019:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 16:55:39,019:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 16:55:39,019:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 16:55:39,019:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 16:55:39,019:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 16:55:39,019:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 16:55:39,019:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 16:55:39,019:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 16:55:39,019:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 16:55:39,019:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 16:55:39,019:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 16:55:39,020:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 16:55:39,020:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 16:55:39,020:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 16:55:39,022:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 16:55:39,022:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 16:55:39,022:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 16:55:39,023:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 16:55:39,024:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 16:55:39,024:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 16:55:39,024:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 16:55:39,024:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 16:55:39,024:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 16:55:39,024:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 16:55:39,024:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 16:55:39,024:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 16:55:39,024:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 16:55:39,025:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 16:55:39,025:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 16:55:39,025:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 16:55:39,025:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 16:55:39,025:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 16:55:39,025:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 16:55:39,025:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 16:55:39,025:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 16:55:39,026:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 16:55:39,026:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 16:55:39,026:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 16:55:39,026:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 16:55:39,026:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 16:55:39,026:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 16:55:39,027:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 16:55:39,027:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 16:55:39,027:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 16:55:39,027:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 16:55:39,027:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 16:55:39,027:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 16:55:39,028:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 16:55:39,028:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 16:55:39,028:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 16:55:39,028:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 16:55:39,028:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 16:55:39,028:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 16:55:39,030:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 16:55:39,030:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 16:55:39,030:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 16:55:39,031:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 16:55:39,031:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 16:55:39,031:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 16:55:39,031:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 16:55:39,032:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 16:55:39,032:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 16:55:39,032:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 16:55:39,032:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 16:55:39,032:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 16:55:39,032:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 16:55:39,032:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 16:55:39,033:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 16:55:39,032:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 16:55:39,033:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 16:55:39,033:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 16:55:39,033:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 16:55:39,033:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 16:55:39,033:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 16:55:39,034:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 16:55:39,034:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 16:55:39,034:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 16:55:39,034:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 16:55:39,034:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 16:55:39,035:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 16:55:39,038:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 16:55:39,038:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 16:55:39,038:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 16:55:39,043:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 16:55:39,043:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 16:55:39,043:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 16:55:39,044:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 16:55:39,044:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 16:55:39,045:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 16:55:39,046:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 16:55:39,046:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 16:55:39,046:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 16:55:39,052:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 16:55:39,052:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 16:55:39,052:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 16:55:39,066:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 16:55:39,066:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 16:55:39,067:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 16:55:39,113:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 16:55:39,113:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 16:55:39,113:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 16:55:39,994:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 16:55:39,994:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 16:55:39,994:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 16:55:39,994:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 16:55:39,994:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 16:55:39,994:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 16:55:39,994:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 16:55:39,994:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 16:55:39,994:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 16:55:39,994:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 16:55:39,994:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 16:55:39,995:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 16:55:39,995:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 16:55:39,995:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 16:55:39,995:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 16:55:39,995:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 16:55:39,995:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 16:55:39,995:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 16:55:39,995:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 16:55:39,995:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 16:55:39,995:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 16:55:39,995:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 16:55:39,995:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 16:55:39,995:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 16:55:39,995:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 16:55:39,995:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 16:55:39,995:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 16:55:39,995:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 16:55:39,995:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 16:55:39,995:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 16:55:39,995:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 16:55:39,995:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 16:55:39,996:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 16:55:39,996:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 16:55:39,996:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 16:55:39,996:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 16:55:39,996:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 16:55:39,996:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 16:55:39,996:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 16:55:39,997:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 16:55:39,997:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 16:55:39,997:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 16:55:39,997:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 16:55:39,997:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 16:55:39,997:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 16:55:39,997:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 16:55:39,997:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 16:55:39,998:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 17:04:48,349:reshape:WARNING:Casting field data to np.float32
+2020-07-10 17:04:48,351:reshape:WARNING:Casting field data to np.float32
+2020-07-10 17:04:48,351:reshape:WARNING:Casting field data to np.float32
+2020-07-10 17:04:48,351:reshape:WARNING:Casting field data to np.float32
+2020-07-10 17:04:48,353:reshape:WARNING:Casting field data to np.float32
+2020-07-10 17:04:48,353:reshape:WARNING:Casting field data to np.float32
+2020-07-10 17:04:48,354:reshape:WARNING:Casting field data to np.float32
+2020-07-10 17:04:48,354:reshape:WARNING:Casting field data to np.float32
+2020-07-10 17:04:48,355:reshape:WARNING:Casting field data to np.float32
+2020-07-10 17:04:48,355:reshape:WARNING:Casting field data to np.float32
+2020-07-10 17:04:48,356:reshape:WARNING:Casting field data to np.float32
+2020-07-10 17:04:48,357:reshape:WARNING:Casting field data to np.float32
+2020-07-10 17:04:48,357:reshape:WARNING:Casting field data to np.float32
+2020-07-10 17:04:48,358:reshape:WARNING:Casting field data to np.float32
+2020-07-10 17:04:48,358:reshape:WARNING:Casting field data to np.float32
+2020-07-10 17:04:48,359:reshape:WARNING:Casting field data to np.float32
+2020-07-10 17:04:48,359:reshape:WARNING:Casting field data to np.float32
+2020-07-10 17:04:48,359:reshape:WARNING:Casting field data to np.float32
+2020-07-10 17:04:48,359:reshape:WARNING:Casting field data to np.float32
+2020-07-10 17:04:48,359:reshape:WARNING:Casting field data to np.float32
+2020-07-10 17:04:48,359:reshape:WARNING:Casting field data to np.float32
+2020-07-10 17:04:48,359:reshape:WARNING:Casting field data to np.float32
+2020-07-10 17:04:48,359:reshape:WARNING:Casting field data to np.float32
+2020-07-10 17:04:48,359:reshape:WARNING:Casting field data to np.float32
+2020-07-10 17:04:48,359:reshape:WARNING:Casting field data to np.float32
+2020-07-10 17:04:48,360:reshape:WARNING:Casting field data to np.float32
+2020-07-10 17:04:48,360:reshape:WARNING:Casting field data to np.float32
+2020-07-10 17:04:48,361:reshape:WARNING:Casting field data to np.float32
+2020-07-10 17:04:48,360:reshape:WARNING:Casting field data to np.float32
+2020-07-10 17:04:48,361:reshape:WARNING:Casting field data to np.float32
+2020-07-10 17:04:48,361:reshape:WARNING:Casting field data to np.float32
+2020-07-10 17:04:48,361:reshape:WARNING:Casting field data to np.float32
+2020-07-10 17:04:48,361:reshape:WARNING:Casting field data to np.float32
+2020-07-10 17:04:48,361:reshape:WARNING:Casting field data to np.float32
+2020-07-10 17:04:48,361:reshape:WARNING:Casting field data to np.float32
+2020-07-10 17:04:48,361:reshape:WARNING:Casting field data to np.float32
+2020-07-10 17:04:48,361:reshape:WARNING:Casting field data to np.float32
+2020-07-10 17:04:48,361:reshape:WARNING:Casting field data to np.float32
+2020-07-10 17:04:48,361:reshape:WARNING:Casting field data to np.float32
+2020-07-10 17:04:48,361:reshape:WARNING:Casting field data to np.float32
+2020-07-10 17:04:48,361:reshape:WARNING:Casting field data to np.float32
+2020-07-10 17:04:48,362:reshape:WARNING:Casting field data to np.float32
+2020-07-10 17:04:48,361:reshape:WARNING:Casting field data to np.float32
+2020-07-10 17:04:48,362:reshape:WARNING:Casting field data to np.float32
+2020-07-10 17:04:48,363:reshape:WARNING:Casting field data to np.float32
+2020-07-10 17:04:48,363:reshape:WARNING:Casting field data to np.float32
+2020-07-10 17:04:48,365:reshape:WARNING:Casting field data to np.float32
+2020-07-10 17:04:48,366:reshape:WARNING:Casting field data to np.float32
+2020-07-10 17:04:52,494:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 17:04:52,495:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 17:04:52,496:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 17:04:52,496:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 17:04:52,496:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 17:04:52,496:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 17:04:52,497:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 17:04:52,497:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 17:04:52,498:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 17:04:52,498:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 17:04:52,498:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 17:04:52,498:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 17:04:52,498:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 17:04:52,499:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 17:04:52,499:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 17:04:52,499:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 17:04:52,499:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 17:04:52,499:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 17:04:52,499:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 17:04:52,499:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 17:04:52,499:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 17:04:52,499:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 17:04:52,499:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 17:04:52,499:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 17:04:52,499:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 17:04:52,501:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 17:04:52,507:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 17:04:52,507:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 17:04:52,509:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 17:04:52,509:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 17:04:52,510:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 17:04:52,510:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 17:04:52,510:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 17:04:52,510:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 17:04:52,510:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 17:04:52,510:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 17:04:52,510:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 17:04:52,510:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 17:04:52,510:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 17:04:52,511:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 17:04:52,511:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 17:04:52,511:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 17:04:52,511:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 17:04:52,511:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 17:04:52,511:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 17:04:52,511:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 17:04:52,511:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 17:04:52,511:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 17:07:49,449:run_EUC:DEBUG:sim_hist_165_v0r0:Temp=HBSSJRRS: Rank=22: #Particles=546
+2020-07-10 17:07:49,449:run_EUC:DEBUG:sim_hist_165_v0r0:Temp=HBSSJRRS: Rank=12: #Particles=546
+2020-07-10 17:07:49,449:run_EUC:DEBUG:sim_hist_165_v0r0:Temp=HBSSJRRS: Rank= 6: #Particles=546
+2020-07-10 17:07:49,449:run_EUC:DEBUG:sim_hist_165_v0r0:Temp=HBSSJRRS: Rank= 2: #Particles=546
+2020-07-10 17:07:49,449:run_EUC:DEBUG:sim_hist_165_v0r0:Temp=HBSSJRRS: Rank= 8: #Particles=546
+2020-07-10 17:07:49,449:run_EUC:DEBUG:sim_hist_165_v0r0:Temp=HBSSJRRS: Rank= 4: #Particles=546
+2020-07-10 17:07:49,449:run_EUC:DEBUG:sim_hist_165_v0r0:Temp=HBSSJRRS: Rank= 1: #Particles=546
+2020-07-10 17:07:49,449:run_EUC:DEBUG:sim_hist_165_v0r0:Temp=HBSSJRRS: Rank=10: #Particles=546
+2020-07-10 17:07:49,449:run_EUC:DEBUG:sim_hist_165_v0r0:Temp=HBSSJRRS: Rank=18: #Particles=546
+2020-07-10 17:07:49,449:run_EUC:DEBUG:sim_hist_165_v0r0:Temp=HBSSJRRS: Rank=16: #Particles=546
+2020-07-10 17:07:49,449:run_EUC:DEBUG:sim_hist_165_v0r0:Temp=HBSSJRRS: Rank=20: #Particles=546
+2020-07-10 17:07:49,449:run_EUC:DEBUG:sim_hist_165_v0r0:Temp=HBSSJRRS: Rank=17: #Particles=546
+2020-07-10 17:07:49,452:run_EUC:INFO:sim_hist_165_v0r0:2013-01-01 to 2012-05-06: Runtime=240 days
+2020-07-10 17:07:49,452:run_EUC:INFO:sim_hist_165_v0r0:Repeat=6 days: Step=60 mins: Output=1 day
+2020-07-10 17:07:49,453:run_EUC:INFO:sim_hist_165_v0r0:Field=b-grid: Chunks=300: Time=1981-2012
+2020-07-10 17:07:49,453:run_EUC:DEBUG:sim_hist_165_v0r0:Temp=HBSSJRRS: Rank= 0: #Particles=546
+2020-07-10 17:07:49,586:run_EUC:DEBUG:sim_hist_165_v0r0:Temp=HBSSJRRS: Rank=36: #Particles=546
+2020-07-10 17:07:49,586:run_EUC:DEBUG:sim_hist_165_v0r0:Temp=HBSSJRRS: Rank=40: #Particles=546
+2020-07-10 17:07:49,593:run_EUC:DEBUG:sim_hist_165_v0r0:Temp=HBSSJRRS: Rank=44: #Particles=546
+2020-07-10 17:07:49,595:run_EUC:DEBUG:sim_hist_165_v0r0:Temp=HBSSJRRS: Rank=32: #Particles=546
+2020-07-10 17:07:49,656:run_EUC:DEBUG:sim_hist_165_v0r0:Temp=HBSSJRRS: Rank=26: #Particles=546
+2020-07-10 17:07:49,666:run_EUC:DEBUG:sim_hist_165_v0r0:Temp=HBSSJRRS: Rank=38: #Particles=546
+2020-07-10 17:07:49,666:run_EUC:DEBUG:sim_hist_165_v0r0:Temp=HBSSJRRS: Rank=42: #Particles=546
+2020-07-10 17:07:49,709:run_EUC:DEBUG:sim_hist_165_v0r0:Temp=HBSSJRRS: Rank=28: #Particles=546
+2020-07-10 17:07:49,713:run_EUC:DEBUG:sim_hist_165_v0r0:Temp=HBSSJRRS: Rank=33: #Particles=546
+2020-07-10 17:07:49,713:run_EUC:DEBUG:sim_hist_165_v0r0:Temp=HBSSJRRS: Rank=34: #Particles=546
+2020-07-10 17:07:56,595:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8311407.gadi-pbs/parcels-12904/352b22bb3d4512175e5cc3adf911dc28_34.so
+2020-07-10 17:07:56,596:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8311407.gadi-pbs/parcels-12904/352b22bb3d4512175e5cc3adf911dc28_42.so
+2020-07-10 17:07:56,596:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8311407.gadi-pbs/parcels-12904/352b22bb3d4512175e5cc3adf911dc28_32.so
+2020-07-10 17:07:56,596:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8311407.gadi-pbs/parcels-12904/352b22bb3d4512175e5cc3adf911dc28_44.so
+2020-07-10 17:07:56,596:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8311407.gadi-pbs/parcels-12904/352b22bb3d4512175e5cc3adf911dc28_4.so
+2020-07-10 17:07:56,597:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8311407.gadi-pbs/parcels-12904/352b22bb3d4512175e5cc3adf911dc28_16.so
+2020-07-10 17:07:56,597:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8311407.gadi-pbs/parcels-12904/352b22bb3d4512175e5cc3adf911dc28_20.so
+2020-07-10 17:07:56,597:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8311407.gadi-pbs/parcels-12904/352b22bb3d4512175e5cc3adf911dc28_0.so
+2020-07-10 17:07:56,597:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8311407.gadi-pbs/parcels-12904/352b22bb3d4512175e5cc3adf911dc28_1.so
+2020-07-10 17:07:56,597:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8311407.gadi-pbs/parcels-12904/352b22bb3d4512175e5cc3adf911dc28_6.so
+2020-07-10 17:07:56,597:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8311407.gadi-pbs/parcels-12904/352b22bb3d4512175e5cc3adf911dc28_8.so
+2020-07-10 17:07:56,597:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8311407.gadi-pbs/parcels-12904/352b22bb3d4512175e5cc3adf911dc28_40.so
+2020-07-10 17:07:56,598:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8311407.gadi-pbs/parcels-12904/352b22bb3d4512175e5cc3adf911dc28_38.so
+2020-07-10 17:07:56,598:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8311407.gadi-pbs/parcels-12904/352b22bb3d4512175e5cc3adf911dc28_2.so
+2020-07-10 17:07:56,598:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8311407.gadi-pbs/parcels-12904/352b22bb3d4512175e5cc3adf911dc28_33.so
+2020-07-10 17:07:56,598:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8311407.gadi-pbs/parcels-12904/352b22bb3d4512175e5cc3adf911dc28_36.so
+2020-07-10 17:07:56,598:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8311407.gadi-pbs/parcels-12904/352b22bb3d4512175e5cc3adf911dc28_26.so
+2020-07-10 17:07:56,598:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8311407.gadi-pbs/parcels-12904/352b22bb3d4512175e5cc3adf911dc28_18.so
+2020-07-10 17:07:56,598:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8311407.gadi-pbs/parcels-12904/352b22bb3d4512175e5cc3adf911dc28_17.so
+2020-07-10 17:07:56,598:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8311407.gadi-pbs/parcels-12904/352b22bb3d4512175e5cc3adf911dc28_12.so
+2020-07-10 17:07:56,598:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8311407.gadi-pbs/parcels-12904/352b22bb3d4512175e5cc3adf911dc28_28.so
+2020-07-10 17:07:56,598:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8311407.gadi-pbs/parcels-12904/352b22bb3d4512175e5cc3adf911dc28_22.so
+2020-07-10 17:07:56,599:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8311407.gadi-pbs/parcels-12904/352b22bb3d4512175e5cc3adf911dc28_10.so
+2020-07-10 17:08:57,076:run_EUC:DEBUG:sim_hist_165_v0r0:Temp=HBSSJRRS: Rank= 5: #Particles=1092
+2020-07-10 17:08:57,076:run_EUC:DEBUG:sim_hist_165_v0r0:Temp=HBSSJRRS: Rank=13: #Particles=546
+2020-07-10 17:08:57,076:run_EUC:DEBUG:sim_hist_165_v0r0:Temp=HBSSJRRS: Rank=21: #Particles=546
+2020-07-10 17:08:57,076:run_EUC:DEBUG:sim_hist_165_v0r0:Temp=HBSSJRRS: Rank=37: #Particles=546
+2020-07-10 17:08:57,076:run_EUC:DEBUG:sim_hist_165_v0r0:Temp=HBSSJRRS: Rank=29: #Particles=546
+2020-07-10 17:08:57,076:run_EUC:DEBUG:sim_hist_165_v0r0:Temp=HBSSJRRS: Rank=45: #Particles=546
+2020-07-10 17:08:57,907:run_EUC:DEBUG:sim_hist_165_v0r0:Temp=HBSSJRRS: Rank=24: #Particles=1092
+2020-07-10 17:08:58,091:run_EUC:DEBUG:sim_hist_165_v0r0:Temp=HBSSJRRS: Rank=30: #Particles=546
+2020-07-10 17:08:58,091:run_EUC:DEBUG:sim_hist_165_v0r0:Temp=HBSSJRRS: Rank=46: #Particles=546
+2020-07-10 17:08:58,091:run_EUC:DEBUG:sim_hist_165_v0r0:Temp=HBSSJRRS: Rank=14: #Particles=1092
+2020-07-10 17:08:58,318:run_EUC:DEBUG:sim_hist_165_v0r0:Temp=HBSSJRRS: Rank=41: #Particles=546
+2020-07-10 17:08:58,318:run_EUC:DEBUG:sim_hist_165_v0r0:Temp=HBSSJRRS: Rank= 9: #Particles=1092
+2020-07-10 17:08:58,318:run_EUC:DEBUG:sim_hist_165_v0r0:Temp=HBSSJRRS: Rank=25: #Particles=546
+2020-07-10 17:08:58,960:run_EUC:DEBUG:sim_hist_165_v0r0:Temp=HBSSJRRS: Rank= 3: #Particles=1092
+2020-07-10 17:08:58,960:run_EUC:DEBUG:sim_hist_165_v0r0:Temp=HBSSJRRS: Rank=11: #Particles=546
+2020-07-10 17:08:58,960:run_EUC:DEBUG:sim_hist_165_v0r0:Temp=HBSSJRRS: Rank=31: #Particles=546
+2020-07-10 17:08:58,960:run_EUC:DEBUG:sim_hist_165_v0r0:Temp=HBSSJRRS: Rank=19: #Particles=546
+2020-07-10 17:08:58,960:run_EUC:DEBUG:sim_hist_165_v0r0:Temp=HBSSJRRS: Rank=27: #Particles=546
+2020-07-10 17:08:58,960:run_EUC:DEBUG:sim_hist_165_v0r0:Temp=HBSSJRRS: Rank=35: #Particles=546
+2020-07-10 17:08:58,960:run_EUC:DEBUG:sim_hist_165_v0r0:Temp=HBSSJRRS: Rank=43: #Particles=546
+2020-07-10 17:08:58,960:run_EUC:DEBUG:sim_hist_165_v0r0:Temp=HBSSJRRS: Rank=39: #Particles=546
+2020-07-10 17:08:58,960:run_EUC:DEBUG:sim_hist_165_v0r0:Temp=HBSSJRRS: Rank=23: #Particles=546
+2020-07-10 17:08:58,960:run_EUC:DEBUG:sim_hist_165_v0r0:Temp=HBSSJRRS: Rank=47: #Particles=546
+2020-07-10 17:08:58,960:run_EUC:DEBUG:sim_hist_165_v0r0:Temp=HBSSJRRS: Rank=15: #Particles=546
+2020-07-10 17:08:58,960:run_EUC:DEBUG:sim_hist_165_v0r0:Temp=HBSSJRRS: Rank= 7: #Particles=546
+2020-07-10 17:09:00,872:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8311407.gadi-pbs/parcels-12904/352b22bb3d4512175e5cc3adf911dc28_5.so
+2020-07-10 17:09:00,880:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8311407.gadi-pbs/parcels-12904/352b22bb3d4512175e5cc3adf911dc28_29.so
+2020-07-10 17:09:00,902:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8311407.gadi-pbs/parcels-12904/352b22bb3d4512175e5cc3adf911dc28_13.so
+2020-07-10 17:09:00,902:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8311407.gadi-pbs/parcels-12904/352b22bb3d4512175e5cc3adf911dc28_21.so
+2020-07-10 17:09:00,923:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8311407.gadi-pbs/parcels-12904/352b22bb3d4512175e5cc3adf911dc28_45.so
+2020-07-10 17:09:00,924:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8311407.gadi-pbs/parcels-12904/352b22bb3d4512175e5cc3adf911dc28_37.so
+2020-07-10 17:09:02,110:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8311407.gadi-pbs/parcels-12904/352b22bb3d4512175e5cc3adf911dc28_24.so
+2020-07-10 17:09:02,610:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8311407.gadi-pbs/parcels-12904/352b22bb3d4512175e5cc3adf911dc28_14.so
+2020-07-10 17:09:02,663:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8311407.gadi-pbs/parcels-12904/352b22bb3d4512175e5cc3adf911dc28_30.so
+2020-07-10 17:09:02,664:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8311407.gadi-pbs/parcels-12904/352b22bb3d4512175e5cc3adf911dc28_46.so
+2020-07-10 17:09:03,249:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8311407.gadi-pbs/parcels-12904/352b22bb3d4512175e5cc3adf911dc28_9.so
+2020-07-10 17:09:03,306:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8311407.gadi-pbs/parcels-12904/352b22bb3d4512175e5cc3adf911dc28_25.so
+2020-07-10 17:09:03,346:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8311407.gadi-pbs/parcels-12904/352b22bb3d4512175e5cc3adf911dc28_41.so
+2020-07-10 17:09:04,405:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8311407.gadi-pbs/parcels-12904/352b22bb3d4512175e5cc3adf911dc28_7.so
+2020-07-10 17:09:04,431:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8311407.gadi-pbs/parcels-12904/352b22bb3d4512175e5cc3adf911dc28_3.so
+2020-07-10 17:09:04,519:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8311407.gadi-pbs/parcels-12904/352b22bb3d4512175e5cc3adf911dc28_11.so
+2020-07-10 17:09:04,528:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8311407.gadi-pbs/parcels-12904/352b22bb3d4512175e5cc3adf911dc28_19.so
+2020-07-10 17:09:04,532:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8311407.gadi-pbs/parcels-12904/352b22bb3d4512175e5cc3adf911dc28_15.so
+2020-07-10 17:09:04,556:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8311407.gadi-pbs/parcels-12904/352b22bb3d4512175e5cc3adf911dc28_23.so
+2020-07-10 17:09:04,565:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8311407.gadi-pbs/parcels-12904/352b22bb3d4512175e5cc3adf911dc28_35.so
+2020-07-10 17:09:04,565:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8311407.gadi-pbs/parcels-12904/352b22bb3d4512175e5cc3adf911dc28_31.so
+2020-07-10 17:09:04,565:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8311407.gadi-pbs/parcels-12904/352b22bb3d4512175e5cc3adf911dc28_27.so
+2020-07-10 17:09:04,594:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8311407.gadi-pbs/parcels-12904/352b22bb3d4512175e5cc3adf911dc28_47.so
+2020-07-10 17:09:04,594:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8311407.gadi-pbs/parcels-12904/352b22bb3d4512175e5cc3adf911dc28_39.so
+2020-07-10 17:09:04,595:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8311407.gadi-pbs/parcels-12904/352b22bb3d4512175e5cc3adf911dc28_43.so
+2020-07-10 17:37:27,844:run_EUC:INFO:sim_hist_165_v0r0:Completed!: 00:46:08: Rank=47: #Particles=546-370=176
+2020-07-10 17:43:10,623:run_EUC:INFO:sim_hist_165_v0r0:Completed!: 00:51:51: Rank=11: #Particles=546-390=156
+2020-07-10 17:48:35,967:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 17:48:35,967:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 17:48:35,968:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 17:48:35,969:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 17:48:35,970:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 17:48:35,970:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 17:48:35,970:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 17:48:35,970:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 17:48:35,971:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 17:48:35,971:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 17:48:35,972:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 17:48:35,972:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 17:48:35,973:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 17:48:35,974:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 17:48:35,973:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 17:48:35,974:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 17:48:35,975:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 17:48:35,974:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 17:48:35,975:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 17:48:35,975:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 17:48:35,976:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 17:48:35,975:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 17:48:35,976:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 17:48:35,976:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 17:48:35,976:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 17:48:35,976:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 17:48:35,976:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 17:48:35,976:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 17:48:35,976:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 17:48:35,977:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 17:48:35,978:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 17:48:35,978:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 17:48:35,978:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 17:48:35,978:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 17:48:35,979:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 17:48:35,978:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 17:48:35,979:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 17:48:35,979:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 17:48:35,979:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 17:48:35,980:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 17:48:35,979:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 17:48:35,980:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 17:48:35,980:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 17:48:35,980:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 17:48:35,980:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 17:48:35,980:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 17:48:35,980:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 17:48:35,980:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 17:48:35,980:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 17:48:35,981:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 17:48:35,981:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 17:48:35,981:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 17:48:35,982:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 17:48:35,981:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 17:48:35,982:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 17:48:35,983:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 17:48:35,982:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 17:48:35,984:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 17:48:35,982:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 17:48:35,984:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 17:48:35,982:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 17:48:35,984:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 17:48:35,983:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 17:48:35,986:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 17:48:35,983:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 17:48:35,986:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 17:48:35,983:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 17:48:35,986:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 17:48:35,984:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 17:48:35,987:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 17:48:35,985:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 17:48:35,988:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 17:48:35,985:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 17:48:35,989:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 17:48:35,985:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 17:48:35,989:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 17:48:35,986:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 17:48:35,989:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 17:48:35,986:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 17:48:35,990:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 17:48:35,986:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 17:48:35,990:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 17:48:35,986:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 17:48:35,991:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 17:48:35,987:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 17:48:35,993:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 17:48:35,987:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 17:48:35,993:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 17:48:35,988:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 17:48:35,993:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 17:48:35,988:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 17:48:35,995:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 17:48:35,989:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 17:48:35,997:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 17:48:35,990:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 17:48:35,997:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 17:48:35,991:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 17:48:35,998:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 17:48:35,994:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 17:48:35,998:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 17:48:35,995:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 17:48:35,999:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 17:48:35,997:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 17:48:36,001:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 17:48:35,999:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 17:48:36,005:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 17:48:36,003:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 17:48:36,007:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 17:48:36,007:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 17:48:36,009:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 17:48:36,007:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 17:48:36,014:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 17:48:36,012:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 17:48:36,015:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 17:48:36,017:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 17:48:36,019:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 17:48:36,020:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 17:48:36,022:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 17:48:36,024:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 17:48:36,025:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 17:48:36,027:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 17:48:36,028:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 17:48:36,030:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 17:48:36,032:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 17:48:36,034:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 17:48:36,036:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 17:48:36,037:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 17:48:36,039:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 17:48:36,041:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 17:48:36,042:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 17:48:36,043:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 17:48:36,045:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 17:48:36,047:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 17:48:36,049:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 17:48:36,050:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 17:48:36,052:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 17:48:36,053:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 17:48:36,055:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 17:48:36,056:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 17:48:36,057:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 17:48:36,059:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 17:48:36,060:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 17:48:36,062:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 17:48:36,063:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 17:48:36,064:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 17:48:36,065:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 17:48:36,067:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 17:48:36,068:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 17:48:36,069:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 17:48:36,071:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 17:48:36,072:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 17:48:36,073:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 17:48:36,074:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 17:48:36,076:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 17:48:36,076:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 17:48:36,078:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 17:48:36,077:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 17:48:36,078:__init__:WARNING:Casting lon data to np.float32
+2020-07-10 17:48:36,080:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 17:48:36,081:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 17:48:36,083:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 17:48:36,084:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 17:48:36,086:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 17:48:36,087:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 17:48:36,089:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 17:48:36,091:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 17:48:36,095:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 17:48:36,093:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 17:48:36,098:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 17:48:36,096:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 17:48:36,103:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 17:48:36,099:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 17:48:36,106:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 17:48:36,105:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 17:48:36,110:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 17:48:36,109:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 17:48:36,114:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 17:48:36,112:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 17:48:36,118:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 17:48:36,116:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 17:48:36,121:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 17:48:36,119:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 17:48:36,124:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 17:48:36,122:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 17:48:36,127:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 17:48:36,126:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 17:48:36,130:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 17:48:36,128:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 17:48:36,133:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 17:48:36,132:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 17:48:36,136:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 17:48:36,134:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 17:48:36,139:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 17:48:36,137:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 17:48:36,142:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 17:48:36,140:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 17:48:36,145:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 17:48:36,143:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 17:48:36,150:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 17:48:36,147:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 17:48:36,153:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 17:48:36,152:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 17:48:36,156:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 17:48:36,154:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 17:48:36,159:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 17:48:36,157:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 17:48:36,162:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 17:48:36,160:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 17:48:36,165:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 17:48:36,163:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 17:48:36,167:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 17:48:36,166:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 17:48:36,171:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 17:48:36,169:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 17:48:36,174:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 17:48:36,172:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 17:48:36,177:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 17:48:36,175:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 17:48:36,180:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 17:48:36,178:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 17:48:36,183:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 17:48:36,182:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 17:48:36,187:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 17:48:36,185:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 17:48:36,190:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 17:48:36,188:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 17:48:36,192:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 17:48:36,191:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 17:48:36,197:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 17:48:36,218:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 17:48:36,220:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 17:48:36,221:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 17:48:36,223:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 17:48:36,224:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 17:48:36,226:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 17:48:36,227:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 17:48:36,229:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 17:48:36,230:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 17:48:36,232:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 17:48:36,233:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 17:48:36,238:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 17:48:36,236:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 17:48:36,241:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 17:48:36,243:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 17:48:36,244:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 17:48:36,246:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 17:48:36,247:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 17:48:36,250:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 17:48:36,251:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 17:48:36,252:__init__:WARNING:Casting lat data to np.float32
+2020-07-10 17:48:36,255:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 17:48:36,261:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 17:48:36,259:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 17:48:36,264:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 17:48:36,262:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 17:48:36,266:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 17:48:36,265:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 17:48:36,270:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 17:48:36,268:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 17:48:36,273:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 17:48:36,271:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 17:48:36,277:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 17:48:36,275:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 17:48:36,283:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 17:48:36,278:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 17:48:36,286:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 17:48:36,281:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 17:48:36,289:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 17:48:36,284:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 17:48:36,292:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 17:48:36,287:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 17:48:36,296:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 17:48:36,290:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 17:48:36,305:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 17:48:36,294:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 17:48:36,314:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 17:48:36,304:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 17:48:36,318:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 17:48:36,307:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 17:48:36,322:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 17:48:36,321:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 17:48:36,325:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 17:48:36,324:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 17:48:36,337:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 17:48:36,338:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 17:48:36,343:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 17:48:36,416:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 17:48:36,421:__init__:WARNING:Casting depth data to np.float32
+2020-07-10 17:48:36,543:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 17:48:36,543:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 17:48:36,543:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 17:48:36,543:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 17:48:36,543:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 17:48:36,543:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 17:48:36,543:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 17:48:36,543:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 17:48:36,543:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 17:48:36,543:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 17:48:36,543:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 17:48:36,543:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 17:48:36,543:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 17:48:36,543:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 17:48:36,543:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 17:48:36,543:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 17:48:36,543:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 17:48:36,543:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 17:48:36,544:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 17:48:36,544:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 17:48:36,544:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 17:48:36,544:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 17:48:36,544:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 17:48:36,544:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 17:48:36,544:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 17:48:36,544:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 17:48:36,544:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 17:48:36,544:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 17:48:36,544:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 17:48:36,544:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 17:48:36,544:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 17:48:36,544:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 17:48:36,544:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 17:48:36,544:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 17:48:36,544:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 17:48:36,544:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 17:48:36,544:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 17:48:36,544:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 17:48:36,545:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 17:48:36,545:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 17:48:36,545:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 17:48:36,545:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 17:48:36,545:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 17:48:36,545:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 17:48:36,545:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 17:48:36,545:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 17:48:36,545:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 17:48:36,545:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 17:48:38,931:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 17:48:38,931:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 17:48:38,931:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 17:48:38,931:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 17:48:38,931:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 17:48:38,931:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 17:48:38,932:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 17:48:38,932:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 17:48:38,932:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 17:48:38,932:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 17:48:38,932:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 17:48:38,932:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 17:48:38,933:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 17:48:38,933:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 17:48:38,933:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 17:48:38,933:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 17:48:38,933:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 17:48:38,933:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 17:48:38,933:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 17:48:38,933:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 17:48:38,933:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 17:48:38,934:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 17:48:38,934:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 17:48:38,934:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 17:48:38,934:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 17:48:38,934:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 17:48:38,934:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 17:48:38,934:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 17:48:38,934:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 17:48:38,934:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 17:48:38,934:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 17:48:38,934:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 17:48:38,934:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 17:48:38,934:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 17:48:38,935:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 17:48:38,935:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 17:48:38,935:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 17:48:38,935:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 17:48:38,936:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 17:48:38,936:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 17:48:38,936:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 17:48:38,936:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 17:48:38,936:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 17:48:38,938:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 17:48:38,938:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 17:48:38,938:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 17:48:38,939:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 17:48:38,940:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-10 18:01:27,102:reshape:WARNING:Casting field data to np.float32
+2020-07-10 18:01:27,103:reshape:WARNING:Casting field data to np.float32
+2020-07-10 18:01:27,104:reshape:WARNING:Casting field data to np.float32
+2020-07-10 18:01:27,107:reshape:WARNING:Casting field data to np.float32
+2020-07-10 18:01:27,107:reshape:WARNING:Casting field data to np.float32
+2020-07-10 18:01:27,108:reshape:WARNING:Casting field data to np.float32
+2020-07-10 18:01:27,108:reshape:WARNING:Casting field data to np.float32
+2020-07-10 18:01:27,108:reshape:WARNING:Casting field data to np.float32
+2020-07-10 18:01:27,110:reshape:WARNING:Casting field data to np.float32
+2020-07-10 18:01:27,110:reshape:WARNING:Casting field data to np.float32
+2020-07-10 18:01:27,110:reshape:WARNING:Casting field data to np.float32
+2020-07-10 18:01:27,110:reshape:WARNING:Casting field data to np.float32
+2020-07-10 18:01:27,111:reshape:WARNING:Casting field data to np.float32
+2020-07-10 18:01:27,111:reshape:WARNING:Casting field data to np.float32
+2020-07-10 18:01:27,110:reshape:WARNING:Casting field data to np.float32
+2020-07-10 18:01:27,111:reshape:WARNING:Casting field data to np.float32
+2020-07-10 18:01:27,111:reshape:WARNING:Casting field data to np.float32
+2020-07-10 18:01:27,112:reshape:WARNING:Casting field data to np.float32
+2020-07-10 18:01:27,112:reshape:WARNING:Casting field data to np.float32
+2020-07-10 18:01:27,112:reshape:WARNING:Casting field data to np.float32
+2020-07-10 18:01:27,112:reshape:WARNING:Casting field data to np.float32
+2020-07-10 18:01:27,112:reshape:WARNING:Casting field data to np.float32
+2020-07-10 18:01:27,112:reshape:WARNING:Casting field data to np.float32
+2020-07-10 18:01:27,112:reshape:WARNING:Casting field data to np.float32
+2020-07-10 18:01:27,112:reshape:WARNING:Casting field data to np.float32
+2020-07-10 18:01:27,113:reshape:WARNING:Casting field data to np.float32
+2020-07-10 18:01:27,113:reshape:WARNING:Casting field data to np.float32
+2020-07-10 18:01:27,113:reshape:WARNING:Casting field data to np.float32
+2020-07-10 18:01:27,114:reshape:WARNING:Casting field data to np.float32
+2020-07-10 18:01:27,114:reshape:WARNING:Casting field data to np.float32
+2020-07-10 18:01:27,114:reshape:WARNING:Casting field data to np.float32
+2020-07-10 18:01:27,115:reshape:WARNING:Casting field data to np.float32
+2020-07-10 18:01:27,115:reshape:WARNING:Casting field data to np.float32
+2020-07-10 18:01:27,115:reshape:WARNING:Casting field data to np.float32
+2020-07-10 18:01:27,115:reshape:WARNING:Casting field data to np.float32
+2020-07-10 18:01:27,115:reshape:WARNING:Casting field data to np.float32
+2020-07-10 18:01:27,115:reshape:WARNING:Casting field data to np.float32
+2020-07-10 18:01:27,115:reshape:WARNING:Casting field data to np.float32
+2020-07-10 18:01:27,115:reshape:WARNING:Casting field data to np.float32
+2020-07-10 18:01:27,115:reshape:WARNING:Casting field data to np.float32
+2020-07-10 18:01:27,115:reshape:WARNING:Casting field data to np.float32
+2020-07-10 18:01:27,115:reshape:WARNING:Casting field data to np.float32
+2020-07-10 18:01:27,116:reshape:WARNING:Casting field data to np.float32
+2020-07-10 18:01:27,116:reshape:WARNING:Casting field data to np.float32
+2020-07-10 18:01:27,117:reshape:WARNING:Casting field data to np.float32
+2020-07-10 18:01:27,117:reshape:WARNING:Casting field data to np.float32
+2020-07-10 18:01:27,117:reshape:WARNING:Casting field data to np.float32
+2020-07-10 18:01:27,119:reshape:WARNING:Casting field data to np.float32
+2020-07-10 18:01:31,150:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 18:01:31,164:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 18:01:31,165:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 18:01:31,165:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 18:01:31,166:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 18:01:31,166:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 18:01:31,166:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 18:01:31,166:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 18:01:31,166:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 18:01:31,166:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 18:01:31,166:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 18:01:31,166:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 18:01:31,166:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 18:01:31,166:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 18:01:31,167:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 18:01:31,169:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 18:01:31,170:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 18:01:31,170:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 18:01:31,171:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 18:01:31,171:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 18:01:31,171:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 18:01:31,171:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 18:01:31,171:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 18:01:31,171:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 18:01:31,176:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 18:01:31,177:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 18:01:31,177:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 18:01:31,183:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 18:01:31,184:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 18:01:31,185:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 18:01:31,185:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 18:01:31,185:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 18:01:31,186:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 18:01:31,186:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 18:01:31,186:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 18:01:31,186:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 18:01:31,186:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 18:01:31,186:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 18:01:31,186:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 18:01:31,186:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 18:01:31,186:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 18:01:31,186:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 18:01:31,186:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 18:01:31,186:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 18:01:31,186:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 18:01:31,186:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 18:01:31,186:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 18:01:31,187:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 18:01:38,827:reshape:WARNING:Casting field data to np.float32
+2020-07-10 18:01:38,827:reshape:WARNING:Casting field data to np.float32
+2020-07-10 18:01:38,827:reshape:WARNING:Casting field data to np.float32
+2020-07-10 18:01:38,840:reshape:WARNING:Casting field data to np.float32
+2020-07-10 18:01:38,842:reshape:WARNING:Casting field data to np.float32
+2020-07-10 18:01:38,836:reshape:WARNING:Casting field data to np.float32
+2020-07-10 18:01:38,841:reshape:WARNING:Casting field data to np.float32
+2020-07-10 18:01:38,834:reshape:WARNING:Casting field data to np.float32
+2020-07-10 18:01:38,842:reshape:WARNING:Casting field data to np.float32
+2020-07-10 18:01:38,840:reshape:WARNING:Casting field data to np.float32
+2020-07-10 18:01:38,834:reshape:WARNING:Casting field data to np.float32
+2020-07-10 18:01:38,827:reshape:WARNING:Casting field data to np.float32
+2020-07-10 18:01:38,868:reshape:WARNING:Casting field data to np.float32
+2020-07-10 18:01:38,873:reshape:WARNING:Casting field data to np.float32
+2020-07-10 18:01:38,886:reshape:WARNING:Casting field data to np.float32
+2020-07-10 18:01:38,888:reshape:WARNING:Casting field data to np.float32
+2020-07-10 18:01:38,898:reshape:WARNING:Casting field data to np.float32
+2020-07-10 18:01:38,904:reshape:WARNING:Casting field data to np.float32
+2020-07-10 18:01:38,911:reshape:WARNING:Casting field data to np.float32
+2020-07-10 18:01:38,921:reshape:WARNING:Casting field data to np.float32
+2020-07-10 18:01:38,928:reshape:WARNING:Casting field data to np.float32
+2020-07-10 18:01:38,932:reshape:WARNING:Casting field data to np.float32
+2020-07-10 18:01:38,934:reshape:WARNING:Casting field data to np.float32
+2020-07-10 18:01:38,942:reshape:WARNING:Casting field data to np.float32
+2020-07-10 18:01:38,953:reshape:WARNING:Casting field data to np.float32
+2020-07-10 18:01:39,023:reshape:WARNING:Casting field data to np.float32
+2020-07-10 18:01:39,039:reshape:WARNING:Casting field data to np.float32
+2020-07-10 18:01:39,057:reshape:WARNING:Casting field data to np.float32
+2020-07-10 18:01:39,068:reshape:WARNING:Casting field data to np.float32
+2020-07-10 18:01:39,101:reshape:WARNING:Casting field data to np.float32
+2020-07-10 18:01:39,127:reshape:WARNING:Casting field data to np.float32
+2020-07-10 18:01:39,188:reshape:WARNING:Casting field data to np.float32
+2020-07-10 18:01:39,222:reshape:WARNING:Casting field data to np.float32
+2020-07-10 18:01:39,290:reshape:WARNING:Casting field data to np.float32
+2020-07-10 18:01:39,311:reshape:WARNING:Casting field data to np.float32
+2020-07-10 18:01:39,459:reshape:WARNING:Casting field data to np.float32
+2020-07-10 18:01:39,461:reshape:WARNING:Casting field data to np.float32
+2020-07-10 18:01:39,486:reshape:WARNING:Casting field data to np.float32
+2020-07-10 18:01:39,495:reshape:WARNING:Casting field data to np.float32
+2020-07-10 18:01:39,508:reshape:WARNING:Casting field data to np.float32
+2020-07-10 18:01:39,533:reshape:WARNING:Casting field data to np.float32
+2020-07-10 18:01:39,535:reshape:WARNING:Casting field data to np.float32
+2020-07-10 18:01:39,537:reshape:WARNING:Casting field data to np.float32
+2020-07-10 18:01:39,542:reshape:WARNING:Casting field data to np.float32
+2020-07-10 18:01:39,561:reshape:WARNING:Casting field data to np.float32
+2020-07-10 18:01:39,570:reshape:WARNING:Casting field data to np.float32
+2020-07-10 18:01:39,579:reshape:WARNING:Casting field data to np.float32
+2020-07-10 18:01:39,587:reshape:WARNING:Casting field data to np.float32
+2020-07-10 18:01:46,950:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 18:01:46,951:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 18:01:46,952:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 18:01:46,952:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 18:01:46,952:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 18:01:46,952:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 18:01:46,953:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 18:01:46,953:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 18:01:46,953:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 18:01:46,953:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 18:01:46,953:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 18:01:46,953:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 18:01:46,953:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 18:01:46,953:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 18:01:46,953:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 18:01:46,953:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 18:01:46,954:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 18:01:46,954:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 18:01:46,954:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 18:01:46,954:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 18:01:46,954:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 18:01:46,954:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 18:01:46,954:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 18:01:46,954:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 18:01:46,981:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 18:01:46,982:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 18:01:46,983:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 18:01:46,983:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 18:01:46,984:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 18:01:46,984:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 18:01:46,984:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 18:01:46,984:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 18:01:46,984:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 18:01:46,984:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 18:01:46,984:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 18:01:46,984:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 18:01:46,984:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 18:01:46,984:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 18:01:46,984:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 18:01:46,984:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 18:01:46,984:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 18:01:46,984:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 18:01:46,984:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 18:01:46,984:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 18:01:46,984:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 18:01:46,984:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 18:01:46,985:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 18:01:46,985:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-10 18:02:42,758:run_EUC:INFO:sim_hist_165_v0r0:Completed!: 01:11:23: Rank=46: #Particles=546-205=341
+2020-07-10 18:04:29,656:run_EUC:DEBUG:sim_hist_250_v0r0:Temp=IPISOCNB: Rank= 8: #Particles=546
+2020-07-10 18:04:29,656:run_EUC:DEBUG:sim_hist_250_v0r0:Temp=IPISOCNB: Rank=16: #Particles=546
+2020-07-10 18:04:29,656:run_EUC:DEBUG:sim_hist_250_v0r0:Temp=IPISOCNB: Rank=40: #Particles=546
+2020-07-10 18:04:29,656:run_EUC:DEBUG:sim_hist_250_v0r0:Temp=IPISOCNB: Rank=32: #Particles=546
+2020-07-10 18:04:29,657:run_EUC:INFO:sim_hist_250_v0r0:2013-01-01 to 2012-05-06: Runtime=240 days
+2020-07-10 18:04:29,658:run_EUC:INFO:sim_hist_250_v0r0:Repeat=6 days: Step=60 mins: Output=1 day
+2020-07-10 18:04:29,658:run_EUC:INFO:sim_hist_250_v0r0:Field=b-grid: Chunks=300: Time=1981-2012
+2020-07-10 18:04:29,658:run_EUC:DEBUG:sim_hist_250_v0r0:Temp=IPISOCNB: Rank= 0: #Particles=546
+2020-07-10 18:04:29,696:run_EUC:DEBUG:sim_hist_250_v0r0:Temp=IPISOCNB: Rank= 2: #Particles=546
+2020-07-10 18:04:29,696:run_EUC:DEBUG:sim_hist_250_v0r0:Temp=IPISOCNB: Rank=26: #Particles=546
+2020-07-10 18:04:29,696:run_EUC:DEBUG:sim_hist_250_v0r0:Temp=IPISOCNB: Rank=34: #Particles=546
+2020-07-10 18:04:29,696:run_EUC:DEBUG:sim_hist_250_v0r0:Temp=IPISOCNB: Rank=42: #Particles=546
+2020-07-10 18:04:29,696:run_EUC:DEBUG:sim_hist_250_v0r0:Temp=IPISOCNB: Rank= 1: #Particles=546
+2020-07-10 18:04:29,696:run_EUC:DEBUG:sim_hist_250_v0r0:Temp=IPISOCNB: Rank=10: #Particles=546
+2020-07-10 18:04:29,696:run_EUC:DEBUG:sim_hist_250_v0r0:Temp=IPISOCNB: Rank=33: #Particles=546
+2020-07-10 18:04:29,696:run_EUC:DEBUG:sim_hist_250_v0r0:Temp=IPISOCNB: Rank= 4: #Particles=546
+2020-07-10 18:04:29,697:run_EUC:DEBUG:sim_hist_250_v0r0:Temp=IPISOCNB: Rank=36: #Particles=546
+2020-07-10 18:04:29,697:run_EUC:DEBUG:sim_hist_250_v0r0:Temp=IPISOCNB: Rank=20: #Particles=546
+2020-07-10 18:04:29,698:run_EUC:DEBUG:sim_hist_250_v0r0:Temp=IPISOCNB: Rank=17: #Particles=546
+2020-07-10 18:04:29,698:run_EUC:DEBUG:sim_hist_250_v0r0:Temp=IPISOCNB: Rank=12: #Particles=546
+2020-07-10 18:04:29,698:run_EUC:DEBUG:sim_hist_250_v0r0:Temp=IPISOCNB: Rank=44: #Particles=546
+2020-07-10 18:04:29,698:run_EUC:DEBUG:sim_hist_250_v0r0:Temp=IPISOCNB: Rank=28: #Particles=546
+2020-07-10 18:04:29,698:run_EUC:DEBUG:sim_hist_250_v0r0:Temp=IPISOCNB: Rank=18: #Particles=546
+2020-07-10 18:04:29,830:run_EUC:DEBUG:sim_hist_250_v0r0:Temp=IPISOCNB: Rank= 6: #Particles=546
+2020-07-10 18:04:29,830:run_EUC:DEBUG:sim_hist_250_v0r0:Temp=IPISOCNB: Rank=38: #Particles=546
+2020-07-10 18:04:29,830:run_EUC:DEBUG:sim_hist_250_v0r0:Temp=IPISOCNB: Rank=22: #Particles=546
+2020-07-10 18:04:30,539:run_EUC:DEBUG:sim_hist_220_v0r0:Temp=PWBJTQYZ: Rank=22: #Particles=546
+2020-07-10 18:04:30,539:run_EUC:DEBUG:sim_hist_220_v0r0:Temp=PWBJTQYZ: Rank=16: #Particles=546
+2020-07-10 18:04:30,539:run_EUC:DEBUG:sim_hist_220_v0r0:Temp=PWBJTQYZ: Rank=17: #Particles=546
+2020-07-10 18:04:30,539:run_EUC:DEBUG:sim_hist_220_v0r0:Temp=PWBJTQYZ: Rank=12: #Particles=546
+2020-07-10 18:04:30,539:run_EUC:DEBUG:sim_hist_220_v0r0:Temp=PWBJTQYZ: Rank= 8: #Particles=546
+2020-07-10 18:04:30,539:run_EUC:DEBUG:sim_hist_220_v0r0:Temp=PWBJTQYZ: Rank=18: #Particles=546
+2020-07-10 18:04:30,539:run_EUC:DEBUG:sim_hist_220_v0r0:Temp=PWBJTQYZ: Rank= 2: #Particles=546
+2020-07-10 18:04:30,539:run_EUC:DEBUG:sim_hist_220_v0r0:Temp=PWBJTQYZ: Rank=10: #Particles=546
+2020-07-10 18:04:30,539:run_EUC:DEBUG:sim_hist_220_v0r0:Temp=PWBJTQYZ: Rank= 6: #Particles=546
+2020-07-10 18:04:30,539:run_EUC:DEBUG:sim_hist_220_v0r0:Temp=PWBJTQYZ: Rank= 4: #Particles=546
+2020-07-10 18:04:30,539:run_EUC:DEBUG:sim_hist_220_v0r0:Temp=PWBJTQYZ: Rank= 1: #Particles=546
+2020-07-10 18:04:30,540:run_EUC:DEBUG:sim_hist_220_v0r0:Temp=PWBJTQYZ: Rank=20: #Particles=546
+2020-07-10 18:04:30,541:run_EUC:INFO:sim_hist_220_v0r0:2013-01-01 to 2012-05-06: Runtime=240 days
+2020-07-10 18:04:30,552:run_EUC:INFO:sim_hist_220_v0r0:Repeat=6 days: Step=60 mins: Output=1 day
+2020-07-10 18:04:30,552:run_EUC:INFO:sim_hist_220_v0r0:Field=b-grid: Chunks=300: Time=1981-2012
+2020-07-10 18:04:30,552:run_EUC:DEBUG:sim_hist_220_v0r0:Temp=PWBJTQYZ: Rank= 0: #Particles=546
+2020-07-10 18:04:31,061:run_EUC:DEBUG:sim_hist_220_v0r0:Temp=PWBJTQYZ: Rank=28: #Particles=546
+2020-07-10 18:04:31,061:run_EUC:DEBUG:sim_hist_220_v0r0:Temp=PWBJTQYZ: Rank=34: #Particles=546
+2020-07-10 18:04:31,127:run_EUC:DEBUG:sim_hist_220_v0r0:Temp=PWBJTQYZ: Rank=32: #Particles=546
+2020-07-10 18:04:31,131:run_EUC:DEBUG:sim_hist_220_v0r0:Temp=PWBJTQYZ: Rank=26: #Particles=546
+2020-07-10 18:04:31,131:run_EUC:DEBUG:sim_hist_220_v0r0:Temp=PWBJTQYZ: Rank=33: #Particles=546
+2020-07-10 18:04:31,242:run_EUC:DEBUG:sim_hist_220_v0r0:Temp=PWBJTQYZ: Rank=38: #Particles=546
+2020-07-10 18:04:31,319:run_EUC:DEBUG:sim_hist_220_v0r0:Temp=PWBJTQYZ: Rank=40: #Particles=546
+2020-07-10 18:04:31,351:run_EUC:DEBUG:sim_hist_220_v0r0:Temp=PWBJTQYZ: Rank=44: #Particles=546
+2020-07-10 18:04:31,444:run_EUC:DEBUG:sim_hist_220_v0r0:Temp=PWBJTQYZ: Rank=36: #Particles=546
+2020-07-10 18:04:31,444:run_EUC:DEBUG:sim_hist_220_v0r0:Temp=PWBJTQYZ: Rank=42: #Particles=546
+2020-07-10 18:04:34,564:run_EUC:INFO:sim_hist_165_v0r0:Completed!: 01:13:15: Rank= 8: #Particles=546-226=320
+2020-07-10 18:04:36,265:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8313409.gadi-pbs/parcels-12904/bc25db6a94b3e4a13486bd96c62bbb32_34.so
+2020-07-10 18:04:36,265:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8313409.gadi-pbs/parcels-12904/bc25db6a94b3e4a13486bd96c62bbb32_40.so
+2020-07-10 18:04:36,265:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8313409.gadi-pbs/parcels-12904/bc25db6a94b3e4a13486bd96c62bbb32_28.so
+2020-07-10 18:04:36,265:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8313409.gadi-pbs/parcels-12904/bc25db6a94b3e4a13486bd96c62bbb32_44.so
+2020-07-10 18:04:36,265:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8313409.gadi-pbs/parcels-12904/bc25db6a94b3e4a13486bd96c62bbb32_36.so
+2020-07-10 18:04:36,265:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8313409.gadi-pbs/parcels-12904/bc25db6a94b3e4a13486bd96c62bbb32_38.so
+2020-07-10 18:04:36,265:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8313409.gadi-pbs/parcels-12904/bc25db6a94b3e4a13486bd96c62bbb32_16.so
+2020-07-10 18:04:36,265:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8313409.gadi-pbs/parcels-12904/bc25db6a94b3e4a13486bd96c62bbb32_33.so
+2020-07-10 18:04:36,265:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8313409.gadi-pbs/parcels-12904/bc25db6a94b3e4a13486bd96c62bbb32_42.so
+2020-07-10 18:04:36,265:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8313409.gadi-pbs/parcels-12904/bc25db6a94b3e4a13486bd96c62bbb32_20.so
+2020-07-10 18:04:36,265:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8313409.gadi-pbs/parcels-12904/bc25db6a94b3e4a13486bd96c62bbb32_0.so
+2020-07-10 18:04:36,266:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8313409.gadi-pbs/parcels-12904/bc25db6a94b3e4a13486bd96c62bbb32_18.so
+2020-07-10 18:04:36,266:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8313409.gadi-pbs/parcels-12904/bc25db6a94b3e4a13486bd96c62bbb32_12.so
+2020-07-10 18:04:36,266:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8313409.gadi-pbs/parcels-12904/bc25db6a94b3e4a13486bd96c62bbb32_8.so
+2020-07-10 18:04:36,266:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8313409.gadi-pbs/parcels-12904/bc25db6a94b3e4a13486bd96c62bbb32_4.so
+2020-07-10 18:04:36,266:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8313409.gadi-pbs/parcels-12904/bc25db6a94b3e4a13486bd96c62bbb32_1.so
+2020-07-10 18:04:36,266:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8313409.gadi-pbs/parcels-12904/bc25db6a94b3e4a13486bd96c62bbb32_32.so
+2020-07-10 18:04:36,266:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8313409.gadi-pbs/parcels-12904/bc25db6a94b3e4a13486bd96c62bbb32_6.so
+2020-07-10 18:04:36,266:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8313409.gadi-pbs/parcels-12904/bc25db6a94b3e4a13486bd96c62bbb32_22.so
+2020-07-10 18:04:36,266:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8313409.gadi-pbs/parcels-12904/bc25db6a94b3e4a13486bd96c62bbb32_2.so
+2020-07-10 18:04:36,266:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8313409.gadi-pbs/parcels-12904/bc25db6a94b3e4a13486bd96c62bbb32_26.so
+2020-07-10 18:04:36,266:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8313409.gadi-pbs/parcels-12904/bc25db6a94b3e4a13486bd96c62bbb32_10.so
+2020-07-10 18:04:36,267:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8313409.gadi-pbs/parcels-12904/bc25db6a94b3e4a13486bd96c62bbb32_17.so
+2020-07-10 18:04:36,551:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8313410.gadi-pbs/parcels-12904/be8dd45c0d5fa69d56a143812d902fab_1.so
+2020-07-10 18:04:36,551:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8313410.gadi-pbs/parcels-12904/be8dd45c0d5fa69d56a143812d902fab_20.so
+2020-07-10 18:04:36,551:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8313410.gadi-pbs/parcels-12904/be8dd45c0d5fa69d56a143812d902fab_34.so
+2020-07-10 18:04:36,551:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8313410.gadi-pbs/parcels-12904/be8dd45c0d5fa69d56a143812d902fab_4.so
+2020-07-10 18:04:36,552:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8313410.gadi-pbs/parcels-12904/be8dd45c0d5fa69d56a143812d902fab_26.so
+2020-07-10 18:04:36,552:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8313410.gadi-pbs/parcels-12904/be8dd45c0d5fa69d56a143812d902fab_44.so
+2020-07-10 18:04:36,552:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8313410.gadi-pbs/parcels-12904/be8dd45c0d5fa69d56a143812d902fab_40.so
+2020-07-10 18:04:36,552:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8313410.gadi-pbs/parcels-12904/be8dd45c0d5fa69d56a143812d902fab_33.so
+2020-07-10 18:04:36,552:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8313410.gadi-pbs/parcels-12904/be8dd45c0d5fa69d56a143812d902fab_6.so
+2020-07-10 18:04:36,552:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8313410.gadi-pbs/parcels-12904/be8dd45c0d5fa69d56a143812d902fab_17.so
+2020-07-10 18:04:36,552:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8313410.gadi-pbs/parcels-12904/be8dd45c0d5fa69d56a143812d902fab_38.so
+2020-07-10 18:04:36,552:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8313410.gadi-pbs/parcels-12904/be8dd45c0d5fa69d56a143812d902fab_32.so
+2020-07-10 18:04:36,552:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8313410.gadi-pbs/parcels-12904/be8dd45c0d5fa69d56a143812d902fab_36.so
+2020-07-10 18:04:36,552:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8313410.gadi-pbs/parcels-12904/be8dd45c0d5fa69d56a143812d902fab_8.so
+2020-07-10 18:04:36,552:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8313410.gadi-pbs/parcels-12904/be8dd45c0d5fa69d56a143812d902fab_42.so
+2020-07-10 18:04:36,552:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8313410.gadi-pbs/parcels-12904/be8dd45c0d5fa69d56a143812d902fab_22.so
+2020-07-10 18:04:36,552:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8313410.gadi-pbs/parcels-12904/be8dd45c0d5fa69d56a143812d902fab_28.so
+2020-07-10 18:04:36,552:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8313410.gadi-pbs/parcels-12904/be8dd45c0d5fa69d56a143812d902fab_18.so
+2020-07-10 18:04:36,553:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8313410.gadi-pbs/parcels-12904/be8dd45c0d5fa69d56a143812d902fab_12.so
+2020-07-10 18:04:36,553:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8313410.gadi-pbs/parcels-12904/be8dd45c0d5fa69d56a143812d902fab_16.so
+2020-07-10 18:04:36,562:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8313410.gadi-pbs/parcels-12904/be8dd45c0d5fa69d56a143812d902fab_2.so
+2020-07-10 18:04:36,562:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8313410.gadi-pbs/parcels-12904/be8dd45c0d5fa69d56a143812d902fab_10.so
+2020-07-10 18:04:36,564:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8313410.gadi-pbs/parcels-12904/be8dd45c0d5fa69d56a143812d902fab_0.so
+2020-07-10 18:05:31,915:run_EUC:DEBUG:sim_hist_250_v0r0:Temp=IPISOCNB: Rank=14: #Particles=1092
+2020-07-10 18:05:31,915:run_EUC:DEBUG:sim_hist_250_v0r0:Temp=IPISOCNB: Rank=30: #Particles=546
+2020-07-10 18:05:31,915:run_EUC:DEBUG:sim_hist_250_v0r0:Temp=IPISOCNB: Rank=46: #Particles=546
+2020-07-10 18:05:34,669:run_EUC:DEBUG:sim_hist_250_v0r0:Temp=IPISOCNB: Rank= 9: #Particles=1092
+2020-07-10 18:05:34,669:run_EUC:DEBUG:sim_hist_250_v0r0:Temp=IPISOCNB: Rank=25: #Particles=546
+2020-07-10 18:05:34,669:run_EUC:DEBUG:sim_hist_250_v0r0:Temp=IPISOCNB: Rank=41: #Particles=546
+2020-07-10 18:05:34,669:run_EUC:DEBUG:sim_hist_250_v0r0:Temp=IPISOCNB: Rank= 5: #Particles=1092
+2020-07-10 18:05:34,669:run_EUC:DEBUG:sim_hist_250_v0r0:Temp=IPISOCNB: Rank=37: #Particles=546
+2020-07-10 18:05:34,669:run_EUC:DEBUG:sim_hist_250_v0r0:Temp=IPISOCNB: Rank=29: #Particles=546
+2020-07-10 18:05:34,669:run_EUC:DEBUG:sim_hist_250_v0r0:Temp=IPISOCNB: Rank=21: #Particles=546
+2020-07-10 18:05:34,669:run_EUC:DEBUG:sim_hist_250_v0r0:Temp=IPISOCNB: Rank=13: #Particles=546
+2020-07-10 18:05:34,669:run_EUC:DEBUG:sim_hist_250_v0r0:Temp=IPISOCNB: Rank=45: #Particles=546
+2020-07-10 18:05:35,055:run_EUC:DEBUG:sim_hist_250_v0r0:Temp=IPISOCNB: Rank= 3: #Particles=1092
+2020-07-10 18:05:35,055:run_EUC:DEBUG:sim_hist_250_v0r0:Temp=IPISOCNB: Rank=27: #Particles=546
+2020-07-10 18:05:35,055:run_EUC:DEBUG:sim_hist_250_v0r0:Temp=IPISOCNB: Rank=31: #Particles=546
+2020-07-10 18:05:35,055:run_EUC:DEBUG:sim_hist_250_v0r0:Temp=IPISOCNB: Rank=35: #Particles=546
+2020-07-10 18:05:35,055:run_EUC:DEBUG:sim_hist_250_v0r0:Temp=IPISOCNB: Rank=39: #Particles=546
+2020-07-10 18:05:35,055:run_EUC:DEBUG:sim_hist_250_v0r0:Temp=IPISOCNB: Rank=19: #Particles=546
+2020-07-10 18:05:35,055:run_EUC:DEBUG:sim_hist_250_v0r0:Temp=IPISOCNB: Rank=11: #Particles=546
+2020-07-10 18:05:35,055:run_EUC:DEBUG:sim_hist_250_v0r0:Temp=IPISOCNB: Rank=23: #Particles=546
+2020-07-10 18:05:35,056:run_EUC:DEBUG:sim_hist_250_v0r0:Temp=IPISOCNB: Rank=43: #Particles=546
+2020-07-10 18:05:35,056:run_EUC:DEBUG:sim_hist_250_v0r0:Temp=IPISOCNB: Rank= 7: #Particles=546
+2020-07-10 18:05:35,056:run_EUC:DEBUG:sim_hist_250_v0r0:Temp=IPISOCNB: Rank=47: #Particles=546
+2020-07-10 18:05:35,056:run_EUC:DEBUG:sim_hist_250_v0r0:Temp=IPISOCNB: Rank=15: #Particles=546
+2020-07-10 18:05:35,436:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8313410.gadi-pbs/parcels-12904/be8dd45c0d5fa69d56a143812d902fab_46.so
+2020-07-10 18:05:35,497:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8313410.gadi-pbs/parcels-12904/be8dd45c0d5fa69d56a143812d902fab_30.so
+2020-07-10 18:05:35,514:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8313410.gadi-pbs/parcels-12904/be8dd45c0d5fa69d56a143812d902fab_14.so
+2020-07-10 18:05:36,346:run_EUC:DEBUG:sim_hist_250_v0r0:Temp=IPISOCNB: Rank=24: #Particles=1092
+2020-07-10 18:05:41,020:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8313410.gadi-pbs/parcels-12904/be8dd45c0d5fa69d56a143812d902fab_29.so
+2020-07-10 18:05:41,022:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8313410.gadi-pbs/parcels-12904/be8dd45c0d5fa69d56a143812d902fab_5.so
+2020-07-10 18:05:41,025:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8313410.gadi-pbs/parcels-12904/be8dd45c0d5fa69d56a143812d902fab_13.so
+2020-07-10 18:05:41,027:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8313410.gadi-pbs/parcels-12904/be8dd45c0d5fa69d56a143812d902fab_9.so
+2020-07-10 18:05:41,042:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8313410.gadi-pbs/parcels-12904/be8dd45c0d5fa69d56a143812d902fab_25.so
+2020-07-10 18:05:41,053:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8313410.gadi-pbs/parcels-12904/be8dd45c0d5fa69d56a143812d902fab_37.so
+2020-07-10 18:05:41,055:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8313410.gadi-pbs/parcels-12904/be8dd45c0d5fa69d56a143812d902fab_21.so
+2020-07-10 18:05:41,064:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8313410.gadi-pbs/parcels-12904/be8dd45c0d5fa69d56a143812d902fab_45.so
+2020-07-10 18:05:41,069:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8313410.gadi-pbs/parcels-12904/be8dd45c0d5fa69d56a143812d902fab_41.so
+2020-07-10 18:05:41,509:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8313410.gadi-pbs/parcels-12904/be8dd45c0d5fa69d56a143812d902fab_23.so
+2020-07-10 18:05:41,523:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8313410.gadi-pbs/parcels-12904/be8dd45c0d5fa69d56a143812d902fab_7.so
+2020-07-10 18:05:41,526:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8313410.gadi-pbs/parcels-12904/be8dd45c0d5fa69d56a143812d902fab_35.so
+2020-07-10 18:05:41,526:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8313410.gadi-pbs/parcels-12904/be8dd45c0d5fa69d56a143812d902fab_31.so
+2020-07-10 18:05:41,535:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8313410.gadi-pbs/parcels-12904/be8dd45c0d5fa69d56a143812d902fab_27.so
+2020-07-10 18:05:41,547:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8313410.gadi-pbs/parcels-12904/be8dd45c0d5fa69d56a143812d902fab_19.so
+2020-07-10 18:05:41,547:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8313410.gadi-pbs/parcels-12904/be8dd45c0d5fa69d56a143812d902fab_11.so
+2020-07-10 18:05:41,547:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8313410.gadi-pbs/parcels-12904/be8dd45c0d5fa69d56a143812d902fab_3.so
+2020-07-10 18:05:41,547:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8313410.gadi-pbs/parcels-12904/be8dd45c0d5fa69d56a143812d902fab_39.so
+2020-07-10 18:05:41,548:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8313410.gadi-pbs/parcels-12904/be8dd45c0d5fa69d56a143812d902fab_15.so
+2020-07-10 18:05:41,558:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8313410.gadi-pbs/parcels-12904/be8dd45c0d5fa69d56a143812d902fab_47.so
+2020-07-10 18:05:41,560:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8313410.gadi-pbs/parcels-12904/be8dd45c0d5fa69d56a143812d902fab_43.so
+2020-07-10 18:05:41,582:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8313410.gadi-pbs/parcels-12904/be8dd45c0d5fa69d56a143812d902fab_24.so
+2020-07-10 18:05:50,746:run_EUC:DEBUG:sim_hist_220_v0r0:Temp=PWBJTQYZ: Rank=14: #Particles=1092
+2020-07-10 18:05:50,747:run_EUC:DEBUG:sim_hist_220_v0r0:Temp=PWBJTQYZ: Rank=46: #Particles=546
+2020-07-10 18:05:50,747:run_EUC:DEBUG:sim_hist_220_v0r0:Temp=PWBJTQYZ: Rank=30: #Particles=546
+2020-07-10 18:05:53,957:run_EUC:DEBUG:sim_hist_220_v0r0:Temp=PWBJTQYZ: Rank= 9: #Particles=1092
+2020-07-10 18:05:53,957:run_EUC:DEBUG:sim_hist_220_v0r0:Temp=PWBJTQYZ: Rank=25: #Particles=546
+2020-07-10 18:05:53,957:run_EUC:DEBUG:sim_hist_220_v0r0:Temp=PWBJTQYZ: Rank=41: #Particles=546
+2020-07-10 18:05:53,957:run_EUC:DEBUG:sim_hist_220_v0r0:Temp=PWBJTQYZ: Rank=29: #Particles=546
+2020-07-10 18:05:53,957:run_EUC:DEBUG:sim_hist_220_v0r0:Temp=PWBJTQYZ: Rank= 5: #Particles=1092
+2020-07-10 18:05:53,957:run_EUC:DEBUG:sim_hist_220_v0r0:Temp=PWBJTQYZ: Rank=45: #Particles=546
+2020-07-10 18:05:53,957:run_EUC:DEBUG:sim_hist_220_v0r0:Temp=PWBJTQYZ: Rank=13: #Particles=546
+2020-07-10 18:05:53,957:run_EUC:DEBUG:sim_hist_220_v0r0:Temp=PWBJTQYZ: Rank=21: #Particles=546
+2020-07-10 18:05:53,957:run_EUC:DEBUG:sim_hist_220_v0r0:Temp=PWBJTQYZ: Rank=37: #Particles=546
+2020-07-10 18:05:54,000:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8313409.gadi-pbs/parcels-12904/bc25db6a94b3e4a13486bd96c62bbb32_14.so
+2020-07-10 18:05:54,049:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8313409.gadi-pbs/parcels-12904/bc25db6a94b3e4a13486bd96c62bbb32_46.so
+2020-07-10 18:05:54,178:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8313409.gadi-pbs/parcels-12904/bc25db6a94b3e4a13486bd96c62bbb32_30.so
+2020-07-10 18:05:54,695:run_EUC:DEBUG:sim_hist_220_v0r0:Temp=PWBJTQYZ: Rank=39: #Particles=546
+2020-07-10 18:05:54,695:run_EUC:DEBUG:sim_hist_220_v0r0:Temp=PWBJTQYZ: Rank=27: #Particles=546
+2020-07-10 18:05:54,695:run_EUC:DEBUG:sim_hist_220_v0r0:Temp=PWBJTQYZ: Rank= 3: #Particles=1092
+2020-07-10 18:05:54,695:run_EUC:DEBUG:sim_hist_220_v0r0:Temp=PWBJTQYZ: Rank=31: #Particles=546
+2020-07-10 18:05:54,695:run_EUC:DEBUG:sim_hist_220_v0r0:Temp=PWBJTQYZ: Rank=43: #Particles=546
+2020-07-10 18:05:54,695:run_EUC:DEBUG:sim_hist_220_v0r0:Temp=PWBJTQYZ: Rank=35: #Particles=546
+2020-07-10 18:05:54,695:run_EUC:DEBUG:sim_hist_220_v0r0:Temp=PWBJTQYZ: Rank=11: #Particles=546
+2020-07-10 18:05:54,695:run_EUC:DEBUG:sim_hist_220_v0r0:Temp=PWBJTQYZ: Rank=19: #Particles=546
+2020-07-10 18:05:54,695:run_EUC:DEBUG:sim_hist_220_v0r0:Temp=PWBJTQYZ: Rank=15: #Particles=546
+2020-07-10 18:05:54,696:run_EUC:DEBUG:sim_hist_220_v0r0:Temp=PWBJTQYZ: Rank= 7: #Particles=546
+2020-07-10 18:05:54,696:run_EUC:DEBUG:sim_hist_220_v0r0:Temp=PWBJTQYZ: Rank=23: #Particles=546
+2020-07-10 18:05:54,696:run_EUC:DEBUG:sim_hist_220_v0r0:Temp=PWBJTQYZ: Rank=47: #Particles=546
+2020-07-10 18:05:59,232:run_EUC:DEBUG:sim_hist_220_v0r0:Temp=PWBJTQYZ: Rank=24: #Particles=1092
+2020-07-10 18:05:59,806:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8313409.gadi-pbs/parcels-12904/bc25db6a94b3e4a13486bd96c62bbb32_13.so
+2020-07-10 18:05:59,806:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8313409.gadi-pbs/parcels-12904/bc25db6a94b3e4a13486bd96c62bbb32_21.so
+2020-07-10 18:05:59,844:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8313409.gadi-pbs/parcels-12904/bc25db6a94b3e4a13486bd96c62bbb32_25.so
+2020-07-10 18:05:59,845:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8313409.gadi-pbs/parcels-12904/bc25db6a94b3e4a13486bd96c62bbb32_29.so
+2020-07-10 18:05:59,891:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8313409.gadi-pbs/parcels-12904/bc25db6a94b3e4a13486bd96c62bbb32_41.so
+2020-07-10 18:05:59,893:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8313409.gadi-pbs/parcels-12904/bc25db6a94b3e4a13486bd96c62bbb32_37.so
+2020-07-10 18:05:59,905:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8313409.gadi-pbs/parcels-12904/bc25db6a94b3e4a13486bd96c62bbb32_45.so
+2020-07-10 18:05:59,930:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8313409.gadi-pbs/parcels-12904/bc25db6a94b3e4a13486bd96c62bbb32_9.so
+2020-07-10 18:05:59,932:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8313409.gadi-pbs/parcels-12904/bc25db6a94b3e4a13486bd96c62bbb32_5.so
+2020-07-10 18:06:00,549:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8313409.gadi-pbs/parcels-12904/bc25db6a94b3e4a13486bd96c62bbb32_19.so
+2020-07-10 18:06:00,555:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8313409.gadi-pbs/parcels-12904/bc25db6a94b3e4a13486bd96c62bbb32_23.so
+2020-07-10 18:06:00,562:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8313409.gadi-pbs/parcels-12904/bc25db6a94b3e4a13486bd96c62bbb32_15.so
+2020-07-10 18:06:00,679:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8313409.gadi-pbs/parcels-12904/bc25db6a94b3e4a13486bd96c62bbb32_31.so
+2020-07-10 18:06:00,715:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8313409.gadi-pbs/parcels-12904/bc25db6a94b3e4a13486bd96c62bbb32_27.so
+2020-07-10 18:06:00,758:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8313409.gadi-pbs/parcels-12904/bc25db6a94b3e4a13486bd96c62bbb32_35.so
+2020-07-10 18:06:00,766:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8313409.gadi-pbs/parcels-12904/bc25db6a94b3e4a13486bd96c62bbb32_43.so
+2020-07-10 18:06:00,789:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8313409.gadi-pbs/parcels-12904/bc25db6a94b3e4a13486bd96c62bbb32_7.so
+2020-07-10 18:06:00,789:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8313409.gadi-pbs/parcels-12904/bc25db6a94b3e4a13486bd96c62bbb32_3.so
+2020-07-10 18:06:00,789:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8313409.gadi-pbs/parcels-12904/bc25db6a94b3e4a13486bd96c62bbb32_39.so
+2020-07-10 18:06:00,789:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8313409.gadi-pbs/parcels-12904/bc25db6a94b3e4a13486bd96c62bbb32_47.so
+2020-07-10 18:06:00,798:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8313409.gadi-pbs/parcels-12904/bc25db6a94b3e4a13486bd96c62bbb32_11.so
+2020-07-10 18:06:02,441:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> /jobfs/8313409.gadi-pbs/parcels-12904/bc25db6a94b3e4a13486bd96c62bbb32_24.so
+2020-07-10 18:10:15,434:run_EUC:INFO:sim_hist_165_v0r0:Completed!: 01:18:55: Rank= 4: #Particles=546-161=385
+2020-07-10 18:15:30,264:run_EUC:INFO:sim_hist_250_v0r0:Completed!: 00:31:36: Rank= 5: #Particles=1092-1061=31
+2020-07-10 18:15:30,473:run_EUC:INFO:sim_hist_250_v0r0:Completed!: 00:31:36: Rank=21: #Particles=546-522=24
+2020-07-10 18:15:30,999:run_EUC:INFO:sim_hist_250_v0r0:Completed!: 00:31:37: Rank=43: #Particles=546-515=31
+2020-07-10 18:15:32,635:run_EUC:INFO:sim_hist_250_v0r0:Completed!: 00:31:39: Rank= 9: #Particles=1092-1039=53
+2020-07-10 18:15:33,808:run_EUC:INFO:sim_hist_165_v0r0:Completed!: 01:24:14: Rank=36: #Particles=546-174=372
+2020-07-10 18:16:42,212:run_EUC:INFO:sim_hist_250_v0r0:Completed!: 00:32:48: Rank=29: #Particles=546-520=26
+2020-07-10 18:17:12,881:run_EUC:INFO:sim_hist_165_v0r0:Completed!: 01:25:53: Rank=34: #Particles=546-172=374
+2020-07-10 18:17:28,749:run_EUC:INFO:sim_hist_165_v0r0:Completed!: 01:26:09: Rank= 3: #Particles=1092-698=394
+2020-07-10 18:18:58,448:run_EUC:INFO:sim_hist_250_v0r0:Completed!: 00:35:04: Rank=47: #Particles=546-516=30
+2020-07-10 18:19:37,769:run_EUC:INFO:sim_hist_165_v0r0:Completed!: 01:28:18: Rank=19: #Particles=546-171=375
+2020-07-10 18:19:56,875:run_EUC:INFO:sim_hist_165_v0r0:Completed!: 01:28:37: Rank=23: #Particles=546-244=302
+2020-07-10 18:23:45,949:run_EUC:INFO:sim_hist_250_v0r0:Completed!: 00:39:52: Rank=37: #Particles=546-528=18
+2020-07-10 18:24:28,580:run_EUC:INFO:sim_hist_250_v0r0:Completed!: 00:40:35: Rank=11: #Particles=546-522=24
+2020-07-10 18:28:20,582:run_EUC:INFO:sim_hist_220_v0r0:Completed!: 00:44:26: Rank=11: #Particles=546-501=45
+2020-07-10 18:32:32,765:run_EUC:INFO:sim_hist_165_v0r0:Completed!: 01:41:13: Rank=30: #Particles=546-159=387
+2020-07-10 18:36:51,523:run_EUC:INFO:sim_hist_165_v0r0:Completed!: 01:45:32: Rank= 1: #Particles=546-173=373
+2020-07-10 18:38:50,739:run_EUC:INFO:sim_hist_165_v0r0:Completed!: 01:47:31: Rank=31: #Particles=546-167=379
+2020-07-10 18:38:56,780:run_EUC:INFO:sim_hist_250_v0r0:Completed!: 00:55:03: Rank= 0: #Particles=546-468=78
+2020-07-10 18:40:48,089:run_EUC:INFO:sim_hist_165_v0r0:Completed!: 01:49:28: Rank=18: #Particles=546-186=360
+2020-07-10 18:41:08,931:run_EUC:INFO:sim_hist_165_v0r0:Completed!: 01:49:49: Rank=38: #Particles=546-170=376
+2020-07-10 18:42:16,770:run_EUC:INFO:sim_hist_165_v0r0:Completed!: 01:50:57: Rank=13: #Particles=546-175=371
+2020-07-10 18:42:47,059:run_EUC:INFO:sim_hist_165_v0r0:Completed!: 01:51:27: Rank=29: #Particles=546-381=165
+2020-07-10 18:43:44,298:run_EUC:INFO:sim_hist_165_v0r0:Completed!: 01:52:24: Rank=17: #Particles=546-171=375
+2020-07-10 18:47:25,284:run_EUC:INFO:sim_hist_165_v0r0:Completed!: 01:56:05: Rank=35: #Particles=546-176=370
+2020-07-10 18:48:38,702:run_EUC:INFO:sim_hist_220_v0r0:Completed!: 01:04:44: Rank=38: #Particles=546-277=269
+2020-07-10 18:50:58,794:run_EUC:INFO:sim_hist_165_v0r0:Completed!: 01:59:39: Rank=42: #Particles=546-180=366
+2020-07-10 18:52:40,101:run_EUC:INFO:sim_hist_165_v0r0:Completed!: 02:01:20: Rank=20: #Particles=546-170=376
+2020-07-10 18:53:09,051:run_EUC:INFO:sim_hist_220_v0r0:Completed!: 01:09:14: Rank=21: #Particles=546-498=48
+2020-07-10 18:53:17,050:run_EUC:INFO:sim_hist_165_v0r0:Completed!: 02:01:57: Rank=14: #Particles=1092-596=496
+2020-07-10 18:57:13,739:run_EUC:INFO:sim_hist_250_v0r0:Completed!: 01:13:20: Rank= 3: #Particles=1092-1011=81
+2020-07-10 18:58:06,057:run_EUC:INFO:sim_hist_165_v0r0:Completed!: 02:06:46: Rank=40: #Particles=546-184=362
+2020-07-10 18:59:05,760:run_EUC:INFO:sim_hist_165_v0r0:Completed!: 02:07:46: Rank=41: #Particles=546-171=375
+2020-07-10 18:59:54,541:run_EUC:INFO:sim_hist_220_v0r0:Completed!: 01:15:60: Rank=19: #Particles=546-322=224
+2020-07-10 19:00:18,608:run_EUC:INFO:sim_hist_165_v0r0:Completed!: 02:08:59: Rank=22: #Particles=546-182=364
+2020-07-10 19:04:25,357:run_EUC:INFO:sim_hist_165_v0r0:Completed!: 02:13:05: Rank=10: #Particles=546-170=376
+2020-07-10 19:04:27,430:run_EUC:INFO:sim_hist_220_v0r0:Completed!: 01:20:32: Rank= 1: #Particles=546-393=153
+2020-07-10 19:05:21,506:run_EUC:INFO:sim_hist_220_v0r0:Completed!: 01:21:27: Rank=29: #Particles=546-500=46
+2020-07-10 19:12:35,344:run_EUC:INFO:sim_hist_250_v0r0:Completed!: 01:28:41: Rank=24: #Particles=1092-987=105
+2020-07-10 19:15:25,686:run_EUC:INFO:sim_hist_220_v0r0:Completed!: 01:31:31: Rank=34: #Particles=546-360=186
+2020-07-10 19:16:44,144:run_EUC:INFO:sim_hist_220_v0r0:Completed!: 01:32:49: Rank= 8: #Particles=546-468=78
+2020-07-10 19:18:41,706:run_EUC:INFO:sim_hist_220_v0r0:Completed!: 01:34:47: Rank=23: #Particles=546-478=68
+2020-07-10 19:19:11,217:run_EUC:INFO:sim_hist_165_v0r0:Completed!: 02:27:51: Rank=12: #Particles=546-177=369
+2020-07-10 19:20:13,804:run_EUC:INFO:sim_hist_165_v0r0:Completed!: 02:28:54: Rank=33: #Particles=546-174=372
+2020-07-10 19:22:44,322:run_EUC:INFO:sim_hist_165_v0r0:Completed!: 02:31:24: Rank=32: #Particles=546-177=369
+2020-07-10 19:23:15,080:run_EUC:INFO:sim_hist_250_v0r0:Completed!: 01:39:21: Rank=16: #Particles=546-428=118
+2020-07-10 19:23:20,046:run_EUC:INFO:sim_hist_250_v0r0:Completed!: 01:39:26: Rank=45: #Particles=546-457=89
+2020-07-10 19:24:30,358:run_EUC:INFO:sim_hist_220_v0r0:Completed!: 01:40:35: Rank=37: #Particles=546-497=49
+2020-07-10 19:25:39,800:run_EUC:INFO:sim_hist_165_v0r0:Completed!: 02:34:20: Rank=44: #Particles=546-180=366
+2020-07-10 19:29:19,958:run_EUC:INFO:sim_hist_165_v0r0:Completed!: 02:38:00: Rank= 2: #Particles=546-178=368
+2020-07-10 19:33:20,248:run_EUC:INFO:sim_hist_220_v0r0:Completed!: 01:49:25: Rank=47: #Particles=546-494=52
+2020-07-10 19:35:51,567:run_EUC:INFO:sim_hist_250_v0r0:Completed!: 01:51:58: Rank=23: #Particles=546-467=79
+2020-07-10 19:40:41,433:run_EUC:INFO:sim_hist_250_v0r0:Completed!: 01:56:47: Rank=39: #Particles=546-403=143
+2020-07-10 19:50:04,639:run_EUC:INFO:sim_hist_165_v0r0:Completed!: 02:58:45: Rank= 6: #Particles=546-182=364
+2020-07-10 19:53:31,537:run_EUC:INFO:sim_hist_250_v0r0:Completed!: 02:09:38: Rank=42: #Particles=546-354=192
+2020-07-10 19:57:28,833:run_EUC:INFO:sim_hist_250_v0r0:Completed!: 02:13:35: Rank=26: #Particles=546-376=170
+2020-07-10 19:59:02,023:run_EUC:INFO:sim_hist_165_v0r0:Completed!: 03:07:42: Rank=28: #Particles=546-182=364
+2020-07-10 20:02:37,541:run_EUC:INFO:sim_hist_165_v0r0:Completed!: 03:11:18: Rank=15: #Particles=546-154=392
+2020-07-10 20:12:45,265:run_EUC:INFO:sim_hist_220_v0r0:Completed!: 02:28:50: Rank=43: #Particles=546-454=92
+2020-07-10 20:16:05,001:run_EUC:INFO:sim_hist_220_v0r0:Completed!: 02:32:10: Rank=42: #Particles=546-409=137
+2020-07-10 20:22:44,046:run_EUC:INFO:sim_hist_250_v0r0:Completed!: 02:38:50: Rank=18: #Particles=546-391=155
+2020-07-10 20:23:18,065:run_EUC:INFO:sim_hist_220_v0r0:Completed!: 02:39:23: Rank=10: #Particles=546-219=327
+2020-07-10 20:30:06,788:run_EUC:INFO:sim_hist_250_v0r0:Completed!: 02:46:13: Rank=14: #Particles=1092-979=113
+2020-07-10 20:33:09,061:run_EUC:INFO:sim_hist_250_v0r0:Completed!: 02:49:15: Rank= 1: #Particles=546-333=213
+2020-07-10 20:34:13,795:run_EUC:INFO:sim_hist_220_v0r0:Completed!: 02:50:19: Rank=18: #Particles=546-429=117
+2020-07-10 20:34:46,752:run_EUC:INFO:sim_hist_250_v0r0:Completed!: 02:50:53: Rank= 7: #Particles=546-341=205
+2020-07-10 20:38:42,614:run_EUC:INFO:sim_hist_220_v0r0:Completed!: 02:54:48: Rank= 5: #Particles=1092-980=112
+2020-07-10 20:42:50,178:run_EUC:INFO:sim_hist_220_v0r0:Completed!: 02:58:55: Rank=46: #Particles=546-443=103
+2020-07-10 20:43:46,291:run_EUC:INFO:sim_hist_250_v0r0:Completed!: 02:59:52: Rank=25: #Particles=546-274=272
+2020-07-10 20:47:33,434:run_EUC:INFO:sim_hist_250_v0r0:Completed!: 03:03:39: Rank= 8: #Particles=546-445=101
+2020-07-10 20:51:57,915:run_EUC:INFO:sim_hist_250_v0r0:Completed!: 03:08:04: Rank=34: #Particles=546-309=237
+2020-07-10 20:56:48,150:run_EUC:INFO:sim_hist_220_v0r0:Completed!: 03:12:53: Rank= 9: #Particles=1092-948=144
+2020-07-10 20:58:39,234:run_EUC:INFO:sim_hist_250_v0r0:Completed!: 03:14:45: Rank=27: #Particles=546-306=240
+2020-07-10 21:01:15,160:run_EUC:INFO:sim_hist_165_v0r0:Completed!: 04:09:55: Rank=25: #Particles=546-152=394
+2020-07-10 21:15:11,647:run_EUC:INFO:sim_hist_165_v0r0:Completed!: 04:23:52: Rank=27: #Particles=546-143=403
+2020-07-10 21:21:37,007:run_EUC:INFO:sim_hist_220_v0r0:Completed!: 03:37:42: Rank=17: #Particles=546-166=380
+2020-07-10 21:29:13,503:run_EUC:INFO:sim_hist_250_v0r0:Completed!: 03:45:19: Rank=46: #Particles=546-421=125
+2020-07-10 21:30:34,197:run_EUC:INFO:sim_hist_220_v0r0:Completed!: 03:46:39: Rank= 0: #Particles=546-412=134
+2020-07-10 21:31:51,052:run_EUC:INFO:sim_hist_250_v0r0:Completed!: 03:47:57: Rank=15: #Particles=546-233=313
+2020-07-10 21:38:57,776:run_EUC:INFO:sim_hist_220_v0r0:Completed!: 03:55:03: Rank=45: #Particles=546-392=154
+2020-07-10 21:41:33,859:run_EUC:INFO:sim_hist_220_v0r0:Completed!: 03:57:39: Rank=16: #Particles=546-372=174
+2020-07-10 21:49:33,975:run_EUC:INFO:sim_hist_165_v0r0:Completed!: 04:58:14: Rank=37: #Particles=546-64=482
+2020-07-10 22:11:43,990:run_EUC:INFO:sim_hist_220_v0r0:Completed!: 04:27:49: Rank=39: #Particles=546-332=214
+2020-07-10 22:20:19,209:run_EUC:INFO:sim_hist_165_v0r0:Completed!: 05:28:59: Rank=39: #Particles=546-101=445
+2020-07-10 22:23:04,272:run_EUC:INFO:sim_hist_220_v0r0:Completed!: 04:39:09: Rank=44: #Particles=546-125=421
+2020-07-10 22:27:27,577:run_EUC:INFO:sim_hist_165_v0r0:Completed!: 05:36:08: Rank= 7: #Particles=546-127=419
+2020-07-10 22:27:29,933:run_EUC:INFO:sim_hist_165_v0r0:Completed!: 05:36:10: Rank=21: #Particles=546-66=480
+2020-07-10 22:35:56,177:run_EUC:INFO:sim_hist_250_v0r0:Completed!: 04:52:02: Rank=19: #Particles=546-273=273
+2020-07-10 22:40:11,772:run_EUC:INFO:sim_hist_220_v0r0:Completed!: 04:56:17: Rank=36: #Particles=546-146=400
+2020-07-10 22:42:41,940:run_EUC:INFO:sim_hist_165_v0r0:Completed!: 05:51:22: Rank=16: #Particles=546-94=452
+2020-07-10 22:45:08,858:run_EUC:INFO:sim_hist_165_v0r0:Completed!: 05:53:49: Rank=26: #Particles=546-117=429
+2020-07-10 22:53:52,523:run_EUC:INFO:sim_hist_165_v0r0:Completed!: 06:02:33: Rank=45: #Particles=546-84=462
+2020-07-10 22:58:52,114:run_EUC:INFO:sim_hist_220_v0r0:Completed!: 05:14:57: Rank=14: #Particles=1092-972=120
+2020-07-10 22:59:18,097:run_EUC:INFO:sim_hist_165_v0r0:Completed!: 06:07:58: Rank=43: #Particles=546-48=498
+2020-07-10 23:04:53,837:run_EUC:INFO:sim_hist_220_v0r0:Completed!: 05:20:59: Rank= 3: #Particles=1092-985=107
+2020-07-10 23:15:24,402:run_EUC:INFO:sim_hist_250_v0r0:Completed!: 05:31:30: Rank=38: #Particles=546-238=308
+2020-07-10 23:23:50,339:run_EUC:INFO:sim_hist_165_v0r0:Completed!: 06:32:30: Rank= 0: #Particles=546-76=470
+2020-07-10 23:32:16,515:run_EUC:INFO:sim_hist_220_v0r0:Completed!: 05:48:22: Rank=26: #Particles=546-308=238
+2020-07-10 23:34:31,594:run_EUC:INFO:sim_hist_220_v0r0:Completed!: 05:50:37: Rank=24: #Particles=1092-872=220
+2020-07-11 00:05:56,268:run_EUC:INFO:sim_hist_250_v0r0:Completed!: 06:22:02: Rank=10: #Particles=546-195=351
+2020-07-11 00:13:42,901:__init__:WARNING:Casting lon data to np.float32
+2020-07-11 00:13:42,902:__init__:WARNING:Casting lat data to np.float32
+2020-07-11 00:13:42,903:__init__:WARNING:Casting depth data to np.float32
+2020-07-11 00:13:42,903:__init__:WARNING:Casting lon data to np.float32
+2020-07-11 00:13:42,903:__init__:WARNING:Casting lat data to np.float32
+2020-07-11 00:13:42,904:__init__:WARNING:Casting lon data to np.float32
+2020-07-11 00:13:42,904:__init__:WARNING:Casting depth data to np.float32
+2020-07-11 00:13:42,904:__init__:WARNING:Casting lat data to np.float32
+2020-07-11 00:13:42,904:__init__:WARNING:Casting depth data to np.float32
+2020-07-11 00:13:42,904:__init__:WARNING:Casting lon data to np.float32
+2020-07-11 00:13:42,904:__init__:WARNING:Casting lat data to np.float32
+2020-07-11 00:13:42,905:__init__:WARNING:Casting depth data to np.float32
+2020-07-11 00:13:42,905:__init__:WARNING:Casting lon data to np.float32
+2020-07-11 00:13:42,905:__init__:WARNING:Casting lat data to np.float32
+2020-07-11 00:13:42,905:__init__:WARNING:Casting depth data to np.float32
+2020-07-11 00:13:42,906:__init__:WARNING:Casting lon data to np.float32
+2020-07-11 00:13:42,907:__init__:WARNING:Casting lat data to np.float32
+2020-07-11 00:13:42,907:__init__:WARNING:Casting depth data to np.float32
+2020-07-11 00:13:42,907:__init__:WARNING:Casting lon data to np.float32
+2020-07-11 00:13:42,907:__init__:WARNING:Casting lat data to np.float32
+2020-07-11 00:13:42,907:__init__:WARNING:Casting depth data to np.float32
+2020-07-11 00:13:42,907:__init__:WARNING:Casting lon data to np.float32
+2020-07-11 00:13:42,908:__init__:WARNING:Casting lat data to np.float32
+2020-07-11 00:13:42,908:__init__:WARNING:Casting depth data to np.float32
+2020-07-11 00:13:42,908:__init__:WARNING:Casting lon data to np.float32
+2020-07-11 00:13:42,908:__init__:WARNING:Casting lat data to np.float32
+2020-07-11 00:13:42,909:__init__:WARNING:Casting depth data to np.float32
+2020-07-11 00:13:42,909:__init__:WARNING:Casting lon data to np.float32
+2020-07-11 00:13:42,909:__init__:WARNING:Casting lat data to np.float32
+2020-07-11 00:13:42,909:__init__:WARNING:Casting depth data to np.float32
+2020-07-11 00:13:42,910:__init__:WARNING:Casting lon data to np.float32
+2020-07-11 00:13:42,910:__init__:WARNING:Casting lon data to np.float32
+2020-07-11 00:13:42,910:__init__:WARNING:Casting lon data to np.float32
+2020-07-11 00:13:42,910:__init__:WARNING:Casting lat data to np.float32
+2020-07-11 00:13:42,910:__init__:WARNING:Casting lat data to np.float32
+2020-07-11 00:13:42,910:__init__:WARNING:Casting lat data to np.float32
+2020-07-11 00:13:42,910:__init__:WARNING:Casting lon data to np.float32
+2020-07-11 00:13:42,910:__init__:WARNING:Casting lon data to np.float32
+2020-07-11 00:13:42,911:__init__:WARNING:Casting depth data to np.float32
+2020-07-11 00:13:42,911:__init__:WARNING:Casting depth data to np.float32
+2020-07-11 00:13:42,911:__init__:WARNING:Casting lat data to np.float32
+2020-07-11 00:13:42,911:__init__:WARNING:Casting depth data to np.float32
+2020-07-11 00:13:42,911:__init__:WARNING:Casting lat data to np.float32
+2020-07-11 00:13:42,911:__init__:WARNING:Casting depth data to np.float32
+2020-07-11 00:13:42,911:__init__:WARNING:Casting depth data to np.float32
+2020-07-11 00:13:42,911:__init__:WARNING:Casting lon data to np.float32
+2020-07-11 00:13:42,911:__init__:WARNING:Casting lat data to np.float32
+2020-07-11 00:13:42,912:__init__:WARNING:Casting depth data to np.float32
+2020-07-11 00:13:42,912:__init__:WARNING:Casting lon data to np.float32
+2020-07-11 00:13:42,912:__init__:WARNING:Casting lat data to np.float32
+2020-07-11 00:13:42,912:__init__:WARNING:Casting depth data to np.float32
+2020-07-11 00:13:42,913:__init__:WARNING:Casting lon data to np.float32
+2020-07-11 00:13:42,913:__init__:WARNING:Casting lat data to np.float32
+2020-07-11 00:13:42,913:__init__:WARNING:Casting depth data to np.float32
+2020-07-11 00:13:42,913:__init__:WARNING:Casting lon data to np.float32
+2020-07-11 00:13:42,914:__init__:WARNING:Casting lon data to np.float32
+2020-07-11 00:13:42,914:__init__:WARNING:Casting lat data to np.float32
+2020-07-11 00:13:42,914:__init__:WARNING:Casting lat data to np.float32
+2020-07-11 00:13:42,914:__init__:WARNING:Casting depth data to np.float32
+2020-07-11 00:13:42,914:__init__:WARNING:Casting depth data to np.float32
+2020-07-11 00:13:42,914:__init__:WARNING:Casting lon data to np.float32
+2020-07-11 00:13:42,914:__init__:WARNING:Casting lon data to np.float32
+2020-07-11 00:13:42,914:__init__:WARNING:Casting lat data to np.float32
+2020-07-11 00:13:42,914:__init__:WARNING:Casting lat data to np.float32
+2020-07-11 00:13:42,914:__init__:WARNING:Casting depth data to np.float32
+2020-07-11 00:13:42,914:__init__:WARNING:Casting depth data to np.float32
+2020-07-11 00:13:42,914:__init__:WARNING:Casting lon data to np.float32
+2020-07-11 00:13:42,915:__init__:WARNING:Casting lat data to np.float32
+2020-07-11 00:13:42,914:__init__:WARNING:Casting lon data to np.float32
+2020-07-11 00:13:42,915:__init__:WARNING:Casting lat data to np.float32
+2020-07-11 00:13:42,915:__init__:WARNING:Casting depth data to np.float32
+2020-07-11 00:13:42,915:__init__:WARNING:Casting depth data to np.float32
+2020-07-11 00:13:42,915:__init__:WARNING:Casting lon data to np.float32
+2020-07-11 00:13:42,915:__init__:WARNING:Casting lat data to np.float32
+2020-07-11 00:13:42,915:__init__:WARNING:Casting lon data to np.float32
+2020-07-11 00:13:42,915:__init__:WARNING:Casting lon data to np.float32
+2020-07-11 00:13:42,915:__init__:WARNING:Casting lat data to np.float32
+2020-07-11 00:13:42,915:__init__:WARNING:Casting depth data to np.float32
+2020-07-11 00:13:42,915:__init__:WARNING:Casting lat data to np.float32
+2020-07-11 00:13:42,915:__init__:WARNING:Casting depth data to np.float32
+2020-07-11 00:13:42,915:__init__:WARNING:Casting depth data to np.float32
+2020-07-11 00:13:42,916:__init__:WARNING:Casting lon data to np.float32
+2020-07-11 00:13:42,916:__init__:WARNING:Casting lat data to np.float32
+2020-07-11 00:13:42,916:__init__:WARNING:Casting depth data to np.float32
+2020-07-11 00:13:42,918:__init__:WARNING:Casting lon data to np.float32
+2020-07-11 00:13:42,918:__init__:WARNING:Casting lon data to np.float32
+2020-07-11 00:13:42,918:__init__:WARNING:Casting lat data to np.float32
+2020-07-11 00:13:42,918:__init__:WARNING:Casting lat data to np.float32
+2020-07-11 00:13:42,918:__init__:WARNING:Casting depth data to np.float32
+2020-07-11 00:13:42,918:__init__:WARNING:Casting depth data to np.float32
+2020-07-11 00:13:42,919:__init__:WARNING:Casting lon data to np.float32
+2020-07-11 00:13:42,919:__init__:WARNING:Casting lat data to np.float32
+2020-07-11 00:13:42,919:__init__:WARNING:Casting depth data to np.float32
+2020-07-11 00:13:42,920:__init__:WARNING:Casting lon data to np.float32
+2020-07-11 00:13:42,920:__init__:WARNING:Casting lat data to np.float32
+2020-07-11 00:13:42,920:__init__:WARNING:Casting depth data to np.float32
+2020-07-11 00:13:42,921:__init__:WARNING:Casting lon data to np.float32
+2020-07-11 00:13:42,921:__init__:WARNING:Casting lat data to np.float32
+2020-07-11 00:13:42,921:__init__:WARNING:Casting depth data to np.float32
+2020-07-11 00:13:42,923:__init__:WARNING:Casting lon data to np.float32
+2020-07-11 00:13:42,923:__init__:WARNING:Casting lat data to np.float32
+2020-07-11 00:13:42,923:__init__:WARNING:Casting depth data to np.float32
+2020-07-11 00:13:42,923:__init__:WARNING:Casting lon data to np.float32
+2020-07-11 00:13:42,923:__init__:WARNING:Casting lat data to np.float32
+2020-07-11 00:13:42,924:__init__:WARNING:Casting depth data to np.float32
+2020-07-11 00:13:42,924:__init__:WARNING:Casting lon data to np.float32
+2020-07-11 00:13:42,924:__init__:WARNING:Casting lat data to np.float32
+2020-07-11 00:13:42,924:__init__:WARNING:Casting depth data to np.float32
+2020-07-11 00:13:42,927:__init__:WARNING:Casting lon data to np.float32
+2020-07-11 00:13:42,927:__init__:WARNING:Casting lat data to np.float32
+2020-07-11 00:13:42,927:__init__:WARNING:Casting depth data to np.float32
+2020-07-11 00:13:42,928:__init__:WARNING:Casting lon data to np.float32
+2020-07-11 00:13:42,928:__init__:WARNING:Casting lat data to np.float32
+2020-07-11 00:13:42,928:__init__:WARNING:Casting depth data to np.float32
+2020-07-11 00:13:42,928:__init__:WARNING:Casting lon data to np.float32
+2020-07-11 00:13:42,929:__init__:WARNING:Casting lat data to np.float32
+2020-07-11 00:13:42,929:__init__:WARNING:Casting depth data to np.float32
+2020-07-11 00:13:42,929:__init__:WARNING:Casting lon data to np.float32
+2020-07-11 00:13:42,929:__init__:WARNING:Casting lat data to np.float32
+2020-07-11 00:13:42,929:__init__:WARNING:Casting depth data to np.float32
+2020-07-11 00:13:42,929:__init__:WARNING:Casting lon data to np.float32
+2020-07-11 00:13:42,929:__init__:WARNING:Casting lat data to np.float32
+2020-07-11 00:13:42,930:__init__:WARNING:Casting depth data to np.float32
+2020-07-11 00:13:42,931:__init__:WARNING:Casting lon data to np.float32
+2020-07-11 00:13:42,931:__init__:WARNING:Casting lat data to np.float32
+2020-07-11 00:13:42,931:__init__:WARNING:Casting depth data to np.float32
+2020-07-11 00:13:42,933:__init__:WARNING:Casting lon data to np.float32
+2020-07-11 00:13:42,933:__init__:WARNING:Casting lat data to np.float32
+2020-07-11 00:13:42,933:__init__:WARNING:Casting depth data to np.float32
+2020-07-11 00:13:42,935:__init__:WARNING:Casting lon data to np.float32
+2020-07-11 00:13:42,935:__init__:WARNING:Casting lat data to np.float32
+2020-07-11 00:13:42,935:__init__:WARNING:Casting depth data to np.float32
+2020-07-11 00:13:42,940:__init__:WARNING:Casting lon data to np.float32
+2020-07-11 00:13:42,940:__init__:WARNING:Casting lat data to np.float32
+2020-07-11 00:13:42,940:__init__:WARNING:Casting depth data to np.float32
+2020-07-11 00:13:42,942:__init__:WARNING:Casting lon data to np.float32
+2020-07-11 00:13:42,942:__init__:WARNING:Casting lat data to np.float32
+2020-07-11 00:13:42,942:__init__:WARNING:Casting depth data to np.float32
+2020-07-11 00:13:42,953:__init__:WARNING:Casting lon data to np.float32
+2020-07-11 00:13:42,954:__init__:WARNING:Casting lat data to np.float32
+2020-07-11 00:13:42,954:__init__:WARNING:Casting depth data to np.float32
+2020-07-11 00:13:43,005:__init__:WARNING:Casting lon data to np.float32
+2020-07-11 00:13:43,005:__init__:WARNING:Casting lat data to np.float32
+2020-07-11 00:13:43,005:__init__:WARNING:Casting depth data to np.float32
+2020-07-11 00:13:43,254:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-11 00:13:43,254:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-11 00:13:43,254:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-11 00:13:43,254:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-11 00:13:43,254:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-11 00:13:43,254:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-11 00:13:43,254:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-11 00:13:43,254:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-11 00:13:43,254:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-11 00:13:43,254:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-11 00:13:43,254:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-11 00:13:43,254:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-11 00:13:43,254:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-11 00:13:43,254:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-11 00:13:43,254:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-11 00:13:43,254:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-11 00:13:43,254:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-11 00:13:43,254:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-11 00:13:43,254:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-11 00:13:43,254:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-11 00:13:43,254:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-11 00:13:43,254:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-11 00:13:43,254:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-11 00:13:43,254:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-11 00:13:43,254:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-11 00:13:43,254:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-11 00:13:43,254:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-11 00:13:43,254:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-11 00:13:43,254:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-11 00:13:43,254:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-11 00:13:43,254:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-11 00:13:43,254:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-11 00:13:43,254:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-11 00:13:43,254:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-11 00:13:43,254:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-11 00:13:43,255:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-11 00:13:43,255:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-11 00:13:43,255:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-11 00:13:43,255:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-11 00:13:43,255:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-11 00:13:43,255:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-11 00:13:43,255:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-11 00:13:43,255:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-11 00:13:43,255:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-11 00:13:43,255:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-11 00:13:43,255:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-11 00:13:43,255:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-11 00:13:43,255:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.

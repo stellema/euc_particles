@@ -1621,3 +1621,9 @@
 2020-07-06 11:24:17,174:timed:INFO:run_EUC: 0:30:55.41 total: 1855.41 seconds.
 2020-07-06 11:24:17,174:timed:INFO:run_EUC: 0:30:55.41 total: 1855.41 seconds.
 2020-07-06 11:24:19,802:timed:INFO:run_EUC: 0:30:58.03 total: 1858.03 seconds.
+2020-07-10 17:07:49,370:pset_euc:INFO:sim_hist_165_v0r0:Particles: /repeat=742: Total=28938
+2020-07-10 17:07:49,448:pset_euc:INFO:sim_hist_165_v0r0:Lon=165: Lat=[-2.6-2.6 x0.1]: Depth=[25-350m x25]
+2020-07-10 18:04:29,642:pset_euc:INFO:sim_hist_250_v0r0:Particles: /repeat=742: Total=28938
+2020-07-10 18:04:29,655:pset_euc:INFO:sim_hist_250_v0r0:Lon=250: Lat=[-2.6-2.6 x0.1]: Depth=[25-350m x25]
+2020-07-10 18:04:30,536:pset_euc:INFO:sim_hist_220_v0r0:Particles: /repeat=742: Total=28938
+2020-07-10 18:04:30,539:pset_euc:INFO:sim_hist_220_v0r0:Lon=220: Lat=[-2.6-2.6 x0.1]: Depth=[25-350m x25]

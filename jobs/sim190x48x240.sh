@@ -10,4 +10,6 @@
 #PBS -l storage=gdata/hh5+gdata/e14
 module use /g/data3/hh5/public/modules
 module load conda/analysis3-20.04
-mpirun -np 48 python3 /g/data/e14/as3189/OFAM/scripts/sim.py -x 190 -r 240 -v 0
+module unload openmpi
+module load openmpi/4.0.2
+mpirun -np 48 python3 /g/data/e14/as3189/OFAM/scripts/sim.py -x 190 -r 240 -v 0 -f "sim_hist_190_v0r0.nc"
