@@ -52,6 +52,7 @@ MUST use pset.Kernel(AdvectionRK4_3D)
 * 1000. * 1.852 * 60. * cos(y * pi / 180)
 """
 import cfg
+import tools
 import math
 import random
 import parcels
@@ -154,8 +155,6 @@ def ofam_fieldset(time_bnds='full', exp='hist', vcoord='sw_edges_ocean', chunks=
                         'unBeachV': {'depth': np.append(np.arange(0, n, dtype=int), n-1).tolist()}}
         else:
             bindices = None
-        # if chunks not in ['auto', False]:
-        #     chunks = {'Time': 1, vcoord: 1, 'st_ocean': 1, 'yu_ocean': cs, 'xu_ocean': cs}
 
         fieldsetUnBeach = FieldSet.from_b_grid_dataset(file, variables, dimensions,
                                                        indices=bindices, field_chunksize=chunks,
@@ -190,13 +189,10 @@ def generate_sim_id(lon, v=0, exp='hist', randomise=False):
 
 def UnBeaching(particle, fieldset, time):
     (ub, vb) = fieldset.UVunbeach[0., particle.depth, particle.lat, particle.lon]
-    if math.fabs(ub) > 0. or math.fabs(vb) > 0.:
-        (uu, vv, ww) = fieldset.UVW[time, particle.depth, particle.lat, particle.lon]
-        if math.fabs(uu) < 1e-8 and math.fabs(vv) < 1e-8:
-            particle.lon += ub * particle.dt
-            particle.lat += vb * particle.dt
-            particle.unbeachCount += 1
-
+    if math.fabs(ub) > 1e-14 or math.fabs(vb) > 1e-14:
+        particle.lon += ub * -particle.dt
+        particle.lat += vb * -particle.dt
+        particle.unbeached += 1
 
 def DeleteParticle(particle, fieldset, time):
     particle.delete()
@@ -312,21 +308,30 @@ def plot3D(sim_id, del_west=True):
     ds = xr.open_dataset(sim_id, decode_cf=True)
     if del_west:
         ds = ds.where(ds.u >= 0., drop=True)
+
+    x, y, z = ds.lon, ds.lat, ds.z
+    xlim = [math.floor(np.nanmin(x)), math.ceil(np.nanmax(x))]
+    ylim = [math.floor(np.nanmin(y)), math.ceil(np.nanmax(y))]
+    zlim = [math.ceil(np.nanmax(z)), math.floor(np.nanmin(z))]
+
     fig = plt.figure(figsize=(13, 10))
     ax = fig.add_subplot(111, projection='3d')
     colors = plt.cm.rainbow(np.linspace(0, 1, len(ds.traj)))
-    x, y, z = ds.lon, ds.lat, ds.z
 
     for i in range(len(ds.traj)):
         ax.plot3D(x[i], y[i], z[i], color=colors[i])
+        ax.set_xlim(xlim[0], xlim[1])
+        ax.set_ylim(ylim[0], ylim[1])
+        ax.set_zlim(zlim[0], zlim[1])
 
-    ax.set_xlabel("Longitude")
-    ax.set_ylabel("Latitude")
+    xticks = ax.get_xticks()
+    yticks = ax.get_yticks()
+    ax.set_xticklabels(tools.coord_formatter(xticks, convert='lon'))
+    ax.set_yticklabels(tools.coord_formatter(yticks, convert='lat'))
     ax.set_zlabel("Depth [m]")
-    ax.set_zlim(np.max(z), np.min(z))
     fig.savefig(cfg.fig/('parcels/' + sim_id.stem + cfg.im_ext))
     plt.show()
     plt.close()
     ds.close()
 
-    return
+    return ds

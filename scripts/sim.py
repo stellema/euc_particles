@@ -15,7 +15,8 @@ from pathlib import Path
 from operator import attrgetter
 from datetime import datetime, timedelta
 from argparse import ArgumentParser
-from parcels import (AdvectionRK4_3D, ParticleSet, ErrorCode, Variable, JITParticle)
+from parcels import (AdvectionRK4_3D, ParticleSet, ErrorCode,
+                     Variable, JITParticle)
 
 try:
     from mpi4py import MPI
@@ -55,13 +56,15 @@ def pset_euc(fieldset, pclass, lon, dy, dz, repeatdt, pset_start, repeats,
         logger.info('{}:Particles: /repeat={}: Total={}'
                     .format(sim_id.stem, Z * X * Y, npart))
         logger.info('{}:Lon={}: Lat=[{}-{} x{}]: Depth=[{}-{}m x{}]'
-                    .format(sim_id.stem, *px, py[0], py[Y-1], dy, pz[0], pz[Z-1], dz))
+                    .format(sim_id.stem, *px, py[0], py[Y-1], dy, pz[0],
+                            pz[Z-1], dz))
     return pset
 
 
 @tools.timeit
 def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
-            outputdt_days=1, runtime_days=186, v=1, chunks=300, unbeach=True, pfile='None'):
+            outputdt_days=1, runtime_days=186, v=1, chunks=300, unbeach=True,
+            pfile='None'):
     """Run Lagrangian EUC particle experiment.
 
     Args:
@@ -69,9 +72,10 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
         dz (float, optional): Particle depth spacing [m]. Defaults to 25.
         lon (int, optional): Longitude(s) to insert partciles. Defaults to 165.
         dt_mins (int, optional): Advection timestep. Defaults to 60.
-        repeatdt_days (int, optional): Particle repeat release interval [days]. Defaults to 6.
-        outputdt_days (int, optional): Advection write freq [day]. Defaults to 1.
-        runtime_days (int, optional): Execution runtime [days]. Defaults to 186.
+        repeatdt_days (int, optional): Particle repeat release interval [days].
+                                       Defaults to 6.
+        outputdt_days (int, optional): Advection write freq. Defaults to 1.
+        runtime_days (int, optional): Execution runtime. Defaults to 186.
         v (int, optional): Version number to save file. Defaults to 1.
         pfile (str, optional): Restart ParticleFile. Defaults to 'None'.
 
@@ -90,7 +94,7 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
         runtime_days += 1
     runtime = timedelta(days=int(runtime_days))
 
-    dt = -timedelta(minutes=dt_mins)  # Advection step (negative for backwards).
+    dt = -timedelta(minutes=dt_mins)  # Advection step (negative for backward).
     repeatdt = timedelta(days=repeatdt_days)  # Repeat particle release time.
     outputdt = timedelta(days=outputdt_days)  # Advection steps to write.
     repeats = math.floor(runtime/repeatdt) - 1
@@ -102,8 +106,9 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
     elif exp == 'rcp':
         time_bnds = [datetime(2070, 1, 1), datetime(2101, 12, 31)]
 
-    fieldset = main.ofam_fieldset(time_bnds, exp, vcoord='sw_edges_ocean', chunks=True, cs=chunks,
-                                  time_periodic=True, add_zone=True, add_unbeach_vel=unbeach)
+    fieldset = main.ofam_fieldset(time_bnds, exp, vcoord='sw_edges_ocean',
+                                  chunks=True, cs=chunks, time_periodic=True,
+                                  add_zone=True, add_unbeach_vel=unbeach)
 
     class zdParticle(JITParticle):
         """Particle class that saves particle age and zonal velocity."""
@@ -121,18 +126,20 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
         distance = Variable('distance', initial=0., dtype=np.float32)
 
         # The previous longitude. to_write=False
-        prev_lon = Variable('prev_lon', initial=attrgetter('lon'), to_write=False, dtype=np.float32)
+        prev_lon = Variable('prev_lon', initial=attrgetter('lon'),
+                            to_write=False, dtype=np.float32)
 
         # The previous latitude. to_write=False,
-        prev_lat = Variable('prev_lat', initial=attrgetter('lat'), to_write=False, dtype=np.float32)
+        prev_lat = Variable('prev_lat', initial=attrgetter('lat'),
+                            to_write=False, dtype=np.float32)
 
-        unbeachCount = Variable('unbeachCount', initial=0., dtype=np.float32)
+        unbeached = Variable('unbeached', initial=0., dtype=np.float32)
 
     pclass = zdParticle
 
     # Create ParticleSet.
     if not restart:
-        # Generate file name for experiment (random number if run doesn't use MPI).
+        # Generate file name for experiment (random number if not using MPI).
         randomise = False if MPI else True
         sim_id = main.generate_sim_id(lon, v, randomise=randomise)
 
@@ -206,8 +213,8 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
                         # ErrorCode.Error: main.DeleteParticle,
                         ErrorCode.ErrorThroughSurface: main.SubmergeParticle}
 
-    pset.execute(kernels, endtime=endtime, dt=dt, output_file=output_file, verbose_progress=True,
-                 recovery=recovery_kernels)
+    pset.execute(kernels, endtime=endtime, dt=dt, output_file=output_file,
+                 verbose_progress=True, recovery=recovery_kernels)
 
     timed = tools.timer(ts)
     logger.info('{}:Completed!: {}: Rank={:>2}: #Particles={}-{}={}'
