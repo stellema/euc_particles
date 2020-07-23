@@ -132,7 +132,7 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
         # The previous latitude. to_write=False,
         prev_lat = Variable('prev_lat', initial=attrgetter('lat'),
                             to_write=False, dtype=np.float32)
-
+        beached = Variable('beached', initial=0., to_write=False, dtype=np.float32)
         unbeached = Variable('unbeached', initial=0., dtype=np.float32)
 
     pclass = zdParticle

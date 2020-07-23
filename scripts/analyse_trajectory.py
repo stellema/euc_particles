@@ -34,6 +34,7 @@ dww = xr.open_dataset(cfg.ofam/'ocean_w_1981-2012_climo.nc').w.mean('Time')
 dww.sel(sw_ocean=100, method='nearest').sel(yt_ocean=slice(-3, 3)).plot(cmap=cmap, vmax=1e-5, vmin=-1e-5)
 """
 import main
+import copy
 import cfg
 import tools
 import math
@@ -91,7 +92,8 @@ def plot_traj(sim_id, var='u', traj=None, t=None, Z=290):
                      yt_ocean=slice(Y[0], Y[1])).sel(sw_ocean=Z, method='nearest')
         lat, lon, z = dv.yt_ocean, dv.xt_ocean, dv.sw_ocean
 
-    cmap = plt.cm.seismic
+    # cmap = plt.cm.get_cmap("seismic").copy()
+    cmap = copy.copy(plt.cm.get_cmap("seismic"))
     cmap.set_bad('grey')
     fig = plt.figure(figsize=(12, 9))
 
@@ -162,4 +164,22 @@ def plot_beached(sim_id, depth=None):
     print(tr)
     return ds, tr
 
+# # date1 = datetime(2012, 9, 1)
+# # date2 = datetime(2012, 10, 27)
 
+# f = []
+# for var in ['u', 'v', 'w']:
+#     for m in ['09', '10']:
+#         f.append(str(cfg.ofam/'ocean_{}_2012_{}.nc'.format(var, m)))
+
+# dx = xr.open_mfdataset(f, combine='by_coords', use_cftime=True)
+# dx = dx.isel(Time=slice(0, -4))
+# dx['Time'] = dx.Time.astype('datetime64[ns]')
+# dx.load()
+# sim_id = cfg.data/'sim_hist_165_v72r0.nc'
+# ds = xr.open_dataset(sim_id, decode_cf=True)
+# ds = ds.isel(traj=0)
+# dr = np.zeros((ds.obs.size, 51))
+# # dxx = dx.w.interp(Time=ds.time, yt_ocean=ds.lat[i], xt_ocean=ds.lon[i], sw_ocean=ds.z[i])
+# for i in range(ds.obs.size):
+#     dr[i] = dx.w.interp(Time=ds.time[i], yt_ocean=ds.lat[i], xt_ocean=ds.lon[i]).values
