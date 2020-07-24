@@ -56,7 +56,7 @@ def pset_euc(fieldset, pclass, lon, dy, dz, repeatdt, pset_start, repeats,
 
 
 logger = tools.mlogger('test_sim', parcels=True, misc=False)
-dy, dz, lon = 0.9, 200, 165
+dy, dz, lon = 0.9, 200, 190
 dt_mins, repeatdt_days, outputdt_days, runtime_days = 60, 6, 1, 160
 pfile = 'None'  # 'sim_hist_190_v21r1.nc'
 date1 = datetime(2012, 9, 1)
@@ -113,7 +113,7 @@ class zdParticle(ScipyParticle):
     # The previous latitude. to_write=False,
     prev_lat = Variable('prev_lat', initial=attrgetter('lat'), to_write=False,
                         dtype=np.float32)
-
+    beached = Variable('beached', initial=0., dtype=np.float32)
     unbeached = Variable('unbeached', initial=0., dtype=np.float32)
 
 
@@ -179,7 +179,7 @@ logger.info('{}:{} to {}: Runtime={} days'
                     (start - runtime).strftime('%Y-%m-%d'), runtime.days))
 
 # Kernels.
-kernels = pset.Kernel(main.DelWest) + pset.Kernel(AdvectionRK4_3D)
+kernels = pset.Kernel(main.DelWest) + pset.Kernel(main.AdvectionRK4_3Db)
 
 if unbeach:
     kernels += pset.Kernel(main.UnBeaching)
@@ -206,4 +206,4 @@ logger.info('{}:Completed!: {}: Rank={:>2}: #Particles={}-{}={}'
 output_file.export()
 
 ds = main.plot3D(sim_id, del_west=True)
-ds, dx = plot_traj(sim_id, var='w', traj=None, t=2, Z=250)
+# ds, dx = plot_traj(sim_id, var='w', traj=None, t=2, Z=250)

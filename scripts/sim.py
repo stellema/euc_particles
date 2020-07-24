@@ -198,7 +198,7 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
         logger.debug('{}:Rank={:>2}: Start={:>2.0f}: Pstart={}'.format(sim_id.stem, rank, pset_start, pset.particle_data['time'].max()))
 
     # Kernels.
-    kernels = pset.Kernel(main.DelWest) + pset.Kernel(AdvectionRK4_3D)
+    kernels = pset.Kernel(main.DelWest) + pset.Kernel(main.AdvectionRK4_3Db)
 
     if unbeach:
         kernels += pset.Kernel(main.UnBeaching)
@@ -245,7 +245,7 @@ if __name__ == "__main__" and cfg.home != Path('E:/'):
             v=args.version, pfile=args.pfile)
 elif __name__ == "__main__":
     logger = tools.mlogger('test_sim', parcels=True, misc=False)
-    dy, dz, lon = 0.8, 150, 190
+    dy, dz, lon = 2, 150, 190
     dt_mins, repeatdt_days, outputdt_days, runtime_days = 60, 6, 1, 10
     pfile = 'None'  # 'sim_hist_190_v21r1.nc'
     v = 55

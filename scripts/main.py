@@ -86,15 +86,18 @@ def ofam_fieldset(time_bnds='full', exp='hist', vcoord='sw_edges_ocean', chunks=
 
     """
     # Add OFAM dimension names to NetcdfFileBuffer name maps (chunking workaround).
-    parcels.field.NetcdfFileBuffer._name_maps = {"time": ["Time"],
-                                                 "lon": ["xu_ocean", "xt_ocean"],
-                                                 "lat": ["yu_ocean", "yt_ocean"],
-                                                 "depth": ["st_ocean", "sw_ocean",
-                                                           "sw_edges_ocean"]}
+    nmaps = {"time": ["Time"],
+             "lon": ["xu_ocean", "xt_ocean"],
+             "lat": ["yu_ocean", "yt_ocean"],
+             "depth": ["st_ocean", "sw_ocean", "sw_ocean_mod"]}
+
+    parcels.field.NetcdfFileBuffer._name_maps = nmaps
     if chunks not in ['auto', False]:
-        chunks = {'Time': 1, 'st_ocean': 1, 'sw_ocean': 1, 'sw_edges_ocean': 1,
+        chunks = {'Time': 1,
+                  'st_ocean': 1, 'sw_ocean': 1, 'sw_ocean_mod': 1,
                   'yt_ocean': cs, 'yu_ocean': cs,
                   'xt_ocean': cs, 'xu_ocean': cs}
+
     if time_bnds == 'full':
         if exp == 'hist':
             y2 = 2012 if cfg.home != Path('E:/') else 1981
@@ -113,36 +116,36 @@ def ofam_fieldset(time_bnds='full', exp='hist', vcoord='sw_edges_ocean', chunks=
             v.append(str(cfg.ofam/('ocean_v_{}_{:02d}.nc'.format(y, m))))
             w.append(str(cfg.ofam/('ocean_w_{}_{:02d}.nc'.format(y, m))))
 
-    if vcoord in ['sw_edges_ocean', 'st_edges_ocean']:
-        chunks[vcoord] = 1
-        # Repeat top level of W and last levels of U and V.
-        n = 51  # len(st_ocean)
-        indices = {'U': {'depth': np.append(np.arange(0, n, dtype=int), n-1).tolist()},
-                   'V': {'depth': np.append(np.arange(0, n, dtype=int), n-1).tolist()},
-                   'W': {'depth': np.append(0, np.arange(0, n, dtype=int)).tolist()}}
-    else:
-        indices = None
-
-    vc = u[0] if vcoord in ['st_ocean', 'st_edges_ocean'] else w[0]
+    mesh = str(cfg.data/'ofam_mesh_grid.nc')
+    # sw_ocean_mod = sw_ocean[np.append(np.arange(1, 51, dtype=int), 0)]
     variables = {'U': 'u', 'V': 'v', 'W': 'w'}
-    dimensions = {'time': 'Time', 'depth': vcoord, 'lat': 'yu_ocean', 'lon': 'xu_ocean'}
-    files = {'U': {'depth': vc, 'lat': u[0], 'lon': u[0], 'data': u},
-             'V': {'depth': vc, 'lat': u[0], 'lon': u[0], 'data': v},
-             'W': {'depth': vc, 'lat': u[0], 'lon': u[0], 'data': w}}
+    files = {'U': {'depth': mesh, 'lat': mesh, 'lon': mesh, 'data': u},
+             'V': {'depth': mesh, 'lat': mesh, 'lon': mesh, 'data': v},
+             'W': {'depth': mesh, 'lat': mesh, 'lon': mesh, 'data': w}}
+    dims = {'U': {'time': 'Time', 'depth': 'sw_ocean', 'lat': 'yu_ocean', 'lon': 'xu_ocean'},
+            'V': {'time': 'Time', 'depth': 'sw_ocean', 'lat': 'yu_ocean', 'lon': 'xu_ocean'},
+            'W': {'time': 'Time', 'depth': 'sw_ocean_mod', 'lat': 'yu_ocean', 'lon': 'xu_ocean'}}
+    # Swap first and last levels of W .
+    n = 51  # len(st_ocean)
+    indices = {'U': {'depth': np.arange(0, n, dtype=int).tolist()},
+               'V': {'depth': np.arange(0, n, dtype=int).tolist()},
+               'W': {'depth': np.append(n-1, np.arange(0, n-1, dtype=int)).tolist()}}
+    fieldset = FieldSet.from_netcdf(files, variables, dims, indices=indices,
+                                    mesh='spherical', field_chunksize=chunks,
+                                    time_periodic=time_periodic)
+    fieldset.U.interp_method = 'bgrid_velocity'
+    fieldset.V.interp_method = 'bgrid_velocity'
+    fieldset.W.interp_method = 'bgrid_w_velocity'
 
-    fieldset = FieldSet.from_b_grid_dataset(files, variables, dimensions, indices=indices,
-                                            field_chunksize=chunks, time_periodic=time_periodic)
     # Set fieldset minimum depth.
     fieldset.mindepth = fieldset.U.depth[0]
     fieldset.W.set_scaling_factor(-1)
 
     if add_zone:
         files = str(cfg.data/'OFAM3_tcell_zones.nc')
-        dimensions = {'time': 'Time', 'depth': 'sw_ocean', 'lat': 'yt_ocean', 'lon': 'xt_ocean'}
-        # if chunks not in ['auto', False]:
-        #     zchunks = {'Time': 1, 'sw_ocean': 1, 'yt_ocean': cs, 'xt_ocean': cs}
-        zfield = Field.from_netcdf(files, 'zone', dimensions,
-                                   field_chunksize=chunks, allow_time_extrapolation=True)
+        dimz = {'time': 'Time', 'depth': 'sw_ocean', 'lat': 'yt_ocean', 'lon': 'xt_ocean'}
+        zfield = Field.from_netcdf(files, 'zone', dimz, field_chunksize=chunks,
+                                   allow_time_extrapolation=True)
         fieldset.add_field(zfield, 'zone')
         fieldset.zone.interp_method = 'nearest'
 
@@ -150,15 +153,8 @@ def ofam_fieldset(time_bnds='full', exp='hist', vcoord='sw_edges_ocean', chunks=
         """Add Unbeach velocity vectorfield to fieldset."""
         file = str(cfg.data/'OFAM3_unbeach_vel_ucell.nc')
         variables = {'unBeachU': 'unBeachU', 'unBeachV': 'unBeachV'}
-        dimensions = {'time': 'Time', 'depth': vcoord, 'lat': 'yu_ocean', 'lon': 'xu_ocean'}
-        if vcoord in ['sw_edges_ocean', 'st_edges_ocean']:
-            bindices = {'unBeachU': {'depth': np.append(np.arange(0, n, dtype=int), n-1).tolist()},
-                        'unBeachV': {'depth': np.append(np.arange(0, n, dtype=int), n-1).tolist()}}
-        else:
-            bindices = None
-
-        fieldsetUnBeach = FieldSet.from_b_grid_dataset(file, variables, dimensions,
-                                                       indices=bindices, field_chunksize=chunks,
+        fieldsetUnBeach = FieldSet.from_b_grid_dataset(file, variables, dims['U'],
+                                                       field_chunksize=chunks,
                                                        allow_time_extrapolation=True)
         fieldsetUnBeach.time_origin = fieldset.time_origin
         fieldsetUnBeach.time_origin.time_origin = fieldset.time_origin.time_origin
@@ -166,7 +162,7 @@ def ofam_fieldset(time_bnds='full', exp='hist', vcoord='sw_edges_ocean', chunks=
         fieldset.add_field(fieldsetUnBeach.unBeachU, 'unBeachU')
         fieldset.add_field(fieldsetUnBeach.unBeachV, 'unBeachV')
         fieldset.unBeachU.units = parcels.tools.converters.GeographicPolar()
-        fieldset.unBeachV.units = parcels.tools.converters.GeographicPolar()
+        fieldset.unBeachV.units = parcels.tools.converters.Geographic()
         UVunbeach = VectorField('UVunbeach', fieldset.unBeachU, fieldset.unBeachV)
         fieldset.add_vector_field(UVunbeach)
 
@@ -209,12 +205,11 @@ def AdvectionRK4_3Db(particle, fieldset, time):
         particle.lat += (v1 + 2*v2 + 2*v3 + v4) / 6. * particle.dt
         particle.depth += (w1 + 2*w2 + 2*w3 + w4) / 6. * particle.dt
 
-
 def UnBeaching(particle, fieldset, time):
     (ub, vb) = fieldset.UVunbeach[0., particle.depth, particle.lat, particle.lon]
     if math.fabs(ub) > 1e-14 or math.fabs(vb) > 1e-14:
         if particle.beached > 3:
-            print('WARNING: UBeaching kernel deleted:', particle.id)
+            print('WARNING: UBeaching deleted a particle.')
             particle.delete()
         else:
             particle.lon += ub * math.fabs(particle.dt)
