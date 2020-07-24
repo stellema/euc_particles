@@ -899,3 +899,208 @@
 2020-07-17 14:32:00,971:run_EUC:DEBUG:sim_hist_190_v77r0:Temp=FDTUQHYR: Rank= 0: #Particles=21
 2020-07-17 14:32:03,404:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\84148b93c2ea18a6788dbe6f0b270e9d_0.dll
 2020-07-17 14:32:14,265:run_EUC:INFO:sim_hist_190_v77r0:Completed!: 00:00:21: Rank= 0: #Particles=21-11=10
+2020-07-21 14:07:28,133:__init__:WARNING:Casting lon data to np.float32
+2020-07-21 14:07:28,134:__init__:WARNING:Casting lat data to np.float32
+2020-07-21 14:07:28,134:__init__:WARNING:Casting depth data to np.float32
+2020-07-21 14:07:28,147:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-21 14:07:29,194:reshape:WARNING:Casting field data to np.float32
+2020-07-21 14:07:30,756:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-21 14:07:30,757:pset_euc:INFO:sim_hist_165_v100r0:Particles: /repeat=1: Total=1
+2020-07-21 14:07:30,757:pset_euc:INFO:sim_hist_165_v100r0:Lon=165: Lat=[0.9-0.9 x0.9]: Depth=[200-200m x200]
+2020-07-21 14:07:30,758:<module>:INFO:sim_hist_165_v100r0:2012-10-27 to 2012-05-18: Runtime=162 days
+2020-07-21 14:16:13,519:<module>:INFO:sim_hist_165_v100r0:Completed!: 00:08:46: Rank= 0: #Particles=1-0=1
+2020-07-21 15:39:43,225:pset_euc:INFO:sim_hist_165_v82r0:Particles: /repeat=1: Total=1
+2020-07-21 15:39:43,226:pset_euc:INFO:sim_hist_165_v82r0:Lon=165: Lat=[0.9-0.9 x0.9]: Depth=[200-200m x200]
+2020-07-21 15:39:43,226:<module>:INFO:sim_hist_165_v82r0:2012-10-27 to 2012-05-18: Runtime=162 days
+2020-07-21 15:39:59,663:pset_euc:INFO:sim_hist_165_v72r0:Particles: /repeat=1: Total=1
+2020-07-21 15:39:59,664:pset_euc:INFO:sim_hist_165_v72r0:Lon=165: Lat=[0.9-0.9 x0.9]: Depth=[200-200m x200]
+2020-07-21 15:39:59,665:<module>:INFO:sim_hist_165_v72r0:2012-10-27 to 2012-05-18: Runtime=162 days
+2020-07-21 15:59:37,144:__init__:WARNING:Casting lon data to np.float32
+2020-07-21 15:59:37,147:__init__:WARNING:Casting lat data to np.float32
+2020-07-21 15:59:37,148:__init__:WARNING:Casting depth data to np.float32
+2020-07-21 15:59:37,150:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-21 15:59:38,368:reshape:WARNING:Casting field data to np.float32
+2020-07-21 15:59:40,176:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-21 15:59:40,476:pset_euc:INFO:sim_hist_165_v5r0:Particles: /repeat=1: Total=1
+2020-07-21 15:59:40,477:pset_euc:INFO:sim_hist_165_v5r0:Lon=165: Lat=[0.9-0.9 x0.9]: Depth=[200-200m x200]
+2020-07-21 15:59:40,478:<module>:INFO:sim_hist_165_v5r0:2012-10-27 to 2012-05-18: Runtime=162 days
+2020-07-21 16:09:49,688:<module>:INFO:sim_hist_165_v72r0:Completed!: 00:29:52: Rank= 0: #Particles=1-0=1
+2020-07-21 16:20:24,558:<module>:INFO:sim_hist_165_v5r0:Completed!: 00:20:48: Rank= 0: #Particles=1-0=1
+2020-07-23 17:02:11,140:__init__:WARNING:Casting lon data to np.float32
+2020-07-23 17:02:11,142:__init__:WARNING:Casting lat data to np.float32
+2020-07-23 17:02:11,142:__init__:WARNING:Casting depth data to np.float32
+2020-07-23 17:02:11,152:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-23 17:02:12,274:reshape:WARNING:Casting field data to np.float32
+2020-07-23 17:02:13,908:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-23 17:02:14,170:pset_euc:INFO:sim_hist_165_v15r0:Particles: /repeat=1: Total=1
+2020-07-23 17:02:14,170:pset_euc:INFO:sim_hist_165_v15r0:Lon=165: Lat=[0.9-0.9 x0.9]: Depth=[200-200m x200]
+2020-07-23 17:02:14,170:<module>:INFO:sim_hist_165_v15r0:2012-10-27 to 2012-06-17: Runtime=132 days
+2020-07-23 17:09:56,886:<module>:INFO:sim_hist_165_v15r0:Completed!: 00:07:46: Rank= 0: #Particles=1-0=1
+2020-07-23 17:25:54,617:__init__:WARNING:Casting lon data to np.float32
+2020-07-23 17:25:54,617:__init__:WARNING:Casting lat data to np.float32
+2020-07-23 17:25:54,617:__init__:WARNING:Casting depth data to np.float32
+2020-07-23 17:25:54,633:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-23 17:25:55,775:reshape:WARNING:Casting field data to np.float32
+2020-07-23 17:25:57,410:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-23 17:25:57,780:pset_euc:INFO:sim_hist_165_v54r0:Particles: /repeat=1: Total=1
+2020-07-23 17:25:57,780:pset_euc:INFO:sim_hist_165_v54r0:Lon=165: Lat=[0.9-0.9 x0.9]: Depth=[200-200m x200]
+2020-07-23 17:25:57,780:<module>:INFO:sim_hist_165_v54r0:2012-10-27 to 2012-05-18: Runtime=162 days
+2020-07-23 17:35:23,825:<module>:INFO:sim_hist_165_v54r0:Completed!: 00:09:29: Rank= 0: #Particles=1-0=1
+2020-07-23 17:51:36,742:pset_euc:INFO:sim_hist_165_v20r0:Particles: /repeat=1: Total=1
+2020-07-23 17:51:36,742:pset_euc:INFO:sim_hist_165_v20r0:Lon=165: Lat=[0.9-0.9 x0.9]: Depth=[200-200m x200]
+2020-07-23 17:51:36,742:<module>:INFO:sim_hist_165_v20r0:2012-10-27 to 2012-05-30: Runtime=150 days
+2020-07-23 18:00:19,285:<module>:INFO:sim_hist_165_v20r0:Completed!: 00:08:46: Rank= 0: #Particles=1-0=1
+2020-07-23 18:14:09,608:__init__:WARNING:Casting lon data to np.float32
+2020-07-23 18:14:09,610:__init__:WARNING:Casting lat data to np.float32
+2020-07-23 18:14:09,611:__init__:WARNING:Casting depth data to np.float32
+2020-07-23 18:14:09,613:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-23 18:14:10,783:reshape:WARNING:Casting field data to np.float32
+2020-07-23 18:14:12,545:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-23 18:14:12,836:pset_euc:INFO:sim_hist_165_v89r0:Particles: /repeat=1: Total=1
+2020-07-23 18:14:12,837:pset_euc:INFO:sim_hist_165_v89r0:Lon=165: Lat=[0.9-0.9 x0.9]: Depth=[200-200m x200]
+2020-07-23 18:14:12,838:<module>:INFO:sim_hist_165_v89r0:2012-10-27 to 2012-05-30: Runtime=150 days
+2020-07-23 18:22:13,521:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 3.888e+06
+2020-07-23 18:22:16,801:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 3.8016e+06
+2020-07-23 18:22:20,131:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 3.7152e+06
+2020-07-23 18:22:23,351:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 3.6288e+06
+2020-07-23 18:22:26,725:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 3.5424e+06
+2020-07-23 18:22:30,002:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 3.456e+06
+2020-07-23 18:22:33,322:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 3.3696e+06
+2020-07-23 18:22:36,602:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 3.2832e+06
+2020-07-23 18:22:39,914:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 3.1968e+06
+2020-07-23 18:22:43,243:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 3.1104e+06
+2020-07-23 18:22:46,571:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 3.024e+06
+2020-07-23 18:22:49,758:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 2.9376e+06
+2020-07-23 18:22:53,069:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 2.8512e+06
+2020-07-23 18:22:56,475:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 2.7648e+06
+2020-07-23 18:22:59,717:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 2.6784e+06
+2020-07-23 18:23:02,967:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 2.592e+06
+2020-07-23 18:23:06,216:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 2.5056e+06
+2020-07-23 18:23:06,216:<module>:INFO:sim_hist_165_v89r0:Completed!: 00:08:57: Rank= 0: #Particles=1-1=0
+2020-07-23 18:49:33,753:pset_euc:INFO:sim_hist_165_v22r0:Particles: /repeat=1: Total=1
+2020-07-23 18:49:33,753:pset_euc:INFO:sim_hist_165_v22r0:Lon=165: Lat=[0.9-0.9 x0.9]: Depth=[200-200m x200]
+2020-07-23 18:49:33,753:<module>:INFO:sim_hist_165_v22r0:2012-10-27 to 2012-05-30: Runtime=150 days
+2020-07-23 18:57:57,394:<module>:INFO:sim_hist_165_v22r0:Completed!: 00:08:27: Rank= 0: #Particles=1-0=1
+2020-07-23 23:08:32,250:__init__:WARNING:Casting lon data to np.float32
+2020-07-23 23:08:32,252:__init__:WARNING:Casting lat data to np.float32
+2020-07-23 23:08:32,253:__init__:WARNING:Casting depth data to np.float32
+2020-07-23 23:08:32,266:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-23 23:08:33,586:reshape:WARNING:Casting field data to np.float32
+2020-07-23 23:08:35,226:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-23 23:08:36,759:pset_euc:INFO:sim_hist_190_v89r0:Particles: /repeat=9: Total=9
+2020-07-23 23:08:36,759:pset_euc:INFO:sim_hist_190_v89r0:Lon=190: Lat=[-2.6-1.4 x2]: Depth=[25-325m x150]
+2020-07-23 23:08:36,760:run_EUC:INFO:sim_hist_190_v89r0:1982-01-01 to 1981-12-20: Runtime=12 days
+2020-07-23 23:08:36,760:run_EUC:INFO:sim_hist_190_v89r0:Repeat=6 days: Step=60 mins: Output=1 day
+2020-07-23 23:08:36,761:run_EUC:INFO:sim_hist_190_v89r0:Field=b-grid: Chunks=300: Time=1981-1981
+2020-07-23 23:08:36,761:run_EUC:DEBUG:sim_hist_190_v89r0:Temp=MVGLFSVP: Rank= 0: #Particles=9
+2020-07-23 23:08:42,418:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\a0a5ed79d34b6e69deca08b25776ea58_0.dll
+2020-07-23 23:08:51,684:run_EUC:INFO:sim_hist_190_v89r0:Completed!: 00:00:20: Rank= 0: #Particles=9-5=4
+2020-07-24 13:11:38,055:__init__:WARNING:Casting lon data to np.float32
+2020-07-24 13:11:38,055:__init__:WARNING:Casting lat data to np.float32
+2020-07-24 13:11:38,055:__init__:WARNING:Casting depth data to np.float32
+2020-07-24 13:11:38,055:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-24 13:11:38,749:reshape:WARNING:Casting field data to np.float32
+2020-07-24 14:01:28,885:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-24 14:02:44,600:pset_euc:INFO:sim_hist_165_v18r0:Particles: /repeat=1: Total=1
+2020-07-24 14:02:44,600:pset_euc:INFO:sim_hist_165_v18r0:Lon=165: Lat=[0.9-0.9 x0.9]: Depth=[200-200m x200]
+2020-07-24 14:02:44,600:<module>:INFO:sim_hist_165_v18r0:2012-10-27 to 2012-10-15: Runtime=12 days
+2020-07-24 14:03:36,981:pset_euc:INFO:sim_hist_165_v66r0:Particles: /repeat=1: Total=1
+2020-07-24 14:03:36,983:pset_euc:INFO:sim_hist_165_v66r0:Lon=165: Lat=[0.9-0.9 x0.9]: Depth=[200-200m x200]
+2020-07-24 14:03:36,983:<module>:INFO:sim_hist_165_v66r0:2012-10-27 to 2012-10-15: Runtime=12 days
+2020-07-24 14:03:41,885:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 1.53792e+07
+2020-07-24 14:03:45,079:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 1.52928e+07
+2020-07-24 14:03:48,191:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 1.52064e+07
+2020-07-24 14:03:51,283:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 1.512e+07
+2020-07-24 14:03:54,427:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 1.50336e+07
+2020-07-24 14:03:57,591:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 1.49472e+07
+2020-07-24 14:04:00,727:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 1.48608e+07
+2020-07-24 14:04:03,898:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 1.47744e+07
+2020-07-24 14:04:07,078:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 1.4688e+07
+2020-07-24 14:04:10,207:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 1.46016e+07
+2020-07-24 14:04:13,345:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 1.45152e+07
+2020-07-24 14:04:16,478:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 1.44288e+07
+2020-07-24 14:04:16,478:<module>:INFO:sim_hist_165_v66r0:Completed!: 00:00:40: Rank= 0: #Particles=1-1=0
+2020-07-24 14:07:55,185:pset_euc:INFO:sim_hist_165_v98r0:Particles: /repeat=1: Total=2
+2020-07-24 14:07:55,185:pset_euc:INFO:sim_hist_165_v98r0:Lon=165: Lat=[0.9-0.9 x0.9]: Depth=[200-200m x200]
+2020-07-24 14:07:55,185:<module>:INFO:sim_hist_165_v98r0:2012-10-27 to 2012-10-15: Runtime=12 days
+2020-07-24 14:08:31,748:<module>:INFO:sim_hist_165_v98r0:Completed!: 00:00:38: Rank= 0: #Particles=2-0=2
+2020-07-24 14:09:37,961:pset_euc:INFO:sim_hist_165_v86r0:Particles: /repeat=1: Total=2
+2020-07-24 14:09:37,961:pset_euc:INFO:sim_hist_165_v86r0:Lon=165: Lat=[0.9-0.9 x0.9]: Depth=[200-200m x200]
+2020-07-24 14:09:37,961:<module>:INFO:sim_hist_165_v86r0:2012-10-27 to 2012-10-15: Runtime=12 days
+2020-07-24 14:10:00,037:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 1.48608e+07
+2020-07-24 14:10:02,819:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 1.47744e+07
+2020-07-24 14:10:05,686:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 1.4688e+07
+2020-07-24 14:10:08,454:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 1.46016e+07
+2020-07-24 14:10:11,302:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 1.45152e+07
+2020-07-24 14:10:14,082:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 1.44288e+07
+2020-07-24 14:10:14,084:<module>:INFO:sim_hist_165_v86r0:Completed!: 00:00:38: Rank= 0: #Particles=2-2=0
+2020-07-24 14:11:19,693:pset_euc:INFO:sim_hist_165_v48r0:Particles: /repeat=1: Total=1
+2020-07-24 14:11:19,693:pset_euc:INFO:sim_hist_165_v48r0:Lon=165: Lat=[0.9-0.9 x0.9]: Depth=[200-200m x200]
+2020-07-24 14:11:19,693:<module>:INFO:sim_hist_165_v48r0:2012-10-27 to 2012-10-15: Runtime=12 days
+2020-07-24 14:11:24,516:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 1.53792e+07
+2020-07-24 14:11:27,284:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 1.52928e+07
+2020-07-24 14:11:30,136:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 1.52064e+07
+2020-07-24 14:11:32,919:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 1.512e+07
+2020-07-24 14:11:35,758:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 1.50336e+07
+2020-07-24 14:11:38,740:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 1.49472e+07
+2020-07-24 14:11:41,611:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 1.48608e+07
+2020-07-24 14:11:44,379:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 1.47744e+07
+2020-07-24 14:11:47,212:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 1.4688e+07
+2020-07-24 14:11:49,981:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 1.46016e+07
+2020-07-24 14:11:52,847:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 1.45152e+07
+2020-07-24 14:11:55,631:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 1.44288e+07
+2020-07-24 14:11:55,631:<module>:INFO:sim_hist_165_v48r0:Completed!: 00:00:37: Rank= 0: #Particles=1-1=0
+2020-07-24 14:28:58,896:pset_euc:INFO:sim_hist_165_v37r0:Particles: /repeat=1: Total=1
+2020-07-24 14:28:58,896:pset_euc:INFO:sim_hist_165_v37r0:Lon=165: Lat=[0.9-0.9 x0.9]: Depth=[200-200m x200]
+2020-07-24 14:28:58,896:<module>:INFO:sim_hist_165_v37r0:2012-10-27 to 2012-10-15: Runtime=12 days
+2020-07-24 14:29:35,047:<module>:INFO:sim_hist_165_v37r0:Completed!: 00:00:37: Rank= 0: #Particles=1-0=1
+2020-07-24 15:00:58,103:pset_euc:INFO:sim_hist_165_v53r0:Particles: /repeat=1: Total=1
+2020-07-24 15:00:58,103:pset_euc:INFO:sim_hist_165_v53r0:Lon=165: Lat=[0.9-0.9 x0.9]: Depth=[200-200m x200]
+2020-07-24 15:00:58,103:<module>:INFO:sim_hist_165_v53r0:2012-10-27 to 2012-05-30: Runtime=150 days
+2020-07-24 15:08:46,647:<module>:INFO:sim_hist_165_v53r0:Completed!: 00:07:49: Rank= 0: #Particles=1-0=1
+2020-07-24 15:42:32,665:__init__:WARNING:Casting lon data to np.float32
+2020-07-24 15:42:32,665:__init__:WARNING:Casting lat data to np.float32
+2020-07-24 15:42:32,665:__init__:WARNING:Casting depth data to np.float32
+2020-07-24 15:42:32,665:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-24 15:42:33,559:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-24 15:42:33,559:pset_euc:INFO:sim_hist_165_v36r0:Particles: /repeat=1: Total=1
+2020-07-24 15:42:33,559:pset_euc:INFO:sim_hist_165_v36r0:Lon=165: Lat=[0.9-0.9 x0.9]: Depth=[200-200m x200]
+2020-07-24 15:42:33,559:<module>:INFO:sim_hist_165_v36r0:2012-10-27 to 2012-05-30: Runtime=150 days
+2020-07-24 15:47:35,520:__init__:WARNING:Casting lon data to np.float32
+2020-07-24 15:47:35,520:__init__:WARNING:Casting lat data to np.float32
+2020-07-24 15:47:35,520:__init__:WARNING:Casting depth data to np.float32
+2020-07-24 15:47:35,520:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-24 15:47:36,515:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-24 15:47:36,515:pset_euc:INFO:sim_hist_165_v31r0:Particles: /repeat=1: Total=1
+2020-07-24 15:47:36,515:pset_euc:INFO:sim_hist_165_v31r0:Lon=165: Lat=[0.9-0.9 x0.9]: Depth=[200-200m x200]
+2020-07-24 15:47:36,515:<module>:INFO:sim_hist_165_v31r0:2012-10-27 to 2012-05-30: Runtime=150 days
+2020-07-24 15:47:43,479:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 1.53792e+07
+2020-07-24 15:47:47,225:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 1.52928e+07
+2020-07-24 15:47:50,633:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 1.52064e+07
+2020-07-24 15:47:54,292:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 1.512e+07
+2020-07-24 15:47:58,066:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 1.50336e+07
+2020-07-24 15:48:01,801:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 1.49472e+07
+2020-07-24 15:48:05,729:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 1.48608e+07
+2020-07-24 15:48:09,507:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 1.47744e+07
+2020-07-24 15:48:21,783:pset_euc:INFO:sim_hist_165_v84r0:Particles: /repeat=1: Total=1
+2020-07-24 15:48:21,783:pset_euc:INFO:sim_hist_165_v84r0:Lon=165: Lat=[0.9-0.9 x0.9]: Depth=[200-200m x200]
+2020-07-24 15:48:21,783:<module>:INFO:sim_hist_165_v84r0:2012-10-27 to 2012-05-30: Runtime=150 days
+2020-07-24 15:48:27,260:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 1.53792e+07
+2020-07-24 15:50:49,775:<module>:INFO:sim_hist_165_v36r0:Completed!: 00:08:17: Rank= 0: #Particles=1-0=1
+2020-07-24 15:58:12,667:reshape:WARNING:Casting field data to np.float32
+2020-07-24 16:03:02,237:pset_euc:INFO:sim_hist_165_v12r0:Particles: /repeat=1: Total=1
+2020-07-24 16:03:02,237:pset_euc:INFO:sim_hist_165_v12r0:Lon=165: Lat=[0.9-0.9 x0.9]: Depth=[200-200m x200]
+2020-07-24 16:03:02,237:<module>:INFO:sim_hist_165_v12r0:2012-10-27 to 2012-05-30: Runtime=150 days
+2020-07-24 16:11:03,232:<module>:INFO:sim_hist_165_v12r0:Completed!: 00:08:02: Rank= 0: #Particles=1-0=1
+2020-07-24 16:12:45,091:pset_euc:INFO:sim_hist_165_v43r0:Particles: /repeat=1: Total=1
+2020-07-24 16:12:45,091:pset_euc:INFO:sim_hist_165_v43r0:Lon=165: Lat=[0.9-0.9 x0.9]: Depth=[200-200m x200]
+2020-07-24 16:12:45,091:<module>:INFO:sim_hist_165_v43r0:2012-10-27 to 2012-05-30: Runtime=150 days
+2020-07-24 16:12:55,397:pset_euc:INFO:sim_hist_165_v30r0:Particles: /repeat=1: Total=1
+2020-07-24 16:12:55,397:pset_euc:INFO:sim_hist_165_v30r0:Lon=165: Lat=[0.9-0.9 x0.9]: Depth=[200-200m x200]
+2020-07-24 16:12:55,397:<module>:INFO:sim_hist_165_v30r0:2012-10-27 to 2012-05-30: Runtime=150 days
+2020-07-24 16:15:58,798:pset_euc:INFO:sim_hist_165_v28r0:Particles: /repeat=1: Total=1
+2020-07-24 16:15:58,799:pset_euc:INFO:sim_hist_165_v28r0:Lon=165: Lat=[0.9-0.9 x0.9]: Depth=[200-200m x200]
+2020-07-24 16:15:58,802:<module>:INFO:sim_hist_165_v28r0:2012-10-27 to 2012-05-30: Runtime=150 days
+2020-07-24 16:23:40,455:<module>:INFO:sim_hist_165_v43r0:Completed!: 00:10:56: Rank= 0: #Particles=1-0=1
+2020-07-24 16:23:40,459:<module>:INFO:sim_hist_165_v30r0:Completed!: 00:10:46: Rank= 0: #Particles=1-0=1
+2020-07-24 16:26:17,651:<module>:INFO:sim_hist_165_v28r0:Completed!: 00:10:20: Rank= 0: #Particles=1-0=1

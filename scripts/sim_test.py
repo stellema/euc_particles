@@ -8,7 +8,6 @@ import numpy as np
 from pathlib import Path
 from operator import attrgetter
 from datetime import datetime, timedelta
-from argparse import ArgumentParser
 from parcels import (AdvectionRK4_3D, ParticleSet, ErrorCode,
                      Variable, JITParticle, ScipyParticle)
 from analyse_trajectory import plot_traj
@@ -57,14 +56,14 @@ def pset_euc(fieldset, pclass, lon, dy, dz, repeatdt, pset_start, repeats,
 
 logger = tools.mlogger('test_sim', parcels=True, misc=False)
 dy, dz, lon = 0.9, 200, 165
-dt_mins, repeatdt_days, outputdt_days, runtime_days = 60, 6, 1, 160
+dt_mins, repeatdt_days, outputdt_days, runtime_days = 60, 6, 1, 150
 pfile = 'None'  # 'sim_hist_190_v21r1.nc'
 date1 = datetime(2012, 9, 1)
 date2 = datetime(2012, 10, 27)
 
 v = 55
 exp = 'hist'
-unbeach = True
+unbeach = False
 chunks = 300
 ts = datetime.now()
 # Get MPI rank or set to zero.
@@ -87,7 +86,7 @@ time_bnds = [datetime(2012, 5, 1), datetime(2012, 12, 31)]
 
 fieldset = main.ofam_fieldset(time_bnds, exp, vcoord='sw_edges_ocean',
                               chunks=True, cs=chunks,
-                              time_periodic=True, add_zone=True,
+                              time_periodic=True, add_zone=False,
                               add_unbeach_vel=unbeach)
 
 
@@ -96,12 +95,9 @@ class zdParticle(ScipyParticle):
 
     # The age of the particle.
     age = Variable('age', initial=0., dtype=np.float32)
-
-    # The velocity of the particle.
     u = Variable('u', initial=fieldset.U, to_write='once', dtype=np.float32)
-
-    # The 'zone' of the particle.
-    zone = Variable('zone', initial=0., dtype=np.float32)
+    # # The 'zone' of the particle.
+    # zone = Variable('zone', initial=0., dtype=np.float32)
 
     # The distance travelled
     distance = Variable('distance', initial=0., dtype=np.float32)
@@ -113,8 +109,8 @@ class zdParticle(ScipyParticle):
     # The previous latitude. to_write=False,
     prev_lat = Variable('prev_lat', initial=attrgetter('lat'), to_write=False,
                         dtype=np.float32)
-
-    unbeached = Variable('unbeached', initial=0., dtype=np.float32)
+    # beached = Variable('beached', initial=0., dtype=np.float32)
+    # unbeached = Variable('unbeached', initial=0., dtype=np.float32)
 
 
 pclass = zdParticle
@@ -184,7 +180,7 @@ kernels = pset.Kernel(main.DelWest) + pset.Kernel(AdvectionRK4_3D)
 if unbeach:
     kernels += pset.Kernel(main.UnBeaching)
 
-kernels += pset.Kernel(main.AgeZone) + pset.Kernel(main.Distance)
+kernels += pset.Kernel(main.Age) + pset.Kernel(main.Distance)
 
 # ParticleSet execution endtime.
 endtime = int(pset_start - runtime.total_seconds())
@@ -206,4 +202,4 @@ logger.info('{}:Completed!: {}: Rank={:>2}: #Particles={}-{}={}'
 output_file.export()
 
 ds = main.plot3D(sim_id, del_west=True)
-ds, dx = plot_traj(sim_id, var='w', traj=None, t=2, Z=250)
+# ds, dx = plot_traj(sim_id, var='w', traj=None, t=2, Z=250)
