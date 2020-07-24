@@ -245,7 +245,7 @@ if __name__ == "__main__" and cfg.home != Path('E:/'):
             v=args.version, pfile=args.pfile)
 elif __name__ == "__main__":
     logger = tools.mlogger('test_sim', parcels=True, misc=False)
-    dy, dz, lon = 2, 150, 190
+    dy, dz, lon = 0.8, 150, 190
     dt_mins, repeatdt_days, outputdt_days, runtime_days = 60, 6, 1, 10
     pfile = 'None'  # 'sim_hist_190_v21r1.nc'
     v = 55

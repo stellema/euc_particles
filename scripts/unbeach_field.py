@@ -63,9 +63,10 @@ files = [str(cfg.ofam/'ocean_{}_1981_01.nc'.format(var))
          for var in ['u', 'v', 'w', 'temp']]
 ds = xr.open_mfdataset(files, combine='by_coords').isel(Time=slice(0, 1))
 
+lon = ds.xu_ocean
+lat = ds.yu_ocean
+depth = ds.st_ocean
 
-gridtypes = ['ucell', 'tcell']
-grid = gridtypes[1]
 U = np.array(ds.u)*0 + 1
 V = np.array(ds.v)*0 + 1
 T = np.array(ds.temp)*0 + 1
@@ -74,19 +75,6 @@ V[np.isnan(V)] = 0
 T[np.isnan(T)] = 0
 ub = np.zeros(ds.u.shape)
 vb = np.zeros(ds.u.shape)
-
-if grid == 'ucell':
-    lon = ds.xu_ocean
-    lat = ds.yu_ocean
-    depth = ds.st_ocean
-    dims = ('Time', 'st_ocean', 'yu_ocean', 'xu_ocean')
-    filename = 'OFAM3_unbeach_vel_ucell.nc'
-else:
-    lon = ds.xt_ocean
-    lat = ds.yt_ocean
-    depth = ds.st_ocean
-    dims = ('Time', 'st_ocean', 'yt_ocean', 'xt_ocean')
-    filename = 'OFAM3_unbeach_vel_tcell.nc'
 
 
 def island(k, j, i):
@@ -98,7 +86,6 @@ def island(k, j, i):
 
 
 def islandlocked(k, j, i, nlats=300, nlons=1750):
-    """Return True if a landlocked point."""
     if j != 0 and i != 0 and j != nlats and i != nlons:
         edge_j = [j-1, j-1, j-1, j, j, j, j+1, j+1, j+1]
         edge_i = [i-1, i, i+1, i-1, i, i+1, i-1, i, i+1]
@@ -123,127 +110,8 @@ def islandlocked(k, j, i, nlats=300, nlons=1750):
 
     return all([island(k, jj, ii) for jj, ii in zip(edge_j, edge_i)])
 
-## U-CELL
-# g = np.zeros(8)
-# for k in range(depth.size):
-#     for j in range(lat.size-1):
-#         for i in range(lon.size-1):
-#             if island(k, j, i):
-#                 # Move west.
-#                 if not island(k, j, i-1):
-#                     ub[0, k, j, i] = -1
-#                     ub[0, k, j+1, i] = -1
-#                 # Move East.
-#                 if not island(k, j, i+1):
-#                     ub[0, k, j, i+1] = 1
-#                     ub[0, k, j+1, i+1] = 1
-#                 # Move South.
-#                 if not island(k, j-1, i):
-#                     vb[0, k, j, i] = -1
-#                     vb[0, k, j, i+1] = -1
-#                 # Move North.
-#                 if not island(k, j+1, i):
-#                     vb[0, k, j+1, i] = 1
-#                     vb[0, k, j+1, i+1] = 1
-#                 if not islandlocked(k, j, i):
-#                     if island(k, j, i-1) and not island(k, j, i+1):
-#                         if island(k, j-1, i) and not island(k, j+1, i):
-#                             g[0] += 1
-#                             if j != 0 and not island(k, j-1, i+1):  # bottom right
-#                                 ub[0, k, j, i] = 1
-#                                 vb[0, k, j, i] = -1
-#                             elif i != 0 and not island(k, j+1, i-1):  # top left
-#                                 ub[0, k, j, i] = -1
-#                                 vb[0, k, j, i] = 1
-#                             elif j != 0 and i != 0 and not island(k, j-1, i-1):  # bottom left
-#                                 ub[0, k, j, i] = -1
-#                                 vb[0, k, j, i] = -1
-#                             else:
-#                                 g[0] -= 1
 
-#                         elif not island(k, j-1, i) and island(k, j+1, i):
-#                             g[1] += 1
-#                             if i != 0 and not island(k, j+1, i-1): # top left
-#                                 ub[0, k, j+1, i] = -1
-#                             elif j != lat.size-2 and not island(k, j+2, i): # above top mid
-#                                 vb[0, k, j+1, i] = 1
-#                             else:
-#                                 g[1] -= 1
-
-#                     elif not island(k, j, i-1) and island(k, j, i+1):
-#                         if island(k, j-1, i) and not island(k, j+1, i):
-#                             g[2] += 1
-#                             if j != 0 and not island(k, j-1, i+1):  # bottom right
-#                                 vb[0, k, j, i+1] = -1
-#                             elif i != lon.size-2 and not island(k, j, i+2): # right of right mid
-#                                 ub[0, k, j, i+1] = 1
-#                             else:
-#                                 g[2] -= 1
-#                         elif not island(k, j-1, i) and island(k, j+1, i):
-#                             g[3] += 1
-#                             if i != lon.size-2 and not island(k, j+1, i+2):  # right of top right
-#                                 ub[0, k, j+1, i+1] = 1
-#                             elif j != lat.size-2 and not island(k, j+2, i+1): # above top right
-#                                 vb[0, k, j+1, i+1] = 1
-#                             else:
-#                                 g[3] -= 1
-#                         elif not island(k, j-1, i) and not island(k, j+1, i):
-#                             g[4] += 1
-#                             if i != lon.size-2 and not island(k, j+1, i+2):  # right of top right
-#                                 ub[0, k, j+1, i+1] = 1
-#                             elif j != lat.size-2 and not island(k, j+2, i+1): # above top right
-#                                 vb[0, k, j+1, i+1] = 1
-#                             elif i != lon.size-2 and not island(k, j, i+2):  # right of mid right
-#                                 ub[0, k, j, i+1] = 1
-#                             elif j != lat.size-2 and not island(k, j-1, i+1): # bottom right
-#                                 vb[0, k, j, i+1] = -1
-#                             else:
-#                                 g[4] -= 1
-
-#                     elif not island(k, j, i-1) and not island(k, j, i+1):
-#                         if island(k, j-1, i) and not island(k, j+1, i):
-#                             g[5] += 1
-#                             if j != 0 and not island(k, j-1, i+1):  # bottom right
-#                                 ub[0, k, j, i] = 1
-#                                 vb[0, k, j, i] = -1
-#                                 vb[0, k, j, i+1] = -1
-#                             elif i != 0 and not island(k, j+1, i-1):  # top left
-#                                 ub[0, k, j, i] = -1
-#                                 vb[0, k, j, i] = 1
-#                             elif j != 0 and i != 0 and not island(k, j-1, i-1):  # bottom left
-#                                 ub[0, k, j, i] = -1
-#                                 vb[0, k, j, i] = -1
-#                             elif i != lon.size-2 and not island(k, j, i+2):  # right of mid right
-#                                 ub[0, k, j, i+1] = 1
-#                             else:
-#                                 g[5] -= 1
-#                         elif not island(k, j-1, i) and island(k, j+1, i):
-#                             g[6] += 1
-#                             if i != 0 and not island(k, j+1, i-1):  # top left
-#                                 ub[0, k, j+1, i] = -1
-#                             elif i != lon.size-2 and not island(k, j+1, i+2):  # right of top right
-#                                 ub[0, k, j+1, i+1] = 1
-#                             elif j != lat.size-2 and not island(k, j+2, i):  # above top mid
-#                                 vb[0, k, j+1, i] = 1
-#                             elif j != lat.size-2 and not island(k, j+2, i+1):  # above top right
-#                                 vb[0, k, j+1, i+1] = 1
-#                             else:
-#                                 g[6] -= 1
-#                         elif not island(k, j-1, i) and not island(k, j+1, i):
-#                             g[7] += 1
-#                             if i != 0 and not island(k, j+1, i-1): # top left
-#                                 ub[0, k, j+1, i] = -1
-#                             elif i != lon.size-2 and not island(k, j+1, i+2):  # right of top right
-#                                 ub[0, k, j+1, i+1] = 1
-#                             elif j != lat.size-2 and not island(k, j+2, i): # above top mid
-#                                 vb[0, k, j+1, i] = 1
-#                             elif j != lat.size-2 and not island(k, j+2, i+1):  # above top right
-#                                 vb[0, k, j+1, i+1] = 1
-#                             else:
-#                                 g[7] -= 1
-
-
-# T-CELL
+g = np.zeros(8)
 for k in range(depth.size):
     for j in range(lat.size-1):
         for i in range(lon.size-1):
@@ -265,14 +133,113 @@ for k in range(depth.size):
                     vb[0, k, j+1, i] = 1
                     vb[0, k, j+1, i+1] = 1
 
-BU = xr.DataArray(ub, name='unBeachU', dims=dims, coords=ds.u.coords,
-                  attrs=ds.u.attrs)
-BV = xr.DataArray(vb, name='unBeachV', dims=dims, coords=ds.u.coords,
-                  attrs=ds.v.attrs)
+                if not islandlocked(k, j, i):
+                    if island(k, j, i-1) and not island(k, j, i+1):
+                        if island(k, j-1, i) and not island(k, j+1, i):
+                            g[0] += 1
+                            if j != 0 and not island(k, j-1, i+1):  # bottom right
+                                ub[0, k, j, i] = 1
+                                vb[0, k, j, i] = -1
+                            elif i != 0 and not island(k, j+1, i-1):  # top left
+                                ub[0, k, j, i] = -1
+                                vb[0, k, j, i] = 1
+                            elif j != 0 and i != 0 and not island(k, j-1, i-1):  # bottom left
+                                ub[0, k, j, i] = -1
+                                vb[0, k, j, i] = -1
+                            else:
+                                g[0] -= 1
+
+                        elif not island(k, j-1, i) and island(k, j+1, i):
+                            g[1] += 1
+                            if i != 0 and not island(k, j+1, i-1): # top left
+                                ub[0, k, j+1, i] = -1
+                            elif j != lat.size-2 and not island(k, j+2, i): # above top mid
+                                vb[0, k, j+1, i] = 1
+                            else:
+                                g[1] -= 1
+
+                    elif not island(k, j, i-1) and island(k, j, i+1):
+                        if island(k, j-1, i) and not island(k, j+1, i):
+                            g[2] += 1
+                            if j != 0 and not island(k, j-1, i+1):  # bottom right
+                                vb[0, k, j, i+1] = -1
+                            elif i != lon.size-2 and not island(k, j, i+2): # right of right mid
+                                ub[0, k, j, i+1] = 1
+                            else:
+                                g[2] -= 1
+                        elif not island(k, j-1, i) and island(k, j+1, i):
+                            g[3] += 1
+                            if i != lon.size-2 and not island(k, j+1, i+2):  # right of top right
+                                ub[0, k, j+1, i+1] = 1
+                            elif j != lat.size-2 and not island(k, j+2, i+1): # above top right
+                                vb[0, k, j+1, i+1] = 1
+                            else:
+                                g[3] -= 1
+                        elif not island(k, j-1, i) and not island(k, j+1, i):
+                            g[4] += 1
+                            if i != lon.size-2 and not island(k, j+1, i+2):  # right of top right
+                                ub[0, k, j+1, i+1] = 1
+                            elif j != lat.size-2 and not island(k, j+2, i+1): # above top right
+                                vb[0, k, j+1, i+1] = 1
+                            elif i != lon.size-2 and not island(k, j, i+2):  # right of mid right
+                                ub[0, k, j, i+1] = 1
+                            elif j != lat.size-2 and not island(k, j-1, i+1): # bottom right
+                                vb[0, k, j, i+1] = -1
+                            else:
+                                g[4] -= 1
+
+                    elif not island(k, j, i-1) and not island(k, j, i+1):
+                        if island(k, j-1, i) and not island(k, j+1, i):
+                            g[5] += 1
+                            if j != 0 and not island(k, j-1, i+1):  # bottom right
+                                ub[0, k, j, i] = 1
+                                vb[0, k, j, i] = -1
+                                vb[0, k, j, i+1] = -1
+                            elif i != 0 and not island(k, j+1, i-1):  # top left
+                                ub[0, k, j, i] = -1
+                                vb[0, k, j, i] = 1
+                            elif j != 0 and i != 0 and not island(k, j-1, i-1):  # bottom left
+                                ub[0, k, j, i] = -1
+                                vb[0, k, j, i] = -1
+                            elif i != lon.size-2 and not island(k, j, i+2):  # right of mid right
+                                ub[0, k, j, i+1] = 1
+                            else:
+                                g[5] -= 1
+                        elif not island(k, j-1, i) and island(k, j+1, i):
+                            g[6] += 1
+                            if i != 0 and not island(k, j+1, i-1):  # top left
+                                ub[0, k, j+1, i] = -1
+                            elif i != lon.size-2 and not island(k, j+1, i+2):  # right of top right
+                                ub[0, k, j+1, i+1] = 1
+                            elif j != lat.size-2 and not island(k, j+2, i):  # above top mid
+                                vb[0, k, j+1, i] = 1
+                            elif j != lat.size-2 and not island(k, j+2, i+1):  # above top right
+                                vb[0, k, j+1, i+1] = 1
+                            else:
+                                g[6] -= 1
+                        elif not island(k, j-1, i) and not island(k, j+1, i):
+                            g[7] += 1
+                            if i != 0 and not island(k, j+1, i-1): # top left
+                                ub[0, k, j+1, i] = -1
+                            elif i != lon.size-2 and not island(k, j+1, i+2):  # right of top right
+                                ub[0, k, j+1, i+1] = 1
+                            elif j != lat.size-2 and not island(k, j+2, i): # above top mid
+                                vb[0, k, j+1, i] = 1
+                            elif j != lat.size-2 and not island(k, j+2, i+1):  # above top right
+                                vb[0, k, j+1, i+1] = 1
+                            else:
+                                g[7] -= 1
+
+dims = ('Time', 'st_ocean', 'yu_ocean', 'xu_ocean')
+dsUnBeachU = xr.DataArray(ub, name='unBeachU',
+                          dims=dims, coords=ds.u.coords, attrs=ds.u.attrs)
+dsUnBeachV = xr.DataArray(vb, name='unBeachV',
+                          dims=dims, coords=ds.u.coords, attrs=ds.v.attrs)
 
 db = xr.Dataset()
-db[BU.name] = BU
-db[BV.name] = BV
+db[dsUnBeachU.name] = dsUnBeachU
+db[dsUnBeachV.name] = dsUnBeachV
+
 db[ds.st_edges_ocean.name] = ds.st_edges_ocean
 db[ds.sw_edges_ocean.name] = ds.sw_edges_ocean
 db[ds.xt_ocean.name] = ds.xt_ocean
@@ -282,11 +249,13 @@ db[ds.yu_ocean.name] = ds.yu_ocean
 db[ds.st_ocean.name] = ds.st_ocean
 db[ds.sw_ocean.name] = ds.sw_ocean
 db.attrs = ds.attrs
-db.attrs['history'] = ('Created {}.'.format(datetime.now().strftime("%Y-%m-%d"))
-                       + db.attrs['history'])
-
+db.attrs['history'] = ('Created {}.'.format(datetime.now().strftime("%Y-%m-%d")) +
+                       db.attrs['history'])
+#3999453 4034189 [28278. 19286. 22589. 28430.  6357.  5449.  5333.  7288.]
+#4001833 4038500 [21085.  4516.  4404.  6996.  5938.  5449.  4800.  7288.]
+print(np.count_nonzero(db.unBeachU), np.count_nonzero(db.unBeachV), g)
 # Checks all four points and uses given unBeach flags.
-db.to_netcdf(path=cfg.data/filename)
+db.to_netcdf(path=cfg.data/'OFAM3_unbeach_vel_ucell.nc')
 
 # (db.unBeachU.isel(st_ocean=20).sel(xu_ocean=slice(120, 150), yu_ocean=slice(-13, -10))*2+
 # db.unBeachV.isel(st_ocean=20).sel(xu_ocean=slice(120, 150), yu_ocean=slice(-13, -10))).plot()
