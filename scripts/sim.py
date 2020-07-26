@@ -252,6 +252,6 @@ elif __name__ == "__main__":
     exp = 'hist'
     unbeach = True
     chunks = 300
-    run_EUC(dy=dy, dz=dz, lon=lon, dt_mins=dt_mins, repeatdt_days=repeatdt_days,
-            outputdt_days=outputdt_days, v=v, runtime_days=runtime_days,
-            unbeach=unbeach, pfile=pfile)
+    # run_EUC(dy=dy, dz=dz, lon=lon, dt_mins=dt_mins, repeatdt_days=repeatdt_days,
+    #         outputdt_days=outputdt_days, v=v, runtime_days=runtime_days,
+    #         unbeach=unbeach, pfile=pfile)

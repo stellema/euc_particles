@@ -899,3 +899,37 @@
 2020-07-17 14:32:00,971:run_EUC:DEBUG:sim_hist_190_v77r0:Temp=FDTUQHYR: Rank= 0: #Particles=21
 2020-07-17 14:32:03,404:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DUnBeachingAgeZoneDistance ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\84148b93c2ea18a6788dbe6f0b270e9d_0.dll
 2020-07-17 14:32:14,265:run_EUC:INFO:sim_hist_190_v77r0:Completed!: 00:00:21: Rank= 0: #Particles=21-11=10
+2020-07-26 12:55:27,038:__init__:WARNING:Casting lon data to np.float32
+2020-07-26 12:55:27,038:__init__:WARNING:Casting lat data to np.float32
+2020-07-26 12:55:27,038:__init__:WARNING:Casting depth data to np.float32
+2020-07-26 12:55:27,038:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-26 12:55:27,796:reshape:WARNING:Casting field data to np.float32
+2020-07-26 12:55:29,008:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-26 12:55:30,417:pset_euc:INFO:sim_hist_190_v21r0:Particles: /repeat=9: Total=9
+2020-07-26 12:55:30,417:pset_euc:INFO:sim_hist_190_v21r0:Lon=190: Lat=[-2.6-1.4 x2]: Depth=[25-325m x150]
+2020-07-26 12:55:30,417:run_EUC:INFO:sim_hist_190_v21r0:1982-01-01 to 1981-12-20: Runtime=12 days
+2020-07-26 12:55:30,417:run_EUC:INFO:sim_hist_190_v21r0:Repeat=6 days: Step=60 mins: Output=1 day
+2020-07-26 12:55:30,417:run_EUC:INFO:sim_hist_190_v21r0:Field=b-grid: Chunks=300: Time=1981-1981
+2020-07-26 12:55:30,417:run_EUC:DEBUG:sim_hist_190_v21r0:Temp=AODQPZLV: Rank= 0: #Particles=9
+2020-07-26 12:55:35,408:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DbUnBeachingAgeZoneDistance ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\2e5c32c4f50827063d16e404063371e7_0.dll
+2020-07-26 12:55:36,308:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 3.14496e+07
+2020-07-26 12:55:36,380:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 3.13632e+07
+2020-07-26 12:55:36,542:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 3.12768e+07
+2020-07-26 12:55:36,712:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 3.11904e+07
+2020-07-26 12:55:37,118:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 3.1104e+07
+2020-07-26 12:55:37,280:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 3.10176e+07
+2020-07-26 12:55:37,454:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 3.09312e+07
+2020-07-26 12:55:37,618:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 3.08448e+07
+2020-07-26 12:55:37,780:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 3.07584e+07
+2020-07-26 12:55:37,945:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 3.0672e+07
+2020-07-26 12:55:38,120:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 3.05856e+07
+2020-07-26 12:55:38,549:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 3.04992e+07
+2020-07-26 12:55:38,549:run_EUC:INFO:sim_hist_190_v21r0:Completed!: 00:00:12: Rank= 0: #Particles=9-9=0
+2020-07-26 13:00:52,978:pset_euc:INFO:sim_hist_190_v48r0:Particles: /repeat=9: Total=9
+2020-07-26 13:00:52,983:pset_euc:INFO:sim_hist_190_v48r0:Lon=190: Lat=[-2.6-1.4 x2]: Depth=[25-325m x150]
+2020-07-26 13:00:52,983:run_EUC:INFO:sim_hist_190_v48r0:1982-01-01 to 1981-12-20: Runtime=12 days
+2020-07-26 13:00:52,983:run_EUC:INFO:sim_hist_190_v48r0:Repeat=6 days: Step=60 mins: Output=1 day
+2020-07-26 13:00:52,983:run_EUC:INFO:sim_hist_190_v48r0:Field=b-grid: Chunks=300: Time=1981-1981
+2020-07-26 13:00:52,983:run_EUC:DEBUG:sim_hist_190_v48r0:Temp=YTKJHFWS: Rank= 0: #Particles=9
+2020-07-26 13:00:54,903:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DbUnBeachingAgeZoneDistance ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\7dfb009e1f22abf75588a6d8853a1493_0.dll
+2020-07-26 13:01:01,369:run_EUC:INFO:sim_hist_190_v48r0:Completed!: 00:00:12: Rank= 0: #Particles=9-5=4

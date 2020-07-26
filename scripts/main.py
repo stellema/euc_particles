@@ -89,12 +89,12 @@ def ofam_fieldset(time_bnds='full', exp='hist', vcoord='sw_edges_ocean', chunks=
     nmaps = {"time": ["Time"],
              "lon": ["xu_ocean", "xt_ocean"],
              "lat": ["yu_ocean", "yt_ocean"],
-             "depth": ["st_ocean", "sw_ocean", "sw_ocean_mod"]}
+             "depth": ["st_ocean", "sw_ocean", "sw_ocean_mod", "st_edges_ocean"]}
 
     parcels.field.NetcdfFileBuffer._name_maps = nmaps
     if chunks not in ['auto', False]:
         chunks = {'Time': 1,
-                  'st_ocean': 1, 'sw_ocean': 1, 'sw_ocean_mod': 1,
+                  'st_ocean': 1, 'sw_ocean': 1, 'sw_ocean_mod': 1, 'st_edges_ocean': 1,
                   'yt_ocean': cs, 'yu_ocean': cs,
                   'xt_ocean': cs, 'xu_ocean': cs}
 
@@ -122,8 +122,8 @@ def ofam_fieldset(time_bnds='full', exp='hist', vcoord='sw_edges_ocean', chunks=
     files = {'U': {'depth': mesh, 'lat': mesh, 'lon': mesh, 'data': u},
              'V': {'depth': mesh, 'lat': mesh, 'lon': mesh, 'data': v},
              'W': {'depth': mesh, 'lat': mesh, 'lon': mesh, 'data': w}}
-    dims = {'U': {'time': 'Time', 'depth': 'sw_ocean', 'lat': 'yu_ocean', 'lon': 'xu_ocean'},
-            'V': {'time': 'Time', 'depth': 'sw_ocean', 'lat': 'yu_ocean', 'lon': 'xu_ocean'},
+    dims = {'U': {'time': 'Time', 'depth': 'st_edges_ocean', 'lat': 'yu_ocean', 'lon': 'xu_ocean'},
+            'V': {'time': 'Time', 'depth': 'st_edges_ocean', 'lat': 'yu_ocean', 'lon': 'xu_ocean'},
             'W': {'time': 'Time', 'depth': 'sw_ocean_mod', 'lat': 'yu_ocean', 'lon': 'xu_ocean'}}
     # Swap first and last levels of W .
     n = 51  # len(st_ocean)
@@ -138,7 +138,7 @@ def ofam_fieldset(time_bnds='full', exp='hist', vcoord='sw_edges_ocean', chunks=
     fieldset.W.interp_method = 'bgrid_w_velocity'
 
     # Set fieldset minimum depth.
-    fieldset.mindepth = fieldset.U.depth[0]
+    # fieldset.mindepth = fieldset.U.depth[0]
     fieldset.W.set_scaling_factor(-1)
 
     if add_zone:
@@ -324,7 +324,7 @@ def particleset_from_particlefile(fieldset, pclass, filename, repeatdt=None, res
     return pset
 
 
-def plot3D(sim_id, del_west=True):
+def plot3D(sim_id):
     """Plot 3D figure of particle trajectories over time.
 
     Args:
@@ -332,8 +332,7 @@ def plot3D(sim_id, del_west=True):
 
     """
     ds = xr.open_dataset(sim_id, decode_cf=True)
-    if del_west:
-        ds = ds.where(ds.u >= 0., drop=True)
+    ds = ds.where(ds.u >= 0., drop=True)
 
     x, y, z = ds.lon, ds.lat, ds.z
     xlim = [math.floor(np.nanmin(x)), math.ceil(np.nanmax(x))]

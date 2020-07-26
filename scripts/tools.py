@@ -493,8 +493,8 @@ def create_mesh_mask():
     mask['st_edges_ocean'] = ds.st_edges_ocean
     mask['sw_edges_ocean'] = ds.sw_edges_ocean
     mod = np.append(np.arange(1, 51, dtype=int), 0)
-    mask['sw_ocean_mod'] = ds.sw_ocean[mod]
-    mask['st_ocean_mod'] = ds.st_ocean[mod]
+    mask['sw_ocean_mod'] = ds.st_edges_ocean.values[mod]
+    mask['st_ocean_mod'] = ds.sw_edges_ocean.values[mod]
     mask.to_netcdf(cfg.data/'ofam_mesh_grid.nc')
     ds.close()
     mask.close()
