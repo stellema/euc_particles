@@ -72,9 +72,6 @@ def mlogger(name, parcels=False, misc=True):
     return logger
 
 
-logger = mlogger(Path(sys.argv[0]).stem)
-
-
 def current_time(print_time=False):
     """Return and/or print the current time in AM/PM format (e.g. 9:00am).
 
@@ -119,6 +116,7 @@ def timeit(method):
     """Wrap function to time method execution time."""
     @wraps(method)
     def timed(*args, **kw):
+        logger = mlogger(Path(sys.argv[0]).stem)
         ts = datetime.now()
         result = method(*args, **kw)
         te = datetime.now()
@@ -412,9 +410,9 @@ def cor_scatter_plot(fig, i, varx, vary,
     varx = varx[mask]
     vary = vary[mask]
 
-    logger.debug('R={:.2f}, p={:.3f} (stats.spearmanr)'.format(cor_r, cor_p))
-    logger.debug('Slope={:.2f} Intercept={:.2f} R={:.2f} P={:.3f} stder={:.2f}'
-                 .format(slope, intercept, r_val, p_val, std_err))
+    # logger.debug('R={:.2f}, p={:.3f} (stats.spearmanr)'.format(cor_r, cor_p))
+    # logger.debug('Slope={:.2f} Intercept={:.2f} R={:.2f} P={:.3f} stder={:.2f}'
+    #              .format(slope, intercept, r_val, p_val, std_err))
 
     ax = fig.add_subplot(1, 3, i)
     ax.set_title(name, loc='left')
@@ -544,7 +542,7 @@ def get_edge_depth(z, index=True, edge=False, greater=False):
 
 def tidy_files(logs=True, jobs=True):
     """Delete empty logs and job result files."""
-    logger.handlers.clear()
+    # logger.handlers.clear()
     if logs:
         for f in cfg.log.glob('*.log'):
             if f.stat().st_size == 0:

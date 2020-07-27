@@ -56,12 +56,12 @@ def pset_euc(fieldset, pclass, lon, dy, dz, repeatdt, pset_start, repeats,
 
 
 logger = tools.mlogger('test_sim', parcels=True, misc=False)
-dy, dz, lon = 0.9, 200, 190
-dt_mins, repeatdt_days, outputdt_days, runtime_days = 60, 6, 1, 160
+dy, dz, lon = -0.3, 275, 165
+dt_mins, repeatdt_days, outputdt_days, runtime_days = 60, 6, 1, 236
 pfile = 'None'  # 'sim_hist_190_v21r1.nc'
-date1 = datetime(2012, 9, 1)
-date2 = datetime(2012, 10, 27)
-
+date1 = datetime(2012, 4, 22)
+date2 = datetime(2012, 12, 14)
+runtime_days = (date2-date1).days
 v = 55
 exp = 'hist'
 unbeach = True
@@ -83,7 +83,7 @@ outputdt = timedelta(days=outputdt_days)  # Advection steps to write.
 repeats = 1  # math.floor(runtime/repeatdt) - 1
 
 # Create time bounds for fieldset based on experiment.
-time_bnds = [datetime(2012, 5, 1), datetime(2012, 12, 31)]
+time_bnds = [datetime(2012, 4, 1), datetime(2012, 12, 31)]
 
 fieldset = main.ofam_fieldset(time_bnds, exp, vcoord='sw_edges_ocean',
                               chunks=True, cs=chunks,
@@ -185,7 +185,7 @@ if unbeach:
     kernels += pset.Kernel(main.UnBeaching)
 
 kernels += pset.Kernel(main.AgeZone) + pset.Kernel(main.Distance)
-
+# kernels += pset.Kernel(main.Age) #+ pset.Kernel(main.Distance)
 # ParticleSet execution endtime.
 endtime = int(pset_start - runtime.total_seconds())
 
@@ -205,5 +205,5 @@ logger.info('{}:Completed!: {}: Rank={:>2}: #Particles={}-{}={}'
 # Save to netcdf.
 output_file.export()
 
-ds = main.plot3D(sim_id, del_west=True)
-# ds, dx = plot_traj(sim_id, var='w', traj=None, t=2, Z=250)
+ds = main.plot3D(sim_id)
+ds, dx = plot_traj(sim_id, var='w', traj=None, t=2, Z=250)

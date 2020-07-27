@@ -61,7 +61,6 @@ def pset_euc(fieldset, pclass, lon, dy, dz, repeatdt, pset_start, repeats,
     return pset
 
 
-@tools.timeit
 def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
             outputdt_days=1, runtime_days=186, v=1, chunks=300, unbeach=True,
             pfile='None'):
@@ -252,6 +251,6 @@ elif __name__ == "__main__":
     exp = 'hist'
     unbeach = True
     chunks = 300
-    # run_EUC(dy=dy, dz=dz, lon=lon, dt_mins=dt_mins, repeatdt_days=repeatdt_days,
-    #         outputdt_days=outputdt_days, v=v, runtime_days=runtime_days,
-    #         unbeach=unbeach, pfile=pfile)
+    run_EUC(dy=dy, dz=dz, lon=lon, dt_mins=dt_mins, repeatdt_days=repeatdt_days,
+            outputdt_days=outputdt_days, v=v, runtime_days=runtime_days,
+            unbeach=unbeach, pfile=pfile)

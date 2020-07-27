@@ -67,8 +67,9 @@ from parcels import (FieldSet, Field, ParticleSet, VectorField,
                      ErrorCode, AdvectionRK4)
 
 
-def ofam_fieldset(time_bnds='full', exp='hist', vcoord='sw_edges_ocean', chunks=True, cs=300,
-                  time_periodic=True, add_zone=True, add_unbeach_vel=True):
+def ofam_fieldset(time_bnds='full', exp='hist', vcoord='sw_edges_ocean',
+                  chunks=True, cs=300, time_periodic=True, add_zone=True,
+                  add_unbeach_vel=True):
     """Create a 3D parcels fieldset from OFAM model output.
 
     Between two dates useing FieldSet.from_b_grid_dataset.
@@ -85,11 +86,12 @@ def ofam_fieldset(time_bnds='full', exp='hist', vcoord='sw_edges_ocean', chunks=
         fieldset (parcels.Fieldset)
 
     """
-    # Add OFAM dimension names to NetcdfFileBuffer name maps (chunking workaround).
+    # Add OFAM dimension names to NetcdfFileBuffer namemaps.
     nmaps = {"time": ["Time"],
              "lon": ["xu_ocean", "xt_ocean"],
              "lat": ["yu_ocean", "yt_ocean"],
-             "depth": ["st_ocean", "sw_ocean", "sw_ocean_mod", "st_edges_ocean"]}
+             "depth": ["st_ocean", "sw_ocean",
+                       "sw_ocean_mod", "st_edges_ocean"]}
 
     parcels.field.NetcdfFileBuffer._name_maps = nmaps
     if chunks not in ['auto', False]:
@@ -143,7 +145,10 @@ def ofam_fieldset(time_bnds='full', exp='hist', vcoord='sw_edges_ocean', chunks=
 
     if add_zone:
         files = str(cfg.data/'OFAM3_tcell_zones.nc')
-        dimz = {'time': 'Time', 'depth': 'sw_ocean', 'lat': 'yt_ocean', 'lon': 'xt_ocean'}
+        dimz = {'time': 'Time',
+                'depth': 'sw_ocean',
+                'lat': 'yt_ocean',
+                'lon': 'xt_ocean'}
         zfield = Field.from_netcdf(files, 'zone', dimz, field_chunksize=chunks,
                                    allow_time_extrapolation=True)
         fieldset.add_field(zfield, 'zone')
@@ -185,8 +190,7 @@ def generate_sim_id(lon, v=0, exp='hist', randomise=False):
 
 
 def AdvectionRK4_3Db(particle, fieldset, time):
-    """Advection of particles using fourth-order Runge-Kutta integration including vertical velocity.
-    Function needs to be converted to Kernel object before execution"""
+    """Fourth-order Runge-Kutta 3D particle advection."""
     if particle.beached == 0:
         (u1, v1, w1) = fieldset.UVW[time, particle.depth, particle.lat, particle.lon]
         lon1 = particle.lon + u1*.5*particle.dt
@@ -205,17 +209,20 @@ def AdvectionRK4_3Db(particle, fieldset, time):
         particle.lat += (v1 + 2*v2 + 2*v3 + v4) / 6. * particle.dt
         particle.depth += (w1 + 2*w2 + 2*w3 + w4) / 6. * particle.dt
 
+
 def UnBeaching(particle, fieldset, time):
-    (ub, vb) = fieldset.UVunbeach[0., particle.depth, particle.lat, particle.lon]
-    if math.fabs(ub) > 1e-14 or math.fabs(vb) > 1e-14:
+    """Unbeach particles."""
+    (uu, vv, ww) = fieldset.UVW[time, particle.depth, particle.lat, particle.lon]
+    if math.fabs(uu) < 1e-14 and math.fabs(vv) < 1e-14:
         if particle.beached > 3:
             print('WARNING: UBeaching deleted a particle.')
             particle.delete()
         else:
+            (ub, vb) = fieldset.UVunbeach[0., particle.depth, particle.lat, particle.lon]
             particle.lon += ub * math.fabs(particle.dt)
             particle.lat += vb * math.fabs(particle.dt)
-            particle.unbeached += 1
             particle.beached += 1
+            particle.unbeached += 1
     else:
         particle.beached = 0
 
@@ -317,9 +324,10 @@ def particleset_from_particlefile(fieldset, pclass, filename, repeatdt=None, res
     else:
         vars['id'] = None
 
-    pset = ParticleSet(fieldset=fieldset, pclass=pclass, lon=vars['lon'], lat=vars['lat'],
-                       depth=vars['depth'], time=vars['time'], pid_orig=vars['id'],
-                       lonlatdepth_dtype=lonlatdepth_dtype, repeatdt=repeatdt, **kwargs)
+    pset = ParticleSet(fieldset=fieldset, pclass=pclass, lon=vars['lon'],
+                       lat=vars['lat'], depth=vars['depth'], time=vars['time'],
+                       pid_orig=vars['id'], repeatdt=repeatdt,
+                       lonlatdepth_dtype=lonlatdepth_dtype, **kwargs)
 
     return pset
 

@@ -11,7 +11,7 @@ author: Annette Stellema (astellemas@gmail.com)
 
 
 # Plot trajectories of particles that go deeper than a certain depth.
-tr = np.unique(ds.where(ds.z > 300).trajectory)[0:5]
+tr = np.unique(ds.where(ds.z > 700).trajectory)[0:5]
 print(tr)
 # traj = int(np.nanmax(tr))
 
