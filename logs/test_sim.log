@@ -1761,3 +1761,65 @@
 2020-07-28 00:03:51,714:pset_euc:INFO:sim_hist_165_v47r0:Lon=165: Lat=[-1.7--1.7 x-1.7]: Depth=[250-250m x250]
 2020-07-28 00:03:51,715:<module>:INFO:sim_hist_165_v47r0:2012-12-26 to 2012-07-01: Runtime=178 days
 2020-07-28 00:13:34,324:<module>:INFO:sim_hist_165_v47r0:Completed!: 00:09:45: Rank= 0: #Particles=1-0=1
+2020-07-28 05:24:47,124:pset_euc:INFO:sim_hist_190_v76r0:Particles: /repeat=9: Total=9
+2020-07-28 05:24:47,125:pset_euc:INFO:sim_hist_190_v76r0:Lon=190: Lat=[-2.6-1.4 x2]: Depth=[25-325m x150]
+2020-07-28 05:24:47,126:run_EUC:INFO:sim_hist_190_v76r0:1982-01-01 to 1981-12-20: Runtime=12 days
+2020-07-28 05:24:47,127:run_EUC:INFO:sim_hist_190_v76r0:Repeat=6 days: Step=60 mins: Output=1 day
+2020-07-28 05:24:47,127:run_EUC:INFO:sim_hist_190_v76r0:Field=b-grid: Chunks=300: Time=1981-1981
+2020-07-28 05:24:47,128:run_EUC:DEBUG:sim_hist_190_v76r0:Temp=CDBAISSV: Rank= 0: #Particles=9
+2020-07-28 05:25:22,768:pset_euc:INFO:sim_hist_165_v46r0:Particles: /repeat=1: Total=1
+2020-07-28 05:25:22,769:pset_euc:INFO:sim_hist_165_v46r0:Lon=165: Lat=[-1.7--1.7 x-1.7]: Depth=[250-250m x250]
+2020-07-28 05:25:22,769:<module>:INFO:sim_hist_165_v46r0:2012-12-26 to 2012-07-01: Runtime=178 days
+2020-07-28 05:26:32,399:pset_euc:INFO:sim_hist_165_v41r0:Particles: /repeat=1: Total=1
+2020-07-28 05:26:32,399:pset_euc:INFO:sim_hist_165_v41r0:Lon=165: Lat=[-1.7--1.7 x-1.7]: Depth=[250-250m x250]
+2020-07-28 05:26:32,400:<module>:INFO:sim_hist_165_v41r0:2012-12-26 to 2012-07-01: Runtime=178 days
+2020-07-28 05:26:36,497:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DbAgeZoneDistance ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\61ae5e37389dbc2aabb81d58579402b1_0.dll
+2020-07-28 05:27:18,779:pset_euc:INFO:sim_hist_165_v78r0:Particles: /repeat=1: Total=1
+2020-07-28 05:27:18,779:pset_euc:INFO:sim_hist_165_v78r0:Lon=165: Lat=[-1.7--1.7 x-1.7]: Depth=[250-250m x250]
+2020-07-28 05:27:18,780:<module>:INFO:sim_hist_165_v78r0:2012-12-26 to 2012-07-01: Runtime=178 days
+2020-07-28 05:27:20,833:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DbAgeZoneDistance ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\74e4d0c63dc7cf510cfca9ffebadddfe_0.dll
+2020-07-28 05:27:30,302:pset_euc:INFO:sim_hist_165_v3r0:Particles: /repeat=1: Total=1
+2020-07-28 05:27:30,303:pset_euc:INFO:sim_hist_165_v3r0:Lon=165: Lat=[-1.7--1.7 x-1.7]: Depth=[250-250m x250]
+2020-07-28 05:27:30,304:<module>:INFO:sim_hist_165_v3r0:2012-12-26 to 2012-07-01: Runtime=178 days
+2020-07-28 05:29:29,669:pset_euc:INFO:sim_hist_165_v89r0:Particles: /repeat=1: Total=1
+2020-07-28 05:29:29,669:pset_euc:INFO:sim_hist_165_v89r0:Lon=165: Lat=[-1.7--1.7 x-1.7]: Depth=[250-250m x250]
+2020-07-28 05:29:29,670:<module>:INFO:sim_hist_165_v89r0:2012-12-26 to 2012-07-01: Runtime=178 days
+2020-07-28 05:29:58,559:pset_euc:INFO:sim_hist_165_v97r0:Particles: /repeat=1: Total=1
+2020-07-28 05:29:58,560:pset_euc:INFO:sim_hist_165_v97r0:Lon=165: Lat=[-1.7--1.7 x-1.7]: Depth=[250-250m x250]
+2020-07-28 05:29:58,561:<module>:INFO:sim_hist_165_v97r0:2012-12-26 to 2012-07-01: Runtime=178 days
+2020-07-28 05:39:17,647:__init__:WARNING:Casting lon data to np.float32
+2020-07-28 05:39:17,648:__init__:WARNING:Casting lat data to np.float32
+2020-07-28 05:39:17,648:__init__:WARNING:Casting depth data to np.float32
+2020-07-28 05:39:17,650:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-28 05:39:18,219:reshape:WARNING:Casting field data to np.float32
+2020-07-28 05:39:19,778:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-28 05:39:19,780:pset_euc:INFO:sim_hist_165_v92r0:Particles: /repeat=1: Total=1
+2020-07-28 05:39:19,780:pset_euc:INFO:sim_hist_165_v92r0:Lon=165: Lat=[-1.7--1.7 x-1.7]: Depth=[250-250m x250]
+2020-07-28 05:39:19,781:<module>:INFO:sim_hist_165_v92r0:2012-12-26 to 2012-07-01: Runtime=178 days
+2020-07-28 05:40:39,484:pset_euc:INFO:sim_hist_165_v45r0:Particles: /repeat=1: Total=1
+2020-07-28 05:40:39,485:pset_euc:INFO:sim_hist_165_v45r0:Lon=165: Lat=[-1.7--1.7 x-1.7]: Depth=[250-250m x250]
+2020-07-28 05:40:39,486:<module>:INFO:sim_hist_165_v45r0:2012-12-26 to 2012-07-01: Runtime=178 days
+2020-07-28 05:41:43,237:pset_euc:INFO:sim_hist_165_v88r0:Particles: /repeat=1: Total=1
+2020-07-28 05:41:43,238:pset_euc:INFO:sim_hist_165_v88r0:Lon=165: Lat=[-1.7--1.7 x-1.7]: Depth=[250-250m x250]
+2020-07-28 05:41:43,239:<module>:INFO:sim_hist_165_v88r0:2012-12-26 to 2012-07-01: Runtime=178 days
+2020-07-28 05:42:25,229:pset_euc:INFO:sim_hist_165_v48r0:Particles: /repeat=1: Total=1
+2020-07-28 05:42:25,230:pset_euc:INFO:sim_hist_165_v48r0:Lon=165: Lat=[-1.7--1.7 x-1.7]: Depth=[250-250m x250]
+2020-07-28 05:42:25,231:<module>:INFO:sim_hist_165_v48r0:2012-12-26 to 2012-07-01: Runtime=178 days
+2020-07-28 05:43:31,183:pset_euc:INFO:sim_hist_165_v96r0:Particles: /repeat=1: Total=1
+2020-07-28 05:43:31,183:pset_euc:INFO:sim_hist_165_v96r0:Lon=165: Lat=[-1.7--1.7 x-1.7]: Depth=[250-250m x250]
+2020-07-28 05:43:31,184:<module>:INFO:sim_hist_165_v96r0:2012-12-26 to 2012-07-01: Runtime=178 days
+2020-07-28 05:43:33,147:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\aa80eb34d91fc6080e9550de6fdfda3c_0.dll
+2020-07-28 05:43:45,625:__init__:WARNING:Casting lon data to np.float32
+2020-07-28 05:43:45,627:__init__:WARNING:Casting lat data to np.float32
+2020-07-28 05:43:45,628:__init__:WARNING:Casting depth data to np.float32
+2020-07-28 05:43:45,630:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-28 05:43:46,298:reshape:WARNING:Casting field data to np.float32
+2020-07-28 05:43:47,964:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-28 05:43:49,482:pset_euc:INFO:sim_hist_190_v85r0:Particles: /repeat=9: Total=9
+2020-07-28 05:43:49,483:pset_euc:INFO:sim_hist_190_v85r0:Lon=190: Lat=[-2.6-1.4 x2]: Depth=[25-325m x150]
+2020-07-28 05:43:49,484:run_EUC:INFO:sim_hist_190_v85r0:1982-01-01 to 1981-12-20: Runtime=12 days
+2020-07-28 05:43:49,485:run_EUC:INFO:sim_hist_190_v85r0:Repeat=6 days: Step=60 mins: Output=1 day
+2020-07-28 05:43:49,485:run_EUC:INFO:sim_hist_190_v85r0:Field=b-grid: Chunks=300: Time=1981-1981
+2020-07-28 05:43:49,486:run_EUC:DEBUG:sim_hist_190_v85r0:Temp=YBAONQBM: Rank= 0: #Particles=9
+2020-07-28 05:43:51,752:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\593ace02d0e4a2a36209872e72119459_0.dll
+2020-07-28 05:44:03,139:run_EUC:INFO:sim_hist_190_v85r0:Completed!: 00:00:18: Rank= 0: #Particles=9-5=4

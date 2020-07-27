@@ -173,13 +173,13 @@ def ofam_fieldset(time_bnds='full', exp='hist', vcoord='sw_edges_ocean',
         dimz = {'unBeachU': {'time': 'Time', 'depth': 'st_edges_ocean', 'lat': 'yu_ocean', 'lon': 'xu_ocean'},
                 'unBeachV': {'time': 'Time', 'depth': 'st_edges_ocean', 'lat': 'yu_ocean', 'lon': 'xu_ocean'},
                 'land': {'time': 'Time', 'depth': 'st_edges_ocean', 'lat': 'yu_ocean', 'lon': 'xu_ocean'}}
-        fieldsetUnBeach = FieldSet.from_b_grid_dataset(file, variables, dimz,
+        fieldsetUnBeach = FieldSet.from_netcdf(file, variables, dimz,
                                                        indices=indices,
                                                        field_chunksize=chunks,
                                                        allow_time_extrapolation=True)
-        # fieldsetUnBeach.time_origin = fieldset.time_origin
-        # fieldsetUnBeach.time_origin.time_origin = fieldset.time_origin.time_origin
-        # fieldsetUnBeach.time_origin.calendar = fieldset.time_origin.calendar
+        fieldsetUnBeach.time_origin = fieldset.time_origin
+        fieldsetUnBeach.time_origin.time_origin = fieldset.time_origin.time_origin
+        fieldsetUnBeach.time_origin.calendar = fieldset.time_origin.calendar
         fieldset.add_field(fieldsetUnBeach.unBeachU, 'unBeachU')
         fieldset.add_field(fieldsetUnBeach.unBeachV, 'unBeachV')
         fieldset.add_field(fieldsetUnBeach.land, 'land')
@@ -232,8 +232,8 @@ def AdvectionRK4_3Db(particle, fieldset, time):
 
 
 def BeachTest(particle, fieldset, time):
-    land = fieldset.land[0., particle.depth, particle.lat, particle.lon]
-    if land >= fieldset.geo/4:
+    ld = fieldset.land[0., particle.depth, particle.lat, particle.lon]
+    if ld >= fieldset.geo/4:
         if particle.beached <= 3:
             particle.beached += 1
         else:
@@ -251,6 +251,70 @@ def UnBeaching(particle, fieldset, time):
         particle.lon += math.copysign(ubx, ub) * math.fabs(particle.dt)
         particle.lat += math.copysign(fieldset.geo, vb) * math.fabs(particle.dt)
         particle.unbeached += 1
+# def UnBeaching(particle, fieldset, time):
+#     """Unbeach particles."""
+#     (uu, vv, ww) = fieldset.UVW[time, particle.depth, particle.lat, particle.lon]
+#     if math.fabs(uu) < 1e-10 and math.fabs(vv) < 1e-10:
+#         if particle.beached > 3:
+#             print('WARNING: UBeaching deleted a particle.')
+#             particle.delete()
+#         else:
+#             (ub, vb) = fieldset.UVunbeach[0., particle.depth, particle.lat, particle.lon]
+#             particle.lon += ub * math.fabs(particle.dt)
+#             particle.lat += vb * math.fabs(particle.dt)
+#             particle.beached += 1
+#             particle.unbeached += 1
+#     else:
+#         particle.beached = 0
+
+
+# def UnBeaching(particle, fieldset, time):
+#     """Unbeach particles."""
+#     (uu, vv, ww) = fieldset.UVW[time, particle.depth, particle.lat, particle.lon]
+#     (ub, vb) = fieldset.UVunbeach[0., particle.depth, particle.lat, particle.lon]
+#     if ((math.fabs(uu) < 1e-12 and math.fabs(vv) < 1e-12) or math.fabs(ub) > 1e-14 or math.fabs(vb) > 1e-14):
+#         if particle.beached > 3:
+#             print('WARNING: UBeaching deleted a particle.')
+#             particle.delete()
+#         else:
+
+#             particle.lon += ub * math.fabs(particle.dt)
+#             particle.lat += vb * math.fabs(particle.dt)
+#             particle.beached += 1
+#             particle.unbeached += 1
+#     else:
+#         particle.beached = 0
+
+# def UnBeaching(particle, fieldset, time):
+#     """Unbeach particles."""
+#     if particle.beached >= 1:
+#         (ub, vb) = fieldset.UVunbeach[0., particle.depth, particle.lat, particle.lon]
+#         (uu, vv, ww) = fieldset.UVW[time, particle.depth, particle.lat, particle.lon]
+#         print('B={} y={:.2f} x={:.2f} z={:.2f} ub={} vb={} uu={} vv={}'
+#               .format(particle.beached, particle.lat, particle.lon,
+#                       particle.depth, ub, vb, uu, vv))
+#         particle.unbeached += 1
+#         (ub, vb) = fieldset.UVunbeach[0., particle.depth, particle.lat, particle.lon]
+#         if math.fabs(ub) > fieldset.geo/3:
+#             ubx = fieldset.geo * (1/math.cos(particle.lat*math.pi/180))
+#             particle.lon += math.copysign(ubx, ub) * math.fabs(particle.dt)
+#         if math.fabs(vb) > fieldset.geo/3:
+#             particle.lat += math.copysign(fieldset.geo, vb) * math.fabs(particle.dt)
+
+# def UnBeaching(particle, fieldset, time):
+#     """Unbeach particles."""
+#     if particle.beached >= 1:
+#         (ub, vb) = fieldset.UVunbeach[0., particle.depth, particle.lat, particle.lon]
+#         land = fieldset.land[0., particle.depth, particle.lat, particle.lon]
+#         (uu, vv, ww) = fieldset.UVW[time, particle.depth, particle.lat, particle.lon]
+#         print()
+#         print('B={} ub={} vb={} ld={} uu={} vv={}'.format(particle.beached, ub, vb, land, uu, vv))
+#         print('B={} y={:.2f} x={:.2f} z={:.2f}'.format(particle.beached, particle.lat, particle.lon, particle.depth))
+#         ubx = fieldset.geo * (1/math.cos(particle.lat*math.pi/180))
+#         particle.lon += math.copysign(ubx, ub) * math.fabs(particle.dt)
+#         particle.lat += math.copysign(fieldset.geo, vb) * math.fabs(particle.dt)
+#         particle.unbeached += 1
+#         print('B={} y={:.2f} x={:.2f} z={:.2f}'.format(particle.beached, particle.lat, particle.lon, particle.depth))
 
 
 def DeleteParticle(particle, fieldset, time):

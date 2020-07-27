@@ -92,7 +92,7 @@ fieldset = main.ofam_fieldset(time_bnds, exp, vcoord='sw_edges_ocean',
                               add_unbeach_vel=unbeach)
 
 
-class zdParticle(ScipyParticle):
+class zdParticle(JITParticle):
     """Particle class that saves particle age and zonal velocity."""
 
     # The age of the particle.

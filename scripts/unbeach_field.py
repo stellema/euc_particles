@@ -99,7 +99,7 @@ T = np.array(ds.temp)*0 + 1
 U[np.isnan(U)] = 0
 V[np.isnan(V)] = 0
 T[np.isnan(T)] = 0
-ld = np.array(ds.temp)*0
+ld = np.zeros(ds.u.shape)
 # ld[np.isnan(ld)] = 1
 ub = np.zeros(ds.u.shape)
 vb = np.zeros(ds.u.shape)
@@ -287,12 +287,12 @@ db.attrs['history'] = ('Created {}.'.format(datetime.now().strftime("%Y-%m-%d"))
 
 # Add land mask.
 
-dims = ('Time', 'st_ocean', 'yt_ocean', 'xt_ocean')
-land = xr.DataArray(ld, name='land', dims=dims, coords=ds.temp.coords)
+dims = ('Time', 'st_ocean', 'yu_ocean', 'xu_ocean')
+land = xr.DataArray(ld, name='land', dims=dims, coords=ds.u.coords, attrs=ds.v.attrs)
 db[land.name] = land
 
 # Checks all four points and uses given unBeach flags.
-db.to_netcdf(path=cfg.data/'OFAM3_unbeach_land_tcell.nc')
+db.to_netcdf(path=cfg.data/'OFAM3_unbeach_land_ucell.nc')
 
 # (db.unBeachU.isel(st_ocean=20).sel(xu_ocean=slice(120, 150), yu_ocean=slice(-13, -10))*2+
 # db.unBeachV.isel(st_ocean=20).sel(xu_ocean=slice(120, 150), yu_ocean=slice(-13, -10))).plot()
