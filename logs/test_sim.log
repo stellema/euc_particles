@@ -1031,3 +1031,733 @@
 2020-07-27 13:39:32,892:run_EUC:DEBUG:sim_hist_190_v73r0:Temp=QZGCXJEL: Rank= 0: #Particles=9
 2020-07-27 13:39:34,569:compile:INFO:Compiled zdParticleDelWestAdvectionRK4_3DbUnBeachingAgeZoneDistance ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\b18d3375a53f0bf4346ad68c01a3bfd9_0.dll
 2020-07-27 13:39:40,670:run_EUC:INFO:sim_hist_190_v73r0:Completed!: 00:00:11: Rank= 0: #Particles=9-5=4
+2020-07-27 15:19:27,331:__init__:WARNING:Casting lon data to np.float32
+2020-07-27 15:19:27,332:__init__:WARNING:Casting lat data to np.float32
+2020-07-27 15:19:27,333:__init__:WARNING:Casting depth data to np.float32
+2020-07-27 15:19:27,334:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-27 15:19:28,111:reshape:WARNING:Casting field data to np.float32
+2020-07-27 15:19:29,404:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-27 15:19:29,404:pset_euc:INFO:sim_hist_165_v27r0:Particles: /repeat=1: Total=1
+2020-07-27 15:19:29,405:pset_euc:INFO:sim_hist_165_v27r0:Lon=165: Lat=[-1.7--1.7 x-1.7]: Depth=[250-250m x250]
+2020-07-27 15:19:29,405:<module>:INFO:sim_hist_165_v27r0:2012-12-26 to 2012-04-06: Runtime=264 days
+2020-07-27 15:19:54,296:__init__:WARNING:Casting lon data to np.float32
+2020-07-27 15:19:54,297:__init__:WARNING:Casting lat data to np.float32
+2020-07-27 15:19:54,298:__init__:WARNING:Casting depth data to np.float32
+2020-07-27 15:19:54,300:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-27 15:19:55,139:reshape:WARNING:Casting field data to np.float32
+2020-07-27 15:19:56,556:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-27 15:19:56,557:pset_euc:INFO:sim_hist_165_v72r0:Particles: /repeat=1: Total=1
+2020-07-27 15:19:56,558:pset_euc:INFO:sim_hist_165_v72r0:Lon=165: Lat=[-1.7--1.7 x-1.7]: Depth=[250-250m x250]
+2020-07-27 15:19:56,559:<module>:INFO:sim_hist_165_v72r0:2012-12-26 to 2012-04-06: Runtime=264 days
+2020-07-27 15:22:22,008:__init__:WARNING:Casting lon data to np.float32
+2020-07-27 15:22:22,010:__init__:WARNING:Casting lat data to np.float32
+2020-07-27 15:22:22,011:__init__:WARNING:Casting depth data to np.float32
+2020-07-27 15:22:22,014:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-27 15:22:23,719:reshape:WARNING:Casting field data to np.float32
+2020-07-27 15:22:25,986:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-27 15:22:25,987:pset_euc:INFO:sim_hist_165_v49r0:Particles: /repeat=1: Total=1
+2020-07-27 15:22:25,987:pset_euc:INFO:sim_hist_165_v49r0:Lon=165: Lat=[-1.7--1.7 x-1.7]: Depth=[250-250m x250]
+2020-07-27 15:22:25,988:<module>:INFO:sim_hist_165_v49r0:2012-12-26 to 2012-04-06: Runtime=264 days
+2020-07-27 15:38:02,498:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 7.5168e+06
+2020-07-27 15:38:06,139:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 7.4304e+06
+2020-07-27 15:38:09,675:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 7.344e+06
+2020-07-27 15:38:13,198:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 7.2576e+06
+2020-07-27 15:38:16,532:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 7.1712e+06
+2020-07-27 15:38:20,027:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 7.0848e+06
+2020-07-27 15:38:23,475:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 6.9984e+06
+2020-07-27 15:38:26,999:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 6.912e+06
+2020-07-27 15:38:30,417:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 6.8256e+06
+2020-07-27 15:38:33,870:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 6.7392e+06
+2020-07-27 15:38:37,357:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 6.6528e+06
+2020-07-27 15:38:40,815:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 6.5664e+06
+2020-07-27 15:38:44,279:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 6.48e+06
+2020-07-27 15:38:47,740:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 6.3936e+06
+2020-07-27 15:38:51,242:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 6.3072e+06
+2020-07-27 15:38:54,767:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 6.2208e+06
+2020-07-27 15:38:58,159:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 6.1344e+06
+2020-07-27 15:39:01,686:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 6.048e+06
+2020-07-27 15:39:05,229:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 5.9616e+06
+2020-07-27 15:39:08,739:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 5.8752e+06
+2020-07-27 15:39:12,179:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 5.7888e+06
+2020-07-27 15:39:15,698:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 5.7024e+06
+2020-07-27 15:39:19,183:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 5.616e+06
+2020-07-27 15:39:22,701:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 5.5296e+06
+2020-07-27 15:39:26,169:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 5.4432e+06
+2020-07-27 15:39:29,707:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 5.3568e+06
+2020-07-27 15:39:33,214:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 5.2704e+06
+2020-07-27 15:39:36,684:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 5.184e+06
+2020-07-27 15:39:40,108:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 5.0976e+06
+2020-07-27 15:39:43,614:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 5.0112e+06
+2020-07-27 15:39:46,217:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 950400
+2020-07-27 15:39:47,047:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 4.9248e+06
+2020-07-27 15:39:50,009:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 864000
+2020-07-27 15:39:50,536:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 4.8384e+06
+2020-07-27 15:39:53,378:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 777600
+2020-07-27 15:39:53,895:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 4.752e+06
+2020-07-27 15:39:56,727:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 691200
+2020-07-27 15:39:57,363:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 4.6656e+06
+2020-07-27 15:40:00,347:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 604800
+2020-07-27 15:40:00,855:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 4.5792e+06
+2020-07-27 15:40:03,705:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 518400
+2020-07-27 15:40:04,282:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 4.4928e+06
+2020-07-27 15:40:07,075:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 432000
+2020-07-27 15:40:07,082:<module>:INFO:sim_hist_165_v27r0:Completed!: 00:20:40: Rank= 0: #Particles=1-1=0
+2020-07-27 15:40:07,600:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 4.4064e+06
+2020-07-27 15:40:10,855:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 4.32e+06
+2020-07-27 15:40:14,127:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 4.2336e+06
+2020-07-27 15:40:17,367:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 4.1472e+06
+2020-07-27 15:40:20,637:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 4.0608e+06
+2020-07-27 15:40:23,824:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 3.9744e+06
+2020-07-27 15:40:26,975:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 3.888e+06
+2020-07-27 15:40:30,139:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 3.8016e+06
+2020-07-27 15:40:33,381:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 3.7152e+06
+2020-07-27 15:40:36,543:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 3.6288e+06
+2020-07-27 15:40:39,813:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 3.5424e+06
+2020-07-27 15:40:42,986:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 3.456e+06
+2020-07-27 15:40:46,152:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 3.3696e+06
+2020-07-27 15:40:49,287:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 3.2832e+06
+2020-07-27 15:40:52,515:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 3.1968e+06
+2020-07-27 15:40:55,689:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 3.1104e+06
+2020-07-27 15:40:58,827:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 3.024e+06
+2020-07-27 15:41:02,019:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 2.9376e+06
+2020-07-27 15:41:05,166:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 2.8512e+06
+2020-07-27 15:41:08,379:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 2.7648e+06
+2020-07-27 15:41:11,586:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 2.6784e+06
+2020-07-27 15:41:14,858:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 2.592e+06
+2020-07-27 15:41:18,068:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 2.5056e+06
+2020-07-27 15:41:21,430:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 2.4192e+06
+2020-07-27 15:41:24,603:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 2.3328e+06
+2020-07-27 15:41:27,901:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 2.2464e+06
+2020-07-27 15:41:31,083:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 2.16e+06
+2020-07-27 15:41:34,516:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 2.0736e+06
+2020-07-27 15:41:37,843:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 1.9872e+06
+2020-07-27 15:41:41,190:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 1.9008e+06
+2020-07-27 15:41:44,552:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 1.8144e+06
+2020-07-27 15:41:47,920:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 1.728e+06
+2020-07-27 15:41:51,243:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 1.6416e+06
+2020-07-27 15:41:54,867:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 1.5552e+06
+2020-07-27 15:41:58,226:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 1.4688e+06
+2020-07-27 15:42:01,410:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 1.3824e+06
+2020-07-27 15:42:04,751:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 1.296e+06
+2020-07-27 15:42:08,050:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 1.2096e+06
+2020-07-27 15:42:11,221:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 1.1232e+06
+2020-07-27 15:42:14,486:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 1.0368e+06
+2020-07-27 15:42:17,621:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 950400
+2020-07-27 15:42:20,839:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 864000
+2020-07-27 15:42:24,065:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 777600
+2020-07-27 15:42:27,439:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 691200
+2020-07-27 15:42:30,674:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 604800
+2020-07-27 15:42:33,969:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 518400
+2020-07-27 15:42:37,256:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 432000
+2020-07-27 15:42:37,261:<module>:INFO:sim_hist_165_v49r0:Completed!: 00:20:15: Rank= 0: #Particles=1-1=0
+2020-07-27 15:45:19,987:pset_euc:INFO:sim_hist_165_v36r0:Particles: /repeat=1: Total=1
+2020-07-27 15:45:19,988:pset_euc:INFO:sim_hist_165_v36r0:Lon=165: Lat=[-1.7--1.7 x-1.7]: Depth=[250-250m x250]
+2020-07-27 15:45:19,994:<module>:INFO:sim_hist_165_v36r0:2012-12-26 to 2012-04-06: Runtime=264 days
+2020-07-27 15:47:53,402:pset_euc:INFO:sim_hist_165_v31r0:Particles: /repeat=1: Total=1
+2020-07-27 15:47:53,403:pset_euc:INFO:sim_hist_165_v31r0:Lon=165: Lat=[-1.7--1.7 x-1.7]: Depth=[250-250m x250]
+2020-07-27 15:47:53,404:<module>:INFO:sim_hist_165_v31r0:2012-12-26 to 2012-04-06: Runtime=264 days
+2020-07-27 15:49:16,967:pset_euc:INFO:sim_hist_165_v54r0:Particles: /repeat=1: Total=1
+2020-07-27 15:49:16,967:pset_euc:INFO:sim_hist_165_v54r0:Lon=165: Lat=[-1.7--1.7 x-1.7]: Depth=[250-250m x250]
+2020-07-27 15:49:16,968:<module>:INFO:sim_hist_165_v54r0:2012-12-26 to 2012-04-06: Runtime=264 days
+2020-07-27 15:54:23,216:pset_euc:INFO:sim_hist_165_v76r0:Particles: /repeat=1: Total=1
+2020-07-27 15:54:23,217:pset_euc:INFO:sim_hist_165_v76r0:Lon=165: Lat=[-1.7--1.7 x-1.7]: Depth=[250-250m x250]
+2020-07-27 15:54:23,218:<module>:INFO:sim_hist_165_v76r0:2012-12-26 to 2012-04-10: Runtime=260 days
+2020-07-27 15:56:15,423:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 7.5168e+06
+2020-07-27 15:56:19,506:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 7.4304e+06
+2020-07-27 15:56:23,394:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 7.344e+06
+2020-07-27 15:56:27,498:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 7.2576e+06
+2020-07-27 15:56:31,489:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 7.1712e+06
+2020-07-27 15:56:35,604:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 7.0848e+06
+2020-07-27 15:56:39,650:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 6.9984e+06
+2020-07-27 15:56:43,803:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 6.912e+06
+2020-07-27 15:56:47,877:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 6.8256e+06
+2020-07-27 15:56:52,076:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 6.7392e+06
+2020-07-27 15:56:56,044:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 6.6528e+06
+2020-07-27 15:57:00,407:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 6.5664e+06
+2020-07-27 15:57:04,591:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 6.48e+06
+2020-07-27 15:57:08,753:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 6.3936e+06
+2020-07-27 15:57:12,732:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 6.3072e+06
+2020-07-27 15:57:16,710:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 6.2208e+06
+2020-07-27 15:57:20,866:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 6.1344e+06
+2020-07-27 15:57:24,920:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 6.048e+06
+2020-07-27 15:57:28,889:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 5.9616e+06
+2020-07-27 15:57:33,157:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 5.8752e+06
+2020-07-27 15:57:37,232:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 5.7888e+06
+2020-07-27 15:57:41,528:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 5.7024e+06
+2020-07-27 15:57:45,750:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 5.616e+06
+2020-07-27 15:57:49,902:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 5.5296e+06
+2020-07-27 15:57:54,083:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 5.4432e+06
+2020-07-27 15:57:58,458:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 5.3568e+06
+2020-07-27 15:58:03,104:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 5.2704e+06
+2020-07-27 15:58:07,836:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 5.184e+06
+2020-07-27 15:58:12,525:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 5.0976e+06
+2020-07-27 15:58:16,766:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 5.0112e+06
+2020-07-27 15:58:21,156:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 4.9248e+06
+2020-07-27 15:58:25,171:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 4.8384e+06
+2020-07-27 15:58:29,397:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 4.752e+06
+2020-07-27 15:58:33,535:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 4.6656e+06
+2020-07-27 15:58:37,734:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 4.5792e+06
+2020-07-27 15:58:42,070:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 4.4928e+06
+2020-07-27 15:58:46,504:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 4.4064e+06
+2020-07-27 15:58:50,994:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 4.32e+06
+2020-07-27 15:58:55,233:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 4.2336e+06
+2020-07-27 15:58:59,498:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 4.1472e+06
+2020-07-27 15:59:03,852:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 4.0608e+06
+2020-07-27 15:59:08,084:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 3.9744e+06
+2020-07-27 15:59:12,878:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 3.888e+06
+2020-07-27 15:59:17,172:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 3.8016e+06
+2020-07-27 15:59:21,413:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 3.7152e+06
+2020-07-27 15:59:25,652:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 3.6288e+06
+2020-07-27 15:59:29,812:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 3.5424e+06
+2020-07-27 15:59:33,973:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 3.456e+06
+2020-07-27 15:59:38,334:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 3.3696e+06
+2020-07-27 15:59:42,456:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 3.2832e+06
+2020-07-27 15:59:46,836:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 3.1968e+06
+2020-07-27 15:59:50,923:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 3.1104e+06
+2020-07-27 15:59:55,293:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 3.024e+06
+2020-07-27 15:59:59,762:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 2.9376e+06
+2020-07-27 16:00:04,282:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 2.8512e+06
+2020-07-27 16:00:08,674:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 2.7648e+06
+2020-07-27 16:00:12,939:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 2.6784e+06
+2020-07-27 16:00:17,650:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 2.592e+06
+2020-07-27 16:00:22,140:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 2.5056e+06
+2020-07-27 16:00:26,553:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 2.4192e+06
+2020-07-27 16:00:30,921:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 2.3328e+06
+2020-07-27 16:00:35,426:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 2.2464e+06
+2020-07-27 16:00:39,744:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 2.16e+06
+2020-07-27 16:00:44,227:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 2.0736e+06
+2020-07-27 16:00:48,364:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 1.9872e+06
+2020-07-27 16:00:52,608:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 1.9008e+06
+2020-07-27 16:00:56,635:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 1.8144e+06
+2020-07-27 16:01:00,946:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 1.728e+06
+2020-07-27 16:01:05,164:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 1.6416e+06
+2020-07-27 16:01:09,507:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 1.5552e+06
+2020-07-27 16:01:13,592:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 1.4688e+06
+2020-07-27 16:01:18,096:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 1.3824e+06
+2020-07-27 16:01:22,384:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 1.296e+06
+2020-07-27 16:01:26,556:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 1.2096e+06
+2020-07-27 16:01:30,744:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 1.1232e+06
+2020-07-27 16:01:34,923:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 1.0368e+06
+2020-07-27 16:01:39,131:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 950400
+2020-07-27 16:01:43,268:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 864000
+2020-07-27 16:01:48,033:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 777600
+2020-07-27 16:01:52,640:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 691200
+2020-07-27 16:01:56,819:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 604800
+2020-07-27 16:02:01,219:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 518400
+2020-07-27 16:02:05,671:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 432000
+2020-07-27 16:02:05,679:<module>:INFO:sim_hist_165_v36r0:Completed!: 00:16:49: Rank= 0: #Particles=1-1=0
+2020-07-27 16:02:07,324:__init__:WARNING:Casting lon data to np.float32
+2020-07-27 16:02:07,326:__init__:WARNING:Casting lat data to np.float32
+2020-07-27 16:02:07,328:__init__:WARNING:Casting depth data to np.float32
+2020-07-27 16:02:07,333:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-27 16:02:09,145:reshape:WARNING:Casting field data to np.float32
+2020-07-27 16:02:12,027:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-27 16:02:12,030:pset_euc:INFO:sim_hist_165_v29r0:Particles: /repeat=1: Total=1
+2020-07-27 16:02:12,031:pset_euc:INFO:sim_hist_165_v29r0:Lon=165: Lat=[-1.7--1.7 x-1.7]: Depth=[250-250m x250]
+2020-07-27 16:02:12,032:<module>:INFO:sim_hist_165_v29r0:2012-12-26 to 2012-04-10: Runtime=260 days
+2020-07-27 16:02:29,680:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 6.2208e+06
+2020-07-27 16:02:33,879:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 6.1344e+06
+2020-07-27 16:02:38,458:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 6.048e+06
+2020-07-27 16:02:42,832:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 5.9616e+06
+2020-07-27 16:02:47,331:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 5.8752e+06
+2020-07-27 16:02:52,152:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 5.7888e+06
+2020-07-27 16:02:56,559:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 5.7024e+06
+2020-07-27 16:03:00,917:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 5.616e+06
+2020-07-27 16:03:05,031:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 5.5296e+06
+2020-07-27 16:03:09,118:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 5.4432e+06
+2020-07-27 16:03:13,498:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 5.3568e+06
+2020-07-27 16:03:17,712:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 5.2704e+06
+2020-07-27 16:03:21,983:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 5.184e+06
+2020-07-27 16:03:26,141:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 5.0976e+06
+2020-07-27 16:03:30,292:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 5.0112e+06
+2020-07-27 16:03:34,236:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 4.9248e+06
+2020-07-27 16:03:38,287:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 4.8384e+06
+2020-07-27 16:03:42,366:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 4.752e+06
+2020-07-27 16:03:46,558:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 4.6656e+06
+2020-07-27 16:03:50,698:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 4.5792e+06
+2020-07-27 16:03:54,913:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 4.4928e+06
+2020-07-27 16:03:58,885:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 4.4064e+06
+2020-07-27 16:04:03,232:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 4.32e+06
+2020-07-27 16:04:07,352:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 4.2336e+06
+2020-07-27 16:04:11,359:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 4.1472e+06
+2020-07-27 16:04:15,643:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 4.0608e+06
+2020-07-27 16:04:19,827:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 3.9744e+06
+2020-07-27 16:04:23,906:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 3.888e+06
+2020-07-27 16:04:28,097:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 3.8016e+06
+2020-07-27 16:04:32,446:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 3.7152e+06
+2020-07-27 16:04:36,446:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 3.6288e+06
+2020-07-27 16:04:40,495:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 3.5424e+06
+2020-07-27 16:04:44,592:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 3.456e+06
+2020-07-27 16:04:48,588:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 3.3696e+06
+2020-07-27 16:04:52,833:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 3.2832e+06
+2020-07-27 16:04:57,047:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 3.1968e+06
+2020-07-27 16:05:01,108:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 3.1104e+06
+2020-07-27 16:05:05,303:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 3.024e+06
+2020-07-27 16:05:09,379:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 2.9376e+06
+2020-07-27 16:05:13,397:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 2.8512e+06
+2020-07-27 16:05:17,638:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 2.7648e+06
+2020-07-27 16:05:21,762:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 2.6784e+06
+2020-07-27 16:05:25,790:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 2.592e+06
+2020-07-27 16:05:30,369:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 2.5056e+06
+2020-07-27 16:05:34,657:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 2.4192e+06
+2020-07-27 16:05:38,688:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 2.3328e+06
+2020-07-27 16:05:43,281:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 2.2464e+06
+2020-07-27 16:05:48,220:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 2.16e+06
+2020-07-27 16:05:52,928:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 2.0736e+06
+2020-07-27 16:05:57,662:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 1.9872e+06
+2020-07-27 16:06:01,950:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 1.9008e+06
+2020-07-27 16:06:05,951:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 1.8144e+06
+2020-07-27 16:06:10,250:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 1.728e+06
+2020-07-27 16:06:14,274:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 1.6416e+06
+2020-07-27 16:06:15,150:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 8.8128e+06
+2020-07-27 16:06:19,085:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 1.5552e+06
+2020-07-27 16:06:19,376:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 8.7264e+06
+2020-07-27 16:06:23,298:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 1.4688e+06
+2020-07-27 16:06:23,456:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 8.64e+06
+2020-07-27 16:06:27,348:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 1.3824e+06
+2020-07-27 16:06:27,494:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 8.5536e+06
+2020-07-27 16:06:31,662:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 1.296e+06
+2020-07-27 16:06:31,873:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 8.4672e+06
+2020-07-27 16:06:35,847:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 8.3808e+06
+2020-07-27 16:06:35,979:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 1.2096e+06
+2020-07-27 16:06:39,901:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 8.2944e+06
+2020-07-27 16:06:40,071:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 1.1232e+06
+2020-07-27 16:06:44,276:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 1.0368e+06
+2020-07-27 16:06:44,534:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 8.208e+06
+2020-07-27 16:06:48,266:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 950400
+2020-07-27 16:06:49,020:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 8.1216e+06
+2020-07-27 16:06:52,563:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 864000
+2020-07-27 16:06:53,248:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 8.0352e+06
+2020-07-27 16:06:57,522:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 7.9488e+06
+2020-07-27 16:06:57,618:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 777600
+2020-07-27 16:07:01,683:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 7.8624e+06
+2020-07-27 16:07:01,834:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 691200
+2020-07-27 16:07:05,787:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 7.776e+06
+2020-07-27 16:07:06,174:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 604800
+2020-07-27 16:07:10,222:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 7.6896e+06
+2020-07-27 16:07:10,639:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 518400
+2020-07-27 16:07:14,406:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 7.6032e+06
+2020-07-27 16:07:14,835:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 432000
+2020-07-27 16:07:14,842:<module>:INFO:sim_hist_165_v54r0:Completed!: 00:18:01: Rank= 0: #Particles=1-1=0
+2020-07-27 16:07:18,191:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 7.5168e+06
+2020-07-27 16:07:21,803:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 7.4304e+06
+2020-07-27 16:07:25,955:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 7.344e+06
+2020-07-27 16:07:29,453:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 7.2576e+06
+2020-07-27 16:07:32,818:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 7.1712e+06
+2020-07-27 16:07:36,150:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 7.0848e+06
+2020-07-27 16:07:39,510:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 6.9984e+06
+2020-07-27 16:07:42,873:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 6.912e+06
+2020-07-27 16:07:46,219:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 6.8256e+06
+2020-07-27 16:07:49,721:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 6.7392e+06
+2020-07-27 16:07:53,257:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 6.6528e+06
+2020-07-27 16:07:57,130:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 6.5664e+06
+2020-07-27 16:08:00,631:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 6.48e+06
+2020-07-27 16:08:04,218:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 6.3936e+06
+2020-07-27 16:08:07,659:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 6.3072e+06
+2020-07-27 16:08:11,082:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 6.2208e+06
+2020-07-27 16:08:14,482:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 6.1344e+06
+2020-07-27 16:08:18,000:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 6.048e+06
+2020-07-27 16:08:21,396:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 5.9616e+06
+2020-07-27 16:08:24,789:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 5.8752e+06
+2020-07-27 16:08:28,137:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 5.7888e+06
+2020-07-27 16:08:31,989:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 5.7024e+06
+2020-07-27 16:08:35,368:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 5.616e+06
+2020-07-27 16:08:38,707:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 5.5296e+06
+2020-07-27 16:08:42,104:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 5.4432e+06
+2020-07-27 16:08:45,546:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 5.3568e+06
+2020-07-27 16:08:49,016:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 5.2704e+06
+2020-07-27 16:08:52,549:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 5.184e+06
+2020-07-27 16:08:55,926:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 5.0976e+06
+2020-07-27 16:08:59,325:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 5.0112e+06
+2020-07-27 16:09:03,245:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 4.9248e+06
+2020-07-27 16:09:06,639:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 4.8384e+06
+2020-07-27 16:09:10,115:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 4.752e+06
+2020-07-27 16:09:13,671:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 4.6656e+06
+2020-07-27 16:09:17,096:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 4.5792e+06
+2020-07-27 16:09:20,502:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 4.4928e+06
+2020-07-27 16:09:23,874:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 4.4064e+06
+2020-07-27 16:09:27,258:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 4.32e+06
+2020-07-27 16:09:30,615:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 4.2336e+06
+2020-07-27 16:09:34,013:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 4.1472e+06
+2020-07-27 16:09:37,818:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 4.0608e+06
+2020-07-27 16:09:41,189:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 3.9744e+06
+2020-07-27 16:09:44,550:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 3.888e+06
+2020-07-27 16:09:47,957:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 3.8016e+06
+2020-07-27 16:09:51,468:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 3.7152e+06
+2020-07-27 16:09:55,001:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 3.6288e+06
+2020-07-27 16:09:58,374:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 3.5424e+06
+2020-07-27 16:10:01,750:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 3.456e+06
+2020-07-27 16:10:05,111:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 3.3696e+06
+2020-07-27 16:10:08,989:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 3.2832e+06
+2020-07-27 16:10:12,366:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 3.1968e+06
+2020-07-27 16:10:15,699:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 3.1104e+06
+2020-07-27 16:10:19,065:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 3.024e+06
+2020-07-27 16:10:22,440:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 2.9376e+06
+2020-07-27 16:10:25,877:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 2.8512e+06
+2020-07-27 16:10:29,505:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 2.7648e+06
+2020-07-27 16:10:33,121:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 2.6784e+06
+2020-07-27 16:10:36,519:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 2.592e+06
+2020-07-27 16:10:40,390:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 2.5056e+06
+2020-07-27 16:10:43,960:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 2.4192e+06
+2020-07-27 16:10:47,381:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 2.3328e+06
+2020-07-27 16:10:50,818:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 2.2464e+06
+2020-07-27 16:10:54,246:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 2.16e+06
+2020-07-27 16:10:57,629:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 2.0736e+06
+2020-07-27 16:11:01,136:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 1.9872e+06
+2020-07-27 16:11:04,661:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 1.9008e+06
+2020-07-27 16:11:08,363:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 1.8144e+06
+2020-07-27 16:11:12,445:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 1.728e+06
+2020-07-27 16:11:15,845:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 1.6416e+06
+2020-07-27 16:11:19,203:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 1.5552e+06
+2020-07-27 16:11:22,690:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 1.4688e+06
+2020-07-27 16:11:26,152:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 1.3824e+06
+2020-07-27 16:11:29,559:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 1.296e+06
+2020-07-27 16:11:32,952:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 1.2096e+06
+2020-07-27 16:11:37,023:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 1.1232e+06
+2020-07-27 16:11:40,664:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 1.0368e+06
+2020-07-27 16:11:44,453:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 950400
+2020-07-27 16:11:48,220:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 864000
+2020-07-27 16:11:51,606:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 777600
+2020-07-27 16:11:51,611:<module>:INFO:sim_hist_165_v76r0:Completed!: 00:17:32: Rank= 0: #Particles=1-1=0
+2020-07-27 16:12:55,596:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 8.8128e+06
+2020-07-27 16:12:58,714:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 8.7264e+06
+2020-07-27 16:13:01,899:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 8.64e+06
+2020-07-27 16:13:05,071:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 8.5536e+06
+2020-07-27 16:13:08,310:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 8.4672e+06
+2020-07-27 16:13:11,501:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 8.3808e+06
+2020-07-27 16:13:14,876:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 8.2944e+06
+2020-07-27 16:13:18,129:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 8.208e+06
+2020-07-27 16:13:21,352:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 8.1216e+06
+2020-07-27 16:13:24,524:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 8.0352e+06
+2020-07-27 16:13:27,697:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 7.9488e+06
+2020-07-27 16:13:30,837:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 7.8624e+06
+2020-07-27 16:13:34,059:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 7.776e+06
+2020-07-27 16:13:37,244:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 7.6896e+06
+2020-07-27 16:13:40,397:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 7.6032e+06
+2020-07-27 16:13:43,581:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 7.5168e+06
+2020-07-27 16:13:46,808:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 7.4304e+06
+2020-07-27 16:13:50,037:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 7.344e+06
+2020-07-27 16:13:53,210:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 7.2576e+06
+2020-07-27 16:13:56,356:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 7.1712e+06
+2020-07-27 16:13:59,670:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 7.0848e+06
+2020-07-27 16:14:02,913:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 6.9984e+06
+2020-07-27 16:14:06,168:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 6.912e+06
+2020-07-27 16:14:09,341:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 6.8256e+06
+2020-07-27 16:14:12,543:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 6.7392e+06
+2020-07-27 16:14:15,711:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 6.6528e+06
+2020-07-27 16:14:18,891:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 6.5664e+06
+2020-07-27 16:14:22,099:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 6.48e+06
+2020-07-27 16:14:25,330:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 6.3936e+06
+2020-07-27 16:14:28,542:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 6.3072e+06
+2020-07-27 16:14:31,679:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 6.2208e+06
+2020-07-27 16:14:34,896:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 6.1344e+06
+2020-07-27 16:14:38,100:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 6.048e+06
+2020-07-27 16:14:41,272:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 5.9616e+06
+2020-07-27 16:14:44,411:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 5.8752e+06
+2020-07-27 16:14:47,550:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 5.7888e+06
+2020-07-27 16:14:50,802:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 5.7024e+06
+2020-07-27 16:14:54,013:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 5.616e+06
+2020-07-27 16:14:57,201:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 5.5296e+06
+2020-07-27 16:15:00,375:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 5.4432e+06
+2020-07-27 16:15:03,597:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 5.3568e+06
+2020-07-27 16:15:06,888:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 5.2704e+06
+2020-07-27 16:15:10,098:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 5.184e+06
+2020-07-27 16:15:13,179:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 5.0976e+06
+2020-07-27 16:15:16,446:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 5.0112e+06
+2020-07-27 16:15:19,713:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 4.9248e+06
+2020-07-27 16:15:22,910:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 4.8384e+06
+2020-07-27 16:15:25,987:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 4.752e+06
+2020-07-27 16:15:29,240:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 4.6656e+06
+2020-07-27 16:15:32,419:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 4.5792e+06
+2020-07-27 16:15:35,604:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 4.4928e+06
+2020-07-27 16:15:38,770:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 4.4064e+06
+2020-07-27 16:15:41,971:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 4.32e+06
+2020-07-27 16:15:45,159:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 4.2336e+06
+2020-07-27 16:15:48,381:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 4.1472e+06
+2020-07-27 16:15:51,500:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 4.0608e+06
+2020-07-27 16:15:54,713:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 3.9744e+06
+2020-07-27 16:15:57,857:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 3.888e+06
+2020-07-27 16:16:01,032:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 3.8016e+06
+2020-07-27 16:16:04,116:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 3.7152e+06
+2020-07-27 16:16:07,328:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 3.6288e+06
+2020-07-27 16:16:10,517:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 3.5424e+06
+2020-07-27 16:16:13,766:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 3.456e+06
+2020-07-27 16:16:16,987:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 3.3696e+06
+2020-07-27 16:16:20,215:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 3.2832e+06
+2020-07-27 16:16:23,417:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 3.1968e+06
+2020-07-27 16:16:26,643:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 3.1104e+06
+2020-07-27 16:16:29,907:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 3.024e+06
+2020-07-27 16:16:33,011:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 2.9376e+06
+2020-07-27 16:16:36,296:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 2.8512e+06
+2020-07-27 16:16:39,499:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 2.7648e+06
+2020-07-27 16:16:42,702:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 2.6784e+06
+2020-07-27 16:16:45,922:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 2.592e+06
+2020-07-27 16:16:49,128:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 2.5056e+06
+2020-07-27 16:16:52,295:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 2.4192e+06
+2020-07-27 16:16:55,489:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 2.3328e+06
+2020-07-27 16:16:58,640:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 2.2464e+06
+2020-07-27 16:17:01,846:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 2.16e+06
+2020-07-27 16:17:05,017:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 2.0736e+06
+2020-07-27 16:17:08,220:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 1.9872e+06
+2020-07-27 16:17:11,467:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 1.9008e+06
+2020-07-27 16:17:14,744:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 1.8144e+06
+2020-07-27 16:17:17,920:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 1.728e+06
+2020-07-27 16:17:21,126:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 1.6416e+06
+2020-07-27 16:17:24,286:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 1.5552e+06
+2020-07-27 16:17:27,461:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 1.4688e+06
+2020-07-27 16:17:30,653:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 1.3824e+06
+2020-07-27 16:17:33,849:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 1.296e+06
+2020-07-27 16:17:36,982:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 1.2096e+06
+2020-07-27 16:17:40,303:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 1.1232e+06
+2020-07-27 16:17:43,584:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 1.0368e+06
+2020-07-27 16:17:46,771:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 950400
+2020-07-27 16:17:49,921:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 864000
+2020-07-27 16:17:53,006:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 777600
+2020-07-27 16:17:53,014:<module>:INFO:sim_hist_165_v29r0:Completed!: 00:15:46: Rank= 0: #Particles=1-1=0
+2020-07-27 16:29:44,800:pset_euc:INFO:sim_hist_165_v70r0:Particles: /repeat=1: Total=1
+2020-07-27 16:29:44,800:pset_euc:INFO:sim_hist_165_v70r0:Lon=165: Lat=[-1.7--1.7 x-1.7]: Depth=[250-250m x250]
+2020-07-27 16:29:44,804:<module>:INFO:sim_hist_165_v70r0:2012-12-26 to 2012-04-10: Runtime=260 days
+2020-07-27 16:38:45,445:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 8.8128e+06
+2020-07-27 16:38:48,705:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 8.7264e+06
+2020-07-27 16:38:51,853:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 8.64e+06
+2020-07-27 16:38:55,004:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 8.5536e+06
+2020-07-27 16:38:58,540:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 8.4672e+06
+2020-07-27 16:39:01,714:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 8.3808e+06
+2020-07-27 16:39:04,901:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 8.2944e+06
+2020-07-27 16:39:07,957:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 8.208e+06
+2020-07-27 16:39:11,024:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 8.1216e+06
+2020-07-27 16:39:14,174:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 8.0352e+06
+2020-07-27 16:39:17,290:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 7.9488e+06
+2020-07-27 16:39:20,475:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 7.8624e+06
+2020-07-27 16:39:23,659:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 7.776e+06
+2020-07-27 16:39:26,827:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 7.6896e+06
+2020-07-27 16:39:30,349:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 7.6032e+06
+2020-07-27 16:39:33,450:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 7.5168e+06
+2020-07-27 16:39:36,572:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 7.4304e+06
+2020-07-27 16:39:39,702:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 7.344e+06
+2020-07-27 16:39:42,842:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 7.2576e+06
+2020-07-27 16:39:45,932:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 7.1712e+06
+2020-07-27 16:39:48,997:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 7.0848e+06
+2020-07-27 16:39:52,183:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 6.9984e+06
+2020-07-27 16:39:55,421:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 6.912e+06
+2020-07-27 16:39:58,966:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 6.8256e+06
+2020-07-27 16:40:02,140:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 6.7392e+06
+2020-07-27 16:40:05,220:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 6.6528e+06
+2020-07-27 16:40:08,377:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 6.5664e+06
+2020-07-27 16:40:11,495:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 6.48e+06
+2020-07-27 16:40:14,621:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 6.3936e+06
+2020-07-27 16:40:17,708:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 6.3072e+06
+2020-07-27 16:40:20,846:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 6.2208e+06
+2020-07-27 16:40:23,988:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 6.1344e+06
+2020-07-27 16:40:27,113:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 6.048e+06
+2020-07-27 16:40:30,629:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 5.9616e+06
+2020-07-27 16:40:33,799:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 5.8752e+06
+2020-07-27 16:40:36,939:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 5.7888e+06
+2020-07-27 16:40:40,079:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 5.7024e+06
+2020-07-27 16:40:43,187:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 5.616e+06
+2020-07-27 16:40:46,310:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 5.5296e+06
+2020-07-27 16:40:49,488:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 5.4432e+06
+2020-07-27 16:40:52,628:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 5.3568e+06
+2020-07-27 16:40:55,727:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 5.2704e+06
+2020-07-27 16:40:58,852:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 5.184e+06
+2020-07-27 16:41:02,414:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 5.0976e+06
+2020-07-27 16:41:05,493:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 5.0112e+06
+2020-07-27 16:41:08,614:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 4.9248e+06
+2020-07-27 16:41:11,721:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 4.8384e+06
+2020-07-27 16:41:14,884:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 4.752e+06
+2020-07-27 16:41:18,024:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 4.6656e+06
+2020-07-27 16:41:21,117:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 4.5792e+06
+2020-07-27 16:41:24,174:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 4.4928e+06
+2020-07-27 16:41:27,424:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 4.4064e+06
+2020-07-27 16:41:30,547:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 4.32e+06
+2020-07-27 16:41:34,081:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 4.2336e+06
+2020-07-27 16:41:37,197:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 4.1472e+06
+2020-07-27 16:41:40,304:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 4.0608e+06
+2020-07-27 16:41:43,378:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 3.9744e+06
+2020-07-27 16:41:46,502:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 3.888e+06
+2020-07-27 16:41:49,573:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 3.8016e+06
+2020-07-27 16:41:52,708:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 3.7152e+06
+2020-07-27 16:41:55,841:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 3.6288e+06
+2020-07-27 16:41:58,996:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 3.5424e+06
+2020-07-27 16:42:02,143:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 3.456e+06
+2020-07-27 16:42:05,620:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 3.3696e+06
+2020-07-27 16:42:08,741:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 3.2832e+06
+2020-07-27 16:42:11,825:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 3.1968e+06
+2020-07-27 16:42:14,936:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 3.1104e+06
+2020-07-27 16:42:18,064:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 3.024e+06
+2020-07-27 16:42:21,255:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 2.9376e+06
+2020-07-27 16:42:24,365:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 2.8512e+06
+2020-07-27 16:42:27,573:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 2.7648e+06
+2020-07-27 16:42:30,690:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 2.6784e+06
+2020-07-27 16:42:34,249:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 2.592e+06
+2020-07-27 16:42:37,349:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 2.5056e+06
+2020-07-27 16:42:40,438:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 2.4192e+06
+2020-07-27 16:42:43,536:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 2.3328e+06
+2020-07-27 16:42:46,648:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 2.2464e+06
+2020-07-27 16:42:49,815:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 2.16e+06
+2020-07-27 16:42:53,001:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 2.0736e+06
+2020-07-27 16:42:56,106:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 1.9872e+06
+2020-07-27 16:42:59,251:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 1.9008e+06
+2020-07-27 16:43:02,355:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 1.8144e+06
+2020-07-27 16:43:06,154:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 1.728e+06
+2020-07-27 16:43:09,219:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 1.6416e+06
+2020-07-27 16:43:12,298:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 1.5552e+06
+2020-07-27 16:43:15,508:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 1.4688e+06
+2020-07-27 16:43:18,672:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 1.3824e+06
+2020-07-27 16:43:21,786:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 1.296e+06
+2020-07-27 16:43:24,940:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 1.2096e+06
+2020-07-27 16:43:28,067:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 1.1232e+06
+2020-07-27 16:43:31,242:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 1.0368e+06
+2020-07-27 16:43:34,326:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 950400
+2020-07-27 16:43:37,876:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 864000
+2020-07-27 16:43:40,927:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 777600
+2020-07-27 16:43:40,932:<module>:INFO:sim_hist_165_v70r0:Completed!: 00:13:59: Rank= 0: #Particles=1-1=0
+2020-07-27 16:49:53,372:pset_euc:INFO:sim_hist_165_v17r0:Particles: /repeat=1: Total=1
+2020-07-27 16:49:53,373:pset_euc:INFO:sim_hist_165_v17r0:Lon=165: Lat=[-1.7--1.7 x-1.7]: Depth=[250-250m x250]
+2020-07-27 16:49:53,377:<module>:INFO:sim_hist_165_v17r0:2012-12-26 to 2012-04-10: Runtime=260 days
+2020-07-27 16:50:10,784:__enter__:WARNING:File E:\model_output\OFAM\trop_pac\ocean_w_2012_12.nc could not be decoded properly by xarray (version 0.16.0).
+         It will be opened with no decoding. Filling values might be wrongly parsed.
+2020-07-27 16:50:12,486:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 2.28096e+07
+2020-07-27 16:50:15,625:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 2.27232e+07
+2020-07-27 17:02:17,920:pset_euc:INFO:sim_hist_165_v21r0:Particles: /repeat=1: Total=1
+2020-07-27 17:02:17,921:pset_euc:INFO:sim_hist_165_v21r0:Lon=165: Lat=[-1.7--1.7 x-1.7]: Depth=[250-250m x250]
+2020-07-27 17:02:17,922:<module>:INFO:sim_hist_165_v21r0:2012-12-26 to 2012-06-10: Runtime=199 days
+2020-07-27 17:16:02,835:pset_euc:INFO:sim_hist_165_v97r0:Particles: /repeat=1: Total=1
+2020-07-27 17:16:02,835:pset_euc:INFO:sim_hist_165_v97r0:Lon=165: Lat=[-1.7--1.7 x-1.7]: Depth=[250-250m x250]
+2020-07-27 17:16:02,836:<module>:INFO:sim_hist_165_v97r0:2012-12-26 to 2012-06-10: Runtime=199 days
+2020-07-27 17:29:55,061:__init__:WARNING:Casting lon data to np.float32
+2020-07-27 17:29:55,063:__init__:WARNING:Casting lat data to np.float32
+2020-07-27 17:29:55,064:__init__:WARNING:Casting depth data to np.float32
+2020-07-27 17:29:55,066:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-27 17:29:56,313:reshape:WARNING:Casting field data to np.float32
+2020-07-27 17:29:58,042:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-27 17:29:58,043:pset_euc:INFO:sim_hist_165_v63r0:Particles: /repeat=1: Total=1
+2020-07-27 17:29:58,044:pset_euc:INFO:sim_hist_165_v63r0:Lon=165: Lat=[-1.7--1.7 x-1.7]: Depth=[250-250m x250]
+2020-07-27 17:29:58,045:<module>:INFO:sim_hist_165_v63r0:2012-12-26 to 2012-06-10: Runtime=199 days
+2020-07-27 17:30:37,315:pset_euc:INFO:sim_hist_165_v45r0:Particles: /repeat=1: Total=1
+2020-07-27 17:30:37,316:pset_euc:INFO:sim_hist_165_v45r0:Lon=165: Lat=[-1.7--1.7 x-1.7]: Depth=[250-250m x250]
+2020-07-27 17:30:37,318:<module>:INFO:sim_hist_165_v45r0:2012-12-26 to 2012-07-01: Runtime=178 days
+2020-07-27 17:41:43,195:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 8.8128e+06
+2020-07-27 17:41:47,126:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 8.7264e+06
+2020-07-27 17:41:50,962:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 8.64e+06
+2020-07-27 17:41:54,749:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 8.5536e+06
+2020-07-27 17:41:58,468:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 8.4672e+06
+2020-07-27 17:42:02,265:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 8.3808e+06
+2020-07-27 17:42:05,935:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 8.2944e+06
+2020-07-27 17:42:09,765:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 8.208e+06
+2020-07-27 17:42:13,583:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 8.1216e+06
+2020-07-27 17:42:17,614:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 8.0352e+06
+2020-07-27 17:42:21,448:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 7.9488e+06
+2020-07-27 17:42:25,446:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 7.8624e+06
+2020-07-27 17:42:25,452:<module>:INFO:sim_hist_165_v45r0:Completed!: 00:11:50: Rank= 0: #Particles=1-1=0
+2020-07-27 17:52:09,322:pset_euc:INFO:sim_hist_165_v34r0:Particles: /repeat=1: Total=1
+2020-07-27 17:52:09,323:pset_euc:INFO:sim_hist_165_v34r0:Lon=165: Lat=[-1.7--1.7 x-1.7]: Depth=[250-250m x250]
+2020-07-27 17:52:09,324:<module>:INFO:sim_hist_165_v34r0:2012-12-26 to 2012-07-01: Runtime=178 days
+2020-07-27 18:01:49,512:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 8.8128e+06
+2020-07-27 18:01:52,846:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 8.7264e+06
+2020-07-27 18:01:56,122:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 8.64e+06
+2020-07-27 18:01:59,428:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 8.5536e+06
+2020-07-27 18:02:02,679:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 8.4672e+06
+2020-07-27 18:02:05,970:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 8.3808e+06
+2020-07-27 18:02:09,146:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 8.2944e+06
+2020-07-27 18:02:12,429:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 8.208e+06
+2020-07-27 18:02:15,651:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 8.1216e+06
+2020-07-27 18:02:18,875:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 8.0352e+06
+2020-07-27 18:02:22,149:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 7.9488e+06
+2020-07-27 18:02:25,335:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 7.8624e+06
+2020-07-27 18:02:25,340:<module>:INFO:sim_hist_165_v34r0:Completed!: 00:10:19: Rank= 0: #Particles=1-1=0
+2020-07-27 18:12:30,513:pset_euc:INFO:sim_hist_165_v98r0:Particles: /repeat=1: Total=1
+2020-07-27 18:12:30,514:pset_euc:INFO:sim_hist_165_v98r0:Lon=165: Lat=[-1.7--1.7 x-1.7]: Depth=[250-250m x250]
+2020-07-27 18:12:30,515:<module>:INFO:sim_hist_165_v98r0:2012-12-26 to 2012-07-01: Runtime=178 days
+2020-07-27 18:22:18,704:<module>:INFO:sim_hist_165_v98r0:Completed!: 00:09:51: Rank= 0: #Particles=1-0=1
+2020-07-27 18:37:39,897:pset_euc:INFO:sim_hist_165_v35r0:Particles: /repeat=1: Total=1
+2020-07-27 18:37:39,898:pset_euc:INFO:sim_hist_165_v35r0:Lon=165: Lat=[-1.7--1.7 x-1.7]: Depth=[250-250m x250]
+2020-07-27 18:37:39,898:<module>:INFO:sim_hist_165_v35r0:2012-12-26 to 2012-07-06: Runtime=173 days
+2020-07-27 18:38:19,490:__init__:WARNING:Casting lon data to np.float32
+2020-07-27 18:38:19,492:__init__:WARNING:Casting lat data to np.float32
+2020-07-27 18:38:19,493:__init__:WARNING:Casting depth data to np.float32
+2020-07-27 18:38:19,495:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-27 18:38:20,099:reshape:WARNING:Casting field data to np.float32
+2020-07-27 18:38:21,305:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-27 18:38:21,306:pset_euc:INFO:sim_hist_165_v16r0:Particles: /repeat=1: Total=1
+2020-07-27 18:38:21,306:pset_euc:INFO:sim_hist_165_v16r0:Lon=165: Lat=[-1.7--1.7 x-1.7]: Depth=[250-250m x250]
+2020-07-27 18:38:21,307:<module>:INFO:sim_hist_165_v16r0:2012-12-26 to 2012-07-06: Runtime=173 days
+2020-07-27 18:47:41,882:<module>:INFO:sim_hist_165_v35r0:Completed!: 00:10:05: Rank= 0: #Particles=1-0=1
+2020-07-27 18:52:35,758:pset_euc:INFO:sim_hist_165_v12r0:Particles: /repeat=1: Total=1
+2020-07-27 18:52:35,759:pset_euc:INFO:sim_hist_165_v12r0:Lon=165: Lat=[-1.7--1.7 x-1.7]: Depth=[250-250m x250]
+2020-07-27 18:52:35,760:<module>:INFO:sim_hist_165_v12r0:2012-12-26 to 2012-07-06: Runtime=173 days
+2020-07-27 19:02:01,217:<module>:INFO:sim_hist_165_v12r0:Completed!: 00:09:28: Rank= 0: #Particles=1-0=1
+2020-07-27 19:28:19,207:pset_euc:INFO:sim_hist_165_v10r0:Particles: /repeat=1: Total=1
+2020-07-27 19:28:19,208:pset_euc:INFO:sim_hist_165_v10r0:Lon=165: Lat=[-1.7--1.7 x-1.7]: Depth=[250-250m x250]
+2020-07-27 19:28:19,209:<module>:INFO:sim_hist_165_v10r0:2012-12-26 to 2012-07-06: Runtime=173 days
+2020-07-27 19:37:51,354:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 8.64e+06
+2020-07-27 19:37:54,704:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 8.5536e+06
+2020-07-27 19:37:58,041:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 8.4672e+06
+2020-07-27 19:38:01,386:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 8.3808e+06
+2020-07-27 19:38:04,700:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 8.2944e+06
+2020-07-27 19:38:04,705:<module>:INFO:sim_hist_165_v10r0:Completed!: 00:09:49: Rank= 0: #Particles=1-1=0
+2020-07-27 19:43:04,996:pset_euc:INFO:sim_hist_165_v74r0:Particles: /repeat=1: Total=1
+2020-07-27 19:43:04,997:pset_euc:INFO:sim_hist_165_v74r0:Lon=165: Lat=[-1.7--1.7 x-1.7]: Depth=[250-250m x250]
+2020-07-27 19:43:04,999:<module>:INFO:sim_hist_165_v74r0:2012-12-26 to 2012-07-06: Runtime=173 days
+2020-07-27 19:44:30,962:pset_euc:INFO:sim_hist_165_v30r0:Particles: /repeat=1: Total=1
+2020-07-27 19:44:30,963:pset_euc:INFO:sim_hist_165_v30r0:Lon=165: Lat=[-1.7--1.7 x-1.7]: Depth=[250-250m x250]
+2020-07-27 19:44:30,964:<module>:INFO:sim_hist_165_v30r0:2012-12-26 to 2012-07-06: Runtime=173 days
+2020-07-27 19:53:34,405:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 8.64e+06
+2020-07-27 19:53:38,062:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 8.5536e+06
+2020-07-27 19:53:41,785:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 8.4672e+06
+2020-07-27 19:53:45,244:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 8.3808e+06
+2020-07-27 19:53:49,062:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 8.2944e+06
+2020-07-27 19:53:49,068:<module>:INFO:sim_hist_165_v74r0:Completed!: 00:10:47: Rank= 0: #Particles=1-1=0
+2020-07-27 19:55:04,990:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 8.64e+06
+2020-07-27 19:55:08,017:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 8.5536e+06
+2020-07-27 19:55:10,948:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 8.4672e+06
+2020-07-27 19:55:14,014:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 8.3808e+06
+2020-07-27 19:55:17,008:convert_pset_to_dict:WARNING:ParticleSet is empty on writing as array at time 8.2944e+06
+2020-07-27 19:55:17,013:<module>:INFO:sim_hist_165_v30r0:Completed!: 00:10:48: Rank= 0: #Particles=1-1=0
+2020-07-27 20:02:23,833:pset_euc:INFO:sim_hist_165_v90r0:Particles: /repeat=1: Total=1
+2020-07-27 20:02:23,834:pset_euc:INFO:sim_hist_165_v90r0:Lon=165: Lat=[-1.7--1.7 x-1.7]: Depth=[250-250m x250]
+2020-07-27 20:02:23,835:<module>:INFO:sim_hist_165_v90r0:2012-12-26 to 2012-07-06: Runtime=173 days
+2020-07-27 20:03:07,266:pset_euc:INFO:sim_hist_165_v64r0:Particles: /repeat=1: Total=1
+2020-07-27 20:03:07,266:pset_euc:INFO:sim_hist_165_v64r0:Lon=165: Lat=[-1.7--1.7 x-1.7]: Depth=[250-250m x250]
+2020-07-27 20:03:07,267:<module>:INFO:sim_hist_165_v64r0:2012-12-26 to 2012-07-06: Runtime=173 days
+2020-07-27 20:12:40,386:<module>:INFO:sim_hist_165_v64r0:Completed!: 00:09:35: Rank= 0: #Particles=1-0=1
+2020-07-27 22:09:01,207:pset_euc:INFO:sim_hist_165_v66r0:Particles: /repeat=1: Total=1
+2020-07-27 22:09:01,207:pset_euc:INFO:sim_hist_165_v66r0:Lon=165: Lat=[-1.7--1.7 x-1.7]: Depth=[250-250m x250]
+2020-07-27 22:09:01,208:<module>:INFO:sim_hist_165_v66r0:2012-12-26 to 2012-07-06: Runtime=173 days
+2020-07-27 22:09:58,728:pset_euc:INFO:sim_hist_165_v15r0:Particles: /repeat=1: Total=1
+2020-07-27 22:09:58,729:pset_euc:INFO:sim_hist_165_v15r0:Lon=165: Lat=[-1.7--1.7 x-1.7]: Depth=[250-250m x250]
+2020-07-27 22:09:58,730:<module>:INFO:sim_hist_165_v15r0:2012-12-26 to 2012-07-06: Runtime=173 days
+2020-07-27 22:10:39,664:pset_euc:INFO:sim_hist_165_v25r0:Particles: /repeat=1: Total=1
+2020-07-27 22:10:39,665:pset_euc:INFO:sim_hist_165_v25r0:Lon=165: Lat=[-1.7--1.7 x-1.7]: Depth=[250-250m x250]
+2020-07-27 22:10:39,665:<module>:INFO:sim_hist_165_v25r0:2012-12-26 to 2012-07-06: Runtime=173 days
+2020-07-27 22:11:56,422:__init__:WARNING:Casting lon data to np.float32
+2020-07-27 22:11:56,423:__init__:WARNING:Casting lat data to np.float32
+2020-07-27 22:11:56,423:__init__:WARNING:Casting depth data to np.float32
+2020-07-27 22:11:56,426:from_netcdf:WARNING:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-07-27 22:11:57,759:reshape:WARNING:Casting field data to np.float32
+2020-07-27 22:12:00,477:__init__:WARNING:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-07-27 22:12:00,479:pset_euc:INFO:sim_hist_165_v88r0:Particles: /repeat=1: Total=1
+2020-07-27 22:12:00,480:pset_euc:INFO:sim_hist_165_v88r0:Lon=165: Lat=[-1.7--1.7 x-1.7]: Depth=[250-250m x250]
+2020-07-27 22:12:00,481:<module>:INFO:sim_hist_165_v88r0:2012-12-26 to 2012-07-06: Runtime=173 days
+2020-07-27 22:22:39,376:<module>:INFO:sim_hist_165_v15r0:Completed!: 00:12:43: Rank= 0: #Particles=1-0=1
+2020-07-27 22:23:41,192:<module>:INFO:sim_hist_165_v25r0:Completed!: 00:13:04: Rank= 0: #Particles=1-0=1
+2020-07-27 22:24:39,136:<module>:INFO:sim_hist_165_v88r0:Completed!: 00:12:43: Rank= 0: #Particles=1-0=1
+2020-07-27 23:16:45,629:pset_euc:INFO:sim_hist_165_v58r0:Particles: /repeat=1: Total=1
+2020-07-27 23:16:45,630:pset_euc:INFO:sim_hist_165_v58r0:Lon=165: Lat=[-1.7--1.7 x-1.7]: Depth=[250-250m x250]
+2020-07-27 23:16:45,633:<module>:INFO:sim_hist_165_v58r0:2012-12-26 to 2012-07-06: Runtime=173 days
+2020-07-27 23:17:36,467:pset_euc:INFO:sim_hist_165_v38r0:Particles: /repeat=1: Total=1
+2020-07-27 23:17:36,471:pset_euc:INFO:sim_hist_165_v38r0:Lon=165: Lat=[-1.7--1.7 x-1.7]: Depth=[250-250m x250]
+2020-07-27 23:17:36,473:<module>:INFO:sim_hist_165_v38r0:2012-12-26 to 2012-07-06: Runtime=173 days
+2020-07-27 23:27:27,250:<module>:INFO:sim_hist_165_v58r0:Completed!: 00:10:45: Rank= 0: #Particles=1-0=1
+2020-07-27 23:27:38,957:<module>:INFO:sim_hist_165_v38r0:Completed!: 00:10:05: Rank= 0: #Particles=1-0=1
+2020-07-27 23:33:17,593:pset_euc:INFO:sim_hist_165_v28r0:Particles: /repeat=1: Total=1
+2020-07-27 23:33:17,594:pset_euc:INFO:sim_hist_165_v28r0:Lon=165: Lat=[-1.7--1.7 x-1.7]: Depth=[250-250m x250]
+2020-07-27 23:33:17,595:<module>:INFO:sim_hist_165_v28r0:2012-12-26 to 2012-07-06: Runtime=173 days
+2020-07-27 23:42:58,180:<module>:INFO:sim_hist_165_v28r0:Completed!: 00:09:43: Rank= 0: #Particles=1-0=1
+2020-07-28 00:02:07,253:pset_euc:INFO:sim_hist_165_v73r0:Particles: /repeat=1: Total=1
+2020-07-28 00:02:07,254:pset_euc:INFO:sim_hist_165_v73r0:Lon=165: Lat=[-1.7--1.7 x-1.7]: Depth=[250-250m x250]
+2020-07-28 00:02:07,255:<module>:INFO:sim_hist_165_v73r0:2012-12-26 to 2012-07-06: Runtime=173 days
+2020-07-28 00:03:51,713:pset_euc:INFO:sim_hist_165_v47r0:Particles: /repeat=1: Total=1
+2020-07-28 00:03:51,714:pset_euc:INFO:sim_hist_165_v47r0:Lon=165: Lat=[-1.7--1.7 x-1.7]: Depth=[250-250m x250]
+2020-07-28 00:03:51,715:<module>:INFO:sim_hist_165_v47r0:2012-12-26 to 2012-07-01: Runtime=178 days
+2020-07-28 00:13:34,324:<module>:INFO:sim_hist_165_v47r0:Completed!: 00:09:45: Rank= 0: #Particles=1-0=1

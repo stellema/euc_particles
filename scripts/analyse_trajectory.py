@@ -11,9 +11,10 @@ author: Annette Stellema (astellemas@gmail.com)
 
 
 # Plot trajectories of particles that go deeper than a certain depth.
-tr = np.unique(ds.where(ds.z > 700).trajectory)[0:5]
+tr = np.unique(ds.where(ds.z > 700).trajectory)
+tr = tr[~np.isnan(tr)].astype(int)
 print(tr)
-# traj = int(np.nanmax(tr))
+ds, dx = plot_traj(sim_id, var='u', traj=tr[0], t=2, Z=250)
 
 t=21
 du = xr.open_dataset(cfg.ofam/'ocean_u_2012_07.nc').u.isel(Time=t)
@@ -23,7 +24,7 @@ dt = xr.open_dataset(cfg.ofam/'ocean_temp_1981_01.nc').temp.isel(Time=t)
 
 sim_id = cfg.data/'sim_hist_165_v87r0.nc'
 
-ds, dx = plot_traj(sim_id, var='w', traj=None, t=2, Z=250)
+ds, dx = plot_traj(sim_id, var='u', traj=None, t=2, Z=250)
 
 ds, tr = plot_beached(sim_id, depth=400)
 
@@ -33,7 +34,7 @@ cmap.set_bad('grey')
 dww = xr.open_dataset(cfg.ofam/'ocean_w_1981-2012_climo.nc').w.mean('Time')
 dww.sel(sw_ocean=100, method='nearest').sel(yt_ocean=slice(-3, 3)).plot(cmap=cmap, vmax=1e-5, vmin=-1e-5)
 """
-import main
+
 import copy
 import cfg
 import tools
@@ -41,7 +42,8 @@ import math
 import numpy as np
 import xarray as xr
 import matplotlib.pyplot as plt
-
+import warnings
+warnings.filterwarnings("ignore")
 
 def plot_traj(sim_id, var='u', traj=None, t=None, Z=290):
     """Plot individual trajectory (3D line and 2D scatter)."""
@@ -132,7 +134,7 @@ def plot_traj(sim_id, var='u', traj=None, t=None, Z=290):
     ax.set_xlabel("Longitude")
     ax.set_ylabel("Depth")
 
-    plt.tight_layout()
+    # plt.tight_layout()
     plt.savefig(cfg.fig/'parcels/traj_{}_{}_{}.png'
                 .format(sim_id.stem, traj, var))
     plt.show()

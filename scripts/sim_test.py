@@ -17,7 +17,8 @@ try:
     from mpi4py import MPI
 except ImportError:
     MPI = None
-
+import warnings
+warnings.filterwarnings("ignore")
 
 def pset_euc(fieldset, pclass, lon, dy, dz, repeatdt, pset_start, repeats,
              sim_id=None, rank=0):
@@ -56,11 +57,11 @@ def pset_euc(fieldset, pclass, lon, dy, dz, repeatdt, pset_start, repeats,
 
 
 logger = tools.mlogger('test_sim', parcels=True, misc=False)
-dy, dz, lon = -0.3, 275, 165
+dy, dz, lon = -1.7, 250, 165
 dt_mins, repeatdt_days, outputdt_days, runtime_days = 60, 6, 1, 236
 pfile = 'None'  # 'sim_hist_190_v21r1.nc'
-date1 = datetime(2012, 4, 22)
-date2 = datetime(2012, 12, 14)
+date1 = datetime(2012, 7, 1)
+date2 = datetime(2012, 12, 26)
 runtime_days = (date2-date1).days
 v = 55
 exp = 'hist'
@@ -72,9 +73,9 @@ rank = 0
 # Start from end of Fieldset time or restart from ParticleFile.
 restart = False if pfile == 'None' else True
 
-# Ensure run ends on a repeat day.
-while runtime_days % repeatdt_days != 0:
-    runtime_days += 1
+# # Ensure run ends on a repeat day.
+# while runtime_days % repeatdt_days != 0:
+#     runtime_days += 1
 runtime = timedelta(days=int(runtime_days))
 
 dt = -timedelta(minutes=dt_mins)  # Advection step (negative for backwards).
@@ -139,7 +140,7 @@ else:
 
     # Increment run index for new output file name.
     sim_id = cfg.data/'{}{}.nc'.format(pfile.stem[:-1],
-                                       int(pfile.stem[-1]) + 1)
+                                        int(pfile.stem[-1]) + 1)
 
     # Change to the latest run if it was not given.
     if sim_id.exists():
@@ -151,14 +152,14 @@ else:
     # Create ParticleSet from the given ParticleFile.
     # import main
     psetx = main.particleset_from_particlefile(fieldset, pclass=pclass,
-                                               filename=pfile, restart=True,
-                                               restarttime=np.nanmin)
+                                                filename=pfile, restart=True,
+                                                restarttime=np.nanmin)
     # Start date to add new EUC particles.
     pset_start = np.nanmin(psetx.time)
 
     # ParticleSet start time (for log).
     start = (fieldset.time_origin.time_origin +
-             timedelta(seconds=np.nanmin(psetx.time)))
+              timedelta(seconds=np.nanmin(psetx.time)))
 
 # Create ParticleSet.
 pset = pset_euc(fieldset, pclass, lon, dy, dz, repeatdt, pset_start, repeats,
@@ -182,7 +183,7 @@ logger.info('{}:{} to {}: Runtime={} days'
 kernels = pset.Kernel(main.DelWest) + pset.Kernel(main.AdvectionRK4_3Db)
 
 if unbeach:
-    kernels += pset.Kernel(main.UnBeaching)
+    kernels += pset.Kernel(main.BeachTest) + pset.Kernel(main.UnBeaching)
 
 kernels += pset.Kernel(main.AgeZone) + pset.Kernel(main.Distance)
 # kernels += pset.Kernel(main.Age) #+ pset.Kernel(main.Distance)
@@ -195,7 +196,7 @@ recovery_kernels = {ErrorCode.ErrorOutOfBounds: main.DeleteParticle,
                     ErrorCode.ErrorThroughSurface: main.SubmergeParticle}
 
 pset.execute(kernels, endtime=endtime, dt=dt, output_file=output_file,
-             verbose_progress=True, recovery=recovery_kernels)
+              verbose_progress=True, recovery=recovery_kernels)
 
 timed = tools.timer(ts)
 logger.info('{}:Completed!: {}: Rank={:>2}: #Particles={}-{}={}'
@@ -205,5 +206,5 @@ logger.info('{}:Completed!: {}: Rank={:>2}: #Particles={}-{}={}'
 # Save to netcdf.
 output_file.export()
 
-ds = main.plot3D(sim_id)
+# ds = main.plot3D(sim_id)
 ds, dx = plot_traj(sim_id, var='w', traj=None, t=2, Z=250)

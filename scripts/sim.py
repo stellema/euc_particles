@@ -24,6 +24,7 @@ except ImportError:
     MPI = None
 
 
+@tools.timeit
 def pset_euc(fieldset, pclass, lon, dy, dz, repeatdt, pset_start, repeats,
              sim_id=None, rank=0):
     """Create a ParticleSet."""
@@ -131,7 +132,7 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
         # The previous latitude. to_write=False,
         prev_lat = Variable('prev_lat', initial=attrgetter('lat'),
                             to_write=False, dtype=np.float32)
-        beached = Variable('beached', initial=0., to_write=False, dtype=np.float32)
+        beached = Variable('beached', initial=0., dtype=np.float32)
         unbeached = Variable('unbeached', initial=0., dtype=np.float32)
 
     pclass = zdParticle
@@ -200,7 +201,7 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
     kernels = pset.Kernel(main.DelWest) + pset.Kernel(main.AdvectionRK4_3Db)
 
     if unbeach:
-        kernels += pset.Kernel(main.UnBeaching)
+        kernels += pset.Kernel(main.BeachTest) + pset.Kernel(main.UnBeaching)
 
     kernels += pset.Kernel(main.AgeZone) + pset.Kernel(main.Distance)
 

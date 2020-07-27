@@ -12,4 +12,4 @@ module use /g/data3/hh5/public/modules
 module load conda/analysis3-20.04
 module unload openmpi
 module load openmpi/4.0.2
-mpirun -np 48 python3 /g/data/e14/as3189/OFAM/scripts/sim.py -x 220 -r 240 -v 3
+mpirun -np 48 python3 /g/data/e14/as3189/OFAM/scripts/sim.py -x 190 -r 300 -v 5
