@@ -25,7 +25,6 @@ except ImportError:
 logger = tools.mlogger('sim', parcels=True, misc=False)
 
 
-@tools.timeit
 def pset_euc(fieldset, pclass, lon, dy, dz, repeatdt, pset_start, repeats,
              sim_id=None, rank=0):
     """Create a ParticleSet."""
@@ -63,7 +62,6 @@ def pset_euc(fieldset, pclass, lon, dy, dz, repeatdt, pset_start, repeats,
     return pset
 
 
-@tools.timeit
 def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
             outputdt_days=1, runtime_days=186, v=1, chunks=300, unbeach=True,
             pfile='None'):
@@ -235,6 +233,9 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
 
     # Save to netcdf.
     output_file.export()
+
+    if rank == 0:
+        logger.info('{}:Finished'.format(sim_id.stem))
 
     return
 
