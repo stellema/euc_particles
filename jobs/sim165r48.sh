@@ -2,7 +2,7 @@
 #PBS -P e14
 #PBS -q normal
 #PBS -l walltime=48:00:00
-#PBS -l mem=140GB
+#PBS -l mem=190GB
 #PBS -l ncpus=48
 #PBS -l wd
 #PBS -M astellemas@gmail.com
@@ -12,4 +12,4 @@ module use /g/data3/hh5/public/modules
 module load conda/analysis3-20.04
 module unload openmpi
 module load openmpi/4.0.2
-mpirun -np 48 python3 /g/data/e14/as3189/OFAM/scripts/sim.py -x 190 -r 300 -v 5
+mpirun -np 48 python3 /g/data/e14/as3189/OFAM/scripts/sim.py -e "rcp" -x 165 -r 1464 -v 0
