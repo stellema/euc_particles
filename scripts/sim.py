@@ -21,6 +21,9 @@ try:
 except ImportError:
     MPI = None
 
+log_name = 'sim' if cfg.home != Path('E:/') else 'test_sim'
+logger = tools.mlogger(log_name, parcels=True, misc=False)
+
 
 def timeit(method):
     """Wrap function to time method execution time."""
@@ -267,15 +270,12 @@ if __name__ == "__main__" and cfg.home != Path('E:/'):
     p.add_argument('-f', '--pfile', default='None', type=str, help='Particle file.')
     args = p.parse_args()
 
-    logger = tools.mlogger('sim', parcels=True, misc=False)
-
     run_EUC(dy=args.dy, dz=args.dz, lon=args.lon, exp=args.exp,
             runtime_days=args.runtime, dt_mins=args.dt,
             repeatdt_days=args.repeatdt, outputdt_days=args.outputdt,
             v=args.version, pfile=args.pfile)
 
 elif __name__ == "__main__":
-    logger = tools.mlogger('test_sim', parcels=True, misc=False)
     dy, dz, lon = 2, 150, 190
     dt_mins, repeatdt_days, outputdt_days, runtime_days = 60, 6, 1, 10
     pfile = 'None'  # 'sim_hist_190_v21r1.nc'
