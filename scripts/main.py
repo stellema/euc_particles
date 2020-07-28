@@ -62,18 +62,15 @@ import random
 import parcels
 import numpy as np
 import xarray as xr
-# import pandas as pd
 from pathlib import Path
-# from operator import attrgetter
 import matplotlib.pyplot as plt
 from datetime import datetime, timedelta
 from parcels import (FieldSet, Field, ParticleSet, VectorField,
                      ErrorCode, AdvectionRK4)
 
 
-def ofam_fieldset(time_bnds='full', exp='hist', vcoord='sw_edges_ocean',
-                  chunks=True, cs=300, time_periodic=True, add_zone=True,
-                  add_unbeach_vel=True):
+def ofam_fieldset(time_bnds='full', exp='hist', chunks=True, cs=300,
+                  time_periodic=True, add_zone=True, add_unbeach_vel=True):
     """Create a 3D parcels fieldset from OFAM model output.
 
     Between two dates useing FieldSet.from_b_grid_dataset.
@@ -344,9 +341,9 @@ def SubmergeParticle(particle, fieldset, time):
     particle.set_state(ErrorCode.Success)
 
 
-def particleset_from_particlefile(fieldset, pclass, filename, repeatdt=None,
-                                  restart=True, restarttime=np.nanmin,
-                                  lonlatdepth_dtype=np.float64, **kwargs):
+def pset_from_file(fieldset, pclass, filename, repeatdt=None,
+                   restart=True, restarttime=np.nanmin,
+                   lonlatdepth_dtype=np.float64, **kwargs):
     """Initialise the ParticleSet from a netcdf ParticleFile.
 
     This creates a new ParticleSet based on locations of all particles written

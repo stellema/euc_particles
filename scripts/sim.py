@@ -8,15 +8,13 @@ import cfg
 import tools
 import main
 import math
-# import parcels
-# import xarray as xr
 import numpy as np
 from pathlib import Path
+from functools import wraps
 from operator import attrgetter
 from datetime import datetime, timedelta
 from argparse import ArgumentParser
-from parcels import (AdvectionRK4_3D, ParticleSet, ErrorCode,
-                     Variable, JITParticle)
+from parcels import (ParticleSet, ErrorCode, Variable, JITParticle)
 
 try:
     from mpi4py import MPI
@@ -24,7 +22,24 @@ except ImportError:
     MPI = None
 
 
-@tools.timeit
+def timeit(method):
+    """Wrap function to time method execution time."""
+    @wraps(method)
+    def timed(*args, **kw):
+        ts = datetime.now()
+        result = method(*args, **kw)
+        te = datetime.now()
+        h, rem = divmod((te - ts).total_seconds(), 3600)
+        m, s = divmod(rem, 60)
+        logger.info('{}: {:}:{:}:{:05.2f} total: {:.2f} seconds.'.format(
+                method.__name__, int(h), int(m), s, (te - ts).total_seconds()))
+
+        return result
+
+    return timed
+
+
+@timeit
 def pset_euc(fieldset, pclass, lon, dy, dz, repeatdt, pset_start, repeats,
              sim_id=None, rank=0):
     """Create a ParticleSet."""
@@ -62,6 +77,7 @@ def pset_euc(fieldset, pclass, lon, dy, dz, repeatdt, pset_start, repeats,
     return pset
 
 
+@timeit
 def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
             outputdt_days=1, runtime_days=186, v=1, chunks=300, unbeach=True,
             pfile='None'):
@@ -106,9 +122,9 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
     elif exp == 'rcp':
         time_bnds = [datetime(2070, 1, 1), datetime(2101, 12, 31)]
 
-    fieldset = main.ofam_fieldset(time_bnds, exp, vcoord='sw_edges_ocean',
-                                  chunks=True, cs=chunks, time_periodic=True,
-                                  add_zone=True, add_unbeach_vel=unbeach)
+    fieldset = main.ofam_fieldset(time_bnds, exp,  chunks=True, cs=chunks,
+                                  time_periodic=True, add_zone=True,
+                                  add_unbeach_vel=unbeach)
 
     class zParticle(JITParticle):
         """Particle class that saves particle age and zonal velocity."""
@@ -117,7 +133,8 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
         age = Variable('age', initial=0., dtype=np.float32)
 
         # The velocity of the particle.
-        u = Variable('u', initial=fieldset.U, to_write='once', dtype=np.float32)
+        u = Variable('u', initial=fieldset.U, to_write='once',
+                     dtype=np.float32)
 
         # The 'zone' of the particle.
         zone = Variable('zone', initial=0., dtype=np.float32)
@@ -152,7 +169,8 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
         pset_start = fieldset.U.grid.time[-1]
 
         # ParticleSet start time (for log).
-        start = fieldset.time_origin.time_origin + timedelta(seconds=pset_start)
+        start = (fieldset.time_origin.time_origin +
+                 timedelta(seconds=pset_start))
 
     # Create particle set from particlefile and add new repeats.
     else:
@@ -160,28 +178,32 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
         pfile = cfg.data/pfile
 
         # Increment run index for new output file name.
-        sim_id = cfg.data/'{}{}.nc'.format(pfile.stem[:-1], int(pfile.stem[-1]) + 1)
+        sim_id = cfg.data/'{}{}.nc'.format(pfile.stem[:-1],
+                                           int(pfile.stem[-1]) + 1)
 
         # Change to the latest run if it was not given.
         if sim_id.exists():
-            sims = [s for s in sim_id.parent.glob(str(sim_id.stem[:-1]) + '*.nc')]
+            sims = [s for s in sim_id.parent.glob(str(sim_id.stem[:-1]) +
+                                                  '*.nc')]
             rmax = max([int(sim.stem[-1]) for sim in sims])
             pfile = cfg.data/'{}{}.nc'.format(pfile.stem[:-1], rmax)
             sim_id = cfg.data/'{}{}.nc'.format(pfile.stem[:-1], rmax + 1)
 
         # Create ParticleSet from the given ParticleFile.
         # import main
-        psetx = main.particleset_from_particlefile(fieldset, pclass=pclass, filename=pfile,
-                                                   restart=True, restarttime=np.nanmin)
+        psetx = main.pset_from_file(fieldset, pclass=pclass, filename=pfile,
+                                    restart=True, restarttime=np.nanmin)
         # Start date to add new EUC particles.
         pset_start = np.nanmin(psetx.time)
 
         # ParticleSet start time (for log).
-        start = fieldset.time_origin.time_origin + timedelta(seconds=np.nanmin(psetx.time))
+        start = (fieldset.time_origin.time_origin +
+                 timedelta(seconds=np.nanmin(psetx.time)))
 
     # Create ParticleSet.
-    pset = pset_euc(fieldset, pclass, lon, dy, dz, repeatdt, pset_start, repeats,
-                    sim_id, rank=rank)
+    pset = pset_euc(fieldset, pclass, lon, dy, dz, repeatdt, pset_start,
+                    repeats, sim_id, rank=rank)
+
     # Add particles from ParticleFile.
     if restart:
         pset.add(psetx)
@@ -244,9 +266,12 @@ if __name__ == "__main__" and cfg.home != Path('E:/'):
     p.add_argument('-v', '--version', default=0, type=int, help='File Index.')
     p.add_argument('-f', '--pfile', default='None', type=str, help='Particle file.')
     args = p.parse_args()
+
     logger = tools.mlogger('sim', parcels=True, misc=False)
-    run_EUC(dy=args.dy, dz=args.dz, lon=args.lon, exp=args.exp, runtime_days=args.runtime,
-            dt_mins=args.dt, repeatdt_days=args.repeatdt, outputdt_days=args.outputdt,
+
+    run_EUC(dy=args.dy, dz=args.dz, lon=args.lon, exp=args.exp,
+            runtime_days=args.runtime, dt_mins=args.dt,
+            repeatdt_days=args.repeatdt, outputdt_days=args.outputdt,
             v=args.version, pfile=args.pfile)
 
 elif __name__ == "__main__":
@@ -258,6 +283,7 @@ elif __name__ == "__main__":
     exp = 'hist'
     unbeach = True
     chunks = 300
-    run_EUC(dy=dy, dz=dz, lon=lon, dt_mins=dt_mins, repeatdt_days=repeatdt_days,
-            outputdt_days=outputdt_days, v=v, runtime_days=runtime_days,
+    run_EUC(dy=dy, dz=dz, lon=lon, dt_mins=dt_mins,
+            repeatdt_days=repeatdt_days, outputdt_days=outputdt_days,
+            v=v, runtime_days=runtime_days,
             unbeach=unbeach, pfile=pfile)

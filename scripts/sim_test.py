@@ -88,8 +88,7 @@ repeats = 1  # math.floor(runtime/repeatdt) - 1
 # Create time bounds for fieldset based on experiment.
 time_bnds = [datetime(2012, 4, 1), datetime(2012, 12, 31)]
 
-fieldset = main.ofam_fieldset(time_bnds, exp, vcoord='sw_edges_ocean',
-                              chunks=True, cs=chunks,
+fieldset = main.ofam_fieldset(time_bnds, exp, chunks=True, cs=chunks,
                               time_periodic=True, add_zone=True,
                               add_unbeach_vel=unbeach)
 
@@ -158,9 +157,8 @@ else:
 
     # Create ParticleSet from the given ParticleFile.
     # import main
-    psetx = main.particleset_from_particlefile(fieldset, pclass=pclass,
-                                               filename=pfile, restart=True,
-                                               restarttime=np.nanmin)
+    psetx = main.pset_from_file(fieldset, pclass=pclass, filename=pfile,
+                                restart=True, restarttime=np.nanmin)
     # Start date to add new EUC particles.
     pset_start = np.nanmin(psetx.time)
 
