@@ -110,7 +110,7 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
                                   chunks=True, cs=chunks, time_periodic=True,
                                   add_zone=True, add_unbeach_vel=unbeach)
 
-    class zdParticle(JITParticle):
+    class zParticle(JITParticle):
         """Particle class that saves particle age and zonal velocity."""
 
         # The age of the particle.
@@ -125,17 +125,22 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
         # The distance travelled
         distance = Variable('distance', initial=0., dtype=np.float32)
 
-        # The previous longitude. to_write=False
+        # The previous longitude.
         prev_lon = Variable('prev_lon', initial=attrgetter('lon'),
                             to_write=False, dtype=np.float32)
 
-        # The previous latitude. to_write=False,
+        # The previous latitude.
         prev_lat = Variable('prev_lat', initial=attrgetter('lat'),
                             to_write=False, dtype=np.float32)
-        beached = Variable('beached', initial=0., dtype=np.float32)
+
+        # Unbeach if beached greater than zero.
+        beached = Variable('beached', initial=0., to_write=False,
+                           dtype=np.float32)
+
+        # Unbeached count.
         unbeached = Variable('unbeached', initial=0., dtype=np.float32)
 
-    pclass = zdParticle
+    pclass = zParticle
 
     # Create ParticleSet.
     if not restart:
@@ -243,6 +248,7 @@ if __name__ == "__main__" and cfg.home != Path('E:/'):
     run_EUC(dy=args.dy, dz=args.dz, lon=args.lon, exp=args.exp, runtime_days=args.runtime,
             dt_mins=args.dt, repeatdt_days=args.repeatdt, outputdt_days=args.outputdt,
             v=args.version, pfile=args.pfile)
+
 elif __name__ == "__main__":
     logger = tools.mlogger('test_sim', parcels=True, misc=False)
     dy, dz, lon = 2, 150, 190

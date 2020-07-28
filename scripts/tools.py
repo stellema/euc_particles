@@ -559,9 +559,12 @@ def tidy_files(logs=True, jobs=True):
 def zone_fieldset(plot=True):
     """Create fieldset or plot zone definitions."""
     # Copy 2D empty OFGAM3 velocity grid.
-    d = xr.open_dataset(cfg.ofam/'ocean_temp_1981_01.nc')
-    d = d.isel(st_ocean=slice(0, 1), Time=slice(0, 1))
-    d = d.temp.where(np.isnan(d.temp), 0)
+    # d = xr.open_dataset(cfg.ofam/'ocean_temp_1981_01.nc')
+    files = [str(cfg.ofam/'ocean_{}_1981_01.nc'.format(v))
+             for v in ['u', 'w', 'temp']]
+    dr = xr.open_mfdataset(files, combine='by_coords')
+    dr = dr.isel(st_ocean=slice(0, 1), Time=slice(0, 1))
+    d = dr.temp.where(np.isnan(dr.temp), 0)
     d = d.rename({'st_ocean': 'sw_ocean'})
     d.coords['sw_ocean'] = np.array([5.0])
 
@@ -599,6 +602,9 @@ def zone_fieldset(plot=True):
         plt.savefig(cfg.fig/'particle_boundaries.png')
     if not plot:
         ds = d.to_dataset(name='zone').transpose('Time', 'sw_ocean', 'yt_ocean', 'xt_ocean')
+        ds[dr.xu_ocean.name] = dr.xu_ocean
+        ds[dr.yu_ocean.name] = dr.yu_ocean
+        ds[dr.st_ocean.name] = dr.st_ocean.isel(st_ocean=slice(0, 1))
         ds.attrs['history'] = 'Created {}.'.format(datetime.now().strftime("%Y-%m-%d"))
         ds.to_netcdf(cfg.data/'OFAM3_tcell_zones.nc')
 

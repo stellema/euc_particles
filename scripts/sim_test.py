@@ -20,6 +20,7 @@ except ImportError:
 import warnings
 warnings.filterwarnings("ignore")
 
+
 def pset_euc(fieldset, pclass, lon, dy, dz, repeatdt, pset_start, repeats,
              sim_id=None, rank=0):
     """Create a ParticleSet."""
@@ -52,7 +53,8 @@ def pset_euc(fieldset, pclass, lon, dy, dz, repeatdt, pset_start, repeats,
         logger.info('{}:Particles: /repeat={}: Total={}'
                     .format(sim_id.stem, Z * X * Y, npart))
         logger.info('{}:Lon={}: Lat=[{}-{} x{}]: Depth=[{}-{}m x{}]'
-                    .format(sim_id.stem, *px, py[0], py[Y-1], dy, pz[0], pz[Z-1], dz))
+                    .format(sim_id.stem, *px, py[0], py[Y-1], dy, pz[0],
+                            pz[Z-1], dz))
     return pset
 
 
@@ -92,7 +94,7 @@ fieldset = main.ofam_fieldset(time_bnds, exp, vcoord='sw_edges_ocean',
                               add_unbeach_vel=unbeach)
 
 
-class zdParticle(JITParticle):
+class zParticle(JITParticle):
     """Particle class that saves particle age and zonal velocity."""
 
     # The age of the particle.
@@ -107,18 +109,23 @@ class zdParticle(JITParticle):
     # The distance travelled
     distance = Variable('distance', initial=0., dtype=np.float32)
 
-    # The previous longitude. to_write=False
-    prev_lon = Variable('prev_lon', initial=attrgetter('lon'), to_write=False,
-                        dtype=np.float32)
+    # The previous longitude.
+    prev_lon = Variable('prev_lon', initial=attrgetter('lon'),
+                        to_write=False, dtype=np.float32)
 
-    # The previous latitude. to_write=False,
-    prev_lat = Variable('prev_lat', initial=attrgetter('lat'), to_write=False,
-                        dtype=np.float32)
-    beached = Variable('beached', initial=0., dtype=np.float32)
+    # The previous latitude.
+    prev_lat = Variable('prev_lat', initial=attrgetter('lat'),
+                        to_write=False, dtype=np.float32)
+
+    # Unbeach if beached greater than zero.
+    beached = Variable('beached', initial=0., to_write=False,
+                       dtype=np.float32)
+
+    # Unbeached count.
     unbeached = Variable('unbeached', initial=0., dtype=np.float32)
 
 
-pclass = zdParticle
+pclass = zParticle
 
 # Create ParticleSet.
 if not restart:
@@ -140,7 +147,7 @@ else:
 
     # Increment run index for new output file name.
     sim_id = cfg.data/'{}{}.nc'.format(pfile.stem[:-1],
-                                        int(pfile.stem[-1]) + 1)
+                                       int(pfile.stem[-1]) + 1)
 
     # Change to the latest run if it was not given.
     if sim_id.exists():
@@ -152,14 +159,14 @@ else:
     # Create ParticleSet from the given ParticleFile.
     # import main
     psetx = main.particleset_from_particlefile(fieldset, pclass=pclass,
-                                                filename=pfile, restart=True,
-                                                restarttime=np.nanmin)
+                                               filename=pfile, restart=True,
+                                               restarttime=np.nanmin)
     # Start date to add new EUC particles.
     pset_start = np.nanmin(psetx.time)
 
     # ParticleSet start time (for log).
     start = (fieldset.time_origin.time_origin +
-              timedelta(seconds=np.nanmin(psetx.time)))
+             timedelta(seconds=np.nanmin(psetx.time)))
 
 # Create ParticleSet.
 pset = pset_euc(fieldset, pclass, lon, dy, dz, repeatdt, pset_start, repeats,
@@ -196,7 +203,7 @@ recovery_kernels = {ErrorCode.ErrorOutOfBounds: main.DeleteParticle,
                     ErrorCode.ErrorThroughSurface: main.SubmergeParticle}
 
 pset.execute(kernels, endtime=endtime, dt=dt, output_file=output_file,
-              verbose_progress=True, recovery=recovery_kernels)
+             verbose_progress=True, recovery=recovery_kernels)
 
 timed = tools.timer(ts)
 logger.info('{}:Completed!: {}: Rank={:>2}: #Particles={}-{}={}'

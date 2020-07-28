@@ -98,11 +98,6 @@ def ofam_fieldset(time_bnds='full', exp='hist', vcoord='sw_edges_ocean',
                        "sw_ocean_mod", "st_edges_ocean"]}
 
     parcels.field.NetcdfFileBuffer._name_maps = nmaps
-    if chunks not in ['auto', False]:
-        chunks = {'Time': 1,
-                  'st_ocean': 1, 'sw_ocean': 1, 'sw_ocean_mod': 1, 'st_edges_ocean': 1,
-                  'yt_ocean': cs, 'yu_ocean': cs,
-                  'xt_ocean': cs, 'xu_ocean': cs}
 
     if time_bnds == 'full':
         if exp == 'hist':
@@ -114,7 +109,7 @@ def ofam_fieldset(time_bnds='full', exp='hist', vcoord='sw_edges_ocean',
     if time_periodic:
         time_periodic = timedelta(days=(time_bnds[1] - time_bnds[0]).days + 1)
 
-    # Create list of files for each variable based on selected years and months.
+    # Create file list based on selected years and months.
     u, v, w = [], [], []
     for y in range(time_bnds[0].year, time_bnds[1].year + 1):
         for m in range(time_bnds[0].month, time_bnds[1].month + 1):
@@ -122,74 +117,116 @@ def ofam_fieldset(time_bnds='full', exp='hist', vcoord='sw_edges_ocean',
             v.append(str(cfg.ofam/('ocean_v_{}_{:02d}.nc'.format(y, m))))
             w.append(str(cfg.ofam/('ocean_w_{}_{:02d}.nc'.format(y, m))))
 
+    # Mesh contains all OFAM3 coords.
     mesh = str(cfg.data/'ofam_mesh_grid.nc')
     # sw_ocean_mod = sw_ocean[np.append(np.arange(1, 51, dtype=int), 0)]
-    variables = {'U': 'u', 'V': 'v', 'W': 'w'}
+
+    variables = {'U': 'u',
+                 'V': 'v',
+                 'W': 'w'}
+
     files = {'U': {'depth': mesh, 'lat': mesh, 'lon': mesh, 'data': u},
              'V': {'depth': mesh, 'lat': mesh, 'lon': mesh, 'data': v},
              'W': {'depth': mesh, 'lat': mesh, 'lon': mesh, 'data': w}}
-    dims = {'U': {'time': 'Time', 'depth': 'st_edges_ocean', 'lat': 'yu_ocean', 'lon': 'xu_ocean'},
-            'V': {'time': 'Time', 'depth': 'st_edges_ocean', 'lat': 'yu_ocean', 'lon': 'xu_ocean'},
-            'W': {'time': 'Time', 'depth': 'sw_ocean_mod', 'lat': 'yu_ocean', 'lon': 'xu_ocean'}}
-    # Swap first and last levels of W .
+
+    dims = {'U': {'time': 'Time', 'lat': 'yu_ocean', 'lon': 'xu_ocean',
+                  'depth': 'st_edges_ocean'},
+            'V': {'time': 'Time', 'lat': 'yu_ocean', 'lon': 'xu_ocean',
+                  'depth': 'st_edges_ocean'},
+            'W': {'time': 'Time', 'lat': 'yu_ocean', 'lon': 'xu_ocean',
+                  'depth': 'sw_ocean_mod'}}
+
+    # Depth coordinate indices.
+    # U,V: Exclude last index of st_edges_ocean.
+    # W: Move last level to top, shift rest down.
     n = 51  # len(st_ocean)
-    indices = {'U': {'depth': np.arange(0, n, dtype=int).tolist()},
-               'V': {'depth': np.arange(0, n, dtype=int).tolist()},
-               'W': {'depth': np.append(n-1, np.arange(0, n-1, dtype=int)).tolist()}}
+    zu_ind = np.arange(0, n, dtype=int).tolist()
+    zw_ind = np.append(n - 1, np.arange(0, n - 1, dtype=int)).tolist()
+
+    indices = {'U': {'depth': zu_ind},
+               'V': {'depth': zu_ind},
+               'W': {'depth': zw_ind}}
+
+    if chunks not in ['auto', False]:
+        chunks = {'Time': 1,
+                  'st_ocean': 1, 'sw_ocean': 1,
+                  'sw_ocean_mod': 1, 'st_edges_ocean': 1,
+                  'yt_ocean': cs, 'yu_ocean': cs,
+                  'xt_ocean': cs, 'xu_ocean': cs}
+
     fieldset = FieldSet.from_netcdf(files, variables, dims, indices=indices,
                                     mesh='spherical', field_chunksize=chunks,
                                     time_periodic=time_periodic)
+
     fieldset.U.interp_method = 'bgrid_velocity'
     fieldset.V.interp_method = 'bgrid_velocity'
     fieldset.W.interp_method = 'bgrid_w_velocity'
 
     # Set fieldset minimum depth.
     fieldset.mindepth = fieldset.U.depth[0]
+
+    # Change W velocity direction scaling factor.
     fieldset.W.set_scaling_factor(-1)
+
     # Convert from geometric to geographic coordinates (m to degree).
     fieldset.add_constant('geo', 1/(1852*60))
 
     if add_zone:
-        files = str(cfg.data/'OFAM3_tcell_zones.nc')
+        # Add particle zone boundaries.
+        file = str(cfg.data/'OFAM3_tcell_zones.nc')
+
+        # NB: Zone is constant with depth.
         dimz = {'time': 'Time',
                 'depth': 'sw_ocean',
-                'lat': 'yt_ocean',
-                'lon': 'xt_ocean'}
-        zfield = Field.from_netcdf(files, 'zone', dimz, field_chunksize=chunks,
+                'lat': 'yu_ocean',
+                'lon': 'xu_ocean'}
+
+        zfield = Field.from_netcdf(file, 'zone', dimz,
+                                   field_chunksize=chunks,
                                    allow_time_extrapolation=True)
+
         fieldset.add_field(zfield, 'zone')
-        fieldset.zone.interp_method = 'nearest'
+        fieldset.zone.interp_method = 'nearest'  # Nearest values only.
 
     if add_unbeach_vel:
-        """Add Unbeach velocity vectorfield to fieldset."""
+        # Add Unbeach velocity vectorfield to fieldset.
         file = str(cfg.data/'OFAM3_unbeach_land_ucell.nc')
-        variables = {'unBeachU': 'unBeachU',
-                     'unBeachV': 'unBeachV',
-                     'land': 'land'}
-        indices = {'unBeachU': {'depth': np.arange(0, n, dtype=int).tolist()},
-                   'unBeachV': {'depth': np.arange(0, n, dtype=int).tolist()},
-                   'land': {'depth': np.arange(0, n, dtype=int).tolist()}}
 
-        dimz = {'unBeachU': {'time': 'Time', 'depth': 'st_edges_ocean', 'lat': 'yu_ocean', 'lon': 'xu_ocean'},
-                'unBeachV': {'time': 'Time', 'depth': 'st_edges_ocean', 'lat': 'yu_ocean', 'lon': 'xu_ocean'},
-                'land': {'time': 'Time', 'depth': 'st_edges_ocean', 'lat': 'yu_ocean', 'lon': 'xu_ocean'}}
-        fieldsetUnBeach = FieldSet.from_netcdf(file, variables, dimz,
-                                                       indices=indices,
-                                                       field_chunksize=chunks,
-                                                       allow_time_extrapolation=True)
-        fieldsetUnBeach.time_origin = fieldset.time_origin
-        fieldsetUnBeach.time_origin.time_origin = fieldset.time_origin.time_origin
-        fieldsetUnBeach.time_origin.calendar = fieldset.time_origin.calendar
-        fieldset.add_field(fieldsetUnBeach.unBeachU, 'unBeachU')
-        fieldset.add_field(fieldsetUnBeach.unBeachV, 'unBeachV')
-        fieldset.add_field(fieldsetUnBeach.land, 'land')
-        fieldset.unBeachU.units = parcels.tools.converters.GeographicPolar()
-        fieldset.unBeachV.units = parcels.tools.converters.Geographic()
+        variables = {'Ub': 'unBeachU',
+                     'Vb': 'unBeachV',
+                     'land': 'land'}
+
+        dimv = {'Ub': dims['U'],
+                'Vb': dims['U'],
+                'land': dims['U']}
+
+        indices = {'depth': zu_ind}
+
+        fieldsetUB = FieldSet.from_netcdf(file, variables, dimv,
+                                          indices=indices,
+                                          field_chunksize=chunks,
+                                          allow_time_extrapolation=True)
+
+        # Field time origins and calander (probs unnecessary).
+        fieldsetUB.time_origin = fieldset.time_origin
+        fieldsetUB.time_origin.time_origin = fieldset.time_origin.time_origin
+        fieldsetUB.time_origin.calendar = fieldset.time_origin.calendar
+
+        # Add beaching velocity and land mask to fieldset.
+        fieldset.add_field(fieldsetUB.Ub, 'Ub')
+        fieldset.add_field(fieldsetUB.Vb, 'Vb')
+        fieldset.add_field(fieldsetUB.land, 'land')
+
+        # Set field units and b-grid interp method (avoids bug).
+        fieldset.Ub.units = parcels.tools.converters.GeographicPolar()
+        fieldset.Vb.units = parcels.tools.converters.Geographic()
         fieldset.land.units = parcels.tools.converters.Geographic()
-        fieldset.unBeachU.interp_method = 'bgrid_velocity'
-        fieldset.unBeachV.interp_method = 'bgrid_velocity'
+        fieldset.Ub.interp_method = 'bgrid_velocity'
+        fieldset.Vb.interp_method = 'bgrid_velocity'
         fieldset.land.interp_method = 'bgrid_velocity'
-        UVunbeach = VectorField('UVunbeach', fieldset.unBeachU, fieldset.unBeachV)
+
+        # Add unbeaching vector field (probs unnecessary).
+        UVunbeach = VectorField('UVunbeach', fieldset.Ub, fieldset.Vb)
         fieldset.add_vector_field(UVunbeach)
 
     return fieldset
@@ -237,7 +274,7 @@ def BeachTest(particle, fieldset, time):
         if particle.beached <= 3:
             particle.beached += 1
         else:
-            print('WARNING: UBeaching deleted a particle.')
+            print('WARNING: Beached particle deleted.')
             particle.delete()
     else:
         particle.beached = 0
@@ -247,74 +284,15 @@ def UnBeaching(particle, fieldset, time):
     """Unbeach particles."""
     if particle.beached >= 1:
         (ub, vb) = fieldset.UVunbeach[0., particle.depth, particle.lat, particle.lon]
-        ubx = fieldset.geo * (1/math.cos(particle.lat*math.pi/180))
-        particle.lon += math.copysign(ubx, ub) * math.fabs(particle.dt)
-        particle.lat += math.copysign(fieldset.geo, vb) * math.fabs(particle.dt)
+        if math.fabs(ub) > 1e-14:
+            ubx = fieldset.geo * (1/math.cos(particle.lat*math.pi/180))
+            particle.lon += math.copysign(ubx, ub) * math.fabs(particle.dt)
+        if math.fabs(vb) > 1e-14:
+            particle.lat += math.copysign(fieldset.geo, vb) * math.fabs(particle.dt)
         particle.unbeached += 1
-# def UnBeaching(particle, fieldset, time):
-#     """Unbeach particles."""
-#     (uu, vv, ww) = fieldset.UVW[time, particle.depth, particle.lat, particle.lon]
-#     if math.fabs(uu) < 1e-10 and math.fabs(vv) < 1e-10:
-#         if particle.beached > 3:
-#             print('WARNING: UBeaching deleted a particle.')
-#             particle.delete()
-#         else:
-#             (ub, vb) = fieldset.UVunbeach[0., particle.depth, particle.lat, particle.lon]
-#             particle.lon += ub * math.fabs(particle.dt)
-#             particle.lat += vb * math.fabs(particle.dt)
-#             particle.beached += 1
-#             particle.unbeached += 1
-#     else:
-#         particle.beached = 0
-
-
-# def UnBeaching(particle, fieldset, time):
-#     """Unbeach particles."""
-#     (uu, vv, ww) = fieldset.UVW[time, particle.depth, particle.lat, particle.lon]
-#     (ub, vb) = fieldset.UVunbeach[0., particle.depth, particle.lat, particle.lon]
-#     if ((math.fabs(uu) < 1e-12 and math.fabs(vv) < 1e-12) or math.fabs(ub) > 1e-14 or math.fabs(vb) > 1e-14):
-#         if particle.beached > 3:
-#             print('WARNING: UBeaching deleted a particle.')
-#             particle.delete()
-#         else:
-
-#             particle.lon += ub * math.fabs(particle.dt)
-#             particle.lat += vb * math.fabs(particle.dt)
-#             particle.beached += 1
-#             particle.unbeached += 1
-#     else:
-#         particle.beached = 0
-
-# def UnBeaching(particle, fieldset, time):
-#     """Unbeach particles."""
-#     if particle.beached >= 1:
-#         (ub, vb) = fieldset.UVunbeach[0., particle.depth, particle.lat, particle.lon]
-#         (uu, vv, ww) = fieldset.UVW[time, particle.depth, particle.lat, particle.lon]
-#         print('B={} y={:.2f} x={:.2f} z={:.2f} ub={} vb={} uu={} vv={}'
-#               .format(particle.beached, particle.lat, particle.lon,
-#                       particle.depth, ub, vb, uu, vv))
-#         particle.unbeached += 1
-#         (ub, vb) = fieldset.UVunbeach[0., particle.depth, particle.lat, particle.lon]
-#         if math.fabs(ub) > fieldset.geo/3:
-#             ubx = fieldset.geo * (1/math.cos(particle.lat*math.pi/180))
-#             particle.lon += math.copysign(ubx, ub) * math.fabs(particle.dt)
-#         if math.fabs(vb) > fieldset.geo/3:
-#             particle.lat += math.copysign(fieldset.geo, vb) * math.fabs(particle.dt)
-
-# def UnBeaching(particle, fieldset, time):
-#     """Unbeach particles."""
-#     if particle.beached >= 1:
-#         (ub, vb) = fieldset.UVunbeach[0., particle.depth, particle.lat, particle.lon]
-#         land = fieldset.land[0., particle.depth, particle.lat, particle.lon]
-#         (uu, vv, ww) = fieldset.UVW[time, particle.depth, particle.lat, particle.lon]
-#         print()
-#         print('B={} ub={} vb={} ld={} uu={} vv={}'.format(particle.beached, ub, vb, land, uu, vv))
-#         print('B={} y={:.2f} x={:.2f} z={:.2f}'.format(particle.beached, particle.lat, particle.lon, particle.depth))
-#         ubx = fieldset.geo * (1/math.cos(particle.lat*math.pi/180))
-#         particle.lon += math.copysign(ubx, ub) * math.fabs(particle.dt)
-#         particle.lat += math.copysign(fieldset.geo, vb) * math.fabs(particle.dt)
-#         particle.unbeached += 1
-#         print('B={} y={:.2f} x={:.2f} z={:.2f}'.format(particle.beached, particle.lat, particle.lon, particle.depth))
+        ldn = fieldset.land[0., particle.depth, particle.lat, particle.lon]
+        if ldn >= fieldset.geo/4:
+            particle.beached = 0
 
 
 def DeleteParticle(particle, fieldset, time):
@@ -366,8 +344,9 @@ def SubmergeParticle(particle, fieldset, time):
     particle.set_state(ErrorCode.Success)
 
 
-def particleset_from_particlefile(fieldset, pclass, filename, repeatdt=None, restart=True,
-                                  restarttime=np.nanmin, lonlatdepth_dtype=np.float64, **kwargs):
+def particleset_from_particlefile(fieldset, pclass, filename, repeatdt=None,
+                                  restart=True, restarttime=np.nanmin,
+                                  lonlatdepth_dtype=np.float64, **kwargs):
     """Initialise the ParticleSet from a netcdf ParticleFile.
 
     This creates a new ParticleSet based on locations of all particles written
@@ -423,12 +402,7 @@ def particleset_from_particlefile(fieldset, pclass, filename, repeatdt=None, res
 
 
 def plot3D(sim_id):
-    """Plot 3D figure of particle trajectories over time.
-
-    Args:
-        sim_id (pathlib.Path): ParticleFile to plot.
-
-    """
+    """Plot 3D figure of particle trajectories over time."""
     ds = xr.open_dataset(sim_id, decode_cf=True)
     ds = ds.where(ds.u >= 0., drop=True)
 
