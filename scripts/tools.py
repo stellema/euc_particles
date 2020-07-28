@@ -4,7 +4,10 @@ created: Mon May  4 17:19:44 2020
 
 author: Annette Stellema (astellemas@gmail.com)
 
-
+class CustomAdapter(logging.LoggerAdapter):
+    def process(self, msg, kwargs):
+        return '[%s] %s' % (self.extra['sim_id'], msg), kwargs
+    loggen = CustomAdapter(logger, {'sim_id': sim_id.stem})
 """
 import os
 import sys
@@ -39,6 +42,20 @@ def mlogger(name, parcels=False, misc=True):
 
     loggers = cfg.loggers
     name = 'misc' if misc else name
+    if Path(sys.argv[0]).stem in ['sim', 'sim_test']:
+        name = 'sim' if cfg.home != Path('E:/') else 'test_sim'
+        parcels = True
+        misc = False
+
+
+    class NoWarnFilter(logging.Filter):
+        def filter(self, record):
+            show = True
+            for key in ['Casting', 'Trying', 'Particle init']:
+                if record.getMessage().startswith(key):
+                    show = False
+            return show
+
 
     # logger = logging.getLogger(__name__)
     if loggers.get(name):
@@ -55,11 +72,13 @@ def mlogger(name, parcels=False, misc=True):
         f_handler.setLevel(logging.DEBUG)
 
         # Create formatters and add it to handlers
-        c_format = logging.Formatter('%(name)s:%(levelname)s:%(message)s')
-        f_format = logging.Formatter('%(asctime)s:%(funcName)s'
-                                     ':%(levelname)s:%(message)s')
+        c_format = logging.Formatter('%(message)s')
+        f_format = logging.Formatter('%(asctime)s:%(message)s',
+                                     "%Y-%m-%d %H:%M:%S")
+
         if len(logger.handlers) != 0:
             logger.handlers.clear()
+
         c_handler.setFormatter(c_format)
         f_handler.setFormatter(f_format)
 
@@ -67,6 +86,8 @@ def mlogger(name, parcels=False, misc=True):
         logger.addHandler(c_handler)
         logger.addHandler(f_handler)
         logger.setLevel(logging.DEBUG)
+        logger.addFilter(NoWarnFilter())
+
         # logger.propagate = False
         loggers[name] = logger
     return logger

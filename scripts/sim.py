@@ -4,6 +4,7 @@ created: Fri Jun 12 18:45:35 2020.
 author: Annette Stellema (astellemas@gmail.com)
 
 """
+# import logging
 import cfg
 import tools
 import main
@@ -21,28 +22,10 @@ try:
 except ImportError:
     MPI = None
 
-log_name = 'sim' if cfg.home != Path('E:/') else 'test_sim'
-logger = tools.mlogger(log_name, parcels=True, misc=False)
+logger = tools.mlogger('sim', parcels=True, misc=False)
 
 
-def timeit(method):
-    """Wrap function to time method execution time."""
-    @wraps(method)
-    def timed(*args, **kw):
-        ts = datetime.now()
-        result = method(*args, **kw)
-        te = datetime.now()
-        h, rem = divmod((te - ts).total_seconds(), 3600)
-        m, s = divmod(rem, 60)
-        logger.info('{}: {:}:{:}:{:05.2f} total: {:.2f} seconds.'.format(
-                method.__name__, int(h), int(m), s, (te - ts).total_seconds()))
-
-        return result
-
-    return timed
-
-
-@timeit
+@tools.timeit
 def pset_euc(fieldset, pclass, lon, dy, dz, repeatdt, pset_start, repeats,
              sim_id=None, rank=0):
     """Create a ParticleSet."""
@@ -80,7 +63,7 @@ def pset_euc(fieldset, pclass, lon, dy, dz, repeatdt, pset_start, repeats,
     return pset
 
 
-@timeit
+@tools.timeit
 def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
             outputdt_days=1, runtime_days=186, v=1, chunks=300, unbeach=True,
             pfile='None'):
