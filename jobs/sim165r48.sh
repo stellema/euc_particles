@@ -12,4 +12,4 @@ module use /g/data3/hh5/public/modules
 module load conda/analysis3-20.04
 module unload openmpi
 module load openmpi/4.0.2
-mpirun -np 48 python3 /g/data/e14/as3189/OFAM/scripts/sim.py -e "rcp" -x 165 -r 1464 -v 0
+mpirun -np 48 python3 /g/data/e14/as3189/OFAM/scripts/sim.py -e "rcp" -x 165 -r 2190 -v 0
