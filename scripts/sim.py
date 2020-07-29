@@ -4,14 +4,12 @@ created: Fri Jun 12 18:45:35 2020.
 author: Annette Stellema (astellemas@gmail.com)
 
 """
-# import logging
 import cfg
 import tools
 import main
 import math
 import numpy as np
 from pathlib import Path
-from functools import wraps
 from operator import attrgetter
 from datetime import datetime, timedelta
 from argparse import ArgumentParser
@@ -26,7 +24,7 @@ logger = tools.mlogger('sim', parcels=True, misc=False)
 
 
 def pset_euc(fieldset, pclass, lon, dy, dz, repeatdt, pset_start, repeats,
-             sim_id=None, rank=0):
+             sim_id=None, rank=0, pid=None):
     """Create a ParticleSet."""
     repeats = 1 if repeats <= 0 else repeats
     # Particle release latitudes, depths and longitudes.
@@ -50,8 +48,14 @@ def pset_euc(fieldset, pclass, lon, dy, dz, repeatdt, pset_start, repeats,
     lon = np.tile(lons, repeats)
     lat = np.tile(lats, repeats)
 
+    if pid:
+        pid_orig = np.arange(lon.size) + pid
+    else:
+        pid_orig = None
+
     pset = ParticleSet.from_list(fieldset=fieldset, pclass=pclass,
                                  lon=lon, lat=lat, depth=depth, time=time,
+                                 pid_orig=pid_orig,
                                  lonlatdepth_dtype=np.float64)
     if sim_id and rank == 0:
         logger.info('{}:Particles: /repeat={}: Total={}'
@@ -155,6 +159,7 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
         # ParticleSet start time (for log).
         start = (fieldset.time_origin.time_origin +
                  timedelta(seconds=pset_start))
+        pid = None
 
     # Create particle set from particlefile and add new repeats.
     else:
@@ -175,10 +180,12 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
 
         # Create ParticleSet from the given ParticleFile.
         # import main
-        psetx = main.pset_from_file(fieldset, pclass=pclass, filename=pfile,
-                                    restart=True, restarttime=np.nanmin)
+        psetx, nextid = main.pset_from_file(fieldset, pclass=pclass,
+                                            filename=pfile, restart=True,
+                                            restarttime=np.nanmin)
         # Start date to add new EUC particles.
         pset_start = np.nanmin(psetx.time)
+        pid = nextid
 
         # ParticleSet start time (for log).
         start = (fieldset.time_origin.time_origin +
@@ -186,7 +193,7 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
 
     # Create ParticleSet.
     pset = pset_euc(fieldset, pclass, lon, dy, dz, repeatdt, pset_start,
-                    repeats, sim_id, rank=rank)
+                    repeats, sim_id, rank=rank, pid=pid)
 
     # Add particles from ParticleFile.
     if restart:
@@ -229,13 +236,20 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
 
     timed = tools.timer(ts)
     logger.info('{}:Completed!: {}: Rank={:>2}: #Particles={}-{}={}'
-                .format(sim_id.stem, timed, rank, psize, psize - pset.size, pset.size))
+                .format(sim_id.stem, timed, rank, psize,
+                        psize - pset.size, pset.size))
 
     # Save to netcdf.
     output_file.export()
 
     if rank == 0:
         logger.info('{}:Finished'.format(sim_id.stem))
+        try:
+            import sim_info
+            info = sim_info.particle_info(sim_id)
+            logger.info(info)
+        except:
+            logger.info('{}:Error getting sim info'.format(sim_id.stem))
 
     return
 
@@ -262,7 +276,7 @@ if __name__ == "__main__" and cfg.home != Path('E:/'):
 elif __name__ == "__main__":
     dy, dz, lon = 2, 150, 190
     dt_mins, repeatdt_days, outputdt_days, runtime_days = 60, 6, 1, 10
-    pfile = 'None'  # 'sim_hist_190_v21r1.nc'
+    pfile = ['None', 'sim_hist_190_v16r0.nc'][0]
     v = 55
     exp = 'hist'
     unbeach = True

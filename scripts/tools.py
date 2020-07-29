@@ -190,6 +190,14 @@ def legend_without_duplicate_labels(ax, loc=False, fontsize=11):
     return
 
 
+def roundup(x):
+    return int(math.ceil(x / 10.0)) * 10
+
+
+def rounddown(x):
+    return int(math.floor(x / 10.0)) * 10
+
+
 def deg_m(lat, lon, deg=0.1):
     """Convert latitude and longitude values or arrays to metres."""
     arc = ((np.pi*cfg.EARTH_RADIUS)/180)

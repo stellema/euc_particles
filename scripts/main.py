@@ -389,43 +389,142 @@ def pset_from_file(fieldset, pclass, filename, repeatdt=None,
         pclass.setLastID(0)  # reset to zero offset
     else:
         vars['id'] = None
-
+    nextid = np.nanmax(pfile.variables['trajectory']) + 1
     pset = ParticleSet(fieldset=fieldset, pclass=pclass, lon=vars['lon'],
                        lat=vars['lat'], depth=vars['depth'], time=vars['time'],
                        pid_orig=vars['id'], repeatdt=repeatdt,
                        lonlatdepth_dtype=lonlatdepth_dtype, **kwargs)
 
-    return pset
+    return pset, nextid
 
 
 def plot3D(sim_id):
     """Plot 3D figure of particle trajectories over time."""
+    import matplotlib.ticker as ticker
+    # Open ParticleFile.
     ds = xr.open_dataset(sim_id, decode_cf=True)
-    ds = ds.where(ds.u >= 0., drop=True)
 
+    # Drop initially westward particles.
+    ds = ds.where(ds.u > 0., drop=True)
+    N = len(ds.traj)
     x, y, z = ds.lon, ds.lat, ds.z
-    xlim = [math.floor(np.nanmin(x)), math.ceil(np.nanmax(x))]
-    ylim = [math.floor(np.nanmin(y)), math.ceil(np.nanmax(y))]
-    zlim = [math.ceil(np.nanmax(z)), math.floor(np.nanmin(z))]
 
     fig = plt.figure(figsize=(13, 10))
+    plt.suptitle(sim_id.stem, y=0.89, x=0.23)
     ax = fig.add_subplot(111, projection='3d')
     colors = plt.cm.rainbow(np.linspace(0, 1, len(ds.traj)))
+    ax.set_xlim(tools.rounddown(np.nanmin(x)), tools.roundup(np.nanmax(x)))
+    ax.set_ylim(tools.rounddown(np.nanmin(y)), tools.roundup(np.nanmax(y)))
+    ax.set_zlim(tools.roundup(np.nanmax(z)), tools.rounddown(np.nanmin(z)))
 
-    for i in range(len(ds.traj)):
+    for i in range(N):
         ax.plot3D(x[i], y[i], z[i], color=colors[i])
-        ax.set_xlim(xlim[0], xlim[1])
-        ax.set_ylim(ylim[0], ylim[1])
-        ax.set_zlim(zlim[0], zlim[1])
 
     xticks = ax.get_xticks()
     yticks = ax.get_yticks()
-    ax.set_xticklabels(tools.coord_formatter(xticks, convert='lon'))
-    ax.set_yticklabels(tools.coord_formatter(yticks, convert='lat'))
-    ax.set_zlabel("Depth [m]")
-    fig.savefig(cfg.fig/('parcels/' + sim_id.stem + cfg.im_ext))
-    plt.show()
+    zticks = ax.get_zticks()
+    xlabels = tools.coord_formatter(xticks, convert='lon')
+    ylabels = tools.coord_formatter(yticks, convert='lat')
+    zlabels = ['{:.0f}m'.format(k) for k in zticks]
+    ax.xaxis.set_major_locator(ticker.FixedLocator(xticks))
+    ax.xaxis.set_major_formatter(ticker.FixedFormatter(xlabels))
+    ax.yaxis.set_major_locator(ticker.FixedLocator(yticks))
+    ax.yaxis.set_major_formatter(ticker.FixedFormatter(ylabels))
+    ax.zaxis.set_major_locator(ticker.FixedLocator(zticks))
+    ax.zaxis.set_major_formatter(ticker.FixedFormatter(zlabels))
+    plt.tight_layout(pad=0)
+
+    fig.savefig(cfg.fig/('parcels/' + sim_id.stem + cfg.im_ext),
+                bbox_inches='tight')
+    # plt.show()
     plt.close()
     ds.close()
 
-    return ds
+    return
+
+
+def plot3Dx(sim_id):
+    """Plot 3D figure of particle trajectories over time."""
+    import matplotlib.ticker as ticker
+
+    def setup(ax, xticks, yticks, zticks, xax='lon', yax='lat'):
+        xlabels = tools.coord_formatter(xticks, convert=xax)
+        ylabels = tools.coord_formatter(yticks, convert=yax)
+        zlabels = ['{:.0f}m'.format(k) for k in zticks]
+        ax.xaxis.set_major_locator(ticker.FixedLocator(xticks))
+        ax.xaxis.set_major_formatter(ticker.FixedFormatter(xlabels))
+        ax.yaxis.set_major_locator(ticker.FixedLocator(yticks))
+        ax.yaxis.set_major_formatter(ticker.FixedFormatter(ylabels))
+        ax.zaxis.set_major_locator(ticker.FixedLocator(zticks))
+        ax.zaxis.set_major_formatter(ticker.FixedFormatter(zlabels))
+        return ax
+
+    # Open ParticleFile.
+    ds = xr.open_dataset(sim_id, decode_cf=True)
+    # Drop initially westward particles.
+    ds = ds.where(ds.u > 0., drop=True)
+    N = len(ds.traj)
+    x, y, z = ds.lon, ds.lat, ds.z
+    xlim = [tools.rounddown(np.nanmin(x)), tools.roundup(np.nanmax(x))]
+    ylim = [tools.rounddown(np.nanmin(y)), tools.roundup(np.nanmax(y))]
+    zlim = [tools.rounddown(np.nanmin(z)), tools.roundup(np.nanmax(z))]
+    colors = plt.cm.rainbow(np.linspace(0, 1, len(ds.traj)))
+
+    # Plot figure.
+    fig = plt.figure(figsize=(18, 16))
+    plt.suptitle(sim_id.stem, y=0.92, x=0.1)
+
+    ax = fig.add_subplot(221, projection='3d')
+    ax.set_xlim(xlim[0], xlim[1])
+    ax.set_ylim(ylim[0], ylim[1])
+    ax.set_zlim(zlim[1], zlim[0])
+    for i in range(N):
+        ax.plot3D(x[i], y[i], z[i], color=colors[i])
+    xticks = ax.get_xticks()
+    yticks = ax.get_yticks()
+    zticks = ax.get_zticks()
+    ax = setup(ax, xticks, yticks, zticks, xax='lon', yax='lat')
+
+    # Reverse latitude.
+    ax = fig.add_subplot(222, projection='3d')
+    ax.set_xlim(xlim[0], xlim[1])
+    ax.set_ylim(ylim[1], ylim[0])
+    ax.set_zlim(zlim[1], zlim[0])
+    for i in range(N):
+        ax.plot3D(x[i], y[i], z[i], color=colors[i])
+    xticks = ax.get_xticks()
+    yticks = ax.get_yticks()
+    zticks = ax.get_zticks()
+    ax = setup(ax, xticks, yticks, zticks, xax='lon', yax='lat')
+
+    # Switch latitude and longitude.
+    ax = fig.add_subplot(223, projection='3d')
+    ax.set_ylim(xlim[0], xlim[1])
+    ax.set_xlim(ylim[0], ylim[1])
+    ax.set_zlim(zlim[1], zlim[0])
+    for i in range(N):
+        ax.plot3D(y[i], x[i], z[i], color=colors[i])
+    xticks = ax.get_xticks()
+    yticks = ax.get_yticks()
+    zticks = ax.get_zticks()
+    ax = setup(ax, xticks, yticks, zticks, xax='lat', yax='lon')
+
+    # Reverse latitude and switch latitude and longitude.
+    ax = fig.add_subplot(224, projection='3d')
+    ax.set_ylim(xlim[1], xlim[0])
+    ax.set_xlim(ylim[0], ylim[1])
+    ax.set_zlim(zlim[1], zlim[0])
+    for i in range(N):
+        ax.plot3D(y[i], x[i], z[i], color=colors[i])
+    xticks = ax.get_xticks()
+    yticks = ax.get_yticks()
+    zticks = ax.get_zticks()
+    ax = setup(ax, xticks, yticks, zticks, xax='lat', yax='lon')
+
+    plt.tight_layout(pad=0)
+    fig.savefig(cfg.fig/('parcels/' + sim_id.stem + 'x' + cfg.im_ext))
+    # plt.show()
+    plt.close()
+    ds.close()
+
+    return
