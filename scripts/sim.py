@@ -161,6 +161,9 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
                  timedelta(seconds=pset_start))
         pid = None
 
+        # Create ParticleSet.
+        pset = pset_euc(fieldset, pclass, lon, dy, dz, repeatdt, pset_start,
+                        repeats, sim_id, rank=rank, pid=pid)
     # Create particle set from particlefile and add new repeats.
     else:
         # Add path to given ParticleFile name.
@@ -179,25 +182,20 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
             sim_id = cfg.data/'{}{}.nc'.format(pfile.stem[:-1], rmax + 1)
 
         # Create ParticleSet from the given ParticleFile.
-        # import main
-        psetx, nextid = main.pset_from_file(fieldset, pclass=pclass,
-                                            filename=pfile, restart=True,
-                                            restarttime=np.nanmin)
+        pset, nextid = main.pset_from_file(fieldset, pclass=pclass,
+                                           filename=pfile, restart=True,
+                                           restarttime=np.nanmin)
+
         # Start date to add new EUC particles.
-        pset_start = np.nanmin(psetx.time)
+        pset_start = np.nanmin(pset.time)
         pid = nextid
+        psetx = pset_euc(fieldset, pclass, lon, dy, dz, repeatdt, pset_start,
+                         repeats, sim_id, rank=rank, pid=pid)
+        pset.add(psetx)
 
         # ParticleSet start time (for log).
         start = (fieldset.time_origin.time_origin +
                  timedelta(seconds=np.nanmin(psetx.time)))
-
-    # Create ParticleSet.
-    pset = pset_euc(fieldset, pclass, lon, dy, dz, repeatdt, pset_start,
-                    repeats, sim_id, rank=rank, pid=pid)
-
-    # Add particles from ParticleFile.
-    if restart:
-        pset.add(psetx)
 
     # ParticleSet size before execution.
     psize = pset.size
@@ -276,7 +274,7 @@ if __name__ == "__main__" and cfg.home != Path('E:/'):
 elif __name__ == "__main__":
     dy, dz, lon = 2, 150, 190
     dt_mins, repeatdt_days, outputdt_days, runtime_days = 60, 6, 1, 10
-    pfile = ['None', 'sim_hist_190_v16r0.nc'][0]
+    pfile = ['None', 'sim_hist_190_v16r0.nc'][1]
     v = 55
     exp = 'hist'
     unbeach = True
