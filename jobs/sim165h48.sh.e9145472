@@ -1,0 +1,64 @@
+
+------------------------------------------------------------------------
+Job 9145472 has exceeded memory allocation on node gadi-cpu-clx-0554.gadi.nci.org.au
+Process "bash", pid 3363723, rss 135168, vmem 20774912
+Process "9145472.gadi-pb", pid 3363773, rss 0, vmem 227966976
+Process "mpirun", pid 3364038, rss 2940928, vmem 601374720
+Process "python3", pid 3364050, rss 4041326592, vmem 5677043712
+Process "python3", pid 3364051, rss 3943682048, vmem 5677060096
+Process "python3", pid 3364052, rss 4113571840, vmem 5677047808
+Process "python3", pid 3364053, rss 4036739072, vmem 5677064192
+Process "python3", pid 3364054, rss 4014387200, vmem 5677047808
+Process "python3", pid 3364055, rss 3944910848, vmem 5677047808
+Process "python3", pid 3364056, rss 3937062912, vmem 5677068288
+Process "python3", pid 3364057, rss 3805511680, vmem 5677047808
+Process "python3", pid 3364058, rss 3959496704, vmem 5677056000
+Process "python3", pid 3364059, rss 3866939392, vmem 5677047808
+Process "python3", pid 3364060, rss 3757903872, vmem 5677064192
+Process "python3", pid 3364061, rss 4000129024, vmem 5677064192
+Process "python3", pid 3364062, rss 4408422400, vmem 5677072384
+Process "python3", pid 3364063, rss 4587163648, vmem 5677056000
+Process "python3", pid 3364064, rss 4439494656, vmem 5677056000
+Process "python3", pid 3364065, rss 4541075456, vmem 5677060096
+Process "python3", pid 3364066, rss 4506873856, vmem 5677043712
+Process "python3", pid 3364067, rss 4394622976, vmem 5677043712
+Process "python3", pid 3364068, rss 4462276608, vmem 5677064192
+Process "python3", pid 3364069, rss 4729253888, vmem 5677068288
+Process "python3", pid 3364070, rss 4603973632, vmem 5677035520
+Process "python3", pid 3364071, rss 4510367744, vmem 5677047808
+Process "python3", pid 3364072, rss 4482916352, vmem 5677084672
+Process "python3", pid 3364073, rss 4737363968, vmem 5677047808
+Process "python3", pid 3364074, rss 4322807808, vmem 5677043712
+Process "python3", pid 3364075, rss 4031139840, vmem 5677064192
+Process "python3", pid 3364076, rss 3957198848, vmem 5677060096
+Process "python3", pid 3364077, rss 4097216512, vmem 5677064192
+Process "python3", pid 3364078, rss 4247203840, vmem 5677342720
+Process "python3", pid 3364079, rss 4192546816, vmem 5677064192
+Process "python3", pid 3364080, rss 4146593792, vmem 5677076480
+Process "python3", pid 3364081, rss 4156952576, vmem 5677060096
+Process "python3", pid 3364082, rss 4093636608, vmem 5677056000
+Process "python3", pid 3364083, rss 4272394240, vmem 5677064192
+Process "python3", pid 3364084, rss 4173910016, vmem 5677056000
+Process "python3", pid 3364085, rss 2898628608, vmem 5677072384
+Process "python3", pid 3364086, rss 3078012928, vmem 5677060096
+Process "python3", pid 3364087, rss 4199260160, vmem 5677076480
+Process "python3", pid 3364088, rss 3069571072, vmem 5677080576
+Process "python3", pid 3364089, rss 2986573824, vmem 5677056000
+Process "python3", pid 3364090, rss 2979385344, vmem 5677072384
+Process "python3", pid 3364091, rss 3079696384, vmem 5677064192
+Process "python3", pid 3364092, rss 3040899072, vmem 5677051904
+Process "python3", pid 3364093, rss 3148103680, vmem 5677060096
+Process "python3", pid 3364094, rss 3208359936, vmem 5677064192
+Process "python3", pid 3364095, rss 3022630912, vmem 5677080576
+Process "python3", pid 3364096, rss 2953646080, vmem 5677072384
+Process "python3", pid 3364097, rss 3209584640, vmem 5677309952
+------------------------------------------------------------------------
+For more information visit https://opus.nci.org.au/x/SwGRAQ
+------------------------------------------------------------------------
+--------------------------------------------------------------------------
+Primary job  terminated normally, but 1 process returned
+a non-zero exit code. Per user-direction, the job has been aborted.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+mpirun noticed that process rank 18 with PID 0 on node gadi-cpu-clx-0554 exited on signal 9 (Killed).
+--------------------------------------------------------------------------
