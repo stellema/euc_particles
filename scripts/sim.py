@@ -151,7 +151,7 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
     if not restart:
         # Generate file name for experiment (random number if not using MPI).
         randomise = False if MPI else True
-        sim_id = main.generate_sim_id(lon, v, randomise=randomise)
+        sim_id = main.generate_sim_id(lon, v, exp=exp, randomise=randomise)
 
         # Set ParticleSet start as last fieldset time.
         pset_start = fieldset.U.grid.time[-1]
