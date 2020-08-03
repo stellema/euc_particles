@@ -120,6 +120,7 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
         # Create ParticleSet.
         pset = main.pset_euc(fieldset, pclass, lon, dy, dz, repeatdt, pset_start,
                              repeats, sim_id, rank=rank, logger=logger)
+        psz = ''
     # Create particle set from particlefile and add new repeats.
     else:
         # Add path to given ParticleFile name.
@@ -141,13 +142,15 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
         pset = main.pset_from_rfile(fieldset, pclass=pclass,
                                     filename=pfile, restart=True,
                                     restarttime=np.nanmin)
-
+        psz1 = pset.size
         # Start date to add new EUC particles.
         pset_start = np.nanmin(pset.time)
         psetx = main.pset_euc(fieldset, pclass, lon, dy, dz, repeatdt,
                               pset_start, repeats, sim_id, rank=rank,
                               logger=logger)
+        psz2 = psetx.size
         pset.add(psetx)
+        psz = '{}+{}='.format(psz1, psz2)
 
         # ParticleSet start time (for log).
         start = (fieldset.time_origin.time_origin +
@@ -164,7 +167,7 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
         logger.info('{}:{} to {}: Runtime={} days'.format(sim_id.stem, start.strftime('%Y-%m-%d'), (start - runtime).strftime('%Y-%m-%d'), runtime.days))
         logger.info('{}:Repeat={} days: Step={:.0f} mins: Output={:.0f} day'.format(sim_id.stem, repeatdt.days, dt_mins, outputdt.days))
         logger.info('{}:Field=b-grid: Chunks={}: Time={}-{}'.format(sim_id.stem, chunks, time_bnds[0].year, time_bnds[1].year))
-    logger.debug('{}:Temp={}: Rank={:>2}: #Particles={}'.format(sim_id.stem, output_file.tempwritedir_base[-8:], rank, psize))
+    logger.debug('{}:Temp={}: Rank={:>2}: #Particles={}{}'.format(sim_id.stem, output_file.tempwritedir_base[-8:], rank, psz, psize))
 
     if pset.particle_data['time'].max() != pset_start:
         logger.debug('{}:Rank={:>2}: Start={:>2.0f}: Pstart={}'.format(sim_id.stem, rank, pset_start, pset.particle_data['time'].max()))
