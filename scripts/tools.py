@@ -609,11 +609,11 @@ def zone_fieldset(plot=True):
 
     if plot:
         d = d.isel(Time=0, sw_ocean=0)
-        d = d.sel(yu_ocean=slice(-7.5, 10), xu_ocean=slice(120, 255))
+        d = d.sel(yt_ocean=slice(-7.5, 10), xt_ocean=slice(120, 255))
 
         cmap = colors.ListedColormap(['darkorange', 'deeppink', 'mediumspringgreen',
                                       'deepskyblue', 'seagreen', 'blue',
-                                      'red', 'darkviolet', 'k'])
+                                      'red', 'darkviolet', 'k', 'm'])
         cmap.set_bad('grey')
         cmap.set_under('white')
         fig = plt.figure(figsize=(16, 9))
