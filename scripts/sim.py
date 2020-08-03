@@ -23,49 +23,6 @@ except ImportError:
 logger = tools.mlogger('sim', parcels=True, misc=False)
 
 
-def pset_euc(fieldset, pclass, lon, dy, dz, repeatdt, pset_start, repeats,
-             sim_id=None, rank=0, pid=None):
-    """Create a ParticleSet."""
-    repeats = 1 if repeats <= 0 else repeats
-    # Particle release latitudes, depths and longitudes.
-    py = np.round(np.arange(-2.6, 2.6 + 0.05, dy), 2)
-    pz = np.arange(25, 350 + 20, dz)
-    px = np.array([lon])
-
-    # Number of particles released in each dimension.
-    Z, Y, X = pz.size, py.size, px.size
-    npart = Z * X * Y * repeats
-
-    # Each repeat.
-    lats = np.repeat(py, pz.size*px.size)
-    depths = np.repeat(np.tile(pz, py.size), px.size)
-    lons = np.repeat(px, pz.size*py.size)
-
-    # Duplicate for each repeat.
-    tr = pset_start - (np.arange(0, repeats) * repeatdt.total_seconds())
-    time = np.repeat(tr, lons.size)
-    depth = np.tile(depths, repeats)
-    lon = np.tile(lons, repeats)
-    lat = np.tile(lats, repeats)
-
-    if pid:
-        pid_orig = np.arange(lon.size) + pid
-    else:
-        pid_orig = None
-
-    pset = ParticleSet.from_list(fieldset=fieldset, pclass=pclass,
-                                 lon=lon, lat=lat, depth=depth, time=time,
-                                 pid_orig=pid_orig,
-                                 lonlatdepth_dtype=np.float64)
-    if sim_id and rank == 0:
-        logger.info('{}:Particles: /repeat={}: Total={}'
-                    .format(sim_id.stem, Z * X * Y, npart))
-        logger.info('{}:Lon={}: Lat=[{}-{} x{}]: Depth=[{}-{}m x{}]'
-                    .format(sim_id.stem, *px, py[0], py[Y-1], dy, pz[0],
-                            pz[Z-1], dz))
-    return pset
-
-
 def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
             outputdt_days=1, runtime_days=186, v=1, chunks=300, unbeach=True,
             pfile='None'):
@@ -143,7 +100,8 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
                            dtype=np.float32)
 
         # Unbeached count.
-        unbeached = Variable('unbeached', initial=0., dtype=np.float32)
+        unbeached = Variable('unbeached', initial=0., to_write=False,
+                             dtype=np.float32)
 
     pclass = zParticle
 
@@ -162,8 +120,8 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
         pid = None
 
         # Create ParticleSet.
-        pset = pset_euc(fieldset, pclass, lon, dy, dz, repeatdt, pset_start,
-                        repeats, sim_id, rank=rank, pid=pid)
+        pset = main.pset_euc(fieldset, pclass, lon, dy, dz, repeatdt, pset_start,
+                             repeats, sim_id, rank=rank, pid=pid, logger=logger)
     # Create particle set from particlefile and add new repeats.
     else:
         # Add path to given ParticleFile name.
@@ -182,15 +140,15 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
             sim_id = cfg.data/'{}{}.nc'.format(pfile.stem[:-1], rmax + 1)
 
         # Create ParticleSet from the given ParticleFile.
-        pset, nextid = main.pset_from_file(fieldset, pclass=pclass,
-                                           filename=pfile, restart=True,
-                                           restarttime=np.nanmin)
+        pset, nextid = main.pset_from_rfile(fieldset, pclass=pclass,
+                                            filename=pfile, restart=True,
+                                            restarttime=np.nanmin)
 
         # Start date to add new EUC particles.
         pset_start = np.nanmin(pset.time)
         pid = nextid
-        psetx = pset_euc(fieldset, pclass, lon, dy, dz, repeatdt, pset_start,
-                         repeats, sim_id, rank=rank, pid=pid)
+        psetx = main.pset_euc(fieldset, pclass, lon, dy, dz, repeatdt, pset_start,
+                              repeats, sim_id, rank=rank, pid=pid, logger=logger)
         pset.add(psetx)
 
         # ParticleSet start time (for log).
@@ -242,12 +200,6 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
 
     if rank == 0:
         logger.info('{}:Finished'.format(sim_id.stem))
-        try:
-            import sim_info
-            info = sim_info.particle_info(sim_id)
-            logger.info(info)
-        except:
-            logger.info('{}:Error getting sim info'.format(sim_id.stem))
 
     return
 
@@ -274,12 +226,12 @@ if __name__ == "__main__" and cfg.home != Path('E:/'):
 elif __name__ == "__main__":
     dy, dz, lon = 2, 150, 190
     dt_mins, repeatdt_days, outputdt_days, runtime_days = 60, 6, 1, 10
-    pfile = ['None', 'sim_hist_190_v16r0.nc'][1]
+    pfile = ['None', 'sim_hist_190_v12r0.nc'][1]
     v = 55
     exp = 'hist'
     unbeach = True
     chunks = 300
-    run_EUC(dy=dy, dz=dz, lon=lon, dt_mins=dt_mins,
-            repeatdt_days=repeatdt_days, outputdt_days=outputdt_days,
-            v=v, runtime_days=runtime_days,
-            unbeach=unbeach, pfile=pfile)
+    # run_EUC(dy=dy, dz=dz, lon=lon, dt_mins=dt_mins,
+    #         repeatdt_days=repeatdt_days, outputdt_days=outputdt_days,
+    #         v=v, runtime_days=runtime_days,
+    #         unbeach=unbeach, pfile=pfile)

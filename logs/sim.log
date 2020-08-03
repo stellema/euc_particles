@@ -629,15 +629,15 @@
 2020-07-29 19:15:57:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9145530.gadi-pbs/parcels-12904/94c7fce528ab62e34b2989596206db7b_39.so
 2020-07-30 16:13:29:sim_rcp_165_v0r0:Particles: /repeat=742: Total=180306
 2020-07-30 16:13:29:sim_rcp_165_v0r0:Lon=165: Lat=[-2.6-2.6 x0.1]: Depth=[25-350m x25]
+2020-07-30 16:13:29:sim_rcp_165_v0r0:2102-01-01 to 2097-12-28: Runtime=1464 days
+2020-07-30 16:13:29:sim_rcp_165_v0r0:Repeat=6 days: Step=60 mins: Output=1 day
+2020-07-30 16:13:29:sim_rcp_165_v0r0:Field=b-grid: Chunks=300: Time=2070-2101
 2020-07-30 16:13:29:sim_rcp_165_v0r0:Temp=PLGBGWCM: Rank= 7: #Particles=3402
 2020-07-30 16:13:29:sim_rcp_165_v0r0:Temp=PLGBGWCM: Rank= 1: #Particles=3402
 2020-07-30 16:13:29:sim_rcp_165_v0r0:Temp=PLGBGWCM: Rank=11: #Particles=3402
 2020-07-30 16:13:29:sim_rcp_165_v0r0:Temp=PLGBGWCM: Rank= 4: #Particles=3402
 2020-07-30 16:13:29:sim_rcp_165_v0r0:Temp=PLGBGWCM: Rank= 3: #Particles=3402
 2020-07-30 16:13:29:sim_rcp_165_v0r0:Temp=PLGBGWCM: Rank=20: #Particles=3402
-2020-07-30 16:13:29:sim_rcp_165_v0r0:2102-01-01 to 2097-12-28: Runtime=1464 days
-2020-07-30 16:13:29:sim_rcp_165_v0r0:Repeat=6 days: Step=60 mins: Output=1 day
-2020-07-30 16:13:29:sim_rcp_165_v0r0:Field=b-grid: Chunks=300: Time=2070-2101
 2020-07-30 16:13:29:sim_rcp_165_v0r0:Temp=PLGBGWCM: Rank= 0: #Particles=3402
 2020-07-30 16:13:29:sim_rcp_165_v0r0:Temp=PLGBGWCM: Rank=17: #Particles=3402
 2020-07-30 16:13:29:sim_rcp_165_v0r0:Temp=PLGBGWCM: Rank=35: #Particles=3402
@@ -656,42 +656,12 @@
 2020-07-30 16:13:29:sim_rcp_165_v0r0:Temp=PLGBGWCM: Rank=23: #Particles=3402
 2020-07-30 16:13:29:sim_rcp_165_v0r0:Temp=PLGBGWCM: Rank=43: #Particles=3402
 2020-07-30 16:13:29:sim_rcp_165_v0r0:Temp=PLGBGWCM: Rank=39: #Particles=3402
-2020-07-30 16:13:37:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9180188.gadi-pbs/parcels-12904/b00df291dff5bbc2b22a14db77176a3d_4.so
-2020-07-30 16:13:37:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9180188.gadi-pbs/parcels-12904/b00df291dff5bbc2b22a14db77176a3d_20.so
-2020-07-30 16:13:37:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9180188.gadi-pbs/parcels-12904/b00df291dff5bbc2b22a14db77176a3d_44.so
-2020-07-30 16:13:37:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9180188.gadi-pbs/parcels-12904/b00df291dff5bbc2b22a14db77176a3d_35.so
-2020-07-30 16:13:37:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9180188.gadi-pbs/parcels-12904/b00df291dff5bbc2b22a14db77176a3d_43.so
-2020-07-30 16:13:37:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9180188.gadi-pbs/parcels-12904/b00df291dff5bbc2b22a14db77176a3d_33.so
-2020-07-30 16:13:37:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9180188.gadi-pbs/parcels-12904/b00df291dff5bbc2b22a14db77176a3d_16.so
-2020-07-30 16:13:37:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9180188.gadi-pbs/parcels-12904/b00df291dff5bbc2b22a14db77176a3d_28.so
-2020-07-30 16:13:37:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9180188.gadi-pbs/parcels-12904/b00df291dff5bbc2b22a14db77176a3d_36.so
-2020-07-30 16:13:37:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9180188.gadi-pbs/parcels-12904/b00df291dff5bbc2b22a14db77176a3d_27.so
-2020-07-30 16:13:37:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9180188.gadi-pbs/parcels-12904/b00df291dff5bbc2b22a14db77176a3d_40.so
-2020-07-30 16:13:37:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9180188.gadi-pbs/parcels-12904/b00df291dff5bbc2b22a14db77176a3d_39.so
-2020-07-30 16:13:37:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9180188.gadi-pbs/parcels-12904/b00df291dff5bbc2b22a14db77176a3d_24.so
-2020-07-30 16:13:37:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9180188.gadi-pbs/parcels-12904/b00df291dff5bbc2b22a14db77176a3d_32.so
-2020-07-30 16:13:37:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9180188.gadi-pbs/parcels-12904/b00df291dff5bbc2b22a14db77176a3d_19.so
-2020-07-30 16:13:37:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9180188.gadi-pbs/parcels-12904/b00df291dff5bbc2b22a14db77176a3d_17.so
-2020-07-30 16:13:37:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9180188.gadi-pbs/parcels-12904/b00df291dff5bbc2b22a14db77176a3d_12.so
-2020-07-30 16:13:37:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9180188.gadi-pbs/parcels-12904/b00df291dff5bbc2b22a14db77176a3d_23.so
-2020-07-30 16:13:37:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9180188.gadi-pbs/parcels-12904/b00df291dff5bbc2b22a14db77176a3d_1.so
-2020-07-30 16:13:37:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9180188.gadi-pbs/parcels-12904/b00df291dff5bbc2b22a14db77176a3d_7.so
-2020-07-30 16:13:37:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9180188.gadi-pbs/parcels-12904/b00df291dff5bbc2b22a14db77176a3d_8.so
-2020-07-30 16:13:37:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9180188.gadi-pbs/parcels-12904/b00df291dff5bbc2b22a14db77176a3d_0.so
-2020-07-30 16:13:37:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9180188.gadi-pbs/parcels-12904/b00df291dff5bbc2b22a14db77176a3d_11.so
-2020-07-30 16:13:37:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9180188.gadi-pbs/parcels-12904/b00df291dff5bbc2b22a14db77176a3d_3.so
 2020-07-30 16:19:49:sim_rcp_165_v0r0:Temp=PLGBGWCM: Rank= 5: #Particles=6804
 2020-07-30 16:19:49:sim_rcp_165_v0r0:Temp=PLGBGWCM: Rank=37: #Particles=3402
 2020-07-30 16:19:49:sim_rcp_165_v0r0:Temp=PLGBGWCM: Rank=45: #Particles=3402
 2020-07-30 16:19:49:sim_rcp_165_v0r0:Temp=PLGBGWCM: Rank=29: #Particles=3402
 2020-07-30 16:19:49:sim_rcp_165_v0r0:Temp=PLGBGWCM: Rank=13: #Particles=3402
 2020-07-30 16:19:49:sim_rcp_165_v0r0:Temp=PLGBGWCM: Rank=21: #Particles=3402
-2020-07-30 16:19:52:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9180188.gadi-pbs/parcels-12904/b00df291dff5bbc2b22a14db77176a3d_37.so
-2020-07-30 16:19:52:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9180188.gadi-pbs/parcels-12904/b00df291dff5bbc2b22a14db77176a3d_45.so
-2020-07-30 16:19:52:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9180188.gadi-pbs/parcels-12904/b00df291dff5bbc2b22a14db77176a3d_29.so
-2020-07-30 16:19:53:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9180188.gadi-pbs/parcels-12904/b00df291dff5bbc2b22a14db77176a3d_5.so
-2020-07-30 16:19:53:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9180188.gadi-pbs/parcels-12904/b00df291dff5bbc2b22a14db77176a3d_13.so
-2020-07-30 16:19:53:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9180188.gadi-pbs/parcels-12904/b00df291dff5bbc2b22a14db77176a3d_21.so
 2020-07-30 16:19:53:sim_rcp_165_v0r0:Temp=PLGBGWCM: Rank= 2: #Particles=6804
 2020-07-30 16:19:53:sim_rcp_165_v0r0:Temp=PLGBGWCM: Rank=34: #Particles=3402
 2020-07-30 16:19:53:sim_rcp_165_v0r0:Temp=PLGBGWCM: Rank=46: #Particles=3402
@@ -709,27 +679,13 @@
 2020-07-30 16:19:56:sim_rcp_165_v0r0:Temp=PLGBGWCM: Rank= 9: #Particles=6804
 2020-07-30 16:19:56:sim_rcp_165_v0r0:Temp=PLGBGWCM: Rank=41: #Particles=3402
 2020-07-30 16:19:56:sim_rcp_165_v0r0:Temp=PLGBGWCM: Rank=25: #Particles=3402
-2020-07-30 16:19:58:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9180188.gadi-pbs/parcels-12904/b00df291dff5bbc2b22a14db77176a3d_46.so
-2020-07-30 16:19:58:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9180188.gadi-pbs/parcels-12904/b00df291dff5bbc2b22a14db77176a3d_30.so
-2020-07-30 16:19:58:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9180188.gadi-pbs/parcels-12904/b00df291dff5bbc2b22a14db77176a3d_38.so
-2020-07-30 16:19:58:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9180188.gadi-pbs/parcels-12904/b00df291dff5bbc2b22a14db77176a3d_42.so
-2020-07-30 16:19:58:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9180188.gadi-pbs/parcels-12904/b00df291dff5bbc2b22a14db77176a3d_34.so
-2020-07-30 16:19:58:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9180188.gadi-pbs/parcels-12904/b00df291dff5bbc2b22a14db77176a3d_26.so
-2020-07-30 16:19:58:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9180188.gadi-pbs/parcels-12904/b00df291dff5bbc2b22a14db77176a3d_6.so
-2020-07-30 16:19:58:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9180188.gadi-pbs/parcels-12904/b00df291dff5bbc2b22a14db77176a3d_2.so
-2020-07-30 16:19:58:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9180188.gadi-pbs/parcels-12904/b00df291dff5bbc2b22a14db77176a3d_10.so
-2020-07-30 16:19:58:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9180188.gadi-pbs/parcels-12904/b00df291dff5bbc2b22a14db77176a3d_22.so
-2020-07-30 16:19:58:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9180188.gadi-pbs/parcels-12904/b00df291dff5bbc2b22a14db77176a3d_14.so
-2020-07-30 16:19:59:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9180188.gadi-pbs/parcels-12904/b00df291dff5bbc2b22a14db77176a3d_47.so
-2020-07-30 16:19:59:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9180188.gadi-pbs/parcels-12904/b00df291dff5bbc2b22a14db77176a3d_31.so
 2020-07-30 16:19:59:sim_rcp_165_v0r0:Temp=PLGBGWCM: Rank=18: #Particles=6804
-2020-07-30 16:19:59:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9180188.gadi-pbs/parcels-12904/b00df291dff5bbc2b22a14db77176a3d_15.so
-2020-07-30 16:20:00:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9180188.gadi-pbs/parcels-12904/b00df291dff5bbc2b22a14db77176a3d_9.so
-2020-07-30 16:20:00:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9180188.gadi-pbs/parcels-12904/b00df291dff5bbc2b22a14db77176a3d_25.so
-2020-07-30 16:20:00:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9180188.gadi-pbs/parcels-12904/b00df291dff5bbc2b22a14db77176a3d_41.so
 2020-07-30 16:20:03:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9180188.gadi-pbs/parcels-12904/b00df291dff5bbc2b22a14db77176a3d_18.so
 2020-07-30 16:48:54:sim_rcp_190_v0r0:Particles: /repeat=742: Total=180306
 2020-07-30 16:48:54:sim_rcp_190_v0r0:Lon=190: Lat=[-2.6-2.6 x0.1]: Depth=[25-350m x25]
+2020-07-30 16:48:54:sim_rcp_190_v0r0:2102-01-01 to 2097-12-28: Runtime=1464 days
+2020-07-30 16:48:54:sim_rcp_190_v0r0:Repeat=6 days: Step=60 mins: Output=1 day
+2020-07-30 16:48:54:sim_rcp_190_v0r0:Field=b-grid: Chunks=300: Time=2070-2101
 2020-07-30 16:48:54:sim_rcp_190_v0r0:Temp=DGLLACMY: Rank=16: #Particles=3402
 2020-07-30 16:48:54:sim_rcp_190_v0r0:Temp=DGLLACMY: Rank= 8: #Particles=3402
 2020-07-30 16:48:54:sim_rcp_190_v0r0:Temp=DGLLACMY: Rank=19: #Particles=3402
@@ -753,34 +709,7 @@
 2020-07-30 16:48:54:sim_rcp_190_v0r0:Temp=DGLLACMY: Rank=39: #Particles=3402
 2020-07-30 16:48:54:sim_rcp_190_v0r0:Temp=DGLLACMY: Rank=17: #Particles=3402
 2020-07-30 16:48:54:sim_rcp_190_v0r0:Temp=DGLLACMY: Rank=27: #Particles=3402
-2020-07-30 16:48:54:sim_rcp_190_v0r0:2102-01-01 to 2097-12-28: Runtime=1464 days
-2020-07-30 16:48:54:sim_rcp_190_v0r0:Repeat=6 days: Step=60 mins: Output=1 day
-2020-07-30 16:48:54:sim_rcp_190_v0r0:Field=b-grid: Chunks=300: Time=2070-2101
 2020-07-30 16:48:54:sim_rcp_190_v0r0:Temp=DGLLACMY: Rank= 0: #Particles=3402
-2020-07-30 16:49:01:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9181152.gadi-pbs/parcels-12904/c9856f5432e50c33b7fb56142307ed4e_32.so
-2020-07-30 16:49:01:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9181152.gadi-pbs/parcels-12904/c9856f5432e50c33b7fb56142307ed4e_33.so
-2020-07-30 16:49:01:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9181152.gadi-pbs/parcels-12904/c9856f5432e50c33b7fb56142307ed4e_27.so
-2020-07-30 16:49:01:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9181152.gadi-pbs/parcels-12904/c9856f5432e50c33b7fb56142307ed4e_40.so
-2020-07-30 16:49:01:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9181152.gadi-pbs/parcels-12904/c9856f5432e50c33b7fb56142307ed4e_3.so
-2020-07-30 16:49:01:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9181152.gadi-pbs/parcels-12904/c9856f5432e50c33b7fb56142307ed4e_20.so
-2020-07-30 16:49:01:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9181152.gadi-pbs/parcels-12904/c9856f5432e50c33b7fb56142307ed4e_43.so
-2020-07-30 16:49:01:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9181152.gadi-pbs/parcels-12904/c9856f5432e50c33b7fb56142307ed4e_17.so
-2020-07-30 16:49:01:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9181152.gadi-pbs/parcels-12904/c9856f5432e50c33b7fb56142307ed4e_44.so
-2020-07-30 16:49:01:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9181152.gadi-pbs/parcels-12904/c9856f5432e50c33b7fb56142307ed4e_28.so
-2020-07-30 16:49:01:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9181152.gadi-pbs/parcels-12904/c9856f5432e50c33b7fb56142307ed4e_35.so
-2020-07-30 16:49:01:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9181152.gadi-pbs/parcels-12904/c9856f5432e50c33b7fb56142307ed4e_16.so
-2020-07-30 16:49:01:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9181152.gadi-pbs/parcels-12904/c9856f5432e50c33b7fb56142307ed4e_39.so
-2020-07-30 16:49:01:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9181152.gadi-pbs/parcels-12904/c9856f5432e50c33b7fb56142307ed4e_36.so
-2020-07-30 16:49:01:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9181152.gadi-pbs/parcels-12904/c9856f5432e50c33b7fb56142307ed4e_24.so
-2020-07-30 16:49:01:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9181152.gadi-pbs/parcels-12904/c9856f5432e50c33b7fb56142307ed4e_23.so
-2020-07-30 16:49:01:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9181152.gadi-pbs/parcels-12904/c9856f5432e50c33b7fb56142307ed4e_12.so
-2020-07-30 16:49:01:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9181152.gadi-pbs/parcels-12904/c9856f5432e50c33b7fb56142307ed4e_19.so
-2020-07-30 16:49:01:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9181152.gadi-pbs/parcels-12904/c9856f5432e50c33b7fb56142307ed4e_1.so
-2020-07-30 16:49:01:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9181152.gadi-pbs/parcels-12904/c9856f5432e50c33b7fb56142307ed4e_4.so
-2020-07-30 16:49:01:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9181152.gadi-pbs/parcels-12904/c9856f5432e50c33b7fb56142307ed4e_7.so
-2020-07-30 16:49:01:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9181152.gadi-pbs/parcels-12904/c9856f5432e50c33b7fb56142307ed4e_11.so
-2020-07-30 16:49:01:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9181152.gadi-pbs/parcels-12904/c9856f5432e50c33b7fb56142307ed4e_0.so
-2020-07-30 16:49:01:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9181152.gadi-pbs/parcels-12904/c9856f5432e50c33b7fb56142307ed4e_8.so
 2020-07-30 16:54:24:sim_rcp_190_v0r0:Temp=DGLLACMY: Rank=15: #Particles=6804
 2020-07-30 16:54:24:sim_rcp_190_v0r0:Temp=DGLLACMY: Rank=31: #Particles=3402
 2020-07-30 16:54:24:sim_rcp_190_v0r0:Temp=DGLLACMY: Rank=47: #Particles=3402
@@ -793,18 +722,6 @@
 2020-07-30 16:54:27:sim_rcp_190_v0r0:Temp=DGLLACMY: Rank=29: #Particles=3402
 2020-07-30 16:54:27:sim_rcp_190_v0r0:Temp=DGLLACMY: Rank=45: #Particles=3402
 2020-07-30 16:54:27:sim_rcp_190_v0r0:Temp=DGLLACMY: Rank=37: #Particles=3402
-2020-07-30 16:54:27:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9181152.gadi-pbs/parcels-12904/c9856f5432e50c33b7fb56142307ed4e_47.so
-2020-07-30 16:54:27:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9181152.gadi-pbs/parcels-12904/c9856f5432e50c33b7fb56142307ed4e_15.so
-2020-07-30 16:54:27:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9181152.gadi-pbs/parcels-12904/c9856f5432e50c33b7fb56142307ed4e_31.so
-2020-07-30 16:54:31:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9181152.gadi-pbs/parcels-12904/c9856f5432e50c33b7fb56142307ed4e_21.so
-2020-07-30 16:54:31:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9181152.gadi-pbs/parcels-12904/c9856f5432e50c33b7fb56142307ed4e_13.so
-2020-07-30 16:54:31:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9181152.gadi-pbs/parcels-12904/c9856f5432e50c33b7fb56142307ed4e_5.so
-2020-07-30 16:54:31:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9181152.gadi-pbs/parcels-12904/c9856f5432e50c33b7fb56142307ed4e_9.so
-2020-07-30 16:54:31:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9181152.gadi-pbs/parcels-12904/c9856f5432e50c33b7fb56142307ed4e_25.so
-2020-07-30 16:54:31:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9181152.gadi-pbs/parcels-12904/c9856f5432e50c33b7fb56142307ed4e_37.so
-2020-07-30 16:54:31:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9181152.gadi-pbs/parcels-12904/c9856f5432e50c33b7fb56142307ed4e_45.so
-2020-07-30 16:54:31:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9181152.gadi-pbs/parcels-12904/c9856f5432e50c33b7fb56142307ed4e_41.so
-2020-07-30 16:54:31:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9181152.gadi-pbs/parcels-12904/c9856f5432e50c33b7fb56142307ed4e_29.so
 2020-07-30 16:54:34:sim_rcp_190_v0r0:Temp=DGLLACMY: Rank= 2: #Particles=6804
 2020-07-30 16:54:34:sim_rcp_190_v0r0:Temp=DGLLACMY: Rank=10: #Particles=3402
 2020-07-30 16:54:34:sim_rcp_190_v0r0:Temp=DGLLACMY: Rank=14: #Particles=3402
@@ -817,20 +734,12 @@
 2020-07-30 16:54:34:sim_rcp_190_v0r0:Temp=DGLLACMY: Rank=30: #Particles=3402
 2020-07-30 16:54:34:sim_rcp_190_v0r0:Temp=DGLLACMY: Rank=46: #Particles=3402
 2020-07-30 16:54:34:sim_rcp_190_v0r0:Temp=DGLLACMY: Rank=42: #Particles=3402
-2020-07-30 16:54:39:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9181152.gadi-pbs/parcels-12904/c9856f5432e50c33b7fb56142307ed4e_6.so
-2020-07-30 16:54:39:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9181152.gadi-pbs/parcels-12904/c9856f5432e50c33b7fb56142307ed4e_14.so
-2020-07-30 16:54:39:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9181152.gadi-pbs/parcels-12904/c9856f5432e50c33b7fb56142307ed4e_22.so
-2020-07-30 16:54:39:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9181152.gadi-pbs/parcels-12904/c9856f5432e50c33b7fb56142307ed4e_18.so
-2020-07-30 16:54:39:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9181152.gadi-pbs/parcels-12904/c9856f5432e50c33b7fb56142307ed4e_10.so
-2020-07-30 16:54:39:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9181152.gadi-pbs/parcels-12904/c9856f5432e50c33b7fb56142307ed4e_2.so
-2020-07-30 16:54:39:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9181152.gadi-pbs/parcels-12904/c9856f5432e50c33b7fb56142307ed4e_38.so
-2020-07-30 16:54:39:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9181152.gadi-pbs/parcels-12904/c9856f5432e50c33b7fb56142307ed4e_30.so
-2020-07-30 16:54:39:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9181152.gadi-pbs/parcels-12904/c9856f5432e50c33b7fb56142307ed4e_46.so
-2020-07-30 16:54:39:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9181152.gadi-pbs/parcels-12904/c9856f5432e50c33b7fb56142307ed4e_34.so
-2020-07-30 16:54:39:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9181152.gadi-pbs/parcels-12904/c9856f5432e50c33b7fb56142307ed4e_26.so
 2020-07-30 16:54:39:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9181152.gadi-pbs/parcels-12904/c9856f5432e50c33b7fb56142307ed4e_42.so
 2020-07-30 17:54:13:sim_rcp_220_v0r0:Particles: /repeat=742: Total=180306
 2020-07-30 17:54:13:sim_rcp_220_v0r0:Lon=220: Lat=[-2.6-2.6 x0.1]: Depth=[25-350m x25]
+2020-07-30 17:54:13:sim_rcp_220_v0r0:2102-01-01 to 2097-12-28: Runtime=1464 days
+2020-07-30 17:54:13:sim_rcp_220_v0r0:Repeat=6 days: Step=60 mins: Output=1 day
+2020-07-30 17:54:13:sim_rcp_220_v0r0:Field=b-grid: Chunks=300: Time=2070-2101
 2020-07-30 17:54:13:sim_rcp_220_v0r0:Temp=VOHSPCBW: Rank= 8: #Particles=3402
 2020-07-30 17:54:13:sim_rcp_220_v0r0:Temp=VOHSPCBW: Rank= 1: #Particles=3402
 2020-07-30 17:54:13:sim_rcp_220_v0r0:Temp=VOHSPCBW: Rank=20: #Particles=3402
@@ -852,42 +761,12 @@
 2020-07-30 17:54:13:sim_rcp_220_v0r0:Temp=VOHSPCBW: Rank=23: #Particles=3402
 2020-07-30 17:54:13:sim_rcp_220_v0r0:Temp=VOHSPCBW: Rank= 3: #Particles=3402
 2020-07-30 17:54:13:sim_rcp_220_v0r0:Temp=VOHSPCBW: Rank=40: #Particles=3402
-2020-07-30 17:54:13:sim_rcp_220_v0r0:2102-01-01 to 2097-12-28: Runtime=1464 days
-2020-07-30 17:54:13:sim_rcp_220_v0r0:Repeat=6 days: Step=60 mins: Output=1 day
-2020-07-30 17:54:13:sim_rcp_220_v0r0:Field=b-grid: Chunks=300: Time=2070-2101
 2020-07-30 17:54:13:sim_rcp_220_v0r0:Temp=VOHSPCBW: Rank= 0: #Particles=3402
 2020-07-30 17:54:13:sim_rcp_220_v0r0:Temp=VOHSPCBW: Rank=43: #Particles=3402
 2020-07-30 17:54:13:sim_rcp_220_v0r0:Temp=VOHSPCBW: Rank=33: #Particles=3402
-2020-07-30 17:54:18:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9183526.gadi-pbs/parcels-12904/7323d16f743b7074e9e083153bef3cba_35.so
-2020-07-30 17:54:18:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9183526.gadi-pbs/parcels-12904/7323d16f743b7074e9e083153bef3cba_8.so
-2020-07-30 17:54:18:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9183526.gadi-pbs/parcels-12904/7323d16f743b7074e9e083153bef3cba_12.so
-2020-07-30 17:54:18:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9183526.gadi-pbs/parcels-12904/7323d16f743b7074e9e083153bef3cba_40.so
-2020-07-30 17:54:18:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9183526.gadi-pbs/parcels-12904/7323d16f743b7074e9e083153bef3cba_17.so
-2020-07-30 17:54:18:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9183526.gadi-pbs/parcels-12904/7323d16f743b7074e9e083153bef3cba_44.so
-2020-07-30 17:54:18:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9183526.gadi-pbs/parcels-12904/7323d16f743b7074e9e083153bef3cba_43.so
-2020-07-30 17:54:18:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9183526.gadi-pbs/parcels-12904/7323d16f743b7074e9e083153bef3cba_19.so
-2020-07-30 17:54:18:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9183526.gadi-pbs/parcels-12904/7323d16f743b7074e9e083153bef3cba_33.so
-2020-07-30 17:54:18:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9183526.gadi-pbs/parcels-12904/7323d16f743b7074e9e083153bef3cba_32.so
-2020-07-30 17:54:18:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9183526.gadi-pbs/parcels-12904/7323d16f743b7074e9e083153bef3cba_24.so
-2020-07-30 17:54:18:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9183526.gadi-pbs/parcels-12904/7323d16f743b7074e9e083153bef3cba_27.so
-2020-07-30 17:54:18:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9183526.gadi-pbs/parcels-12904/7323d16f743b7074e9e083153bef3cba_20.so
-2020-07-30 17:54:18:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9183526.gadi-pbs/parcels-12904/7323d16f743b7074e9e083153bef3cba_23.so
-2020-07-30 17:54:18:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9183526.gadi-pbs/parcels-12904/7323d16f743b7074e9e083153bef3cba_16.so
-2020-07-30 17:54:18:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9183526.gadi-pbs/parcels-12904/7323d16f743b7074e9e083153bef3cba_28.so
-2020-07-30 17:54:18:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9183526.gadi-pbs/parcels-12904/7323d16f743b7074e9e083153bef3cba_36.so
-2020-07-30 17:54:18:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9183526.gadi-pbs/parcels-12904/7323d16f743b7074e9e083153bef3cba_39.so
-2020-07-30 17:54:18:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9183526.gadi-pbs/parcels-12904/7323d16f743b7074e9e083153bef3cba_7.so
-2020-07-30 17:54:18:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9183526.gadi-pbs/parcels-12904/7323d16f743b7074e9e083153bef3cba_4.so
-2020-07-30 17:54:18:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9183526.gadi-pbs/parcels-12904/7323d16f743b7074e9e083153bef3cba_1.so
-2020-07-30 17:54:18:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9183526.gadi-pbs/parcels-12904/7323d16f743b7074e9e083153bef3cba_3.so
-2020-07-30 17:54:18:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9183526.gadi-pbs/parcels-12904/7323d16f743b7074e9e083153bef3cba_11.so
-2020-07-30 17:54:18:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9183526.gadi-pbs/parcels-12904/7323d16f743b7074e9e083153bef3cba_0.so
 2020-07-30 18:00:26:sim_rcp_220_v0r0:Temp=VOHSPCBW: Rank=15: #Particles=6804
 2020-07-30 18:00:26:sim_rcp_220_v0r0:Temp=VOHSPCBW: Rank=47: #Particles=3402
 2020-07-30 18:00:26:sim_rcp_220_v0r0:Temp=VOHSPCBW: Rank=31: #Particles=3402
-2020-07-30 18:00:29:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9183526.gadi-pbs/parcels-12904/7323d16f743b7074e9e083153bef3cba_47.so
-2020-07-30 18:00:29:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9183526.gadi-pbs/parcels-12904/7323d16f743b7074e9e083153bef3cba_31.so
-2020-07-30 18:00:29:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9183526.gadi-pbs/parcels-12904/7323d16f743b7074e9e083153bef3cba_15.so
 2020-07-30 18:01:04:sim_rcp_220_v0r0:Temp=VOHSPCBW: Rank= 5: #Particles=6804
 2020-07-30 18:01:04:sim_rcp_220_v0r0:Temp=VOHSPCBW: Rank=21: #Particles=3402
 2020-07-30 18:01:04:sim_rcp_220_v0r0:Temp=VOHSPCBW: Rank=13: #Particles=3402
@@ -897,15 +776,6 @@
 2020-07-30 18:01:07:sim_rcp_220_v0r0:Temp=VOHSPCBW: Rank= 9: #Particles=6804
 2020-07-30 18:01:07:sim_rcp_220_v0r0:Temp=VOHSPCBW: Rank=25: #Particles=3402
 2020-07-30 18:01:07:sim_rcp_220_v0r0:Temp=VOHSPCBW: Rank=41: #Particles=3402
-2020-07-30 18:01:08:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9183526.gadi-pbs/parcels-12904/7323d16f743b7074e9e083153bef3cba_29.so
-2020-07-30 18:01:08:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9183526.gadi-pbs/parcels-12904/7323d16f743b7074e9e083153bef3cba_37.so
-2020-07-30 18:01:08:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9183526.gadi-pbs/parcels-12904/7323d16f743b7074e9e083153bef3cba_45.so
-2020-07-30 18:01:08:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9183526.gadi-pbs/parcels-12904/7323d16f743b7074e9e083153bef3cba_13.so
-2020-07-30 18:01:08:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9183526.gadi-pbs/parcels-12904/7323d16f743b7074e9e083153bef3cba_5.so
-2020-07-30 18:01:08:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9183526.gadi-pbs/parcels-12904/7323d16f743b7074e9e083153bef3cba_21.so
-2020-07-30 18:01:10:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9183526.gadi-pbs/parcels-12904/7323d16f743b7074e9e083153bef3cba_25.so
-2020-07-30 18:01:10:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9183526.gadi-pbs/parcels-12904/7323d16f743b7074e9e083153bef3cba_9.so
-2020-07-30 18:01:10:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9183526.gadi-pbs/parcels-12904/7323d16f743b7074e9e083153bef3cba_41.so
 2020-07-30 18:01:14:sim_rcp_220_v0r0:Temp=VOHSPCBW: Rank= 2: #Particles=6804
 2020-07-30 18:01:14:sim_rcp_220_v0r0:Temp=VOHSPCBW: Rank=18: #Particles=6804
 2020-07-30 18:01:14:sim_rcp_220_v0r0:Temp=VOHSPCBW: Rank=34: #Particles=3402
@@ -918,20 +788,12 @@
 2020-07-30 18:01:14:sim_rcp_220_v0r0:Temp=VOHSPCBW: Rank=10: #Particles=3402
 2020-07-30 18:01:14:sim_rcp_220_v0r0:Temp=VOHSPCBW: Rank=46: #Particles=3402
 2020-07-30 18:01:14:sim_rcp_220_v0r0:Temp=VOHSPCBW: Rank=22: #Particles=3402
-2020-07-30 18:01:18:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9183526.gadi-pbs/parcels-12904/7323d16f743b7074e9e083153bef3cba_6.so
-2020-07-30 18:01:18:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9183526.gadi-pbs/parcels-12904/7323d16f743b7074e9e083153bef3cba_10.so
-2020-07-30 18:01:18:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9183526.gadi-pbs/parcels-12904/7323d16f743b7074e9e083153bef3cba_14.so
-2020-07-30 18:01:18:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9183526.gadi-pbs/parcels-12904/7323d16f743b7074e9e083153bef3cba_22.so
-2020-07-30 18:01:18:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9183526.gadi-pbs/parcels-12904/7323d16f743b7074e9e083153bef3cba_30.so
-2020-07-30 18:01:18:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9183526.gadi-pbs/parcels-12904/7323d16f743b7074e9e083153bef3cba_26.so
-2020-07-30 18:01:18:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9183526.gadi-pbs/parcels-12904/7323d16f743b7074e9e083153bef3cba_34.so
-2020-07-30 18:01:18:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9183526.gadi-pbs/parcels-12904/7323d16f743b7074e9e083153bef3cba_2.so
-2020-07-30 18:01:18:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9183526.gadi-pbs/parcels-12904/7323d16f743b7074e9e083153bef3cba_18.so
-2020-07-30 18:01:18:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9183526.gadi-pbs/parcels-12904/7323d16f743b7074e9e083153bef3cba_46.so
-2020-07-30 18:01:18:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9183526.gadi-pbs/parcels-12904/7323d16f743b7074e9e083153bef3cba_38.so
 2020-07-30 18:01:18:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9183526.gadi-pbs/parcels-12904/7323d16f743b7074e9e083153bef3cba_42.so
 2020-07-30 18:27:40:sim_rcp_250_v0r0:Particles: /repeat=742: Total=180306
 2020-07-30 18:27:40:sim_rcp_250_v0r0:Lon=250: Lat=[-2.6-2.6 x0.1]: Depth=[25-350m x25]
+2020-07-30 18:27:40:sim_rcp_250_v0r0:2102-01-01 to 2097-12-28: Runtime=1464 days
+2020-07-30 18:27:40:sim_rcp_250_v0r0:Repeat=6 days: Step=60 mins: Output=1 day
+2020-07-30 18:27:40:sim_rcp_250_v0r0:Field=b-grid: Chunks=300: Time=2070-2101
 2020-07-30 18:27:40:sim_rcp_250_v0r0:Temp=WARDMBVF: Rank=20: #Particles=3402
 2020-07-30 18:27:40:sim_rcp_250_v0r0:Temp=WARDMBVF: Rank=17: #Particles=3402
 2020-07-30 18:27:40:sim_rcp_250_v0r0:Temp=WARDMBVF: Rank=12: #Particles=3402
@@ -944,9 +806,6 @@
 2020-07-30 18:27:40:sim_rcp_250_v0r0:Temp=WARDMBVF: Rank=28: #Particles=3402
 2020-07-30 18:27:40:sim_rcp_250_v0r0:Temp=WARDMBVF: Rank=24: #Particles=3402
 2020-07-30 18:27:40:sim_rcp_250_v0r0:Temp=WARDMBVF: Rank=36: #Particles=3402
-2020-07-30 18:27:40:sim_rcp_250_v0r0:2102-01-01 to 2097-12-28: Runtime=1464 days
-2020-07-30 18:27:40:sim_rcp_250_v0r0:Repeat=6 days: Step=60 mins: Output=1 day
-2020-07-30 18:27:40:sim_rcp_250_v0r0:Field=b-grid: Chunks=300: Time=2070-2101
 2020-07-30 18:27:40:sim_rcp_250_v0r0:Temp=WARDMBVF: Rank= 0: #Particles=3402
 2020-07-30 18:27:40:sim_rcp_250_v0r0:Temp=WARDMBVF: Rank=32: #Particles=3402
 2020-07-30 18:27:40:sim_rcp_250_v0r0:Temp=WARDMBVF: Rank=40: #Particles=3402
@@ -959,54 +818,18 @@
 2020-07-30 18:27:40:sim_rcp_250_v0r0:Temp=WARDMBVF: Rank=43: #Particles=3402
 2020-07-30 18:27:40:sim_rcp_250_v0r0:Temp=WARDMBVF: Rank=19: #Particles=3402
 2020-07-30 18:27:40:sim_rcp_250_v0r0:Temp=WARDMBVF: Rank=11: #Particles=3402
-2020-07-30 18:27:48:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9184180.gadi-pbs/parcels-12904/8a048c0c987d02ad44554571d2aee41d_43.so
-2020-07-30 18:27:48:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9184180.gadi-pbs/parcels-12904/8a048c0c987d02ad44554571d2aee41d_39.so
-2020-07-30 18:27:48:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9184180.gadi-pbs/parcels-12904/8a048c0c987d02ad44554571d2aee41d_12.so
-2020-07-30 18:27:48:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9184180.gadi-pbs/parcels-12904/8a048c0c987d02ad44554571d2aee41d_36.so
-2020-07-30 18:27:48:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9184180.gadi-pbs/parcels-12904/8a048c0c987d02ad44554571d2aee41d_24.so
-2020-07-30 18:27:48:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9184180.gadi-pbs/parcels-12904/8a048c0c987d02ad44554571d2aee41d_19.so
-2020-07-30 18:27:48:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9184180.gadi-pbs/parcels-12904/8a048c0c987d02ad44554571d2aee41d_17.so
-2020-07-30 18:27:48:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9184180.gadi-pbs/parcels-12904/8a048c0c987d02ad44554571d2aee41d_35.so
-2020-07-30 18:27:48:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9184180.gadi-pbs/parcels-12904/8a048c0c987d02ad44554571d2aee41d_40.so
-2020-07-30 18:27:48:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9184180.gadi-pbs/parcels-12904/8a048c0c987d02ad44554571d2aee41d_44.so
-2020-07-30 18:27:48:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9184180.gadi-pbs/parcels-12904/8a048c0c987d02ad44554571d2aee41d_20.so
-2020-07-30 18:27:48:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9184180.gadi-pbs/parcels-12904/8a048c0c987d02ad44554571d2aee41d_28.so
-2020-07-30 18:27:48:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9184180.gadi-pbs/parcels-12904/8a048c0c987d02ad44554571d2aee41d_32.so
-2020-07-30 18:27:48:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9184180.gadi-pbs/parcels-12904/8a048c0c987d02ad44554571d2aee41d_33.so
-2020-07-30 18:27:48:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9184180.gadi-pbs/parcels-12904/8a048c0c987d02ad44554571d2aee41d_27.so
-2020-07-30 18:27:48:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9184180.gadi-pbs/parcels-12904/8a048c0c987d02ad44554571d2aee41d_23.so
-2020-07-30 18:27:48:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9184180.gadi-pbs/parcels-12904/8a048c0c987d02ad44554571d2aee41d_16.so
-2020-07-30 18:27:48:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9184180.gadi-pbs/parcels-12904/8a048c0c987d02ad44554571d2aee41d_8.so
-2020-07-30 18:27:48:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9184180.gadi-pbs/parcels-12904/8a048c0c987d02ad44554571d2aee41d_7.so
-2020-07-30 18:27:48:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9184180.gadi-pbs/parcels-12904/8a048c0c987d02ad44554571d2aee41d_4.so
-2020-07-30 18:27:48:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9184180.gadi-pbs/parcels-12904/8a048c0c987d02ad44554571d2aee41d_1.so
-2020-07-30 18:27:48:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9184180.gadi-pbs/parcels-12904/8a048c0c987d02ad44554571d2aee41d_3.so
-2020-07-30 18:27:48:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9184180.gadi-pbs/parcels-12904/8a048c0c987d02ad44554571d2aee41d_11.so
-2020-07-30 18:27:48:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9184180.gadi-pbs/parcels-12904/8a048c0c987d02ad44554571d2aee41d_0.so
 2020-07-30 18:34:08:sim_rcp_250_v0r0:Temp=WARDMBVF: Rank=15: #Particles=6804
 2020-07-30 18:34:08:sim_rcp_250_v0r0:Temp=WARDMBVF: Rank=47: #Particles=3402
 2020-07-30 18:34:08:sim_rcp_250_v0r0:Temp=WARDMBVF: Rank=31: #Particles=3402
-2020-07-30 18:34:12:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9184180.gadi-pbs/parcels-12904/8a048c0c987d02ad44554571d2aee41d_15.so
-2020-07-30 18:34:12:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9184180.gadi-pbs/parcels-12904/8a048c0c987d02ad44554571d2aee41d_47.so
-2020-07-30 18:34:12:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9184180.gadi-pbs/parcels-12904/8a048c0c987d02ad44554571d2aee41d_31.so
 2020-07-30 18:34:14:sim_rcp_250_v0r0:Temp=WARDMBVF: Rank= 5: #Particles=6804
 2020-07-30 18:34:14:sim_rcp_250_v0r0:Temp=WARDMBVF: Rank=21: #Particles=3402
 2020-07-30 18:34:14:sim_rcp_250_v0r0:Temp=WARDMBVF: Rank=13: #Particles=3402
 2020-07-30 18:34:14:sim_rcp_250_v0r0:Temp=WARDMBVF: Rank=45: #Particles=3402
 2020-07-30 18:34:14:sim_rcp_250_v0r0:Temp=WARDMBVF: Rank=37: #Particles=3402
 2020-07-30 18:34:14:sim_rcp_250_v0r0:Temp=WARDMBVF: Rank=29: #Particles=3402
-2020-07-30 18:34:18:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9184180.gadi-pbs/parcels-12904/8a048c0c987d02ad44554571d2aee41d_37.so
-2020-07-30 18:34:18:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9184180.gadi-pbs/parcels-12904/8a048c0c987d02ad44554571d2aee41d_45.so
-2020-07-30 18:34:18:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9184180.gadi-pbs/parcels-12904/8a048c0c987d02ad44554571d2aee41d_29.so
-2020-07-30 18:34:18:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9184180.gadi-pbs/parcels-12904/8a048c0c987d02ad44554571d2aee41d_13.so
-2020-07-30 18:34:18:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9184180.gadi-pbs/parcels-12904/8a048c0c987d02ad44554571d2aee41d_21.so
-2020-07-30 18:34:18:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9184180.gadi-pbs/parcels-12904/8a048c0c987d02ad44554571d2aee41d_5.so
 2020-07-30 18:34:20:sim_rcp_250_v0r0:Temp=WARDMBVF: Rank=25: #Particles=3402
 2020-07-30 18:34:20:sim_rcp_250_v0r0:Temp=WARDMBVF: Rank=41: #Particles=3402
 2020-07-30 18:34:20:sim_rcp_250_v0r0:Temp=WARDMBVF: Rank= 9: #Particles=6804
-2020-07-30 18:34:23:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9184180.gadi-pbs/parcels-12904/8a048c0c987d02ad44554571d2aee41d_9.so
-2020-07-30 18:34:23:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9184180.gadi-pbs/parcels-12904/8a048c0c987d02ad44554571d2aee41d_41.so
-2020-07-30 18:34:23:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9184180.gadi-pbs/parcels-12904/8a048c0c987d02ad44554571d2aee41d_25.so
 2020-07-30 18:34:24:sim_rcp_250_v0r0:Temp=WARDMBVF: Rank= 2: #Particles=6804
 2020-07-30 18:34:24:sim_rcp_250_v0r0:Temp=WARDMBVF: Rank= 6: #Particles=3402
 2020-07-30 18:34:24:sim_rcp_250_v0r0:Temp=WARDMBVF: Rank=34: #Particles=3402
@@ -1019,17 +842,6 @@
 2020-07-30 18:34:24:sim_rcp_250_v0r0:Temp=WARDMBVF: Rank=22: #Particles=3402
 2020-07-30 18:34:24:sim_rcp_250_v0r0:Temp=WARDMBVF: Rank=14: #Particles=3402
 2020-07-30 18:34:24:sim_rcp_250_v0r0:Temp=WARDMBVF: Rank=46: #Particles=3402
-2020-07-30 18:34:29:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9184180.gadi-pbs/parcels-12904/8a048c0c987d02ad44554571d2aee41d_22.so
-2020-07-30 18:34:30:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9184180.gadi-pbs/parcels-12904/8a048c0c987d02ad44554571d2aee41d_14.so
-2020-07-30 18:34:30:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9184180.gadi-pbs/parcels-12904/8a048c0c987d02ad44554571d2aee41d_18.so
-2020-07-30 18:34:30:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9184180.gadi-pbs/parcels-12904/8a048c0c987d02ad44554571d2aee41d_2.so
-2020-07-30 18:34:30:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9184180.gadi-pbs/parcels-12904/8a048c0c987d02ad44554571d2aee41d_46.so
-2020-07-30 18:34:30:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9184180.gadi-pbs/parcels-12904/8a048c0c987d02ad44554571d2aee41d_6.so
-2020-07-30 18:34:30:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9184180.gadi-pbs/parcels-12904/8a048c0c987d02ad44554571d2aee41d_10.so
-2020-07-30 18:34:30:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9184180.gadi-pbs/parcels-12904/8a048c0c987d02ad44554571d2aee41d_26.so
-2020-07-30 18:34:30:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9184180.gadi-pbs/parcels-12904/8a048c0c987d02ad44554571d2aee41d_38.so
-2020-07-30 18:34:30:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9184180.gadi-pbs/parcels-12904/8a048c0c987d02ad44554571d2aee41d_42.so
-2020-07-30 18:34:30:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9184180.gadi-pbs/parcels-12904/8a048c0c987d02ad44554571d2aee41d_30.so
 2020-07-30 18:34:30:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9184180.gadi-pbs/parcels-12904/8a048c0c987d02ad44554571d2aee41d_34.so
 2020-07-30 20:24:49:sim_rcp_165_v0r0:Completed!: 04:35:36: Rank= 4: #Particles=3402-1323=2079
 2020-07-30 20:24:50:sim_rcp_165_v0r0:Completed!: 04:35:37: Rank= 0: #Particles=3402-1538=1864
@@ -1079,6 +891,7 @@
 2020-07-30 20:53:26:sim_rcp_165_v0r0:Completed!: 05:04:13: Rank=18: #Particles=6804-2865=3939
 2020-07-30 20:54:00:sim_rcp_165_v0r0:Completed!: 05:04:47: Rank= 5: #Particles=6804-2873=3931
 2020-07-30 20:55:36:sim_rcp_165_v0r0:Completed!: 05:06:24: Rank=12: #Particles=3402-1426=1976
+2020-07-30 22:43:37:sim_rcp_165_v0r0:Finished
 2020-07-30 21:46:29:sim_rcp_190_v0r0:Completed!: 05:21:18: Rank=13: #Particles=3402-1830=1572
 2020-07-30 21:47:14:sim_rcp_190_v0r0:Completed!: 05:22:04: Rank= 4: #Particles=3402-1298=2104
 2020-07-30 21:54:55:sim_rcp_190_v0r0:Completed!: 05:29:44: Rank= 1: #Particles=3402-1178=2224
@@ -1127,7 +940,7 @@
 2020-07-30 22:26:06:sim_rcp_190_v0r0:Completed!: 06:00:56: Rank=42: #Particles=3402-1157=2245
 2020-07-30 22:29:01:sim_rcp_190_v0r0:Completed!: 06:03:51: Rank=18: #Particles=6804-2806=3998
 2020-07-30 22:29:30:sim_rcp_190_v0r0:Completed!: 06:04:20: Rank=37: #Particles=3402-1246=2156
-2020-07-30 22:43:37:sim_rcp_165_v0r0:Finished
+2020-07-31 00:00:22:sim_rcp_190_v0r0:Finished
 2020-07-30 23:19:03:sim_rcp_220_v0r0:Completed!: 05:43:14: Rank=33: #Particles=3402-1039=2363
 2020-07-30 23:19:25:sim_rcp_220_v0r0:Completed!: 05:43:35: Rank=32: #Particles=3402-1016=2386
 2020-07-30 23:19:39:sim_rcp_220_v0r0:Completed!: 05:43:50: Rank=31: #Particles=3402-2618=784
@@ -1176,7 +989,7 @@
 2020-07-30 23:38:23:sim_rcp_220_v0r0:Completed!: 06:02:33: Rank=38: #Particles=3402-1019=2383
 2020-07-30 23:43:08:sim_rcp_220_v0r0:Completed!: 06:07:19: Rank=18: #Particles=6804-3971=2833
 2020-07-30 23:43:27:sim_rcp_220_v0r0:Completed!: 06:07:37: Rank=44: #Particles=3402-1277=2125
-2020-07-31 00:00:22:sim_rcp_190_v0r0:Finished
+2020-07-31 01:14:23:sim_rcp_220_v0r0:Finished
 2020-07-31 00:01:20:sim_rcp_250_v0r0:Completed!: 05:57:28: Rank=29: #Particles=3402-2494=908
 2020-07-31 00:02:01:sim_rcp_250_v0r0:Completed!: 05:58:08: Rank= 7: #Particles=3402-2564=838
 2020-07-31 00:02:53:sim_rcp_250_v0r0:Completed!: 05:59:01: Rank=31: #Particles=3402-2701=701
@@ -1225,5 +1038,4 @@
 2020-07-31 00:27:38:sim_rcp_250_v0r0:Completed!: 06:23:45: Rank=42: #Particles=3402-1051=2351
 2020-07-31 00:27:45:sim_rcp_250_v0r0:Completed!: 06:23:52: Rank=43: #Particles=3402-1190=2212
 2020-07-31 00:30:04:sim_rcp_250_v0r0:Completed!: 06:26:11: Rank=38: #Particles=3402-1267=2135
-2020-07-31 01:14:23:sim_rcp_220_v0r0:Finished
 2020-07-31 02:15:25:sim_rcp_250_v0r0:Finished

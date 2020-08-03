@@ -341,6 +341,49 @@ def SubmergeParticle(particle, fieldset, time):
     particle.set_state(ErrorCode.Success)
 
 
+def pset_euc(fieldset, pclass, lon, dy, dz, repeatdt, pset_start, repeats,
+             sim_id=None, rank=0, pid=None, logger=None):
+    """Create a ParticleSet."""
+    repeats = 1 if repeats <= 0 else repeats
+    # Particle release latitudes, depths and longitudes.
+    py = np.round(np.arange(-2.6, 2.6 + 0.05, dy), 2)
+    pz = np.arange(25, 350 + 20, dz)
+    px = np.array([lon])
+
+    # Number of particles released in each dimension.
+    Z, Y, X = pz.size, py.size, px.size
+    npart = Z * X * Y * repeats
+
+    # Each repeat.
+    lats = np.repeat(py, pz.size*px.size)
+    depths = np.repeat(np.tile(pz, py.size), px.size)
+    lons = np.repeat(px, pz.size*py.size)
+
+    # Duplicate for each repeat.
+    tr = pset_start - (np.arange(0, repeats) * repeatdt.total_seconds())
+    time = np.repeat(tr, lons.size)
+    depth = np.tile(depths, repeats)
+    lon = np.tile(lons, repeats)
+    lat = np.tile(lats, repeats)
+
+    if pid:
+        pid_orig = np.arange(lon.size) + pid
+    else:
+        pid_orig = None
+
+    pset = ParticleSet.from_list(fieldset=fieldset, pclass=pclass,
+                                 lon=lon, lat=lat, depth=depth, time=time,
+                                 pid_orig=pid_orig,
+                                 lonlatdepth_dtype=np.float64)
+    if sim_id and rank == 0 and logger:
+        logger.info('{}:Particles: /repeat={}: Total={}'
+                    .format(sim_id.stem, Z * X * Y, npart))
+        logger.info('{}:Lon={}: Lat=[{}-{} x{}]: Depth=[{}-{}m x{}]'
+                    .format(sim_id.stem, *px, py[0], py[Y-1], dy, pz[0],
+                            pz[Z-1], dz))
+    return pset
+
+
 def pset_from_file(fieldset, pclass, filename, repeatdt=None,
                    restart=True, restarttime=np.nanmin,
                    lonlatdepth_dtype=np.float64, **kwargs):
@@ -398,6 +441,67 @@ def pset_from_file(fieldset, pclass, filename, repeatdt=None,
     return pset, nextid
 
 
+def pset_from_rfile(fieldset, pclass, filename, repeatdt=None,
+                    restart=True, restarttime=np.nanmin,
+                    lonlatdepth_dtype=np.float64, **kwargs):
+    """Initialise the ParticleSet from a netcdf ParticleFile.
+
+    This creates a new ParticleSet based on locations of all particles written
+    in a netcdf ParticleFile at a certain time. Particle IDs are preserved if restart=True
+    """
+
+    pfile = xr.open_dataset(str(filename.parent/('pset_' + filename.name)),
+                            decode_cf=False)
+
+
+    pfile_vars = [v for v in pfile.data_vars]
+
+    vars = {}
+    to_write = {}
+
+    for v in pclass.getPType().variables:
+        if v.name in pfile_vars:
+            vars[v.name] = np.ma.filled(pfile.variables[v.name], np.nan)
+        elif v.name not in ['xi', 'yi', 'zi', 'ti', 'dt', '_next_dt',
+                            'depth', 'id', 'fileid', 'state'] \
+                and v.to_write:
+            raise RuntimeError('Variable %s is in pclass but not in the particlefile' % v.name)
+        to_write[v.name] = v.to_write
+    vars['depth'] = np.ma.filled(pfile.variables['z'], np.nan)
+    vars['id'] = np.ma.filled(pfile.variables['trajectory'], np.nan)
+
+    if isinstance(vars['time'][0], np.timedelta64):
+        vars['time'] = np.array([t/np.timedelta64(1, 's') for t in vars['time']])
+
+    if restarttime is None:
+        restarttime = np.nanmax(vars['time'])
+    elif callable(restarttime):
+        restarttime = restarttime(vars['time'])
+    else:
+        restarttime = restarttime
+
+    inds = np.where(vars['time'] == restarttime)
+    for v in vars:
+        if to_write[v] is True:
+            vars[v] = vars[v][inds]
+        elif to_write[v] == 'once':
+            vars[v] = vars[v][inds[0]]
+        if v not in ['lon', 'lat', 'depth', 'time', 'id']:
+            kwargs[v] = vars[v]
+
+    if restart:
+        pclass.setLastID(0)  # reset to zero offset
+    else:
+        vars['id'] = None
+    nextid = pfile.variables['nextid'].item()
+    pset = ParticleSet(fieldset=fieldset, pclass=pclass, lon=vars['lon'],
+                       lat=vars['lat'], depth=vars['depth'], time=vars['time'],
+                       pid_orig=vars['id'], repeatdt=repeatdt,
+                       lonlatdepth_dtype=lonlatdepth_dtype, **kwargs)
+
+    return pset, nextid
+
+
 def plot3D(sim_id):
     """Plot 3D figure of particle trajectories over time."""
     import matplotlib.ticker as ticker
@@ -439,7 +543,6 @@ def plot3D(sim_id):
     # plt.show()
     plt.close()
     ds.close()
-
     return
 
 
