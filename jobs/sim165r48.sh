@@ -14,8 +14,8 @@ module load conda/analysis3-20.04
 module unload openmpi
 module load openmpi/4.0.2
 
-EXP = "rcp"
-FILE = "sim_rcp_165_v0r0.nc"
+EXP="rcp"
+FILE="sim_rcp_165_v0r0.nc"
 python3 /g/data/e14/as3189/OFAM/scripts/sim_particleset.py -e $EXP -f $FILE
 mpirun python3 /g/data/e14/as3189/OFAM/scripts/sim.py -e $EXP -x 165 -r 732 -v 0 -f $FILE
 python3 /g/data/e14/as3189/OFAM/scripts/sim_info.py -f $FILE
