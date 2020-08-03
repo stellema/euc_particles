@@ -492,9 +492,7 @@ def pset_from_rfile(fieldset, pclass, filename, repeatdt=None,
                        lat=vars['lat'], depth=vars['depth'], time=vars['time'],
                        pid_orig=vars['id'], repeatdt=repeatdt,
                        lonlatdepth_dtype=lonlatdepth_dtype, **kwargs)
-    print(pclass.lastID)
     pclass.setLastID(pfile.variables['nextid'].item())
-    print(pclass.lastID)
 
     return pset
 

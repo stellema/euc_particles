@@ -126,18 +126,18 @@ def reduce_particlefile(filename, exp):
     df['vars'] = [v for v in vars]
     df['kwargs'] = [k for k in kwargs]
     df.to_netcdf(cfg.data/('pset_' + filename.name))
-    logger.info('Saved:', str(cfg.data/('pset_' + filename.name)))
+    logger.info('Saved: {}'.format(str(cfg.data/('pset_' + filename.name))))
 
     return df
 
 
 if __name__ == "__main__":
     p = ArgumentParser(description="""Reduce EUC ParticleSet.""")
-    p.add_argument('-f', '--pfile', default='sim_hist_165_v35r0.nc', type=str,
+    p.add_argument('-f', '--pfile', default='sim_hist_165_v28r0.nc', type=str,
                    help='Particle file.')
     p.add_argument('-e', '--exp', default='hist', type=str, help='Experiment.')
     args = p.parse_args()
     filename = cfg.data/args.pfile
     exp = args.exp
-    if not filename.exists():
+    if not (cfg.data/('pset_' + filename.name)).exists():
         df = reduce_particlefile(filename, exp)

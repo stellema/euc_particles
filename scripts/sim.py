@@ -154,7 +154,7 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
 
         # ParticleSet start time (for log).
         start = (fieldset.time_origin.time_origin +
-                 timedelta(seconds=np.nanmin(psetx.time)))
+                 timedelta(seconds=pset_start))
 
     # ParticleSet size before execution.
     psize = pset.size
@@ -226,8 +226,8 @@ if __name__ == "__main__" and cfg.home != Path('E:/'):
 
 elif __name__ == "__main__":
     dy, dz, lon = 2, 150, 165
-    dt_mins, repeatdt_days, outputdt_days, runtime_days = 60, 6, 1, 10
-    pfile = ['None', 'sim_hist_165_v0r0.nc'][1]
+    dt_mins, repeatdt_days, outputdt_days, runtime_days = 60, 6, 1, 36
+    pfile = ['None', 'sim_hist_165_v28r0.nc'][1]
     v = 55
     exp = 'hist'
     unbeach = True

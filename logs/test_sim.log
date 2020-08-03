@@ -1958,3 +1958,18 @@
 2020-08-03 16:39:55:sim_hist_190_v12r1:Completed!: 00:00:16: Rank= 0: #Particles=25-5=20
 2020-08-03 16:39:55:sim_hist_190_v12r1:Finished
 2020-08-03 16:39:55:sim_hist_190_v12r1:Error getting sim info
+2020-08-03 19:26:38:sim_hist_165_v28r0:Particles: /repeat=9: Total=45
+2020-08-03 19:26:38:sim_hist_165_v28r0:Lon=165: Lat=[-2.6-1.4 x2]: Depth=[25-325m x150]
+2020-08-03 19:26:38:sim_hist_165_v28r0:1982-01-01 to 1981-11-26: Runtime=36 days
+2020-08-03 19:26:38:sim_hist_165_v28r0:Repeat=6 days: Step=60 mins: Output=1 day
+2020-08-03 19:26:38:sim_hist_165_v28r0:Field=b-grid: Chunks=300: Time=1981-1981
+2020-08-03 19:26:38:sim_hist_165_v28r0:Temp=DSVRZLGJ: Rank= 0: #Particles=45
+2020-08-03 19:26:41:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\6453aaecbe7fb11e08cb1b5e0029eaab_0.dll
+2020-08-03 19:27:15:sim_hist_165_v28r0:Completed!: 00:00:50: Rank= 0: #Particles=45-26=19
+2020-08-03 19:27:15:sim_hist_165_v28r0:Finished
+2020-08-03 19:32:33:sim_hist_165_v28r1:Particles: /repeat=9: Total=45
+2020-08-03 19:32:33:sim_hist_165_v28r1:Lon=165: Lat=[-2.6-1.4 x2]: Depth=[25-325m x150]
+2020-08-03 19:32:33:sim_hist_165_v28r1:1981-11-02 to 1981-09-27: Runtime=36 days
+2020-08-03 19:32:33:sim_hist_165_v28r1:Repeat=6 days: Step=60 mins: Output=1 day
+2020-08-03 19:32:33:sim_hist_165_v28r1:Field=b-grid: Chunks=300: Time=1981-1981
+2020-08-03 19:32:33:sim_hist_165_v28r1:Temp=OYHYRDQY: Rank= 0: #Particles=19+45=64
