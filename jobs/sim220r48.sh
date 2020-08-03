@@ -8,8 +8,14 @@
 #PBS -M astellemas@gmail.com
 #PBS -m abe
 #PBS -l storage=gdata/hh5+gdata/e14
+
 module use /g/data3/hh5/public/modules
 module load conda/analysis3-20.04
 module unload openmpi
 module load openmpi/4.0.2
-mpirun -np 48 python3 /g/data/e14/as3189/OFAM/scripts/sim.py -e "rcp" -x 220 -r 1464 -v 0
+
+EXP = "rcp"
+FILE = "sim_rcp_220_v0r0.nc"
+python3 /g/data/e14/as3189/OFAM/scripts/sim_particleset.py -e $EXP -f $FILE
+mpirun python3 /g/data/e14/as3189/OFAM/scripts/sim.py -e $EXP -x 220 -r 732 -v 0 -f $FILE
+python3 /g/data/e14/as3189/OFAM/scripts/sim_info.py -f $FILE

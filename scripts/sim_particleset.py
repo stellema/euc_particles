@@ -19,7 +19,7 @@ from argparse import ArgumentParser
 from parcels import (ParticleSet, ErrorCode, Variable, JITParticle)
 
 
-logger = tools.mlogger('misc', parcels=False, misc=True)
+logger = tools.mlogger('particles', parcels=False, misc=False)
 
 
 def reduce_particlefile(filename, exp):
@@ -133,10 +133,11 @@ def reduce_particlefile(filename, exp):
 
 if __name__ == "__main__":
     p = ArgumentParser(description="""Reduce EUC ParticleSet.""")
-    p.add_argument('-f', '--pfile', default='sim_hist_190_v12r0.nc', type=str,
+    p.add_argument('-f', '--pfile', default='sim_hist_165_v35r0.nc', type=str,
                    help='Particle file.')
     p.add_argument('-e', '--exp', default='hist', type=str, help='Experiment.')
     args = p.parse_args()
     filename = cfg.data/args.pfile
     exp = args.exp
-    df = reduce_particlefile(filename, exp)
+    if not filename.exists():
+        df = reduce_particlefile(filename, exp)

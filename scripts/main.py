@@ -342,7 +342,7 @@ def SubmergeParticle(particle, fieldset, time):
 
 
 def pset_euc(fieldset, pclass, lon, dy, dz, repeatdt, pset_start, repeats,
-             sim_id=None, rank=0, pid=None, logger=None):
+             sim_id=None, rank=0, logger=None):
     """Create a ParticleSet."""
     repeats = 1 if repeats <= 0 else repeats
     # Particle release latitudes, depths and longitudes.
@@ -366,14 +366,8 @@ def pset_euc(fieldset, pclass, lon, dy, dz, repeatdt, pset_start, repeats,
     lon = np.tile(lons, repeats)
     lat = np.tile(lats, repeats)
 
-    if pid:
-        pid_orig = np.arange(lon.size) + pid
-    else:
-        pid_orig = None
-
     pset = ParticleSet.from_list(fieldset=fieldset, pclass=pclass,
                                  lon=lon, lat=lat, depth=depth, time=time,
-                                 pid_orig=pid_orig,
                                  lonlatdepth_dtype=np.float64)
     if sim_id and rank == 0 and logger:
         logger.info('{}:Particles: /repeat={}: Total={}'
@@ -432,13 +426,14 @@ def pset_from_file(fieldset, pclass, filename, repeatdt=None,
         pclass.setLastID(0)  # reset to zero offset
     else:
         vars['id'] = None
-    nextid = np.nanmax(pfile.variables['trajectory']) + 1
+
     pset = ParticleSet(fieldset=fieldset, pclass=pclass, lon=vars['lon'],
                        lat=vars['lat'], depth=vars['depth'], time=vars['time'],
                        pid_orig=vars['id'], repeatdt=repeatdt,
                        lonlatdepth_dtype=lonlatdepth_dtype, **kwargs)
+    pclass.setLastID(np.nanmax(pfile.variables['trajectory']) + 1)
 
-    return pset, nextid
+    return pset
 
 
 def pset_from_rfile(fieldset, pclass, filename, repeatdt=None,
@@ -452,7 +447,6 @@ def pset_from_rfile(fieldset, pclass, filename, repeatdt=None,
 
     pfile = xr.open_dataset(str(filename.parent/('pset_' + filename.name)),
                             decode_cf=False)
-
 
     pfile_vars = [v for v in pfile.data_vars]
 
@@ -493,23 +487,28 @@ def pset_from_rfile(fieldset, pclass, filename, repeatdt=None,
         pclass.setLastID(0)  # reset to zero offset
     else:
         vars['id'] = None
-    nextid = pfile.variables['nextid'].item()
+
     pset = ParticleSet(fieldset=fieldset, pclass=pclass, lon=vars['lon'],
                        lat=vars['lat'], depth=vars['depth'], time=vars['time'],
                        pid_orig=vars['id'], repeatdt=repeatdt,
                        lonlatdepth_dtype=lonlatdepth_dtype, **kwargs)
+    print(pclass.lastID)
+    pclass.setLastID(pfile.variables['nextid'].item())
+    print(pclass.lastID)
 
-    return pset, nextid
+    return pset
 
 
-def plot3D(sim_id):
+def plot3D(sim_id, ds=None):
     """Plot 3D figure of particle trajectories over time."""
     import matplotlib.ticker as ticker
-    # Open ParticleFile.
-    ds = xr.open_dataset(sim_id, decode_cf=True)
+    if not ds:
+        # Open ParticleFile.
+        ds = xr.open_dataset(sim_id, decode_cf=True)
 
-    # Drop initially westward particles.
-    ds = ds.where(ds.u > 0., drop=True)
+        # Drop initially westward particles.
+        ds = ds.where(ds.u > 0., drop=True)
+
     N = len(ds.traj)
     x, y, z = ds.lon, ds.lat, ds.z
 
@@ -546,7 +545,7 @@ def plot3D(sim_id):
     return
 
 
-def plot3Dx(sim_id):
+def plot3Dx(sim_id, ds=None):
     """Plot 3D figure of particle trajectories over time."""
     import matplotlib.ticker as ticker
 
@@ -562,10 +561,13 @@ def plot3Dx(sim_id):
         ax.zaxis.set_major_formatter(ticker.FixedFormatter(zlabels))
         return ax
 
-    # Open ParticleFile.
-    ds = xr.open_dataset(sim_id, decode_cf=True)
-    # Drop initially westward particles.
-    ds = ds.where(ds.u > 0., drop=True)
+    if not ds:
+        # Open ParticleFile.
+        ds = xr.open_dataset(sim_id, decode_cf=True)
+
+        # Drop initially westward particles.
+        ds = ds.where(ds.u > 0., drop=True)
+
     N = len(ds.traj)
     x, y, z = ds.lon, ds.lat, ds.z
     xlim = [tools.rounddown(np.nanmin(x)), tools.roundup(np.nanmax(x))]
