@@ -19,7 +19,7 @@ from argparse import ArgumentParser
 from parcels import (ParticleSet, ErrorCode, Variable, JITParticle)
 
 
-logger = tools.mlogger('particles', parcels=False, misc=False)
+logger = tools.mlogger('sim', parcels=False, misc=False)
 
 
 def reduce_particlefile(filename, exp):
@@ -126,7 +126,7 @@ def reduce_particlefile(filename, exp):
     df['vars'] = [v for v in vars]
     df['kwargs'] = [k for k in kwargs]
     df.to_netcdf(cfg.data/('pset_' + filename.name))
-    print('Saved:', str(cfg.data/('pset_' + filename.name)))
+    logger.info('Saved:', str(cfg.data/('pset_' + filename.name)))
 
     return df
 
