@@ -37,8 +37,8 @@ def particle_info(sim_id, info_only=True):
     logger.info('{}: init={} u<0={} rem={} final={} deleted={}({:.1f}%)'
                 .format(sim_id.stem, total, west, npart, nrem,
                         dels, (dels/npart)*100))
-    logger.debug('{}: Finished plot3D.'.format(sim_id.stem))
-    logger.debug('{}: Finished plot3Dx.'.format(sim_id.stem))
+    main.plot3D(sim_id, ds)
+    main.plot3Dx(sim_id, ds)
 
     return
 
