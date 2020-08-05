@@ -18,5 +18,5 @@ EXP="hist"
 FILE1="sim_hist_190_v0r2.nc"
 FILE2="sim_hist_190_v0r3.nc"
 python3 /g/data/e14/as3189/OFAM/scripts/sim_particleset.py -e $EXP -f $FILE1
-mpirun python3 /g/data/e14/as3189/OFAM/scripts/sim.py -e $EXP -x 190 -r 1464- -v 0 -f $FILE1
+mpirun python3 /g/data/e14/as3189/OFAM/scripts/sim.py -e $EXP -x 190 -r 1464 -v 0 -f $FILE1
 python3 /g/data/e14/as3189/OFAM/scripts/sim_info.py -f $FILE2
