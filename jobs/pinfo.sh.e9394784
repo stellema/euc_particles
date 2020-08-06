@@ -1,0 +1,30 @@
+sim_rcp_165_v0r1: init=231846 u<0=41674 rem=190172 final=145077 deleted=45095(23.7%)
+/local/spool/pbs/mom_priv/jobs/9394784.gadi-pbs.SC: line 13: 2865904 Killed                  python3 /g/data/e14/as3189/OFAM/scripts/sim_info.py -f "sim_rcp_165_v0r1.nc"
+sim_rcp_190_v0r1: init=235102 u<0=49384 rem=185718 final=155685 deleted=30033(16.2%)
+/local/spool/pbs/mom_priv/jobs/9394784.gadi-pbs.SC: line 14: 2913376 Killed                  python3 /g/data/e14/as3189/OFAM/scripts/sim_info.py -f "sim_rcp_190_v0r1.nc"
+sim_rcp_220_v0r1: init=228061 u<0=58513 rem=169548 final=149275 deleted=20273(12.0%)
+sim_rcp_250_v0r1: init=217276 u<0=69676 rem=147600 final=131443 deleted=16157(10.9%)
+sim_hist_165_v0r2: init=282136 u<0=50860 rem=231276 final=183131 deleted=48145(20.8%)
+
+------------------------------------------------------------------------
+Job 9394784 has exceeded memory allocation on node gadi-cpu-clx-1831.gadi.nci.org.au
+Process "bash", pid 2865604, rss 8192, vmem 20774912
+Process "9394784.gadi-pb", pid 2865657, rss 53248, vmem 227966976
+Process "python3", pid 3053555, rss 59315859456, vmem 65166876672
+Process "orted", pid 3053560, rss 1675264, vmem 388984832
+------------------------------------------------------------------------
+For more information visit https://opus.nci.org.au/x/SwGRAQ
+------------------------------------------------------------------------
+/local/spool/pbs/mom_priv/jobs/9394784.gadi-pbs.SC: line 17: 3053555 Killed                  python3 /g/data/e14/as3189/OFAM/scripts/sim_info.py -f "sim_hist_165_v0r2.nc"
+sim_hist_190_v0r2: init=271242 u<0=57600 rem=213642 final=181088 deleted=32554(15.2%)
+/local/spool/pbs/mom_priv/jobs/9394784.gadi-pbs.SC: line 18: 3132506 Killed                  python3 /g/data/e14/as3189/OFAM/scripts/sim_info.py -f "sim_hist_190_v0r2.nc"
+sim_hist_220_v0r2: init=264962 u<0=66242 rem=198720 final=174474 deleted=24246(12.2%)
+/local/spool/pbs/mom_priv/jobs/9394784.gadi-pbs.SC: line 19: 3211827 Killed                  python3 /g/data/e14/as3189/OFAM/scripts/sim_info.py -f "sim_hist_220_v0r2.nc"
+sim_hist_250_v0r2: init=267329 u<0=70754 rem=196575 final=178406 deleted=18169(9.2%)
+/local/spool/pbs/mom_priv/jobs/9394784.gadi-pbs.SC: line 20: 3329672 Killed                  python3 /g/data/e14/as3189/OFAM/scripts/sim_info.py -f "sim_hist_250_v0r2.nc"
+sim_rcp_165_v0r2: init=280121 u<0=38632 rem=241489 final=183893 deleted=57596(23.9%)
+/local/spool/pbs/mom_priv/jobs/9394784.gadi-pbs.SC: line 21: 3395677 Killed                  python3 /g/data/e14/as3189/OFAM/scripts/sim_info.py -f "sim_rcp_165_v0r2.nc"
+sim_rcp_190_v0r2: init=290729 u<0=48231 rem=242498 final=203020 deleted=39478(16.3%)
+/local/spool/pbs/mom_priv/jobs/9394784.gadi-pbs.SC: line 22: 3490962 Killed                  python3 /g/data/e14/as3189/OFAM/scripts/sim_info.py -f "sim_rcp_190_v0r2.nc"
+sim_rcp_220_v0r2: init=284319 u<0=57735 rem=226584 final=196830 deleted=29754(13.1%)
+=>> PBS: job killed: walltime 36008 exceeded limit 36000
