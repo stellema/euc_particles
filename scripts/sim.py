@@ -96,11 +96,11 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
                             to_write=False, dtype=np.float32)
 
         # Unbeach if beached greater than zero.
-        beached = Variable('beached', initial=0., to_write=False,
+        beached = Variable('beached', initial=0., #to_write=False,
                            dtype=np.float32)
 
         # Unbeached count.
-        unbeached = Variable('unbeached', initial=0., to_write=False,
+        unbeached = Variable('unbeached', initial=0., #to_write=False,
                              dtype=np.float32)
 
     pclass = zParticle

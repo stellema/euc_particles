@@ -271,7 +271,7 @@ def BeachTest(particle, fieldset, time):
         if particle.beached <= 3:
             particle.beached += 1
         else:
-            print('WARNING: Beached particle deleted.')
+            print("Deleted beached particle id: %d" % particle.id)
             particle.delete()
     else:
         particle.beached = 0
