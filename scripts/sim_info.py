@@ -32,11 +32,15 @@ def particle_info(sim_id, info_only=True):
 
     # Number of remaining particles.
     nrem = inds.size
-
+    if hasattr(ds, 'beached'):
+        db = np.unique(ds.where(ds.unbeached > 3, drop=True).trajectory)
+        bb = 'beached={}'.format(db[~np.isnan(db)].size)
+    else:
+        bb = ''
     dels = npart - nrem
-    logger.info('{}: init={} u<0={} rem={} final={} deleted={}({:.1f}%)'
+    logger.info('{}: init={} u<0={} rem={} final={} deleted={}({:.1f}%){}'
                 .format(sim_id.stem, total, west, npart, nrem,
-                        dels, (dels/npart)*100))
+                        dels, (dels/npart)*100, bb))
     main.plot3D(sim_id, ds)
     main.plot3Dx(sim_id, ds)
 

@@ -15,8 +15,8 @@ module unload openmpi
 module load openmpi/4.0.2
 
 EXP="rcp"
-FILE1="sim_rcp_165_v0r3.nc"
-FILE2="sim_rcp_165_v0r4.nc"
+FILE1="sim_rcp_165_v0r4.nc"
+FILE2="sim_rcp_165_v0r5.nc"
 python3 /g/data/e14/as3189/OFAM/scripts/sim_particleset.py -e $EXP -f $FILE1
 mpirun python3 /g/data/e14/as3189/OFAM/scripts/sim.py -e $EXP -x 165 -r 1098 -v 0 -f $FILE1
 python3 /g/data/e14/as3189/OFAM/scripts/sim_info.py -f $FILE2
