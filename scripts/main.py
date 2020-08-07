@@ -456,6 +456,8 @@ def pset_from_rfile(fieldset, pclass, filename, repeatdt=None,
     for v in pclass.getPType().variables:
         if v.name in pfile_vars:
             vars[v.name] = np.ma.filled(pfile.variables[v.name], np.nan)
+        elif v.name in ['beached', 'unbeached'] and v.to_write:
+            vars[v.name] = vars['age']*0.
         elif v.name not in ['xi', 'yi', 'zi', 'ti', 'dt', '_next_dt',
                             'depth', 'id', 'fileid', 'state'] \
                 and v.to_write:

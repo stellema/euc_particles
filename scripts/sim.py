@@ -124,23 +124,23 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
     # Create particle set from particlefile and add new repeats.
     else:
         # Add path to given ParticleFile name.
-        pfile = cfg.data/pfile
+        filename = cfg.data/pfile
 
         # Increment run index for new output file name.
-        sim_id = cfg.data/'{}{}.nc'.format(pfile.stem[:-1],
-                                           int(pfile.stem[-1]) + 1)
+        sim_id = cfg.data/'{}{}.nc'.format(filename.stem[:-1],
+                                           int(filename.stem[-1]) + 1)
 
         # Change to the latest run if it was not given.
         if sim_id.exists():
             sims = [s for s in sim_id.parent.glob(str(sim_id.stem[:-1]) +
                                                   '*.nc')]
             rmax = max([int(sim.stem[-1]) for sim in sims])
-            pfile = cfg.data/'{}{}.nc'.format(pfile.stem[:-1], rmax)
-            sim_id = cfg.data/'{}{}.nc'.format(pfile.stem[:-1], rmax + 1)
+            filename = cfg.data/'{}{}.nc'.format(filename.stem[:-1], rmax)
+            sim_id = cfg.data/'{}{}.nc'.format(filename.stem[:-1], rmax + 1)
 
         # Create ParticleSet from the given ParticleFile.
         pset = main.pset_from_rfile(fieldset, pclass=pclass,
-                                    filename=pfile, restart=True,
+                                    filename=filename, restart=True,
                                     restarttime=np.nanmin)
         psz1 = pset.size
         # Start date to add new EUC particles.
@@ -227,7 +227,7 @@ if __name__ == "__main__" and cfg.home != Path('E:/'):
 elif __name__ == "__main__":
     dy, dz, lon = 2, 150, 165
     dt_mins, repeatdt_days, outputdt_days, runtime_days = 60, 6, 1, 36
-    pfile = ['None', 'sim_hist_165_v28r0.nc'][1]
+    pfile = ['None', 'sim_hist_190_v16r0.nc'][1]
     v = 55
     exp = 'hist'
     unbeach = True
