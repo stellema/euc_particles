@@ -63,18 +63,16 @@ def reduce_particlefile(filename, exp):
                             to_write=False, dtype=np.float32)
 
         # Unbeach if beached greater than zero.
-        beached = Variable('beached', initial=0., to_write=False,
+        beached = Variable('beached', initial=0., #to_write=False,
                            dtype=np.float32)
 
         # Unbeached count.
-        unbeached = Variable('unbeached', initial=0., to_write=False,
+        unbeached = Variable('unbeached', initial=0., #to_write=False,
                              dtype=np.float32)
 
     pclass = zParticle
 
     pfile = xr.open_dataset(str(filename), decode_cf=False)
-    if hasattr(pfile, 'unbeached'):
-        pfile = pfile.drop('unbeached')
     pfile_vars = [v for v in pfile.data_vars]
 
     vars = {}
@@ -83,6 +81,8 @@ def reduce_particlefile(filename, exp):
     for v in pclass.getPType().variables:
         if v.name in pfile_vars:
             vars[v.name] = np.ma.filled(pfile.variables[v.name], np.nan)
+        elif v.name in ['beached', 'unbeached'] and v.to_write:
+            vars[v.name] = vars['age']*0.
         elif v.name not in ['xi', 'yi', 'zi', 'ti', 'dt', '_next_dt',
                             'depth', 'id', 'fileid', 'state'] \
                 and v.to_write:
@@ -123,8 +123,8 @@ def reduce_particlefile(filename, exp):
             df[v] = (['traj'], vars[v])
 
     df['nextid'] = nextid
-    df['vars'] = [v for v in vars]
-    df['kwargs'] = [k for k in kwargs]
+    # df['vars'] = [v for v in vars]
+    # df['kwargs'] = [k for k in kwargs]
     df.to_netcdf(cfg.data/('pset_' + filename.name))
     logger.info('Saved: {}'.format(str(cfg.data/('pset_' + filename.name))))
 
@@ -133,11 +133,11 @@ def reduce_particlefile(filename, exp):
 
 if __name__ == "__main__":
     p = ArgumentParser(description="""Reduce EUC ParticleSet.""")
-    p.add_argument('-f', '--pfile', default='sim_hist_165_v28r0.nc', type=str,
+    p.add_argument('-f', '--pfile', default='sim_hist_165_v78r0.nc', type=str,
                    help='Particle file.')
     p.add_argument('-e', '--exp', default='hist', type=str, help='Experiment.')
     args = p.parse_args()
     filename = cfg.data/args.pfile
     exp = args.exp
-    if not (cfg.data/('pset_' + filename.name)).exists():
-        df = reduce_particlefile(filename, exp)
+    # if not (cfg.data/('pset_' + filename.name)).exists():
+    df = reduce_particlefile(filename, exp)

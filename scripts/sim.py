@@ -227,12 +227,12 @@ if __name__ == "__main__" and cfg.home != Path('E:/'):
 elif __name__ == "__main__":
     dy, dz, lon = 2, 150, 165
     dt_mins, repeatdt_days, outputdt_days, runtime_days = 60, 6, 1, 36
-    pfile = ['None', 'sim_hist_190_v16r0.nc'][1]
+    pfile = ['None', 'sim_hist_165_v78r0.nc'][1]
     v = 55
     exp = 'hist'
     unbeach = True
     chunks = 300
-    # run_EUC(dy=dy, dz=dz, lon=lon, dt_mins=dt_mins,
-    #         repeatdt_days=repeatdt_days, outputdt_days=outputdt_days,
-    #         v=v, runtime_days=runtime_days,
-    #         unbeach=unbeach, pfile=pfile)
+    run_EUC(dy=dy, dz=dz, lon=lon, dt_mins=dt_mins,
+            repeatdt_days=repeatdt_days, outputdt_days=outputdt_days,
+            v=v, runtime_days=runtime_days,
+            unbeach=unbeach, pfile=pfile)
