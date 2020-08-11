@@ -41,6 +41,8 @@ def particle_info(sim_id, info_only=True):
         db = np.unique(ds.where(ds.unbeached >= 1, drop=True).trajectory)
         unbeached = db[~np.isnan(db)].size
         ext += ' uB={}({:.1f}%)'.format(unbeached, (unbeached/N)*100)
+    else:
+        ext += ' uB=N/A'
 
     # Number of beached particles.
     if hasattr(ds, 'beached'):
@@ -56,6 +58,9 @@ def particle_info(sim_id, info_only=True):
         # Update number of deleted particles minus beached.
         oob = dels - beached
         ext += ' OOB={}'.format(oob)
+    else:
+        ext += ' B=N/A OOB=N/A'
+
     logger.info('{}: I={} W={} N={} F={} del={}({:.1f}%){}'
                 .format(sim_id.stem, start, west, N, end,
                         dels, (dels/N)*100, ext))
