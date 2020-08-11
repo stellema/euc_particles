@@ -6,7 +6,7 @@
 #PBS -l ncpus=48
 #PBS -l wd
 #PBS -M astellemas@gmail.com
-#PBS -m abe
+#PBS -m ae
 #PBS -l storage=gdata/hh5+gdata/e14
 
 module use /g/data3/hh5/public/modules
@@ -15,8 +15,8 @@ module unload openmpi
 module load openmpi/4.0.2
 
 EXP="rcp"
-FILE1="sim_rcp_250_v0r6.nc"
-FILE2="sim_rcp_250_v0r7.nc"
+FILE1="sim_rcp_250_v0r7.nc"
+FILE2="sim_rcp_250_v0r8.nc"
 python3 /g/data/e14/as3189/OFAM/scripts/sim_particleset.py -e $EXP -f $FILE1
 mpirun python3 /g/data/e14/as3189/OFAM/scripts/sim.py -e $EXP -x 250 -r 732 -v 0 -f $FILE1
 python3 /g/data/e14/as3189/OFAM/scripts/sim_info.py -f $FILE2

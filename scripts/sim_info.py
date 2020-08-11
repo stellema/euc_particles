@@ -38,7 +38,7 @@ def particle_info(sim_id, info_only=True):
     dels = N - end
 
     if hasattr(ds, 'unbeached'):
-        db = np.unique(ds.where(ds.unbeached > 1, drop=True).trajectory)
+        db = np.unique(ds.where(ds.unbeached >= 1, drop=True).trajectory)
         unbeached = db[~np.isnan(db)].size
         ext += ' uB={}({:.1f}%)'.format(unbeached, (unbeached/N)*100)
 
@@ -46,7 +46,7 @@ def particle_info(sim_id, info_only=True):
     if hasattr(ds, 'beached'):
         db = np.unique(ds.where(ds.beached > 3, drop=True).trajectory)
         beached = db[~np.isnan(db)].size
-        ext += ' B={}'.format(beached)
+        ext += ' B={} max={}'.format(beached, np.nanmax(ds.beached))
         # Add beached particles %total and %unbeached.
         if beached > 0:
             ext += '({:.1f}%N)'.format((beached/N)*100)
