@@ -1,7 +1,7 @@
 #!/bin/bash
 #PBS -P e14
 #PBS -q normal
-#PBS -l walltime=12:00:00
+#PBS -l walltime=14:00:00
 #PBS -l mem=192GB
 #PBS -l ncpus=48
 #PBS -l wd
@@ -15,8 +15,8 @@ module unload openmpi
 module load openmpi/4.0.2
 
 EXP="hist"
-FILE1="sim_hist_190_v0r5.nc"
-FILE2="sim_hist_190_v0r6.nc"
+FILE1="sim_hist_190_v0r6.nc"
+FILE2="sim_hist_190_v0r7.nc"
 python3 /g/data/e14/as3189/OFAM/scripts/sim_particleset.py -e $EXP -f $FILE1
-mpirun python3 /g/data/e14/as3189/OFAM/scripts/sim.py -e $EXP -x 190 -r 732 -v 0 -f $FILE1
+mpirun python3 /g/data/e14/as3189/OFAM/scripts/sim.py -e $EXP -x 190 -r 1098 -v 0 -f $FILE1
 python3 /g/data/e14/as3189/OFAM/scripts/sim_info.py -f $FILE2

@@ -46,10 +46,13 @@ def particle_info(sim_id, info_only=True):
     if hasattr(ds, 'beached'):
         db = np.unique(ds.where(ds.beached > 3, drop=True).trajectory)
         beached = db[~np.isnan(db)].size
-        ext += ' B={}({:.1f}%N)'.format(beached, (beached/N)*100)
-        if hasattr(ds, 'unbeached'):
-            if unbeached > 0:
+        ext += ' B={}'.format(beached)
+        # Add beached particles %total and %unbeached.
+        if beached > 0:
+            ext += '({:.1f}%N)'.format((beached/N)*100)
+            if hasattr(ds, 'unbeached'):
                 ext += '({:.1f}%uB)'.format((beached/unbeached)*100)
+
         # Update number of deleted particles minus beached.
         oob = dels - beached
         ext += ' OOB={}'.format(oob)
