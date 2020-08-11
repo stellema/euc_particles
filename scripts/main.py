@@ -311,7 +311,9 @@ def SampleZone(particle, fieldset, time):
 
 def AgeZone(particle, fieldset, time):
     particle.age = particle.age + math.fabs(particle.dt)
-    particle.zone = fieldset.zone[0., 5., particle.lat, particle.lon]
+    zz = fieldset.zone[0., 5., particle.lat, particle.lon]
+    if math.fabs(zz) > 1e-14:
+        particle.zone = zz
 
 
 def Distance(particle, fieldset, time):
