@@ -50,9 +50,9 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
     # Start from end of Fieldset time or restart from ParticleFile.
     restart = False if pfile == 'None' else True
 
-    # Ensure run ends on a repeat day.
-    while runtime_days % repeatdt_days != 0:
-        runtime_days += 1
+    # # Ensure run ends on a repeat day.
+    # while runtime_days % repeatdt_days != 0:
+    #     runtime_days += 1
     runtime = timedelta(days=int(runtime_days))
 
     dt = -timedelta(minutes=dt_mins)  # Advection step (negative for backward).
