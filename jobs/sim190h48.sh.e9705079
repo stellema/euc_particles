@@ -1,0 +1,436 @@
+WARNING: Casting lon data to np.float32
+WARNING: Casting lat data to np.float32
+WARNING: Casting depth data to np.float32
+WARNING: Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+WARNING: Casting field data to np.float32
+/g/data/e14/as3189/OFAM/scripts/sim_particleset.py:97: RuntimeWarning: All-NaN slice encountered
+  restarttime = np.nanmin(vars['time'])
+Saved: /g/data/e14/as3189/OFAM/data/pset_sim_hist_190_v0r7.nc
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 225, in <module>
+    v=args.version, pfile=args.pfile)
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 144, in run_EUC
+    restarttime=np.nanmin)
+  File "/g/data/e14/as3189/OFAM/scripts/main.py", line 469, in pset_from_rfile
+    if isinstance(vars['time'][0], np.timedelta64):
+IndexError: index 0 is out of bounds for axis 0 with size 0
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 225, in <module>
+    v=args.version, pfile=args.pfile)
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 144, in run_EUC
+    restarttime=np.nanmin)
+  File "/g/data/e14/as3189/OFAM/scripts/main.py", line 469, in pset_from_rfile
+    if isinstance(vars['time'][0], np.timedelta64):
+IndexError: index 0 is out of bounds for axis 0 with size 0
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 225, in <module>
+    v=args.version, pfile=args.pfile)
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 144, in run_EUC
+    restarttime=np.nanmin)
+  File "/g/data/e14/as3189/OFAM/scripts/main.py", line 469, in pset_from_rfile
+    if isinstance(vars['time'][0], np.timedelta64):
+IndexError: index 0 is out of bounds for axis 0 with size 0
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 225, in <module>
+    v=args.version, pfile=args.pfile)
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 144, in run_EUC
+    restarttime=np.nanmin)
+  File "/g/data/e14/as3189/OFAM/scripts/main.py", line 469, in pset_from_rfile
+    if isinstance(vars['time'][0], np.timedelta64):
+IndexError: index 0 is out of bounds for axis 0 with size 0
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 225, in <module>
+    v=args.version, pfile=args.pfile)
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 144, in run_EUC
+    restarttime=np.nanmin)
+  File "/g/data/e14/as3189/OFAM/scripts/main.py", line 469, in pset_from_rfile
+    if isinstance(vars['time'][0], np.timedelta64):
+IndexError: index 0 is out of bounds for axis 0 with size 0
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 225, in <module>
+    v=args.version, pfile=args.pfile)
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 144, in run_EUC
+    restarttime=np.nanmin)
+  File "/g/data/e14/as3189/OFAM/scripts/main.py", line 469, in pset_from_rfile
+    if isinstance(vars['time'][0], np.timedelta64):
+IndexError: index 0 is out of bounds for axis 0 with size 0
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 225, in <module>
+    v=args.version, pfile=args.pfile)
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 144, in run_EUC
+    restarttime=np.nanmin)
+  File "/g/data/e14/as3189/OFAM/scripts/main.py", line 469, in pset_from_rfile
+    if isinstance(vars['time'][0], np.timedelta64):
+IndexError: index 0 is out of bounds for axis 0 with size 0
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 225, in <module>
+    v=args.version, pfile=args.pfile)
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 144, in run_EUC
+    restarttime=np.nanmin)
+  File "/g/data/e14/as3189/OFAM/scripts/main.py", line 469, in pset_from_rfile
+    if isinstance(vars['time'][0], np.timedelta64):
+IndexError: index 0 is out of bounds for axis 0 with size 0
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 225, in <module>
+    v=args.version, pfile=args.pfile)
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 144, in run_EUC
+    restarttime=np.nanmin)
+  File "/g/data/e14/as3189/OFAM/scripts/main.py", line 469, in pset_from_rfile
+    if isinstance(vars['time'][0], np.timedelta64):
+IndexError: index 0 is out of bounds for axis 0 with size 0
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 225, in <module>
+    v=args.version, pfile=args.pfile)
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 144, in run_EUC
+    restarttime=np.nanmin)
+  File "/g/data/e14/as3189/OFAM/scripts/main.py", line 469, in pset_from_rfile
+    if isinstance(vars['time'][0], np.timedelta64):
+IndexError: index 0 is out of bounds for axis 0 with size 0
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 225, in <module>
+    v=args.version, pfile=args.pfile)
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 144, in run_EUC
+    restarttime=np.nanmin)
+  File "/g/data/e14/as3189/OFAM/scripts/main.py", line 469, in pset_from_rfile
+    if isinstance(vars['time'][0], np.timedelta64):
+IndexError: index 0 is out of bounds for axis 0 with size 0
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 225, in <module>
+    v=args.version, pfile=args.pfile)
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 144, in run_EUC
+    restarttime=np.nanmin)
+  File "/g/data/e14/as3189/OFAM/scripts/main.py", line 469, in pset_from_rfile
+    if isinstance(vars['time'][0], np.timedelta64):
+IndexError: index 0 is out of bounds for axis 0 with size 0
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 225, in <module>
+    v=args.version, pfile=args.pfile)
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 144, in run_EUC
+    restarttime=np.nanmin)
+  File "/g/data/e14/as3189/OFAM/scripts/main.py", line 469, in pset_from_rfile
+    if isinstance(vars['time'][0], np.timedelta64):
+IndexError: index 0 is out of bounds for axis 0 with size 0
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 225, in <module>
+    v=args.version, pfile=args.pfile)
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 144, in run_EUC
+    restarttime=np.nanmin)
+  File "/g/data/e14/as3189/OFAM/scripts/main.py", line 469, in pset_from_rfile
+    if isinstance(vars['time'][0], np.timedelta64):
+IndexError: index 0 is out of bounds for axis 0 with size 0
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 225, in <module>
+    v=args.version, pfile=args.pfile)
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 144, in run_EUC
+    restarttime=np.nanmin)
+  File "/g/data/e14/as3189/OFAM/scripts/main.py", line 469, in pset_from_rfile
+    if isinstance(vars['time'][0], np.timedelta64):
+IndexError: index 0 is out of bounds for axis 0 with size 0
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 225, in <module>
+    v=args.version, pfile=args.pfile)
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 144, in run_EUC
+    restarttime=np.nanmin)
+  File "/g/data/e14/as3189/OFAM/scripts/main.py", line 469, in pset_from_rfile
+    if isinstance(vars['time'][0], np.timedelta64):
+IndexError: index 0 is out of bounds for axis 0 with size 0
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 225, in <module>
+    v=args.version, pfile=args.pfile)
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 144, in run_EUC
+    restarttime=np.nanmin)
+  File "/g/data/e14/as3189/OFAM/scripts/main.py", line 469, in pset_from_rfile
+    if isinstance(vars['time'][0], np.timedelta64):
+IndexError: index 0 is out of bounds for axis 0 with size 0
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 225, in <module>
+    v=args.version, pfile=args.pfile)
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 144, in run_EUC
+    restarttime=np.nanmin)
+  File "/g/data/e14/as3189/OFAM/scripts/main.py", line 469, in pset_from_rfile
+    if isinstance(vars['time'][0], np.timedelta64):
+IndexError: index 0 is out of bounds for axis 0 with size 0
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 225, in <module>
+    v=args.version, pfile=args.pfile)
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 144, in run_EUC
+    restarttime=np.nanmin)
+  File "/g/data/e14/as3189/OFAM/scripts/main.py", line 469, in pset_from_rfile
+    if isinstance(vars['time'][0], np.timedelta64):
+IndexError: index 0 is out of bounds for axis 0 with size 0
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 225, in <module>
+    v=args.version, pfile=args.pfile)
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 144, in run_EUC
+    restarttime=np.nanmin)
+  File "/g/data/e14/as3189/OFAM/scripts/main.py", line 469, in pset_from_rfile
+    if isinstance(vars['time'][0], np.timedelta64):
+IndexError: index 0 is out of bounds for axis 0 with size 0
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 225, in <module>
+    v=args.version, pfile=args.pfile)
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 144, in run_EUC
+    restarttime=np.nanmin)
+  File "/g/data/e14/as3189/OFAM/scripts/main.py", line 469, in pset_from_rfile
+    if isinstance(vars['time'][0], np.timedelta64):
+IndexError: index 0 is out of bounds for axis 0 with size 0
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 225, in <module>
+    v=args.version, pfile=args.pfile)
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 144, in run_EUC
+    restarttime=np.nanmin)
+  File "/g/data/e14/as3189/OFAM/scripts/main.py", line 469, in pset_from_rfile
+    if isinstance(vars['time'][0], np.timedelta64):
+IndexError: index 0 is out of bounds for axis 0 with size 0
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 225, in <module>
+    v=args.version, pfile=args.pfile)
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 144, in run_EUC
+    restarttime=np.nanmin)
+  File "/g/data/e14/as3189/OFAM/scripts/main.py", line 469, in pset_from_rfile
+    if isinstance(vars['time'][0], np.timedelta64):
+IndexError: index 0 is out of bounds for axis 0 with size 0
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 225, in <module>
+    v=args.version, pfile=args.pfile)
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 144, in run_EUC
+    restarttime=np.nanmin)
+  File "/g/data/e14/as3189/OFAM/scripts/main.py", line 469, in pset_from_rfile
+    if isinstance(vars['time'][0], np.timedelta64):
+IndexError: index 0 is out of bounds for axis 0 with size 0
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 225, in <module>
+    v=args.version, pfile=args.pfile)
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 144, in run_EUC
+    restarttime=np.nanmin)
+  File "/g/data/e14/as3189/OFAM/scripts/main.py", line 469, in pset_from_rfile
+    if isinstance(vars['time'][0], np.timedelta64):
+IndexError: index 0 is out of bounds for axis 0 with size 0
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 225, in <module>
+    v=args.version, pfile=args.pfile)
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 144, in run_EUC
+    restarttime=np.nanmin)
+  File "/g/data/e14/as3189/OFAM/scripts/main.py", line 469, in pset_from_rfile
+    if isinstance(vars['time'][0], np.timedelta64):
+IndexError: index 0 is out of bounds for axis 0 with size 0
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 225, in <module>
+    v=args.version, pfile=args.pfile)
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 144, in run_EUC
+    restarttime=np.nanmin)
+  File "/g/data/e14/as3189/OFAM/scripts/main.py", line 469, in pset_from_rfile
+    if isinstance(vars['time'][0], np.timedelta64):
+IndexError: index 0 is out of bounds for axis 0 with size 0
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 225, in <module>
+    v=args.version, pfile=args.pfile)
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 144, in run_EUC
+    restarttime=np.nanmin)
+  File "/g/data/e14/as3189/OFAM/scripts/main.py", line 469, in pset_from_rfile
+    if isinstance(vars['time'][0], np.timedelta64):
+IndexError: index 0 is out of bounds for axis 0 with size 0
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 225, in <module>
+    v=args.version, pfile=args.pfile)
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 144, in run_EUC
+    restarttime=np.nanmin)
+  File "/g/data/e14/as3189/OFAM/scripts/main.py", line 469, in pset_from_rfile
+    if isinstance(vars['time'][0], np.timedelta64):
+IndexError: index 0 is out of bounds for axis 0 with size 0
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 225, in <module>
+    v=args.version, pfile=args.pfile)
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 144, in run_EUC
+    restarttime=np.nanmin)
+  File "/g/data/e14/as3189/OFAM/scripts/main.py", line 469, in pset_from_rfile
+    if isinstance(vars['time'][0], np.timedelta64):
+IndexError: index 0 is out of bounds for axis 0 with size 0
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 225, in <module>
+    v=args.version, pfile=args.pfile)
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 144, in run_EUC
+    restarttime=np.nanmin)
+  File "/g/data/e14/as3189/OFAM/scripts/main.py", line 469, in pset_from_rfile
+    if isinstance(vars['time'][0], np.timedelta64):
+IndexError: index 0 is out of bounds for axis 0 with size 0
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 225, in <module>
+    v=args.version, pfile=args.pfile)
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 144, in run_EUC
+    restarttime=np.nanmin)
+  File "/g/data/e14/as3189/OFAM/scripts/main.py", line 469, in pset_from_rfile
+    if isinstance(vars['time'][0], np.timedelta64):
+IndexError: index 0 is out of bounds for axis 0 with size 0
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 225, in <module>
+    v=args.version, pfile=args.pfile)
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 144, in run_EUC
+    restarttime=np.nanmin)
+  File "/g/data/e14/as3189/OFAM/scripts/main.py", line 469, in pset_from_rfile
+    if isinstance(vars['time'][0], np.timedelta64):
+IndexError: index 0 is out of bounds for axis 0 with size 0
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 225, in <module>
+    v=args.version, pfile=args.pfile)
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 144, in run_EUC
+    restarttime=np.nanmin)
+  File "/g/data/e14/as3189/OFAM/scripts/main.py", line 469, in pset_from_rfile
+    if isinstance(vars['time'][0], np.timedelta64):
+IndexError: index 0 is out of bounds for axis 0 with size 0
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 225, in <module>
+    v=args.version, pfile=args.pfile)
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 144, in run_EUC
+    restarttime=np.nanmin)
+  File "/g/data/e14/as3189/OFAM/scripts/main.py", line 469, in pset_from_rfile
+    if isinstance(vars['time'][0], np.timedelta64):
+IndexError: index 0 is out of bounds for axis 0 with size 0
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 225, in <module>
+    v=args.version, pfile=args.pfile)
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 144, in run_EUC
+    restarttime=np.nanmin)
+  File "/g/data/e14/as3189/OFAM/scripts/main.py", line 469, in pset_from_rfile
+    if isinstance(vars['time'][0], np.timedelta64):
+IndexError: index 0 is out of bounds for axis 0 with size 0
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 225, in <module>
+    v=args.version, pfile=args.pfile)
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 144, in run_EUC
+    restarttime=np.nanmin)
+  File "/g/data/e14/as3189/OFAM/scripts/main.py", line 469, in pset_from_rfile
+    if isinstance(vars['time'][0], np.timedelta64):
+IndexError: index 0 is out of bounds for axis 0 with size 0
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 225, in <module>
+    v=args.version, pfile=args.pfile)
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 144, in run_EUC
+    restarttime=np.nanmin)
+  File "/g/data/e14/as3189/OFAM/scripts/main.py", line 469, in pset_from_rfile
+    if isinstance(vars['time'][0], np.timedelta64):
+IndexError: index 0 is out of bounds for axis 0 with size 0
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 225, in <module>
+    v=args.version, pfile=args.pfile)
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 144, in run_EUC
+    restarttime=np.nanmin)
+  File "/g/data/e14/as3189/OFAM/scripts/main.py", line 469, in pset_from_rfile
+    if isinstance(vars['time'][0], np.timedelta64):
+IndexError: index 0 is out of bounds for axis 0 with size 0
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 225, in <module>
+    v=args.version, pfile=args.pfile)
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 144, in run_EUC
+    restarttime=np.nanmin)
+  File "/g/data/e14/as3189/OFAM/scripts/main.py", line 469, in pset_from_rfile
+    if isinstance(vars['time'][0], np.timedelta64):
+IndexError: index 0 is out of bounds for axis 0 with size 0
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 225, in <module>
+    v=args.version, pfile=args.pfile)
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 144, in run_EUC
+    restarttime=np.nanmin)
+  File "/g/data/e14/as3189/OFAM/scripts/main.py", line 469, in pset_from_rfile
+    if isinstance(vars['time'][0], np.timedelta64):
+IndexError: index 0 is out of bounds for axis 0 with size 0
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 225, in <module>
+    v=args.version, pfile=args.pfile)
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 144, in run_EUC
+    restarttime=np.nanmin)
+  File "/g/data/e14/as3189/OFAM/scripts/main.py", line 469, in pset_from_rfile
+    if isinstance(vars['time'][0], np.timedelta64):
+IndexError: index 0 is out of bounds for axis 0 with size 0
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 225, in <module>
+    v=args.version, pfile=args.pfile)
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 144, in run_EUC
+    restarttime=np.nanmin)
+  File "/g/data/e14/as3189/OFAM/scripts/main.py", line 469, in pset_from_rfile
+    if isinstance(vars['time'][0], np.timedelta64):
+IndexError: index 0 is out of bounds for axis 0 with size 0
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 225, in <module>
+    v=args.version, pfile=args.pfile)
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 144, in run_EUC
+    restarttime=np.nanmin)
+  File "/g/data/e14/as3189/OFAM/scripts/main.py", line 469, in pset_from_rfile
+    if isinstance(vars['time'][0], np.timedelta64):
+IndexError: index 0 is out of bounds for axis 0 with size 0
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 225, in <module>
+    v=args.version, pfile=args.pfile)
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 144, in run_EUC
+    restarttime=np.nanmin)
+  File "/g/data/e14/as3189/OFAM/scripts/main.py", line 469, in pset_from_rfile
+    if isinstance(vars['time'][0], np.timedelta64):
+IndexError: index 0 is out of bounds for axis 0 with size 0
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 225, in <module>
+    v=args.version, pfile=args.pfile)
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 144, in run_EUC
+    restarttime=np.nanmin)
+  File "/g/data/e14/as3189/OFAM/scripts/main.py", line 469, in pset_from_rfile
+    if isinstance(vars['time'][0], np.timedelta64):
+IndexError: index 0 is out of bounds for axis 0 with size 0
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 225, in <module>
+    v=args.version, pfile=args.pfile)
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 144, in run_EUC
+    restarttime=np.nanmin)
+  File "/g/data/e14/as3189/OFAM/scripts/main.py", line 469, in pset_from_rfile
+    if isinstance(vars['time'][0], np.timedelta64):
+IndexError: index 0 is out of bounds for axis 0 with size 0
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 225, in <module>
+    v=args.version, pfile=args.pfile)
+  File "/g/data/e14/as3189/OFAM/scripts/sim.py", line 144, in run_EUC
+    restarttime=np.nanmin)
+  File "/g/data/e14/as3189/OFAM/scripts/main.py", line 469, in pset_from_rfile
+    if isinstance(vars['time'][0], np.timedelta64):
+IndexError: index 0 is out of bounds for axis 0 with size 0
+--------------------------------------------------------------------------
+Primary job  terminated normally, but 1 process returned
+a non-zero exit code. Per user-direction, the job has been aborted.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+mpirun detected that one or more processes exited with non-zero status, thus causing
+the job to be terminated. The first process to do so was:
+
+  Process name: [[27480,1],30]
+  Exit code:    1
+--------------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 198, in _acquire_with_cache_info
+    file = self._cache[self._key]
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/lru_cache.py", line 53, in __getitem__
+    value = self._cache[key]
+KeyError: [<class 'netCDF4._netCDF4.Dataset'>, ('/g/data/e14/as3189/OFAM/data/sim_hist_190_v0r8.nc',), 'r', (('clobber', True), ('diskless', False), ('format', 'NETCDF4'), ('persist', False))]
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/sim_info.py", line 82, in <module>
+    particle_info(sim_id, info_only=False)
+  File "/g/data/e14/as3189/OFAM/scripts/sim_info.py", line 22, in particle_info
+    ds = xr.open_dataset(str(sim_id), decode_cf=False)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/api.py", line 509, in open_dataset
+    filename_or_obj, group=group, lock=lock, **backend_kwargs
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 358, in open
+    return cls(manager, group=group, mode=mode, lock=lock, autoclose=autoclose)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 314, in __init__
+    self.format = self.ds.data_model
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 367, in ds
+    return self._acquire()
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 361, in _acquire
+    with self._manager.acquire_context(needs_lock) as root:
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/contextlib.py", line 112, in __enter__
+    return next(self.gen)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 186, in acquire_context
+    file, cached = self._acquire_with_cache_info(needs_lock)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 204, in _acquire_with_cache_info
+    file = self._opener(*self._args, **kwargs)
+  File "netCDF4/_netCDF4.pyx", line 2321, in netCDF4._netCDF4.Dataset.__init__
+  File "netCDF4/_netCDF4.pyx", line 1885, in netCDF4._netCDF4._ensure_nc_success
+FileNotFoundError: [Errno 2] No such file or directory: b'/g/data/e14/as3189/OFAM/data/sim_hist_190_v0r8.nc'
