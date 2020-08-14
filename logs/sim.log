@@ -17234,3 +17234,385 @@ MISSING FINISH STATEMENT?
 2020-08-13 12:07:46:sim_rcp_250_v0r10:Temp=TLHNANNJ: Rank=22: #Particles=9509+3920=13429
 2020-08-13 12:08:08:sim_rcp_250_v0r10:Temp=TLHNANNJ: Rank=44: #Particles=10459+3920=14379
 2020-08-13 12:08:12:Compiled zParticleDelWestAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> /jobfs/9767777.gadi-pbs/parcels-12904/1c7f0d1aff831d0296c9b912f8705512_44.so
+sim_hist_165_v0r10:Completed!: 02:07:13: Rank=40: #Particles=4434-1977=2457
+sim_hist_165_v0r10:Completed!: 02:07:13: Rank=24: #Particles=4821-2131=2690
+sim_hist_165_v0r10:Completed!: 02:08:17: Rank=19: #Particles=4408-1699=2709
+sim_hist_165_v0r10:Completed!: 02:08:38: Rank=39: #Particles=4043-1425=2618
+sim_hist_165_v0r10:Completed!: 02:09:54: Rank=14: #Particles=9524-3086=6438
+sim_hist_165_v0r10:Completed!: 02:10:57: Rank= 6: #Particles=10119-5094=5025
+sim_hist_165_v0r10:Completed!: 02:11:13: Rank=33: #Particles=8099-6125=1974
+sim_hist_165_v0r10:Completed!: 02:12:17: Rank= 3: #Particles=7153-2656=4497
+sim_hist_165_v0r10:Completed!: 02:12:21: Rank=44: #Particles=11527-3023=8504
+sim_hist_165_v0r10:Completed!: 02:12:26: Rank=43: #Particles=10312-2590=7722
+sim_hist_165_v0r10:Completed!: 02:13:08: Rank=11: #Particles=8629-2745=5884
+sim_hist_165_v0r10:Completed!: 02:13:28: Rank=42: #Particles=10762-6223=4539
+sim_hist_165_v0r10:Completed!: 02:14:57: Rank=22: #Particles=12286-3457=8829
+sim_hist_165_v0r10:Completed!: 02:15:10: Rank=28: #Particles=5785-1998=3787
+sim_hist_165_v0r10:Completed!: 02:15:34: Rank=17: #Particles=4015-1473=2542
+sim_hist_165_v0r10:Completed!: 02:16:03: Rank=34: #Particles=9845-1209=8636
+sim_hist_165_v0r10:Completed!: 02:16:04: Rank=31: #Particles=9377-1833=7544
+sim_hist_165_v0r10:Completed!: 02:21:34: Rank=37: #Particles=8676-1189=7487
+sim_hist_165_v0r10:Completed!: 02:22:36: Rank=16: #Particles=10414-885=9529
+sim_hist_165_v0r10:Completed!: 02:23:16: Rank=26: #Particles=13364-2916=10448
+sim_hist_165_v0r10:Completed!: 02:24:04: Rank= 1: #Particles=15266-2189=13077
+sim_hist_165_v0r10:Completed!: 02:25:52: Rank=46: #Particles=10406-1092=9314
+sim_hist_165_v0r10:Completed!: 02:26:50: Rank=10: #Particles=11896-1568=10328
+sim_hist_165_v0r10:Completed!: 02:28:15: Rank=30: #Particles=9982-1237=8745
+sim_hist_165_v0r10:Completed!: 02:28:38: Rank=18: #Particles=9630-864=8766
+sim_hist_165_v0r10:Completed!: 02:29:16: Rank=21: #Particles=5243-945=4298
+sim_hist_165_v0r10:Completed!: 02:30:17: Rank= 9: #Particles=4433-1550=2883
+sim_hist_165_v0r10:Completed!: 02:30:36: Rank=25: #Particles=9890-2137=7753
+sim_hist_165_v0r10:Completed!: 02:31:10: Rank=23: #Particles=9229-775=8454
+sim_hist_165_v0r10:Completed!: 02:31:25: Rank= 4: #Particles=11759-1871=9888
+sim_hist_165_v0r10:Completed!: 02:31:26: Rank=45: #Particles=10246-1135=9111
+sim_hist_165_v0r10:Completed!: 02:31:48: Rank=41: #Particles=4930-896=4034
+sim_hist_165_v0r10:Completed!: 02:32:39: Rank= 2: #Particles=9823-1554=8269
+sim_hist_165_v0r10:Completed!: 02:32:52: Rank= 8: #Particles=9702-860=8842
+sim_hist_165_v0r10:Completed!: 02:33:31: Rank=47: #Particles=9620-1454=8166
+sim_hist_165_v0r10:Completed!: 02:33:41: Rank=13: #Particles=7799-1006=6793
+sim_hist_165_v0r10:Completed!: 02:34:06: Rank=27: #Particles=8319-843=7476
+sim_hist_165_v0r10:Completed!: 02:34:06: Rank=32: #Particles=7791-2800=4991
+sim_hist_165_v0r10:Completed!: 02:34:17: Rank= 7: #Particles=8898-2558=6340
+sim_hist_165_v0r10:Completed!: 02:34:19: Rank=35: #Particles=9761-939=8822
+sim_hist_165_v0r10:Completed!: 02:35:53: Rank=15: #Particles=7529-1826=5703
+sim_hist_165_v0r10:Completed!: 02:36:19: Rank=20: #Particles=9411-2139=7272
+sim_hist_165_v0r10:Completed!: 02:36:37: Rank=38: #Particles=4647-973=3674
+sim_hist_165_v0r10:Completed!: 02:37:04: Rank= 0: #Particles=8504-1508=6996
+sim_hist_165_v0r10:Completed!: 02:38:09: Rank=29: #Particles=4301-1185=3116
+sim_hist_165_v0r10:Completed!: 02:40:17: Rank=36: #Particles=8338-2604=5734
+sim_hist_165_v0r10:Completed!: 02:40:47: Rank= 5: #Particles=5376-1408=3968
+sim_hist_165_v0r10:Completed!: 02:42:57: Rank=12: #Particles=7155-2207=4948
+sim_hist_165_v0r10:Finished
+sim_hist_190_v0r10:Completed!: 02:13:34: Rank=36: #Particles=4302-1778=2524
+sim_hist_190_v0r10:Completed!: 02:13:45: Rank= 7: #Particles=10724-1726=8998
+sim_hist_190_v0r10:Completed!: 02:14:08: Rank=39: #Particles=10543-4978=5565
+sim_hist_190_v0r10:Completed!: 02:14:35: Rank=11: #Particles=8829-922=7907
+sim_hist_190_v0r10:Completed!: 02:14:53: Rank=24: #Particles=6485-3015=3470
+sim_hist_190_v0r10:Completed!: 02:14:56: Rank=35: #Particles=5023-1542=3481
+sim_hist_190_v0r10:Completed!: 02:15:06: Rank= 3: #Particles=10986-3076=7910
+sim_hist_190_v0r10:Completed!: 02:18:29: Rank=41: #Particles=8214-2691=5523
+sim_hist_190_v0r10:Completed!: 02:18:33: Rank=31: #Particles=12076-2121=9955
+sim_hist_190_v0r10:Completed!: 02:19:02: Rank=10: #Particles=9297-3300=5997
+sim_hist_190_v0r10:Completed!: 02:19:52: Rank= 8: #Particles=13395-1054=12341
+sim_hist_190_v0r10:Completed!: 02:19:57: Rank=29: #Particles=4452-1417=3035
+sim_hist_190_v0r10:Completed!: 02:21:27: Rank= 9: #Particles=8886-2477=6409
+sim_hist_190_v0r10:Completed!: 02:21:39: Rank=38: #Particles=12202-1811=10391
+sim_hist_190_v0r10:Completed!: 02:22:03: Rank= 0: #Particles=4792-2348=2444
+sim_hist_190_v0r10:Completed!: 02:22:07: Rank=45: #Particles=12456-2026=10430
+sim_hist_190_v0r10:Completed!: 02:24:20: Rank=42: #Particles=5911-1990=3921
+sim_hist_190_v0r10:Completed!: 02:25:24: Rank=23: #Particles=9927-1063=8864
+sim_hist_190_v0r10:Completed!: 02:25:34: Rank=17: #Particles=5045-1374=3671
+sim_hist_190_v0r10:Completed!: 02:25:44: Rank=19: #Particles=7920-5486=2434
+sim_hist_190_v0r10:Completed!: 02:26:39: Rank= 6: #Particles=8348-1235=7113
+sim_hist_190_v0r10:Completed!: 02:26:46: Rank=28: #Particles=14918-1074=13844
+sim_hist_190_v0r10:Completed!: 02:26:54: Rank=26: #Particles=8484-851=7633
+sim_hist_190_v0r10:Completed!: 02:28:27: Rank= 5: #Particles=17249-994=16255
+sim_hist_190_v0r10:Completed!: 02:28:59: Rank=14: #Particles=4856-1448=3408
+sim_hist_190_v0r10:Completed!: 02:29:06: Rank= 2: #Particles=16547-809=15738
+sim_hist_190_v0r10:Completed!: 02:29:10: Rank=33: #Particles=8811-1013=7798
+sim_hist_190_v0r10:Completed!: 02:29:55: Rank=25: #Particles=8645-2172=6473
+sim_hist_190_v0r10:Completed!: 02:32:12: Rank=32: #Particles=4934-995=3939
+sim_hist_190_v0r10:Completed!: 02:32:14: Rank=37: #Particles=7617-2191=5426
+sim_hist_190_v0r10:Completed!: 02:32:19: Rank=44: #Particles=8803-2322=6481
+sim_hist_190_v0r10:Completed!: 02:32:20: Rank=30: #Particles=17348-804=16544
+sim_hist_190_v0r10:Completed!: 02:32:21: Rank=40: #Particles=9382-1424=7958
+sim_hist_190_v0r10:Completed!: 02:32:23: Rank=43: #Particles=9756-799=8957
+sim_hist_190_v0r10:Completed!: 02:32:39: Rank= 1: #Particles=11697-643=11054
+sim_hist_190_v0r10:Completed!: 02:32:48: Rank=46: #Particles=6178-1812=4366
+sim_hist_190_v0r10:Completed!: 02:33:23: Rank=47: #Particles=12227-1442=10785
+sim_hist_190_v0r10:Completed!: 02:33:24: Rank= 4: #Particles=16377-2210=14167
+sim_hist_190_v0r10:Completed!: 02:33:31: Rank=34: #Particles=6882-2495=4387
+sim_hist_190_v0r10:Completed!: 02:35:17: Rank=27: #Particles=10114-554=9560
+sim_hist_190_v0r10:Completed!: 02:39:42: Rank=16: #Particles=16454-716=15738
+sim_hist_190_v0r10:Completed!: 02:43:08: Rank=22: #Particles=9184-4310=4874
+sim_hist_190_v0r10:Completed!: 02:44:01: Rank=15: #Particles=18267-2397=15870
+sim_hist_190_v0r10:Completed!: 02:45:11: Rank=21: #Particles=6246-1019=5227
+sim_hist_190_v0r10:Completed!: 02:45:42: Rank=13: #Particles=14406-766=13640
+sim_hist_190_v0r10:Completed!: 02:46:53: Rank=18: #Particles=16727-1068=15659
+sim_hist_190_v0r10:Completed!: 02:48:48: Rank=20: #Particles=10231-796=9435
+sim_hist_190_v0r10:Completed!: 02:48:51: Rank=12: #Particles=8283-1202=7081
+sim_hist_220_v0r10:Completed!: 02:09:22: Rank=32: #Particles=7125-1950=5175
+sim_hist_220_v0r10:Completed!: 02:09:22: Rank= 1: #Particles=12449-1201=11248
+sim_hist_220_v0r10:Completed!: 02:09:25: Rank= 7: #Particles=5648-1672=3976
+sim_hist_220_v0r10:Completed!: 02:09:29: Rank= 9: #Particles=10656-2085=8571
+sim_hist_220_v0r10:Completed!: 02:09:33: Rank=25: #Particles=7002-1756=5246
+sim_hist_220_v0r10:Completed!: 02:09:38: Rank=40: #Particles=9483-7365=2118
+sim_hist_220_v0r10:Completed!: 02:10:23: Rank=35: #Particles=5418-1743=3675
+sim_hist_220_v0r10:Completed!: 02:10:26: Rank= 8: #Particles=12787-607=12180
+sim_hist_220_v0r10:Completed!: 02:10:58: Rank=27: #Particles=5463-1389=4074
+sim_hist_220_v0r10:Completed!: 02:11:52: Rank= 4: #Particles=6339-3393=2946
+sim_hist_220_v0r10:Completed!: 02:12:28: Rank=11: #Particles=13053-837=12216
+sim_hist_220_v0r10:Completed!: 02:12:45: Rank=34: #Particles=6812-585=6227
+sim_hist_220_v0r10:Completed!: 02:13:28: Rank= 2: #Particles=11306-644=10662
+sim_hist_220_v0r10:Completed!: 02:13:43: Rank= 3: #Particles=10191-1896=8295
+sim_hist_220_v0r10:Completed!: 02:13:56: Rank=21: #Particles=7723-1164=6559
+sim_hist_220_v0r10:Completed!: 02:14:03: Rank= 5: #Particles=10379-1055=9324
+sim_hist_220_v0r10:Completed!: 02:14:37: Rank= 0: #Particles=7464-1405=6059
+sim_hist_220_v0r10:Completed!: 02:15:02: Rank=30: #Particles=7427-1629=5798
+sim_hist_220_v0r10:Completed!: 02:15:03: Rank=24: #Particles=10190-2200=7990
+sim_hist_220_v0r10:Completed!: 02:15:03: Rank=23: #Particles=4819-1317=3502
+sim_hist_220_v0r10:Completed!: 02:15:11: Rank= 6: #Particles=15560-1414=14146
+sim_hist_220_v0r10:Completed!: 02:15:16: Rank=22: #Particles=9126-2776=6350
+sim_hist_220_v0r10:Completed!: 02:15:31: Rank=13: #Particles=8576-985=7591
+sim_hist_220_v0r10:Completed!: 02:16:12: Rank=17: #Particles=5049-1046=4003
+sim_hist_220_v0r10:Completed!: 02:16:34: Rank=39: #Particles=5426-1835=3591
+sim_hist_220_v0r10:Completed!: 02:16:42: Rank=12: #Particles=6924-1905=5019
+sim_hist_220_v0r10:Completed!: 02:17:10: Rank=33: #Particles=16027-565=15462
+sim_hist_220_v0r10:Completed!: 02:18:38: Rank=29: #Particles=15692-518=15174
+sim_hist_220_v0r10:Completed!: 02:19:44: Rank=37: #Particles=8379-631=7748
+sim_hist_220_v0r10:Completed!: 02:19:50: Rank=43: #Particles=7158-2484=4674
+sim_hist_220_v0r10:Completed!: 02:20:06: Rank=31: #Particles=6044-1491=4553
+sim_hist_220_v0r10:Completed!: 02:20:22: Rank=47: #Particles=5787-1588=4199
+sim_hist_220_v0r10:Completed!: 02:21:04: Rank=41: #Particles=17396-1170=16226
+sim_hist_220_v0r10:Completed!: 02:21:09: Rank=15: #Particles=10797-4049=6748
+sim_hist_220_v0r10:Completed!: 02:21:18: Rank=14: #Particles=12693-788=11905
+sim_hist_220_v0r10:Completed!: 02:21:22: Rank=45: #Particles=18588-1424=17164
+sim_hist_220_v0r10:Completed!: 02:21:30: Rank=19: #Particles=17409-506=16903
+sim_hist_220_v0r10:Completed!: 02:21:40: Rank=46: #Particles=14831-556=14275
+sim_hist_220_v0r10:Completed!: 02:21:59: Rank=44: #Particles=10745-4531=6214
+sim_hist_220_v0r10:Completed!: 02:22:13: Rank=28: #Particles=12848-840=12008
+sim_hist_220_v0r10:Completed!: 02:22:17: Rank=38: #Particles=15042-890=14152
+sim_hist_220_v0r10:Completed!: 02:22:19: Rank=10: #Particles=15998-2390=13608
+sim_hist_220_v0r10:Completed!: 02:22:21: Rank=16: #Particles=12977-618=12359
+sim_hist_220_v0r10:Completed!: 02:22:54: Rank=18: #Particles=12834-1318=11516
+sim_hist_220_v0r10:Completed!: 02:23:07: Rank=36: #Particles=11040-1543=9497
+sim_hist_220_v0r10:Completed!: 02:23:20: Rank=26: #Particles=12949-574=12375
+sim_hist_220_v0r10:Completed!: 02:23:36: Rank=42: #Particles=14781-606=14175
+sim_hist_220_v0r10:Completed!: 02:24:25: Rank=20: #Particles=6322-2706=3616
+sim_hist_250_v0r10:Completed!: 02:22:13: Rank= 2: #Particles=12507-499=12008
+sim_hist_250_v0r10:Completed!: 02:22:56: Rank=25: #Particles=6743-1887=4856
+sim_hist_250_v0r10:Completed!: 02:22:59: Rank= 7: #Particles=15343-472=14871
+sim_hist_250_v0r10:Completed!: 02:23:12: Rank= 5: #Particles=9868-2149=7719
+sim_hist_250_v0r10:Completed!: 02:23:27: Rank=13: #Particles=11262-504=10758
+sim_hist_250_v0r10:Completed!: 02:23:35: Rank=11: #Particles=6434-1624=4810
+sim_hist_250_v0r10:Completed!: 02:23:37: Rank= 8: #Particles=8496-4347=4149
+sim_hist_250_v0r10:Completed!: 02:23:55: Rank=24: #Particles=7023-1797=5226
+sim_hist_250_v0r10:Completed!: 02:24:20: Rank=30: #Particles=3993-944=3049
+sim_hist_250_v0r10:Completed!: 02:24:59: Rank=32: #Particles=4193-786=3407
+sim_hist_250_v0r10:Completed!: 02:25:01: Rank= 9: #Particles=9721-2307=7414
+sim_hist_250_v0r10:Completed!: 02:25:51: Rank=35: #Particles=7549-1070=6479
+sim_hist_250_v0r10:Completed!: 02:26:34: Rank=26: #Particles=7285-460=6825
+sim_hist_250_v0r10:Completed!: 02:26:47: Rank= 0: #Particles=13885-1702=12183
+sim_hist_250_v0r10:Completed!: 02:26:58: Rank=27: #Particles=6428-824=5604
+sim_hist_250_v0r10:Completed!: 02:27:11: Rank=34: #Particles=9147-1073=8074
+sim_hist_250_v0r10:Completed!: 02:28:03: Rank=23: #Particles=7744-2057=5687
+sim_hist_250_v0r10:Completed!: 02:28:31: Rank=17: #Particles=16017-511=15506
+sim_hist_250_v0r10:Completed!: 02:28:32: Rank=29: #Particles=8298-454=7844
+sim_hist_250_v0r10:Completed!: 02:29:45: Rank=16: #Particles=5044-1841=3203
+sim_hist_250_v0r10:Completed!: 02:29:56: Rank=18: #Particles=8287-1873=6414
+sim_hist_250_v0r10:Completed!: 02:29:56: Rank=19: #Particles=14349-540=13809
+sim_hist_250_v0r10:Completed!: 02:30:24: Rank=14: #Particles=7629-1964=5665
+sim_hist_250_v0r10:Completed!: 02:30:31: Rank=41: #Particles=7039-1867=5172
+sim_hist_250_v0r10:Completed!: 02:31:01: Rank=21: #Particles=8821-3226=5595
+sim_hist_250_v0r10:Completed!: 02:31:14: Rank=28: #Particles=4244-1516=2728
+sim_hist_250_v0r10:Completed!: 02:31:52: Rank=33: #Particles=21581-493=21088
+sim_hist_250_v0r10:Completed!: 02:32:12: Rank=31: #Particles=10182-425=9757
+sim_hist_250_v0r10:Completed!: 02:33:19: Rank= 4: #Particles=16013-3062=12951
+sim_hist_250_v0r10:Completed!: 02:34:22: Rank=10: #Particles=16201-2911=13290
+sim_hist_250_v0r10:Completed!: 02:35:13: Rank=40: #Particles=4135-2044=2091
+sim_hist_250_v0r10:Completed!: 02:36:11: Rank=12: #Particles=16954-1279=15675
+sim_hist_250_v0r10:Completed!: 02:37:17: Rank=45: #Particles=8379-2088=6291
+sim_hist_250_v0r10:Completed!: 02:37:19: Rank=38: #Particles=6522-2324=4198
+sim_hist_250_v0r10:Completed!: 02:37:22: Rank=20: #Particles=14729-1387=13342
+sim_hist_250_v0r10:Completed!: 02:37:35: Rank=22: #Particles=6196-3679=2517
+sim_hist_250_v0r10:Completed!: 02:38:60: Rank=39: #Particles=9781-1079=8702
+sim_hist_250_v0r10:Completed!: 02:39:12: Rank=47: #Particles=10167-1775=8392
+sim_hist_250_v0r10:Completed!: 02:39:25: Rank=15: #Particles=12710-3222=9488
+sim_hist_250_v0r10:Completed!: 02:40:35: Rank=43: #Particles=12460-1340=11120
+sim_hist_250_v0r10:Completed!: 02:40:41: Rank=46: #Particles=19757-497=19260
+sim_hist_250_v0r10:Completed!: 02:41:01: Rank=44: #Particles=15613-2720=12893
+sim_hist_250_v0r10:Completed!: 02:41:32: Rank=37: #Particles=21373-521=20852
+sim_hist_250_v0r10:Completed!: 02:41:58: Rank=42: #Particles=5367-3244=2123
+sim_hist_250_v0r10:Completed!: 02:42:03: Rank=36: #Particles=14536-1162=13374
+sim_rcp_165_v0r10:Completed!: 02:16:16: Rank=41: #Particles=4013-1287=2726
+sim_rcp_165_v0r10:Completed!: 02:16:29: Rank=21: #Particles=8744-1047=7697
+sim_rcp_165_v0r10:Completed!: 02:17:38: Rank= 5: #Particles=9228-4175=5053
+sim_rcp_165_v0r10:Completed!: 02:19:00: Rank=36: #Particles=7674-2351=5323
+sim_rcp_165_v0r10:Completed!: 02:20:27: Rank=35: #Particles=6423-1258=5165
+sim_rcp_165_v0r10:Completed!: 02:20:32: Rank=24: #Particles=10138-3975=6163
+sim_rcp_165_v0r10:Completed!: 02:12:32: Rank=33: #Particles=5180-2019=3161
+sim_rcp_165_v0r10:Completed!: 02:13:04: Rank=23: #Particles=10987-5144=5843
+sim_rcp_165_v0r10:Completed!: 02:13:19: Rank=28: #Particles=3743-1433=2310
+sim_rcp_165_v0r10:Completed!: 02:13:20: Rank=14: #Particles=8814-5998=2816
+sim_rcp_165_v0r10:Completed!: 02:13:22: Rank=16: #Particles=6617-2365=4252
+sim_rcp_165_v0r10:Completed!: 02:15:08: Rank= 4: #Particles=6521-2045=4476
+sim_rcp_165_v0r10:Completed!: 02:22:19: Rank=34: #Particles=12283-2647=9636
+sim_rcp_165_v0r10:Completed!: 02:22:44: Rank= 6: #Particles=8065-2608=5457
+sim_rcp_165_v0r10:Completed!: 02:23:17: Rank=39: #Particles=9860-1438=8422
+sim_rcp_165_v0r10:Completed!: 02:23:58: Rank=46: #Particles=12190-2493=9697
+sim_rcp_165_v0r10:Completed!: 02:25:05: Rank=20: #Particles=11197-944=10253
+sim_rcp_165_v0r10:Completed!: 02:25:56: Rank= 7: #Particles=9876-2246=7630
+sim_rcp_165_v0r10:Completed!: 02:29:09: Rank=22: #Particles=9976-3109=6867
+sim_rcp_165_v0r10:Completed!: 02:32:08: Rank= 1: #Particles=10603-984=9619
+sim_rcp_165_v0r10:Completed!: 02:34:41: Rank=37: #Particles=9553-1243=8310
+sim_rcp_165_v0r10:Completed!: 02:35:47: Rank=42: #Particles=10602-1570=9032
+sim_rcp_165_v0r10:Completed!: 02:37:37: Rank=45: #Particles=9965-912=9053
+sim_rcp_165_v0r10:Completed!: 02:38:33: Rank=29: #Particles=8593-1020=7573
+sim_rcp_165_v0r10:Completed!: 02:38:34: Rank=18: #Particles=8913-2647=6266
+sim_rcp_165_v0r10:Completed!: 02:38:46: Rank=31: #Particles=9167-930=8237
+sim_rcp_165_v0r10:Completed!: 02:39:30: Rank= 9: #Particles=9127-1403=7724
+sim_rcp_165_v0r10:Completed!: 02:39:57: Rank=19: #Particles=8538-3531=5007
+sim_rcp_165_v0r10:Completed!: 02:39:58: Rank=17: #Particles=5980-1095=4885
+sim_rcp_165_v0r10:Completed!: 02:42:06: Rank=13: #Particles=5324-1554=3770
+sim_rcp_165_v0r10:Completed!: 02:42:09: Rank=12: #Particles=5421-762=4659
+sim_rcp_165_v0r10:Completed!: 02:42:45: Rank=11: #Particles=9471-783=8688
+sim_rcp_165_v0r10:Completed!: 02:43:17: Rank=25: #Particles=9109-971=8138
+sim_rcp_165_v0r10:Completed!: 02:43:59: Rank=38: #Particles=8745-820=7925
+sim_rcp_165_v0r10:Completed!: 02:45:22: Rank=47: #Particles=9687-1434=8253
+sim_rcp_165_v0r10:Completed!: 02:45:46: Rank=32: #Particles=8137-3868=4269
+sim_rcp_165_v0r10:Completed!: 02:45:46: Rank=30: #Particles=9086-929=8157
+sim_rcp_165_v0r10:Completed!: 02:47:48: Rank= 2: #Particles=8977-1857=7120
+sim_rcp_165_v0r10:Completed!: 02:48:40: Rank= 8: #Particles=8970-3121=5849
+sim_rcp_165_v0r10:Completed!: 02:50:14: Rank=15: #Particles=7242-1863=5379
+sim_rcp_165_v0r10:Completed!: 02:50:54: Rank=26: #Particles=5770-1044=4726
+sim_rcp_165_v0r10:Completed!: 02:53:24: Rank=40: #Particles=7821-974=6847
+sim_rcp_165_v0r10:Completed!: 02:53:52: Rank=43: #Particles=4032-737=3295
+sim_rcp_165_v0r10:Completed!: 02:53:52: Rank= 3: #Particles=6697-2364=4333
+sim_rcp_165_v0r10:Completed!: 02:54:59: Rank=27: #Particles=6555-846=5709
+sim_rcp_165_v0r10:Completed!: 02:55:12: Rank= 0: #Particles=5733-1513=4220
+sim_rcp_165_v0r10:Completed!: 02:56:22: Rank=10: #Particles=9154-1518=7636
+sim_rcp_165_v0r10:Completed!: 03:17:55: Rank=44: #Particles=9074-3860=5214
+sim_rcp_190_v0r10:Completed!: 02:13:15: Rank=12: #Particles=8374-1264=7110
+sim_rcp_190_v0r10:Completed!: 02:13:15: Rank=35: #Particles=4086-1427=2659
+sim_rcp_190_v0r10:Completed!: 02:13:16: Rank=30: #Particles=3976-1251=2725
+sim_rcp_190_v0r10:Completed!: 02:13:16: Rank=28: #Particles=6386-2194=4192
+sim_rcp_190_v0r10:Completed!: 02:13:16: Rank=31: #Particles=8377-1819=6558
+sim_rcp_190_v0r10:Completed!: 02:13:16: Rank=15: #Particles=6230-3031=3199
+sim_rcp_190_v0r10:Completed!: 02:13:17: Rank=33: #Particles=9388-3910=5478
+sim_rcp_190_v0r10:Completed!: 02:13:18: Rank=14: #Particles=9518-1638=7880
+sim_rcp_190_v0r10:Completed!: 02:13:18: Rank=16: #Particles=4387-1084=3303
+sim_rcp_190_v0r10:Completed!: 02:13:25: Rank=24: #Particles=8480-6329=2151
+sim_rcp_190_v0r10:Completed!: 02:13:52: Rank=27: #Particles=8061-2563=5498
+sim_rcp_190_v0r10:Completed!: 02:14:10: Rank= 8: #Particles=8727-1043=7684
+sim_rcp_190_v0r10:Completed!: 02:14:12: Rank=45: #Particles=10700-4032=6668
+sim_rcp_190_v0r10:Completed!: 02:14:14: Rank=38: #Particles=9211-1182=8029
+sim_rcp_190_v0r10:Completed!: 02:15:11: Rank= 4: #Particles=9091-3662=5429
+sim_rcp_190_v0r10:Completed!: 02:16:45: Rank= 9: #Particles=12948-2388=10560
+sim_rcp_190_v0r10:Completed!: 02:17:13: Rank=44: #Particles=7233-3371=3862
+sim_rcp_190_v0r10:Completed!: 02:17:26: Rank= 1: #Particles=11941-1904=10037
+sim_rcp_190_v0r10:Completed!: 02:19:24: Rank=43: #Particles=8100-910=7190
+sim_rcp_190_v0r10:Completed!: 02:20:15: Rank=17: #Particles=8164-1865=6299
+sim_rcp_190_v0r10:Completed!: 02:20:26: Rank= 3: #Particles=11867-930=10937
+sim_rcp_190_v0r10:Completed!: 02:20:30: Rank= 6: #Particles=13218-1872=11346
+sim_rcp_190_v0r10:Completed!: 02:20:32: Rank=22: #Particles=10096-4952=5144
+sim_rcp_190_v0r10:Completed!: 02:20:59: Rank=13: #Particles=14328-772=13556
+sim_rcp_190_v0r10:Completed!: 02:21:24: Rank=34: #Particles=14228-707=13521
+sim_rcp_190_v0r10:Completed!: 02:22:17: Rank=29: #Particles=9395-757=8638
+sim_rcp_190_v0r10:Completed!: 02:22:21: Rank=19: #Particles=13793-672=13121
+sim_rcp_190_v0r10:Completed!: 02:22:36: Rank=36: #Particles=7864-1283=6581
+sim_rcp_190_v0r10:Completed!: 02:22:40: Rank=25: #Particles=7181-1849=5332
+sim_rcp_190_v0r10:Completed!: 02:23:20: Rank=41: #Particles=16668-1068=15600
+sim_rcp_190_v0r10:Completed!: 02:24:01: Rank=46: #Particles=15878-1189=14689
+sim_rcp_190_v0r10:Completed!: 02:25:52: Rank=20: #Particles=15570-755=14815
+sim_rcp_190_v0r10:Completed!: 02:26:24: Rank=21: #Particles=7203-922=6281
+sim_rcp_190_v0r10:Completed!: 02:26:51: Rank=32: #Particles=14027-674=13353
+sim_rcp_190_v0r10:Completed!: 02:27:59: Rank=47: #Particles=6751-1491=5260
+sim_rcp_190_v0r10:Completed!: 02:28:10: Rank=37: #Particles=7969-2433=5536
+sim_rcp_190_v0r10:Completed!: 02:28:16: Rank=40: #Particles=9458-1391=8067
+sim_rcp_190_v0r10:Completed!: 02:29:32: Rank=26: #Particles=8148-3065=5083
+sim_rcp_190_v0r10:Completed!: 02:29:55: Rank= 0: #Particles=12514-1574=10940
+sim_rcp_190_v0r10:Completed!: 02:31:19: Rank=11: #Particles=7232-912=6320
+sim_rcp_190_v0r10:Completed!: 02:31:31: Rank= 5: #Particles=12186-868=11318
+sim_rcp_190_v0r10:Completed!: 02:31:37: Rank=18: #Particles=11637-1035=10602
+sim_rcp_190_v0r10:Completed!: 02:32:24: Rank= 2: #Particles=9786-726=9060
+sim_rcp_190_v0r10:Completed!: 02:32:28: Rank= 7: #Particles=10444-696=9748
+sim_rcp_190_v0r10:Completed!: 02:32:47: Rank=23: #Particles=8473-3469=5004
+sim_rcp_190_v0r10:Completed!: 02:33:39: Rank=10: #Particles=8490-1687=6803
+sim_rcp_190_v0r10:Completed!: 02:34:14: Rank=39: #Particles=5129-1312=3817
+sim_rcp_190_v0r10:Completed!: 02:37:26: Rank=42: #Particles=6175-2273=3902
+sim_rcp_220_v0r10:Completed!: 02:18:17: Rank=13: #Particles=9505-2097=7408
+sim_rcp_220_v0r10:Completed!: 02:18:42: Rank=15: #Particles=8714-3180=5534
+sim_rcp_220_v0r10:Completed!: 02:19:32: Rank=11: #Particles=5036-1688=3348
+sim_rcp_220_v0r10:Completed!: 02:20:37: Rank= 5: #Particles=12556-1104=11452
+sim_rcp_220_v0r10:Completed!: 02:20:56: Rank=23: #Particles=4589-1315=3274
+sim_rcp_220_v0r10:Completed!: 02:21:59: Rank= 9: #Particles=7563-2673=4890
+sim_rcp_220_v0r10:Completed!: 02:22:33: Rank=27: #Particles=4786-1267=3519
+sim_rcp_220_v0r10:Completed!: 02:22:49: Rank=43: #Particles=4597-1692=2905
+sim_rcp_220_v0r10:Completed!: 02:25:40: Rank=35: #Particles=7043-712=6331
+sim_rcp_220_v0r10:Completed!: 02:26:28: Rank= 2: #Particles=19805-574=19231
+sim_rcp_220_v0r10:Completed!: 02:27:04: Rank=24: #Particles=7767-1586=6181
+sim_rcp_220_v0r10:Completed!: 02:27:10: Rank=29: #Particles=12734-827=11907
+sim_rcp_220_v0r10:Completed!: 02:29:05: Rank=20: #Particles=16235-1253=14982
+sim_rcp_220_v0r10:Completed!: 02:29:09: Rank=33: #Particles=14403-670=13733
+sim_rcp_220_v0r10:Completed!: 02:29:15: Rank=38: #Particles=6516-1139=5377
+sim_rcp_220_v0r10:Completed!: 02:29:24: Rank=14: #Particles=6449-2834=3615
+sim_rcp_220_v0r10:Completed!: 02:29:28: Rank=30: #Particles=9417-5914=3503
+sim_rcp_220_v0r10:Completed!: 02:29:54: Rank=26: #Particles=7025-2087=4938
+sim_rcp_220_v0r10:Completed!: 02:30:06: Rank=28: #Particles=8545-1417=7128
+sim_rcp_220_v0r10:Completed!: 02:30:16: Rank=10: #Particles=7668-3672=3996
+sim_rcp_220_v0r10:Completed!: 02:30:21: Rank= 7: #Particles=7873-527=7346
+sim_rcp_220_v0r10:Completed!: 02:30:53: Rank=25: #Particles=10914-1806=9108
+sim_rcp_220_v0r10:Completed!: 02:31:18: Rank=12: #Particles=13002-1128=11874
+sim_rcp_220_v0r10:Completed!: 02:31:28: Rank=32: #Particles=7041-1492=5549
+sim_rcp_220_v0r10:Completed!: 02:32:05: Rank=47: #Particles=8040-2582=5458
+sim_rcp_220_v0r10:Completed!: 02:33:18: Rank=45: #Particles=7153-3125=4028
+sim_rcp_220_v0r10:Completed!: 02:33:24: Rank= 0: #Particles=13484-1425=12059
+sim_rcp_220_v0r10:Completed!: 02:33:43: Rank=22: #Particles=12346-2741=9605
+sim_rcp_220_v0r10:Completed!: 02:33:59: Rank=21: #Particles=11505-928=10577
+sim_rcp_220_v0r10:Completed!: 02:34:09: Rank=18: #Particles=13934-1387=12547
+sim_rcp_220_v0r10:Completed!: 02:34:41: Rank=42: #Particles=4418-941=3477
+sim_rcp_220_v0r10:Completed!: 02:34:45: Rank=39: #Particles=5885-2053=3832
+sim_rcp_220_v0r10:Completed!: 02:36:19: Rank=44: #Particles=6867-2587=4280
+sim_rcp_220_v0r10:Completed!: 02:37:16: Rank= 4: #Particles=16737-2669=14068
+sim_rcp_220_v0r10:Completed!: 02:37:21: Rank=34: #Particles=14095-574=13521
+sim_rcp_220_v0r10:Completed!: 02:37:59: Rank=16: #Particles=10239-723=9516
+sim_rcp_220_v0r10:Completed!: 02:38:26: Rank=17: #Particles=12971-526=12445
+sim_rcp_220_v0r10:Completed!: 02:38:31: Rank=37: #Particles=18884-609=18275
+sim_rcp_220_v0r10:Completed!: 02:39:31: Rank=36: #Particles=6689-3065=3624
+sim_rcp_220_v0r10:Completed!: 02:39:45: Rank=40: #Particles=15080-1389=13691
+sim_rcp_220_v0r10:Completed!: 02:40:56: Rank=41: #Particles=11102-1217=9885
+sim_rcp_220_v0r10:Completed!: 02:41:11: Rank=46: #Particles=13257-525=12732
+sim_rcp_220_v0r10:Completed!: 02:15:34: Rank= 1: #Particles=10150-1522=8628
+sim_rcp_220_v0r10:Completed!: 02:15:35: Rank= 3: #Particles=8873-2915=5958
+sim_rcp_220_v0r10:Completed!: 02:16:15: Rank= 8: #Particles=4438-824=3614
+sim_rcp_220_v0r10:Completed!: 02:16:57: Rank=19: #Particles=9859-1663=8196
+sim_rcp_220_v0r10:Completed!: 02:18:08: Rank= 6: #Particles=10190-2186=8004
+sim_rcp_220_v0r10:Completed!: 02:43:43: Rank=31: #Particles=7957-481=7476
+sim_rcp_250_v0r10:Completed!: 02:19:08: Rank= 7: #Particles=5647-1743=3904
+sim_rcp_250_v0r10:Completed!: 02:19:57: Rank= 2: #Particles=6088-1227=4861
+sim_rcp_250_v0r10:Completed!: 02:20:02: Rank=17: #Particles=10387-641=9746
+sim_rcp_250_v0r10:Completed!: 02:22:25: Rank= 9: #Particles=8907-2223=6684
+sim_rcp_250_v0r10:Completed!: 02:22:36: Rank= 3: #Particles=9845-903=8942
+sim_rcp_250_v0r10:Completed!: 02:23:45: Rank=18: #Particles=7026-3134=3892
+sim_rcp_250_v0r10:Completed!: 02:23:48: Rank=14: #Particles=5952-1630=4322
+sim_rcp_250_v0r10:Completed!: 02:24:09: Rank=16: #Particles=6837-1024=5813
+sim_rcp_250_v0r10:Completed!: 02:24:09: Rank= 4: #Particles=10749-2917=7832
+sim_rcp_250_v0r10:Completed!: 02:24:35: Rank= 6: #Particles=15806-1375=14431
+sim_rcp_250_v0r10:Completed!: 02:26:02: Rank=11: #Particles=8144-3437=4707
+sim_rcp_250_v0r10:Completed!: 02:26:04: Rank=34: #Particles=6451-837=5614
+sim_rcp_250_v0r10:Completed!: 02:26:04: Rank=24: #Particles=6402-1912=4490
+sim_rcp_250_v0r10:Completed!: 02:28:01: Rank=25: #Particles=3960-1865=2095
+sim_rcp_250_v0r10:Completed!: 02:28:03: Rank=29: #Particles=11674-604=11070
+sim_rcp_250_v0r10:Completed!: 02:28:17: Rank= 8: #Particles=18789-678=18111
+sim_rcp_250_v0r10:Completed!: 02:29:15: Rank=32: #Particles=5827-3649=2178
+sim_rcp_250_v0r10:Completed!: 02:30:09: Rank= 5: #Particles=10868-894=9974
+sim_rcp_250_v0r10:Completed!: 02:30:15: Rank= 1: #Particles=9241-2459=6782
+sim_rcp_250_v0r10:Completed!: 02:30:30: Rank=27: #Particles=6170-1924=4246
+sim_rcp_250_v0r10:Completed!: 02:30:58: Rank=21: #Particles=3860-1171=2689
+sim_rcp_250_v0r10:Completed!: 02:30:58: Rank=23: #Particles=13595-1079=12516
+sim_rcp_250_v0r10:Completed!: 02:31:03: Rank=31: #Particles=6234-2188=4046
+sim_rcp_250_v0r10:Completed!: 02:33:38: Rank=30: #Particles=12407-529=11878
+sim_rcp_250_v0r10:Completed!: 02:33:41: Rank=13: #Particles=12307-491=11816
+sim_rcp_250_v0r10:Completed!: 02:35:47: Rank= 0: #Particles=7279-2560=4719
+sim_rcp_250_v0r10:Completed!: 02:35:48: Rank=10: #Particles=16948-2900=14048
+sim_rcp_250_v0r10:Completed!: 02:36:18: Rank=35: #Particles=9487-976=8511
+sim_rcp_250_v0r10:Completed!: 02:36:18: Rank=33: #Particles=18224-609=17615
+sim_rcp_250_v0r10:Completed!: 02:37:23: Rank=15: #Particles=10567-3946=6621
+sim_rcp_250_v0r10:Completed!: 02:38:33: Rank=28: #Particles=8354-3544=4810
+sim_rcp_250_v0r10:Completed!: 02:39:02: Rank=20: #Particles=7468-1653=5815
+sim_rcp_250_v0r10:Completed!: 02:39:25: Rank=26: #Particles=19228-482=18746
+sim_rcp_250_v0r10:Completed!: 02:39:33: Rank=12: #Particles=11891-1234=10657
+sim_rcp_250_v0r10:Completed!: 02:40:30: Rank=46: #Particles=4277-1162=3115
+sim_rcp_250_v0r10:Completed!: 02:40:46: Rank=22: #Particles=13429-3008=10421
+sim_rcp_250_v0r10:Completed!: 02:41:05: Rank=42: #Particles=3854-801=3053
+sim_rcp_250_v0r10:Completed!: 02:41:05: Rank=41: #Particles=4684-1438=3246
+sim_rcp_250_v0r10:Completed!: 02:41:07: Rank=19: #Particles=21768-595=21173
+sim_rcp_250_v0r10:Completed!: 02:41:50: Rank=37: #Particles=7926-1187=6739
+sim_rcp_250_v0r10:Completed!: 02:42:23: Rank=39: #Particles=6302-2023=4279
+sim_rcp_250_v0r10:Completed!: 02:43:04: Rank=40: #Particles=3800-1754=2046
+sim_rcp_250_v0r10:Completed!: 02:43:41: Rank=45: #Particles=7289-1320=5969
+sim_rcp_250_v0r10:Completed!: 02:43:57: Rank=38: #Particles=5615-1128=4487
+sim_rcp_250_v0r10:Completed!: 02:44:02: Rank=47: #Particles=9561-2110=7451
+sim_rcp_250_v0r10:Completed!: 02:47:36: Rank=36: #Particles=7480-2543=4937
+sim_rcp_250_v0r10:Completed!: 02:47:36: Rank=43: #Particles=15862-1299=14563
+sim_rcp_250_v0r10:Completed!: 02:49:37: Rank=44: #Particles=14379-2507=11872

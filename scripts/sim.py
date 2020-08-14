@@ -23,9 +23,20 @@ except ImportError:
 logger = tools.mlogger('sim', parcels=True, misc=False)
 
 
+def del_westward(pset):
+    inds, = np.where((pset.particle_data['u'] <= 0.) &
+                     (pset.particle_data['age'] == 0.))
+    for d in pset.particle_data:
+        pset.particle_data[d] = np.delete(pset.particle_data[d], inds, axis=0)
+    pset.particle_data['u'] = (np.cos(pset.particle_data['lat'] * math.pi/180,
+                                      dtype=np.float32)
+                               * 1852 * 60 * pset.particle_data['u'])
+    return pset
+
+
 def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
-            outputdt_days=1, runtime_days=186, v=1, chunks=300, unbeach=True,
-            pfile='None'):
+            outputdt_days=1, runtime_days=186, v=1, chunks=300,
+            pfile='None', final=False):
     """Run Lagrangian EUC particle experiment.
 
     Args:
@@ -45,21 +56,29 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
 
     """
     ts = datetime.now()
+
     # Get MPI rank or set to zero.
     rank = MPI.COMM_WORLD.Get_rank() if MPI else 0
+
     # Start from end of Fieldset time or restart from ParticleFile.
     restart = False if pfile == 'None' else True
 
     # # Ensure run ends on a repeat day.
-    # while runtime_days % repeatdt_days != 0:
-    #     runtime_days += 1
+    if not final:
+        while runtime_days % repeatdt_days != 0:
+            runtime_days += 1
     runtime = timedelta(days=int(runtime_days))
 
     dt = -timedelta(minutes=dt_mins)  # Advection step (negative for backward).
     repeatdt = timedelta(days=repeatdt_days)  # Repeat particle release time.
     outputdt = timedelta(days=outputdt_days)  # Advection steps to write.
-    repeats = math.floor(runtime/repeatdt) - 1
 
+    repeats = math.floor(runtime/repeatdt)
+
+    # Don't add final repeat if run ends on a repeat day.
+    if final and runtime_days % repeatdt_days == 0:
+        repeats -= 1
+    isize = 742 * repeats
     # Create time bounds for fieldset based on experiment.
     if exp == 'hist':
         y2 = 2012 if cfg.home != Path('E:/') else 1981
@@ -69,7 +88,7 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
 
     fieldset = main.ofam_fieldset(time_bnds, exp,  chunks=True, cs=chunks,
                                   time_periodic=True, add_zone=True,
-                                  add_unbeach_vel=unbeach)
+                                  add_unbeach_vel=True)
 
     class zParticle(JITParticle):
         """Particle class that saves particle age and zonal velocity."""
@@ -96,12 +115,10 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
                             to_write=False, dtype=np.float32)
 
         # Unbeach if beached greater than zero.
-        beached = Variable('beached', initial=0., #to_write=False,
-                           dtype=np.float32)
+        beached = Variable('beached', initial=0., dtype=np.float32)
 
         # Unbeached count.
-        unbeached = Variable('unbeached', initial=0., #to_write=False,
-                             dtype=np.float32)
+        unbeached = Variable('unbeached', initial=0., dtype=np.float32)
 
     pclass = zParticle
 
@@ -118,9 +135,14 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
         start = (fieldset.time_origin.time_origin +
                  timedelta(seconds=pset_start))
         # Create ParticleSet.
-        pset = main.pset_euc(fieldset, pclass, lon, dy, dz, repeatdt, pset_start,
-                             repeats, sim_id, rank=rank, logger=logger)
-        psz = ''
+        pset = main.pset_euc(fieldset, pclass, lon, dy, dz, repeatdt,
+                             pset_start, repeats, sim_id, rank=rank,
+                             logger=logger)
+        psz1 = pset.size
+        pset = del_westward(pset)
+        psize = pset.size
+        # Initial minus removed westward particles.
+        psz = '{}-{}='.format(psz1, psz1 - psize)
     # Create particle set from particlefile and add new repeats.
     else:
         # Add path to given ParticleFile name.
@@ -139,25 +161,28 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
             sim_id = cfg.data/'{}{}.nc'.format(filename.stem[:-1], rmax + 1)
 
         # Create ParticleSet from the given ParticleFile.
-        pset = main.pset_from_rfile(fieldset, pclass=pclass,
-                                    filename=filename, restart=True,
-                                    restarttime=np.nanmin)
-        psz1 = pset.size
+        pset, fsize = main.pset_from_file(fieldset, pclass=pclass,
+                                          filename=filename, restart=True,
+                                          restarttime=np.nanmin)
+
         # Start date to add new EUC particles.
         pset_start = np.nanmin(pset.time)
         psetx = main.pset_euc(fieldset, pclass, lon, dy, dz, repeatdt,
                               pset_start, repeats, sim_id, rank=rank,
                               logger=logger)
+        psz3 = pset.size
+        psz1 = psetx.size
+        psetx = del_westward(psetx)
         psz2 = psetx.size
         pset.add(psetx)
-        psz = '{}+{}='.format(psz1, psz2)
+        isize += fsize
 
+        # Initial minus removed westward particles.
+        psz = '{}+{}-{}='.format(psz3, psz1, psz1 - psz2)
+        psize = pset.size
         # ParticleSet start time (for log).
         start = (fieldset.time_origin.time_origin +
                  timedelta(seconds=pset_start))
-
-    # ParticleSet size before execution.
-    psize = pset.size
 
     # Create output ParticleFile p_name and time steps to write output.
     output_file = pset.ParticleFile(cfg.data/sim_id.stem, outputdt=outputdt)
@@ -173,17 +198,15 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
         logger.debug('{}:Rank={:>2}: Start={:>2.0f}: Pstart={}'.format(sim_id.stem, rank, pset_start, pset.particle_data['time'].max()))
 
     # Kernels.
-    kernels = pset.Kernel(main.DelWest) + pset.Kernel(main.AdvectionRK4_3Db)
+    kernels = pset.Kernel(main.AdvectionRK4_3Db)
 
-    if unbeach:
-        kernels += pset.Kernel(main.BeachTest) + pset.Kernel(main.UnBeaching)
+    kernels += pset.Kernel(main.BeachTest) + pset.Kernel(main.UnBeaching)
 
     kernels += pset.Kernel(main.AgeZone) + pset.Kernel(main.Distance)
 
     # ParticleSet execution endtime.
-    endtime = int(pset_start - runtime.total_seconds())
+    endtime = int(pset_start - runtime.total_seconds()) if not final else 0
 
-    # Execute ParticleSet.
     recovery_kernels = {ErrorCode.ErrorOutOfBounds: main.DeleteParticle,
                         # ErrorCode.Error: main.DeleteParticle,
                         ErrorCode.ErrorThroughSurface: main.SubmergeParticle}
@@ -192,6 +215,7 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
                  verbose_progress=True, recovery=recovery_kernels)
 
     timed = tools.timer(ts)
+
     logger.info('{}:Completed!: {}: Rank={:>2}: #Particles={}-{}={}'
                 .format(sim_id.stem, timed, rank, psize,
                         psize - pset.size, pset.size))
@@ -200,7 +224,9 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
     output_file.export()
 
     if rank == 0:
-        logger.info('{}:Finished'.format(sim_id.stem))
+        npart = output_file.particleset.size
+        logger.info('{}:Finished! #Particles={}-{}={}'
+                    .format(sim_id.stem, isize, isize - npart, npart))
 
     return
 
@@ -227,12 +253,11 @@ if __name__ == "__main__" and cfg.home != Path('E:/'):
 elif __name__ == "__main__":
     dy, dz, lon = 2, 150, 165
     dt_mins, repeatdt_days, outputdt_days, runtime_days = 60, 6, 1, 36
-    pfile = ['None', 'sim_hist_165_v78r0.nc'][1]
+    pfile = ['None', 'sim_hist_165_v40r0.nc'][1]
     v = 55
     exp = 'hist'
-    unbeach = True
     chunks = 300
     run_EUC(dy=dy, dz=dz, lon=lon, dt_mins=dt_mins,
             repeatdt_days=repeatdt_days, outputdt_days=outputdt_days,
             v=v, runtime_days=runtime_days,
-            unbeach=unbeach, pfile=pfile)
+            pfile=pfile)

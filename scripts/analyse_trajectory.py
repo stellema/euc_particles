@@ -24,7 +24,7 @@ dt = xr.open_dataset(cfg.ofam/'ocean_temp_1981_01.nc').temp.isel(Time=t)
 
 sim_id = cfg.data/'sim_hist_165_v87r0.nc'
 
-ds, dx = plot_traj(sim_id, var='u', traj=None, t=2, Z=250)
+ds, dx = plot_traj(sim_id, var='u', traj=119, t=2, Z=250)
 
 ds, tr = plot_beached(sim_id, depth=400)
 
@@ -45,9 +45,10 @@ import matplotlib.pyplot as plt
 import warnings
 warnings.filterwarnings("ignore")
 
-def plot_traj(sim_id, var='u', traj=None, t=None, Z=290):
+def plot_traj(sim_id, var='u', traj=None, t=None, Z=290, ds=None):
     """Plot individual trajectory (3D line and 2D scatter)."""
-    ds = xr.open_dataset(sim_id, decode_cf=True)
+    if not ds:
+        ds = xr.open_dataset(sim_id, decode_cf=True)
     if not traj:
         try:
             ub = np.unique(ds.where(ds.unbeached >= 1).trajectory)
@@ -71,9 +72,13 @@ def plot_traj(sim_id, var='u', traj=None, t=None, Z=290):
             traj = int(ds.trajectory[0, 0]) if not traj else traj
             dx = ds.where(ds.trajectory == traj, drop=True).isel(traj=0)
     else:
-        dx = ds.where(ds.trajectory == int(traj), drop=True).isel(traj=0)
+        try:
+            dx = ds.where(ds.trajectory == int(traj), drop=True).isel(traj=0)
+        except:
+            dx = ds.isel(traj=traj)
     bc = [i for i in range(len(dx.unbeached.values))
           if dx.unbeached[i] > dx.unbeached[i-1]]
+    zmap, norm = tools.zone_cmap()
     X = [np.round(dx.lon.min(), 1)-0.5, np.round(dx.lon.max(), 1)+0.5]
     Y = [np.round(dx.lat.min(), 1)-0.25, np.round(dx.lat.max(), 1)+0.25]
 
@@ -113,10 +118,12 @@ def plot_traj(sim_id, var='u', traj=None, t=None, Z=290):
     ax = fig.add_subplot(222)
     ax.set_title(var_str + ' velocity at {:.1f} m'.format(z.item()))
     ax.pcolormesh(lon, lat, dv, cmap=cmap, vmax=vmax, vmin=-vmax)
-    ax.scatter(dx.lon[bc], dx.lat[bc], color='y', s=3, zorder=3)
-    ax.plot(dx.lon, dx.lat, color='k', marker='o', linewidth=1, markersize=3)
+    # ax.scatter(dx.lon[bc], dx.lat[bc], color='y', s=3, zorder=3)
+    # ax.plot(dx.lon, dx.lat, color='k', marker='o', linewidth=1, markersize=3)
+    im = ax.scatter(dx.lon, dx.lat, c=dx.zone.values, marker='o', cmap=zmap, linewidth=1, s=3, norm=norm)
     ax.set_xlabel("Longitude")
     ax.set_ylabel("Latitude")
+    plt.colorbar(im)
 
     ax = fig.add_subplot(223)
     ax.set_title(sim_id.stem + ' traj=' + str(traj))

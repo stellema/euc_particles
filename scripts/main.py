@@ -222,10 +222,6 @@ def ofam_fieldset(time_bnds='full', exp='hist', chunks=True, cs=300,
         fieldset.Vb.interp_method = 'bgrid_velocity'
         fieldset.land.interp_method = 'bgrid_velocity'
 
-        # Add unbeaching vector field (probs unnecessary).
-        UVunbeach = VectorField('UVunbeach', fieldset.Ub, fieldset.Vb)
-        fieldset.add_vector_field(UVunbeach)
-
     return fieldset
 
 
@@ -268,10 +264,10 @@ def AdvectionRK4_3Db(particle, fieldset, time):
 def BeachTest(particle, fieldset, time):
     ld = fieldset.land[0., particle.depth, particle.lat, particle.lon]
     if ld >= fieldset.geo/4:
-        if particle.beached <= 3:
+        if particle.beached <= 6:
             particle.beached += 1
         else:
-            print("Deleted beached particle id: %d" % particle.id)
+            print("Deleted beached particle id: %d" % (particle.id))
             particle.delete()
     else:
         particle.beached = 0
@@ -280,7 +276,8 @@ def BeachTest(particle, fieldset, time):
 def UnBeaching(particle, fieldset, time):
     """Unbeach particles."""
     if particle.beached >= 1:
-        (ub, vb) = fieldset.UVunbeach[0., particle.depth, particle.lat, particle.lon]
+        ub = fieldset.Ub[0., particle.depth, particle.lat, particle.lon]
+        vb = fieldset.Vb[0., particle.depth, particle.lat, particle.lon]
         if math.fabs(ub) > 1e-14:
             ubx = fieldset.geo * (1/math.cos(particle.lat*math.pi/180))
             particle.lon += math.copysign(ubx, ub) * math.fabs(particle.dt)
@@ -288,7 +285,7 @@ def UnBeaching(particle, fieldset, time):
             particle.lat += math.copysign(fieldset.geo, vb) * math.fabs(particle.dt)
         particle.unbeached += 1
         ldn = fieldset.land[0., particle.depth, particle.lat, particle.lon]
-        if ldn >= fieldset.geo/4:
+        if ldn < fieldset.geo/4:
             particle.beached = 0
 
 
@@ -302,15 +299,20 @@ def DelWest(particle, fieldset, time):
 
 
 def Age(particle, fieldset, time):
-    particle.age = particle.age + math.fabs(particle.dt)
+    if particle.state == ErrorCode.Evaluate:
+        particle.age = particle.age + math.fabs(particle.dt)
 
 
 def SampleZone(particle, fieldset, time):
-    particle.zone = fieldset.zone[0., 5., particle.lat, particle.lon]
+    zz = fieldset.zone[0., 5., particle.lat, particle.lon]
+    if math.fabs(zz) > 1e-14:
+        particle.zone = zz
+
 
 
 def AgeZone(particle, fieldset, time):
-    particle.age = particle.age + math.fabs(particle.dt)
+    if particle.state == ErrorCode.Evaluate:
+        particle.age = particle.age + math.fabs(particle.dt)
     zz = fieldset.zone[0., 5., particle.lat, particle.lon]
     if math.fabs(zz) > 1e-14:
         particle.zone = zz
@@ -433,9 +435,10 @@ def pset_from_file(fieldset, pclass, filename, repeatdt=None,
                        lat=vars['lat'], depth=vars['depth'], time=vars['time'],
                        pid_orig=vars['id'], repeatdt=repeatdt,
                        lonlatdepth_dtype=lonlatdepth_dtype, **kwargs)
+
     pclass.setLastID(np.nanmax(pfile.variables['trajectory']) + 1)
 
-    return pset
+    return pset, vars['lon'].size
 
 
 def pset_from_rfile(fieldset, pclass, filename, repeatdt=None,
