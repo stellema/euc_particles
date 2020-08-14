@@ -76,7 +76,7 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
     repeats = math.floor(runtime/repeatdt)
 
     # Don't add final repeat if run ends on a repeat day.
-    if final and runtime_days % repeatdt_days == 0:
+    if not final and runtime_days % repeatdt_days == 0:
         repeats -= 1
     isize = 742 * repeats
     # Create time bounds for fieldset based on experiment.
