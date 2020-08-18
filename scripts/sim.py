@@ -13,7 +13,8 @@ from pathlib import Path
 from operator import attrgetter
 from datetime import datetime, timedelta
 from argparse import ArgumentParser
-from parcels import (ParticleSet, ErrorCode, Variable, JITParticle)
+from parcels import (ParticleSet, AdvectionRK4_3D, ErrorCode,
+                     Variable, JITParticle)
 
 try:
     from mpi4py import MPI
@@ -199,7 +200,7 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
         logger.debug('{}:Rank={:>2}: Start={:>2.0f}: Pstart={}'.format(sim_id.stem, rank, pset_start, pset.particle_data['time'].max()))
 
     # Kernels.
-    kernels = pset.Kernel(main.AdvectionRK4_3Db)
+    kernels = pset.Kernel(AdvectionRK4_3D)
 
     kernels += pset.Kernel(main.BeachTest) + pset.Kernel(main.UnBeaching)
 
