@@ -585,7 +585,17 @@ def tidy_files(logs=True, jobs=True):
     return
 
 
-def zone_fieldset(plot=True):
+def zone_cmap():
+
+    zmap = colors.ListedColormap(['darkorange', 'deeppink',
+                                   'mediumspringgreen',
+                                   'deepskyblue', 'seagreen', 'blue',
+                                   'red', 'darkviolet', 'k', 'm', 'y'])
+    norm = colors.BoundaryNorm(np.linspace(1, 10, 11), zmap.N)
+    return zmap, norm
+
+
+def zone_fieldset(plot=False, cell='u'):
     """Create fieldset or plot zone definitions."""
     # Copy 2D empty OFGAM3 velocity grid.
     # d = xr.open_dataset(cfg.ofam/'ocean_temp_1981_01.nc')
@@ -593,23 +603,28 @@ def zone_fieldset(plot=True):
              for v in ['u', 'w', 'temp']]
     dr = xr.open_mfdataset(files, combine='by_coords')
     dr = dr.isel(st_ocean=slice(0, 1), Time=slice(0, 1))
-    d = dr.temp.where(np.isnan(dr.temp), 0)
+    d = dr.u.where(np.isnan(dr.u), 0)
     d = d.rename({'st_ocean': 'sw_ocean'})
     d.coords['sw_ocean'] = np.array([5.0])
 
     eps = 0 if not plot else 0.1  # Add a bit of padding to the plotted lines.
     for n, zone in enumerate(cfg.zones):
-        coords = cfg.zones[zone] if type(cfg.zones[zone][0]) == list else [cfg.zones[zone]]
+        if type(cfg.zones[zone][0]) == list:
+            coords = cfg.zones[zone]
+        else:
+            coords = [cfg.zones[zone]]
+
         for c in coords:
-            xx = [d.xt_ocean[idx(d.xt_ocean, i+ep)].item() for i, ep in zip(c[0:2], [-eps, eps])]
-            yy = [d.yt_ocean[idx(d.yt_ocean, i)].item() for i in c[2:4]]
-            d = xr.where((d.xt_ocean >= xx[0]) & (d.xt_ocean <= xx[1]) &
-                         (d.yt_ocean >= yy[0]) & (d.yt_ocean <= yy[1]) &
+            xx = [d.xu_ocean[idx(d.xu_ocean, i+ep)].item()
+                  for i, ep in zip(c[0:2], [-eps, eps])]
+            yy = [d.yu_ocean[idx(d.yu_ocean, i)].item() for i in c[2:4]]
+            d = xr.where((d.xu_ocean >= xx[0]) & (d.xu_ocean <= xx[1]) &
+                         (d.yu_ocean >= yy[0]) & (d.yu_ocean <= yy[1]) &
                          ~np.isnan(d), n + 1, d)
 
     if plot:
         d = d.isel(Time=0, sw_ocean=0)
-        d = d.sel(yt_ocean=slice(-7.5, 10), xt_ocean=slice(120, 255))
+        d = d.sel(yu_ocean=slice(-7.5, 10), xu_ocean=slice(120, 255))
 
         cmap = colors.ListedColormap(['darkorange', 'deeppink', 'mediumspringgreen',
                                       'deepskyblue', 'seagreen', 'blue',
@@ -620,9 +635,9 @@ def zone_fieldset(plot=True):
         cs = plt.pcolormesh(d.xt_ocean.values, d.yt_ocean.values, d.T,
                             cmap=cmap, snap=False, linewidth=2, vmin=0.5)
 
-        plt.xticks(d.xt_ocean[::100], coord_formatter(d.xt_ocean[::100], 'lon'))
-        plt.yticks(d.yt_ocean[::25], coord_formatter(
-            np.arange(d.yt_ocean[0], d.yt_ocean[-1] + 2.5, 2.5), 'lat'))
+        plt.xticks(d.xu_ocean[::100], coord_formatter(d.xu_ocean[::100], 'lon'))
+        plt.yticks(d.yu_ocean[::25], coord_formatter(
+            np.arange(d.yu_ocean[0], d.yu_ocean[-1] + 2.5, 2.5), 'lat'))
         cbar = fig.colorbar(cs, ticks=np.arange(1, 10), orientation='horizontal',
                             boundaries=np.arange(0.5, 9.6), pad=0.075)
         znames = ['{}:{}'.format(i + 1, z) for i, z in enumerate(cfg.zone_names)]
@@ -630,12 +645,16 @@ def zone_fieldset(plot=True):
 
         plt.savefig(cfg.fig/'particle_boundaries.png')
     if not plot:
-        ds = d.to_dataset(name='zone').transpose('Time', 'sw_ocean', 'yt_ocean', 'xt_ocean')
-        ds[dr.xu_ocean.name] = dr.xu_ocean
-        ds[dr.yu_ocean.name] = dr.yu_ocean
+
+        ds = d.to_dataset(name='zone').transpose('Time', 'sw_ocean',
+                                                 'yu_ocean', 'xu_ocean')
+        if cell == 't':
+            ds['zone'] = (dr.temp.dims, ds.zone)
+        ds[dr.xt_ocean.name] = dr.xt_ocean
+        ds[dr.yt_ocean.name] = dr.yt_ocean
         ds[dr.st_ocean.name] = dr.st_ocean.isel(st_ocean=slice(0, 1))
         ds.attrs['history'] = 'Created {}.'.format(datetime.now().strftime("%Y-%m-%d"))
-        ds.to_netcdf(cfg.data/'OFAM3_tcell_zones.nc')
+        ds.to_netcdf(cfg.data/'OFAM3_{}cell_zones.nc'.format(cell))
 
     d.close()
     return

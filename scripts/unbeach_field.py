@@ -22,23 +22,27 @@ depth = ds.st_ocean
 
 # Zero for land cells and one for ocean cells.
 T = np.array(ds.temp)*0 + 1
+U = np.array(ds.u)*0 + 1
+V = np.array(ds.v)*0 + 1
 T[np.isnan(T)] = 0
+U[np.isnan(U)] = 0
+V[np.isnan(V)] = 0
 ld = np.zeros(ds.u.shape)
 ub = np.zeros(ds.u.shape)
 vb = np.zeros(ds.u.shape)
 
 
 def island(k, j, i):
-    """Return True if land point based on t-cell (works out the same)."""
-    if T[0, k, j, i] == 0:
+    if U[0, k, j, i] == 0 and U[0, k, j, i+1] == 0 and U[0, k, j+1, i] == 0 and U[0, k, j+1, i+1] == 0 and\
+       V[0, k, j, i] == 0 and V[0, k, j, i+1] == 0 and V[0, k, j+1, i] == 0 and V[0, k, j+1, i+1] == 0:
         return True
     else:
         return False
 
 
 for k in range(depth.size):
-    for j in range(lat.size-1):
-        for i in range(lon.size-1):
+    for j in range(lat.size-2):
+        for i in range(lon.size-2):
             if island(k, j, i):
                 # Move west.
                 if not island(k, j, i-1):
@@ -88,4 +92,4 @@ db[ds.st_edges_ocean.name] = ds.st_edges_ocean
 db[ds.sw_edges_ocean.name] = ds.sw_edges_ocean
 db.attrs = ds.attrs
 db.attrs['history'] = 'Created {}.'.format(datetime.now().strftime("%Y-%m-%d"))
-db.to_netcdf(path=cfg.data/'OFAM3_unbeach_land_ucell.nc')
+db.to_netcdf(path=cfg.data/'OFAM3_unbeach_land_ucell1.nc')
