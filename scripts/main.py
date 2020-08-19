@@ -170,7 +170,7 @@ def ofam_fieldset(time_bnds='full', exp='hist', chunks=True, cs=300,
 
     if add_zone:
         # Add particle zone boundaries.
-        file = str(cfg.data/'OFAM3_tcell_zones.nc')
+        file = str(cfg.data/'OFAM3_ucell_zones.nc')
 
         # NB: Zone is constant with depth.
         dimz = {'time': 'Time',
@@ -262,31 +262,46 @@ def AdvectionRK4_3Db(particle, fieldset, time):
 
 
 def BeachTest(particle, fieldset, time):
-    ld = fieldset.land[0., particle.depth, particle.lat, particle.lon]
-    if ld >= fieldset.geo/4:
-        if particle.beached <= 6:
+    land1 = fieldset.land[0., particle.depth, particle.lat, particle.lon]
+    if land1 > 1e-12:
+        (uu1, vv1) = fieldset.UV[time, particle.depth, particle.lat, particle.lon]
+        if land1 > fieldset.geo * 0.5:
+            particle.beached += 1
+        elif math.fabs(uu1) < 1e-12 and math.fabs(vv1) < 1e-12:
             particle.beached += 1
         else:
-            print("Deleted beached particle id: %d" % (particle.id))
-            particle.delete()
+            particle.beached = 0
     else:
         particle.beached = 0
 
 
 def UnBeaching(particle, fieldset, time):
-    """Unbeach particles."""
     if particle.beached >= 1:
-        ub = fieldset.Ub[0., particle.depth, particle.lat, particle.lon]
-        vb = fieldset.Vb[0., particle.depth, particle.lat, particle.lon]
-        if math.fabs(ub) > 1e-14:
-            ubx = fieldset.geo * (1/math.cos(particle.lat*math.pi/180))
-            particle.lon += math.copysign(ubx, ub) * math.fabs(particle.dt)
-        if math.fabs(vb) > 1e-14:
-            particle.lat += math.copysign(fieldset.geo, vb) * math.fabs(particle.dt)
-        particle.unbeached += 1
-        ldn = fieldset.land[0., particle.depth, particle.lat, particle.lon]
-        if ldn < fieldset.geo/4:
-            particle.beached = 0
+        # Unbeach particle
+        while particle.beached > 0 and particle.beached <= 6:
+            ub = fieldset.Ub[0., particle.depth, particle.lat, particle.lon]
+            vb = fieldset.Vb[0., particle.depth, particle.lat, particle.lon]
+            if math.fabs(ub) > 1e-12:
+                ubx = fieldset.geo * (1/math.cos(particle.lat*math.pi/180))
+                particle.lon += math.copysign(ubx, ub) * math.fabs(particle.dt)
+            if math.fabs(vb) > 1e-12:
+                particle.lat += math.copysign(fieldset.geo, vb) * math.fabs(particle.dt)
+
+            # Check if particle is still on land.
+            (uu2, vv2) = fieldset.UV[time, particle.depth, particle.lat, particle.lon]
+            land2 = fieldset.land[0., particle.depth, particle.lat, particle.lon]
+            if land2 > fieldset.geo * 0.5:
+                particle.beached += 1
+            elif math.fabs(uu2) < 1e-12 and math.fabs(vv2) < 1e-12:
+                particle.beached += 1
+            else:
+                particle.unbeached += 1
+                particle.beached = 0
+
+        if particle.beached > 6:
+            print("Deleted beached particle [%d] (%g %g %g %g)." % (particle.id, particle.lon, particle.lat, particle.depth, particle.time))
+            particle.unbeached = -1 * (particle.unbeached + 1)
+            particle.delete()
 
 
 def DeleteParticle(particle, fieldset, time):
@@ -345,18 +360,13 @@ def SubmergeParticle(particle, fieldset, time):
     particle.set_state(ErrorCode.Success)
 
 
-def pset_euc(fieldset, pclass, lon, dy, dz, repeatdt, pset_start, repeats,
-             sim_id=None, rank=0, logger=None):
+def pset_euc(fieldset, pclass, lon, dy, dz, repeatdt, pset_start, repeats):
     """Create a ParticleSet."""
     repeats = 1 if repeats <= 0 else repeats
     # Particle release latitudes, depths and longitudes.
     py = np.round(np.arange(-2.6, 2.6 + 0.05, dy), 2)
     pz = np.arange(25, 350 + 20, dz)
     px = np.array([lon])
-
-    # Number of particles released in each dimension.
-    Z, Y, X = pz.size, py.size, px.size
-    npart = Z * X * Y * repeats
 
     # Each repeat.
     lats = np.repeat(py, pz.size*px.size)
@@ -373,12 +383,6 @@ def pset_euc(fieldset, pclass, lon, dy, dz, repeatdt, pset_start, repeats,
     pset = ParticleSet.from_list(fieldset=fieldset, pclass=pclass,
                                  lon=lon, lat=lat, depth=depth, time=time,
                                  lonlatdepth_dtype=np.float64)
-    if sim_id and rank == 0 and logger:
-        logger.info('{}:Particles: /repeat={}: Total={}'
-                    .format(sim_id.stem, Z * X * Y, npart))
-        logger.info('{}:Lon={}: Lat=[{}-{} x{}]: Depth=[{}-{}m x{}]'
-                    .format(sim_id.stem, *px, py[0], py[Y-1], dy, pz[0],
-                            pz[Z-1], dz))
     return pset
 
 

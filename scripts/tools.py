@@ -595,7 +595,7 @@ def zone_cmap():
     return zmap, norm
 
 
-def zone_fieldset(plot=False, cell='u'):
+def zone_fieldset(plot=True, cell='u'):
     """Create fieldset or plot zone definitions."""
     # Copy 2D empty OFGAM3 velocity grid.
     # d = xr.open_dataset(cfg.ofam/'ocean_temp_1981_01.nc')
@@ -624,7 +624,8 @@ def zone_fieldset(plot=False, cell='u'):
 
     if plot:
         d = d.isel(Time=0, sw_ocean=0)
-        d = d.sel(yu_ocean=slice(-7.5, 10), xu_ocean=slice(120, 255))
+        # d = d.sel(yu_ocean=slice(-7.5, 10), xu_ocean=slice(120, 255))
+        d = d.sel(yu_ocean=slice(-15, 10), xu_ocean=slice(120, 255))
 
         cmap = colors.ListedColormap(['darkorange', 'deeppink', 'mediumspringgreen',
                                       'deepskyblue', 'seagreen', 'blue',
@@ -632,7 +633,7 @@ def zone_fieldset(plot=False, cell='u'):
         cmap.set_bad('grey')
         cmap.set_under('white')
         fig = plt.figure(figsize=(16, 9))
-        cs = plt.pcolormesh(d.xt_ocean.values, d.yt_ocean.values, d.T,
+        cs = plt.pcolormesh(d.xu_ocean.values, d.yu_ocean.values, d.T,
                             cmap=cmap, snap=False, linewidth=2, vmin=0.5)
 
         plt.xticks(d.xu_ocean[::100], coord_formatter(d.xu_ocean[::100], 'lon'))
@@ -640,10 +641,10 @@ def zone_fieldset(plot=False, cell='u'):
             np.arange(d.yu_ocean[0], d.yu_ocean[-1] + 2.5, 2.5), 'lat'))
         cbar = fig.colorbar(cs, ticks=np.arange(1, 10), orientation='horizontal',
                             boundaries=np.arange(0.5, 9.6), pad=0.075)
-        znames = ['{}:{}'.format(i + 1, z) for i, z in enumerate(cfg.zone_names)]
+        znames = ['{}:{}'.format(i + 1, z) for i, z in enumerate(cfg.zone_names[:-1])]
         cbar.ax.set_xticklabels(znames, fontsize=10)
 
-        plt.savefig(cfg.fig/'particle_boundaries.png')
+        plt.savefig(cfg.fig/'particle_boundariesx.png')
     if not plot:
 
         ds = d.to_dataset(name='zone').transpose('Time', 'sw_ocean',

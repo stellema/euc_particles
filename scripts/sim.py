@@ -88,7 +88,7 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
         time_bnds = [datetime(2070, 1, 1), datetime(2101, 12, 31)]
 
     fieldset = main.ofam_fieldset(time_bnds, exp,  chunks=True, cs=chunks,
-                                  time_periodic=True, add_zone=True,
+                                  time_periodic=False, add_zone=True,
                                   add_unbeach_vel=True)
 
     class zParticle(JITParticle):
@@ -138,13 +138,13 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
                  timedelta(seconds=pset_start))
         # Create ParticleSet.
         pset = main.pset_euc(fieldset, pclass, lon, dy, dz, repeatdt,
-                             pset_start, repeats, sim_id, rank=rank,
-                             logger=logger)
+                             pset_start, repeats)
         psz1 = pset.size
         pset = del_westward(pset)
         psize = pset.size
         # Initial minus removed westward particles.
         psz = '{}-{}='.format(psz1, psz1 - psize)
+        fsize = 0
     # Create particle set from particlefile and add new repeats.
     else:
         # Add path to given ParticleFile name.
@@ -170,14 +170,12 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
         # Start date to add new EUC particles.
         pset_start = np.nanmin(pset.time)
         psetx = main.pset_euc(fieldset, pclass, lon, dy, dz, repeatdt,
-                              pset_start, repeats, sim_id, rank=rank,
-                              logger=logger)
+                              pset_start, repeats)
         psz3 = pset.size
         psz1 = psetx.size
         psetx = del_westward(psetx)
         psz2 = psetx.size
         pset.add(psetx)
-        isize += fsize
 
         # Initial minus removed westward particles.
         psz = '{}+{}-{}='.format(psz3, psz1, psz1 - psz2)
@@ -191,19 +189,15 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
 
     # Log experiment details.
     if rank == 0:
-        logger.info('{}:{} to {}: Runtime={} days'.format(sim_id.stem, start.strftime('%Y-%m-%d'), (start - runtime).strftime('%Y-%m-%d'), runtime.days))
+        logger.info('{}:{} to {} ({} days): Particles={}+{}={}'.format(sim_id.stem, start.strftime('%Y-%m-%d'), (start - runtime).strftime('%Y-%m-%d'), runtime.days, isize, fsize, isize + fsize))
         logger.info('{}:Repeat={} days: Step={:.0f} mins: Output={:.0f} day'.format(sim_id.stem, repeatdt.days, dt_mins, outputdt.days))
-        logger.info('{}:Field=b-grid: Chunks={}: Time={}-{}'.format(sim_id.stem, chunks, time_bnds[0].year, time_bnds[1].year))
     logger.debug('{}:Temp={}: Rank={:>2}: #Particles={}{}'.format(sim_id.stem, output_file.tempwritedir_base[-8:], rank, psz, psize))
-
     if pset.particle_data['time'].max() != pset_start:
         logger.debug('{}:Rank={:>2}: Start={:>2.0f}: Pstart={}'.format(sim_id.stem, rank, pset_start, pset.particle_data['time'].max()))
 
     # Kernels.
     kernels = pset.Kernel(AdvectionRK4_3D)
-
     kernels += pset.Kernel(main.BeachTest) + pset.Kernel(main.UnBeaching)
-
     kernels += pset.Kernel(main.AgeZone) + pset.Kernel(main.Distance)
 
     # ParticleSet execution endtime.
@@ -218,9 +212,7 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
 
     timed = tools.timer(ts)
 
-    logger.info('{}:Completed!: {}: Rank={:>2}: #Particles={}-{}={}'
-                .format(sim_id.stem, timed, rank, psize,
-                        psize - pset.size, pset.size))
+    logger.info('{}:Completed!: {}: Rank={:>2}: #Particles={}-{}={}'.format(sim_id.stem, timed, rank, psize, psize - pset.size, pset.size))
 
     # Save to netcdf.
     output_file.export()
@@ -253,7 +245,7 @@ if __name__ == "__main__" and cfg.home != Path('E:/'):
 elif __name__ == "__main__":
     dy, dz, lon = 2, 150, 165
     dt_mins, repeatdt_days, outputdt_days, runtime_days = 60, 6, 1, 36
-    pfile = ['None', 'sim_hist_165_v40r0.nc'][1]
+    pfile = ['None', 'sim_hist_165_v25r0.nc'][1]
     v = 55
     exp = 'hist'
     chunks = 300
