@@ -265,7 +265,7 @@ def BeachTest(particle, fieldset, time):
     land1 = fieldset.land[0., particle.depth, particle.lat, particle.lon]
     if land1 > 1e-12:
         (uu1, vv1) = fieldset.UV[time, particle.depth, particle.lat, particle.lon]
-        if land1 > fieldset.geo * 0.5:
+        if land1 > fieldset.geo * 0.75:
             particle.beached += 1
         elif math.fabs(uu1) < 1e-12 and math.fabs(vv1) < 1e-12:
             particle.beached += 1
@@ -290,7 +290,7 @@ def UnBeaching(particle, fieldset, time):
             # Check if particle is still on land.
             (uu2, vv2) = fieldset.UV[time, particle.depth, particle.lat, particle.lon]
             land2 = fieldset.land[0., particle.depth, particle.lat, particle.lon]
-            if land2 > fieldset.geo * 0.5:
+            if land2 > fieldset.geo * 0.75:
                 particle.beached += 1
             elif math.fabs(uu2) < 1e-12 and math.fabs(vv2) < 1e-12:
                 particle.beached += 1
