@@ -54,6 +54,8 @@ TODO: Test unbeaching code.
 MUST use pset.Kernel(AdvectionRK4_3D)
 # if particle.state == ErrorCode.Evaluate:
 * 1000. * 1.852 * 60. * cos(y * pi / 180)
+qcat -o 10150240 0.5 (1045 beached)
+10184247 0.75
 """
 import cfg
 import tools
@@ -265,9 +267,9 @@ def BeachTest(particle, fieldset, time):
     land1 = fieldset.land[0., particle.depth, particle.lat, particle.lon]
     if land1 > 1e-12:
         (uu1, vv1) = fieldset.UV[time, particle.depth, particle.lat, particle.lon]
-        if land1 > fieldset.geo * 0.75:
+        if land1 > fieldset.geo:
             particle.beached += 1
-        elif math.fabs(uu1) < 1e-12 and math.fabs(vv1) < 1e-12:
+        elif math.fabs(uu1) < 1e-10 and math.fabs(vv1) < 1e-10:
             particle.beached += 1
         else:
             particle.beached = 0
@@ -281,18 +283,18 @@ def UnBeaching(particle, fieldset, time):
         while particle.beached > 0 and particle.beached <= 6:
             ub = fieldset.Ub[0., particle.depth, particle.lat, particle.lon]
             vb = fieldset.Vb[0., particle.depth, particle.lat, particle.lon]
-            if math.fabs(ub) > 1e-12:
+            if math.fabs(ub) > 1e-10:
                 ubx = fieldset.geo * (1/math.cos(particle.lat*math.pi/180))
                 particle.lon += math.copysign(ubx, ub) * math.fabs(particle.dt)
-            if math.fabs(vb) > 1e-12:
+            if math.fabs(vb) > 1e-10:
                 particle.lat += math.copysign(fieldset.geo, vb) * math.fabs(particle.dt)
 
             # Check if particle is still on land.
             (uu2, vv2) = fieldset.UV[time, particle.depth, particle.lat, particle.lon]
             land2 = fieldset.land[0., particle.depth, particle.lat, particle.lon]
-            if land2 > fieldset.geo * 0.75:
+            if land2 > fieldset.geo:
                 particle.beached += 1
-            elif math.fabs(uu2) < 1e-12 and math.fabs(vv2) < 1e-12:
+            elif math.fabs(uu2) < 1e-10 and math.fabs(vv2) < 1e-10:
                 particle.beached += 1
             else:
                 particle.unbeached += 1
