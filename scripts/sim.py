@@ -192,7 +192,7 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
     xlog['dt'] = dt_mins
     xlog['outdt'] = outputdt.days
     xlog['rdt'] = repeatdt.days
-    xlog['land'] = fieldset.edge if fieldset.edge >= 0.9 else fieldset.edge*(1/111120)
+    xlog['land'] = fieldset.landlim
     xlog['pset_start'] = pset_start
     xlog['pset_start_r'] = pset.particle_data['time'].max()
 
@@ -256,8 +256,8 @@ elif __name__ == "__main__":
     v = 55
     exp = 'hist'
     chunks = 300
-    final=False
-    # run_EUC(dy=dy, dz=dz, lon=lon, dt_mins=dt_mins,
-    #         repeatdt_days=repeatdt_days, outputdt_days=outputdt_days,
-    #         v=v, runtime_days=runtime_days,
-    #         pfile=pfile)
+    final = False
+    run_EUC(dy=dy, dz=dz, lon=lon, dt_mins=dt_mins,
+            repeatdt_days=repeatdt_days, outputdt_days=outputdt_days,
+            v=v, runtime_days=runtime_days,
+            pfile=pfile)

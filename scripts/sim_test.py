@@ -100,7 +100,7 @@ fieldset = main.ofam_fieldset(time_bnds, exp, chunks=True, cs=chunks,
                               add_unbeach_vel=True)
 
 
-class zParticle(ScipyParticle):
+class zParticle(JITParticle):
     """Particle class that saves particle age and zonal velocity."""
 
     # The age of the particle.
@@ -201,7 +201,7 @@ xlog['run'] = runtime.days
 xlog['dt'] = dt_mins
 xlog['outdt'] = outputdt.days
 xlog['rdt'] = repeatdt.days
-xlog['land'] = fieldset.edge if fieldset.edge >= 0.9 else fieldset.edge*(1/111120)
+xlog['land'] = fieldset.landlim
 xlog['pset_start'] = pset_start
 xlog['pset_start_r'] = pset.particle_data['time'].max()
 

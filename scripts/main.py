@@ -72,7 +72,7 @@ from parcels import (FieldSet, Field, ParticleSet, VectorField,
 
 
 def ofam_fieldset(time_bnds='full', exp='hist', chunks=True, cs=300,
-                  time_periodic=False, add_zone=False, add_unbeach_vel=True):
+                  time_periodic=False, add_zone=True, add_unbeach_vel=True):
     """Create a 3D parcels fieldset from OFAM model output.
 
     Between two dates useing FieldSet.from_b_grid_dataset.
@@ -169,7 +169,7 @@ def ofam_fieldset(time_bnds='full', exp='hist', chunks=True, cs=300,
 
     # Convert from geometric to geographic coordinates (m to degree).
     fieldset.add_constant('geo', 1/(1852*60))
-    fieldset.add_constant('edge', 0.95)
+    fieldset.add_constant('landlim', 0.95)
 
     if add_zone:
         # Add particle zone boundaries.
@@ -218,10 +218,10 @@ def ofam_fieldset(time_bnds='full', exp='hist', chunks=True, cs=300,
         fieldset.add_field(fieldsetUB.land, 'land')
 
         # Set field units and b-grid interp method (avoids bug).
+        fieldset.land.units = parcels.tools.converters.UnitConverter()
         fieldset.Ub.units = parcels.tools.converters.GeographicPolar()
         fieldset.Vb.units = parcels.tools.converters.Geographic()
-        # fieldset.land.units = parcels.tools.converters.Geographic()
-        fieldset.land.units = parcels.tools.converters.UnitConverter()
+
         fieldset.Ub.interp_method = 'bgrid_velocity'
         fieldset.Vb.interp_method = 'bgrid_velocity'
         fieldset.land.interp_method = 'bgrid_velocity'
@@ -267,11 +267,10 @@ def AdvectionRK4_3Db(particle, fieldset, time):
 
 def BeachTest(particle, fieldset, time):
     land1 = fieldset.land[0., particle.depth, particle.lat, particle.lon]
-    if land1 >= fieldset.edge:
-        print(particle.beached, particle.unbeached, land1, particle.lon, particle.lat, particle.depth)
+    if land1 > 0.95:
         particle.beached += 1
         if particle.beached > 12:
-            print("Deleted beached particle [%d] (%g %g %g)." % (particle.id, particle.lon, particle.lat, particle.depth))
+            print("Deleted beached particle [%d] (%g %g %g %g)." % (particle.id, particle.beached, particle.lon, particle.lat, particle.depth))
             particle.unbeached = -1 * particle.unbeached
             particle.delete()
     else:
@@ -291,8 +290,7 @@ def UnBeaching(particle, fieldset, time):
 
         # Check if particle is still on land.
         land2 = fieldset.land[0., particle.depth, particle.lat, particle.lon]
-        print(particle.beached, particle.unbeached, land2, particle.lon, particle.lat, particle.depth, ub, vb)
-        if land2 >= fieldset.edge:
+        if land2 > 0.95:
             particle.beached += 1
         else:
             particle.beached = 0
