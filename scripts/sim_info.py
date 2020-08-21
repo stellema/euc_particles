@@ -88,10 +88,33 @@ if __name__ == "__main__":
 # # R0 number of initial particles (or assume 159529 new).
 # ds.trajectory.max()
 
+# from analyse_trajectory import plot_traj
 
-
-# dz = xr.open_dataset(cfg.data/'sim_hist_165_v2r0.nc', decode_cf=False)
+# dz = xr.open_dataset(cfg.data/'sim_hist_165_v1r0.nc', decode_cf=False)
 # inde = dz.time.argmin(axis=1)
 # dze = dz.isel(obs=inde)
 # dzu = dze.where(dze.unbeached < 0, drop=True)
 # indz = dzu.unbeached.argmin(axis=1) # 178
+
+# tjs = dz.trajectory.where(dz.z > 900, drop=True)
+# tji = np.unique(tjs)[~np.isnan(np.unique(tjs))]
+# print(tji)
+# # dj = dz.isel(obs=0).trajectory.where(dz.isel(obs=0).trajectory == int(tji[0]))
+# # i = np.nanargmax(dj)
+# traj = tji[2]
+# ds, dx = plot_traj(sim_id, var='u', traj=traj, t=2, Z=250, ds=dz)
+
+
+# Plot histogram of beached zone locations.
+sim_id = cfg.data/'sim_hist_165_v2r0.nc'
+ds = xr.open_dataset(sim_id, decode_cf=False)
+ub = np.unique(ds.where(ds.unbeached < 0).trajectory)
+ub = ub[~np.isnan(ub)].astype(int)
+print('Number of beached=', len(ub))
+dx = ds.isel(traj=ds.isel(obs=0).trajectory.isin(ub))
+inds = dx.time.argmin(axis=1)
+end_zone = dx.lon.isel(obs=inds)
+end_zone.plot.hist()
+
+hx, bx = np.histogram(dx.lon.isel(obs=inds), bins=20)
+hy, by = np.histogram(dx.lat.isel(obs=inds), bins=8)

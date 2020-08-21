@@ -72,7 +72,7 @@ from parcels import (FieldSet, Field, ParticleSet, VectorField,
 
 
 def ofam_fieldset(time_bnds='full', exp='hist', chunks=True, cs=300,
-                  time_periodic=True, add_zone=True, add_unbeach_vel=True):
+                  time_periodic=False, add_zone=False, add_unbeach_vel=True):
     """Create a 3D parcels fieldset from OFAM model output.
 
     Between two dates useing FieldSet.from_b_grid_dataset.
@@ -169,6 +169,7 @@ def ofam_fieldset(time_bnds='full', exp='hist', chunks=True, cs=300,
 
     # Convert from geometric to geographic coordinates (m to degree).
     fieldset.add_constant('geo', 1/(1852*60))
+    fieldset.add_constant('edge', 0.95)
 
     if add_zone:
         # Add particle zone boundaries.
@@ -219,7 +220,8 @@ def ofam_fieldset(time_bnds='full', exp='hist', chunks=True, cs=300,
         # Set field units and b-grid interp method (avoids bug).
         fieldset.Ub.units = parcels.tools.converters.GeographicPolar()
         fieldset.Vb.units = parcels.tools.converters.Geographic()
-        fieldset.land.units = parcels.tools.converters.Geographic()
+        # fieldset.land.units = parcels.tools.converters.Geographic()
+        fieldset.land.units = parcels.tools.converters.UnitConverter()
         fieldset.Ub.interp_method = 'bgrid_velocity'
         fieldset.Vb.interp_method = 'bgrid_velocity'
         fieldset.land.interp_method = 'bgrid_velocity'
@@ -265,45 +267,35 @@ def AdvectionRK4_3Db(particle, fieldset, time):
 
 def BeachTest(particle, fieldset, time):
     land1 = fieldset.land[0., particle.depth, particle.lat, particle.lon]
-    if land1 > 1e-12:
-        (uu1, vv1) = fieldset.UV[time, particle.depth, particle.lat, particle.lon]
-        if land1 > fieldset.geo:
-            particle.beached += 1
-        elif math.fabs(uu1) < 1e-10 and math.fabs(vv1) < 1e-10:
-            particle.beached += 1
-        else:
-            particle.beached = 0
+    if land1 >= fieldset.edge:
+        print(particle.beached, particle.unbeached, land1, particle.lon, particle.lat, particle.depth)
+        particle.beached += 1
+        if particle.beached > 12:
+            print("Deleted beached particle [%d] (%g %g %g)." % (particle.id, particle.lon, particle.lat, particle.depth))
+            particle.unbeached = -1 * particle.unbeached
+            particle.delete()
     else:
         particle.beached = 0
 
 
 def UnBeaching(particle, fieldset, time):
     if particle.beached >= 1:
-        # Unbeach particle
-        while particle.beached > 0 and particle.beached <= 6:
-            ub = fieldset.Ub[0., particle.depth, particle.lat, particle.lon]
-            vb = fieldset.Vb[0., particle.depth, particle.lat, particle.lon]
-            if math.fabs(ub) > 1e-10:
-                ubx = fieldset.geo * (1/math.cos(particle.lat*math.pi/180))
-                particle.lon += math.copysign(ubx, ub) * math.fabs(particle.dt)
-            if math.fabs(vb) > 1e-10:
-                particle.lat += math.copysign(fieldset.geo, vb) * math.fabs(particle.dt)
+        ub = fieldset.Ub[0., particle.depth, particle.lat, particle.lon]
+        vb = fieldset.Vb[0., particle.depth, particle.lat, particle.lon]
+        if math.fabs(ub) > 1e-10:
+            ubx = fieldset.geo * (1/math.cos(particle.lat * math.pi/180))
+            particle.lon += math.copysign(ubx, ub) * math.fabs(particle.dt)
+        if math.fabs(vb) > 1e-10:
+            particle.lat += math.copysign(fieldset.geo, vb) * math.fabs(particle.dt)
+        particle.unbeached += 1
 
-            # Check if particle is still on land.
-            (uu2, vv2) = fieldset.UV[time, particle.depth, particle.lat, particle.lon]
-            land2 = fieldset.land[0., particle.depth, particle.lat, particle.lon]
-            if land2 > fieldset.geo:
-                particle.beached += 1
-            elif math.fabs(uu2) < 1e-10 and math.fabs(vv2) < 1e-10:
-                particle.beached += 1
-            else:
-                particle.unbeached += 1
-                particle.beached = 0
-
-        if particle.beached > 6:
-            print("Deleted beached particle [%d] (%g %g %g %g)." % (particle.id, particle.lon, particle.lat, particle.depth, particle.time))
-            particle.unbeached = -1 * (particle.unbeached + 1)
-            particle.delete()
+        # Check if particle is still on land.
+        land2 = fieldset.land[0., particle.depth, particle.lat, particle.lon]
+        print(particle.beached, particle.unbeached, land2, particle.lon, particle.lat, particle.depth, ub, vb)
+        if land2 >= fieldset.edge:
+            particle.beached += 1
+        else:
+            particle.beached = 0
 
 
 def DeleteParticle(particle, fieldset, time):
@@ -362,7 +354,8 @@ def SubmergeParticle(particle, fieldset, time):
     particle.set_state(ErrorCode.Success)
 
 
-def pset_euc(fieldset, pclass, lon, dy, dz, repeatdt, pset_start, repeats):
+def pset_euc(fieldset, pclass, lon, dy, dz, repeatdt, pset_start, repeats,
+             xlog=None):
     """Create a ParticleSet."""
     repeats = 1 if repeats <= 0 else repeats
     # Particle release latitudes, depths and longitudes.
@@ -374,6 +367,12 @@ def pset_euc(fieldset, pclass, lon, dy, dz, repeatdt, pset_start, repeats):
     lats = np.repeat(py, pz.size*px.size)
     depths = np.repeat(np.tile(pz, py.size), px.size)
     lons = np.repeat(px, pz.size*py.size)
+
+    if xlog:
+        xlog['new'] = pz.size * py.size * px.size * repeats
+        xlog['y'] = '[{}-{} x{}]'.format(py[0], py[py.size - 1], dy)
+        xlog['x'] = '{}'.format(*px)
+        xlog['z'] = '[{}-{}m x{}]'.format(pz[0], pz[pz.size - 1], dz)
 
     # Duplicate for each repeat.
     tr = pset_start - (np.arange(0, repeats) * repeatdt.total_seconds())
@@ -388,9 +387,30 @@ def pset_euc(fieldset, pclass, lon, dy, dz, repeatdt, pset_start, repeats):
     return pset
 
 
+def log_simulation(xlog, rank, logger):
+    if rank == 0:
+        logger.info('{}:{} to {}: Runtime={}d: Particles={}+{}={}'
+                    .format(xlog['id'], xlog['itime'], xlog['ftime'],
+                            xlog['run'], xlog['new'], xlog['file'], xlog['N']))
+        logger.info('{}:Lon={}: Lat={}: Depth={}'
+                    .format(xlog['id'], xlog['x'], xlog['y'], xlog['z']))
+        logger.info('{}:DIR={}: Repeat={}d: dt={:.0f}m: Outdt={:.0f}d: Land={}'
+                    .format(xlog['id'], xlog['out'], xlog['rdt'], xlog['dt'],
+                            xlog['outdt'], xlog['land']))
+
+    logger.debug('{}:Rank={:>2}: Particles: New={} File={} West={} Init={}'
+                 .format(xlog['id'], rank, xlog['new_r'], xlog['file_r'],
+                         xlog['west_r'], xlog['start_r']))
+
+    if xlog['pset_start_r'] != xlog['pset_start']:
+        logger.debug('{}:Rank={:>2}: Start={:>2.0f}: Pstart={}'
+                     .format(xlog['id'], rank, xlog['pset_start'],
+                             xlog['pset_start_r']))
+
+
 def pset_from_file(fieldset, pclass, filename, repeatdt=None,
                    restart=True, restarttime=np.nanmin,
-                   lonlatdepth_dtype=np.float64, **kwargs):
+                   lonlatdepth_dtype=np.float64, xlog=None, **kwargs):
     """Initialise the ParticleSet from a netcdf ParticleFile.
 
     This creates a new ParticleSet based on locations of all particles written
@@ -443,69 +463,8 @@ def pset_from_file(fieldset, pclass, filename, repeatdt=None,
                        lonlatdepth_dtype=lonlatdepth_dtype, **kwargs)
 
     pclass.setLastID(np.nanmax(pfile.variables['trajectory']) + 1)
-
+    xlog['file'] = vars['lon'].size
     return pset, vars['lon'].size
-
-
-def pset_from_rfile(fieldset, pclass, filename, repeatdt=None,
-                    restart=True, restarttime=np.nanmin,
-                    lonlatdepth_dtype=np.float64, **kwargs):
-    """Initialise the ParticleSet from a netcdf ParticleFile.
-
-    This creates a new ParticleSet based on locations of all particles written
-    in a netcdf ParticleFile at a certain time. Particle IDs are preserved if restart=True
-    """
-
-    pfile = xr.open_dataset(str(filename.parent/('pset_' + filename.name)),
-                            decode_cf=False)
-
-    pfile_vars = [v for v in pfile.data_vars]
-
-    vars = {}
-    to_write = {}
-
-    for v in pclass.getPType().variables:
-        if v.name in pfile_vars:
-            vars[v.name] = np.ma.filled(pfile.variables[v.name], np.nan)
-        elif v.name not in ['xi', 'yi', 'zi', 'ti', 'dt', '_next_dt',
-                            'depth', 'id', 'fileid', 'state'] \
-                and v.to_write:
-            raise RuntimeError('Variable %s is in pclass but not in the particlefile' % v.name)
-        to_write[v.name] = v.to_write
-    vars['depth'] = np.ma.filled(pfile.variables['z'], np.nan)
-    vars['id'] = np.ma.filled(pfile.variables['trajectory'], np.nan)
-
-    if isinstance(vars['time'][0], np.timedelta64):
-        vars['time'] = np.array([t/np.timedelta64(1, 's') for t in vars['time']])
-
-    if restarttime is None:
-        restarttime = np.nanmax(vars['time'])
-    elif callable(restarttime):
-        restarttime = restarttime(vars['time'])
-    else:
-        restarttime = restarttime
-
-    inds = np.where(vars['time'] == restarttime)
-    for v in vars:
-        if to_write[v] is True:
-            vars[v] = vars[v][inds]
-        elif to_write[v] == 'once':
-            vars[v] = vars[v][inds[0]]
-        if v not in ['lon', 'lat', 'depth', 'time', 'id']:
-            kwargs[v] = vars[v]
-
-    if restart:
-        pclass.setLastID(0)  # reset to zero offset
-    else:
-        vars['id'] = None
-
-    pset = ParticleSet(fieldset=fieldset, pclass=pclass, lon=vars['lon'],
-                       lat=vars['lat'], depth=vars['depth'], time=vars['time'],
-                       pid_orig=vars['id'], repeatdt=repeatdt,
-                       lonlatdepth_dtype=lonlatdepth_dtype, **kwargs)
-    pclass.setLastID(pfile.variables['nextid'].item())
-
-    return pset
 
 
 def plot3D(sim_id, ds=None):
@@ -548,7 +507,7 @@ def plot3D(sim_id, ds=None):
 
     fig.savefig(cfg.fig/('parcels/' + sim_id.stem + cfg.im_ext),
                 bbox_inches='tight')
-    # plt.show()
+    plt.show()
     plt.close()
     ds.close()
     return

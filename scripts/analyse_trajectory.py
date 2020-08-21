@@ -192,3 +192,53 @@ def plot_beached(sim_id, depth=None):
 # # dxx = dx.w.interp(Time=ds.time, yt_ocean=ds.lat[i], xt_ocean=ds.lon[i], sw_ocean=ds.z[i])
 # for i in range(ds.obs.size):
 #     dr[i] = dx.w.interp(Time=ds.time[i], yt_ocean=ds.lat[i], xt_ocean=ds.lon[i]).values
+
+
+def plot_ubtraj(sim_id, var='u', t=22, Z=290, ds=None):
+    """Plot individual trajectory (3D line and 2D scatter)."""
+    if not ds:
+        ds = xr.open_dataset(sim_id, decode_cf=True)
+
+    ub = np.unique(ds.where(ds.unbeached < 0).trajectory)
+    ub = ub[~np.isnan(ub)].astype(int)
+    print('Number of beached=', len(ub))
+    dx = ds.isel(traj=ds.isel(obs=0).trajectory.isin(ub))
+
+    if not t:
+        t = 22
+    dsv = xr.open_dataset(cfg.ofam/'ocean_{}_2012_12.nc'.format(var)).isel(Time=t)[var]
+
+    if var in ['u', 'v']:
+        var_str = 'Zonal' if var == 'u' else 'Meridional'
+        vmax = 0.5
+        dv = dsv.sel(st_ocean=Z, method='nearest')
+        lat, lon, z = dv.yu_ocean, dv.xu_ocean, dv.st_ocean
+    else:
+        var_str = 'Vertical'
+        vmax = 0.001
+        dv = dsv.sel(sw_ocean=Z, method='nearest')
+        lat, lon, z = dv.yt_ocean, dv.xt_ocean, dv.sw_ocean
+
+    # cmap = plt.cm.get_cmap("seismic").copy()
+    cmap = copy.copy(plt.cm.get_cmap("seismic"))
+    cmap.set_bad('grey')
+    fig = plt.figure(figsize=(12, 9))
+    zmap, norm = tools.zone_cmap()
+    ax = fig.add_subplot()
+    ax.set_title(sim_id.stem)
+
+    ax.set_title(var_str + ' velocity at {:.1f} m'.format(z.item()))
+    ax.pcolormesh(lon, lat, dv, cmap=cmap, vmax=vmax, vmin=-vmax)
+    for i in range(len(dx.traj)):
+        im = ax.scatter(dx.isel(traj=i).lon, dx.isel(traj=i).lat,
+                        c=dx.isel(traj=i).zone.values, marker='o',
+                        cmap=zmap, linewidth=1, s=3, norm=norm)
+    ax.set_xlabel("Longitude")
+    ax.set_ylabel("Latitude")
+    plt.colorbar(im)
+
+    plt.savefig(cfg.fig/'parcels/{}_beached.png'
+                .format(sim_id.stem))
+    plt.show()
+
+    return ds, dx

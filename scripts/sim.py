@@ -16,6 +16,7 @@ from argparse import ArgumentParser
 from parcels import (ParticleSet, AdvectionRK4_3D, ErrorCode,
                      Variable, JITParticle)
 
+
 try:
     from mpi4py import MPI
 except ImportError:
@@ -56,6 +57,8 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
         None.
 
     """
+    xlog = {'file': 0, 'new': 0, 'west_r': 0, 'new_r': 0, 'final_r': 0,
+            'file_r': 0, 'y': '', 'x': '', 'z': ''}
     ts = datetime.now()
 
     # Get MPI rank or set to zero.
@@ -73,13 +76,12 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
     dt = -timedelta(minutes=dt_mins)  # Advection step (negative for backward).
     repeatdt = timedelta(days=repeatdt_days)  # Repeat particle release time.
     outputdt = timedelta(days=outputdt_days)  # Advection steps to write.
-
     repeats = math.floor(runtime/repeatdt)
 
     # Don't add final repeat if run ends on a repeat day.
     if not final and runtime_days % repeatdt_days == 0:
         repeats -= 1
-    isize = 742 * repeats
+
     # Create time bounds for fieldset based on experiment.
     if exp == 'hist':
         y2 = 2012 if cfg.home != Path('E:/') else 1981
@@ -133,18 +135,14 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
         # Set ParticleSet start as last fieldset time.
         pset_start = fieldset.U.grid.time[-1]
 
-        # ParticleSet start time (for log).
-        start = (fieldset.time_origin.time_origin +
-                 timedelta(seconds=pset_start))
         # Create ParticleSet.
         pset = main.pset_euc(fieldset, pclass, lon, dy, dz, repeatdt,
-                             pset_start, repeats)
-        psz1 = pset.size
+                             pset_start, repeats, xlog=xlog)
+        xlog['new_r'] = pset.size
         pset = del_westward(pset)
-        psize = pset.size
-        # Initial minus removed westward particles.
-        psz = '{}-{}='.format(psz1, psz1 - psize)
-        fsize = 0
+        xlog['start_r'] = pset.size
+        xlog['west_r'] = xlog['new_r'] - xlog['start_r']
+
     # Create particle set from particlefile and add new repeats.
     else:
         # Add path to given ParticleFile name.
@@ -163,40 +161,46 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
             sim_id = cfg.data/'{}{}.nc'.format(filename.stem[:-1], rmax + 1)
 
         # Create ParticleSet from the given ParticleFile.
-        pset, fsize = main.pset_from_file(fieldset, pclass=pclass,
-                                          filename=filename, restart=True,
-                                          restarttime=np.nanmin)
-
+        pset = main.pset_from_file(fieldset, pclass=pclass,
+                                   filename=filename, restart=True,
+                                   restarttime=np.nanmin, xlog=xlog)
+        xlog['file_r'] = pset.size
         # Start date to add new EUC particles.
+
         pset_start = np.nanmin(pset.time)
         psetx = main.pset_euc(fieldset, pclass, lon, dy, dz, repeatdt,
-                              pset_start, repeats)
-        psz3 = pset.size
-        psz1 = psetx.size
+                              pset_start, repeats, xlog=xlog)
+
+        xlog['new_r'] = psetx.size
         psetx = del_westward(psetx)
-        psz2 = psetx.size
+        xlog['start_r'] = psetx.size
+        xlog['west_r'] = xlog['new_r'] - xlog['start_r']
+
         pset.add(psetx)
 
-        # Initial minus removed westward particles.
-        psz = '{}+{}-{}='.format(psz3, psz1, psz1 - psz2)
-        psize = pset.size
-        # ParticleSet start time (for log).
-        start = (fieldset.time_origin.time_origin +
-                 timedelta(seconds=pset_start))
+    # ParticleSet start time (for log).
+    start = (fieldset.time_origin.time_origin + timedelta(seconds=pset_start))
 
     # Create output ParticleFile p_name and time steps to write output.
     output_file = pset.ParticleFile(cfg.data/sim_id.stem, outputdt=outputdt)
+    xlog['itime'] = start.strftime('%Y-%m-%d')
+    xlog['ftime'] = (start - runtime).strftime('%Y-%m-%d')
+    xlog['N'] = xlog['new'] + xlog['file']
+    xlog['id'] = sim_id.stem
+    xlog['out'] = output_file.tempwritedir_base[-8:]
+    xlog['run'] = runtime.days
+    xlog['dt'] = dt_mins
+    xlog['outdt'] = outputdt.days
+    xlog['rdt'] = repeatdt.days
+    xlog['land'] = fieldset.edge if fieldset.edge >= 0.9 else fieldset.edge*(1/111120)
+    xlog['pset_start'] = pset_start
+    xlog['pset_start_r'] = pset.particle_data['time'].max()
 
     # Log experiment details.
-    if rank == 0:
-        logger.info('{}:{} to {} ({} days): Particles={}+{}={}'.format(sim_id.stem, start.strftime('%Y-%m-%d'), (start - runtime).strftime('%Y-%m-%d'), runtime.days, isize, fsize, isize + fsize))
-        logger.info('{}:Repeat={} days: Step={:.0f} mins: Output={:.0f} day'.format(sim_id.stem, repeatdt.days, dt_mins, outputdt.days))
-    logger.debug('{}:Temp={}: Rank={:>2}: #Particles={}{}'.format(sim_id.stem, output_file.tempwritedir_base[-8:], rank, psz, psize))
-    if pset.particle_data['time'].max() != pset_start:
-        logger.debug('{}:Rank={:>2}: Start={:>2.0f}: Pstart={}'.format(sim_id.stem, rank, pset_start, pset.particle_data['time'].max()))
+    main.log_simulation(xlog, rank, logger)
 
     # Kernels.
-    kernels = pset.Kernel(AdvectionRK4_3D)
+    kernels = pset.Kernel(main.AdvectionRK4_3Db)
     kernels += pset.Kernel(main.BeachTest) + pset.Kernel(main.UnBeaching)
     kernels += pset.Kernel(main.AgeZone) + pset.Kernel(main.Distance)
 
@@ -211,8 +215,11 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
                  verbose_progress=True, recovery=recovery_kernels)
 
     timed = tools.timer(ts)
-
-    logger.info('{}:Completed!: {}: Rank={:>2}: #Particles={}-{}={}'.format(sim_id.stem, timed, rank, psize, psize - pset.size, pset.size))
+    xlog['end_r'] = pset.size
+    xlog['del_r'] = xlog['start_r'] - xlog['end_r']
+    logger.info('{}:Completed!: {}: Rank={:>2}: Particles: I={} del={} F={}'
+                .format(xlog['id'], timed, rank, xlog['start_r'],
+                        xlog['del_r'], xlog['end_r']))
 
     # Save to netcdf.
     output_file.export()
@@ -243,13 +250,14 @@ if __name__ == "__main__" and cfg.home != Path('E:/'):
             v=args.version, pfile=args.pfile)
 
 elif __name__ == "__main__":
-    dy, dz, lon = 2, 150, 165
-    dt_mins, repeatdt_days, outputdt_days, runtime_days = 60, 6, 1, 36
-    pfile = ['None', 'sim_hist_165_v25r0.nc'][1]
+    dy, dz, lon = 1, 250, 190
+    dt_mins, repeatdt_days, outputdt_days, runtime_days = 60, 6, 1, 6
+    pfile = ['None', 'sim_hist_165_v25r0.nc'][0]
     v = 55
     exp = 'hist'
     chunks = 300
-    run_EUC(dy=dy, dz=dz, lon=lon, dt_mins=dt_mins,
-            repeatdt_days=repeatdt_days, outputdt_days=outputdt_days,
-            v=v, runtime_days=runtime_days,
-            pfile=pfile)
+    final=False
+    # run_EUC(dy=dy, dz=dz, lon=lon, dt_mins=dt_mins,
+    #         repeatdt_days=repeatdt_days, outputdt_days=outputdt_days,
+    #         v=v, runtime_days=runtime_days,
+    #         pfile=pfile)
