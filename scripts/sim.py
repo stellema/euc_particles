@@ -76,7 +76,7 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
     dt = -timedelta(minutes=dt_mins)  # Advection step (negative for backward).
     repeatdt = timedelta(days=repeatdt_days)  # Repeat particle release time.
     outputdt = timedelta(days=outputdt_days)  # Advection steps to write.
-    repeats = math.floor(runtime/repeatdt)
+    repeats = 6#math.floor(runtime/repeatdt)
 
     # Don't add final repeat if run ends on a repeat day.
     if not final and runtime_days % repeatdt_days == 0:
@@ -84,8 +84,8 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
 
     # Create time bounds for fieldset based on experiment.
     if exp == 'hist':
-        y2 = 2012 if cfg.home != Path('E:/') else 1981
-        time_bnds = [datetime(1981, 1, 1), datetime(y2, 12, 31)]
+        y1 = 1981 if cfg.home != Path('E:/') else 2012
+        time_bnds = [datetime(y1, 1, 1), datetime(2012, 12, 31)]
     elif exp == 'rcp':
         time_bnds = [datetime(2070, 1, 1), datetime(2101, 12, 31)]
 
@@ -129,8 +129,8 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
     # Create ParticleSet.
     if not restart:
         # Generate file name for experiment (random number if not using MPI).
-        randomise = False if MPI else True
-        sim_id = main.generate_sim_id(lon, v, exp=exp, randomise=randomise)
+        rdm = False if MPI else True
+        sim_id = main.generate_sim_id(lon, v, exp, randomise=rdm, xlog=xlog)
 
         # Set ParticleSet start as last fieldset time.
         pset_start = fieldset.U.grid.time[-1]
@@ -149,16 +149,7 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
         filename = cfg.data/pfile
 
         # Increment run index for new output file name.
-        sim_id = cfg.data/'{}{}.nc'.format(filename.stem[:-1],
-                                           int(filename.stem[-1]) + 1)
-
-        # Change to the latest run if it was not given.
-        if sim_id.exists():
-            sims = [s for s in sim_id.parent.glob(str(sim_id.stem[:-1]) +
-                                                  '*.nc')]
-            rmax = max([int(sim.stem[-1]) for sim in sims])
-            filename = cfg.data/'{}{}.nc'.format(filename.stem[:-1], rmax)
-            sim_id = cfg.data/'{}{}.nc'.format(filename.stem[:-1], rmax + 1)
+        sim_id = main.generate_sim_id(lon, v, exp, file=filename, xlog=xlog)
 
         # Create ParticleSet from the given ParticleFile.
         pset = main.pset_from_file(fieldset, pclass=pclass,
@@ -183,8 +174,8 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
 
     # Create output ParticleFile p_name and time steps to write output.
     output_file = pset.ParticleFile(cfg.data/sim_id.stem, outputdt=outputdt)
-    xlog['itime'] = start.strftime('%Y-%m-%d')
-    xlog['ftime'] = (start - runtime).strftime('%Y-%m-%d')
+    xlog['Ti'] = start.strftime('%Y-%m-%d')
+    xlog['Tf'] = (start - runtime).strftime('%Y-%m-%d')
     xlog['N'] = xlog['new'] + xlog['file']
     xlog['id'] = sim_id.stem
     xlog['out'] = output_file.tempwritedir_base[-8:]
@@ -193,6 +184,7 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
     xlog['outdt'] = outputdt.days
     xlog['rdt'] = repeatdt.days
     xlog['land'] = fieldset.landlim
+    xlog['eps'] = fieldset.eps
     xlog['pset_start'] = pset_start
     xlog['pset_start_r'] = pset.particle_data['time'].max()
 
@@ -217,7 +209,7 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
     timed = tools.timer(ts)
     xlog['end_r'] = pset.size
     xlog['del_r'] = xlog['start_r'] - xlog['end_r']
-    logger.info('{}:Completed!: {}: Rank={:>2}: Particles: I={} del={} F={}'
+    logger.info('{}:Completed: {}: Rank={:>2}: Particles: Start={} Del={} End={}'
                 .format(xlog['id'], timed, rank, xlog['start_r'],
                         xlog['del_r'], xlog['end_r']))
 
@@ -250,8 +242,8 @@ if __name__ == "__main__" and cfg.home != Path('E:/'):
             v=args.version, pfile=args.pfile)
 
 elif __name__ == "__main__":
-    dy, dz, lon = 1, 250, 190
-    dt_mins, repeatdt_days, outputdt_days, runtime_days = 60, 6, 1, 6
+    dy, dz, lon = 0.6, 150, 165
+    dt_mins, repeatdt_days, outputdt_days, runtime_days = 60, 6, 1, 360
     pfile = ['None', 'sim_hist_165_v25r0.nc'][0]
     v = 55
     exp = 'hist'
@@ -259,5 +251,4 @@ elif __name__ == "__main__":
     final = False
     run_EUC(dy=dy, dz=dz, lon=lon, dt_mins=dt_mins,
             repeatdt_days=repeatdt_days, outputdt_days=outputdt_days,
-            v=v, runtime_days=runtime_days,
-            pfile=pfile)
+            v=v, runtime_days=runtime_days, pfile=pfile)

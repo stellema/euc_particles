@@ -100,8 +100,8 @@ def ofam_fieldset(time_bnds='full', exp='hist', chunks=True, cs=300,
 
     if time_bnds == 'full':
         if exp == 'hist':
-            y2 = 2012 if cfg.home != Path('E:/') else 1981
-            time_bnds = [datetime(1981, 1, 1), datetime(y2, 12, 31)]
+            y1 = 1981 if cfg.home != Path('E:/') else 2012
+            time_bnds = [datetime(y1, 1, 1), datetime(2012, 12, 31)]
         elif exp == 'rcp':
             time_bnds = [datetime(2070, 1, 1), datetime(2101, 12, 31)]
 
@@ -141,10 +141,14 @@ def ofam_fieldset(time_bnds='full', exp='hist', chunks=True, cs=300,
     n = 51  # len(st_ocean)
     zu_ind = np.arange(0, n, dtype=int).tolist()
     zw_ind = np.append(n - 1, np.arange(0, n - 1, dtype=int)).tolist()
+    yu_ind = np.arange(1, 300, dtype=int).tolist()
+    yw_ind = np.arange(0, 300 - 1, dtype=int).tolist()
+    xu_ind = np.arange(1, 1750, dtype=int).tolist()
+    xw_ind = np.arange(0, 1750 - 1, dtype=int).tolist()
 
-    indices = {'U': {'depth': zu_ind},
-               'V': {'depth': zu_ind},
-               'W': {'depth': zw_ind}}
+    indices = {'U': {'lat': yu_ind, 'lon': xu_ind, 'depth': zu_ind},
+               'V': {'lat': yu_ind, 'lon': xu_ind, 'depth': zu_ind},
+               'W': {'lat': yw_ind, 'lon': xw_ind, 'depth': zw_ind}}
 
     if chunks not in ['auto', False]:
         chunks = {'Time': 1,
@@ -169,7 +173,8 @@ def ofam_fieldset(time_bnds='full', exp='hist', chunks=True, cs=300,
 
     # Convert from geometric to geographic coordinates (m to degree).
     fieldset.add_constant('geo', 1/(1852*60))
-    fieldset.add_constant('landlim', 0.95)
+    fieldset.add_constant('landlim', 0.97)
+    fieldset.add_constant('eps', 1e-6)
 
     if add_zone:
         # Add particle zone boundaries.
@@ -180,8 +185,9 @@ def ofam_fieldset(time_bnds='full', exp='hist', chunks=True, cs=300,
                 'depth': 'sw_ocean',
                 'lat': 'yu_ocean',
                 'lon': 'xu_ocean'}
+        zindices = {'lat': yu_ind, 'lon': xu_ind}
 
-        zfield = Field.from_netcdf(file, 'zone', dimz,
+        zfield = Field.from_netcdf(file, 'zone', dimz, indices=zindices,
                                    field_chunksize=chunks,
                                    allow_time_extrapolation=True)
 
@@ -200,10 +206,12 @@ def ofam_fieldset(time_bnds='full', exp='hist', chunks=True, cs=300,
                 'Vb': dims['U'],
                 'land': dims['U']}
 
-        indices = {'depth': zu_ind}
+        uindices = {'Ub': {'lat': yu_ind, 'lon': xu_ind, 'depth': zu_ind},
+                    'Vb': {'lat': yu_ind, 'lon': xu_ind, 'depth': zu_ind},
+                    'land': {'lat': yu_ind, 'lon': xu_ind, 'depth': zu_ind}}
 
         fieldsetUB = FieldSet.from_netcdf(file, variables, dimv,
-                                          indices=indices,
+                                          indices=uindices,
                                           field_chunksize=chunks,
                                           allow_time_extrapolation=True)
 
@@ -229,19 +237,107 @@ def ofam_fieldset(time_bnds='full', exp='hist', chunks=True, cs=300,
     return fieldset
 
 
-def generate_sim_id(lon, v=0, exp='hist', randomise=False):
+def generate_sim_id(lon, v=0, exp='hist', randomise=False,
+                    file=None, xlog=None):
     """Create name to save particle file (looks for unsaved filename)."""
-    head = 'sim_{}_{}_v'.format(exp, int(lon))  # Start of filename.
+    if not file:
+        head = 'sim_{}_{}_v'.format(exp, int(lon))  # Start of filename.
 
-    # Copy given index or find a random number.
-    i = random.randint(0, 100) if randomise else v
+        # Copy given index or find a random number.
+        i = random.randint(0, 100) if randomise else v
 
-    # Increment index or find new random number if the file already exists.
-    while (cfg.data/'{}{}r0.nc'.format(head, i)).exists():
-        i = random.randint(0, 100) if randomise else i + 1
+        # Increment index or find new random number if the file already exists.
+        while (cfg.data/'{}{}r0.nc'.format(head, i)).exists():
+            i = random.randint(0, 100) if randomise else i + 1
 
-    sim_id = cfg.data/'{}{}r0.nc'.format(head, i)
+        sim_id = cfg.data/'{}{}r0.nc'.format(head, i)
+        if xlog:
+            xlog['v'], xlog['r'] = i, 0
+
+    # Increment run index for new output file name.
+    elif file:
+        sim_id = cfg.data/'{}{}.nc'.format(file.stem[:-1],
+                                           int(file.stem[-1]) + 1)
+
+        # Change to the latest run if it was not given.
+        if sim_id.exists():
+            sims = [s for s in sim_id.parent.glob(str(sim_id.stem[:-1]) + '*.nc')]
+            rmax = max([int(sim.stem[-1]) for sim in sims])
+            file = cfg.data/'{}{}.nc'.format(file.stem[:-1], rmax)
+            sim_id = cfg.data/'{}{}.nc'.format(file.stem[:-1], rmax + 1)
+        if xlog:
+            xlog['r'] = rmax + 1
+
     return sim_id
+
+
+def BeachTest(particle, fieldset, time):
+    land1 = fieldset.land[0., particle.depth, particle.lat, particle.lon]
+    if land1 > fieldset.landlim:
+        particle.beached += 1
+    elif (land1 > 0.9 and
+          math.fabs(particle.lat - particle.prev_lat) < fieldset.eps or\
+          math.fabs(particle.lon - particle.prev_lon) < fieldset.eps):
+        particle.beached += 1
+
+    else:
+        particle.beached = 0
+
+
+def UnBeaching(particle, fieldset, time):
+    if particle.beached >= 1:
+        while particle.beached > 0 and particle.beached <= 3:
+            ub = fieldset.Ub[0., particle.depth, particle.lat, particle.lon]
+            vb = fieldset.Vb[0., particle.depth, particle.lat, particle.lon]
+            if math.fabs(ub) > 1e-8:
+                ubx = fieldset.geo * (1/math.cos(particle.lat * math.pi/180))
+                particle.lon += math.copysign(ubx, ub) * math.fabs(particle.dt)
+            if math.fabs(vb) > 1e-8:
+                particle.lat += math.copysign(fieldset.geo, vb) * math.fabs(particle.dt)
+            particle.unbeached += 1
+
+            # Check if particle is still on land.
+            land2 = fieldset.land[0., particle.depth, particle.lat, particle.lon]
+            if land2 > fieldset.landlim:
+                particle.beached += 1
+            else:
+                particle.beached = 0
+
+        if particle.beached > 3:
+            print("Deleted beached particle [%d] (%g %g %g %g)." % (particle.id, particle.beached, particle.lon, particle.lat, particle.depth))
+            particle.unbeached = -1 * particle.unbeached
+            particle.delete()
+
+
+# def BeachTest(particle, fieldset, time):
+#     land1 = fieldset.land[0., particle.depth, particle.lat, particle.lon]
+#     if land1 > fieldset.landlim:
+#         particle.beached += 1
+#         if particle.beached > 12:
+#             print("Deleted beached particle [%d] (%g %g %g %g)." % (particle.id, particle.beached, particle.lon, particle.lat, particle.depth))
+#             particle.unbeached = -1 * particle.unbeached
+#             particle.delete()
+#     else:
+#         particle.beached = 0
+
+
+# def UnBeaching(particle, fieldset, time):
+#     if particle.beached >= 1:
+#         ub = fieldset.Ub[0., particle.depth, particle.lat, particle.lon]
+#         vb = fieldset.Vb[0., particle.depth, particle.lat, particle.lon]
+#         if math.fabs(ub) > 1e-10:
+#             ubx = fieldset.geo * (1/math.cos(particle.lat * math.pi/180))
+#             particle.lon += math.copysign(ubx, ub) * math.fabs(particle.dt)
+#         if math.fabs(vb) > 1e-10:
+#             particle.lat += math.copysign(fieldset.geo, vb) * math.fabs(particle.dt)
+#         particle.unbeached += 1
+
+#         # Check if particle is still on land.
+#         land2 = fieldset.land[0., particle.depth, particle.lat, particle.lon]
+#         if land2 > fieldset.landlim:
+#             particle.beached += 1
+#         else:
+#             particle.beached = 0
 
 
 def AdvectionRK4_3Db(particle, fieldset, time):
@@ -264,36 +360,6 @@ def AdvectionRK4_3Db(particle, fieldset, time):
         particle.lat += (v1 + 2*v2 + 2*v3 + v4) / 6. * particle.dt
         particle.depth += (w1 + 2*w2 + 2*w3 + w4) / 6. * particle.dt
 
-
-def BeachTest(particle, fieldset, time):
-    land1 = fieldset.land[0., particle.depth, particle.lat, particle.lon]
-    if land1 > 0.95:
-        particle.beached += 1
-        if particle.beached > 12:
-            print("Deleted beached particle [%d] (%g %g %g %g)." % (particle.id, particle.beached, particle.lon, particle.lat, particle.depth))
-            particle.unbeached = -1 * particle.unbeached
-            particle.delete()
-    else:
-        particle.beached = 0
-
-
-def UnBeaching(particle, fieldset, time):
-    if particle.beached >= 1:
-        ub = fieldset.Ub[0., particle.depth, particle.lat, particle.lon]
-        vb = fieldset.Vb[0., particle.depth, particle.lat, particle.lon]
-        if math.fabs(ub) > 1e-10:
-            ubx = fieldset.geo * (1/math.cos(particle.lat * math.pi/180))
-            particle.lon += math.copysign(ubx, ub) * math.fabs(particle.dt)
-        if math.fabs(vb) > 1e-10:
-            particle.lat += math.copysign(fieldset.geo, vb) * math.fabs(particle.dt)
-        particle.unbeached += 1
-
-        # Check if particle is still on land.
-        land2 = fieldset.land[0., particle.depth, particle.lat, particle.lon]
-        if land2 > 0.95:
-            particle.beached += 1
-        else:
-            particle.beached = 0
 
 
 def DeleteParticle(particle, fieldset, time):
@@ -387,21 +453,23 @@ def pset_euc(fieldset, pclass, lon, dy, dz, repeatdt, pset_start, repeats,
 
 def log_simulation(xlog, rank, logger):
     if rank == 0:
-        logger.info('{}:{} to {}: Runtime={}d: Particles={}+{}={}'
-                    .format(xlog['id'], xlog['itime'], xlog['ftime'],
-                            xlog['run'], xlog['new'], xlog['file'], xlog['N']))
+        logger.info('{}:Simulation v{}r{}: Particles={}+{:}={}'
+                    .format(xlog['id'], xlog['v'], xlog['r'], xlog['new'],
+                            xlog['file'], xlog['N']))
+        logger.info('{}:Excecuting {} to {}: Runtime={}d'
+                    .format(xlog['id'], xlog['Ti'], xlog['Tf'], xlog['run']))
         logger.info('{}:Lon={}: Lat={}: Depth={}'
                     .format(xlog['id'], xlog['x'], xlog['y'], xlog['z']))
-        logger.info('{}:DIR={}: Repeat={}d: dt={:.0f}m: Outdt={:.0f}d: Land={}'
+        logger.info('{}:DIR={}: Reps={}d: dt={:.0f}m: Out={:.0f}d: Land={} EPS={}'
                     .format(xlog['id'], xlog['out'], xlog['rdt'], xlog['dt'],
-                            xlog['outdt'], xlog['land']))
+                            xlog['outdt'], xlog['land'], xlog['eps']))
 
-    logger.debug('{}:Rank={:>2}: Particles: New={} File={} West={} Init={}'
-                 .format(xlog['id'], rank, xlog['new_r'], xlog['file_r'],
+    logger.debug('{}:Rank={:>2}: Particles: File={} New={} West={} I={}'
+                 .format(xlog['id'], rank, xlog['file_r'], xlog['new_r'],
                          xlog['west_r'], xlog['start_r']))
 
     if xlog['pset_start_r'] != xlog['pset_start']:
-        logger.debug('{}:Rank={:>2}: Start={:>2.0f}: Pstart={}'
+        logger.debug('{}:Rank={:>2}: T0={:>2.0f}: RT0={}'
                      .format(xlog['id'], rank, xlog['pset_start'],
                              xlog['pset_start_r']))
 

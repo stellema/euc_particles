@@ -2355,3 +2355,144 @@
 2020-08-21 17:07:34:Compiled zParticleAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\1cb1a512b95df85758ec30bc9c3a9ee9_0.dll
 2020-08-21 17:07:37:sim_hist_190_v7r0:Completed!: 00:00:10: Rank= 0: Particles: I=4 del=0 F=4
 2020-08-21 17:07:37:sim_hist_190_v7r0:Finished!
+2020-08-21 19:52:49:sim_hist_165_v84r0:2013-01-01 to 2012-01-07: Runtime=360d: Particles=3+0=3
+2020-08-21 19:52:49:sim_hist_165_v84r0:Lon=165: Lat=-0.3: Depth=200
+2020-08-21 19:52:49:sim_hist_165_v84r0:DIR=SOJIVSLZ: Repeat=6d: dt=60m: Outdt=1d: Land=0.95
+2020-08-21 19:52:49:sim_hist_165_v84r0:Rank= 0: Particles: File=0 New=3 West=0 Start=3
+2020-08-21 19:52:51:Compiled zParticleAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\1a007a531a93230ced8af0a988f76842_0.dll
+2020-08-21 20:03:25:sim_hist_165_v84r0:Completed!: 00:10:41: Rank= 0: Particles: I=3 del=0 F=3
+2020-08-21 20:03:27:sim_hist_165_v84r0:Finished!
+2020-08-21 21:41:20:sim_hist_165_v100r0:2013-01-01 to 2012-01-07: Runtime=360d: Particles=3+0=3
+2020-08-21 21:41:20:sim_hist_165_v100r0:Lon=165: Lat=-0.3: Depth=200
+2020-08-21 21:41:20:sim_hist_165_v100r0:DIR=NVBKMDKE: Repeat=6d: dt=60m: Outdt=1d: Land=0.96
+2020-08-21 21:41:20:sim_hist_165_v100r0:Rank= 0: Particles: File=0 New=3 West=0 Start=3
+2020-08-21 21:41:23:Compiled zParticleAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\cf20ce783ae54059104a8b48fb0a0b1b_0.dll
+2020-08-21 21:46:57:sim_hist_165_v59r0:2013-01-01 to 2012-01-07: Runtime=360d: Particles=4+0=4
+2020-08-21 21:46:57:sim_hist_165_v59r0:Lon=165: Lat=-0.7: Depth=225
+2020-08-21 21:46:57:sim_hist_165_v59r0:DIR=ABUZAPRS: Repeat=6d: dt=60m: Outdt=1d: Land=0.96
+2020-08-21 21:46:57:sim_hist_165_v59r0:Rank= 0: Particles: File=0 New=4 West=0 Start=4
+2020-08-21 21:47:00:Compiled zParticleAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\f49e18fdc1e54bb6a6c3a94b5375c7cb_0.dll
+2020-08-21 21:50:09:sim_hist_165_v27r0:2012-12-31 to 2012-01-06: Runtime=360d: Particles=4+0=4
+2020-08-21 21:50:09:sim_hist_165_v27r0:Lon=165: Lat=-0.7: Depth=225
+2020-08-21 21:50:09:sim_hist_165_v27r0:DIR=RCOTQTKV: Repeat=6d: dt=60m: Outdt=1d: Land=0.97
+2020-08-21 21:50:09:sim_hist_165_v27r0:Rank= 0: Particles: File=0 New=4 West=0 Start=4
+2020-08-21 21:50:12:Compiled zParticleAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\74976a77480750dc85e65f5ac0152f4c_0.dll
+2020-08-21 21:53:28:sim_hist_165_v100r0:Completed!: 00:12:14: Rank= 0: Particles: I=3 del=0 F=3
+2020-08-21 21:53:30:sim_hist_165_v100r0:Finished!
+2020-08-21 22:00:56:sim_hist_165_v27r0:Completed!: 00:10:55: Rank= 0: Particles: I=4 del=0 F=4
+2020-08-21 22:00:58:sim_hist_165_v27r0:Finished!
+2020-08-21 22:19:41:sim_hist_165_v51r0:2012-12-31 to 2012-01-06: Runtime=360d: Particles=4+0=4
+2020-08-21 22:19:41:sim_hist_165_v51r0:Lon=165: Lat=-0.4: Depth=175
+2020-08-21 22:19:41:sim_hist_165_v51r0:DIR=DDNFERIY: Repeat=6d: dt=60m: Outdt=1d: Land=0.96
+2020-08-21 22:19:41:sim_hist_165_v51r0:Rank= 0: Particles: File=0 New=4 West=0 Start=4
+2020-08-21 22:19:44:Compiled zParticleAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\685961d042f49da3b0ebea2294039866_0.dll
+2020-08-21 22:21:31:sim_hist_165_v92r0:2012-12-31 to 2012-01-06: Runtime=360d: Particles=4+0=4
+2020-08-21 22:21:31:sim_hist_165_v92r0:Lon=165: Lat=-0.4: Depth=175
+2020-08-21 22:21:31:sim_hist_165_v92r0:DIR=WZSGDYRU: Repeat=6d: dt=60m: Outdt=1d: Land=0.95
+2020-08-21 22:21:31:sim_hist_165_v92r0:Rank= 0: Particles: File=0 New=4 West=0 Start=4
+2020-08-21 22:21:33:Compiled zParticleAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\c461d48b542c559c117df0e7cc45dfa7_0.dll
+2020-08-21 22:30:58:sim_hist_165_v51r0:Completed!: 00:11:25: Rank= 0: Particles: I=4 del=0 F=4
+2020-08-21 22:31:01:sim_hist_165_v51r0:Finished!
+2020-08-21 22:32:53:sim_hist_165_v92r0:Completed!: 00:11:35: Rank= 0: Particles: I=4 del=1 F=3
+2020-08-21 22:32:56:sim_hist_165_v92r0:Finished!
+2020-08-21 22:37:53:sim_hist_165_v47r0:2012-12-31 to 2012-01-06: Runtime=360d: Particles=4+0=4
+2020-08-21 22:37:53:sim_hist_165_v47r0:Lon=165: Lat=-0.4: Depth=175
+2020-08-21 22:37:53:sim_hist_165_v47r0:DIR=UNZLXLIW: Repeat=6d: dt=60m: Outdt=1d: Land=0.95
+2020-08-21 22:37:53:sim_hist_165_v47r0:Rank= 0: Particles: File=0 New=4 West=0 Start=4
+2020-08-21 22:37:56:Compiled zParticleAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\f76d29034981d13474c0c78427b2fb63_0.dll
+2020-08-21 22:48:23:sim_hist_165_v47r0:Completed!: 00:10:37: Rank= 0: Particles: I=4 del=1 F=3
+2020-08-21 22:48:25:sim_hist_165_v47r0:Finished!
+2020-08-22 00:00:32:sim_hist_165_v97r0:2012-12-31 to 2012-01-06: Runtime=360d: Particles=4+0=4
+2020-08-22 00:00:32:sim_hist_165_v97r0:Lon=165: Lat=-0.4: Depth=175
+2020-08-22 00:00:32:sim_hist_165_v97r0:DIR=GOMIMVAT: Repeat=6d: dt=60m: Outdt=1d: Land=0.96
+2020-08-22 00:00:32:sim_hist_165_v97r0:Rank= 0: Particles: File=0 New=4 West=0 Start=4
+2020-08-22 00:00:35:Compiled zParticleAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\faed6adcb22d0efabf245b678f215fdf_0.dll
+2020-08-22 00:10:59:sim_hist_165_v97r0:Completed!: 00:10:37: Rank= 0: Particles: I=4 del=0 F=4
+2020-08-22 00:11:01:sim_hist_165_v97r0:Finished!
+2020-08-22 10:20:45:sim_hist_165_v10r0:2012-12-31 to 2012-01-06: Runtime=360d: Particles=4+0=4
+2020-08-22 10:20:45:sim_hist_165_v10r0:Lon=165: Lat=-0.4: Depth=175
+2020-08-22 10:20:45:sim_hist_165_v10r0:DIR=PZUKKKBK: Repeat=6d: dt=60m: Outdt=1d: Land=0.97
+2020-08-22 10:20:45:sim_hist_165_v10r0:Rank= 0: Particles: File=0 New=4 West=0 Start=4
+2020-08-22 10:20:48:Compiled zParticleAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\83fe4f36292e3bbe77c35f32d93a4f0f_0.dll
+2020-08-22 10:31:25:sim_hist_165_v10r0:Completed!: 00:10:48: Rank= 0: Particles: I=4 del=0 F=4
+2020-08-22 10:31:27:sim_hist_165_v10r0:Finished!
+2020-08-22 10:35:35:sim_hist_165_v54r0:2012-12-31 to 2012-01-06: Runtime=360d: Particles=4+0=4
+2020-08-22 10:35:35:sim_hist_165_v54r0:Lon=165: Lat=-0.4: Depth=175
+2020-08-22 10:35:35:sim_hist_165_v54r0:DIR=ONBNIKLK: Repeat=6d: dt=60m: Outdt=1d: Land=0.97
+2020-08-22 10:35:35:sim_hist_165_v54r0:Rank= 0: Particles: File=0 New=4 West=0 Start=4
+2020-08-22 10:35:37:Compiled zParticleAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\7e3a53d31c0fd25cb6c7e89efb486cf8_0.dll
+2020-08-22 10:46:03:sim_hist_165_v54r0:Completed!: 00:10:38: Rank= 0: Particles: I=4 del=0 F=4
+2020-08-22 10:46:05:sim_hist_165_v54r0:Finished!
+2020-08-22 12:41:07:sim_hist_165_v78r0:2012-12-31 to 2012-01-06: Runtime=360d: Particles=4+0=4
+2020-08-22 12:41:07:sim_hist_165_v78r0:Lon=165: Lat=-0.4: Depth=175
+2020-08-22 12:41:07:sim_hist_165_v78r0:DIR=NEDEGLOW: Repeat=6d: dt=60m: Outdt=1d: Land=0.97
+2020-08-22 12:41:07:sim_hist_165_v78r0:Rank= 0: Particles: File=0 New=4 West=0 Start=4
+2020-08-22 12:41:09:Compiled zParticleAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\55b7278c4461682fc45e7c640e9b7526_0.dll
+2020-08-22 12:52:02:sim_hist_165_v78r0:Completed!: 00:11:05: Rank= 0: Particles: I=4 del=0 F=4
+2020-08-22 12:52:04:sim_hist_165_v78r0:Finished!
+2020-08-22 13:06:56:sim_hist_165_v5r0:2012-12-31 to 2012-01-06: Runtime=360d: Particles=4+0=4
+2020-08-22 13:06:56:sim_hist_165_v5r0:Lon=165: Lat=-0.4: Depth=175
+2020-08-22 13:06:56:sim_hist_165_v5r0:DIR=HUMQVEGQ: Repeat=6d: dt=60m: Outdt=1d: Land=0.97
+2020-08-22 13:06:56:sim_hist_165_v5r0:Rank= 0: Particles: File=0 New=4 West=0 Start=4
+2020-08-22 13:06:58:Compiled zParticleAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\862faa6edddb87e55e0b0bb9dbe8d7cc_0.dll
+2020-08-22 13:18:17:sim_hist_165_v5r0:2012-12-31 to 2012-01-06: Runtime=360d: Particles=4+0=4
+2020-08-22 13:18:17:sim_hist_165_v5r0:Lon=165: Lat=-0.4: Depth=175
+2020-08-22 13:18:17:sim_hist_165_v5r0:DIR=OIIDYROT: Repeat=6d: dt=60m: Outdt=1d: Land=0.97 eps=1e-06
+2020-08-22 13:18:17:sim_hist_165_v5r0:Rank= 0: Particles: File=0 New=4 West=0 Start=4
+2020-08-22 13:18:19:Compiled zParticleAdvectionRK4_3DbBeachTestUnBeachingAgeZone ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\c14df944efeadac74ea0a8738f079585_0.dll
+2020-08-22 13:29:19:sim_hist_165_v5r0:Completed!: 00:11:10: Rank= 0: Particles: I=4 del=0 F=4
+2020-08-22 13:29:22:sim_hist_165_v5r0:Finished!
+2020-08-22 13:45:15:sim_hist_165_v36r0:Simulation v2012-12-19 to 2011-12-25: Runtime=360d: Particles=1+0=1
+2020-08-22 13:45:15:sim_hist_165_v36r0:2012-12-19 to 2011-12-25: Runtime=360d: Particles=1+0=1
+2020-08-22 13:45:15:sim_hist_165_v36r0:Lon=165: Lat=-0.4: Depth=175
+2020-08-22 13:45:15:sim_hist_165_v36r0:DIR=EWTHYIAW: Reps=6d: dt=60m: Out=1d: Land=0.97 EPS=1e-06
+2020-08-22 13:45:15:sim_hist_165_v36r0:Rank= 0: Particles: File=0 New=1 West=0 I=1
+2020-08-22 13:45:17:Compiled zParticleAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\886d88a7eff5b24f2973ce95c97c0194_0.dll
+2020-08-22 14:21:01:sim_hist_165_v74r0:Simulation v2012-12-19 to 2012-01-24: Runtime=330d: Particles=1+0=1
+2020-08-22 14:21:01:sim_hist_165_v74r0:2012-12-19 to 2012-01-24: Runtime=330d: Particles=1+0=1
+2020-08-22 14:21:01:sim_hist_165_v74r0:Lon=165: Lat=-0.4: Depth=175
+2020-08-22 14:21:01:sim_hist_165_v74r0:DIR=UVDPSESG: Reps=6d: dt=60m: Out=1d: Land=0.97 EPS=5e-05
+2020-08-22 14:21:01:sim_hist_165_v74r0:Rank= 0: Particles: File=0 New=1 West=0 I=1
+2020-08-22 14:21:03:Compiled zParticleAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\b5cdbf06fa39d6c6c180ab8b66b2f1b8_0.dll
+2020-08-22 14:28:07:sim_hist_165_v74r0:Completed!: 00:07:10: Rank= 0: Particles: I=1 del=0 F=1
+2020-08-22 14:28:09:sim_hist_165_v74r0:Finished!
+2020-08-22 14:48:53:sim_hist_165_v33r0:Simulation v33r0: Particles=   135+     0=135
+2020-08-22 14:48:53:sim_hist_165_v33r0:Excecuting 2012-12-31 to 2012-01-06: Runtime=360d
+2020-08-22 14:48:53:sim_hist_165_v33r0:Lon=165: Lat=[-2.6-2.2 x0.6]: Depth=[25-325m x150]
+2020-08-22 14:48:53:sim_hist_165_v33r0:DIR=BWJLHCCT: Reps=6d: dt=60m: Out=1d: Land=0.97 EPS=5e-05
+2020-08-22 14:48:53:sim_hist_165_v33r0:Rank= 0: Particles: File=0 New=135 West=81 I=54
+2020-08-22 14:48:55:Compiled zParticleAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\a8fb3824186c20082a2f3e7b0f1b4f44_0.dll
+2020-08-22 15:03:29:sim_hist_165_v33r0:Completed: 00:15:10: Rank= 0: Particles: Start=54 Del=3 End=51
+2020-08-22 15:03:31:sim_hist_165_v33r0:Finished!
+2020-08-22 15:19:55:sim_hist_165_v87r0:Simulation v55r0: Particles=1+0=1
+2020-08-22 15:19:55:sim_hist_165_v87r0:Excecuting 2012-12-19 to 2012-01-24: Runtime=330d
+2020-08-22 15:19:55:sim_hist_165_v87r0:Lon=165: Lat=-0.4: Depth=175
+2020-08-22 15:19:55:sim_hist_165_v87r0:DIR=DRWTWTYY: Reps=6d: dt=60m: Out=1d: Land=0.97 EPS=5e-05
+2020-08-22 15:19:55:sim_hist_165_v87r0:Rank= 0: Particles: File=0 New=1 West=0 I=1
+2020-08-22 15:19:57:Compiled zParticleAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\734f3f2ffe25d7448fd87d63ef105571_0.dll
+2020-08-22 15:26:51:sim_hist_165_v87r0:Completed!: 00:07:01: Rank= 0: Particles: I=1 del=0 F=1
+2020-08-22 15:26:53:sim_hist_165_v87r0:Finished!
+2020-08-22 16:00:28:sim_hist_165_v54r0:Simulation v55r0: Particles=1+0=1
+2020-08-22 16:00:28:sim_hist_165_v54r0:Excecuting 2012-12-19 to 2012-01-24: Runtime=330d
+2020-08-22 16:00:28:sim_hist_165_v54r0:Lon=165: Lat=-0.4: Depth=175
+2020-08-22 16:00:28:sim_hist_165_v54r0:DIR=XHUESJKY: Reps=6d: dt=60m: Out=1d: Land=0.97 EPS=1e-06
+2020-08-22 16:00:28:sim_hist_165_v54r0:Rank= 0: Particles: File=0 New=1 West=0 I=1
+2020-08-22 16:00:30:Compiled zParticleAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\b218115196780d11072eb4c79232b57c_0.dll
+2020-08-22 16:07:30:sim_hist_165_v54r0:Completed!: 00:07:06: Rank= 0: Particles: I=1 del=0 F=1
+2020-08-22 16:07:32:sim_hist_165_v54r0:Finished!
+2020-08-22 16:21:50:sim_hist_165_v99r0:Simulation v55r0: Particles=1+0=1
+2020-08-22 16:21:50:sim_hist_165_v99r0:Excecuting 2012-12-19 to 2012-01-24: Runtime=330d
+2020-08-22 16:21:50:sim_hist_165_v99r0:Lon=165: Lat=-0.4: Depth=175
+2020-08-22 16:21:50:sim_hist_165_v99r0:DIR=PBGPJGUB: Reps=6d: dt=60m: Out=1d: Land=0.97 EPS=1e-06
+2020-08-22 16:21:50:sim_hist_165_v99r0:Rank= 0: Particles: File=0 New=1 West=0 I=1
+2020-08-22 16:21:52:Compiled zParticleAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\d3de94d9d56096d384c586397db8ccbb_0.dll
+2020-08-22 16:29:26:sim_hist_165_v99r0:Completed!: 00:07:40: Rank= 0: Particles: I=1 del=0 F=1
+2020-08-22 16:29:28:sim_hist_165_v99r0:Finished!
+2020-08-22 16:40:41:sim_hist_165_v77r0:Simulation v77r0: Particles=135+0=135
+2020-08-22 16:40:41:sim_hist_165_v77r0:Excecuting 2012-12-31 to 2012-01-06: Runtime=360d
+2020-08-22 16:40:41:sim_hist_165_v77r0:Lon=165: Lat=[-2.6-2.2 x0.6]: Depth=[25-325m x150]
+2020-08-22 16:40:41:sim_hist_165_v77r0:DIR=CUCIRWAS: Reps=6d: dt=60m: Out=1d: Land=0.97 EPS=1e-06
+2020-08-22 16:40:41:sim_hist_165_v77r0:Rank= 0: Particles: File=0 New=135 West=81 I=54
+2020-08-22 16:40:43:Compiled zParticleAdvectionRK4_3DbBeachTestUnBeachingAgeZoneDistance ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\46e00844ba3b73d0edf6713f7d5029e8_0.dll
+2020-08-22 16:55:14:sim_hist_165_v77r0:Completed: 00:15:11: Rank= 0: Particles: Start=54 Del=2 End=52
+2020-08-22 16:55:17:sim_hist_165_v77r0:Finished!

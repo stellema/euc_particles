@@ -19,7 +19,7 @@ ds, dx = plot_traj(sim_id, var='u', traj=tr[0], t=2, Z=250)
 t=21
 du = xr.open_dataset(cfg.ofam/'ocean_u_2012_07.nc').u.isel(Time=t)
 dv = xr.open_dataset(cfg.ofam/'ocean_v_2012_07.nc').v.isel(Time=t)
-dw = xr.open_dataset(cfg.ofam/'ocean_w_2012_07.nc').w.isel(Time=t)
+dw = xr.open_dataset(cfg.ofam/'ocean_w_2012_01.nc').w.isel(Time=t)
 dt = xr.open_dataset(cfg.ofam/'ocean_temp_1981_01.nc').temp.isel(Time=t)
 
 sim_id = cfg.data/'sim_hist_165_v87r0.nc'
@@ -142,7 +142,7 @@ def plot_traj(sim_id, var='u', traj=None, t=None, Z=290, ds=None):
     ax.set_ylabel("Depth")
 
     # plt.tight_layout()
-    plt.savefig(cfg.fig/'parcels/traj_{}_{}_{}.png'
+    plt.savefig(cfg.fig/'parcels/tests/traj_{}_{}_{}.png'
                 .format(sim_id.stem, traj, var))
     plt.show()
 
@@ -237,7 +237,7 @@ def plot_ubtraj(sim_id, var='u', t=22, Z=290, ds=None):
     ax.set_ylabel("Latitude")
     plt.colorbar(im)
 
-    plt.savefig(cfg.fig/'parcels/{}_beached.png'
+    plt.savefig(cfg.fig/'parcels/tests/{}_beached.png'
                 .format(sim_id.stem))
     plt.show()
 

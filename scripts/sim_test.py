@@ -7,6 +7,8 @@ dy, dz, lon = -0.3, 200, 165
 date1 = datetime(2012, 4, 30)
 date2 = datetime(2012, 12, 31)
 time_bnds = [datetime(2012, 4, 1), datetime(2012, 12, 31)]
+dy, dz, lon = -0.7, 225, 165
+dy, dz, lon = -0.4, 175, 165
 """
 import cfg
 import tools
@@ -77,10 +79,11 @@ def pset_euc(fieldset, pclass, lon, dy, dz, repeatdt, pset_start, repeats,
 xlog = {'file': 0, 'new': 0, 'west_r': 0, 'new_r': 0, 'final_r': 0,
         'file_r': 0, 'y': '', 'x': '', 'z': ''}
 logger = tools.mlogger('test_sim', parcels=True, misc=False)
-dt_mins, repeatdt_days, outputdt_days, runtime_days = 60, 6, 1, 360
+dt_mins, repeatdt_days, outputdt_days, runtime_days = 60, 6, 1, 330
 chunks, exp, v, rank = 300, 'hist', 55, 0
 pfile = ['None', 'sim_hist_165_v47r0.nc'][0]
-dy, dz, lon = -0.3, 200, 165
+dy, dz, lon = -0.4, 175, 165
+offset = 12*24*3600
 # date1 = datetime(2012, 1, 1)
 # date2 = datetime(2012, 12, 31)
 
@@ -93,10 +96,10 @@ restart = False if pfile == 'None' else True
 dt = -timedelta(minutes=dt_mins)  # Advection step (negative for backwards).
 repeatdt = timedelta(days=repeatdt_days)  # Repeat particle release time.
 outputdt = timedelta(days=outputdt_days)  # Advection steps to write.
-repeats = 3  # math.floor(runtime/repeatdt) - 1
+repeats = 1  # math.floor(runtime/repeatdt) - 1
 time_bnds = [datetime(2012, 1, 1), datetime(2012, 12, 31)]
 fieldset = main.ofam_fieldset(time_bnds, exp, chunks=True, cs=chunks,
-                              time_periodic=True, add_zone=True,
+                              time_periodic=False, add_zone=True,
                               add_unbeach_vel=True)
 
 
@@ -138,11 +141,11 @@ pclass = zParticle
 # Create ParticleSet.
 if not restart:
     # Generate file name for experiment (random number if not using MPI).
-    randomise = False if MPI else True
-    sim_id = main.generate_sim_id(lon, v, exp=exp, randomise=randomise)
+    rdm = False if MPI else True
+    sim_id = main.generate_sim_id(lon, v, exp, randomise=rdm, xlog=xlog)
 
     # Set ParticleSet start as last fieldset time.
-    pset_start = fieldset.U.grid.time[-1]
+    pset_start = fieldset.U.grid.time[-1] - offset
 
     # Create ParticleSet.
     pset = pset_euc(fieldset, pclass, lon, dy, dz, repeatdt,
@@ -157,17 +160,7 @@ else:
     # Add path to given ParticleFile name.
     filename = cfg.data/pfile
 
-    # Increment run index for new output file name.
-    sim_id = cfg.data/'{}{}.nc'.format(filename.stem[:-1],
-                                       int(filename.stem[-1]) + 1)
-
-    # Change to the latest run if it was not given.
-    if sim_id.exists():
-        sims = [s for s in sim_id.parent.glob(str(sim_id.stem[:-1]) +
-                                              '*.nc')]
-        rmax = max([int(sim.stem[-1]) for sim in sims])
-        filename = cfg.data/'{}{}.nc'.format(filename.stem[:-1], rmax)
-        sim_id = cfg.data/'{}{}.nc'.format(filename.stem[:-1], rmax + 1)
+    sim_id = main.generate_sim_id(lon, v, exp, file=filename, xlog=xlog)
 
     # Create ParticleSet from the given ParticleFile.
     pset = main.pset_from_file(fieldset, pclass=pclass,
@@ -175,7 +168,6 @@ else:
                                restarttime=np.nanmin, xlog=xlog)
     xlog['file_r'] = pset.size
     # Start date to add new EUC particles.
-
     pset_start = np.nanmin(pset.time)
     psetx = pset_euc(fieldset, pclass, lon, dy, dz, repeatdt,
                      pset_start, repeats, xlog=xlog)
@@ -192,16 +184,18 @@ start = (fieldset.time_origin.time_origin + timedelta(seconds=pset_start))
 
 # Create output ParticleFile p_name and time steps to write output.
 output_file = pset.ParticleFile(cfg.data/sim_id.stem, outputdt=outputdt)
-xlog['itime'] = start.strftime('%Y-%m-%d')
-xlog['ftime'] = (start - runtime).strftime('%Y-%m-%d')
+xlog['Ti'] = start.strftime('%Y-%m-%d')
+xlog['Tf'] = (start - runtime).strftime('%Y-%m-%d')
 xlog['N'] = xlog['new'] + xlog['file']
 xlog['id'] = sim_id.stem
 xlog['out'] = output_file.tempwritedir_base[-8:]
 xlog['run'] = runtime.days
 xlog['dt'] = dt_mins
+xlog['v'] = v
 xlog['outdt'] = outputdt.days
 xlog['rdt'] = repeatdt.days
 xlog['land'] = fieldset.landlim
+xlog['eps'] = fieldset.eps
 xlog['pset_start'] = pset_start
 xlog['pset_start_r'] = pset.particle_data['time'].max()
 
@@ -247,10 +241,10 @@ for j in ds.traj.values:
     mn = 195
     tj = list(zip(np.arange(ds.isel(traj=j).lat[mn:mx].values.size),
                   ds.isel(traj=j).unbeached[mn:mx].values.astype(dtype=int),
-                  np.around(ds.isel(traj=j).lat[mn:mx].values, 2),
-                  np.around(ds.isel(traj=j).lon[mn:mx].values, 2),
-                  np.around(ds.isel(traj=j).z[mn:mx].values, 2)))
+                  np.around(ds.isel(traj=j).lat[mn:mx].values, 3),
+                  np.around(ds.isel(traj=j).lon[mn:mx].values, 3),
+                  np.around(ds.isel(traj=j).z[mn:mx].values, 3)))
     print(j, mx, tj[-1])
 
 # ds = main.plot3D(sim_id)
-ds, dx = plot_traj(sim_id, var='u', traj=1, t=2, Z=250, ds=ds)
+ds, dx = plot_traj(sim_id, var='u', traj=0, t=2, Z=250, ds=ds)
