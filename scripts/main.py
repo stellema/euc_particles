@@ -173,7 +173,7 @@ def ofam_fieldset(time_bnds='full', exp='hist', chunks=True, cs=300,
 
     # Convert from geometric to geographic coordinates (m to degree).
     fieldset.add_constant('geo', 1/(1852*60))
-    fieldset.add_constant('landlim', 0.97)
+    fieldset.add_constant('landlim', 0.95)
     fieldset.add_constant('eps', 1e-6)
 
     if add_zone:
@@ -309,37 +309,6 @@ def UnBeaching(particle, fieldset, time):
             particle.delete()
 
 
-# def BeachTest(particle, fieldset, time):
-#     land1 = fieldset.land[0., particle.depth, particle.lat, particle.lon]
-#     if land1 > fieldset.landlim:
-#         particle.beached += 1
-#         if particle.beached > 12:
-#             print("Deleted beached particle [%d] (%g %g %g %g)." % (particle.id, particle.beached, particle.lon, particle.lat, particle.depth))
-#             particle.unbeached = -1 * particle.unbeached
-#             particle.delete()
-#     else:
-#         particle.beached = 0
-
-
-# def UnBeaching(particle, fieldset, time):
-#     if particle.beached >= 1:
-#         ub = fieldset.Ub[0., particle.depth, particle.lat, particle.lon]
-#         vb = fieldset.Vb[0., particle.depth, particle.lat, particle.lon]
-#         if math.fabs(ub) > 1e-10:
-#             ubx = fieldset.geo * (1/math.cos(particle.lat * math.pi/180))
-#             particle.lon += math.copysign(ubx, ub) * math.fabs(particle.dt)
-#         if math.fabs(vb) > 1e-10:
-#             particle.lat += math.copysign(fieldset.geo, vb) * math.fabs(particle.dt)
-#         particle.unbeached += 1
-
-#         # Check if particle is still on land.
-#         land2 = fieldset.land[0., particle.depth, particle.lat, particle.lon]
-#         if land2 > fieldset.landlim:
-#             particle.beached += 1
-#         else:
-#             particle.beached = 0
-
-
 def AdvectionRK4_3Db(particle, fieldset, time):
     """Fourth-order Runge-Kutta 3D particle advection."""
     if particle.beached == 0:
@@ -460,7 +429,7 @@ def log_simulation(xlog, rank, logger):
                     .format(xlog['id'], xlog['Ti'], xlog['Tf'], xlog['run']))
         logger.info('{}:Lon={}: Lat={}: Depth={}'
                     .format(xlog['id'], xlog['x'], xlog['y'], xlog['z']))
-        logger.info('{}:DIR={}: Reps={}d: dt={:.0f}m: Out={:.0f}d: Land={} EPS={}'
+        logger.info('{}:Dir={}: Rep={}d: dt={:.0f}m: Out={:.0f}d: Land={} Eps={}'
                     .format(xlog['id'], xlog['out'], xlog['rdt'], xlog['dt'],
                             xlog['outdt'], xlog['land'], xlog['eps']))
 

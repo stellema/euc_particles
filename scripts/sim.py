@@ -76,7 +76,7 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
     dt = -timedelta(minutes=dt_mins)  # Advection step (negative for backward).
     repeatdt = timedelta(days=repeatdt_days)  # Repeat particle release time.
     outputdt = timedelta(days=outputdt_days)  # Advection steps to write.
-    repeats = 6#math.floor(runtime/repeatdt)
+    repeats = math.floor(runtime/repeatdt)
 
     # Don't add final repeat if run ends on a repeat day.
     if not final and runtime_days % repeatdt_days == 0:
@@ -242,8 +242,8 @@ if __name__ == "__main__" and cfg.home != Path('E:/'):
             v=args.version, pfile=args.pfile)
 
 elif __name__ == "__main__":
-    dy, dz, lon = 0.6, 150, 165
-    dt_mins, repeatdt_days, outputdt_days, runtime_days = 60, 6, 1, 360
+    dy, dz, lon = 1, 150, 165
+    dt_mins, repeatdt_days, outputdt_days, runtime_days = 60, 6, 1, 36
     pfile = ['None', 'sim_hist_165_v25r0.nc'][0]
     v = 55
     exp = 'hist'
