@@ -1,0 +1,32 @@
+sim_hist_165_t4r0: I=159529 W=61438 N=98091 F=88408 del=9683(9.9%) uB=14545(14.8%) B=121(0.1%N0.8%uB) OOB=9562
+Traceback (most recent call last):
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 198, in _acquire_with_cache_info
+    file = self._cache[self._key]
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/lru_cache.py", line 53, in __getitem__
+    value = self._cache[key]
+KeyError: [<class 'netCDF4._netCDF4.Dataset'>, ('/g/data/e14/as3189/OFAM/data/sim_hist_165_v2r0.nc',), 'r', (('clobber', True), ('diskless', False), ('format', 'NETCDF4'), ('persist', False))]
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/sim_info.py", line 110, in <module>
+    ds = xr.open_dataset(sim_id, decode_cf=False)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/api.py", line 509, in open_dataset
+    filename_or_obj, group=group, lock=lock, **backend_kwargs
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 358, in open
+    return cls(manager, group=group, mode=mode, lock=lock, autoclose=autoclose)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 314, in __init__
+    self.format = self.ds.data_model
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 367, in ds
+    return self._acquire()
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/netCDF4_.py", line 361, in _acquire
+    with self._manager.acquire_context(needs_lock) as root:
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/contextlib.py", line 112, in __enter__
+    return next(self.gen)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 186, in acquire_context
+    file, cached = self._acquire_with_cache_info(needs_lock)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.04/lib/python3.7/site-packages/xarray/backends/file_manager.py", line 204, in _acquire_with_cache_info
+    file = self._opener(*self._args, **kwargs)
+  File "netCDF4/_netCDF4.pyx", line 2321, in netCDF4._netCDF4.Dataset.__init__
+  File "netCDF4/_netCDF4.pyx", line 1885, in netCDF4._netCDF4._ensure_nc_success
+FileNotFoundError: [Errno 2] No such file or directory: b'/g/data/e14/as3189/OFAM/data/sim_hist_165_v2r0.nc'
