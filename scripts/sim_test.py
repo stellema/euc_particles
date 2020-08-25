@@ -111,7 +111,7 @@ class zParticle(JITParticle):
 
     # The velocity of the particle.
     u = Variable('u', initial=fieldset.U, to_write='once',
-                 dtype=np.float32)
+                  dtype=np.float32)
 
     # The 'zone' of the particle.
     zone = Variable('zone', initial=0., dtype=np.float32)
@@ -129,7 +129,7 @@ class zParticle(JITParticle):
 
     # Unbeach if beached greater than zero.
     beached = Variable('beached', initial=0., #to_write=False,
-                       dtype=np.float32)
+                        dtype=np.float32)
 
     # Unbeached count.
     unbeached = Variable('unbeached', initial=0., dtype=np.float32)
@@ -164,13 +164,13 @@ else:
 
     # Create ParticleSet from the given ParticleFile.
     pset = main.pset_from_file(fieldset, pclass=pclass,
-                               filename=filename, restart=True,
-                               restarttime=np.nanmin, xlog=xlog)
+                                filename=filename, restart=True,
+                                restarttime=np.nanmin, xlog=xlog)
     xlog['file_r'] = pset.size
     # Start date to add new EUC particles.
     pset_start = np.nanmin(pset.time)
     psetx = pset_euc(fieldset, pclass, lon, dy, dz, repeatdt,
-                     pset_start, repeats, xlog=xlog)
+                      pset_start, repeats, xlog=xlog)
 
     xlog['new_r'] = psetx.size
     psetx = del_westward(psetx)
@@ -204,7 +204,7 @@ main.log_simulation(xlog, rank, logger)
 
 # Kernels.
 kernels = pset.Kernel(main.AdvectionRK4_3Db)
-kernels += pset.Kernel(main.BeachTest) + pset.Kernel(main.UnBeaching)
+# kernels += pset.Kernel(main.BeachTest) + pset.Kernel(main.UnBeaching)
 kernels += pset.Kernel(main.AgeZone) + pset.Kernel(main.Distance)
 
 # ParticleSet execution endtime.
@@ -215,7 +215,7 @@ recovery_kernels = {ErrorCode.ErrorOutOfBounds: main.DeleteParticle,
                     ErrorCode.ErrorThroughSurface: main.SubmergeParticle}
 
 pset.execute(kernels, endtime=endtime, dt=dt, output_file=output_file,
-             verbose_progress=True, recovery=recovery_kernels)
+              verbose_progress=True, recovery=recovery_kernels)
 
 timed = tools.timer(ts)
 xlog['end_r'] = pset.size

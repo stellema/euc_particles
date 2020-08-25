@@ -42,8 +42,8 @@ def island(k, j, i):
 
 
 for k in range(depth.size):
-    for j in range(lat.size-2):
-        for i in range(lon.size-2):
+    for j in range(1, lat.size-2):
+        for i in range(1, lon.size-2):
             if island(k, j, i):
                 # Move west.
                 if not island(k, j, i-1):

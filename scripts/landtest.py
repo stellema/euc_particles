@@ -6,6 +6,7 @@ author: Annette Stellema (astellemas@gmail.com)
 
 
 """
+import main
 import cfg
 import tools
 import math
@@ -19,115 +20,138 @@ from datetime import datetime, timedelta
 from parcels import (FieldSet, Field, ParticleSet, VectorField,
                      ErrorCode, AdvectionRK4)
 
+def plot_interp(ax, i, xx, yy, v, title, mn, mx, cmap):
+    ax[i].set_title(title)
+    im = ax[i].pcolormesh(xx, yy, v, vmin=mn, vmax=mx, cmap=cmap, shading='flat')
+    for lat in lats:
+        ax[i].axhline(lat, color='k', linestyle='--')
+    for lon in lons:
+        ax[i].axvline(lon, color='k', linestyle='--')
+    ax[i].set_ylim(ymin=lats[0], ymax=lats[-1])
+    ax[i].set_xlim(xmin=lons[0], xmax=lons[-1])
+    fig.colorbar(im, ax=ax[i])
 
-nmaps = {"time": ["Time"],
-         "lon": ["xu_ocean", "xt_ocean"],
-         "lat": ["yu_ocean", "yt_ocean"],
-         "depth": ["st_ocean", "sw_ocean",
-                   "sw_ocean_mod", "st_edges_ocean"]}
-
-parcels.field.NetcdfFileBuffer._name_maps = nmaps
-
-
-# Mesh contains all OFAM3 coords.
-mesh = str(cfg.data/'ofam_mesh_grid.nc')
-
-dims = {'U': {'time': 'Time', 'lat': 'yu_ocean', 'lon': 'xu_ocean',
-              'depth': 'st_edges_ocean'},
-        'V': {'time': 'Time', 'lat': 'yu_ocean', 'lon': 'xu_ocean',
-              'depth': 'st_edges_ocean'},
-        'W': {'time': 'Time', 'lat': 'yu_ocean', 'lon': 'xu_ocean',
-              'depth': 'sw_ocean_mod'}}
-
-# Depth coordinate indices.
-# U,V: Exclude last index of st_edges_ocean.
-# W: Move last level to top, shift rest down.
-n = 51  # len(st_ocean)
-zu_ind = np.arange(0, n, dtype=int).tolist()
-zw_ind = np.append(n - 1, np.arange(0, n - 1, dtype=int)).tolist()
-
-indices = {'U': {'depth': zu_ind},
-           'V': {'depth': zu_ind},
-           'W': {'depth': zw_ind}}
-
-chunks = 'auto'
+    return
 
 
-# Set fieldset minimum depth.
-# fieldset.mindepth = fieldset.U.depth[0]
+fieldset = main.ofam_fieldset(time_bnds='full', exp='hist', chunks=True, cs=300,
+                              time_periodic=False, add_zone=True, add_unbeach_vel=True,
+                              apply_indicies=False)
+fieldset.computeTimeChunk(0, 0)
+dx = 0.1
+dz = 0.25
+J = [-5, -4.35]
+I = [156.65, 157.45]
+z = 290
+# Zonal velocity.
+du = xr.open_dataset(cfg.ofam/'ocean_u_2012_01.nc').u
+u = du.isel(Time=0).sel(st_ocean=z, method='nearest')
+u = u.sel(yu_ocean=slice(J[0], J[1]), xu_ocean=slice(I[0], I[1]))
 
-# # Change W velocity direction scaling factor.
-# fieldset.W.set_scaling_factor(-1)
+# Land.
+db = xr.open_dataset(cfg.data/'OFAM3_unbeach_land_ucell.nc')
+ld = db.land.isel(Time=0).sel(st_ocean=z, method='nearest')
+ld = ld.sel(yu_ocean=slice(J[0], J[1]), xu_ocean=slice(I[0], I[1]))
 
-# # Convert from geometric to geographic coordinates (m to degree).
-# fieldset.add_constant('geo', 1/(1852*60))
+# UnbeachU
+ub = db.unBeachU.isel(Time=0).sel(st_ocean=z, method='nearest')
+ub = ub.sel(yu_ocean=slice(J[0], J[1]), xu_ocean=slice(I[0], I[1]))
+# UnbeachU
+vb = db.unBeachV.isel(Time=0).sel(st_ocean=z, method='nearest')
+vb = vb.sel(yu_ocean=slice(J[0], J[1]), xu_ocean=slice(I[0], I[1]))
 
+lats = u.yu_ocean.values
+lons = u.xu_ocean.values
+fv = np.zeros((lats.size, lons.size))*np.nan
+# latx = lats-0.05
+# lonx = lons-0.05
+latz = np.interp(np.arange(0, len(lats)-1 + dx, dx), np.arange(0, len(lats)), lats)
+lonz = np.interp(np.arange(0, len(lons)-1 + dx, dx), np.arange(0, len(lons)), lons)
+latx = np.interp(np.arange(0, len(lats)-1 + dz, dz), np.arange(0, len(lats)), lats)
+lonx = np.interp(np.arange(0, len(lons)-1 + dz, dz), np.arange(0, len(lons)), lons)
+fvz = np.zeros((latz.size, lonz.size))
+fld, fub, fvb = fvz.copy(), fvz.copy(), fvz.copy()
+fvx = np.zeros((latx.size, lonx.size))
+flx, fubx, fvbx = fvx.copy(), fvx.copy(), fvx.copy()
 
-# Add Unbeach velocity vectorfield to fieldset.
-file = str(cfg.data/'OFAM3_unbeach_land_ucell.nc')
+for iy, y in enumerate(latz):
+    for ix, x in enumerate(lonz):
+        fvz[iy, ix] = fieldset.U.eval(0, z, y, x, applyConversion=False)
+        fld[iy, ix] = fieldset.land.eval(0, z, y, x, applyConversion=False)
+        fub[iy, ix] = fieldset.Ub.eval(0, z, y, x, applyConversion=False)
+        fvb[iy, ix] = fieldset.Vb.eval(0, z, y, x, applyConversion=False)
 
-variables = {'Ub': 'unBeachU',
-             'Vb': 'unBeachV',
-             'land': 'land'}
+for iy, y in enumerate(latx):
+    for ix, x in enumerate(lonx):
+        fvx[iy, ix] = fieldset.U.eval(0, z, y, x, applyConversion=False)
+        flx[iy, ix] = fieldset.land.eval(0, z, y, x, applyConversion=False)
+        fubx[iy, ix] = fieldset.Ub.eval(0, z, y, x, applyConversion=False)
+        fvbx[iy, ix] = fieldset.Vb.eval(0, z, y, x, applyConversion=False)
 
-dimv = {'Ub': dims['U'],
-        'Vb': dims['U'],
-        'land': dims['U']}
-
-indices = {'depth': zu_ind}
-
-fieldset = FieldSet.from_netcdf(file, variables, dimv,
-                                  indices=indices,
-                                  field_chunksize=chunks,
-                                  allow_time_extrapolation=True)
-
-
-# Set field units and b-grid interp method (avoids bug).
-fieldset.land.units = parcels.tools.converters.UnitConverter()
-fieldset.Ub.units = parcels.tools.converters.GeographicPolar()
-fieldset.Vb.units = parcels.tools.converters.Geographic()
-fieldset.Ub.interp_method = 'bgrid_velocity'
-fieldset.Vb.interp_method = 'bgrid_velocity'
-fieldset.land.interp_method = 'bgrid_velocity'
-
-# lats = fieldset.land.lat
-# lons = fieldset.land.lon
-# depths = fieldset.land.depth
-
-# d = np.zeros((depths.size, lats.size, lons.size), dtype=np.float32)
-
-# for iz, z in enumerate(depths):
-#     for iy, y in enumerate(lats):
-#         for ix, x in enumerate(lons):
-#             d[iz, iy, ix] = fieldset.land.eval(0, z, y, x)
-
-
-
-# for j, i in zip(np.arange(-0.91, -0.78, 0.01), np.arange(185.29, 185.42, 0.01)):
-#     print(round(j, 2), round(i, 2), fieldset.land.eval(0, 297, j, i))
-
-
-i = 151.71893894
-k = 192.111676
-j = -8.68136321
-
-i = 151.2
-k = 193.66
-j = -8.7
-for j in np.arange(-8.5, -8.8, -0.05):
-    print(round(j, 3), round(i, 2),
-          fieldset.land.eval(0, k, j, i, applyConversion=False),
-          round(fieldset.U.eval(0, k, j, i, applyConversion=True), 4),
-          round(fieldset.V.eval(0, k, j, i, applyConversion=False), 4),
-          round(fieldset.W.eval(0, k, j, i, applyConversion=False), 4),
-          round(fieldset.Ub.eval(0, k, j, i, applyConversion=False), 4),
-          round(fieldset.Vb.eval(0, k, j, i, applyConversion=False), 4))
+fvz[np.isnan(fvz)] = 0
+fvx[np.isnan(fvx)] = 0
+u = u.where(~np.isnan(u), 0)
+x, y = np.meshgrid(lons, lats)
 
 
-j = -0.85
-for i in np.arange(185.29, 185.42, 0.005):
-    print(round(j, 2), round(i, 2),
-          fieldset.land.eval(0, 297, j, i),
-          round(fieldset.U.eval(0, 297, j, i)*1e6, 4),
-          round(fieldset.V.eval(0, 297, j, i)*1e6, 4),
-          round(fieldset.W.eval(0, 297, j, i)*1e6, 4))
+fig, ax = plt.subplots(4, 3, figsize=(15, 17))
+ax = ax.flatten()
+mn, mx = 0, 0.1
+cmap = plt.cm.gist_stern
+title = 'Original Zonal Velocity'
+x, y, v = lons, lats, np.fabs(u)
+plot_interp(ax, 0, x, y, v, title, mn, mx, cmap)
+title = 'Fieldset Velocity'
+x, y, v = lonx, latx, np.fabs(fvx)
+plot_interp(ax, 1, x, y, v, title, mn, mx, cmap)
+x, y, v = lonz, latz, np.fabs(fvz)
+plot_interp(ax, 2, x, y, v, title, mn, mx, cmap)
+
+cmap = plt.cm.viridis_r
+mn, mx = 0.0, 1
+title = 'Original Land Velocity'
+x, y, v = lons, lats, np.fabs(ld)
+plot_interp(ax, 3, x, y, v, title, mn, mx, cmap)
+title = 'Fieldset Land Velocity'
+x, y, v = lonx, latx, np.fabs(flx)
+plot_interp(ax, 4, x, y, v, title, mn, mx, cmap)
+x, y, v = lonz, latz, np.fabs(fld)
+plot_interp(ax, 5, x, y, v, title, mn, mx, cmap)
+
+cmap = plt.cm.seismic
+mn, mx = -1, 1
+title = 'Original unbeachU Velocity'
+x, y, v = lons, lats, ub
+plot_interp(ax, 6, x, y, v, title, mn, mx, cmap)
+title = 'Fieldset unbeachU Velocity'
+x, y, v = lonx, latx, fubx
+plot_interp(ax, 7, x, y, v, title, mn, mx, cmap)
+x, y, v = lonz, latz, fub
+plot_interp(ax, 8, x, y, v, title, mn, mx, cmap)
+
+
+mn, mx = -1, 1
+title = 'Original unbeachV Velocity'
+x, y, v = lons, lats, vb
+plot_interp(ax, 9, x, y, v, title, mn, mx, cmap)
+title = 'Fieldset unbeachV Velocity'
+x, y, v = lonx, latx, fvbx
+plot_interp(ax, 10, x, y, v, title, mn, mx, cmap)
+x, y, v = lonz, latz, fvb
+plot_interp(ax, 11, x, y, v, title, mn, mx, cmap)
+
+plt.tight_layout()
+plt.savefig(cfg.fig/'interp_lat_{}_lon{}_{}.png'
+            .format(math.ceil(J[0]), math.ceil(I[0]), dx), format="png")
+plt.show()
+# i = 151.2
+# k = 193.66
+# j = -8.7
+# for j in np.arange(-8.5, -8.8, -0.05):
+#     print(round(j, 3), round(i, 2),
+#           fieldset.land.eval(0, k, j, i, applyConversion=False),
+#           round(fieldset.U.eval(0, k, j, i, applyConversion=True), 4),
+#           round(fieldset.V.eval(0, k, j, i, applyConversion=False), 4),
+#           round(fieldset.W.eval(0, k, j, i, applyConversion=False), 4),
+#           round(fieldset.Ub.eval(0, k, j, i, applyConversion=False), 4),
+#           round(fieldset.Vb.eval(0, k, j, i, applyConversion=False), 4))

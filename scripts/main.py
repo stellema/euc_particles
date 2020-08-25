@@ -72,7 +72,8 @@ from parcels import (FieldSet, Field, ParticleSet, VectorField,
 
 
 def ofam_fieldset(time_bnds='full', exp='hist', chunks=True, cs=300,
-                  time_periodic=False, add_zone=True, add_unbeach_vel=True):
+                  time_periodic=False, add_zone=True, add_unbeach_vel=True,
+                  apply_indicies=True):
     """Create a 3D parcels fieldset from OFAM model output.
 
     Between two dates useing FieldSet.from_b_grid_dataset.
@@ -138,14 +139,23 @@ def ofam_fieldset(time_bnds='full', exp='hist', chunks=True, cs=300,
     # Depth coordinate indices.
     # U,V: Exclude last index of st_edges_ocean.
     # W: Move last level to top, shift rest down.
-    n = 51  # len(st_ocean)
-    zu_ind = np.arange(0, n, dtype=int).tolist()
-    zw_ind = np.append(n - 1, np.arange(0, n - 1, dtype=int)).tolist()
-    yu_ind = np.arange(1, 300, dtype=int).tolist()
-    yw_ind = np.arange(0, 300 - 1, dtype=int).tolist()
-    xu_ind = np.arange(1, 1750, dtype=int).tolist()
-    xw_ind = np.arange(0, 1750 - 1, dtype=int).tolist()
-
+    Z = 51  # len(st_ocean)
+    X = 1750
+    Y = 300
+    if apply_indicies:
+        zu_ind = np.arange(0, Z, dtype=int).tolist()
+        zw_ind = np.append(Z - 1, np.arange(0, Z - 1, dtype=int)).tolist()
+        yu_ind = np.arange(1, Y, dtype=int).tolist()
+        yw_ind = np.arange(0, Y - 1, dtype=int).tolist()
+        xu_ind = np.arange(1, X, dtype=int).tolist()
+        xw_ind = np.arange(0, X - 1, dtype=int).tolist()
+    else:
+        zu_ind = np.arange(0, Z, dtype=int).tolist()
+        zw_ind = np.append(Z - 1, np.arange(0, Z - 1, dtype=int)).tolist()
+        yu_ind = np.arange(0, Y, dtype=int).tolist()
+        yw_ind = np.arange(0, Y, dtype=int).tolist()
+        xu_ind = np.arange(0, X, dtype=int).tolist()
+        xw_ind = np.arange(0, X, dtype=int).tolist()
     indices = {'U': {'lat': yu_ind, 'lon': xu_ind, 'depth': zu_ind},
                'V': {'lat': yu_ind, 'lon': xu_ind, 'depth': zu_ind},
                'W': {'lat': yw_ind, 'lon': xw_ind, 'depth': zw_ind}}
@@ -225,7 +235,7 @@ def ofam_fieldset(time_bnds='full', exp='hist', chunks=True, cs=300,
         fieldset.add_field(fieldsetUB.Vb, 'Vb')
         fieldset.add_field(fieldsetUB.land, 'land')
 
-        # Set field units and b-grid interp method (avoids bug).
+        # Set field units and b-grid interp method.
         fieldset.land.units = parcels.tools.converters.UnitConverter()
         fieldset.Ub.units = parcels.tools.converters.GeographicPolar()
         fieldset.Vb.units = parcels.tools.converters.Geographic()
@@ -273,40 +283,60 @@ def generate_sim_id(lon, v=0, exp='hist', randomise=False,
 
 def BeachTest(particle, fieldset, time):
     land1 = fieldset.land[0., particle.depth, particle.lat, particle.lon]
-    if land1 > fieldset.landlim:
-        particle.beached += 1
-    elif (land1 > 0.9 and
-          math.fabs(particle.lat - particle.prev_lat) < fieldset.eps or\
-          math.fabs(particle.lon - particle.prev_lon) < fieldset.eps):
-        particle.beached += 1
 
+    # Test if on or near to land point.
+    if land1 > 0.97:
+        particle.beached += 1
+    # If particle is really close to land and lat OR lon hasn't changed much.
+    elif land1 > 0.5:
+        (uu, vv) = fieldset.UV[time, particle.depth, particle.lat, particle.lon]
+        if math.fabs(particle.lat - particle.prev_lat) < 1e-6 and math.fabs(particle.lon - particle.prev_lon) < 1e-6:
+            particle.beached += 1
+        elif math.fabs(uu) < 1e-7 and math.fabs(vv) < 1e-7:
+            particle.beached += 1
+        else:
+            particle.beached = 0
     else:
         particle.beached = 0
 
 
 def UnBeaching(particle, fieldset, time):
+    # Attempt three times to unbeach particle.
     if particle.beached >= 1:
-        while particle.beached > 0 and particle.beached <= 3:
+        while particle.beached > 0 and particle.beached <= 50:
             ub = fieldset.Ub[0., particle.depth, particle.lat, particle.lon]
             vb = fieldset.Vb[0., particle.depth, particle.lat, particle.lon]
-            if math.fabs(ub) > 1e-8:
+            # Unbeach by 1m/s (only if unbeach velocity is vaid (not interpolated from another cell))
+            if math.fabs(ub) > 1e-6:
                 ubx = fieldset.geo * (1/math.cos(particle.lat * math.pi/180))
                 particle.lon += math.copysign(ubx, ub) * math.fabs(particle.dt)
-            if math.fabs(vb) > 1e-8:
+            if math.fabs(vb) > 1e-6:
                 particle.lat += math.copysign(fieldset.geo, vb) * math.fabs(particle.dt)
+
+            elif math.fabs(vb) <= 1e-6 and math.fabs(vb) <= 1e-6:
+                vdir = particle.lat - particle.prev_lat
+                udir = particle.lon - particle.prev_lon
+                ubx = fieldset.geo * (1/math.cos(particle.lat * math.pi/180))
+                particle.lat += math.copysign(fieldset.geo, vdir) * math.fabs(particle.dt)
+                particle.lon += math.copysign(ubx, udir) * math.fabs(particle.dt)
             particle.unbeached += 1
 
             # Check if particle is still on land.
             land2 = fieldset.land[0., particle.depth, particle.lat, particle.lon]
-            if land2 > fieldset.landlim:
+            if land2 > 0.97:
                 particle.beached += 1
+            elif land2 > 0.5:
+                (uu1, vv1) = fieldset.UV[time, particle.depth, particle.lat, particle.lon]
+                if math.fabs(particle.lat - particle.prev_lat) < 1e-6 and math.fabs(particle.lon - particle.prev_lon) < 1e-6:
+                    particle.beached += 1
+                elif math.fabs(uu1) < 1e-7 and math.fabs(vv1) < 1e-7:
+                    particle.beached += 1
+                else:
+                    particle.beached = 0
             else:
                 particle.beached = 0
 
-        if particle.beached > 3:
-            print("Deleted beached particle [%d] (%g %g %g %g)." % (particle.id, particle.beached, particle.lon, particle.lat, particle.depth))
-            particle.unbeached = -1 * particle.unbeached
-            particle.delete()
+        particle.beached = 0
 
 
 def AdvectionRK4_3Db(particle, fieldset, time):
