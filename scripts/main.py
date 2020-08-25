@@ -292,7 +292,7 @@ def BeachTest(particle, fieldset, time):
         (uu, vv) = fieldset.UV[time, particle.depth, particle.lat, particle.lon]
         if math.fabs(particle.lat - particle.prev_lat) < 1e-6 and math.fabs(particle.lon - particle.prev_lon) < 1e-6:
             particle.beached += 1
-        elif math.fabs(uu) < 1e-7 and math.fabs(vv) < 1e-7:
+        elif math.fabs(uu) < 5e-7 and math.fabs(vv) < 5e-7:
             particle.beached += 1
         else:
             particle.beached = 0
@@ -303,7 +303,7 @@ def BeachTest(particle, fieldset, time):
 def UnBeaching(particle, fieldset, time):
     # Attempt three times to unbeach particle.
     if particle.beached >= 1:
-        while particle.beached > 0 and particle.beached <= 50:
+        while particle.beached > 0 and particle.beached <= 6:
             ub = fieldset.Ub[0., particle.depth, particle.lat, particle.lon]
             vb = fieldset.Vb[0., particle.depth, particle.lat, particle.lon]
             # Unbeach by 1m/s (only if unbeach velocity is vaid (not interpolated from another cell))
@@ -319,7 +319,7 @@ def UnBeaching(particle, fieldset, time):
                 ubx = fieldset.geo * (1/math.cos(particle.lat * math.pi/180))
                 particle.lat += math.copysign(fieldset.geo, vdir) * math.fabs(particle.dt)
                 particle.lon += math.copysign(ubx, udir) * math.fabs(particle.dt)
-            particle.unbeached += 1
+
 
             # Check if particle is still on land.
             land2 = fieldset.land[0., particle.depth, particle.lat, particle.lon]
@@ -329,13 +329,13 @@ def UnBeaching(particle, fieldset, time):
                 (uu1, vv1) = fieldset.UV[time, particle.depth, particle.lat, particle.lon]
                 if math.fabs(particle.lat - particle.prev_lat) < 1e-6 and math.fabs(particle.lon - particle.prev_lon) < 1e-6:
                     particle.beached += 1
-                elif math.fabs(uu1) < 1e-7 and math.fabs(vv1) < 1e-7:
+                elif math.fabs(uu1) < 5e-7 and math.fabs(vv1) < 5e-7:
                     particle.beached += 1
                 else:
                     particle.beached = 0
             else:
                 particle.beached = 0
-
+        particle.unbeached += 1
         particle.beached = 0
 
 

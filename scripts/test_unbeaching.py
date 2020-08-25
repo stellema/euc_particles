@@ -22,12 +22,12 @@ import warnings
 warnings.filterwarnings("ignore")
 
 def del_land(pset):
-    inds, = np.where((pset.particle_data['ld'] > 0.5))
+    inds, = np.where((pset.particle_data['ld'] > 0.00))
     for d in pset.particle_data:
         pset.particle_data[d] = np.delete(pset.particle_data[d], inds, axis=0)
     return pset
 
-test = 'ngcu'
+test = 'CS'
 fieldset = main.ofam_fieldset(time_bnds='full', exp='hist', chunks=True,
                               cs=300, time_periodic=False, add_zone=True,
                               add_unbeach_vel=True, apply_indicies=True)
@@ -35,9 +35,9 @@ fieldset = main.ofam_fieldset(time_bnds='full', exp='hist', chunks=True,
 
 
 class zParticle(JITParticle):
-    age = Variable('age', initial=0., dtype=np.float32)
-    u = Variable('u', initial=fieldset.U, to_write='once', dtype=np.float32)
-    zone = Variable('zone', initial=0., dtype=np.float32)
+    # age = Variable('age', initial=0., dtype=np.float32)
+    # u = Variable('u', initial=fieldset.U, to_write='once', dtype=np.float32)
+    # zone = Variable('zone', initial=0., dtype=np.float32)
     distance = Variable('distance', initial=0., dtype=np.float32)
     prev_lon = Variable('prev_lon', initial=attrgetter('lon'),
                         to_write=False, dtype=np.float32)
@@ -50,25 +50,44 @@ class zParticle(JITParticle):
 
 pclass = zParticle
 
-if test == 'island':
+if test == 'BT':
     runtime = timedelta(minutes=60)
     dt = timedelta(minutes=60)
     stime = fieldset.U.grid.time[0]
     outputdt = timedelta(minutes=60)
-    T = range(144)
+    T = np.arange(2, 144)
     dx = 0.1
-    J, I, K = [-5.25, -4.2], [156.65, 157.75], [290]
+    J, I, K = [-5.25, -4.2], [156.65, 157.75], [160]
     domain = {'N': -3.75, 'S': -5.625, 'E': 158, 'W': 156}
-elif test == 'ngcu':
+elif test == 'PNG':
     runtime = timedelta(minutes=120)
     dt = -timedelta(minutes=60)
     stime = fieldset.U.grid.time[-1] - 60
     outputdt = timedelta(minutes=60)
-    T = np.arange(0, 144)
-    dx = 0.25
-    J, I, K = [-6, -3], [143, 148], [290]
-    domain = {'N': -2.5, 'S': -7, 'E': 149, 'W': 142}
+    T = np.arange(2, 400)
+    dx = 0.1
+    J, I, K = [-6, -1.5], [141, 149], [160]
+    domain = {'N': -1, 'S': -7.5, 'E': 149.5, 'W': 141}
+elif test == 'SS':
+    runtime = timedelta(minutes=120)
+    dt = -timedelta(minutes=60)
+    stime = fieldset.U.grid.time[-1] - 60
+    outputdt = timedelta(minutes=60)
+    T = np.arange(2, 400)
+    dx = 0.1
+    J, I, K = [-6, -2], [150.5, 156.5], [160]
+    domain = {'N': -2, 'S': -7, 'E': 157.5, 'W': 150}
+elif test == 'CS':
+    runtime = timedelta(minutes=120)
+    dt = -timedelta(minutes=60)
+    stime = fieldset.U.grid.time[-1] - 60
+    outputdt = timedelta(minutes=60)
+    T = np.arange(2, 400)
+    dx = 0.1
 
+    J, I, K = [-12.5, -7.5], [147.5, 156.5], [160]
+    domain = {'N': -7, 'S': -13.5, 'E': 156, 'W': 147}
+d = 20
 py = np.arange(J[0], J[1]+dx, dx)
 px = np.arange(I[0], I[1], dx)
 pz = np.array(K)
@@ -76,24 +95,29 @@ lon, lat = np.meshgrid(px, py)
 depth = np.repeat(pz, lon.size)
 
 i = 0
-while cfg.fig.joinpath('parcels/tests/BT' + str(i)).exists():
+while cfg.fig.joinpath('parcels/tests/{}{}'.format(test, i)).exists():
     i += 1
-cfg.fig.joinpath('parcels/tests/BT' + str(i)).mkdir()
-savefile = str(cfg.fig/'parcels/tests/BT{}/BT{}'.format(i, i))
+cfg.fig.joinpath('parcels/tests/{}{}'.format(test, i)).mkdir()
+savefile = str(cfg.fig/'parcels/tests/{}{}/{}{}'.format(test, i, test, i))
 pset = ParticleSet.from_list(fieldset=fieldset, pclass=pclass,
                              lon=lon, lat=lat, depth=depth, time=stime)
+fieldset.computeTimeChunk(fieldset.U.grid.time[-1], -1)
+pset.show(domain=domain, field='vector', depth_level=d, animation=False,
+          vmax=0.3, savefile=savefile + str(0).zfill(3))
 pset = del_land(pset)
+pset.show(domain=domain, field='vector', depth_level=d, animation=False,
+          vmax=0.3, savefile=savefile + str(1).zfill(3))
 kernels = pset.Kernel(main.AdvectionRK4_3Db)
 kernels += pset.Kernel(main.BeachTest) + pset.Kernel(main.UnBeaching)
-kernels += pset.Kernel(main.AgeZone) + pset.Kernel(main.Distance)
+kernels += pset.Kernel(main.Distance)
 recovery_kernels = {ErrorCode.ErrorOutOfBounds: main.DeleteParticle,
                     ErrorCode.ErrorThroughSurface: main.SubmergeParticle}
-fieldset.computeTimeChunk(fieldset.U.grid.time[-1], -1)
+
 for t in T:
-    pset.show(domain=domain, field='vector', depth_level=29, animation=False,
+    pset.show(domain=domain, field='vector', depth_level=d, animation=False,
               vmax=0.3, savefile=savefile + str(t).zfill(3))
     pset.execute(kernels, runtime=runtime, dt=dt,
                  verbose_progress=False, recovery=recovery_kernels)
 
-pset.show(domain=domain, field='vector', depth_level=29, animation=False,
+pset.show(domain=domain, field='vector', depth_level=d, animation=False,
           vmax=0.3, savefile=savefile + str(t).zfill(3))
