@@ -51,7 +51,7 @@ def mlogger(name, parcels=False, misc=True):
     class NoWarnFilter(logging.Filter):
         def filter(self, record):
             show = True
-            for key in ['Casting', 'Trying', 'Particle init']:
+            for key in ['Casting', 'Trying', 'Particle init', 'Plot saved']:
                 if record.getMessage().startswith(key):
                     show = False
             return show

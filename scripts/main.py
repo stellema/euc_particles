@@ -183,8 +183,9 @@ def ofam_fieldset(time_bnds='full', exp='hist', chunks=True, cs=300,
 
     # Convert from geometric to geographic coordinates (m to degree).
     fieldset.add_constant('geo', 1/(1852*60))
-    fieldset.add_constant('landlim', 0.95)
-    fieldset.add_constant('eps', 1e-6)
+    fieldset.add_constant('landlim', 0.97)
+    fieldset.add_constant('Vmin', 1.5e-7)
+    fieldset.add_constant('UBmin', 1e-6)
 
     if add_zone:
         # Add particle zone boundaries.
@@ -319,7 +320,6 @@ def UnBeaching(particle, fieldset, time):
                 ubx = fieldset.geo * (1/math.cos(particle.lat * math.pi/180))
                 particle.lat += math.copysign(fieldset.geo, vdir) * math.fabs(particle.dt)
                 particle.lon += math.copysign(ubx, udir) * math.fabs(particle.dt)
-
 
             # Check if particle is still on land.
             land2 = fieldset.land[0., particle.depth, particle.lat, particle.lon]
@@ -546,7 +546,7 @@ def plot3D(sim_id, ds=None):
     x, y, z = ds.lon, ds.lat, ds.z
 
     fig = plt.figure(figsize=(13, 10))
-    plt.suptitle(sim_id.stem, y=0.89, x=0.23)
+    # plt.suptitle(sim_id.stem, y=0.89, x=0.23)
     ax = fig.add_subplot(111, projection='3d')
     colors = plt.cm.rainbow(np.linspace(0, 1, len(ds.traj)))
     ax.set_xlim(tools.rounddown(np.nanmin(x)), tools.roundup(np.nanmax(x)))
