@@ -234,8 +234,8 @@ for t in T:
     pset.execute(kernels, runtime=runtime, dt=dt, output_file=output_file,
                  verbose_progress=False, recovery=recovery_kernels)
 
-pset.show(domain=domain, field=fieldtype, depth_level=d-3, animation=False,
-          vmax=vmax, vmin=vmin, savefile=savefile + str('g').zfill(3))
+pset.show(domain=domain, field=fieldtype, depth_level=d, animation=False,
+          vmax=vmax, vmin=vmin, savefile=savefile + str(t).zfill(3))
 
 
 pd = pset.particle_data
