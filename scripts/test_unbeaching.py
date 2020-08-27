@@ -154,37 +154,34 @@ if test == 'BT':
     stime = fieldset.U.grid.time[0]
     outputdt = timedelta(minutes=60)
     T = np.arange(1, 144)
-    J, I, K = [-5.25, -4.2], [156.65, 157.75], [160]
+    J, I, K = [-5.25, -4.2], [156.65, 157.75], [150]
     domain = {'N': -3.75, 'S': -5.625, 'E': 158, 'W': 156}
 elif test == 'PNG':
     runtime = timedelta(minutes=120)
     dt = -timedelta(minutes=60)
     stime = fieldset.U.grid.time[-1] - 60
     outputdt = timedelta(minutes=60)
-    T = np.arange(1, 400)
-    J, I, K = [-6, -1.5], [141, 149], [160]
+    J, I, K = [-6, -1.5], [141, 149], [150]
     domain = {'N': -1, 'S': -7.5, 'E': 149.5, 'W': 141}
 elif test == 'SS':
     runtime = timedelta(minutes=120)
     dt = -timedelta(minutes=60)
     stime = fieldset.U.grid.time[-1] - 60
     outputdt = timedelta(minutes=60)
-    T = np.arange(1, 400)
-    J, I, K = [-6, -2], [150.5, 156.5], [160]
+    J, I, K = [-6, -2], [150.5, 156.5], [150]
     domain = {'N': -2, 'S': -7, 'E': 157.5, 'W': 150}
 elif test == 'CS':
     runtime = timedelta(minutes=240)
     dt = -timedelta(minutes=60)
     stime = fieldset.U.grid.time[-1] - 60
     outputdt = timedelta(minutes=60)
-    T = np.arange(1, 400)
     # J, I, K = [-11, -9], [150, 154.5], [160] # Wierd strait.
     # J, I, K = [-8.7, -8.4], [149.7, 150], [160]  # underwater bridge,
-    J, I, K = [-12.5, -7.5], [147.5, 156.5], [160]  # Normal.
+    J, I, K = [-12.5, -7.5], [147.5, 156.5], [150]  # Normal.
     domain = {'N': -7, 'S': -13.5, 'E': 156, 'W': 147}
-d = 20
+d = 19
 dx = 0.1
-
+T = np.arange(1, 500)
 fieldtype, vmax, vmin = 'vector', 0.3, None
 fieldtype, vmax, vmin = fieldset.land, 1.2, 0.5
 py = np.arange(J[0], J[1] + dx, dx)
@@ -192,19 +189,12 @@ px = np.arange(I[0], I[1], dx)
 pz = np.array(K)
 lon, lat = np.meshgrid(px, py)
 depth = np.repeat(pz, lon.size)
-# rep = 1
-# rdt = 1
-# tr = stime - (np.arange(0, rep) * rdt*60*60)
-# time = np.repeat(tr, lon.size)
-# depth = np.tile(depth, rep)
-# lon = np.tile(lon, rep)
-# lat = np.tile(lat, rep)
 i = 0
-while cfg.fig.joinpath('parcels/tests/{}{}'.format(test, i)).exists():
+while cfg.fig.joinpath('parcels/tests/{}_{:02d}'.format(test, i)).exists():
     i += 1
-cfg.fig.joinpath('parcels/tests/{}{}'.format(test, i)).mkdir()
-savefile = cfg.fig/'parcels/tests/{}{}/{}{}'.format(test, i, test, i)
-sim = savefile.stem
+cfg.fig.joinpath('parcels/tests/{}_{:02d}'.format(test, i)).mkdir()
+savefile = cfg.fig/'parcels/tests/{}_{:02d}/{}_{:02d}_'.format(test, i, test, i)
+sim = savefile.stem[:-1]
 savefile = str(savefile)
 logger.info(' {}: Land>={}: LandB>={}: UBmin={}: Vmin={}: Loop>=3:\
             Sends back if >UBmin: UBW=-geo'
