@@ -56,7 +56,7 @@ def CoastTime(particle, fieldset, time):
 
 def BeachTest(particle, fieldset, time):
     particle.lnd = fieldset.land[0., particle.depth, particle.lat, particle.lon]
-    if particle.lnd < 0.5:
+    if particle.lnd < 0.75:
         particle.beached = 0
     else:
         (uu, vv) = fieldset.UV[time, particle.depth, particle.lat, particle.lon]
@@ -77,8 +77,7 @@ def UnBeaching(particle, fieldset, time):
         # Attempt three times to unbeach particle.
         # TODO: Test 3, 4 and 6. (no difference between 3 and 6)
         while particle.beached > 0 and particle.beached <= 3:
-            ub = fieldset.Ub[0., particle.depth, particle.lat, particle.lon]
-            vb = fieldset.Vb[0., particle.depth, particle.lat, particle.lon]
+            (ub, vb, wb) = fieldset.UVWb[0., particle.depth, particle.lat, particle.lon]
 
             # Unbeach by 1m/s (checks if unbeach velocities are close to zero).
             # fieldset.geo/4 == 2.25e-6 too large (C3).
@@ -87,6 +86,8 @@ def UnBeaching(particle, fieldset, time):
                 particle.lon += math.copysign(ubx, ub) * math.fabs(particle.dt)
             if math.fabs(vb) >= fieldset.UBmin:
                 particle.lat += math.copysign(fieldset.geo, vb) * math.fabs(particle.dt)
+            if math.fabs(wb) >= 1e-14:
+                particle.depth -= fieldset.geo * math.fabs(particle.dt)
 
             # Send back the way particle came and up if no unbeach velocities.
             elif math.fabs(ub) <= fieldset.UBmin and math.fabs(vb) <= fieldset.UBmin:
@@ -98,12 +99,6 @@ def UnBeaching(particle, fieldset, time):
                     particle.lon += math.copysign(ubx, xdir) * math.fabs(particle.dt)
                 particle.ubeachprv += 1
 
-            # Check if depth above is further away from land.
-            if particle.depth > fieldset.mindepth + 25:
-                landBu = fieldset.land[0., particle.depth - 10, particle.lat, particle.lon]
-                landBd = fieldset.land[0., particle.depth, particle.lat, particle.lon]
-                if landBu < landBd:
-                    particle.depth -= fieldset.geo * math.fabs(particle.dt)
             # Check if particle is still on land.
             particle.lnd = fieldset.land[0., particle.depth, particle.lat, particle.lon]
             (uuB, vvB) = fieldset.UV[time, particle.depth, particle.lat, particle.lon]
@@ -112,7 +107,7 @@ def UnBeaching(particle, fieldset, time):
                 particle.beached += 1
                 particle.beachlnd += 1  # Land trigger count.
             # Still near land with low velocity.
-            elif (particle.lnd >= 0.5 and math.fabs(uuB) <= fieldset.Vmin and math.fabs(vvB) <= fieldset.Vmin):
+            elif (particle.lnd >= 0.75 and math.fabs(uuB) <= fieldset.Vmin and math.fabs(vvB) <= fieldset.Vmin):
                 particle.beached += 1
                 particle.beachvel += 1  # Velocity trigger count.
             else:
@@ -129,7 +124,7 @@ def del_land(pset):
         pset.particle_data[d] = np.delete(pset.particle_data[d], inds, axis=0)
     return pset
 
-test = 'CS'
+test = 'PNG'
 fieldset = main.ofam_fieldset(time_bnds='full', exp='hist', chunks=True,
                               cs=300, time_periodic=False, add_zone=True,
                               add_unbeach_vel=True, apply_indicies=True)
@@ -160,7 +155,6 @@ if test == 'BT':
     stime = fieldset.U.grid.time[0]
     outputdt = timedelta(minutes=60)
     T = np.arange(1, 144)
-    dx = 0.1
     J, I, K = [-5.25, -4.2], [156.65, 157.75], [160]
     domain = {'N': -3.75, 'S': -5.625, 'E': 158, 'W': 156}
 elif test == 'PNG':
@@ -169,7 +163,6 @@ elif test == 'PNG':
     stime = fieldset.U.grid.time[-1] - 60
     outputdt = timedelta(minutes=60)
     T = np.arange(1, 400)
-    dx = 0.1
     J, I, K = [-6, -1.5], [141, 149], [160]
     domain = {'N': -1, 'S': -7.5, 'E': 149.5, 'W': 141}
 elif test == 'SS':
@@ -178,7 +171,6 @@ elif test == 'SS':
     stime = fieldset.U.grid.time[-1] - 60
     outputdt = timedelta(minutes=60)
     T = np.arange(1, 400)
-    dx = 0.1
     J, I, K = [-6, -2], [150.5, 156.5], [160]
     domain = {'N': -2, 'S': -7, 'E': 157.5, 'W': 150}
 elif test == 'CS':
@@ -187,65 +179,85 @@ elif test == 'CS':
     stime = fieldset.U.grid.time[-1] - 60
     outputdt = timedelta(minutes=60)
     T = np.arange(1, 400)
-    dx = 0.1
     # J, I, K = [-11, -9], [150, 154.5], [160] # Wierd strait.
     # J, I, K = [-8.7, -8.4], [149.7, 150], [160]  # underwater bridge,
     J, I, K = [-12.5, -7.5], [147.5, 156.5], [160]  # Normal.
     domain = {'N': -7, 'S': -13.5, 'E': 156, 'W': 147}
 d = 20
+dx = 0.1
+# rep = 1
+# rdt = 1
 # fieldtype, vmax, vmin = 'vector', 0.3, None
-fieldtype, vmax, vmin = fieldset.land, 1.2, 0.5
-py = np.arange(J[0], J[1]+dx, dx)
-px = np.arange(I[0], I[1], dx)
-pz = np.array(K)
-lon, lat = np.meshgrid(px, py)
-depth = np.repeat(pz, lon.size)
-i = 0
-while cfg.fig.joinpath('parcels/tests/{}{}'.format(test, i)).exists():
-    i += 1
-cfg.fig.joinpath('parcels/tests/{}{}'.format(test, i)).mkdir()
-savefile = cfg.fig/'parcels/tests/{}{}/{}{}'.format(test, i, test, i)
-sim = savefile.stem
-savefile = str(savefile)
-logger.info('{}: Land>={}: LandB>=0.50: UBmin={}: Vmin={}: Loop>=3.'
-            .format(sim, fieldset.landlim, fieldset.UBmin, fieldset.Vmin))
-logger.info('{}: Low unbeachUV - check previous position (depth move main)'.format(sim))
-logger.info('{}: Reduce depth if less land 25m above.'.format(sim))
-pset = ParticleSet.from_list(fieldset=fieldset, pclass=pclass,
-                             lon=lon, lat=lat, depth=depth, time=stime)
-fieldset.computeTimeChunk(0, 0)
-# fieldset.computeTimeChunk(fieldset.U.grid.time[-1], -1)
-pset.show(domain=domain, field=fieldtype, depth_level=d, animation=False,
-          vmax=vmax, vmin=vmin, savefile=savefile + str(0).zfill(3))
+# fieldtype, vmax, vmin = fieldset.land, 1.2, 0.5
+# py = np.arange(J[0], J[1] + dx, dx)
+# px = np.arange(I[0], I[1], dx)
+# pz = np.array(K)
 
-pset = del_land(pset)
-N = pset.size
-kernels = pset.Kernel(AdvectionRK4_3D)
-kernels += pset.Kernel(CoastTime)
-kernels += pset.Kernel(BeachTest) + pset.Kernel(UnBeaching)
-kernels += pset.Kernel(main.Distance)
-recovery_kernels = {ErrorCode.ErrorOutOfBounds: main.DeleteParticle,
-                    ErrorCode.ErrorThroughSurface: main.SubmergeParticle}
-output_file = pset.ParticleFile(cfg.data/'{}{}.nc'.format(test, i),
-                                outputdt=outputdt)
-for t in T:
-    pset.show(domain=domain, field=fieldtype, depth_level=d, animation=False,
-              vmax=vmax, vmin=vmin, savefile=savefile + str(t).zfill(3))
-    pset.execute(kernels, runtime=runtime, dt=dt, output_file=output_file,
-                 verbose_progress=False, recovery=recovery_kernels)
+# lon, lat = np.meshgrid(px, py)
+# depth = np.repeat(pz, lon.size)
+# # tr = stime - (np.arange(0, rep) * rdt*60*60)
+# # time = np.repeat(tr, lon.size)
+# # depth = np.tile(depth, rep)
+# # lon = np.tile(lon, rep)
+# # lat = np.tile(lat, rep)
+# i = 0
+# while cfg.fig.joinpath('parcels/tests/{}{}'.format(test, i)).exists():
+#     i += 1
+# cfg.fig.joinpath('parcels/tests/{}{}'.format(test, i)).mkdir()
+# savefile = cfg.fig/'parcels/tests/{}{}/{}{}'.format(test, i, test, i)
+# sim = savefile.stem
+# savefile = str(savefile)
+# logger.info('{}: Land>={}: LandB>=0.75: UBmin={}: Vmin={}: Loop>=3'
+#             .format(sim, fieldset.landlim, fieldset.UBmin, fieldset.Vmin))
+# logger.info('{}: Low unbeachUV - check previous position (depth 25m move main)'
+#             .format(sim))
 
-pset.show(domain=domain, field=fieldtype, depth_level=d, animation=False,
-          vmax=vmax, vmin=vmin, savefile=savefile + str(t).zfill(3))
+# pset = ParticleSet.from_list(fieldset=fieldset, pclass=pclass,
+#                               lon=lon, lat=lat, depth=depth, time=stime)
+
+# fieldset.computeTimeChunk(0, 0)
+# # fieldset.computeTimeChunk(fieldset.U.grid.time[-1], -1)
+# pset.show(domain=domain, field=fieldtype, depth_level=d, animation=False,
+#           vmax=vmax, vmin=vmin, savefile=savefile + str(0).zfill(3))
+
+# pset = del_land(pset)
+# N = pset.size
+# kernels = pset.Kernel(AdvectionRK4_3D)
+# kernels += pset.Kernel(CoastTime)
+# kernels += pset.Kernel(BeachTest) + pset.Kernel(UnBeaching)
+# kernels += pset.Kernel(main.Distance)
+# recovery_kernels = {ErrorCode.ErrorOutOfBounds: main.DeleteParticle,
+#                     ErrorCode.ErrorThroughSurface: main.SubmergeParticle}
+# output_file = pset.ParticleFile(cfg.data/'{}{}.nc'.format(test, i),
+#                                 outputdt=outputdt)
+# for t in T:
+#     pset.show(domain=domain, field=fieldtype, depth_level=d, animation=False,
+#               vmax=vmax, vmin=vmin, savefile=savefile + str(t).zfill(3))
+#     pset.execute(kernels, runtime=runtime, dt=dt, output_file=output_file,
+#                   verbose_progress=False, recovery=recovery_kernels)
+
+# pset.show(domain=domain, field=fieldtype, depth_level=d, animation=False,
+#           vmax=vmax, vmin=vmin, savefile=savefile + str(t).zfill(3))
 
 
-pd = pset.particle_data
-for v in ['unbeached', 'ubeachprv', 'coasttime',
-          'beachlnd', 'beachvel', 'ubcount']:
-    p = pd[v]
-    Nb = np.where(p > 0.0, 1, 0).sum()
-    pb = np.where(p > 0.0, p, np.nan)
-    pb = pb[~np.isnan(pb)]
-    logger.info('{}: {}: N={} Nb={}({:.2f}%) max={} median={}: mean={}'
-                .format(sim, v, N, Nb, (Nb/N)*100, int(p.max()),
-                        np.nanmedian(pb), np.nanmean(pb)))
-output_file.export()
+# pd = pset.particle_data
+# for v in ['unbeached', 'ubeachprv', 'coasttime',
+#           'beachlnd', 'beachvel', 'ubcount']:
+#     p = pd[v]
+#     Nb = np.where(p > 0.0, 1, 0).sum()
+#     pb = np.where(p > 0.0, p, np.nan)
+#     pb = pb[~np.isnan(pb)]
+#     logger.info('{}: {}: N={} Nb={}({:.2f}%) max={} median={}: mean={}'
+#                 .format(sim, v, N, Nb, (Nb/N)*100, int(p.max()),
+#                         np.nanmedian(pb), np.nanmean(pb)))
+# output_file.export()
+
+test = 'CS'
+for i in [13, 14, 15, 12, 11]:
+    import subprocess
+    cmd = ['ffmpeg', '-i',
+            'E:/GitHub/OFAM/figures/parcels/tests/{}{}/{}{}%03d.png'.format(test, i, test, i),
+            'E:/GitHub/OFAM/figures/parcels/tests/{}{}/{}{}.mp4'.format(test, i, test, i)]
+    retcode = subprocess.call(cmd)
+    if not retcode == 0:
+        raise ValueError('Error {} executing command: {}'.format(retcode, ' '.join(cmd)))

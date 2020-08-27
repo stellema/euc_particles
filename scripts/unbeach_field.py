@@ -28,6 +28,7 @@ V[np.isnan(V)] = 0
 ld = np.zeros(ds.u.shape)
 ub = np.zeros(ds.u.shape)
 vb = np.zeros(ds.u.shape)
+wb = np.zeros(ds.u.shape)
 
 
 def island(k, j, i):
@@ -67,6 +68,19 @@ for k in range(depth.size):
                 ld[0, k, j+1, i+1] = 1
                 ld[0, k, j+1, i] = 1
 
+                # Move up.
+                if k >= 1:
+                    if not island(k-1, j, i):
+                        wb[0, k, j, i] = -1
+                    if not island(k-1, j, i+1):
+                        wb[0, k, j, i+1] = -1
+                    if not island(k-1, j+1, i):
+                        wb[0, k, j+1, i] = -1
+                    if not island(k-1, j+1, i+1):
+                        wb[0, k, j+1, i+1] = -1
+
+
+
 # Create Dataset.
 db = xr.Dataset()
 coords = ds.u.coords
@@ -75,11 +89,14 @@ Ub = xr.DataArray(ub, name='unBeachU', dims=dims, coords=coords,
                   attrs=ds.u.attrs)
 Vb = xr.DataArray(vb, name='unBeachV', dims=dims, coords=coords,
                   attrs=ds.v.attrs)
+Wb = xr.DataArray(wb, name='unBeachW', dims=dims, coords=coords,
+                  attrs=ds.v.attrs)
 land = xr.DataArray(ld, name='land', dims=dims, coords=coords,
                     attrs=ds.v.attrs)
 
 db[Ub.name] = Ub
 db[Vb.name] = Vb
+db[Wb.name] = Wb
 db[land.name] = land
 
 # Add all the coords, just in case.
@@ -93,4 +110,4 @@ db[ds.st_edges_ocean.name] = ds.st_edges_ocean
 db[ds.sw_edges_ocean.name] = ds.sw_edges_ocean
 db.attrs = ds.attrs
 db.attrs['history'] = 'Created {}.'.format(datetime.now().strftime("%Y-%m-%d"))
-db.to_netcdf(path=cfg.data/'OFAM3_unbeach_land_ucell.nc')
+db.to_netcdf(path=cfg.data/'OFAM3_unbeach_land_UVW_ucell.nc')

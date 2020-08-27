@@ -183,7 +183,7 @@ def ofam_fieldset(time_bnds='full', exp='hist', chunks=True, cs=300,
 
     # Convert from geometric to geographic coordinates (m to degree).
     fieldset.add_constant('geo', 1/(1852*60))
-    fieldset.add_constant('landlim', 0.97)
+    fieldset.add_constant('landlim', 0.95)
     fieldset.add_constant('Vmin', 1.5e-7)
     fieldset.add_constant('UBmin', 1e-6)
 
@@ -207,18 +207,21 @@ def ofam_fieldset(time_bnds='full', exp='hist', chunks=True, cs=300,
 
     if add_unbeach_vel:
         # Add Unbeach velocity vectorfield to fieldset.
-        file = str(cfg.data/'OFAM3_unbeach_land_ucell.nc')
+        file = str(cfg.data/'OFAM3_unbeach_land_UVW_ucell.nc')
 
         variables = {'Ub': 'unBeachU',
                      'Vb': 'unBeachV',
+                     'Wb': 'unBeachW',
                      'land': 'land'}
 
         dimv = {'Ub': dims['U'],
                 'Vb': dims['U'],
+                'Wb': dims['U'],
                 'land': dims['U']}
 
         uindices = {'Ub': {'lat': yu_ind, 'lon': xu_ind, 'depth': zu_ind},
                     'Vb': {'lat': yu_ind, 'lon': xu_ind, 'depth': zu_ind},
+                    'Wb': {'lat': yu_ind, 'lon': xu_ind, 'depth': zu_ind},
                     'land': {'lat': yu_ind, 'lon': xu_ind, 'depth': zu_ind}}
 
         fieldsetUB = FieldSet.from_netcdf(file, variables, dimv,
@@ -234,17 +237,22 @@ def ofam_fieldset(time_bnds='full', exp='hist', chunks=True, cs=300,
         # Add beaching velocity and land mask to fieldset.
         fieldset.add_field(fieldsetUB.Ub, 'Ub')
         fieldset.add_field(fieldsetUB.Vb, 'Vb')
+        fieldset.add_field(fieldsetUB.Wb, 'Wb')
         fieldset.add_field(fieldsetUB.land, 'land')
 
         # Set field units and b-grid interp method.
         fieldset.land.units = parcels.tools.converters.UnitConverter()
+        fieldset.Wb.units = parcels.tools.converters.UnitConverter()
         fieldset.Ub.units = parcels.tools.converters.GeographicPolar()
         fieldset.Vb.units = parcels.tools.converters.Geographic()
 
         fieldset.Ub.interp_method = 'bgrid_velocity'
         fieldset.Vb.interp_method = 'bgrid_velocity'
+        fieldset.Wb.interp_method = 'bgrid_velocity'
         fieldset.land.interp_method = 'bgrid_velocity'
 
+        UVWb = VectorField('UVWb', fieldset.Ub, fieldset.Vb, fieldset.Wb)
+        fieldset.add_vector_field(UVWb)
     return fieldset
 
 

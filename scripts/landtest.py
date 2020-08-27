@@ -96,7 +96,7 @@ x, y = np.meshgrid(lons, lats)
 
 fig, ax = plt.subplots(4, 3, figsize=(15, 17))
 ax = ax.flatten()
-mn, mx = 0, 0.1
+mn, mx = 0, 0.5
 cmap = plt.cm.gist_stern
 title = 'Original Zonal Velocity'
 x, y, v = lons, lats, np.fabs(u)
