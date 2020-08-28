@@ -124,16 +124,17 @@ def AdvectionRK4_3D_coast(particle, fieldset, time):
     particle.ld = fieldset.land[0., particle.depth, particle.lat, particle.lon]
     if particle.ld > 0.25:
         particle.rounder += 1
-        latN = particle.lat * 100
-        lonN = particle.lon * 100
-        if math.fabs(latN) - math.fabs(math.floor(latN)) < 0.25:
-            lat = math.floor(particle.lat/0.05) * 0.05
+        latN = particle.lat * 10**3
+        lonN = particle.lon * 10**3
+        a = 0.025
+        if math.fabs(latN) - math.fabs(math.floor(latN)) < a/2:
+            lat = math.floor(particle.lat/a) * a
         else:
-            lat = math.ceil(particle.lat/0.05) * 0.05
-        if math.fabs(lonN) - math.fabs(math.floor(lonN)) < 0.25:
-            lon = math.floor(particle.lon/0.05) * 0.05
+            lat = math.ceil(particle.lat/a) * a
+        if math.fabs(lonN) - math.fabs(math.floor(lonN)) < a/2:
+            lon = math.floor(particle.lon/a) * a
         else:
-            lon = math.ceil(particle.lon/0.05) * 0.05
+            lon = math.ceil(particle.lon/a) * a
         (u1, v1, w1) = fieldset.UVW[time, particle.depth, lat, lon]
         lon1 = lon + u1*.5*particle.dt
         lat1 = lat + v1*.5*particle.dt
@@ -256,7 +257,7 @@ savefile = cfg.fig/'parcels/tests/{}_{:02d}/{}_{:02d}_'.format(test, i, test, i)
 sim = savefile.stem[:-1]
 savefile = str(savefile)
 logger.info(' {}: Land>={}: LandB>={}: UBmin={}: Vmin={}: Loop>=3:\
-            Rounder >0.25: Skip depth <1e-10: Back if >UBmin: UBW=-geo'
+            Rounder >0.025: Skip depth <1e-10: Back if >UBmin: UBW=-geo'
             .format(sim, fieldset.landlim, fieldset.coast,
                     fieldset.UBmin, fieldset.Vmin))
 pset = ParticleSet.from_list(fieldset=fieldset, pclass=pclass,
