@@ -156,6 +156,33 @@ def AdvectionRK4_3D_coast(particle, fieldset, time):
         particle.roundZ += 1
 
 
+def AdvectionRK4_3D_reduce(particle, fieldset, time):
+    """Fourth-order Runge-Kutta 3D particle advection."""
+    particle.ld = fieldset.land[0., particle.depth, particle.lat, particle.lon]
+    rep = 1
+    counter = 0
+    if particle.ld > 0.25:
+        rep = 4
+    while counter <= rep:
+        dtr = particle.dt/rep
+        (u1, v1, w1) = fieldset.UVW[time, particle.depth, particle.lat, particle.lon]
+        lon1 = particle.lon + u1*.5*dtr
+        lat1 = particle.lat + v1*.5*dtr
+        dep1 = particle.depth + w1*.5*dtr
+        (u2, v2, w2) = fieldset.UVW[time + .5 * dtr, dep1, lat1, lon1]
+        lon2 = particle.lon + u2*.5*dtr
+        lat2 = particle.lat + v2*.5*dtr
+        dep2 = particle.depth + w2*.5*dtr
+        (u3, v3, w3) = fieldset.UVW[time + .5 * dtr, dep2, lat2, lon2]
+        lon3 = particle.lon + u3*dtr
+        lat3 = particle.lat + v3*dtr
+        dep3 = particle.depth + w3*dtr
+        (u4, v4, w4) = fieldset.UVW[time + dtr, dep3, lat3, lon3]
+        particle.lon += (u1 + 2*u2 + 2*u3 + u4) / 6. * dtr
+        particle.lat += (v1 + 2*v2 + 2*v3 + v4) / 6. * dtr
+        particle.depth += (w1 + 2*w2 + 2*w3 + w4) / 6. * dtr
+        counter += 1
+
 
 def del_land(pset):
     inds, = np.where((pset.particle_data['ld'] > 0.00))
@@ -241,7 +268,7 @@ savefile = cfg.fig/'parcels/tests/{}_{:02d}/{}_{:02d}_'.format(test, i, test, i)
 sim = savefile.stem[:-1]
 savefile = str(savefile)
 logger.info(' {}: Land>={}: LandB>={}: UBmin={}: Vmin={}: Loop>=3:\
-            Rounder >0.025: Skip depth <1e-10: Back if >UBmin: UBW=-geo'
+            Reduce timestep by 25%: Back if >UBmin: UBW=-geo'
             .format(sim, fieldset.landlim, fieldset.coast,
                     fieldset.UBmin, fieldset.Vmin))
 pset = ParticleSet.from_list(fieldset=fieldset, pclass=pclass,
@@ -254,7 +281,8 @@ pset.show(domain=domain, field=fieldtype, depth_level=d, animation=False,
 
 pset = del_land(pset)
 N = pset.size
-kernels = pset.Kernel(AdvectionRK4_3D_coast)
+# kernels = pset.Kernel(AdvectionRK4_3D_coast)
+kernels = pset.Kernel(AdvectionRK4_3D_reduce)
 kernels += pset.Kernel(CoastTime)
 kernels += pset.Kernel(BeachTest) + pset.Kernel(UnBeaching)
 kernels += pset.Kernel(main.Distance)
