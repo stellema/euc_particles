@@ -122,11 +122,11 @@ def UnBeaching(particle, fieldset, time):
 def AdvectionRK4_3D_coast(particle, fieldset, time):
     """Fourth-order Runge-Kutta 3D particle advection."""
     particle.ld = fieldset.land[0., particle.depth, particle.lat, particle.lon]
+    lon0 = particle.lon
+    lat0 = particle.lat
     if particle.ld >= 0.25:
         particle.rounder += 1
         a = 0.025
-        lon0 = particle.lon
-        lat0 = particle.lat
         (uB, vB, wB) = fieldset.UVWb[0., particle.depth, particle.lat, particle.lon]
         if uB < -fieldset.UBmin:
             lon0 = math.floor(particle.lon/a) * a
@@ -271,7 +271,7 @@ savefile = cfg.fig/'parcels/tests/{}_{:02d}/{}_{:02d}_'.format(test, i, test, i)
 sim = savefile.stem[:-1]
 savefile = str(savefile)
 logger.info(' {}: Land>={}: LandB>={}: UBmin={}: Vmin={}: Loop>=3:\
-            Round >0.0125 (UB dir): Land >=0.25: Skip depth <1e-10: Back if >UBmin: UBW=-geo'
+            Round >0.025 (uv not xy and UB dir): Land >=0.25: Skip depth <1e-10: Back if >UBmin: UBW=-geo'
             .format(sim, fieldset.landlim, fieldset.coast,
                     fieldset.UBmin, fieldset.Vmin))
 pset = ParticleSet.from_list(fieldset=fieldset, pclass=pclass,
@@ -303,10 +303,6 @@ for t in T:
 pset.show(domain=domain, field=fieldtype, depth_level=d, animation=False,
           vmax=vmax, vmin=vmin, savefile=savefile + str(t).zfill(3))
 
-files = savefile + '%03d.png'
-output = str(cfg.fig/'parcels/gifs') + '/' + str(sim) + '.mp4'
-tools.image2video(files, output, frames=10)
-
 pd = pset.particle_data
 for v in ['unbeached', 'ubeachprv', 'coasttime',
           'beachlnd', 'beachvel', 'ubcount', 'ubWcount', 'ubWdepth',
@@ -318,6 +314,9 @@ for v in ['unbeached', 'ubeachprv', 'coasttime',
     logger.info('{}: {}: N={} Nb={}({:.2f}%) max={:.2f} median={:.2f}: mean={:.2f}'
                 .format(sim, v, N, Nb, (Nb/N)*100, int(p.max()),
                         np.nanmedian(pb), np.nanmean(pb)))
+files = savefile + '%03d.png'
+output = str(cfg.fig/'parcels/gifs') + '/' + str(sim) + '.mp4'
+tools.image2video(files, output, frames=10)
 output_file.export()
 
 main.plot3Dx(cfg.data/'{}{}.nc'.format(test, i), ds=None)
