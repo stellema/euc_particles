@@ -166,19 +166,19 @@ def AdvectionRK4_3D_reduce(particle, fieldset, time):
     while counter <= rep:
         dtr = particle.dt/rep
         tsp = counter * dtr
-        (u1, v1, w1) = fieldset.UVW[time * tsp, particle.depth, particle.lat, particle.lon]
+        (u1, v1, w1) = fieldset.UVW[time + tsp, particle.depth, particle.lat, particle.lon]
         lon1 = particle.lon + u1*.5*dtr
         lat1 = particle.lat + v1*.5*dtr
         dep1 = particle.depth + w1*.5*dtr
-        (u2, v2, w2) = fieldset.UVW[time * tsp + .5 * dtr, dep1, lat1, lon1]
+        (u2, v2, w2) = fieldset.UVW[time + tsp + .5 * dtr, dep1, lat1, lon1]
         lon2 = particle.lon + u2*.5*dtr
         lat2 = particle.lat + v2*.5*dtr
         dep2 = particle.depth + w2*.5*dtr
-        (u3, v3, w3) = fieldset.UVW[time * tsp + .5 * dtr, dep2, lat2, lon2]
+        (u3, v3, w3) = fieldset.UVW[time + tsp + .5 * dtr, dep2, lat2, lon2]
         lon3 = particle.lon + u3*dtr
         lat3 = particle.lat + v3*dtr
         dep3 = particle.depth + w3*dtr
-        (u4, v4, w4) = fieldset.UVW[time * tsp + dtr, dep3, lat3, lon3]
+        (u4, v4, w4) = fieldset.UVW[time + tsp + dtr, dep3, lat3, lon3]
         particle.lon += (u1 + 2*u2 + 2*u3 + u4) / 6. * dtr
         particle.lat += (v1 + 2*v2 + 2*v3 + v4) / 6. * dtr
         particle.depth += (w1 + 2*w2 + 2*w3 + w4) / 6. * dtr
@@ -191,7 +191,7 @@ def del_land(pset):
         pset.particle_data[d] = np.delete(pset.particle_data[d], inds, axis=0)
     return pset
 
-test = ['PNG', 'CS', 'SS'][2]
+test = ['PNG', 'CS', 'SS'][0]
 fieldset = main.ofam_fieldset(time_bnds='full', exp='hist', chunks=True,
                               cs=300, time_periodic=False, add_zone=True,
                               add_unbeach_vel=True, apply_indicies=True)
