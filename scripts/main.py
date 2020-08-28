@@ -184,8 +184,8 @@ def ofam_fieldset(time_bnds='full', exp='hist', chunks=True, cs=300,
     # Convert from geometric to geographic coordinates (m to degree).
     fieldset.add_constant('geo', 1/(1852*60))
     fieldset.add_constant('landlim', 0.97)
-    fieldset.add_constant('coast', 0.5)
-    fieldset.add_constant('Vmin', 1.5e-7)
+    fieldset.add_constant('coast', 0.75)
+    fieldset.add_constant('Vmin', 1e-7)
     fieldset.add_constant('UBmin', 1e-6)
 
     if add_zone:
@@ -549,7 +549,7 @@ def plot3D(sim_id, ds=None):
         ds = xr.open_dataset(sim_id, decode_cf=True)
 
         # Drop initially westward particles.
-        ds = ds.where(ds.u > 0., drop=True)
+        # ds = ds.where(ds.u > 0., drop=True)
 
     N = len(ds.traj)
     x, y, z = ds.lon, ds.lat, ds.z
@@ -608,7 +608,7 @@ def plot3Dx(sim_id, ds=None):
         ds = xr.open_dataset(sim_id, decode_cf=True)
 
         # Drop initially westward particles.
-        ds = ds.where(ds.u > 0., drop=True)
+        # ds = ds.where(ds.u > 0., drop=True)
 
     N = len(ds.traj)
     x, y, z = ds.lon, ds.lat, ds.z

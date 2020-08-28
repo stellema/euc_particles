@@ -87,6 +87,8 @@ def UnBeaching(particle, fieldset, time):
                 particle.lat += math.copysign(fieldset.geo, vb) * math.fabs(particle.dt)
             if math.fabs(wb) > 1e-14:
                 particle.depth -= fieldset.geo * math.fabs(particle.dt)
+                particle.ubWdepth += fieldset.geo * math.fabs(particle.dt)
+                particle.ubWcount += 1
 
             # Send back the way particle came and up if no unbeach velocities.
             elif math.fabs(ub) <= fieldset.UBmin and math.fabs(vb) <= fieldset.UBmin:
@@ -96,7 +98,7 @@ def UnBeaching(particle, fieldset, time):
                     particle.lat += math.copysign(fieldset.geo, ydir) * math.fabs(particle.dt)
                 if math.fabs(xdir) >= fieldset.UBmin:
                     particle.lon += math.copysign(ubx, xdir) * math.fabs(particle.dt)
-                particle.ubeachprv += 1 # TEST: No UB velocity count.
+                particle.ubeachprv += 1  # TEST: No UB velocity count.
 
             # Check if particle is still on land.
             particle.lnd = fieldset.land[0., particle.depth, particle.lat, particle.lon]
@@ -123,7 +125,7 @@ def del_land(pset):
         pset.particle_data[d] = np.delete(pset.particle_data[d], inds, axis=0)
     return pset
 
-test = 'PNG'
+test = ['PNG', 'CS', 'SS'][0]
 fieldset = main.ofam_fieldset(time_bnds='full', exp='hist', chunks=True,
                               cs=300, time_periodic=False, add_zone=True,
                               add_unbeach_vel=True, apply_indicies=True)
@@ -143,6 +145,8 @@ class zParticle(JITParticle):
     ubeachprv = Variable('ubeachprv', initial=0., dtype=np.float32)
     coasttime = Variable('coasttime', initial=0., dtype=np.float32)
     ubcount = Variable('ubcount', initial=0., dtype=np.float32)
+    ubWcount = Variable('ubWcount', initial=0., dtype=np.float32)
+    ubWdepth = Variable('ubWdepth', initial=0., dtype=np.float32)
     ld = Variable('ld', initial=fieldset.land, dtype=np.float32)
 
 
@@ -216,9 +220,9 @@ kernels += pset.Kernel(BeachTest) + pset.Kernel(UnBeaching)
 kernels += pset.Kernel(main.Distance)
 recovery_kernels = {ErrorCode.ErrorOutOfBounds: main.DeleteParticle,
                     ErrorCode.ErrorThroughSurface: main.SubmergeParticle}
-# output_file = pset.ParticleFile(cfg.data/'{}{}.nc'.format(test, i),
-#                                 outputdt=outputdt)
-output_file = None
+output_file = pset.ParticleFile(cfg.data/'{}{}.nc'.format(test, i),
+                                outputdt=outputdt)
+# output_file = None
 for t in T:
     pset.show(domain=domain, field=fieldtype, depth_level=d, animation=False,
               vmax=vmax, vmin=vmin, savefile=savefile + str(t).zfill(3))
@@ -229,12 +233,12 @@ pset.show(domain=domain, field=fieldtype, depth_level=d, animation=False,
           vmax=vmax, vmin=vmin, savefile=savefile + str(t).zfill(3))
 
 files = savefile + '%03d.png'
-output = cfg.fig/'parcels/gifs/' + str(sim) + '.mp4'
+output = str(cfg.fig/'parcels/gifs') + '/' + str(sim) + '.mp4'
 tools.image2video(files, output, frames=10)
 
 pd = pset.particle_data
 for v in ['unbeached', 'ubeachprv', 'coasttime',
-          'beachlnd', 'beachvel', 'ubcount']:
+          'beachlnd', 'beachvel', 'ubcount', 'ubWcount', 'ubWdepth']:
     p = pd[v]
     Nb = np.where(p > 0.0, 1, 0).sum()
     pb = np.where(p > 0.0, p, np.nan)
@@ -242,4 +246,6 @@ for v in ['unbeached', 'ubeachprv', 'coasttime',
     logger.info('{}: {}: N={} Nb={}({:.2f}%) max={} median={}: mean={}'
                 .format(sim, v, N, Nb, (Nb/N)*100, int(p.max()),
                         np.nanmedian(pb), np.nanmean(pb)))
-# output_file.export()
+output_file.export()
+
+main.plot3Dx(cfg.data/'{}{}.nc'.format(test, i), ds=None)
