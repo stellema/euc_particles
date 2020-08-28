@@ -264,9 +264,9 @@
 2020-08-28 14:56:38:SS_07: rounder: N=1852 Nb=359(19.38%) max=990 median=84.0: mean=210.61837768554688
 2020-08-28 14:56:38:SS_07: roundZ: N=1852 Nb=359(19.38%) max=964 median=66.0: mean=132.2367706298828
 #################################################################################################################################
-2020-08-28 17:10:04: PNG_08: Land>=0.97: LandB>=0.75: UBmin=1e-06: Vmin=1.5e-07: Loop>=3:           Rounder >0.025 (UB dir): Skip depth <1e-10: Back if >UBmin: UBW=-geo
-2020-08-28 17:10:08: CS_08: Land>=0.97: LandB>=0.75: UBmin=1e-06: Vmin=1.5e-07: Loop>=3:            Rounder >0.025 (UB dir): Skip depth <1e-10: Back if >UBmin: UBW=-geo
-2020-08-28 17:10:18: SS_08: Land>=0.97: LandB>=0.75: UBmin=1e-06: Vmin=1.5e-07: Loop>=3:            Rounder >0.025 (UB dir): Skip depth <1e-10: Back if >UBmin: UBW=-geo
+2020-08-28 17:10:04: PNG_08: Land>=0.97: LandB>=0.75: UBmin=1e-06: Vmin=1.5e-07: Loop>=3:           Rounder >0.025 (UB dir): Land >=0.25: Skip depth <1e-10: Back if >UBmin: UBW=-geo
+2020-08-28 17:10:08: CS_08: Land>=0.97: LandB>=0.75: UBmin=1e-06: Vmin=1.5e-07: Loop>=3:            Rounder >0.025 (UB dir): Land >=0.25: Skip depth <1e-10: Back if >UBmin: UBW=-geo
+2020-08-28 17:10:18: SS_08: Land>=0.97: LandB>=0.75: UBmin=1e-06: Vmin=1.5e-07: Loop>=3:            Rounder >0.025 (UB dir): Land >=0.25: Skip depth <1e-10: Back if >UBmin: UBW=-geo
 #################################################################################################################################
 2020-08-28 18:13:43:PNG_0: coasttime: N=2032 Nb=561(27.61%) max=3531600.00 median=226800.00: mean=580023
 2020-08-28 18:20:51:CS_0: coasttime: N=3408 Nb=430(12.62%) max=7088400.00 median=702000.00: mean=1531917
@@ -384,3 +384,73 @@ SS_09: roundZ: N=1852 Nb=0(0.00%) max=0 median=nan: mean=nan
 2020-08-28 18:09:24:SS_10: rounder: N=1852 Nb=0(0.00%) max=0.00 median=nan: mean=nan
 2020-08-28 18:09:24:SS_10: roundZ: N=1852 Nb=0(0.00%) max=0.00 median=nan: mean=nan
 #################################################################################################################################
+PNG_11: Land>=0.97: LandB>=0.75: UBmin=1e-06: Vmin=1.5e-07: Loop>=3:           Round >0.025 (UB dir): Land >=0.5: Skip depth <1e-10: Back if >UBmin: UBW=-geo
+CS_11: Land>=0.97: LandB>=0.75: UBmin=1e-06: Vmin=1.5e-07: Loop>=3:            Round >0.025 (UB dir): Land >=0.5: Skip depth <1e-10: Back if >UBmin: UBW=-geo
+SS_11: Land>=0.97: LandB>=0.75: UBmin=1e-06: Vmin=1.5e-07: Loop>=3:            Round >0.025 (UB dir): Land >=0.5: Skip depth <1e-10: Back if >UBmin: UBW=-geo
+#################################################################################################################################
+2020-08-28 19:12:12: PNG_12: Land>=0.97: LandB>=0.75: UBmin=1e-06: Vmin=1.5e-07: Loop>=3:            Round >0.0125 (UB dir): Land >=0.25: Skip depth <1e-10: Back if >UBmin: UBW=-geo
+2020-08-28 19:12:15: CS_12: Land>=0.97: LandB>=0.75: UBmin=1e-06: Vmin=1.5e-07: Loop>=3:            Round >0.0125 (UB dir): Land >=0.25: Skip depth <1e-10: Back if >UBmin: UBW=-geo
+2020-08-28 19:12:20: SS_12: Land>=0.97: LandB>=0.75: UBmin=1e-06: Vmin=1.5e-07: Loop>=3:            Round >0.0125 (UB dir): Land >=0.25: Skip depth <1e-10: Back if >UBmin: UBW=-geo
+2020-08-28 19:12:26:Compiled zParticleAdvectionRK4_3D_coastCoastTimeBeachTestUnBeachingDistance ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\f3492f1dee900ea8460f150ec8ba930a_0.dll
+2020-08-28 19:12:30:Compiled zParticleAdvectionRK4_3D_coastCoastTimeBeachTestUnBeachingDistance ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\2f02b38b577eae0804030ad7ecafe918_0.dll
+2020-08-28 19:12:33:Compiled zParticleAdvectionRK4_3D_coastCoastTimeBeachTestUnBeachingDistance ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\89d676286abd3f1899a14d03ac1bdf16_0.dll
+2020-08-28 19:22:12:SS_11: unbeached: N=1852 Nb=8(0.43%) max=3.00 median=1.00: mean=1.38
+2020-08-28 19:22:12:SS_11: ubeachprv: N=1852 Nb=0(0.00%) max=0.00 median=nan: mean=nan
+2020-08-28 19:22:12:SS_11: coasttime: N=1852 Nb=338(18.25%) max=3340800.00 median=234000.00: mean=551045.00
+2020-08-28 19:22:12:SS_11: beachlnd: N=1852 Nb=4(0.22%) max=2.00 median=1.50: mean=1.50
+2020-08-28 19:22:12:SS_11: beachvel: N=1852 Nb=5(0.27%) max=3.00 median=1.00: mean=1.40
+2020-08-28 19:22:12:SS_11: ubcount: N=1852 Nb=0(0.00%) max=0.00 median=nan: mean=nan
+2020-08-28 19:22:12:SS_11: ubWcount: N=1852 Nb=6(0.32%) max=3.00 median=1.50: mean=1.67
+2020-08-28 19:22:12:SS_11: ubWdepth: N=1852 Nb=6(0.32%) max=0.00 median=0.05: mean=0.05
+2020-08-28 19:22:12:SS_11: rounder: N=1852 Nb=198(10.69%) max=571.00 median=3.00: mean=38.67
+2020-08-28 19:22:12:SS_11: roundZ: N=1852 Nb=1852(100.00%) max=998.00 median=998.00: mean=997.65
+2020-08-28 19:22:15:PNG_11: unbeached: N=2032 Nb=1(0.05%) max=2.00 median=2.00: mean=2.00
+2020-08-28 19:22:15:PNG_11: ubeachprv: N=2032 Nb=0(0.00%) max=0.00 median=nan: mean=nan
+2020-08-28 19:22:15:PNG_11: coasttime: N=2032 Nb=512(25.20%) max=3117600.00 median=208800.00: mean=436661.72
+2020-08-28 19:22:15:PNG_11: beachlnd: N=2032 Nb=1(0.05%) max=2.00 median=2.00: mean=2.00
+2020-08-28 19:22:15:PNG_11: beachvel: N=2032 Nb=0(0.00%) max=0.00 median=nan: mean=nan
+2020-08-28 19:22:15:PNG_11: ubcount: N=2032 Nb=0(0.00%) max=0.00 median=nan: mean=nan
+2020-08-28 19:22:15:PNG_11: ubWcount: N=2032 Nb=1(0.05%) max=1.00 median=1.00: mean=1.00
+2020-08-28 19:22:15:PNG_11: ubWdepth: N=2032 Nb=1(0.05%) max=0.00 median=0.03: mean=0.03
+2020-08-28 19:22:15:PNG_11: rounder: N=2032 Nb=316(15.55%) max=769.00 median=5.00: mean=44.81
+2020-08-28 19:22:15:PNG_11: roundZ: N=2032 Nb=2032(100.00%) max=998.00 median=998.00: mean=997.85
+2020-08-28 19:26:34:SS_12: unbeached: N=1852 Nb=4(0.22%) max=1.00 median=1.00: mean=1.00
+2020-08-28 19:26:34:SS_12: ubeachprv: N=1852 Nb=0(0.00%) max=0.00 median=nan: mean=nan
+2020-08-28 19:26:34:SS_12: coasttime: N=1852 Nb=338(18.25%) max=2487600.00 median=28800.00: mean=177560.95
+2020-08-28 19:26:34:SS_12: beachlnd: N=1852 Nb=1(0.05%) max=1.00 median=1.00: mean=1.00
+2020-08-28 19:26:34:SS_12: beachvel: N=1852 Nb=3(0.16%) max=1.00 median=1.00: mean=1.00
+2020-08-28 19:26:34:SS_12: ubcount: N=1852 Nb=0(0.00%) max=0.00 median=nan: mean=nan
+2020-08-28 19:26:34:SS_12: ubWcount: N=1852 Nb=4(0.22%) max=1.00 median=1.00: mean=1.00
+2020-08-28 19:26:34:SS_12: ubWdepth: N=1852 Nb=4(0.22%) max=0.00 median=0.03: mean=0.03
+2020-08-28 19:26:34:SS_12: rounder: N=1852 Nb=338(18.25%) max=690.00 median=8.00: mean=49.27
+2020-08-28 19:26:34:SS_12: roundZ: N=1852 Nb=1852(100.00%) max=998.00 median=998.00: mean=997.66
+2020-08-28 19:26:52:PNG_12: unbeached: N=2032 Nb=1(0.05%) max=1.00 median=1.00: mean=1.00
+2020-08-28 19:26:52:PNG_12: ubeachprv: N=2032 Nb=0(0.00%) max=0.00 median=nan: mean=nan
+2020-08-28 19:26:52:PNG_12: coasttime: N=2032 Nb=512(25.20%) max=2793600.00 median=32400.00: mean=154842.19
+2020-08-28 19:26:52:PNG_12: beachlnd: N=2032 Nb=1(0.05%) max=1.00 median=1.00: mean=1.00
+2020-08-28 19:26:52:PNG_12: beachvel: N=2032 Nb=0(0.00%) max=0.00 median=nan: mean=nan
+2020-08-28 19:26:52:PNG_12: ubcount: N=2032 Nb=0(0.00%) max=0.00 median=nan: mean=nan
+2020-08-28 19:26:52:PNG_12: ubWcount: N=2032 Nb=1(0.05%) max=1.00 median=1.00: mean=1.00
+2020-08-28 19:26:52:PNG_12: ubWdepth: N=2032 Nb=1(0.05%) max=0.00 median=0.03: mean=0.03
+2020-08-28 19:26:52:PNG_12: rounder: N=2032 Nb=511(25.15%) max=775.00 median=9.00: mean=43.00
+2020-08-28 19:26:52:PNG_12: roundZ: N=2032 Nb=2032(100.00%) max=998.00 median=998.00: mean=997.86
+2020-08-28 19:27:56:CS_11: unbeached: N=3408 Nb=21(0.62%) max=296.00 median=1.00: mean=21.14
+2020-08-28 19:27:56:CS_11: ubeachprv: N=3408 Nb=1(0.03%) max=9.00 median=9.00: mean=9.00
+2020-08-28 19:27:56:CS_11: coasttime: N=3408 Nb=453(13.29%) max=6973200.00 median=543600.00: mean=1140802.62
+2020-08-28 19:27:56:CS_11: beachlnd: N=3408 Nb=7(0.21%) max=12.00 median=1.00: mean=2.71
+2020-08-28 19:27:56:CS_11: beachvel: N=3408 Nb=19(0.56%) max=298.00 median=1.00: mean=23.32
+2020-08-28 19:27:56:CS_11: ubcount: N=3408 Nb=1(0.03%) max=4.00 median=4.00: mean=4.00
+2020-08-28 19:27:56:CS_11: ubWcount: N=3408 Nb=7(0.21%) max=2.00 median=1.00: mean=1.29
+2020-08-28 19:27:56:CS_11: ubWdepth: N=3408 Nb=7(0.21%) max=0.00 median=0.03: mean=0.04
+2020-08-28 19:27:56:CS_11: rounder: N=3408 Nb=307(9.01%) max=1760.00 median=22.00: mean=139.82
+2020-08-28 19:27:56:CS_11: roundZ: N=3408 Nb=3349(98.27%) max=1996.00 median=1996.00: mean=1995.41
+2020-08-28 19:31:08:CS_12: unbeached: N=3408 Nb=21(0.62%) max=3.00 median=1.00: mean=1.19
+2020-08-28 19:31:08:CS_12: ubeachprv: N=3408 Nb=0(0.00%) max=0.00 median=nan: mean=nan
+2020-08-28 19:31:08:CS_12: coasttime: N=3408 Nb=453(13.29%) max=6494400.00 median=61200.00: mean=490100.66
+2020-08-28 19:31:08:CS_12: beachlnd: N=3408 Nb=5(0.15%) max=2.00 median=1.00: mean=1.20
+2020-08-28 19:31:08:CS_12: beachvel: N=3408 Nb=19(0.56%) max=3.00 median=1.00: mean=1.16
+2020-08-28 19:31:08:CS_12: ubcount: N=3408 Nb=0(0.00%) max=0.00 median=nan: mean=nan
+2020-08-28 19:31:08:CS_12: ubWcount: N=3408 Nb=6(0.18%) max=2.00 median=1.00: mean=1.33
+2020-08-28 19:31:08:CS_12: ubWdepth: N=3408 Nb=6(0.18%) max=0.00 median=0.03: mean=0.04
+2020-08-28 19:31:08:CS_12: rounder: N=3408 Nb=453(13.29%) max=1803.00 median=17.00: mean=136.06
+2020-08-28 19:31:08:CS_12: roundZ: N=3408 Nb=3349(98.27%) max=1996.00 median=1996.00: mean=1995.43

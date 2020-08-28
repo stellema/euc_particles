@@ -125,33 +125,35 @@ def AdvectionRK4_3D_coast(particle, fieldset, time):
     if particle.ld >= 0.25:
         particle.rounder += 1
         a = 0.025
+        lon0 = particle.lon
+        lat0 = particle.lat
         (uB, vB, wB) = fieldset.UVWb[0., particle.depth, particle.lat, particle.lon]
         if uB < -fieldset.UBmin:
-            particle.lon = math.floor(particle.lon/a) * a
+            lon0 = math.floor(particle.lon/a) * a
         elif uB > fieldset.UBmin:
-            particle.lon = math.ceil(particle.lon/a) * a
+            lon0 = math.ceil(particle.lon/a) * a
         if vB < -fieldset.UBmin:
-            particle.lat = math.floor(particle.lat/a) * a
+            lat0 = math.floor(particle.lat/a) * a
         elif vB > fieldset.UBmin:
-            particle.lat = math.ceil(particle.lat/a) * a
+            lat0 = math.ceil(particle.lat/a) * a
 
-    (u1, v1, w1) = fieldset.UVW[time, particle.depth, particle.lat, particle.lon]
-    lon1 = particle.lon + u1*.5*particle.dt
-    lat1 = particle.lat + v1*.5*particle.dt
+    (u1, v1, w1) = fieldset.UVW[time, particle.depth, lat0, lon0]
+    lon1 = lon0 + u1*.5*particle.dt
+    lat1 = lat0 + v1*.5*particle.dt
     dep1 = particle.depth + w1*.5*particle.dt
     (u2, v2, w2) = fieldset.UVW[time + .5 * particle.dt, dep1, lat1, lon1]
-    lon2 = particle.lon + u2*.5*particle.dt
-    lat2 = particle.lat + v2*.5*particle.dt
+    lon2 = lon0 + u2*.5*particle.dt
+    lat2 = lat0 + v2*.5*particle.dt
     dep2 = particle.depth + w2*.5*particle.dt
     (u3, v3, w3) = fieldset.UVW[time + .5 * particle.dt, dep2, lat2, lon2]
-    lon3 = particle.lon + u3*particle.dt
-    lat3 = particle.lat + v3*particle.dt
+    lon3 = lon0 + u3*particle.dt
+    lat3 = lat0 + v3*particle.dt
     dep3 = particle.depth + w3*particle.dt
     (u4, v4, w4) = fieldset.UVW[time + particle.dt, dep3, lat3, lon3]
     particle.lon += (u1 + 2*u2 + 2*u3 + u4) / 6. * particle.dt
     particle.lat += (v1 + 2*v2 + 2*v3 + v4) / 6. * particle.dt
     particle.depth += (w1 + 2*w2 + 2*w3 + w4) / 6. * particle.dt
-    if math.fabs(u1) > 1e-10 and math.fabs(v1) > 1e-10:
+    if math.fabs(u1) > 1e-12 and math.fabs(v1) > 1e-12:
         particle.depth += (w1 + 2*w2 + 2*w3 + w4) / 6. * particle.dt
         particle.roundZ += 1
 
@@ -191,7 +193,7 @@ def del_land(pset):
         pset.particle_data[d] = np.delete(pset.particle_data[d], inds, axis=0)
     return pset
 
-test = ['PNG', 'CS', 'SS'][0]
+test = ['PNG', 'CS', 'SS'][2]
 fieldset = main.ofam_fieldset(time_bnds='full', exp='hist', chunks=True,
                               cs=300, time_periodic=False, add_zone=True,
                               add_unbeach_vel=True, apply_indicies=True)
@@ -269,7 +271,7 @@ savefile = cfg.fig/'parcels/tests/{}_{:02d}/{}_{:02d}_'.format(test, i, test, i)
 sim = savefile.stem[:-1]
 savefile = str(savefile)
 logger.info(' {}: Land>={}: LandB>={}: UBmin={}: Vmin={}: Loop>=3:\
-            Reduce timestep by 25% (fixed): Back if >UBmin: UBW=-geo'
+            Round >0.0125 (UB dir): Land >=0.25: Skip depth <1e-10: Back if >UBmin: UBW=-geo'
             .format(sim, fieldset.landlim, fieldset.coast,
                     fieldset.UBmin, fieldset.Vmin))
 pset = ParticleSet.from_list(fieldset=fieldset, pclass=pclass,
@@ -282,8 +284,8 @@ pset.show(domain=domain, field=fieldtype, depth_level=d, animation=False,
 
 pset = del_land(pset)
 N = pset.size
-# kernels = pset.Kernel(AdvectionRK4_3D_coast)
-kernels = pset.Kernel(AdvectionRK4_3D_reduce)
+kernels = pset.Kernel(AdvectionRK4_3D_coast)
+# kernels = pset.Kernel(AdvectionRK4_3D_reduce)
 kernels += pset.Kernel(CoastTime)
 kernels += pset.Kernel(BeachTest) + pset.Kernel(UnBeaching)
 kernels += pset.Kernel(main.Distance)
