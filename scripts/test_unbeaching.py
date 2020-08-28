@@ -122,54 +122,38 @@ def UnBeaching(particle, fieldset, time):
 def AdvectionRK4_3D_coast(particle, fieldset, time):
     """Fourth-order Runge-Kutta 3D particle advection."""
     particle.ld = fieldset.land[0., particle.depth, particle.lat, particle.lon]
-    if particle.ld > 0.25:
+    if particle.ld >= 0.25:
         particle.rounder += 1
-        latN = particle.lat * 10**3
-        lonN = particle.lon * 10**3
         a = 0.025
-        if math.fabs(latN) - math.fabs(math.floor(latN)) < a/2:
-            lat = math.floor(particle.lat/a) * a
-        else:
-            lat = math.ceil(particle.lat/a) * a
-        if math.fabs(lonN) - math.fabs(math.floor(lonN)) < a/2:
-            lon = math.floor(particle.lon/a) * a
-        else:
-            lon = math.ceil(particle.lon/a) * a
-        (u1, v1, w1) = fieldset.UVW[time, particle.depth, lat, lon]
-        lon1 = lon + u1*.5*particle.dt
-        lat1 = lat + v1*.5*particle.dt
-        dep1 = particle.depth + w1*.5*particle.dt
-        (u2, v2, w2) = fieldset.UVW[time + .5 * particle.dt, dep1, lat1, lon1]
-        lon2 = lon + u2*.5*particle.dt
-        lat2 = lat + v2*.5*particle.dt
-        dep2 = particle.depth + w2*.5*particle.dt
-        (u3, v3, w3) = fieldset.UVW[time + .5 * particle.dt, dep2, lat2, lon2]
-        lon3 = lon + u3*particle.dt
-        lat3 = lat + v3*particle.dt
-        dep3 = particle.depth + w3*particle.dt
-        (u4, v4, w4) = fieldset.UVW[time + particle.dt, dep3, lat3, lon3]
-        particle.lon += (u1 + 2*u2 + 2*u3 + u4) / 6. * particle.dt
-        particle.lat += (v1 + 2*v2 + 2*v3 + v4) / 6. * particle.dt
-        if math.fabs(u1) > 1e-10 and math.fabs(v1) > 1e-10:
-            particle.depth += (w1 + 2*w2 + 2*w3 + w4) / 6. * particle.dt
-            particle.roundZ += 1
-    else:
-        (u1, v1, w1) = fieldset.UVW[time, particle.depth, particle.lat, particle.lon]
-        lon1 = particle.lon + u1*.5*particle.dt
-        lat1 = particle.lat + v1*.5*particle.dt
-        dep1 = particle.depth + w1*.5*particle.dt
-        (u2, v2, w2) = fieldset.UVW[time + .5 * particle.dt, dep1, lat1, lon1]
-        lon2 = particle.lon + u2*.5*particle.dt
-        lat2 = particle.lat + v2*.5*particle.dt
-        dep2 = particle.depth + w2*.5*particle.dt
-        (u3, v3, w3) = fieldset.UVW[time + .5 * particle.dt, dep2, lat2, lon2]
-        lon3 = particle.lon + u3*particle.dt
-        lat3 = particle.lat + v3*particle.dt
-        dep3 = particle.depth + w3*particle.dt
-        (u4, v4, w4) = fieldset.UVW[time + particle.dt, dep3, lat3, lon3]
-        particle.lon += (u1 + 2*u2 + 2*u3 + u4) / 6. * particle.dt
-        particle.lat += (v1 + 2*v2 + 2*v3 + v4) / 6. * particle.dt
+        (uB, vB, wB) = fieldset.UVWb[0., particle.depth, particle.lat, particle.lon]
+        if uB < -fieldset.UBmin:
+            particle.lon = math.floor(particle.lon/a) * a
+        elif uB > fieldset.UBmin:
+            particle.lon = math.ceil(particle.lon/a) * a
+        if vB < -fieldset.UBmin:
+            particle.lat = math.floor(particle.lat/a) * a
+        elif vB > fieldset.UBmin:
+            particle.lat = math.ceil(particle.lat/a) * a
+
+    (u1, v1, w1) = fieldset.UVW[time, particle.depth, particle.lat, particle.lon]
+    lon1 = particle.lon + u1*.5*particle.dt
+    lat1 = particle.lat + v1*.5*particle.dt
+    dep1 = particle.depth + w1*.5*particle.dt
+    (u2, v2, w2) = fieldset.UVW[time + .5 * particle.dt, dep1, lat1, lon1]
+    lon2 = particle.lon + u2*.5*particle.dt
+    lat2 = particle.lat + v2*.5*particle.dt
+    dep2 = particle.depth + w2*.5*particle.dt
+    (u3, v3, w3) = fieldset.UVW[time + .5 * particle.dt, dep2, lat2, lon2]
+    lon3 = particle.lon + u3*particle.dt
+    lat3 = particle.lat + v3*particle.dt
+    dep3 = particle.depth + w3*particle.dt
+    (u4, v4, w4) = fieldset.UVW[time + particle.dt, dep3, lat3, lon3]
+    particle.lon += (u1 + 2*u2 + 2*u3 + u4) / 6. * particle.dt
+    particle.lat += (v1 + 2*v2 + 2*v3 + v4) / 6. * particle.dt
+    particle.depth += (w1 + 2*w2 + 2*w3 + w4) / 6. * particle.dt
+    if math.fabs(u1) > 1e-10 and math.fabs(v1) > 1e-10:
         particle.depth += (w1 + 2*w2 + 2*w3 + w4) / 6. * particle.dt
+        particle.roundZ += 1
 
 
 
