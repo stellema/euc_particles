@@ -124,8 +124,16 @@ def AdvectionRK4_3D_coast(particle, fieldset, time):
     particle.ld = fieldset.land[0., particle.depth, particle.lat, particle.lon]
     if particle.ld > 0.25:
         particle.rounder += 1
-        lat = math.floor(particle.lat / 0.1) * 0.1
-        lon = math.floor(particle.lon / 0.1) * 0.1
+        latN = particle.lat * 100
+        lonN = particle.lon * 100
+        if math.fabs(latN) - math.fabs(math.floor(latN)) < 0.25:
+            lat = math.floor(particle.lat/0.05) * 0.05
+        else:
+            lat = math.ceil(particle.lat/0.05) * 0.05
+        if math.fabs(lonN) - math.fabs(math.floor(lonN)) < 0.25:
+            lon = math.floor(particle.lon/0.05) * 0.05
+        else:
+            lon = math.ceil(particle.lon/0.05) * 0.05
         (u1, v1, w1) = fieldset.UVW[time, particle.depth, lat, lon]
         lon1 = lon + u1*.5*particle.dt
         lat1 = lat + v1*.5*particle.dt
@@ -161,6 +169,7 @@ def AdvectionRK4_3D_coast(particle, fieldset, time):
         particle.lon += (u1 + 2*u2 + 2*u3 + u4) / 6. * particle.dt
         particle.lat += (v1 + 2*v2 + 2*v3 + v4) / 6. * particle.dt
         particle.depth += (w1 + 2*w2 + 2*w3 + w4) / 6. * particle.dt
+
 
 
 def del_land(pset):
