@@ -51,7 +51,7 @@ def AdvectionRK4_3D_coast(particle, fieldset, time):
     particle.lnd = fieldset.land[0., particle.depth, particle.lat, particle.lon]
     lat0 = particle.lat
     lon0 = particle.lon
-    if particle.lnd >= 0.1:
+    if particle.lnd >= fieldset.coast:
         # Fixed-radius near neighbors: Solution by rounding and hashing.
         minLand = particle.lnd
         a = 0.
@@ -127,7 +127,7 @@ def AdvectionRK4_3D_coast(particle, fieldset, time):
     particle.depth += depthP
 
     particle.lnd = fieldset.land[0., particle.depth, particle.lat, particle.lon]
-    if particle.lnd >= 0.25 and math.fabs(u1) < 5e-8 and math.fabs(v1) < 5e-8:
+    if (particle.lnd >= 0.5 and math.fabs(u1) < fieldset.Vmin and math.fabs(v1) < fieldset.Vmin):
         particle.depth -= depthP
         particle.roundZ += 1  # TEST: Skip depth change near low UV.
 
@@ -197,8 +197,8 @@ class zParticle(JITParticle):
     lnd = Variable('lnd', initial=fieldset.land, dtype=np.float32)
     # Testers.
     beachlnd = Variable('beachlnd', initial=0., dtype=np.float32)
-    beachvel = Variable('beachvel', initial=0., dtype=np.float32)
-    ubeachprv = Variable('ubeachprv', initial=0., dtype=np.float32)
+    # beachvel = Variable('beachvel', initial=0., dtype=np.float32)
+    # ubeachprv = Variable('ubeachprv', initial=0., dtype=np.float32)
     coasttime = Variable('coasttime', initial=0., dtype=np.float32)
     ubcount = Variable('ubcount', initial=0., dtype=np.float32)
     rounder = Variable('rounder', initial=0., dtype=np.float32)
@@ -268,7 +268,8 @@ savefile = str(savefile)
 logger.info(' {}: Land>={}: LandB>={}: UBmin={}: Loop>=3:'
             .format(sim, fieldset.landlim, fieldset.coast, fieldset.UBmin) +
             'Round 0.025<a<0.1 break minLand<1e-7 (min Land distance+reg): ' +
-            'Land >=0.1: Skip depth UV<5e-8+L>0.25: UBW=-geo: No coast+Vmin check')
+            'Land >={}: Skip depth UV<5e-8+L>0.25:'.format(fieldset.coast) +
+            ' UBW=-geo: No coast+Vmin check')
 pset.show(domain=domain, field=fieldtype, depth_level=d, animation=False,
           vmax=vmax, vmin=vmin, savefile=savefile + str(0).zfill(3))
 
@@ -293,9 +294,8 @@ pset.show(domain=domain, field=fieldtype, depth_level=d, animation=False,
           vmax=vmax, vmin=vmin, savefile=savefile + str(t).zfill(3))
 
 pd = pset.particle_data
-for v in ['unbeached', 'ubeachprv', 'coasttime',
-          'beachlnd', 'beachvel', 'ubcount', 'ubWcount', 'ubWdepth',
-          'rounder', 'roundZ', 'roundX', 'roundY']:
+for v in ['unbeached', 'coasttime', 'beachlnd',  'ubcount',
+          'ubWcount', 'ubWdepth', 'rounder', 'roundZ', 'roundX', 'roundY']:
     p = pd[v]
     Nb = np.where(p > 0.0, 1, 0).sum()
     pb = np.where(p > 0.0, p, np.nan)
