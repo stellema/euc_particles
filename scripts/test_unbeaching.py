@@ -266,8 +266,7 @@ savefile = cfg.fig/'parcels/tests/{}_{:02d}/{}_{:02d}_'.format(test, i, test, i)
 sim = savefile.stem[:-1]
 savefile = str(savefile)
 logger.info(' {}: Land>={}: LandB>={}: UBmin={}: Loop>=3:'
-            .format(sim, fieldset.landlim, fieldset.coast,
-                    fieldset.UBmin) +
+            .format(sim, fieldset.landlim, fieldset.coast, fieldset.UBmin) +
             'Round 0.025<a<0.1 break minLand<1e-7 (min Land distance+reg): ' +
             'Land >=0.1: Skip depth UV<5e-8+L>0.25: UBW=-geo: No coast+Vmin check')
 pset.show(domain=domain, field=fieldtype, depth_level=d, animation=False,
