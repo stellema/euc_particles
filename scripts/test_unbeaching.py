@@ -49,42 +49,56 @@ logger = tools.mlogger('test_unbeaching', parcels=True, misc=False)
 def AdvectionRK4_3D_coast(particle, fieldset, time):
     """Fourth-order Runge-Kutta 3D particle advection."""
     particle.lnd = fieldset.land[0., particle.depth, particle.lat, particle.lon]
-    lon0 = particle.lon
     lat0 = particle.lat
+    lon0 = particle.lon
     if particle.lnd >= 0.1:
         # Fixed-radius near neighbors: Solution by rounding and hashing.
         minLand = particle.lnd
         a = 0.
         while a < 0.1:
             a += 0.025
-            lonr = math.floor(particle.lon/a) * a
             latr = math.floor(particle.lat/a) * a
-            lndr = fieldset.land[0., particle.depth, latr, lonr]
-            if minLand > lndr:
+            lonr = math.ceil(particle.lon/a) * a
+            lndr = fieldset.land[0., particle.depth, particle.lat, lonr]
+            if minLand > lndr:  # Lat reg, lon ceil.
                 minLand = lndr
+                lat0 = particle.lat
                 lon0 = lonr
-                lat0 = latr
                 if minLand < 1e-7:
                     break
-            lndr = fieldset.land[0., particle.depth, latr, lonr + a]
-            if minLand > lndr:
+            lndr = fieldset.land[0., particle.depth, latr, particle.lon]
+            if minLand > lndr:  # Lat floor, lon reg.
                 minLand = lndr
-                lon0 = lonr + a
                 lat0 = latr
+                lon0 = particle.lon
+                if minLand < 1e-7:
+                    break
+            lndr = fieldset.land[0., particle.depth, latr, lonr]
+            if minLand > lndr:  # Lat floor, lon ceil.
+                minLand = lndr
+                lat0 = latr
+                lon0 = lonr
                 if minLand < 1e-7:
                     break
             lndr = fieldset.land[0., particle.depth, latr + a, lonr]
-            if minLand > lndr:
+            if minLand > lndr:  # Lat ceil, lon ceil.
                 minLand = lndr
-                lon0 = lonr
                 lat0 = latr + a
+                lon0 = lonr
                 if minLand < 1e-7:
                     break
-            lndr = fieldset.land[0., particle.depth, latr + a, lonr + a]
-            if minLand > lndr:
+            lndr = fieldset.land[0., particle.depth, latr, lonr - a]
+            if minLand > lndr:  # Lat floor, lon floor.
                 minLand = lndr
-                lon0 = lonr + a
+                lat0 = latr
+                lon0 = lonr - a
+                if minLand < 1e-7:
+                    break
+            lndr = fieldset.land[0., particle.depth, latr + a, lonr - a]
+            if minLand > lndr:  # Lat ceil, lon floor.
+                minLand = lndr
                 lat0 = latr + a
+                lon0 = lonr - a
                 if minLand < 1e-7:
                     break
 
@@ -109,9 +123,12 @@ def AdvectionRK4_3D_coast(particle, fieldset, time):
     (u4, v4, w4) = fieldset.UVW[time + particle.dt, dep3, lat3, lon3]
     particle.lon += (u1 + 2*u2 + 2*u3 + u4) / 6. * particle.dt
     particle.lat += (v1 + 2*v2 + 2*v3 + v4) / 6. * particle.dt
-    particle.depth += (w1 + 2*w2 + 2*w3 + w4) / 6. * particle.dt
-    if math.fabs(u1) > 1e-8 and math.fabs(v1) > 1e-8:
-        particle.depth += (w1 + 2*w2 + 2*w3 + w4) / 6. * particle.dt
+    depthP = (w1 + 2*w2 + 2*w3 + w4) / 6. * particle.dt
+    particle.depth += depthP
+
+    particle.lnd = fieldset.land[0., particle.depth, particle.lat, particle.lon]
+    if particle.lnd >= 0.25 and math.fabs(u1) < 5e-8 and math.fabs(v1) < 5e-8:
+        particle.depth -= depthP
         particle.roundZ += 1  # TEST: Skip depth change near low UV.
 
 
@@ -193,7 +210,7 @@ class zParticle(JITParticle):
 
 
 pclass = zParticle
-test = ['CS', 'PNG', 'SS'][0]
+test = ['CS', 'PNG', 'SS'][2]
 if test == 'BT':
     runtime = timedelta(minutes=60)
     dt = timedelta(minutes=60)
@@ -251,8 +268,8 @@ savefile = str(savefile)
 logger.info(' {}: Land>={}: LandB>={}: UBmin={}: Loop>=3:'
             .format(sim, fieldset.landlim, fieldset.coast,
                     fieldset.UBmin) +
-            'Round 0.025<a<0.1 break minLand<1e-7 (min Land distance): ' +
-            'Land >=0.1: Skip depth UV<1e-8: UBW=-geo: No coast+Vmin check')
+            'Round 0.025<a<0.1 break minLand<1e-7 (min Land distance+reg): ' +
+            'Land >=0.1: Skip depth UV<5e-8+L>0.25: UBW=-geo: No coast+Vmin check')
 pset.show(domain=domain, field=fieldtype, depth_level=d, animation=False,
           vmax=vmax, vmin=vmin, savefile=savefile + str(0).zfill(3))
 
