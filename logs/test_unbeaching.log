@@ -855,3 +855,35 @@ SS_11: Land>=0.97: LandB>=0.75: UBmin=1e-06: Vmin=1.5e-07: Loop>=3:            R
 2020-08-29 20:57:30:CS_22: roundX: N=3408 Nb=520(15.3%) max=141.00 med=1.97 mean=8.11
 2020-08-29 20:57:30:CS_22: roundY: N=3408 Nb=520(15.3%) max=99.00 med=2.31 mean=10.73
 #################################################################################################################################
+2020-08-29 21:15:09: CS_23: Land>=0.95: LandB>=0.1: UBmin=1e-06: Loop>=3:Round 0.025<a<0.1 break minLand<1e-7 (min Land distance+reg): Land >=0.1: Skip depth UV<1e-07+L>=0.5: UBW=-geo: st_ocean swap
+2020-08-29 21:15:12: PNG_23: Land>=0.95: LandB>=0.1: UBmin=1e-06: Loop>=3:Round 0.025<a<0.1 break minLand<1e-7 (min Land distance+reg): Land >=0.1: Skip depth UV<1e-07+L>=0.5: UBW=-geo: st_ocean swap
+2020-08-29 21:15:13:Compiled zParticleAdvectionRK4_LandCoastTimeBeachTestUnBeachingDistance ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\e60cd8636de2f16507a5bc0eb50c57d3_0.dll
+2020-08-29 21:15:16:Compiled zParticleAdvectionRK4_LandCoastTimeBeachTestUnBeachingDistance ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\e3664c3c3cac7aa0a64e78bd94588446_0.dll
+2020-08-29 21:15:16: SS_23: Land>=0.95: LandB>=0.1: UBmin=1e-06: Loop>=3:Round 0.025<a<0.1 break minLand<1e-7 (min Land distance+reg): Land >=0.1: Skip depth UV<1e-07+L>=0.5: UBW=-geo: st_ocean swap
+2020-08-29 21:15:20:Compiled zParticleAdvectionRK4_LandCoastTimeBeachTestUnBeachingDistance ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\8b3005002107e768b82f9c7eaafd8446_0.dll
+2020-08-29 21:24:31:SS_23: unbeached: N=1864 Nb=61(3.3%) max=8.00 med=1.00 mean=1.64
+2020-08-29 21:24:31:SS_23: coasttime: N=1864 Nb=381(20.4%) max=3290400.00 med=162000.00 mean=387911.81
+2020-08-29 21:24:31:SS_23: beachlnd: N=1864 Nb=2(0.1%) max=1.00 med=1.00 mean=1.00
+2020-08-29 21:24:31:SS_23: ubcount: N=1864 Nb=0(0.0%) max=0.00 med=nan mean=nan
+2020-08-29 21:24:31:SS_23: ubWcount: N=1864 Nb=20(1.1%) max=5.00 med=1.00 mean=1.50
+2020-08-29 21:24:31:SS_23: ubWdepth: N=1864 Nb=20(1.1%) max=0.00 med=0.03 mean=0.05
+2020-08-29 21:24:31:SS_23: rounder: N=1864 Nb=494(26.5%) max=928.00 med=57.50 mean=132.63
+2020-08-29 21:24:31:SS_23: roundZ: N=1864 Nb=44(2.4%) max=238.00 med=22.00 mean=34.61
+2020-08-29 21:24:31:SS_23: roundX: N=1864 Nb=474(25.4%) max=55.00 med=1.29 mean=3.92
+2020-08-29 21:24:31:SS_23: roundY: N=1864 Nb=464(24.9%) max=64.00 med=1.27 mean=3.44
+2020-08-29 21:24:36:PNG_23: unbeached: N=2032 Nb=158(7.8%) max=15.00 med=2.00 mean=2.53
+2020-08-29 21:24:36:PNG_23: coasttime: N=2032 Nb=612(30.1%) max=3034800.00 med=136800.00 mean=309282.34
+2020-08-29 21:24:36:PNG_23: beachlnd: N=2032 Nb=2(0.1%) max=2.00 med=1.50 mean=1.50
+2020-08-29 21:24:36:PNG_23: ubcount: N=2032 Nb=0(0.0%) max=0.00 med=nan mean=nan
+2020-08-29 21:24:36:PNG_23: ubWcount: N=2032 Nb=49(2.4%) max=6.00 med=1.00 mean=1.55
+2020-08-29 21:24:36:PNG_23: ubWdepth: N=2032 Nb=49(2.4%) max=0.00 med=0.03 mean=0.05
+2020-08-29 21:24:36:PNG_23: rounder: N=2032 Nb=770(37.9%) max=934.00 med=50.00 mean=100.00
+2020-08-29 21:24:36:PNG_23: roundZ: N=2032 Nb=40(2.0%) max=247.00 med=19.50 mean=36.35
+2020-08-29 21:24:36:PNG_23: roundX: N=2032 Nb=736(36.2%) max=41.00 med=1.30 mean=3.41
+2020-08-29 21:24:36:PNG_23: roundY: N=2032 Nb=735(36.2%) max=47.00 med=1.16 mean=3.08
+2020-08-29 21:25:28: CS_24: Land>=0.95: LandB>=0.1: UBmin=1e-06: No loop:Round 0.025<a<0.1 break minLand<1e-7 (min Land distance+reg): Land >=0.1: Skip depth UV<1e-07+L>=0.5: UBW=-geo: sw_ocean normal
+2020-08-29 21:25:33:Compiled zParticleAdvectionRK4_LandCoastTimeBeachTestUnBeachingDistance ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\5ee58609752a79610d1fe2d90a7a8f6d_0.dll
+2020-08-29 21:29:00: PNG_24: Land>=0.95: LandB>=0.1: UBmin=1e-06: No loop:Round 0.025<a<0.1 break minLand<1e-7 (min Land distance+reg): Land >=0.1: Skip depth UV<1e-07+L>=0.5: UBW=-geo: sw_ocean normal
+2020-08-29 21:29:02: SS_24: Land>=0.95: LandB>=0.1: UBmin=1e-06: No loop:Round 0.025<a<0.1 break minLand<1e-7 (min Land distance+reg): Land >=0.1: Skip depth UV<1e-07+L>=0.5: UBW=-geo: sw_ocean normal
+2020-08-29 21:29:04:Compiled zParticleAdvectionRK4_LandCoastTimeBeachTestUnBeachingDistance ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\5fef2821c1707897f30b1e21f599e8d0_0.dll
+2020-08-29 21:29:06:Compiled zParticleAdvectionRK4_LandCoastTimeBeachTestUnBeachingDistance ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\6643bbea0481e340dd075264c4d08835_0.dll

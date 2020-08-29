@@ -95,7 +95,7 @@ def ofam_fieldset(time_bnds='full', exp='hist', chunks=True, cs=300,
              "lon": ["xu_ocean", "xt_ocean"],
              "lat": ["yu_ocean", "yt_ocean"],
              "depth": ["st_ocean", "sw_ocean",
-                       "st_ocean_mod", "sw_edges_ocean"]}
+                       "sw_ocean_mod", "st_edges_ocean"]}
 
     parcels.field.NetcdfFileBuffer._name_maps = nmaps
 
@@ -130,11 +130,11 @@ def ofam_fieldset(time_bnds='full', exp='hist', chunks=True, cs=300,
              'W': {'depth': mesh, 'lat': mesh, 'lon': mesh, 'data': w}}
 
     dims = {'U': {'time': 'Time', 'lat': 'yu_ocean', 'lon': 'xu_ocean',
-                  'depth': 'sw_edges_ocean'},
+                  'depth': 'st_edges_ocean'},
             'V': {'time': 'Time', 'lat': 'yu_ocean', 'lon': 'xu_ocean',
-                  'depth': 'sw_edges_ocean'},
+                  'depth': 'st_edges_ocean'},
             'W': {'time': 'Time', 'lat': 'yu_ocean', 'lon': 'xu_ocean',
-                  'depth': 'st_ocean_mod'}}
+                  'depth': 'sw_ocean_mod'}}
 
     # Depth coordinate indices.
     # U,V: Exclude last index of st_edges_ocean.
@@ -163,7 +163,7 @@ def ofam_fieldset(time_bnds='full', exp='hist', chunks=True, cs=300,
     if chunks not in ['auto', False]:
         chunks = {'Time': 1,
                   'sw_ocean': 1, 'st_ocean': 1,
-                  'st_ocean_mod': 1, 'sw_edges_ocean': 1,
+                  'sw_ocean_mod': 1, 'st_edges_ocean': 1,
                   'yt_ocean': cs, 'yu_ocean': cs,
                   'xt_ocean': cs, 'xu_ocean': cs}
 
