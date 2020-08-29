@@ -32,7 +32,7 @@ except ImportError:
 import warnings
 warnings.filterwarnings("ignore")
 
-def AdvectionRK4_3D_coast(particle, fieldset, time):
+def AdvectionRK4_Land(particle, fieldset, time):
     """Fourth-order Runge-Kutta 3D particle advection."""
     particle.lnd = fieldset.land[0., particle.depth, particle.lat, particle.lon]
     lat0 = particle.lat
@@ -113,7 +113,7 @@ def AdvectionRK4_3D_coast(particle, fieldset, time):
 
 def BeachTest(particle, fieldset, time):
     particle.lnd = fieldset.land[0., particle.depth, particle.lat, particle.lon]
-    if particle.lnd < fieldset.landlim:
+    if particle.lnd < fieldset.LandLim:
         particle.beached = 0
     else:
         particle.beached += 1
@@ -135,7 +135,7 @@ def UnBeaching(particle, fieldset, time):
 
             # Check if particle is still on land.
             particle.lnd = fieldset.land[0., particle.depth, particle.lat, particle.lon]
-            if particle.lnd >= fieldset.landlim:
+            if particle.lnd >= fieldset.LandLim:
                 particle.beached += 1
             else:
                 particle.beached = 0
@@ -305,7 +305,7 @@ xlog['dt'] = dt_mins
 xlog['v'] = v
 xlog['outdt'] = outputdt.days
 xlog['rdt'] = repeatdt.days
-xlog['land'] = fieldset.landlim
+xlog['land'] = fieldset.LandLim
 xlog['eps'] = fieldset.Vmin
 xlog['pset_start'] = pset_start
 xlog['pset_start_r'] = pset.particle_data['time'].max()
@@ -314,8 +314,8 @@ xlog['pset_start_r'] = pset.particle_data['time'].max()
 main.log_simulation(xlog, rank, logger)
 
 # Kernels.
-kernels = pset.Kernel(AdvectionRK4_3D_coast)
-kernels += pset.Kernel(BeachTest) + pset.Kernel(UnBeaching)
+kernels = pset.Kernel(main.AdvectionRK4_Land)
+kernels += pset.Kernel(main.BeachTest) + pset.Kernel(main.UnBeaching)
 kernels += pset.Kernel(main.AgeZone) + pset.Kernel(main.Distance)
 
 # ParticleSet execution endtime.
