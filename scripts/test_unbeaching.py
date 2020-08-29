@@ -184,7 +184,7 @@ def del_land(pset):
 
 fieldset = main.ofam_fieldset(time_bnds='full', exp='hist', chunks=True,
                               cs=300, time_periodic=False, add_zone=True,
-                              add_unbeach_vel=True, apply_indicies=True)
+                              add_unbeach_vel=True, apply_indicies=False)
 fieldset.land.grid.time_origin = fieldset.time_origin
 
 
@@ -267,7 +267,7 @@ logger.info(' {}: Land>={}: LandB>={}: UBmin={}: Loop>3:'
             .format(sim, fieldset.LandLim, fieldset.coast, fieldset.UBmin) +
             'Round 0.025<a<0.1 break minLand<1e-7 (min Land distance+reg): ' +
             'Land >={}: Skip depth UV<{}+L>=0.5:'.format(fieldset.coast, fieldset.Vmin) +
-            ' UBW=-depth/20')
+            ' UBW=-depth/20: No depth indices changes')
 pset.show(domain=domain, field=fieldtype, depth_level=d, animation=False,
           vmax=vmax, vmin=vmin, savefile=savefile + str(0).zfill(3))
 

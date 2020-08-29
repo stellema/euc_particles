@@ -1004,8 +1004,30 @@ SS_11: Land>=0.97: LandB>=0.75: UBmin=1e-06: Vmin=1.5e-07: Loop>=3:            R
 2020-08-30 00:01:42:CS_29: ubWdepth: N=3408 Nb=25(0.7%) max=22.00 med=6.85 mean=9.62
 #################################################################################################################################
 2020-08-30 00:16:30: CS_30: Land>=0.95: LandB>=0.1: UBmin=2e-06: Loop>3:Round 0.025<a<0.1 break minLand<1e-7 (min Land distance+reg): Land >=0.1: Skip depth UV<1e-07+L>=0.5: UBW=-depth/20
-2020-08-30 00:16:33:Compiled zParticleAdvectionRK4_LandCoastTimeBeachTestUnBeachingDistance ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\64c247f06a79d6227b815dc91eea82ae_0.dll
 2020-08-30 00:16:38: PNG_30: Land>=0.95: LandB>=0.1: UBmin=2e-06: Loop>3:Round 0.025<a<0.1 break minLand<1e-7 (min Land distance+reg): Land >=0.1: Skip depth UV<1e-07+L>=0.5: UBW=-depth/20
-2020-08-30 00:16:41:Compiled zParticleAdvectionRK4_LandCoastTimeBeachTestUnBeachingDistance ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\1938b343aca9cf290a01d81fc4a0e973_0.dll
 2020-08-30 00:16:42: SS_30: Land>=0.95: LandB>=0.1: UBmin=2e-06: Loop>3:Round 0.025<a<0.1 break minLand<1e-7 (min Land distance+reg): Land >=0.1: Skip depth UV<1e-07+L>=0.5: UBW=-depth/20
-2020-08-30 00:16:45:Compiled zParticleAdvectionRK4_LandCoastTimeBeachTestUnBeachingDistance ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\4cb12f39e41a14a098aaf1b156bdb9f8_0.dll
+#################################################################################################################################
+2020-08-30 00:28:41:SS_30: unbeached: N=1852 Nb=63(3.4%) max=5.00 med=1.00 mean=1.41
+2020-08-30 00:28:41:SS_30: coasttime: N=1852 Nb=369(19.9%) max=3189600.00 med=154800.00 mean=390907.31
+2020-08-30 00:28:41:SS_30: ubcount: N=1852 Nb=0(0.0%) max=0.00 med=nan mean=nan
+2020-08-30 00:28:41:SS_30: ubWcount: N=1852 Nb=18(1.0%) max=2.00 med=1.00 mean=1.28
+2020-08-30 00:28:41:SS_30: ubWdepth: N=1852 Nb=18(1.0%) max=15.00 med=7.52 mean=9.12
+--------------------------------------------------------------------------------------------------------------------------------
+2020-08-30 00:28:51:PNG_30: unbeached: N=2032 Nb=120(5.9%) max=8.00 med=1.00 mean=2.08
+2020-08-30 00:28:51:PNG_30: coasttime: N=2032 Nb=561(27.6%) max=2826000.00 med=122400.00 mean=300006.41
+2020-08-30 00:28:51:PNG_30: ubcount: N=2032 Nb=0(0.0%) max=0.00 med=nan mean=nan
+2020-08-30 00:28:51:PNG_30: ubWcount: N=2032 Nb=42(2.1%) max=3.00 med=1.00 mean=1.36
+2020-08-30 00:28:51:PNG_30: ubWdepth: N=2032 Nb=42(2.1%) max=20.00 med=7.35 mean=9.48
+--------------------------------------------------------------------------------------------------------------------------------
+2020-08-30 00:33:38:CS_30: unbeached: N=3408 Nb=129(3.8%) max=274.00 med=2.00 mean=6.01
+2020-08-30 00:33:38:CS_30: coasttime: N=3408 Nb=431(12.6%) max=6944400.00 med=302400.00 mean=940460.31
+2020-08-30 00:33:38:CS_30: ubcount: N=3408 Nb=3(0.1%) max=271.00 med=7.00 mean=93.00
+2020-08-30 00:33:38:CS_30: ubWcount: N=3408 Nb=24(0.7%) max=4.00 med=1.00 mean=1.50
+2020-08-30 00:33:38:CS_30: ubWdepth: N=3408 Nb=24(0.7%) max=25.00 med=6.80 mean=9.56
+#################################################################################################################################
+2020-08-30 00:45:03: CS_31: Land>=0.95: LandB>=0.2: UBmin=1e-06: Loop>3:Round 0.025<a<0.1 break minLand<1e-7 (min Land distance+reg): Land >=0.2: Skip depth UV<1e-07+L>=0.5: UBW=-depth/20: No depth indices changes
+2020-08-30 00:45:05:Compiled zParticleAdvectionRK4_LandCoastTimeBeachTestUnBeachingDistance ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\6989f3fd96622b4c3354b7490a1bc7f4_0.dll
+2020-08-30 00:45:16: PNG_31: Land>=0.95: LandB>=0.2: UBmin=1e-06: Loop>3:Round 0.025<a<0.1 break minLand<1e-7 (min Land distance+reg): Land >=0.2: Skip depth UV<1e-07+L>=0.5: UBW=-depth/20: No depth indices changes
+2020-08-30 00:45:20:Compiled zParticleAdvectionRK4_LandCoastTimeBeachTestUnBeachingDistance ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\85a8bccabcae9110c19e4b867c497138_0.dll
+2020-08-30 00:45:21: SS_31: Land>=0.95: LandB>=0.2: UBmin=1e-06: Loop>3:Round 0.025<a<0.1 break minLand<1e-7 (min Land distance+reg): Land >=0.2: Skip depth UV<1e-07+L>=0.5: UBW=-depth/20: No depth indices changes
+2020-08-30 00:45:24:Compiled zParticleAdvectionRK4_LandCoastTimeBeachTestUnBeachingDistance ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\505293d6dc0880e7aafc85cad8420825_0.dll

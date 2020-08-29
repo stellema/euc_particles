@@ -134,7 +134,7 @@ def ofam_fieldset(time_bnds='full', exp='hist', chunks=True, cs=300,
             'V': {'time': 'Time', 'lat': 'yu_ocean', 'lon': 'xu_ocean',
                   'depth': 'st_edges_ocean'},
             'W': {'time': 'Time', 'lat': 'yu_ocean', 'lon': 'xu_ocean',
-                  'depth': 'sw_ocean_mod'}}
+                  'depth': 'st_edges_ocean'}}
 
     # Depth coordinate indices.
     # U,V: Exclude last index of st_edges_ocean.
@@ -151,7 +151,7 @@ def ofam_fieldset(time_bnds='full', exp='hist', chunks=True, cs=300,
         xw_ind = np.arange(0, X - 1, dtype=int).tolist()
     else:
         zu_ind = np.arange(0, Z, dtype=int).tolist()
-        zw_ind = np.append(Z - 1, np.arange(0, Z - 1, dtype=int)).tolist()
+        zw_ind = np.arange(0, Z, dtype=int).tolist()
         yu_ind = np.arange(0, Y, dtype=int).tolist()
         yw_ind = np.arange(0, Y, dtype=int).tolist()
         xu_ind = np.arange(0, X, dtype=int).tolist()
@@ -184,9 +184,9 @@ def ofam_fieldset(time_bnds='full', exp='hist', chunks=True, cs=300,
     # Convert from geometric to geographic coordinates (m to degree).
     fieldset.add_constant('geo', 1/(1852*60))
     fieldset.add_constant('LandLim', 0.95)
-    fieldset.add_constant('coast', 0.1)
+    fieldset.add_constant('coast', 0.2)
     fieldset.add_constant('Vmin', 1e-7)
-    fieldset.add_constant('UBmin', 2e-6)
+    fieldset.add_constant('UBmin', 1e-6)
 
     if add_zone:
         # Add particle zone boundaries.
