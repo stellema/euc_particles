@@ -66,7 +66,6 @@ def UnBeaching(particle, fieldset, time):
         # Attempt three times to unbeach particle.
         while particle.beached > 0 and particle.beached <= 3:
             (ub, vb, wb) = fieldset.UVWb[0., particle.depth, particle.lat, particle.lon]
-
             # Unbeach by 1m/s (checks if unbeach velocities are close to zero).
             ubx = fieldset.geo * (1/math.cos(particle.lat * math.pi/180))
             if math.fabs(ub) >= fieldset.UBmin:
@@ -96,6 +95,7 @@ def AdvectionRK4_3D_coast(particle, fieldset, time):
     """Fourth-order Runge-Kutta 3D particle advection."""
     particle.lnd = fieldset.land[0., particle.depth, particle.lat, particle.lon]
     lon0 = particle.lon
+    lat0 = particle.lat
     if particle.lnd >= 0.25:
         # Fixed-radius near neighbors: Solution by rounding and hashing.
         # a = (math.ceil(particle.lnd/0.25) * 0.25)/10
@@ -186,9 +186,8 @@ class zParticle(JITParticle):
     ubWdepth = Variable('ubWdepth', initial=0., dtype=np.float32)
 
 
-
 pclass = zParticle
-test = ['PNG', 'CS', 'SS'][1]
+test = ['CS', 'PNG', 'SS'][0]
 if test == 'BT':
     runtime = timedelta(minutes=60)
     dt = timedelta(minutes=60)
@@ -222,8 +221,8 @@ elif test == 'CS':
     domain = {'N': -7, 'S': -13.5, 'E': 156, 'W': 147}
 d = 19
 dx = 0.1
-T = np.arange(1, 200)
-fieldtype, vmax, vmin = 'vector', 0.3, None
+T = np.arange(1, 500)
+# fieldtype, vmax, vmin = 'vector', 0.3, None
 fieldtype, vmax, vmin = fieldset.land, 1.2, 0.5
 py = np.arange(J[0], J[1] + dx, dx)
 px = np.arange(I[0], I[1], dx)
@@ -245,7 +244,7 @@ savefile = str(savefile)
 logger.info(' {}: Land>={}: LandB>={}: UBmin={}: Vmin={}: Loop>=3:'
             .format(sim, fieldset.landlim, fieldset.coast,
                     fieldset.UBmin, fieldset.Vmin) +
-            'Round +0.25 loop (min Land distance): Land >=0.25<lim:' +
+            'Round 0.025<a<0.075 or minLand<=0.01 (min Land distance): Land >=0.25:' +
             'Skip depth UV<1e-8: UBW=-geo: No UB coast or Vmin check')
 pset.show(domain=domain, field=fieldtype, depth_level=d, animation=False,
           vmax=vmax, vmin=vmin, savefile=savefile + str(0).zfill(3))
