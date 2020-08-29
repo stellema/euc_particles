@@ -62,11 +62,11 @@ def BeachTest(particle, fieldset, time):
         # Test if on or near to land point.
         if particle.lnd > fieldset.landlim:
             particle.beached += 1
-            particle.beachlnd += 1  # TEST: Land trigger count.
+            # particle.beachlnd += 1  # TEST: Land trigger count.
         # Unbeach if U and V velocity is small.
         elif math.fabs(uu) <= fieldset.Vmin and math.fabs(vv) <= fieldset.Vmin:
             particle.beached += 1
-            particle.beachvel += 1  # TEST: Velocity trigger count.
+            # particle.beachvel += 1  # TEST: Velocity trigger count.
         else:
             particle.beached = 0
 
@@ -87,8 +87,8 @@ def UnBeaching(particle, fieldset, time):
                 particle.lat += math.copysign(fieldset.geo, vb) * math.fabs(particle.dt)
             if math.fabs(wb) > 1e-14:
                 particle.depth -= fieldset.geo * math.fabs(particle.dt)
-                particle.ubWdepth += fieldset.geo * math.fabs(particle.dt)
-                particle.ubWcount += 1
+                # particle.ubWdepth += fieldset.geo * math.fabs(particle.dt)
+                # particle.ubWcount += 1
 
             # Send back the way particle came and up if no unbeach velocities.
             elif math.fabs(ub) <= fieldset.UBmin and math.fabs(vb) <= fieldset.UBmin:
@@ -98,7 +98,7 @@ def UnBeaching(particle, fieldset, time):
                     particle.lat += math.copysign(fieldset.geo, ydir) * math.fabs(particle.dt)
                 if math.fabs(xdir) >= fieldset.UBmin:
                     particle.lon += math.copysign(ubx, xdir) * math.fabs(particle.dt)
-                particle.ubeachprv += 1  # TEST: No UB velocity count.
+                # particle.ubeachprv += 1  # TEST: No UB velocity count.
 
             # Check if particle is still on land.
             particle.lnd = fieldset.land[0., particle.depth, particle.lat, particle.lon]
@@ -106,16 +106,16 @@ def UnBeaching(particle, fieldset, time):
             # Still on land.
             if particle.lnd >= fieldset.landlim:
                 particle.beached += 1
-                particle.beachlnd += 1  # TEST: Land trigger count.
+                # particle.beachlnd += 1  # TEST: Land trigger count.
             # Still near land with low velocity.
             elif (particle.lnd >= fieldset.coast and math.fabs(uuB) <= fieldset.Vmin and math.fabs(vvB) <= fieldset.Vmin):
                 particle.beached += 1
-                particle.beachvel += 1  # TEST: Velocity trigger count.
+                # particle.beachvel += 1  # TEST: Velocity trigger count.
             else:
                 particle.beached = 0
         particle.unbeached += 1
-        if particle.beached > 0:  # TEST: Fail count.
-            particle.ubcount += 1  # TEST: Fail count.
+        # if particle.beached > 0:  # TEST: Fail count.
+        #     particle.ubcount += 1  # TEST: Fail count.
         particle.beached = 0
 
 
@@ -124,7 +124,7 @@ def AdvectionRK4_3D_coast(particle, fieldset, time):
     particle.ld = fieldset.land[0., particle.depth, particle.lat, particle.lon]
     lon0 = particle.lon
     lat0 = particle.lat
-    if particle.ld >= 0.25:
+    if particle.ld > 0.25:
         particle.rounder += 1
         a = 0.025
         (uB, vB, wB) = fieldset.UVWb[0., particle.depth, particle.lat, particle.lon]
@@ -156,35 +156,6 @@ def AdvectionRK4_3D_coast(particle, fieldset, time):
     if math.fabs(u1) > 1e-12 and math.fabs(v1) > 1e-12:
         particle.depth += (w1 + 2*w2 + 2*w3 + w4) / 6. * particle.dt
         particle.roundZ += 1
-
-
-def AdvectionRK4_3D_reduce(particle, fieldset, time):
-    """Fourth-order Runge-Kutta 3D particle advection."""
-    particle.ld = fieldset.land[0., particle.depth, particle.lat, particle.lon]
-    rep = 1
-    counter = 0
-    if particle.ld > 0.25:
-        rep = 4
-    while counter <= rep:
-        dtr = particle.dt/rep
-        tsp = counter * dtr
-        (u1, v1, w1) = fieldset.UVW[time + tsp, particle.depth, particle.lat, particle.lon]
-        lon1 = particle.lon + u1*.5*dtr
-        lat1 = particle.lat + v1*.5*dtr
-        dep1 = particle.depth + w1*.5*dtr
-        (u2, v2, w2) = fieldset.UVW[time + tsp + .5 * dtr, dep1, lat1, lon1]
-        lon2 = particle.lon + u2*.5*dtr
-        lat2 = particle.lat + v2*.5*dtr
-        dep2 = particle.depth + w2*.5*dtr
-        (u3, v3, w3) = fieldset.UVW[time + tsp + .5 * dtr, dep2, lat2, lon2]
-        lon3 = particle.lon + u3*dtr
-        lat3 = particle.lat + v3*dtr
-        dep3 = particle.depth + w3*dtr
-        (u4, v4, w4) = fieldset.UVW[time + tsp + dtr, dep3, lat3, lon3]
-        particle.lon += (u1 + 2*u2 + 2*u3 + u4) / 6. * dtr
-        particle.lat += (v1 + 2*v2 + 2*v3 + v4) / 6. * dtr
-        particle.depth += (w1 + 2*w2 + 2*w3 + w4) / 6. * dtr
-        counter += 1
 
 
 def del_land(pset):
@@ -320,3 +291,31 @@ tools.image2video(files, output, frames=10)
 output_file.export()
 
 main.plot3Dx(cfg.data/'{}{}.nc'.format(test, i), ds=None)
+
+# def AdvectionRK4_3D_reduce(particle, fieldset, time):
+#     """Fourth-order Runge-Kutta 3D particle advection."""
+#     particle.ld = fieldset.land[0., particle.depth, particle.lat, particle.lon]
+#     rep = 1
+#     counter = 0
+#     if particle.ld > 0.25:
+#         rep = 4
+#     while counter <= rep:
+#         dtr = particle.dt/rep
+#         tsp = counter * dtr
+#         (u1, v1, w1) = fieldset.UVW[time + tsp, particle.depth, particle.lat, particle.lon]
+#         lon1 = particle.lon + u1*.5*dtr
+#         lat1 = particle.lat + v1*.5*dtr
+#         dep1 = particle.depth + w1*.5*dtr
+#         (u2, v2, w2) = fieldset.UVW[time + tsp + .5 * dtr, dep1, lat1, lon1]
+#         lon2 = particle.lon + u2*.5*dtr
+#         lat2 = particle.lat + v2*.5*dtr
+#         dep2 = particle.depth + w2*.5*dtr
+#         (u3, v3, w3) = fieldset.UVW[time + tsp + .5 * dtr, dep2, lat2, lon2]
+#         lon3 = particle.lon + u3*dtr
+#         lat3 = particle.lat + v3*dtr
+#         dep3 = particle.depth + w3*dtr
+#         (u4, v4, w4) = fieldset.UVW[time + tsp + dtr, dep3, lat3, lon3]
+#         particle.lon += (u1 + 2*u2 + 2*u3 + u4) / 6. * dtr
+#         particle.lat += (v1 + 2*v2 + 2*v3 + v4) / 6. * dtr
+#         particle.depth += (w1 + 2*w2 + 2*w3 + w4) / 6. * dtr
+#         counter += 1

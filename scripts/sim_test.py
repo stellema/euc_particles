@@ -32,6 +32,109 @@ except ImportError:
 import warnings
 warnings.filterwarnings("ignore")
 
+def AdvectionRK4_3D_coast(particle, fieldset, time):
+    """Fourth-order Runge-Kutta 3D particle advection."""
+    particle.lnd = fieldset.land[0., particle.depth, particle.lat, particle.lon]
+    lon0 = particle.lon
+    lat0 = particle.lat
+    if particle.lnd > 0.25:
+        # particle.rounder += 1
+        a = 0.025
+        (uB, vB, wB) = fieldset.UVWb[0., particle.depth, particle.lat, particle.lon]
+        if uB < -fieldset.UBmin:
+            lon0 = math.floor(particle.lon/a) * a
+        elif uB > fieldset.UBmin:
+            lon0 = math.ceil(particle.lon/a) * a
+        if vB < -fieldset.UBmin:
+            lat0 = math.floor(particle.lat/a) * a
+        elif vB > fieldset.UBmin:
+            lat0 = math.ceil(particle.lat/a) * a
+
+    (u1, v1, w1) = fieldset.UVW[time, particle.depth, lat0, lon0]
+    lon1 = lon0 + u1*.5*particle.dt
+    lat1 = lat0 + v1*.5*particle.dt
+    dep1 = particle.depth + w1*.5*particle.dt
+    (u2, v2, w2) = fieldset.UVW[time + .5 * particle.dt, dep1, lat1, lon1]
+    lon2 = lon0 + u2*.5*particle.dt
+    lat2 = lat0 + v2*.5*particle.dt
+    dep2 = particle.depth + w2*.5*particle.dt
+    (u3, v3, w3) = fieldset.UVW[time + .5 * particle.dt, dep2, lat2, lon2]
+    lon3 = lon0 + u3*particle.dt
+    lat3 = lat0 + v3*particle.dt
+    dep3 = particle.depth + w3*particle.dt
+    (u4, v4, w4) = fieldset.UVW[time + particle.dt, dep3, lat3, lon3]
+    particle.lon += (u1 + 2*u2 + 2*u3 + u4) / 6. * particle.dt
+    particle.lat += (v1 + 2*v2 + 2*v3 + v4) / 6. * particle.dt
+    particle.depth += (w1 + 2*w2 + 2*w3 + w4) / 6. * particle.dt
+    if math.fabs(u1) > 1e-12 and math.fabs(v1) > 1e-12:
+        particle.depth += (w1 + 2*w2 + 2*w3 + w4) / 6. * particle.dt
+        # particle.roundZ += 1
+
+
+def BeachTest(particle, fieldset, time):
+    particle.lnd = fieldset.land[0., particle.depth, particle.lat, particle.lon]
+    if particle.lnd < fieldset.coast:
+        particle.beached = 0
+    else:
+        (uu, vv) = fieldset.UV[time, particle.depth, particle.lat, particle.lon]
+        # Test if on or near to land point.
+        if particle.lnd > fieldset.landlim:
+            particle.beached += 1
+            # particle.beachlnd += 1  # TEST: Land trigger count.
+        # Unbeach if U and V velocity is small.
+        elif math.fabs(uu) <= fieldset.Vmin and math.fabs(vv) <= fieldset.Vmin:
+            particle.beached += 1
+            # particle.beachvel += 1  # TEST: Velocity trigger count.
+        else:
+            particle.beached = 0
+
+
+def UnBeaching(particle, fieldset, time):
+    if particle.beached >= 1:
+        # Attempt three times to unbeach particle.
+        # TODO: Test 3, 4 and 6. (no difference between 3 and 6)
+        while particle.beached > 0 and particle.beached <= 3:
+            (ub, vb, wb) = fieldset.UVWb[0., particle.depth, particle.lat, particle.lon]
+
+            # Unbeach by 1m/s (checks if unbeach velocities are close to zero).
+            # fieldset.geo/4 == 2.25e-6 too large (C3).
+            ubx = fieldset.geo * (1/math.cos(particle.lat * math.pi/180))
+            if math.fabs(ub) >= fieldset.UBmin:
+                particle.lon += math.copysign(ubx, ub) * math.fabs(particle.dt)
+            if math.fabs(vb) >= fieldset.UBmin:
+                particle.lat += math.copysign(fieldset.geo, vb) * math.fabs(particle.dt)
+            if math.fabs(wb) > 1e-14:
+                particle.depth -= fieldset.geo * math.fabs(particle.dt)
+                # particle.ubWdepth += fieldset.geo * math.fabs(particle.dt)
+                # particle.ubWcount += 1
+
+            # Send back the way particle came and up if no unbeach velocities.
+            elif math.fabs(ub) <= fieldset.UBmin and math.fabs(vb) <= fieldset.UBmin:
+                ydir = particle.lat - particle.prev_lat
+                xdir = particle.lon - particle.prev_lon
+                if math.fabs(ydir) >= fieldset.UBmin:
+                    particle.lat += math.copysign(fieldset.geo, ydir) * math.fabs(particle.dt)
+                if math.fabs(xdir) >= fieldset.UBmin:
+                    particle.lon += math.copysign(ubx, xdir) * math.fabs(particle.dt)
+                # particle.ubeachprv += 1  # TEST: No UB velocity count.
+
+            # Check if particle is still on land.
+            particle.lnd = fieldset.land[0., particle.depth, particle.lat, particle.lon]
+            (uuB, vvB) = fieldset.UV[time, particle.depth, particle.lat, particle.lon]
+            # Still on land.
+            if particle.lnd >= fieldset.landlim:
+                particle.beached += 1
+                # particle.beachlnd += 1  # TEST: Land trigger count.
+            # Still near land with low velocity.
+            elif (particle.lnd >= fieldset.coast and math.fabs(uuB) <= fieldset.Vmin and math.fabs(vvB) <= fieldset.Vmin):
+                particle.beached += 1
+                # particle.beachvel += 1  # TEST: Velocity trigger count.
+            else:
+                particle.beached = 0
+        particle.unbeached += 1
+        # if particle.beached > 0:  # TEST: Fail count.
+        #     particle.ubcount += 1  # TEST: Fail count.
+        particle.beached = 0
 
 def del_westward(pset):
     inds, = np.where((pset.particle_data['u'] <= 0.) &
@@ -133,6 +236,7 @@ class zParticle(JITParticle):
 
     # Unbeached count.
     unbeached = Variable('unbeached', initial=0., dtype=np.float32)
+    lnd = Variable('lnd', initial=fieldset.land, dtype=np.float32)
 
 
 pclass = zParticle
@@ -195,7 +299,7 @@ xlog['v'] = v
 xlog['outdt'] = outputdt.days
 xlog['rdt'] = repeatdt.days
 xlog['land'] = fieldset.landlim
-xlog['eps'] = fieldset.eps
+xlog['eps'] = fieldset.Vmin
 xlog['pset_start'] = pset_start
 xlog['pset_start_r'] = pset.particle_data['time'].max()
 
@@ -203,8 +307,8 @@ xlog['pset_start_r'] = pset.particle_data['time'].max()
 main.log_simulation(xlog, rank, logger)
 
 # Kernels.
-kernels = pset.Kernel(main.AdvectionRK4_3Db)
-# kernels += pset.Kernel(main.BeachTest) + pset.Kernel(main.UnBeaching)
+kernels = pset.Kernel(AdvectionRK4_3D_coast)
+kernels += pset.Kernel(BeachTest) + pset.Kernel(UnBeaching)
 kernels += pset.Kernel(main.AgeZone) + pset.Kernel(main.Distance)
 
 # ParticleSet execution endtime.
