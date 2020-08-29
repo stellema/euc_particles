@@ -43,8 +43,71 @@ from parcels import (AdvectionRK4_3D, ParticleSet, ErrorCode, Variable,
                      JITParticle)
 
 import warnings
-warnings.filterwarnings("ignore")
+# warnings.filterwarnings("ignore")
 logger = tools.mlogger('test_unbeaching', parcels=True, misc=False)
+
+
+def AdvectionRK4_3D_coast(particle, fieldset, time):
+    """Fourth-order Runge-Kutta 3D particle advection."""
+    particle.lnd = fieldset.land[0., particle.depth, particle.lat, particle.lon]
+    lon0 = particle.lon
+    lat0 = particle.lat
+    if particle.lnd >= 0.25:
+        # Fixed-radius near neighbors: Solution by rounding and hashing.
+        minLand = particle.lnd
+        a = 0.00
+        while a < 0.075:
+            a += 0.025
+            lonr = math.floor(particle.lon/a) * a
+            latr = math.floor(particle.lat/a) * a
+            lndr = fieldset.land[0., particle.depth, latr, lonr]
+            if minLand > lndr:
+                minLand = lndr
+                lon0 = lonr
+                lat0 = latr
+            lndr = fieldset.land[0., particle.depth, latr + a, lonr]
+            if minLand > lndr:
+                minLand = lndr
+                lon0 = lonr
+                lat0 = latr + a
+            lndr = fieldset.land[0., particle.depth, latr, lonr + a]
+            if minLand > lndr:
+                minLand = lndr
+                lon0 = lonr + a
+                lat0 = latr
+            lndr = fieldset.land[0., particle.depth, latr + a, lonr + a]
+            if minLand > lndr:
+                minLand = lndr
+                lon0 = lonr + a
+                lat0 = latr + a
+            if minLand <= 0.01:
+                a = 1  # Break if no longer on land.
+
+        if (math.fabs(lat0 - particle.lat) > 1e-14 or  # TEST.
+                math.fabs(lon0 - particle.lon) > 1e-14):  # TEST.
+            particle.rounder += 1  # TEST.
+            particle.roundX += math.fabs(particle.lon - lon0)  # TEST.
+            particle.roundY += math.fabs(particle.lat - lat0)  # TEST.
+
+    (u1, v1, w1) = fieldset.UVW[time, particle.depth, lat0, lon0]
+    lon1 = lon0 + u1*.5*particle.dt
+    lat1 = lat0 + v1*.5*particle.dt
+    dep1 = particle.depth + w1*.5*particle.dt
+    (u2, v2, w2) = fieldset.UVW[time + .5 * particle.dt, dep1, lat1, lon1]
+    lon2 = lon0 + u2*.5*particle.dt
+    lat2 = lat0 + v2*.5*particle.dt
+    dep2 = particle.depth + w2*.5*particle.dt
+    (u3, v3, w3) = fieldset.UVW[time + .5 * particle.dt, dep2, lat2, lon2]
+    lon3 = lon0 + u3*particle.dt
+    lat3 = lat0 + v3*particle.dt
+    dep3 = particle.depth + w3*particle.dt
+    (u4, v4, w4) = fieldset.UVW[time + particle.dt, dep3, lat3, lon3]
+    particle.lon += (u1 + 2*u2 + 2*u3 + u4) / 6. * particle.dt
+    particle.lat += (v1 + 2*v2 + 2*v3 + v4) / 6. * particle.dt
+    particle.depth += (w1 + 2*w2 + 2*w3 + w4) / 6. * particle.dt
+    if math.fabs(u1) > 1e-8 and math.fabs(v1) > 1e-8:
+        particle.depth += (w1 + 2*w2 + 2*w3 + w4) / 6. * particle.dt
+        particle.roundZ += 1  # TEST: Skip depth change near low UV.
 
 
 def CoastTime(particle, fieldset, time):
@@ -74,12 +137,11 @@ def UnBeaching(particle, fieldset, time):
                 particle.lat += math.copysign(fieldset.geo, vb) * math.fabs(particle.dt)
             if math.fabs(wb) > 1e-14:
                 particle.depth -= fieldset.geo * math.fabs(particle.dt)
-                particle.ubWdepth += fieldset.geo * math.fabs(particle.dt)
-                particle.ubWcount += 1
+                particle.ubWdepth += fieldset.geo * math.fabs(particle.dt)  # TEST
+                particle.ubWcount += 1  # TEST
 
             # Check if particle is still on land.
             particle.lnd = fieldset.land[0., particle.depth, particle.lat, particle.lon]
-            # Still on land.
             if particle.lnd >= fieldset.landlim:
                 particle.beached += 1
                 particle.beachlnd += 1  # TEST: Land trigger count.
@@ -89,67 +151,6 @@ def UnBeaching(particle, fieldset, time):
         if particle.beached > 0:  # TEST: Fail count.
             particle.ubcount += 1  # TEST: Fail count.
         particle.beached = 0
-
-
-def AdvectionRK4_3D_coast(particle, fieldset, time):
-    """Fourth-order Runge-Kutta 3D particle advection."""
-    particle.lnd = fieldset.land[0., particle.depth, particle.lat, particle.lon]
-    lon0 = particle.lon
-    lat0 = particle.lat
-    if particle.lnd >= 0.25:
-        # Fixed-radius near neighbors: Solution by rounding and hashing.
-        # a = (math.ceil(particle.lnd/0.25) * 0.25)/10
-        minLand = particle.lnd
-        a = 0.00
-        while a < 0.075 or minLand <= 0.01:
-            a += 0.025
-            lonr = math.floor(particle.lon/a) * a
-            latr = math.floor(particle.lat/a) * a
-            lndr = fieldset.land[0., particle.depth, latr, lonr]
-            if minLand > lndr:
-                minLand = lndr
-                lon0 = lonr
-                lat0 = latr
-            lndr = fieldset.land[0., particle.depth, latr + a, lonr]
-            if minLand > lndr:
-                minLand = lndr
-                lon0 = lonr
-                lat0 = latr + a
-            lndr = fieldset.land[0., particle.depth, latr, lonr + a]
-            if minLand > lndr:
-                minLand = lndr
-                lon0 = lonr + a
-                lat0 = latr
-            lndr = fieldset.land[0., particle.depth, latr + a, lonr + a]
-            if minLand > lndr:
-                minLand = lndr
-                lon0 = lonr + a
-                lat0 = latr + a
-        if (math.fabs(lat0 - particle.lat) > 1e-14 or
-                math.fabs(lon0 - particle.lon) > 1e-14):
-            particle.rounder += 1
-            particle.roundX += math.fabs(particle.lon - lon0)
-            particle.roundY += math.fabs(particle.lat - lat0)
-
-    (u1, v1, w1) = fieldset.UVW[time, particle.depth, lat0, lon0]
-    lon1 = lon0 + u1*.5*particle.dt
-    lat1 = lat0 + v1*.5*particle.dt
-    dep1 = particle.depth + w1*.5*particle.dt
-    (u2, v2, w2) = fieldset.UVW[time + .5 * particle.dt, dep1, lat1, lon1]
-    lon2 = lon0 + u2*.5*particle.dt
-    lat2 = lat0 + v2*.5*particle.dt
-    dep2 = particle.depth + w2*.5*particle.dt
-    (u3, v3, w3) = fieldset.UVW[time + .5 * particle.dt, dep2, lat2, lon2]
-    lon3 = lon0 + u3*particle.dt
-    lat3 = lat0 + v3*particle.dt
-    dep3 = particle.depth + w3*particle.dt
-    (u4, v4, w4) = fieldset.UVW[time + particle.dt, dep3, lat3, lon3]
-    particle.lon += (u1 + 2*u2 + 2*u3 + u4) / 6. * particle.dt
-    particle.lat += (v1 + 2*v2 + 2*v3 + v4) / 6. * particle.dt
-    particle.depth += (w1 + 2*w2 + 2*w3 + w4) / 6. * particle.dt
-    if math.fabs(u1) > 1e-8 and math.fabs(v1) > 1e-8:
-        particle.depth += (w1 + 2*w2 + 2*w3 + w4) / 6. * particle.dt
-        particle.roundZ += 1
 
 
 def del_land(pset):
