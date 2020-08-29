@@ -243,7 +243,7 @@ class zParticle(JITParticle):
 
     # Unbeached count.
     unbeached = Variable('unbeached', initial=0., dtype=np.float32)
-    lnd = Variable('lnd', initial=fieldset.land, dtype=np.float32)
+    Land = Variable('Land', initial=fieldset.land, to_write=False, dtype=np.float32)
 
 
 pclass = zParticle

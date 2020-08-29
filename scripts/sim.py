@@ -124,6 +124,8 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
         # Unbeached count.
         unbeached = Variable('unbeached', initial=0., dtype=np.float32)
 
+        Land = Variable('Land', initial=fieldset.land, to_write=False, dtype=np.float32)
+
     pclass = zParticle
 
     # Create ParticleSet.
@@ -183,8 +185,8 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
     xlog['dt'] = dt_mins
     xlog['outdt'] = outputdt.days
     xlog['rdt'] = repeatdt.days
-    xlog['land'] = fieldset.landlim
-    xlog['eps'] = fieldset.eps
+    xlog['land'] = fieldset.LandLim
+    xlog['eps'] = fieldset.Vmin
     xlog['pset_start'] = pset_start
     xlog['pset_start_r'] = pset.particle_data['time'].max()
 
@@ -192,7 +194,7 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
     main.log_simulation(xlog, rank, logger)
 
     # Kernels.
-    kernels = pset.Kernel(main.AdvectionRK4_3Db)
+    kernels = pset.Kernel(main.AdvectionRK4_Land)
     kernels += pset.Kernel(main.BeachTest) + pset.Kernel(main.UnBeaching)
     kernels += pset.Kernel(main.AgeZone) + pset.Kernel(main.Distance)
 

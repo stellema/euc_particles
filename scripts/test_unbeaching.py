@@ -148,25 +148,27 @@ def BeachTest(particle, fieldset, time):
 
 def UnBeaching(particle, fieldset, time):
     if particle.beached >= 1:
-        (ub, vb, wb) = fieldset.UVWb[0., particle.depth, particle.lat, particle.lon]
-        # Unbeach by 1m/s (checks if unbeach velocities are close to zero).
-        ubx = fieldset.geo * (1/math.cos(particle.lat * math.pi/180))
-        if math.fabs(ub) >= fieldset.UBmin:
-            particle.lon += math.copysign(ubx, ub) * math.fabs(particle.dt)
-        if math.fabs(vb) >= fieldset.UBmin:
-            particle.lat += math.copysign(fieldset.geo, vb) * math.fabs(particle.dt)
-        if math.fabs(wb) > 1e-14:
-            particle.depth -= fieldset.geo * math.fabs(particle.dt)
-            particle.ubWdepth += fieldset.geo * math.fabs(particle.dt)  # TEST
-            particle.ubWcount += 1  # TEST
+        # Attempt three times to unbeach particle.
+        while particle.beached > 0 and particle.beached <= 3:
+            (ub, vb, wb) = fieldset.UVWb[0., particle.depth, particle.lat, particle.lon]
+            # Unbeach by 1m/s (checks if unbeach velocities are close to zero).
+            ubx = fieldset.geo * (1/math.cos(particle.lat * math.pi/180))
+            if math.fabs(ub) >= fieldset.UBmin:
+                particle.lon += math.copysign(ubx, ub) * math.fabs(particle.dt)
+            if math.fabs(vb) >= fieldset.UBmin:
+                particle.lat += math.copysign(fieldset.geo, vb) * math.fabs(particle.dt)
+            if math.fabs(wb) > 1e-14:
+                particle.depth -= particle.depth / 20
+                particle.ubWdepth += particle.depth / 20  # TEST
+                particle.ubWcount += 1  # TEST
 
-        # # Check if particle is still on land.
-        # particle.Land = fieldset.land[0., particle.depth, particle.lat, particle.lon]
-        # if particle.Land >= fieldset.LandLim:
-        #     particle.beached += 1
-        #     particle.beachlnd += 1  # TEST: Land trigger count.
-        # else:
-        #     particle.beached = 0
+            # Check if particle is still on land.
+            particle.Land = fieldset.land[0., particle.depth, particle.lat, particle.lon]
+            if particle.Land >= fieldset.LandLim:
+                particle.beached += 1
+                particle.beachlnd += 1  # TEST: Land trigger count.
+            else:
+                particle.beached = 0
         particle.unbeached += 1
         if particle.beached > 0:  # TEST: Fail count.
             particle.ubcount += 1  # TEST: Fail count.
@@ -195,8 +197,6 @@ class zParticle(JITParticle):
     Land = Variable('Land', initial=fieldset.land, to_write=False, dtype=np.float32)
     # Testers.
     beachlnd = Variable('beachlnd', initial=0., dtype=np.float32)
-    # beachvel = Variable('beachvel', initial=0., dtype=np.float32)
-    # ubeachprv = Variable('ubeachprv', initial=0., dtype=np.float32)
     coasttime = Variable('coasttime', initial=0., dtype=np.float32)
     ubcount = Variable('ubcount', initial=0., dtype=np.float32)
     rounder = Variable('rounder', initial=0., dtype=np.float32)
@@ -263,11 +263,11 @@ cfg.fig.joinpath('parcels/tests/{}_{:02d}'.format(test, i)).mkdir()
 savefile = cfg.fig/'parcels/tests/{}_{:02d}/{}_{:02d}_'.format(test, i, test, i)
 sim = savefile.stem[:-1]
 savefile = str(savefile)
-logger.info(' {}: Land>={}: LandB>={}: UBmin={}: No loop:'
+logger.info(' {}: Land>={}: LandB>={}: UBmin={}: Loop>3:'
             .format(sim, fieldset.LandLim, fieldset.coast, fieldset.UBmin) +
             'Round 0.025<a<0.1 break minLand<1e-7 (min Land distance+reg): ' +
             'Land >={}: Skip depth UV<{}+L>=0.5:'.format(fieldset.coast, fieldset.Vmin) +
-            ' UBW=-geo: sw_ocean normal')
+            ' UBW=-depth/20')
 pset.show(domain=domain, field=fieldtype, depth_level=d, animation=False,
           vmax=vmax, vmin=vmin, savefile=savefile + str(0).zfill(3))
 
@@ -292,8 +292,7 @@ pset.show(domain=domain, field=fieldtype, depth_level=d, animation=False,
           vmax=vmax, vmin=vmin, savefile=savefile + str(t).zfill(3))
 
 pd = pset.particle_data
-for v in ['unbeached', 'coasttime', 'beachlnd',  'ubcount',
-          'ubWcount', 'ubWdepth', 'rounder', 'roundZ', 'roundX', 'roundY']:
+for v in ['unbeached', 'coasttime', 'ubcount', 'ubWcount', 'ubWdepth']:
     p = pd[v]
     Nb = np.where(p > 0.0, 1, 0).sum()
     pb = np.where(p > 0.0, p, np.nan)

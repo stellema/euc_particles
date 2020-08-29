@@ -186,7 +186,7 @@ def ofam_fieldset(time_bnds='full', exp='hist', chunks=True, cs=300,
     fieldset.add_constant('LandLim', 0.95)
     fieldset.add_constant('coast', 0.1)
     fieldset.add_constant('Vmin', 1e-7)
-    fieldset.add_constant('UBmin', 1e-6)
+    fieldset.add_constant('UBmin', 2e-6)
 
     if add_zone:
         # Add particle zone boundaries.
@@ -293,7 +293,7 @@ def generate_sim_id(lon, v=0, exp='hist', randomise=False,
 
 def AdvectionRK4_Land(particle, fieldset, time):
     """Fourth-order Runge-Kutta 3D particle advection."""
-    particle.Land = fieldset.land[0., particle.depth, particle.lat, particle.lon]
+    # particle.Land = fieldset.land[0., particle.depth, particle.lat, particle.lon]
     lat0 = particle.lat
     lon0 = particle.lon
     if particle.Land >= fieldset.coast:
@@ -383,7 +383,6 @@ def UnBeaching(particle, fieldset, time):
         # Attempt three times to unbeach particle.
         while particle.beached > 0 and particle.beached <= 3:
             (ub, vb, wb) = fieldset.UVWb[0., particle.depth, particle.lat, particle.lon]
-
             # Unbeach by 1m/s (checks if unbeach velocities are close to zero).
             ubx = fieldset.geo * (1/math.cos(particle.lat * math.pi/180))
             if math.fabs(ub) >= fieldset.UBmin:
@@ -391,7 +390,7 @@ def UnBeaching(particle, fieldset, time):
             if math.fabs(vb) >= fieldset.UBmin:
                 particle.lat += math.copysign(fieldset.geo, vb) * math.fabs(particle.dt)
             if math.fabs(wb) > 1e-14:
-                particle.depth -= fieldset.geo * math.fabs(particle.dt)
+                particle.depth -= particle.depth / 50
 
             # Check if particle is still on land.
             particle.Land = fieldset.land[0., particle.depth, particle.lat, particle.lon]
