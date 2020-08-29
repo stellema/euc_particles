@@ -31,19 +31,18 @@ okay at  1.5e-7 CS2
 #     particle.beachstr += 1
 #     particle.ubcount = 0
 """
+import cfg
 import math
 import main
 import tools
-import cfg
+import warnings
 import numpy as np
 import xarray as xr
 from operator import attrgetter
 from datetime import timedelta
-from parcels import (AdvectionRK4_3D, ParticleSet, ErrorCode, Variable,
-                     JITParticle)
+from parcels import (ParticleSet, ErrorCode, Variable, JITParticle)
 
-import warnings
-# warnings.filterwarnings("ignore")
+warnings.filterwarnings("ignore")
 logger = tools.mlogger('test_unbeaching', parcels=True, misc=False)
 
 
@@ -52,11 +51,11 @@ def AdvectionRK4_3D_coast(particle, fieldset, time):
     particle.lnd = fieldset.land[0., particle.depth, particle.lat, particle.lon]
     lon0 = particle.lon
     lat0 = particle.lat
-    if particle.lnd >= 0.25:
+    if particle.lnd >= 0.125:
         # Fixed-radius near neighbors: Solution by rounding and hashing.
         minLand = particle.lnd
-        a = 0.00
-        while a < 0.075:
+        a = 0.
+        while a < 0.1:
             a += 0.025
             lonr = math.floor(particle.lon/a) * a
             latr = math.floor(particle.lat/a) * a
@@ -65,23 +64,29 @@ def AdvectionRK4_3D_coast(particle, fieldset, time):
                 minLand = lndr
                 lon0 = lonr
                 lat0 = latr
-            lndr = fieldset.land[0., particle.depth, latr + a, lonr]
-            if minLand > lndr:
-                minLand = lndr
-                lon0 = lonr
-                lat0 = latr + a
+                if minLand < 1e-7:
+                    break
             lndr = fieldset.land[0., particle.depth, latr, lonr + a]
             if minLand > lndr:
                 minLand = lndr
                 lon0 = lonr + a
                 lat0 = latr
+                if minLand < 1e-7:
+                    break
+            lndr = fieldset.land[0., particle.depth, latr + a, lonr]
+            if minLand > lndr:
+                minLand = lndr
+                lon0 = lonr
+                lat0 = latr + a
+                if minLand < 1e-7:
+                    break
             lndr = fieldset.land[0., particle.depth, latr + a, lonr + a]
             if minLand > lndr:
                 minLand = lndr
                 lon0 = lonr + a
                 lat0 = latr + a
-            if minLand <= 0.01:
-                a = 1  # Break if no longer on land.
+                if minLand < 1e-7:
+                    break
 
         if (math.fabs(lat0 - particle.lat) > 1e-14 or  # TEST.
                 math.fabs(lon0 - particle.lon) > 1e-14):  # TEST.
@@ -220,6 +225,7 @@ elif test == 'CS':
     # J, I, K = [-8.7, -8.4], [149.7, 150], [160]  # underwater bridge,
     J, I, K = [-12.5, -7.5], [147.5, 156.5], [150]  # Normal.
     domain = {'N': -7, 'S': -13.5, 'E': 156, 'W': 147}
+
 d = 19
 dx = 0.1
 T = np.arange(1, 500)
@@ -245,8 +251,8 @@ savefile = str(savefile)
 logger.info(' {}: Land>={}: LandB>={}: UBmin={}: Vmin={}: Loop>=3:'
             .format(sim, fieldset.landlim, fieldset.coast,
                     fieldset.UBmin, fieldset.Vmin) +
-            'Round 0.025<a<0.075 or minLand<=0.01 (min Land distance): Land >=0.25:' +
-            'Skip depth UV<1e-8: UBW=-geo: No UB coast or Vmin check')
+            'Round 0.025<a<0.1 break minLand<1e-7 (min Land distance): ' +
+            'Land >=0.125: Skip depth UV<1e-8: UBW=-geo: No coast+Vmin check')
 pset.show(domain=domain, field=fieldtype, depth_level=d, animation=False,
           vmax=vmax, vmin=vmin, savefile=savefile + str(0).zfill(3))
 
