@@ -134,7 +134,7 @@ def ofam_fieldset(time_bnds='full', exp='hist', chunks=True, cs=300,
             'V': {'time': 'Time', 'lat': 'yu_ocean', 'lon': 'xu_ocean',
                   'depth': 'st_edges_ocean'},
             'W': {'time': 'Time', 'lat': 'yu_ocean', 'lon': 'xu_ocean',
-                  'depth': 'st_edges_ocean'}}
+                  'depth': 'sw_ocean_mod'}}
 
     # Depth coordinate indices.
     # U,V: Exclude last index of st_edges_ocean.
@@ -151,7 +151,7 @@ def ofam_fieldset(time_bnds='full', exp='hist', chunks=True, cs=300,
         xw_ind = np.arange(0, X - 1, dtype=int).tolist()
     else:
         zu_ind = np.arange(0, Z, dtype=int).tolist()
-        zw_ind = np.arange(0, Z, dtype=int).tolist()
+        zw_ind = np.append(Z - 1, np.arange(0, Z - 1, dtype=int)).tolist()
         yu_ind = np.arange(0, Y, dtype=int).tolist()
         yw_ind = np.arange(0, Y, dtype=int).tolist()
         xu_ind = np.arange(0, X, dtype=int).tolist()
