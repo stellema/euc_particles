@@ -51,7 +51,7 @@ def AdvectionRK4_3D_coast(particle, fieldset, time):
     particle.lnd = fieldset.land[0., particle.depth, particle.lat, particle.lon]
     lon0 = particle.lon
     lat0 = particle.lat
-    if particle.lnd >= 0.125:
+    if particle.lnd >= 0.1:
         # Fixed-radius near neighbors: Solution by rounding and hashing.
         minLand = particle.lnd
         a = 0.
@@ -248,11 +248,11 @@ cfg.fig.joinpath('parcels/tests/{}_{:02d}'.format(test, i)).mkdir()
 savefile = cfg.fig/'parcels/tests/{}_{:02d}/{}_{:02d}_'.format(test, i, test, i)
 sim = savefile.stem[:-1]
 savefile = str(savefile)
-logger.info(' {}: Land>={}: LandB>={}: UBmin={}: Vmin={}: Loop>=3:'
+logger.info(' {}: Land>={}: LandB>={}: UBmin={}: Loop>=3:'
             .format(sim, fieldset.landlim, fieldset.coast,
-                    fieldset.UBmin, fieldset.Vmin) +
+                    fieldset.UBmin) +
             'Round 0.025<a<0.1 break minLand<1e-7 (min Land distance): ' +
-            'Land >=0.125: Skip depth UV<1e-8: UBW=-geo: No coast+Vmin check')
+            'Land >=0.1: Skip depth UV<1e-8: UBW=-geo: No coast+Vmin check')
 pset.show(domain=domain, field=fieldtype, depth_level=d, animation=False,
           vmax=vmax, vmin=vmin, savefile=savefile + str(0).zfill(3))
 
