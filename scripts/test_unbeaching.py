@@ -210,7 +210,7 @@ class zParticle(JITParticle):
 
 
 pclass = zParticle
-test = ['CS', 'PNG', 'SS'][2]
+test = ['CS', 'PNG', 'SS'][0]
 if test == 'BT':
     runtime = timedelta(minutes=60)
     dt = timedelta(minutes=60)
@@ -269,7 +269,7 @@ logger.info(' {}: Land>={}: LandB>={}: UBmin={}: Loop>=3:'
             .format(sim, fieldset.LandLim, fieldset.coast, fieldset.UBmin) +
             'Round 0.025<a<0.1 break minLand<1e-7 (min Land distance+reg): ' +
             'Land >={}: Skip depth UV<{}+L>=0.5:'.format(fieldset.coast, fieldset.Vmin) +
-            ' UBW=-geo: No coast+Vmin check')
+            ' UBW=-geo: st_ocean swap')
 pset.show(domain=domain, field=fieldtype, depth_level=d, animation=False,
           vmax=vmax, vmin=vmin, savefile=savefile + str(0).zfill(3))
 
