@@ -38,11 +38,11 @@ fieldset = main.ofam_fieldset(time_bnds='full', exp='hist', chunks=True, cs=300,
                               time_periodic=False, add_zone=True, add_unbeach_vel=True,
                               apply_indicies=False)
 fieldset.computeTimeChunk(0, 0)
-dx = 0.1
+dx = 0.5
 dz = 0.25
-J = [-5, -4.35]
-I = [156.65, 157.45]
-z = 290
+J = [-11.5, -11]
+I = [151.5, 153]
+z = 150
 # Zonal velocity.
 du = xr.open_dataset(cfg.ofam/'ocean_u_2012_01.nc').u
 u = du.isel(Time=0).sel(st_ocean=z, method='nearest')
@@ -63,10 +63,10 @@ vb = vb.sel(yu_ocean=slice(J[0], J[1]), xu_ocean=slice(I[0], I[1]))
 lats = u.yu_ocean.values
 lons = u.xu_ocean.values
 fv = np.zeros((lats.size, lons.size))*np.nan
-# latx = lats-0.05
-# lonx = lons-0.05
-latz = np.interp(np.arange(0, len(lats)-1 + dx, dx), np.arange(0, len(lats)), lats)
-lonz = np.interp(np.arange(0, len(lons)-1 + dx, dx), np.arange(0, len(lons)), lons)
+latz = lats-0.05
+lonz = lons-0.05
+# latz = np.interp(np.arange(0, len(lats)-1 + dx, dx), np.arange(0, len(lats)), lats)
+# lonz = np.interp(np.arange(0, len(lons)-1 + dx, dx), np.arange(0, len(lons)), lons)
 latx = np.interp(np.arange(0, len(lats)-1 + dz, dz), np.arange(0, len(lats)), lats)
 lonx = np.interp(np.arange(0, len(lons)-1 + dz, dz), np.arange(0, len(lons)), lons)
 fvz = np.zeros((latz.size, lonz.size))
@@ -141,17 +141,18 @@ x, y, v = lonz, latz, fvb
 plot_interp(ax, 11, x, y, v, title, mn, mx, cmap)
 
 plt.tight_layout()
-plt.savefig(cfg.fig/'interp_lat_{}_lon{}_{}.png'
-            .format(math.ceil(J[0]), math.ceil(I[0]), dx), format="png")
-plt.show()
-# i = 151.2
-# k = 193.66
-# j = -8.7
-# for j in np.arange(-8.5, -8.8, -0.05):
-#     print(round(j, 3), round(i, 2),
-#           fieldset.land.eval(0, k, j, i, applyConversion=False),
-#           round(fieldset.U.eval(0, k, j, i, applyConversion=True), 4),
-#           round(fieldset.V.eval(0, k, j, i, applyConversion=False), 4),
-#           round(fieldset.W.eval(0, k, j, i, applyConversion=False), 4),
-#           round(fieldset.Ub.eval(0, k, j, i, applyConversion=False), 4),
-#           round(fieldset.Vb.eval(0, k, j, i, applyConversion=False), 4))
+plt.savefig(cfg.fig/'interp_lat_{}_lon{}_{}_{}.png'
+            .format(math.ceil(J[0]), math.ceil(I[0]), dz, dx), format="png")
+# plt.show()
+i = 151.9747
+k = 256.4669
+j = -11.232549
+for j in np.arange(-11, -12, -0.05):
+    print(round(j, 3), round(i, 2),
+          fieldset.land.eval(0, k, j, i, applyConversion=False),
+          round(fieldset.U.eval(0, k, j, i, applyConversion=False), 4),
+          round(fieldset.V.eval(0, k, j, i, applyConversion=False), 4),
+          round(fieldset.W.eval(0, k, j, i, applyConversion=False), 4),
+          round(fieldset.Ub.eval(0, k, j, i, applyConversion=False), 4),
+          round(fieldset.Vb.eval(0, k, j, i, applyConversion=False), 4),
+          round(fieldset.Wb.eval(0, k, j, i, applyConversion=False), 4))

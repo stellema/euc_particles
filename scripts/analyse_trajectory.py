@@ -24,7 +24,7 @@ dt = xr.open_dataset(cfg.ofam/'ocean_temp_1981_01.nc').temp.isel(Time=t)
 
 sim_id = cfg.data/'sim_hist_165_v87r0.nc'
 
-ds, dx = plot_traj(sim_id, var='u', traj=119, t=2, Z=250)
+ds, dx = plot_traj(sim_id, var='u', traj=2292, t=2, Z=250)
 
 ds, tr = plot_beached(sim_id, depth=400)
 
@@ -120,10 +120,15 @@ def plot_traj(sim_id, var='u', traj=None, t=None, Z=290, ds=None):
     ax.pcolormesh(lon, lat, dv, cmap=cmap, vmax=vmax, vmin=-vmax)
     # ax.scatter(dx.lon[bc], dx.lat[bc], color='y', s=3, zorder=3)
     # ax.plot(dx.lon, dx.lat, color='k', marker='o', linewidth=1, markersize=3)
-    im = ax.scatter(dx.lon, dx.lat, c=dx.zone.values, marker='o', cmap=zmap, linewidth=1, s=3, norm=norm)
+    try:
+        im = ax.scatter(dx.lon, dx.lat, c=dx.zone.values, marker='o',
+                        cmap=zmap, linewidth=1, s=3, norm=norm)
+        plt.colorbar(im)
+    except:
+        im = ax.scatter(dx.lon, dx.lat, marker='o', linewidth=1, s=3)
     ax.set_xlabel("Longitude")
     ax.set_ylabel("Latitude")
-    plt.colorbar(im)
+
 
     ax = fig.add_subplot(223)
     ax.set_title(sim_id.stem + ' traj=' + str(traj))
