@@ -183,8 +183,8 @@ def ofam_fieldset(time_bnds='full', exp='hist', chunks=True, cs=300,
 
     # Convert from geometric to geographic coordinates (m to degree).
     fieldset.add_constant('geo', 1/(1852*60))
-    fieldset.add_constant('LandLim', 0.95)
-    fieldset.add_constant('coast', 0.2)
+    fieldset.add_constant('LandLim', 0.975)
+    fieldset.add_constant('coast', 0.1)
     fieldset.add_constant('Vmin', 1e-7)
     fieldset.add_constant('UBmin', 1e-6)
 
