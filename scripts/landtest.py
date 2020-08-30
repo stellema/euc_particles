@@ -44,10 +44,10 @@ J = [-9.5, -8.2]
 I = [150, 151.5]
 z = 140
 # Zonal velocity.
-du = xr.open_dataset(cfg.ofam/'ocean_u_2012_01.nc').u
+du = xr.open_dataset(cfg.ofam/'ocean_w_2012_01.nc').w
 zi = tools.get_edge_depth(z, index=True, edge=False, greater=False)
-u = du.isel(Time=0, st_ocean=zi)
-u = u.sel(yu_ocean=slice(J[0], J[1]), xu_ocean=slice(I[0], I[1]))
+u = du.isel(Time=0).sel(sw_ocean=z, method='nearest')
+u = u.sel(yt_ocean=slice(J[0]-0.05, J[1]-0.05), xt_ocean=slice(I[0]-0.05, I[1]-0.05))
 
 # Land.
 db = xr.open_dataset(cfg.data/'OFAM3_unbeach_land_ucell.nc')
@@ -61,8 +61,8 @@ ub = ub.sel(yu_ocean=slice(J[0], J[1]), xu_ocean=slice(I[0], I[1]))
 vb = db.unBeachV.isel(Time=0, st_ocean=zi)
 vb = vb.sel(yu_ocean=slice(J[0], J[1]), xu_ocean=slice(I[0], I[1]))
 
-lats = u.yu_ocean.values
-lons = u.xu_ocean.values
+lats = vb.yu_ocean.values
+lons = vb.xu_ocean.values
 fv = np.zeros((lats.size, lons.size))*np.nan
 latz = lats-0.05
 lonz = lons-0.05
@@ -77,14 +77,14 @@ flx, fubx, fvbx = fvx.copy(), fvx.copy(), fvx.copy()
 
 for iy, y in enumerate(latz):
     for ix, x in enumerate(lonz):
-        fvz[iy, ix] = fieldset.U.eval(0, z, y, x, applyConversion=False)
+        fvz[iy, ix] = fieldset.W.eval(0, z, y, x, applyConversion=False)
         fld[iy, ix] = fieldset.land.eval(0, z, y, x, applyConversion=False)
         fub[iy, ix] = fieldset.Ub.eval(0, z, y, x, applyConversion=False)
         fvb[iy, ix] = fieldset.Vb.eval(0, z, y, x, applyConversion=False)
 
 for iy, y in enumerate(latx):
     for ix, x in enumerate(lonx):
-        fvx[iy, ix] = fieldset.U.eval(0, z, y, x, applyConversion=False)
+        fvx[iy, ix] = fieldset.W.eval(0, z, y, x, applyConversion=False)
         flx[iy, ix] = fieldset.land.eval(0, z, y, x, applyConversion=False)
         fubx[iy, ix] = fieldset.Ub.eval(0, z, y, x, applyConversion=False)
         fvbx[iy, ix] = fieldset.Vb.eval(0, z, y, x, applyConversion=False)
@@ -97,15 +97,16 @@ x, y = np.meshgrid(lons, lats)
 
 fig, ax = plt.subplots(4, 3, figsize=(15, 17))
 ax = ax.flatten()
-mn, mx = 0, 0.5
-cmap = plt.cm.gist_stern
+mn, mx = -0.00005, 0.00005
+# cmap = plt.cm.gist_stern
+cmap = plt.cm.viridis_r
 title = 'Original Zonal Velocity'
-x, y, v = lons, lats, np.fabs(u)
+x, y, v = lons, lats, u
 plot_interp(ax, 0, x, y, v, title, mn, mx, cmap)
 title = 'Fieldset Velocity'
-x, y, v = lonx, latx, np.fabs(fvx)
+x, y, v = lonx, latx, fvx
 plot_interp(ax, 1, x, y, v, title, mn, mx, cmap)
-x, y, v = lonz, latz, np.fabs(fvz)
+x, y, v = lonz, latz, fvz
 plot_interp(ax, 2, x, y, v, title, mn, mx, cmap)
 
 cmap = plt.cm.viridis_r
@@ -142,7 +143,7 @@ x, y, v = lonz, latz, fvb
 plot_interp(ax, 11, x, y, v, title, mn, mx, cmap)
 
 plt.tight_layout()
-plt.savefig(cfg.fig/'interp_lat_{}_lon{}_z{}_{}_{}.png'
+plt.savefig(cfg.fig/'interp_lat_{}_lon{}_z{}_{}_{}w.png'
             .format(math.ceil(J[0]), math.ceil(I[0]), z, dz, dx), format="png")
 # plt.show()
 # i = 151.9747

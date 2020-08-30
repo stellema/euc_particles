@@ -63,24 +63,11 @@ def AdvectionRK4_Land(particle, fieldset, time):
         # Fixed-radius near neighbors: Solution by rounding and hashing.
         minLand = particle.Land
         a = 0.
-        while a < 0.1:
+        while a < 0.075:
             a += 0.025
+            particle.alpha = a
             latr = math.floor(particle.lat/a) * a
             lonr = math.ceil(particle.lon/a) * a
-            # Landr = fieldset.land[0., particle.depth, particle.lat, lonr]
-            # if minLand > Landr:  # Lat reg, lon ceil.
-            #     minLand = Landr
-            #     lat0 = particle.lat
-            #     lon0 = lonr
-            #     if minLand < 1e-7:
-            #         break
-            # Landr = fieldset.land[0., particle.depth, latr, particle.lon]
-            # if minLand > Landr:  # Lat floor, lon reg.
-            #     minLand = Landr
-            #     lat0 = latr
-            #     lon0 = particle.lon
-            #     if minLand < 1e-7:
-            #         break
             Landr = fieldset.land[0., particle.depth, latr, lonr]
             if minLand > Landr:  # Lat floor, lon ceil.
                 minLand = Landr
@@ -109,6 +96,8 @@ def AdvectionRK4_Land(particle, fieldset, time):
                 lon0 = lonr - a
                 if minLand < 1e-7:
                     break
+            if a >= 0.07:
+                particle.calpha += 1
 
         if (math.fabs(lat0 - particle.lat) > 1e-14 or  # TEST.
                 math.fabs(lon0 - particle.lon) > 1e-14):  # TEST.
@@ -247,6 +236,8 @@ class zParticle(JITParticle):
     ubWdepth = Variable('ubWdepth', initial=0., dtype=np.float32)
     sgnx = Variable('sgnx', initial=0., dtype=np.float32)
     sgny = Variable('sgny', initial=0., dtype=np.float32)
+    alpha = Variable('alpha', initial=0., dtype=np.float32)
+    calpha = Variable('calpha', initial=0., dtype=np.float32)
     # roundX = Variable('roundX', initial=0., dtype=np.float32)
     # roundY = Variable('roundY', initial=0., dtype=np.float32)
     # beachlnd = Variable('beachlnd', initial=0., dtype=np.float32)
@@ -312,7 +303,7 @@ sim = savefile.stem[:-1]
 savefile = str(savefile)
 logger.info(' {}: Land>={}: LandB>={}: UBmin={}: Loop>3:'
             .format(sim, fieldset.LandLim, fieldset.coast, fieldset.UBmin) +
-            'Round 0.025<a<0.1 break minLand<1e-7 (min Land distance+reg):' +
+            'Round 0.025<a<0.075 break minLand<1e-7 (min Land distance+reg):' +
             ' Land >={}: Skip depth UV<{}+L>=0.5:'
             .format(fieldset.coast, fieldset.Vmin) + ' UBW=-depth*1e-5*dt:')
 pset.show(domain=domain, field=fieldtype, depth_level=d, animation=False,
@@ -340,7 +331,7 @@ pset.show(domain=domain, field=fieldtype, depth_level=d, animation=False,
 
 pd = pset.particle_data
 for v in ['unbeached', 'coasttime', 'ubcount', 'ubWcount', 'ubWdepth',
-          'rounder', 'sgnx', 'sgny']:
+          'rounder', 'sgnx', 'sgny', 'calpha', 'alpha']:
     p = pd[v]
     Nb = np.where(p > 0.0, 1, 0).sum()
     pb = np.where(p > 0.0, p, np.nan)
