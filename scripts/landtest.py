@@ -40,24 +40,25 @@ fieldset = main.ofam_fieldset(time_bnds='full', exp='hist', chunks=True, cs=300,
 fieldset.computeTimeChunk(0, 0)
 dx = 0.5
 dz = 0.25
-J = [-11.5, -11]
-I = [151.5, 153]
-z = 150
+J = [-9.5, -8.2]
+I = [150, 151.5]
+z = 140
 # Zonal velocity.
 du = xr.open_dataset(cfg.ofam/'ocean_u_2012_01.nc').u
-u = du.isel(Time=0).sel(st_ocean=z, method='nearest')
+zi = tools.get_edge_depth(z, index=True, edge=False, greater=False)
+u = du.isel(Time=0, st_ocean=zi)
 u = u.sel(yu_ocean=slice(J[0], J[1]), xu_ocean=slice(I[0], I[1]))
 
 # Land.
 db = xr.open_dataset(cfg.data/'OFAM3_unbeach_land_ucell.nc')
-ld = db.land.isel(Time=0).sel(st_ocean=z, method='nearest')
+ld = db.land.isel(Time=0, st_ocean=zi)
 ld = ld.sel(yu_ocean=slice(J[0], J[1]), xu_ocean=slice(I[0], I[1]))
 
 # UnbeachU
-ub = db.unBeachU.isel(Time=0).sel(st_ocean=z, method='nearest')
+ub = db.unBeachU.isel(Time=0, st_ocean=zi)
 ub = ub.sel(yu_ocean=slice(J[0], J[1]), xu_ocean=slice(I[0], I[1]))
 # UnbeachU
-vb = db.unBeachV.isel(Time=0).sel(st_ocean=z, method='nearest')
+vb = db.unBeachV.isel(Time=0, st_ocean=zi)
 vb = vb.sel(yu_ocean=slice(J[0], J[1]), xu_ocean=slice(I[0], I[1]))
 
 lats = u.yu_ocean.values
@@ -141,18 +142,18 @@ x, y, v = lonz, latz, fvb
 plot_interp(ax, 11, x, y, v, title, mn, mx, cmap)
 
 plt.tight_layout()
-plt.savefig(cfg.fig/'interp_lat_{}_lon{}_{}_{}.png'
-            .format(math.ceil(J[0]), math.ceil(I[0]), dz, dx), format="png")
+plt.savefig(cfg.fig/'interp_lat_{}_lon{}_z{}_{}_{}.png'
+            .format(math.ceil(J[0]), math.ceil(I[0]), z, dz, dx), format="png")
 # plt.show()
-i = 151.9747
-k = 256.4669
-j = -11.232549
-for j in np.arange(-11, -12, -0.05):
-    print(round(j, 3), round(i, 2),
-          fieldset.land.eval(0, k, j, i, applyConversion=False),
-          round(fieldset.U.eval(0, k, j, i, applyConversion=False), 4),
-          round(fieldset.V.eval(0, k, j, i, applyConversion=False), 4),
-          round(fieldset.W.eval(0, k, j, i, applyConversion=False), 4),
-          round(fieldset.Ub.eval(0, k, j, i, applyConversion=False), 4),
-          round(fieldset.Vb.eval(0, k, j, i, applyConversion=False), 4),
-          round(fieldset.Wb.eval(0, k, j, i, applyConversion=False), 4))
+# i = 151.9747
+# k = 256.4669
+# j = -11.232549
+# for j in np.arange(-11, -12, -0.05):
+#     print(round(j, 3), round(i, 2),
+#           fieldset.land.eval(0, k, j, i, applyConversion=False),
+#           round(fieldset.U.eval(0, k, j, i, applyConversion=False), 4),
+#           round(fieldset.V.eval(0, k, j, i, applyConversion=False), 4),
+#           round(fieldset.W.eval(0, k, j, i, applyConversion=False), 4),
+#           round(fieldset.Ub.eval(0, k, j, i, applyConversion=False), 4),
+#           round(fieldset.Vb.eval(0, k, j, i, applyConversion=False), 4),
+#           round(fieldset.Wb.eval(0, k, j, i, applyConversion=False), 4))
