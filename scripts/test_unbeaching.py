@@ -63,7 +63,7 @@ def AdvectionRK4_Land(particle, fieldset, time):
         # Fixed-radius near neighbors: Solution by rounding and hashing.
         minLand = particle.Land
         a = 0.
-        while a < 0.075:
+        while a < 0.1:
             a += 0.025
             latr = math.floor(particle.lat/a) * a
             lonr = math.ceil(particle.lon/a) * a
@@ -145,9 +145,10 @@ def AdvectionRK4_Land(particle, fieldset, time):
     xnd = math.copysign(1, particle.lat - particle.prev_lat)  # Test
     ynd = math.copysign(1, particle.lon - particle.prev_lon)  # Test
     if particle.Land >= fieldset.coast:
-        if xrd * xnd < 0 or yrd * ynd < 0:  # Test
-            particle.sgn += 1  # Test
-
+        if xrd * xnd < 0:  # Test
+            particle.sgnx += 1  # Test
+        if yrd * ynd < 0:  # Test
+            particle.sgny += 1  # Test
 
 
 def AdvectionRK4_3Dr(particle, fieldset, time):
@@ -244,7 +245,8 @@ class zParticle(JITParticle):
     roundZ = Variable('roundZ', initial=0., dtype=np.float32)
     ubWcount = Variable('ubWcount', initial=0., dtype=np.float32)
     ubWdepth = Variable('ubWdepth', initial=0., dtype=np.float32)
-    sgn = Variable('sgn', initial=0., dtype=np.float32)
+    sgnx = Variable('sgnx', initial=0., dtype=np.float32)
+    sgny = Variable('sgny', initial=0., dtype=np.float32)
     # roundX = Variable('roundX', initial=0., dtype=np.float32)
     # roundY = Variable('roundY', initial=0., dtype=np.float32)
     # beachlnd = Variable('beachlnd', initial=0., dtype=np.float32)
@@ -310,7 +312,7 @@ sim = savefile.stem[:-1]
 savefile = str(savefile)
 logger.info(' {}: Land>={}: LandB>={}: UBmin={}: Loop>3:'
             .format(sim, fieldset.LandLim, fieldset.coast, fieldset.UBmin) +
-            'Round 0.025<a<0.05 break minLand<1e-7 (min Land distance+reg):' +
+            'Round 0.025<a<0.1 break minLand<1e-7 (min Land distance+reg):' +
             ' Land >={}: Skip depth UV<{}+L>=0.5:'
             .format(fieldset.coast, fieldset.Vmin) + ' UBW=-depth*1e-5*dt:')
 pset.show(domain=domain, field=fieldtype, depth_level=d, animation=False,
@@ -338,7 +340,7 @@ pset.show(domain=domain, field=fieldtype, depth_level=d, animation=False,
 
 pd = pset.particle_data
 for v in ['unbeached', 'coasttime', 'ubcount', 'ubWcount', 'ubWdepth',
-          'rounder', 'sgn']:
+          'rounder', 'sgnx', 'sgny']:
     p = pd[v]
     Nb = np.where(p > 0.0, 1, 0).sum()
     pb = np.where(p > 0.0, p, np.nan)
