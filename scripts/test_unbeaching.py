@@ -55,7 +55,6 @@ logger = tools.mlogger('test_unbeaching', parcels=True, misc=False)
 
 
 def AdvectionRK4_Land(particle, fieldset, time):
-    """Fourth-order Runge-Kutta 3D particle advection."""
     """Fourth-order Runge-Kutta 3D advection with rounding lat/lon near land."""
     particle.Land = fieldset.land[0., particle.depth, particle.lat, particle.lon]
     lat0 = particle.lat
@@ -120,33 +119,14 @@ def AdvectionRK4_Land(particle, fieldset, time):
     particle.lon += (u1 + 2*u2 + 2*u3 + u4) / 6. * particle.dt
     particle.lat += (v1 + 2*v2 + 2*v3 + v4) / 6. * particle.dt
 
-    # if (particle.Land >= 0.5 and
-    #         math.fabs(u1) < fieldset.Vmin and math.fabs(v1) < fieldset.Vmin):
-    #     zconst = math.fabs(1 - particle.Land)
-    #     particle.roundZ += (w1 + 2*w2 + 2*w3 + w4) / 6. * particle.dt * zconst  # TEST: Skip depth change near low UV.
-    # else:
-    #     zconst = 1
-    if particle.Land > 0.1:
-        zconst = math.fabs(1 - particle.Land)
-        particle.zc = zconst  # Test.
-        particle.roundZ += (w1 + 2*w2 + 2*w3 + w4) / 6. * particle.dt * zconst  # TEST: Skip depth change near low UV.
-
-    else:
-        zconst = 1
-        particle.zc = 0  # Test.
+    # Reduce vertical velocity as they get closer to the coast.
+    zconst = 1
+    if particle.Land >= fieldset.coast:
+        zconst = (1 - particle.Land)
+        particle.zc += 1  # Test.
+        particle.roundZ += (w1 + 2*w2 + 2*w3 + w4) / 6. * particle.dt * zconst  # TEST.
 
     particle.depth += (w1 + 2*w2 + 2*w3 + w4) / 6. * particle.dt * zconst
-
-    # # Test
-    # xrd = math.copysign(1, particle.latr - particle.prev_lat)  # Test
-    # yrd = math.copysign(1, particle.lonr - particle.prev_lon)  # Test
-    # xnd = math.copysign(1, particle.lat - particle.prev_lat)  # Test
-    # ynd = math.copysign(1, particle.lon - particle.prev_lon)  # Test
-    # if particle.Land >= fieldset.coast:
-    #     if xrd * xnd < 0:  # Test
-    #         particle.sgnx += 1  # Test
-    #     if yrd * ynd < 0:  # Test
-    #         particle.sgny += 1  # Test
 
 
 def AdvectionRK4_3Dr(particle, fieldset, time):
@@ -198,9 +178,9 @@ def UnBeaching(particle, fieldset, time):
             if math.fabs(vb) >= fieldset.UBmin:
                 particle.lat += math.copysign(fieldset.geo, vb) * math.fabs(particle.dt)
             # Depth.
-            if math.fabs(wb) > 1e-14:
-                particle.depth -= 1e-4 * math.fabs(particle.dt)
-                particle.ubWdepth += 1e-4 * math.fabs(particle.dt)  # TEST
+            if math.fabs(wb) > 1/3:
+                particle.depth -= fieldset.UBWvel * math.fabs(particle.dt)
+                particle.ubWdepth += fieldset.UBWvel * math.fabs(particle.dt)  # TEST
                 particle.ubWcount += 1  # TEST
 
             # Check if particle is still on land.
@@ -311,8 +291,8 @@ savefile = str(savefile)
 logger.info(' {}: Land>={}: LandB>={}: UBmin={}: Loop>3:'
             .format(sim, fieldset.LandLim, fieldset.coast, fieldset.UBmin) +
             'Round 0.025<a<0.1 break minLand<1e-7 (min Land distance): ' +
-            'Land >={}: Depth*(1-Land) if L>0.1:'
-            .format(fieldset.coast, fieldset.Vmin) + ' UBW=-1e-4*dt:')
+            'Land >={}: Depth*(1-Land) if L>{} : UBW=-{}*dt if wb>1/3'
+            .format(fieldset.coast, fieldset.coast, fieldset.UBWvel))
 pset.show(domain=domain, field=fieldtype, depth_level=d, animation=False,
           vmax=vmax, vmin=vmin, savefile=savefile + str(0).zfill(3))
 
@@ -343,9 +323,8 @@ for v in ['unbeached', 'coasttime', 'ubcount', 'ubWcount', 'ubWdepth',
     Nb = np.where(p > 0.0, 1, 0).sum()
     pb = np.where(p > 0.0, p, np.nan)
     pb = pb[~np.isnan(pb)]
-    mx = int(p.max()) if v != 'zc' else int(p.min())
     logger.info('{}: {}: N={} Nb={}({:.1f}%) max={:.3f} med={:.3f} mean={:.3f}'
-                .format(sim, v, N, Nb, (Nb/N)*100, mx,
+                .format(sim, v, N, Nb, (Nb/N)*100, p.max(),
                         np.nanmedian(pb), np.nanmean(pb)))
 
 output = str(cfg.fig/'parcels/gifs') + '/' + str(sim) + '.mp4'
