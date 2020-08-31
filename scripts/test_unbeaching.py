@@ -122,7 +122,12 @@ def AdvectionRK4_Land(particle, fieldset, time):
     # Reduce vertical velocity as they get closer to the coast.
     zconst = 1
     if particle.Land >= fieldset.coast:
-        zconst = (1 - particle.Land)
+        # if particle.Land >= 1 - fieldset.coast:
+        #     zconst = 0.
+        #     particle.zcz += 1  # Test.
+        # else:
+        #     zconst = (1 - particle.Land - fieldset.coast)**4
+        zconst = (1 - particle.Land)**2
         particle.zc += 1  # Test.
         particle.roundZ += (w1 + 2*w2 + 2*w3 + w4) / 6. * particle.dt * zconst  # TEST.
 
@@ -178,7 +183,7 @@ def UnBeaching(particle, fieldset, time):
             if math.fabs(vb) >= fieldset.UBmin:
                 particle.lat += math.copysign(fieldset.geo, vb) * math.fabs(particle.dt)
             # Depth.
-            if math.fabs(wb) > 1/3:
+            if math.fabs(wb) >= fieldset.coast:
                 particle.depth -= fieldset.UBWvel * math.fabs(particle.dt)
                 particle.ubWdepth += fieldset.UBWvel * math.fabs(particle.dt)  # TEST
                 particle.ubWcount += 1  # TEST
@@ -218,7 +223,7 @@ class zParticle(JITParticle):
     # depthr = Variable('depthr', initial=attrgetter('depth'), dtype=np.float32)
     beached = Variable('beached', initial=0., to_write=False, dtype=np.float32)
     unbeached = Variable('unbeached', initial=0., dtype=np.float32)
-    Land = Variable('Land', initial=fieldset.land, to_write=False, dtype=np.float32)
+    Land = Variable('Land', initial=fieldset.land, dtype=np.float32)
     # Testers.
     coasttime = Variable('coasttime', initial=0., dtype=np.float32)
     ubcount = Variable('ubcount', initial=0., dtype=np.float32)
@@ -268,7 +273,7 @@ elif test == 'CS':
 
 d = 19
 dx = 0.1
-T = np.arange(1, 500)
+T = np.arange(1, 650)
 # fieldtype, vmax, vmin = 'vector', 0.3, None
 fieldtype, vmax, vmin = fieldset.land, 1.2, 0.5
 py = np.arange(J[0], J[1] + dx, dx)
@@ -288,10 +293,10 @@ cfg.fig.joinpath('parcels/tests/{}_{:02d}'.format(test, i)).mkdir()
 savefile = cfg.fig/'parcels/tests/{}_{:02d}/{}_{:02d}_'.format(test, i, test, i)
 sim = savefile.stem[:-1]
 savefile = str(savefile)
-logger.info(' {}: Land>={}: LandB>={}: UBmin={}: Loop>3:'
+logger.info(' {:<3}: Land>={}: LandB>={}: UBmin={}: Loop>3:'
             .format(sim, fieldset.LandLim, fieldset.coast, fieldset.UBmin) +
             'Round 0.025<a<0.1 break minLand<1e-7 (min Land distance): ' +
-            'Land >={}: Depth*(1-Land) if L>{} : UBW=-{}*dt if wb>1/3'
+            'Land >={}: Depth*(1-Land)^2 if L>{} : UBW=-{}*dt if wb>coast'
             .format(fieldset.coast, fieldset.coast, fieldset.UBWvel))
 pset.show(domain=domain, field=fieldtype, depth_level=d, animation=False,
           vmax=vmax, vmin=vmin, savefile=savefile + str(0).zfill(3))
@@ -318,15 +323,18 @@ pset.show(domain=domain, field=fieldtype, depth_level=d, animation=False,
 
 pd = pset.particle_data
 for v in ['unbeached', 'coasttime', 'ubcount', 'ubWcount', 'ubWdepth',
-          'rounder', 'roundZ', 'zc', 'alpha']:
+          'roundZ', 'zc', 'alpha']:
     p = pd[v]
     Nb = np.where(p > 0.0, 1, 0).sum()
     pb = np.where(p > 0.0, p, np.nan)
     pb = pb[~np.isnan(pb)]
-    logger.info('{}: {}: N={} Nb={}({:.1f}%) max={:.3f} med={:.3f} mean={:.3f}'
-                .format(sim, v, N, Nb, (Nb/N)*100, p.max(),
+    logger.info('{:>6}: {:<9}: N={}({:.1f}%) max={:.2f} med={:.2f} mean={:.2f}'
+                .format(sim, v, Nb, (Nb/N)*100, p.max(),
                         np.nanmedian(pb), np.nanmean(pb)))
-
+v = 'depth'
+p = pd[v]
+logger.info('{:<6}: {:<9}: N={}, max={} min={:.2f} med={:.2f} mean={:.2f}'
+            .format(sim, v, N, p.max(), p.min(), np.median(p), np.mean(p)))
 output = str(cfg.fig/'parcels/gifs') + '/' + str(sim) + '.mp4'
 tools.image2video(savefile + '%03d.png', output, frames=10)
 output_file.export()
