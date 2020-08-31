@@ -103,8 +103,6 @@ def AdvectionRK4_Land(particle, fieldset, time):
         if (math.fabs(lat0 - particle.lat) > 1e-14 or  # TEST.
                 math.fabs(lon0 - particle.lon) > 1e-14):  # TEST.
             particle.rounder += 1  # TEST.
-            # particle.roundX += math.fabs(particle.lon - lon0)  # TEST.
-            # particle.roundY += math.fabs(particle.lat - lat0)  # TEST.
 
     (u1, v1, w1) = fieldset.UVW[time, particle.depth, lat0, lon0]
     lon1 = lon0 + u1*.5*particle.dt
@@ -122,12 +120,20 @@ def AdvectionRK4_Land(particle, fieldset, time):
     particle.lon += (u1 + 2*u2 + 2*u3 + u4) / 6. * particle.dt
     particle.lat += (v1 + 2*v2 + 2*v3 + v4) / 6. * particle.dt
 
-    if (particle.Land >= 0.5 and
-            math.fabs(u1) < fieldset.Vmin and math.fabs(v1) < fieldset.Vmin):
+    # if (particle.Land >= 0.5 and
+    #         math.fabs(u1) < fieldset.Vmin and math.fabs(v1) < fieldset.Vmin):
+    #     zconst = math.fabs(1 - particle.Land)
+    #     particle.roundZ += (w1 + 2*w2 + 2*w3 + w4) / 6. * particle.dt * zconst  # TEST: Skip depth change near low UV.
+    # else:
+    #     zconst = 1
+    if particle.Land > 0.1:
         zconst = math.fabs(1 - particle.Land)
+        particle.zc = zconst  # Test.
         particle.roundZ += (w1 + 2*w2 + 2*w3 + w4) / 6. * particle.dt * zconst  # TEST: Skip depth change near low UV.
+
     else:
         zconst = 1
+        particle.zc = 0  # Test.
 
     particle.depth += (w1 + 2*w2 + 2*w3 + w4) / 6. * particle.dt * zconst
 
@@ -240,6 +246,7 @@ class zParticle(JITParticle):
     roundZ = Variable('roundZ', initial=0., dtype=np.float32)
     ubWcount = Variable('ubWcount', initial=0., dtype=np.float32)
     ubWdepth = Variable('ubWdepth', initial=0., dtype=np.float32)
+    zc = Variable('zc', initial=0., dtype=np.float32)
     # sgnx = Variable('sgnx', initial=0., dtype=np.float32)
     # sgny = Variable('sgny', initial=0., dtype=np.float32)
     alpha = Variable('alpha', initial=0., dtype=np.float32)
@@ -303,8 +310,8 @@ sim = savefile.stem[:-1]
 savefile = str(savefile)
 logger.info(' {}: Land>={}: LandB>={}: UBmin={}: Loop>3:'
             .format(sim, fieldset.LandLim, fieldset.coast, fieldset.UBmin) +
-            'Round 0.025<a<0.1 break minLand<1e-7 (min Land distance+reg): ' +
-            'Land >={}: Depth*(1-Land) if UV<{}+L>=0.5:'
+            'Round 0.025<a<0.1 break minLand<1e-7 (min Land distance): ' +
+            'Land >={}: Depth*(1-Land) if L>0.1:'
             .format(fieldset.coast, fieldset.Vmin) + ' UBW=-1e-4*dt:')
 pset.show(domain=domain, field=fieldtype, depth_level=d, animation=False,
           vmax=vmax, vmin=vmin, savefile=savefile + str(0).zfill(3))
@@ -331,13 +338,14 @@ pset.show(domain=domain, field=fieldtype, depth_level=d, animation=False,
 
 pd = pset.particle_data
 for v in ['unbeached', 'coasttime', 'ubcount', 'ubWcount', 'ubWdepth',
-          'rounder', 'roundZ', 'alpha']:
+          'rounder', 'roundZ', 'zc', 'alpha']:
     p = pd[v]
     Nb = np.where(p > 0.0, 1, 0).sum()
     pb = np.where(p > 0.0, p, np.nan)
     pb = pb[~np.isnan(pb)]
+    mx = int(p.max()) if v != 'zc' else int(p.min())
     logger.info('{}: {}: N={} Nb={}({:.1f}%) max={:.3f} med={:.3f} mean={:.3f}'
-                .format(sim, v, N, Nb, (Nb/N)*100, int(p.max()),
+                .format(sim, v, N, Nb, (Nb/N)*100, mx,
                         np.nanmedian(pb), np.nanmean(pb)))
 
 output = str(cfg.fig/'parcels/gifs') + '/' + str(sim) + '.mp4'
