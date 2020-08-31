@@ -1634,10 +1634,8 @@ Increased run time to 650
 #################################################################################################################################
 2020-08-31 23:30:27: CS_51: Land>=0.97: LandB>=0.1: UBmin=1e-06: Loop>3:Round 0.025<a<0.1 break minLand<1e-7 (min Land distance): Land >=0.1: Depth*(1-Land)^2 if L>0.1 : UBW=-0.0001*dt if wb>coast
 2020-08-31 23:30:28: PNG_51: Land>=0.97: LandB>=0.1: UBmin=1e-06: Loop>3:Round 0.025<a<0.1 break minLand<1e-7 (min Land distance): Land >=0.1: Depth*(1-Land)^2 if L>0.1 : UBW=-0.0001*dt if wb>coast
-2020-08-31 23:30:30:Compiled zParticleAdvectionRK4_LandCoastTimeBeachTestUnBeachingDistance ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\1a7f954c8720fdeabe803523206605db_0.dll
 2020-08-31 23:30:31: SS_51: Land>=0.97: LandB>=0.1: UBmin=1e-06: Loop>3:Round 0.025<a<0.1 break minLand<1e-7 (min Land distance): Land >=0.1: Depth*(1-Land)^2 if L>0.1 : UBW=-0.0001*dt if wb>coast
-2020-08-31 23:30:31:Compiled zParticleAdvectionRK4_LandCoastTimeBeachTestUnBeachingDistance ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\e4808aef74e1e82c3be0e687fbceaacd_0.dll
-2020-08-31 23:30:34:Compiled zParticleAdvectionRK4_LandCoastTimeBeachTestUnBeachingDistance ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\7ea63a796d0ad1382717880aa565e230_0.dll
+#################################################################################################################################
 2020-08-31 23:48:36: SS_51: unbeached: N=99(5.3%) max=9.00 med=1.00 mean=1.61
 2020-08-31 23:48:36: SS_51: coasttime: N=411(22.2%) max=4204800.00 med=162000.00 mean=437859.84
 2020-08-31 23:48:36: SS_51: ubcount  : N=0(0.0%) max=0.00 med=nan mean=nan
@@ -1646,7 +1644,7 @@ Increased run time to 650
 2020-08-31 23:48:36: SS_51: roundZ   : N=0(0.0%) max=0.00 med=nan mean=nan
 2020-08-31 23:48:36: SS_51: zc       : N=0(0.0%) max=0.00 med=nan mean=nan
 2020-08-31 23:48:36: SS_51: alpha    : N=520(28.1%) max=0.10 med=0.03 mean=0.03
-2020-08-31 23:48:36:SS_51 : depth    : N=1852, max=196.2755126953125 min=65.36 med=152.93 mean=147.00
+2020-08-31 23:48:36: SS_51: depth    : N=1852, max=196.2755126953125 min=65.36 med=152.93 mean=147.00
 2020-08-31 23:48:37:PNG_51: unbeached: N=182(9.0%) max=16.00 med=1.00 mean=2.36
 2020-08-31 23:48:37:PNG_51: coasttime: N=767(37.7%) max=4230000.00 med=126000.00 mean=339071.19
 2020-08-31 23:48:37:PNG_51: ubcount  : N=1(0.0%) max=10.00 med=10.00 mean=10.00
@@ -1664,4 +1662,23 @@ Increased run time to 650
 2020-08-31 23:56:01: CS_51: roundZ   : N=0(0.0%) max=0.00 med=nan mean=nan
 2020-08-31 23:56:01: CS_51: zc       : N=0(0.0%) max=0.00 med=nan mean=nan
 2020-08-31 23:56:01: CS_51: alpha    : N=687(20.2%) max=0.10 med=0.03 mean=0.04
-2020-08-31 23:56:01:CS_51 : depth    : N=3408, max=261.9399108886719 min=48.48 med=156.06 mean=156.55
+2020-08-31 23:56:01: CS_51: depth    : N=3408, max=261.9399108886719 min=48.48 med=156.06 mean=156.55
+#################################################################################################################################
+2020-09-01 00:20:07: CS_52: Land>=0.975: LandB>=0.25: UBmin=1e-07: Loop>3:Round 0.025<a<0.1 break minLand<1e-7 (min Land distance): Land >=0.25: Depth*(1-Land)^2 if L>0.25 : UBW=-1e-05*dt if wb>coast
+2020-09-01 00:20:10:Compiled zParticleAdvectionRK4_LandCoastTimeBeachTestUnBeachingDistance ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\975ba70d0f26feb3c51b861ebe516015_0.dll
+2020-09-01 00:20:26: PNG_52: Land>=0.975: LandB>=0.25: UBmin=1e-07: Loop>3:Round 0.025<a<0.1 break minLand<1e-7 (min Land distance): Land >=0.25: Depth*(1-Land)^2 if L>0.25 : UBW=-1e-05*dt if wb>coast
+2020-09-01 00:20:30:Compiled zParticleAdvectionRK4_LandCoastTimeBeachTestUnBeachingDistance ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\71d8b4076759f358fee151747a26b18e_0.dll
+2020-09-01 00:33:24:PNG_52: unbeached: N=170(8.4%) max=8.00 med=2.00 mean=2.25
+2020-09-01 00:33:24:PNG_52: coasttime: N=745(36.7%) max=4172400.00 med=122400.00 mean=323927.53
+2020-09-01 00:33:24:PNG_52: ubcount  : N=0(0.0%) max=0.00 med=nan mean=nan
+2020-09-01 00:33:24:PNG_52: ubWcount : N=102(5.0%) max=8.00 med=1.00 mean=1.52
+2020-09-01 00:33:24:PNG_52: ubWdepth : N=102(5.0%) max=0.29 med=0.04 mean=0.05
+2020-09-01 00:33:24:PNG_52: zc       : N=106(5.2%) max=132.00 med=18.00 mean=25.79
+2020-09-01 00:33:24:PNG_52: depth    : N=2032, max=243.2201690673828 min=48.88 med=148.14 mean=147.95
+2020-09-01 00:39:14: CS_52: unbeached: N=186(5.5%) max=70.00 med=2.00 mean=6.31
+2020-09-01 00:39:14: CS_52: coasttime: N=524(15.4%) max=8568000.00 med=306000.00 mean=1068306.88
+2020-09-01 00:39:14: CS_52: ubcount  : N=0(0.0%) max=0.00 med=nan mean=nan
+2020-09-01 00:39:14: CS_52: ubWcount : N=59(1.7%) max=69.00 med=1.00 mean=3.14
+2020-09-01 00:39:14: CS_52: ubWdepth : N=59(1.7%) max=2.48 med=0.04 mean=0.11
+2020-09-01 00:39:14: CS_52: zc       : N=237(7.0%) max=851.00 med=52.00 mean=97.51
+2020-09-01 00:39:14: CS_52: depth    : N=3408, max=261.9226989746094 min=48.48 med=155.99 mean=156.46

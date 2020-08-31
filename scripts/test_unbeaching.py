@@ -67,7 +67,7 @@ def AdvectionRK4_Land(particle, fieldset, time):
         a = 0.
         while a < 0.1:
             a += 0.025
-            particle.alpha = a  # Test.
+            # particle.alpha = a  # Test.
             latr = math.floor(particle.lat/a) * a
             lonr = math.ceil(particle.lon/a) * a
             Landr = fieldset.land[0., particle.depth, latr, lonr]
@@ -99,9 +99,9 @@ def AdvectionRK4_Land(particle, fieldset, time):
                 if minLand < 1e-7:
                     break
         particle.Land = minLand
-        if (math.fabs(lat0 - particle.lat) > 1e-14 or  # TEST.
-                math.fabs(lon0 - particle.lon) > 1e-14):  # TEST.
-            particle.rounder += 1  # TEST.
+        # if (math.fabs(lat0 - particle.lat) > 1e-14 or  # TEST.
+        #         math.fabs(lon0 - particle.lon) > 1e-14):  # TEST.
+        #     particle.rounder += 1  # TEST.
 
     (u1, v1, w1) = fieldset.UVW[time, particle.depth, lat0, lon0]
     lon1 = lon0 + u1*.5*particle.dt
@@ -121,7 +121,7 @@ def AdvectionRK4_Land(particle, fieldset, time):
 
     # Reduce vertical velocity as they get closer to the coast.
     zconst = 1
-    if particle.Land >= fieldset.coast:
+    if (particle.Land >= 0.01 and math.fabs(u1) < fieldset.Vmin and math.fabs(v1) < fieldset.Vmin):
         # if particle.Land >= 1 - fieldset.coast:
         #     zconst = 0.
         #     particle.zcz += 1  # Test.
@@ -129,7 +129,7 @@ def AdvectionRK4_Land(particle, fieldset, time):
         #     zconst = (1 - particle.Land - fieldset.coast)**4
         zconst = (1 - particle.Land)**2
         particle.zc += 1  # Test.
-        particle.roundZ += (w1 + 2*w2 + 2*w3 + w4) / 6. * particle.dt * zconst  # TEST.
+        # particle.roundZ += (w1 + 2*w2 + 2*w3 + w4) / 6. * particle.dt * zconst  # TEST.
 
     particle.depth += (w1 + 2*w2 + 2*w3 + w4) / 6. * particle.dt * zconst
 
@@ -227,20 +227,20 @@ class zParticle(JITParticle):
     # Testers.
     coasttime = Variable('coasttime', initial=0., dtype=np.float32)
     ubcount = Variable('ubcount', initial=0., dtype=np.float32)
-    rounder = Variable('rounder', initial=0., dtype=np.float32)
-    roundZ = Variable('roundZ', initial=0., dtype=np.float32)
+    # rounder = Variable('rounder', initial=0., dtype=np.float32)
+    # roundZ = Variable('roundZ', initial=0., dtype=np.float32)
     ubWcount = Variable('ubWcount', initial=0., dtype=np.float32)
     ubWdepth = Variable('ubWdepth', initial=0., dtype=np.float32)
     zc = Variable('zc', initial=0., dtype=np.float32)
     # sgnx = Variable('sgnx', initial=0., dtype=np.float32)
     # sgny = Variable('sgny', initial=0., dtype=np.float32)
-    alpha = Variable('alpha', initial=0., dtype=np.float32)
+    # alpha = Variable('alpha', initial=0., dtype=np.float32)
     # calpha = Variable('calpha', initial=0., dtype=np.float32)
 
 
 
 pclass = zParticle
-test = ['CS', 'PNG', 'SS'][2]
+test = ['CS', 'PNG', 'SS'][1]
 if test == 'BT':
     runtime = timedelta(minutes=60)
     dt = timedelta(minutes=60)
@@ -322,8 +322,7 @@ pset.show(domain=domain, field=fieldtype, depth_level=d, animation=False,
           vmax=vmax, vmin=vmin, savefile=savefile + str(t).zfill(3))
 
 pd = pset.particle_data
-for v in ['unbeached', 'coasttime', 'ubcount', 'ubWcount', 'ubWdepth',
-          'roundZ', 'zc', 'alpha']:
+for v in ['unbeached', 'coasttime', 'ubcount', 'ubWcount', 'ubWdepth', 'zc']:
     p = pd[v]
     Nb = np.where(p > 0.0, 1, 0).sum()
     pb = np.where(p > 0.0, p, np.nan)
@@ -333,7 +332,7 @@ for v in ['unbeached', 'coasttime', 'ubcount', 'ubWcount', 'ubWdepth',
                         np.nanmedian(pb), np.nanmean(pb)))
 v = 'depth'
 p = pd[v]
-logger.info('{:<6}: {:<9}: N={}, max={} min={:.2f} med={:.2f} mean={:.2f}'
+logger.info('{:>6}: {:<9}: N={}, max={} min={:.2f} med={:.2f} mean={:.2f}'
             .format(sim, v, N, p.max(), p.min(), np.median(p), np.mean(p)))
 output = str(cfg.fig/'parcels/gifs') + '/' + str(sim) + '.mp4'
 tools.image2video(savefile + '%03d.png', output, frames=10)
