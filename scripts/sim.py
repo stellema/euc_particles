@@ -185,7 +185,7 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
     xlog['dt'] = dt_mins
     xlog['outdt'] = outputdt.days
     xlog['rdt'] = repeatdt.days
-    xlog['land'] = fieldset.LandLim
+    xlog['land'] = fieldset.landLim
     xlog['eps'] = fieldset.Vmin
     xlog['pset_start'] = pset_start
     xlog['pset_start_r'] = pset.particle_data['time'].max()
