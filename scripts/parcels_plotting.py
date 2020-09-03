@@ -1,18 +1,30 @@
+# -*- coding: utf-8 -*-
+"""
+created: Thu Sep  3 14:59:05 2020
+
+author: Annette Stellema (astellemas@gmail.com)
+
+
+"""
+import cfg
+import tools
+import numpy as np
+import xarray as xr
+import matplotlib.pyplot as plt
+import matplotlib.ticker as ticker
 from datetime import datetime
 from datetime import timedelta as delta
-
-import numpy as np
-
 from parcels.field import Field
 from parcels.field import VectorField
-from parcels.grid import CurvilinearGrid
 from parcels.grid import GridCode
+from parcels.grid import CurvilinearGrid
 from parcels.tools.error import TimeExtrapolationError
 from parcels.tools.loggers import logger
 
 
-def plotparticles(particles, with_particles=True, show_time=None, field=None, domain=None, projection=None,
-                  land=True, vmin=None, vmax=None, savefile=None, animation=False, **kwargs):
+def plotparticles(particles, with_particles=True, show_time=None, field=None,
+                  domain=None, projection=None, land=True, vmin=None,
+                  vmax=None, savefile=None, animation=False, **kwargs):
     """Function to plot a Parcels ParticleSet
 
     :param show_time: Time at which to show the ParticleSet
@@ -43,8 +55,7 @@ def plotparticles(particles, with_particles=True, show_time=None, field=None, do
     if field is None:
         spherical = True if particles.fieldset.U.grid.mesh == 'spherical' else False
         plt, fig, ax, cartopy = create_parcelsfig_axis(spherical, land, projection)
-        if plt is None:
-            return  # creating axes was not possible
+
         ax.set_title('Particles' + parsetimestr(particles.fieldset.U.grid.time_origin, show_time))
         latN, latS, lonE, lonW = parsedomain(domain, particles.fieldset.U)
         if cartopy is None or projection is None:
@@ -76,14 +87,30 @@ def plotparticles(particles, with_particles=True, show_time=None, field=None, do
         plt, fig, ax, cartopy = plotfield(field=field, animation=animation, show_time=show_time, domain=domain,
                                           projection=projection, land=land, vmin=vmin, vmax=vmax, savefile=None,
                                           titlestr='Particles and ', depth_level=depth_level)
-        if plt is None:
-            return  # creating axes was not possible
 
     if with_particles:
-        plon = np.array([p.lon for p in particles])
-        plat = np.array([p.lat for p in particles])
+#############################ADDED#############################################
+        if 'unbeached' in particles.particle_data:
+            plon = np.array([p.lon for p in particles if p.unbeached == 0])
+            plat = np.array([p.lat for p in particles if p.unbeached == 0])
+            plonb = np.array([p.lon for p in particles if p.unbeached != 0])
+            platb = np.array([p.lat for p in particles if p.unbeached != 0])
+            c = np.array([p.unbeached for p in particles if p.unbeached != 0], dtype=int)
+            colors = plt.cm.gist_rainbow(np.linspace(0, 1, 15))
+            c = np.where(c >= 15, 14, c)
+        else:
+            plon = np.array([p.lon for p in particles])
+            plat = np.array([p.lat for p in particles])
+#############################OLD##############################################
+        # plon = np.array([p.lon for p in particles])
+        # plat = np.array([p.lat for p in particles])
+##############################################################################
         if cartopy:
-            ax.scatter(plon, plat, s=20, color='black', zorder=20, transform=cartopy.crs.PlateCarree())
+            ax.scatter(plon, plat, s=2, color='black', zorder=20, transform=cartopy.crs.PlateCarree())
+#############################ADDED#############################################
+            if 'unbeached' in particles.particle_data:
+                ax.scatter(plonb, platb, s=2, c=colors[c], zorder=20, transform=cartopy.crs.PlateCarree())
+##############################################################################
         else:
             ax.scatter(plon, plat, s=20, color='black', zorder=20)
 
@@ -141,9 +168,10 @@ def plotfield(field, show_time=None, domain=None, depth_level=0, projection=None
             fld.fieldset.computeTimeChunk(show_time, 1)
         (idx, periods) = fld.time_index(show_time)
         show_time -= periods * (fld.grid.time_full[-1] - fld.grid.time_full[0])
-        if show_time > fld.grid.time[-1] or show_time < fld.grid.time[0]:
-            raise TimeExtrapolationError(show_time, field=fld, msg='show_time')
-
+##############################################################################
+        # if show_time > fld.grid.time[-1] or show_time < fld.grid.time[0]:
+        #     raise TimeExtrapolationError(show_time, field=fld, msg='show_time')
+##############################################################################
         latN, latS, lonE, lonW = parsedomain(domain, fld)
         if isinstance(fld.grid, CurvilinearGrid):
             plotlon[i] = fld.grid.lon[latS:latN, lonW:lonE]
@@ -212,10 +240,16 @@ def plotfield(field, show_time=None, domain=None, depth_level=0, projection=None
             d = np.where(data[0][1:, 1:] == 0, 0, d)
             d = np.where(data[0][:-1, 1:] == 0, 0, d)
         if cartopy:
-            cs = ax.pcolormesh(plotlon[0], plotlat[0], d, transform=cartopy.crs.PlateCarree())
+##############################################################################
+            # cs = ax.pcolormesh(plotlon[0], plotlat[0], d, transform=cartopy.crs.PlateCarree())
+##############################################################################
+            if type(field) is not VectorField and field[0].name == 'land':
+                cs = ax.pcolormesh(plotlon[0], plotlat[0], d, cmap=plt.cm.Greys, transform=cartopy.crs.PlateCarree())
+            else:
+                cs = ax.pcolormesh(plotlon[0], plotlat[0], d, transform=cartopy.crs.PlateCarree())
+##############################################################################
         else:
             cs = ax.pcolormesh(plotlon[0], plotlat[0], d)
-
     if cartopy is None:
         ax.set_xlim(np.nanmin(plotlon[0]), np.nanmax(plotlon[0]))
         ax.set_ylim(np.nanmin(plotlat[0]), np.nanmax(plotlat[0]))
@@ -224,15 +258,18 @@ def plotfield(field, show_time=None, domain=None, depth_level=0, projection=None
     cs.cmap.set_over('k')
     cs.cmap.set_under('w')
     cs.set_clim(vmin, vmax)
-
-    cartopy_colorbar(cs, plt, fig, ax)
-
+##############################################################################
+    if type(field) is VectorField and field[0].name != 'land':
+        cartopy_colorbar(cs, plt, fig, ax)
+##############################################################################
+    # cartopy_colorbar(cs, plt, fig, ax)
+##############################################################################
     timestr = parsetimestr(field[0].grid.time_origin, show_time)
     titlestr = kwargs.pop('titlestr', '')
     if field[0].grid.zdim > 1:
         if field[0].grid.gtype in [GridCode.CurvilinearZGrid, GridCode.RectilinearZGrid]:
             gphrase = 'depth'
-            depth_or_level = field[0].grid.depth[depth_level]
+            depth_or_level = round(field[0].grid.depth[depth_level], 0)
         else:
             gphrase = 'level'
             depth_or_level = depth_level
@@ -240,7 +277,7 @@ def plotfield(field, show_time=None, domain=None, depth_level=0, projection=None
     else:
         depthstr = ''
     if plottype == 'vector':
-        ax.set_title(titlestr + 'Velocity field' + depthstr + timestr)
+        ax.set_title(titlestr + 'vector field' + depthstr + timestr)
     else:
         ax.set_title(titlestr + field[0].name + depthstr + timestr)
 
@@ -251,7 +288,8 @@ def plotfield(field, show_time=None, domain=None, depth_level=0, projection=None
     plt.draw()
 
     if savefile:
-        plt.savefig(savefile)
+        plt.tight_layout(fig)
+        plt.savefig(savefile, bbox_inches='tight')
         logger.info('Plot saved to ' + savefile + '.png')
         plt.close()
 
@@ -320,7 +358,7 @@ def parsetimestr(time_origin, show_time):
 def cartopy_colorbar(cs, plt, fig, ax):
     cbar_ax = fig.add_axes([0, 0, 0.1, 0.1])
     fig.subplots_adjust(hspace=0, wspace=0, top=0.925, left=0.1)
-    plt.colorbar(cs, cax=cbar_ax)
+    plt.colorbar(cs, cax=cbar_ax, shrink=0.9)
 
     def resize_colorbar(event):
         plt.draw()
@@ -329,3 +367,132 @@ def cartopy_colorbar(cs, plt, fig, ax):
 
     fig.canvas.mpl_connect('resize_event', resize_colorbar)
     resize_colorbar(None)
+
+
+def plot3D(sim_id, ds=None):
+    """Plot 3D figure of particle trajectories over time."""
+    import matplotlib.ticker as ticker
+    if not ds:
+        # Open ParticleFile.
+        ds = xr.open_dataset(sim_id, decode_cf=True)
+
+    N = len(ds.traj)
+    x, y, z = ds.lon, ds.lat, ds.z
+
+    fig = plt.figure(figsize=(13, 10))
+    # plt.suptitle(sim_id.stem, y=0.89, x=0.23)
+    ax = fig.add_subplot(111, projection='3d')
+    colors = plt.cm.rainbow(np.linspace(0, 1, len(ds.traj)))
+    ax.set_xlim(tools.rounddown(np.nanmin(x)), tools.roundup(np.nanmax(x)))
+    ax.set_ylim(tools.rounddown(np.nanmin(y)), tools.roundup(np.nanmax(y)))
+    ax.set_zlim(tools.roundup(np.nanmax(z)), tools.rounddown(np.nanmin(z)))
+
+    for i in range(N):
+        ax.plot3D(x[i], y[i], z[i], color=colors[i])
+
+    xticks = ax.get_xticks()
+    yticks = ax.get_yticks()
+    zticks = ax.get_zticks()
+    xlabels = tools.coord_formatter(xticks, convert='lon')
+    ylabels = tools.coord_formatter(yticks, convert='lat')
+    zlabels = ['{:.0f}m'.format(k) for k in zticks]
+    ax.xaxis.set_major_locator(ticker.FixedLocator(xticks))
+    ax.xaxis.set_major_formatter(ticker.FixedFormatter(xlabels))
+    ax.yaxis.set_major_locator(ticker.FixedLocator(yticks))
+    ax.yaxis.set_major_formatter(ticker.FixedFormatter(ylabels))
+    ax.zaxis.set_major_locator(ticker.FixedLocator(zticks))
+    ax.zaxis.set_major_formatter(ticker.FixedFormatter(zlabels))
+    plt.tight_layout(pad=0)
+
+    fig.savefig(cfg.fig/('parcels/' + sim_id.stem + cfg.im_ext),
+                bbox_inches='tight')
+    plt.show()
+    plt.close()
+    ds.close()
+    return
+
+
+def plot3Dx(sim_id, ds=None):
+    """Plot 3D figure of particle trajectories over time."""
+
+    def setup(ax, xticks, yticks, zticks, xax='lon', yax='lat'):
+        xlabels = tools.coord_formatter(xticks, convert=xax)
+        ylabels = tools.coord_formatter(yticks, convert=yax)
+        zlabels = ['{:.0f}m'.format(k) for k in zticks]
+        ax.xaxis.set_major_locator(ticker.FixedLocator(xticks))
+        ax.xaxis.set_major_formatter(ticker.FixedFormatter(xlabels))
+        ax.yaxis.set_major_locator(ticker.FixedLocator(yticks))
+        ax.yaxis.set_major_formatter(ticker.FixedFormatter(ylabels))
+        ax.zaxis.set_major_locator(ticker.FixedLocator(zticks))
+        ax.zaxis.set_major_formatter(ticker.FixedFormatter(zlabels))
+        return ax
+
+    if not ds:
+        # Open ParticleFile.
+        ds = xr.open_dataset(sim_id, decode_cf=True)
+
+    N = len(ds.traj)
+    x, y, z = ds.lon, ds.lat, ds.z
+    xlim = [tools.rounddown(np.nanmin(x)), tools.roundup(np.nanmax(x))]
+    ylim = [tools.rounddown(np.nanmin(y)), tools.roundup(np.nanmax(y))]
+    zlim = [tools.rounddown(np.nanmin(z)), tools.roundup(np.nanmax(z))]
+    colors = plt.cm.rainbow(np.linspace(0, 1, len(ds.traj)))
+
+    # Plot figure.
+    fig = plt.figure(figsize=(18, 16))
+    plt.suptitle(sim_id.stem, y=0.92, x=0.1)
+
+    ax = fig.add_subplot(221, projection='3d')
+    ax.set_xlim(xlim[0], xlim[1])
+    ax.set_ylim(ylim[0], ylim[1])
+    ax.set_zlim(zlim[1], zlim[0])
+    for i in range(N):
+        ax.plot3D(x[i], y[i], z[i], color=colors[i])
+    xticks = ax.get_xticks()
+    yticks = ax.get_yticks()
+    zticks = ax.get_zticks()
+    ax = setup(ax, xticks, yticks, zticks, xax='lon', yax='lat')
+
+    # Reverse latitude.
+    ax = fig.add_subplot(222, projection='3d')
+    ax.set_xlim(xlim[0], xlim[1])
+    ax.set_ylim(ylim[1], ylim[0])
+    ax.set_zlim(zlim[1], zlim[0])
+    for i in range(N):
+        ax.plot3D(x[i], y[i], z[i], color=colors[i])
+    xticks = ax.get_xticks()
+    yticks = ax.get_yticks()
+    zticks = ax.get_zticks()
+    ax = setup(ax, xticks, yticks, zticks, xax='lon', yax='lat')
+
+    # Switch latitude and longitude.
+    ax = fig.add_subplot(223, projection='3d')
+    ax.set_ylim(xlim[0], xlim[1])
+    ax.set_xlim(ylim[0], ylim[1])
+    ax.set_zlim(zlim[1], zlim[0])
+    for i in range(N):
+        ax.plot3D(y[i], x[i], z[i], color=colors[i])
+    xticks = ax.get_xticks()
+    yticks = ax.get_yticks()
+    zticks = ax.get_zticks()
+    ax = setup(ax, xticks, yticks, zticks, xax='lat', yax='lon')
+
+    # Reverse latitude and switch latitude and longitude.
+    ax = fig.add_subplot(224, projection='3d')
+    ax.set_ylim(xlim[1], xlim[0])
+    ax.set_xlim(ylim[0], ylim[1])
+    ax.set_zlim(zlim[1], zlim[0])
+    for i in range(N):
+        ax.plot3D(y[i], x[i], z[i], color=colors[i])
+    xticks = ax.get_xticks()
+    yticks = ax.get_yticks()
+    zticks = ax.get_zticks()
+    ax = setup(ax, xticks, yticks, zticks, xax='lat', yax='lon')
+
+    plt.tight_layout(pad=0)
+    fig.savefig(cfg.fig/('parcels/' + sim_id.stem + 'x' + cfg.im_ext))
+    # plt.show()
+    plt.close()
+    ds.close()
+
+    return
