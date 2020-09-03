@@ -211,12 +211,8 @@ kernels += pset.Kernel(main.AgeZone) + pset.Kernel(main.Distance)
 # ParticleSet execution endtime.
 endtime = int(pset_start - runtime.total_seconds())
 
-recovery_kernels = {ErrorCode.ErrorOutOfBounds: main.DeleteParticle,
-                    # ErrorCode.Error: main.DeleteParticle,
-                    ErrorCode.ErrorThroughSurface: main.SubmergeParticle}
-
 pset.execute(kernels, endtime=endtime, dt=dt, output_file=output_file,
-             verbose_progress=True, recovery=recovery_kernels)
+             verbose_progress=True, recovery=main.recovery_kernels)
 
 timed = tools.timer(ts)
 xlog['end_r'] = pset.size
@@ -247,5 +243,5 @@ for j in ds.traj.values:
                   np.around(ds.isel(traj=j).z[mn:mx].values, 3)))
     print(j, mx, tj[-1])
 
-# ds = main.plot3D(sim_id)
-# ds, dx = plot_traj(sim_id, var='u', traj=1, t=2, Z=250, ds=ds)
+ds = main.plot3D(sim_id)
+ds, dx = plot_traj(sim_id, var='u', traj=0, t=2, Z=250, ds=ds)

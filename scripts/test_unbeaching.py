@@ -104,11 +104,11 @@ if test == 'BT':
     J, I, K = [-5.25, -4.2], [156.65, 157.75], [150]
     domain = {'N': -3.75, 'S': -5.625, 'E': 158, 'W': 156}
 elif test == 'PNG':
-    runtime = timedelta(minutes=120)
+    runtime = timedelta(minutes=180)
     J, I, K = [-6, -1.5], [141, 149], [150]
     domain = {'N': -1, 'S': -7.5, 'E': 149.5, 'W': 141}
 elif test == 'SS':
-    runtime = timedelta(minutes=120)
+    runtime = timedelta(minutes=180)
     J, I, K = [-6, -2], [150.5, 156.5], [150]
     domain = {'N': -2, 'S': -7, 'E': 157.5, 'W': 150}
 elif test == 'CS':
@@ -151,15 +151,13 @@ kernels = pset.Kernel(main.AdvectionRK4_Land) + pset.Kernel(main.CoastTime)
 kernels += pset.Kernel(main.BeachTest) + pset.Kernel(main.UnBeaching)
 # kernels += pset.Kernel(main.Distance)
 
-recovery_kernels = {ErrorCode.ErrorOutOfBounds: main.DeleteParticle,
-                    ErrorCode.ErrorThroughSurface: main.SubmergeParticle}
 output_file = pset.ParticleFile(cfg.data/'{}{}.nc'.format(test, i),
                                 outputdt=outputdt)
 for t in T:
     pset.show(domain=domain, field=fieldtype, depth_level=d, animation=False,
               vmax=vmax, vmin=vmin, savefile=savefile + str(t).zfill(3))
     pset.execute(kernels, runtime=runtime, dt=dt, output_file=output_file,
-                 verbose_progress=False, recovery=recovery_kernels)
+                 verbose_progress=False, recovery=main.recovery_kernels)
 
 pset.show(domain=domain, field=fieldtype, depth_level=d, animation=False,
           vmax=vmax, vmin=vmin, savefile=savefile + str(t).zfill(3))

@@ -1806,3 +1806,17 @@ GOOD
 2020-09-02 18:24:26: PNG_60: Land>=0.975: Coast>=0.01: UBv=0.9999999999999999: UBmin=1e-06: Loop>=4:Round if >=coast<land: 0.025<a<0.1 find min Land break minLand<1e-7: RK depth if >=0.5 <Vmin: Depth*(1-Land): wUB=-0.0001*dt if wb>UBmin: T==700
 2020-09-02 18:24:27:Compiled zParticleAdvectionRK4_LandCoastTimeBeachTestUnBeaching ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\1c1a6a88328259bebed0cbabcb75ad10_0.dll
 2020-09-02 18:24:31:Compiled zParticleAdvectionRK4_LandCoastTimeBeachTestUnBeaching ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\4ddf8849dd398f81a8ee5a27c683bd8c_0.dll
+2020-09-02 18:39:27:PNG_60: unbeached: N=209(10.3%) max=13.00 med=2.00 mean=2.49
+2020-09-02 18:39:27:PNG_60: coasttime: N=832(40.9%) max=4089600.00 med=133200.00 mean=349983.16
+2020-09-02 18:39:27:PNG_60: ubcount  : N=0(0.0%) max=0.00 med=nan mean=nan
+2020-09-02 18:39:27:PNG_60: ubWcount : N=109(5.4%) max=6.00 med=1.00 mean=1.54
+2020-09-02 18:39:27:PNG_60: ubWdepth : N=109(5.4%) max=2.16 med=0.36 mean=0.55
+2020-09-02 18:39:27:PNG_60: zc       : N=0(0.0%) max=0.00 med=nan mean=nan
+2020-09-02 18:39:27:PNG_60: depth    : N=2032, max=0.0 min=0.00 med=0.00 mean=0.00
+2020-09-02 18:47:05: CS_60: unbeached: N=189(5.5%) max=1282.00 med=2.00 mean=19.24
+2020-09-02 18:47:05: CS_60: coasttime: N=585(17.2%) max=8902800.00 med=277200.00 mean=1036978.56
+2020-09-02 18:47:05: CS_60: ubcount  : N=3(0.1%) max=1278.00 med=1115.00 mean=798.33
+2020-09-02 18:47:05: CS_60: ubWcount : N=54(1.6%) max=57.00 med=1.00 mean=6.17
+2020-09-02 18:47:05: CS_60: ubWdepth : N=54(1.6%) max=20.52 med=0.36 mean=2.22
+2020-09-02 18:47:05: CS_60: zc       : N=3(0.1%) max=1278.00 med=1114.00 mean=798.00
+2020-09-02 18:47:05: CS_60: depth    : N=3408, max=1278.0 min=0.00 med=0.00 mean=0.73
