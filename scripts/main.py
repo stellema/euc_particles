@@ -24,51 +24,17 @@ OFAM variable coordinates:
     salt - st_ocean, yt_ocean, xt_ocean
     temp - st_ocean, yt_ocean, xt_ocean
 
-TODO: Find "normal" years for spinup (based on nino3.4 index).
-TODO: Interpolate TAU/TRITON observation data.
 
-git pull git@github.com:stellema/OFAM.git master
-git commit -a -m "added shell_script"
-
-exp=1
-du = xr.open_dataset(xpath/'ocean_u_{}-{}_climo.nc'.format(*years[exp]))
-dt = xr.open_dataset(xpath/'ocean_temp_{}-{}_climo.nc'.format(*years[exp]))
-du = du.rename({'month': 'Time'})
-du = du.assign_coords(Time=dt.Time)
-du.to_netcdf(xpath/'ocean_u_{}-{}_climoz.nc'.format(*years[exp]))
-
-logger.setLevel(logging.DEBUG)
-now = datetime.now()
-handler = logging.FileHandler(lpath/'main.log')
-formatter = logging.Formatter(
-        '%(asctime)s:%(funcName)s:%(message)s')
-handler.setFormatter(formatter)
-logger.addHandler(handler)
-logger.propagate = False
-
-TODO: Delete particles during execution, after pset creation or save locations to file?
-TODO: Get around not writing prev_lat/prev_lon?
-TODO: Add new EUC particles in from_particlefile?
-TODO: Test unbeaching code.
-
-MUST use pset.Kernel(AdvectionRK4_3D)
-# if particle.state == ErrorCode.Evaluate:
-* 1000. * 1.852 * 60. * cos(y * pi / 180)
-qcat -o 10150240 0.5 (1045 beached)
-10184247 0.75
 """
 import cfg
-import tools
 import math
 import random
 import parcels
 import numpy as np
 import xarray as xr
 from pathlib import Path
-import matplotlib.pyplot as plt
 from datetime import datetime, timedelta
-from parcels import (FieldSet, Field, ParticleSet, VectorField,
-                     ErrorCode, AdvectionRK4)
+from parcels import (FieldSet, Field, ParticleSet, VectorField)
 
 
 def ofam_fieldset(time_bnds='full', exp='hist', chunks=True, cs=300,
@@ -327,6 +293,14 @@ def pset_euc(fieldset, pclass, lon, dy, dz, repeatdt, pset_start, repeats,
     return pset
 
 
+def del_westward(pset):
+    inds, = np.where((pset.particle_data['u'] <= 0.) & (pset.particle_data['age'] == 0.))
+    for d in pset.particle_data:
+        pset.particle_data[d] = np.delete(pset.particle_data[d], inds, axis=0)
+    pset.particle_data['u'] = (np.cos(pset.particle_data['lat'] * math.pi/180, dtype=np.float32) * 1852 * 60 * pset.particle_data['u'])
+    return pset
+
+
 def log_simulation(xlog, rank, logger):
     if rank == 0:
         logger.info('{}:Simulation v{}r{}: Particles={}+{:}={}'
@@ -405,5 +379,6 @@ def pset_from_file(fieldset, pclass, filename, repeatdt=None,
                        lonlatdepth_dtype=lonlatdepth_dtype, **kwargs)
 
     pclass.setLastID(np.nanmax(pfile.variables['trajectory']) + 1)
-    xlog['file'] = vars['lon'].size
+    if xlog:
+        xlog['file'] = vars['lon'].size
     return pset, vars['lon'].size

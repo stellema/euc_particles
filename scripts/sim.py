@@ -6,16 +6,18 @@ author: Annette Stellema (astellemas@gmail.com)
 """
 import cfg
 import tools
-import main
+# import main
+from main import (ofam_fieldset, pset_euc, del_westward, generate_sim_id,
+                  pset_from_file, log_simulation)
 import math
 import numpy as np
 from pathlib import Path
 from operator import attrgetter
 from datetime import datetime, timedelta
 from argparse import ArgumentParser
-from parcels import (ParticleSet, AdvectionRK4_3D, ErrorCode,
-                     Variable, JITParticle)
-
+from parcels import (Variable, JITParticle)
+from kernels import (AdvectionRK4_Land, BeachTest, UnBeaching, Age,
+                     SampleZone, Distance, recovery_kernels)
 
 try:
     from mpi4py import MPI
@@ -23,17 +25,6 @@ except ImportError:
     MPI = None
 
 logger = tools.mlogger('sim', parcels=True, misc=False)
-
-
-def del_westward(pset):
-    inds, = np.where((pset.particle_data['u'] <= 0.) &
-                     (pset.particle_data['age'] == 0.))
-    for d in pset.particle_data:
-        pset.particle_data[d] = np.delete(pset.particle_data[d], inds, axis=0)
-    pset.particle_data['u'] = (np.cos(pset.particle_data['lat'] * math.pi/180,
-                                      dtype=np.float32)
-                               * 1852 * 60 * pset.particle_data['u'])
-    return pset
 
 
 def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
@@ -89,9 +80,9 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
     elif exp == 'rcp':
         time_bnds = [datetime(2070, 1, 1), datetime(2101, 12, 31)]
 
-    fieldset = main.ofam_fieldset(time_bnds, exp,  chunks=True, cs=chunks,
-                                  time_periodic=False, add_zone=True,
-                                  add_unbeach_vel=True)
+    fieldset = ofam_fieldset(time_bnds, exp,  chunks=True, cs=chunks,
+                             time_periodic=False, add_zone=True,
+                             add_unbeach_vel=True)
 
     class zParticle(JITParticle):
         """Particle class that saves particle age and zonal velocity."""
@@ -100,8 +91,7 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
         age = Variable('age', initial=0., dtype=np.float32)
 
         # The velocity of the particle.
-        u = Variable('u', initial=fieldset.U, to_write='once',
-                     dtype=np.float32)
+        u = Variable('u', initial=fieldset.U, to_write='once', dtype=np.float32)
 
         # The 'zone' of the particle.
         zone = Variable('zone', initial=0., dtype=np.float32)
@@ -110,20 +100,18 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
         distance = Variable('distance', initial=0., dtype=np.float32)
 
         # The previous longitude.
-        prev_lon = Variable('prev_lon', initial=attrgetter('lon'),
-                            to_write=False, dtype=np.float32)
+        prev_lon = Variable('prev_lon', initial=attrgetter('lon'), to_write=False, dtype=np.float32)
 
         # The previous latitude.
-        prev_lat = Variable('prev_lat', initial=attrgetter('lat'),
-                            to_write=False, dtype=np.float32)
+        prev_lat = Variable('prev_lat', initial=attrgetter('lat'), to_write=False, dtype=np.float32)
 
         # Unbeach if beached greater than zero.
-        beached = Variable('beached', initial=0., to_write=False,
-                           dtype=np.float32)
+        beached = Variable('beached', initial=0., to_write=False, dtype=np.float32)
 
         # Unbeached count.
         unbeached = Variable('unbeached', initial=0., dtype=np.float32)
 
+        # Land field.
         Land = Variable('Land', initial=fieldset.land, to_write=False, dtype=np.float32)
 
     pclass = zParticle
@@ -132,14 +120,13 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
     if not restart:
         # Generate file name for experiment (random number if not using MPI).
         rdm = False if MPI else True
-        sim_id = main.generate_sim_id(lon, v, exp, randomise=rdm, xlog=xlog)
+        sim_id = generate_sim_id(lon, v, exp, randomise=rdm, xlog=xlog)
 
         # Set ParticleSet start as last fieldset time.
         pset_start = fieldset.U.grid.time[-1]
 
         # Create ParticleSet.
-        pset = main.pset_euc(fieldset, pclass, lon, dy, dz, repeatdt,
-                             pset_start, repeats, xlog=xlog)
+        pset = pset_euc(fieldset, pclass, lon, dy, dz, repeatdt, pset_start, repeats, xlog=xlog)
         xlog['new_r'] = pset.size
         pset = del_westward(pset)
         xlog['start_r'] = pset.size
@@ -151,18 +138,16 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
         filename = cfg.data/pfile
 
         # Increment run index for new output file name.
-        sim_id = main.generate_sim_id(lon, v, exp, file=filename, xlog=xlog)
+        sim_id = generate_sim_id(lon, v, exp, file=filename, xlog=xlog)
 
         # Create ParticleSet from the given ParticleFile.
-        pset = main.pset_from_file(fieldset, pclass=pclass,
-                                   filename=filename, restart=True,
-                                   restarttime=np.nanmin, xlog=xlog)
+        pset = pset_from_file(fieldset, pclass=pclass, filename=filename, restart=True, restarttime=np.nanmin, xlog=xlog)
         xlog['file_r'] = pset.size
         # Start date to add new EUC particles.
 
         pset_start = np.nanmin(pset.time)
-        psetx = main.pset_euc(fieldset, pclass, lon, dy, dz, repeatdt,
-                              pset_start, repeats, xlog=xlog)
+        psetx = pset_euc(fieldset, pclass, lon, dy, dz, repeatdt,
+                         pset_start, repeats, xlog=xlog)
 
         xlog['new_r'] = psetx.size
         psetx = del_westward(psetx)
@@ -191,19 +176,15 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
     xlog['pset_start_r'] = pset.particle_data['time'].max()
 
     # Log experiment details.
-    main.log_simulation(xlog, rank, logger)
+    log_simulation(xlog, rank, logger)
 
     # Kernels.
-    kernels = pset.Kernel(main.AdvectionRK4_Land)
-    kernels += pset.Kernel(main.BeachTest) + pset.Kernel(main.UnBeaching)
-    kernels += pset.Kernel(main.AgeZone) + pset.Kernel(main.Distance)
+    kernels = pset.Kernel(AdvectionRK4_Land)
+    kernels += pset.Kernel(BeachTest) + pset.Kernel(UnBeaching)
+    kernels += pset.Kernel(Age) + pset.Kernel(SampleZone) + pset.Kernel(Distance)
 
     # ParticleSet execution endtime.
     endtime = int(pset_start - runtime.total_seconds()) if not final else 0
-
-    recovery_kernels = {ErrorCode.ErrorOutOfBounds: main.DeleteParticle,
-                        # ErrorCode.Error: main.DeleteParticle,
-                        ErrorCode.ErrorThroughSurface: main.SubmergeParticle}
 
     pset.execute(kernels, endtime=endtime, dt=dt, output_file=output_file,
                  verbose_progress=True, recovery=recovery_kernels)
@@ -212,14 +193,13 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
     xlog['end_r'] = pset.size
     xlog['del_r'] = xlog['start_r'] - xlog['end_r']
     logger.info('{}:Completed: {}: Rank={:>2}: Particles: Start={} Del={} End={}'
-                .format(xlog['id'], timed, rank, xlog['start_r'],
-                        xlog['del_r'], xlog['end_r']))
+                .format(xlog['id'], timed, rank, xlog['start_r'], xlog['del_r'], xlog['end_r']))
 
     # Save to netcdf.
     output_file.export()
 
     if rank == 0:
-        logger.info('{}:Finished!'.format(sim_id.stem))
+        logger.info('{}:Finished!'.format(xlog['id']))
 
     return
 
@@ -236,12 +216,13 @@ if __name__ == "__main__" and cfg.home != Path('E:/'):
     p.add_argument('-out', '--outputdt', default=1, type=int, help='Advection write freq [day].')
     p.add_argument('-v', '--version', default=0, type=int, help='File Index.')
     p.add_argument('-f', '--pfile', default='None', type=str, help='Particle file.')
+    p.add_argument('-final', '--final', default=False, type=bool, help='Final run.')
     args = p.parse_args()
 
     run_EUC(dy=args.dy, dz=args.dz, lon=args.lon, exp=args.exp,
             runtime_days=args.runtime, dt_mins=args.dt,
             repeatdt_days=args.repeatdt, outputdt_days=args.outputdt,
-            v=args.version, pfile=args.pfile)
+            v=args.version, pfile=args.pfile, final=args.final)
 
 elif __name__ == "__main__":
     dy, dz, lon = 1, 150, 165
@@ -253,4 +234,4 @@ elif __name__ == "__main__":
     final = False
     run_EUC(dy=dy, dz=dz, lon=lon, dt_mins=dt_mins,
             repeatdt_days=repeatdt_days, outputdt_days=outputdt_days,
-            v=v, runtime_days=runtime_days, pfile=pfile)
+            v=v, runtime_days=runtime_days, pfile=pfile, final=final)

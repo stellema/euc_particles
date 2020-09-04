@@ -41,14 +41,18 @@ okay at  1.5e-7 CS2
 """
 import cfg
 import math
-import main
+# import main
 import tools
 import warnings
 import numpy as np
 import xarray as xr
 from operator import attrgetter
 from datetime import timedelta
+from plotparticles import plot3Dx, plot_traj
 from parcels import (ParticleSet, ErrorCode, Variable, JITParticle)
+from main import ofam_fieldset
+from kernels import (AdvectionRK4_Land, BeachTest, UnBeaching, Age,
+                     SampleZone, Distance, CoastTime, recovery_kernels)
 
 warnings.filterwarnings("ignore")
 logger = tools.mlogger('test_unbeaching', parcels=True, misc=False)
@@ -63,9 +67,9 @@ def del_land(pset):
     return pset
 
 
-fieldset = main.ofam_fieldset(time_bnds='full', exp='hist', chunks=True,
-                              cs=300, time_periodic=False, add_zone=True,
-                              add_unbeach_vel=True, apply_indicies=True)
+fieldset = ofam_fieldset(time_bnds='full', exp='hist', chunks=True,
+                         cs=300, time_periodic=False, add_zone=True,
+                         add_unbeach_vel=True, apply_indicies=True)
 fieldset.land.grid.time_origin = fieldset.time_origin
 
 
@@ -147,9 +151,9 @@ pset.show(domain=domain, field=fieldtype, depth_level=d, animation=False,
 
 pset = del_land(pset)
 N = pset.size
-kernels = pset.Kernel(main.AdvectionRK4_Land) + pset.Kernel(main.CoastTime)
-kernels += pset.Kernel(main.BeachTest) + pset.Kernel(main.UnBeaching)
-# kernels += pset.Kernel(main.Distance)
+kernels = pset.Kernel(AdvectionRK4_Land) + pset.Kernel(CoastTime)
+kernels += pset.Kernel(BeachTest) + pset.Kernel(UnBeaching)
+kernels += pset.Kernel(Distance)
 
 output_file = pset.ParticleFile(cfg.data/'{}{}.nc'.format(test, i),
                                 outputdt=outputdt)
@@ -157,7 +161,7 @@ for t in T:
     pset.show(domain=domain, field=fieldtype, depth_level=d, animation=False,
               vmax=vmax, vmin=vmin, savefile=savefile + str(t).zfill(3))
     pset.execute(kernels, runtime=runtime, dt=dt, output_file=output_file,
-                 verbose_progress=False, recovery=main.recovery_kernels)
+                 verbose_progress=False, recovery=recovery_kernels)
 
 pset.show(domain=domain, field=fieldtype, depth_level=d, animation=False,
           vmax=vmax, vmin=vmin, savefile=savefile + str(t).zfill(3))
@@ -177,6 +181,6 @@ logger.info('{:>6}: {:<9}: N={}, max={} min={:.2f} med={:.2f} mean={:.2f}'
 output = str(cfg.fig/'parcels/gifs') + '/' + str(sim) + '.mp4'
 tools.image2video(savefile + '%03d.png', output, frames=10)
 output_file.export()
-main.plot3Dx(cfg.data/'{}{}.nc'.format(test, i), ds=None)
-from analyse_trajectory import plot_traj
+plot3Dx(cfg.data/'{}{}.nc'.format(test, i), ds=None)
+# from analyse_trajectory import plot_traj
 ds, dx = plot_traj(cfg.data/'{}{}.nc'.format(test, i), var='w', traj=12265, t=2, Z=130)

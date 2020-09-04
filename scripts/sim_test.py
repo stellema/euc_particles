@@ -12,18 +12,17 @@ dy, dz, lon = -0.4, 175, 165
 """
 import cfg
 import tools
-import main
-import math
-# import parcels
+from main import (ofam_fieldset, pset_euc, del_westward, generate_sim_id,
+                  pset_from_file, log_simulation)
+from kernels import (AdvectionRK4_Land, BeachTest, UnBeaching, Age,
+                     SampleZone, Distance, recovery_kernels)
 import xarray as xr
 import numpy as np
-from pathlib import Path
 from operator import attrgetter
 from datetime import datetime, timedelta
-from argparse import ArgumentParser
 from parcels import (AdvectionRK4_3D, ParticleSet, ErrorCode,
                      Variable, JITParticle, ScipyParticle)
-from analyse_trajectory import plot_traj
+from plotparticles import plot3D, plot_traj
 
 try:
     from mpi4py import MPI
@@ -32,16 +31,6 @@ except ImportError:
 import warnings
 warnings.filterwarnings("ignore")
 
-
-def del_westward(pset):
-    inds, = np.where((pset.particle_data['u'] <= 0.) &
-                     (pset.particle_data['age'] == 0.))
-    for d in pset.particle_data:
-        pset.particle_data[d] = np.delete(pset.particle_data[d], inds, axis=0)
-    pset.particle_data['u'] = (np.cos(pset.particle_data['lat'] * math.pi/180,
-                                      dtype=np.float32)
-                               * 1852 * 60 * pset.particle_data['u'])
-    return pset
 
 
 def pset_euc(fieldset, pclass, lon, dy, dz, repeatdt, pset_start, repeats,
@@ -98,9 +87,9 @@ repeatdt = timedelta(days=repeatdt_days)  # Repeat particle release time.
 outputdt = timedelta(days=outputdt_days)  # Advection steps to write.
 repeats = 1  # math.floor(runtime/repeatdt) - 1
 time_bnds = [datetime(2012, 1, 1), datetime(2012, 12, 31)]
-fieldset = main.ofam_fieldset(time_bnds, exp, chunks=True, cs=chunks,
-                              time_periodic=False, add_zone=True,
-                              add_unbeach_vel=True)
+fieldset = ofam_fieldset(time_bnds, exp, chunks=True, cs=chunks,
+                         time_periodic=False, add_zone=True,
+                         add_unbeach_vel=True)
 
 
 class zParticle(JITParticle):
@@ -110,8 +99,7 @@ class zParticle(JITParticle):
     age = Variable('age', initial=0., dtype=np.float32)
 
     # The velocity of the particle.
-    u = Variable('u', initial=fieldset.U, to_write='once',
-                 dtype=np.float32)
+    u = Variable('u', initial=fieldset.U, to_write='once', dtype=np.float32)
 
     # The 'zone' of the particle.
     zone = Variable('zone', initial=0., dtype=np.float32)
@@ -120,19 +108,18 @@ class zParticle(JITParticle):
     distance = Variable('distance', initial=0., dtype=np.float32)
 
     # The previous longitude.
-    prev_lon = Variable('prev_lon', initial=attrgetter('lon'),
-                        to_write=False, dtype=np.float32)
+    prev_lon = Variable('prev_lon', initial=attrgetter('lon'), to_write=False, dtype=np.float32)
 
     # The previous latitude.
-    prev_lat = Variable('prev_lat', initial=attrgetter('lat'),
-                        to_write=False, dtype=np.float32)
+    prev_lat = Variable('prev_lat', initial=attrgetter('lat'), to_write=False, dtype=np.float32)
 
     # Unbeach if beached greater than zero.
-    beached = Variable('beached', initial=0., #to_write=False,
-                       dtype=np.float32)
+    beached = Variable('beached', initial=0., to_write=False, dtype=np.float32)
 
     # Unbeached count.
     unbeached = Variable('unbeached', initial=0., dtype=np.float32)
+
+    # Land field.
     Land = Variable('Land', initial=fieldset.land, to_write=False, dtype=np.float32)
 
 
@@ -143,14 +130,13 @@ pclass = zParticle
 if not restart:
     # Generate file name for experiment (random number if not using MPI).
     rdm = False if MPI else True
-    sim_id = main.generate_sim_id(lon, v, exp, randomise=rdm, xlog=xlog)
+    sim_id = generate_sim_id(lon, v, exp, randomise=rdm, xlog=xlog)
 
     # Set ParticleSet start as last fieldset time.
     pset_start = fieldset.U.grid.time[-1] - offset
 
     # Create ParticleSet.
-    pset = pset_euc(fieldset, pclass, lon, dy, dz, repeatdt,
-                    pset_start, repeats, xlog=xlog)
+    pset = pset_euc(fieldset, pclass, lon, dy, dz, repeatdt, pset_start, repeats, xlog=xlog)
     xlog['new_r'] = pset.size
     pset = del_westward(pset)
     xlog['start_r'] = pset.size
@@ -161,12 +147,11 @@ else:
     # Add path to given ParticleFile name.
     filename = cfg.data/pfile
 
-    sim_id = main.generate_sim_id(lon, v, exp, file=filename, xlog=xlog)
+    sim_id = generate_sim_id(lon, v, exp, file=filename, xlog=xlog)
 
     # Create ParticleSet from the given ParticleFile.
-    pset = main.pset_from_file(fieldset, pclass=pclass,
-                               filename=filename, restart=True,
-                               restarttime=np.nanmin, xlog=xlog)
+    pset = pset_from_file(fieldset, pclass=pclass, filename=filename,
+                          restart=True, restarttime=np.nanmin, xlog=xlog)
     xlog['file_r'] = pset.size
     # Start date to add new EUC particles.
     pset_start = np.nanmin(pset.time)
@@ -201,36 +186,34 @@ xlog['pset_start'] = pset_start
 xlog['pset_start_r'] = pset.particle_data['time'].max()
 
 # Log experiment details.
-main.log_simulation(xlog, rank, logger)
+log_simulation(xlog, rank, logger)
 
 # Kernels.
-kernels = pset.Kernel(main.AdvectionRK4_Land)
-kernels += pset.Kernel(main.BeachTest) + pset.Kernel(main.UnBeaching)
-kernels += pset.Kernel(main.AgeZone) + pset.Kernel(main.Distance)
+kernels = pset.Kernel(AdvectionRK4_Land)
+kernels += pset.Kernel(BeachTest) + pset.Kernel(UnBeaching)
+kernels += pset.Kernel(Age) + pset.Kernel(SampleZone) + pset.Kernel(Distance)
 
 # ParticleSet execution endtime.
 endtime = int(pset_start - runtime.total_seconds())
 
 pset.execute(kernels, endtime=endtime, dt=dt, output_file=output_file,
-             verbose_progress=True, recovery=main.recovery_kernels)
+             verbose_progress=True, recovery=recovery_kernels)
 
 timed = tools.timer(ts)
 xlog['end_r'] = pset.size
 xlog['del_r'] = xlog['start_r'] - xlog['end_r']
 logger.info('{}:Completed!: {}: Rank={:>2}: Particles: I={} del={} F={}'
-            .format(xlog['id'], timed, rank, xlog['start_r'],
-                    xlog['del_r'], xlog['end_r']))
+            .format(xlog['id'], timed, rank, xlog['start_r'], xlog['del_r'], xlog['end_r']))
 
 # Save to netcdf.
 output_file.export()
 
 if rank == 0:
-    logger.info('{}:Finished!'.format(sim_id.stem))
+    logger.info('{}:Finished!'.format(xlog['id']))
 
 
 ds = xr.open_dataset(sim_id, decode_cf=True)
 print(np.nanmax(np.fabs(ds.unbeached), axis=1))
-# print(ds.isel(traj=3).unbeached[140:200])
 
 for j in ds.traj.values:
     mx = np.isnan(ds.isel(traj=j).lat).argmax().item()
@@ -243,5 +226,5 @@ for j in ds.traj.values:
                   np.around(ds.isel(traj=j).z[mn:mx].values, 3)))
     print(j, mx, tj[-1])
 
-ds = main.plot3D(sim_id)
+ds = plot3D(sim_id)
 ds, dx = plot_traj(sim_id, var='u', traj=0, t=2, Z=250, ds=ds)
