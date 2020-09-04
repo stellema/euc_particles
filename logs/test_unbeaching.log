@@ -1804,8 +1804,7 @@ GOOD
 2020-09-02 17:11:51: CS_59: depth    : N=3408, max=787.0 min=0.00 med=0.00 mean=0.51
 #################################################################################################################################
 2020-09-02 18:24:26: PNG_60: Land>=0.975: Coast>=0.01: UBv=0.9999999999999999: UBmin=1e-06: Loop>=4:Round if >=coast<land: 0.025<a<0.1 find min Land break minLand<1e-7: RK depth if >=0.5 <Vmin: Depth*(1-Land): wUB=-0.0001*dt if wb>UBmin: T==700
-2020-09-02 18:24:27:Compiled zParticleAdvectionRK4_LandCoastTimeBeachTestUnBeaching ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\1c1a6a88328259bebed0cbabcb75ad10_0.dll
-2020-09-02 18:24:31:Compiled zParticleAdvectionRK4_LandCoastTimeBeachTestUnBeaching ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\4ddf8849dd398f81a8ee5a27c683bd8c_0.dll
+#################################################################################################################################
 2020-09-02 18:39:27:PNG_60: unbeached: N=209(10.3%) max=13.00 med=2.00 mean=2.49
 2020-09-02 18:39:27:PNG_60: coasttime: N=832(40.9%) max=4089600.00 med=133200.00 mean=349983.16
 2020-09-02 18:39:27:PNG_60: ubcount  : N=0(0.0%) max=0.00 med=nan mean=nan
@@ -1820,3 +1819,10 @@ GOOD
 2020-09-02 18:47:05: CS_60: ubWdepth : N=54(1.6%) max=20.52 med=0.36 mean=2.22
 2020-09-02 18:47:05: CS_60: zc       : N=3(0.1%) max=1278.00 med=1114.00 mean=798.00
 2020-09-02 18:47:05: CS_60: depth    : N=3408, max=1278.0 min=0.00 med=0.00 mean=0.73
+#################################################################################################################################
+2020-09-04 19:14:12: SST_0: N=84 rdt>=6:00:00: run>=3:00:00: itr=599: Ntot=25116
+2020-09-04 19:14:12: SST_0: zParticleAdvectionRK4_LandCoastTimeAgeSampleZoneDistance
+2020-09-04 19:14:15:Compiled zParticleAdvectionRK4_LandCoastTimeAgeSampleZoneDistance ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\885f21ce2b80e0ad50f32ed5367685e8_0.dll
+2020-09-04 19:15:09: SST_0: N=84 rdt>=6:00:00: run>=3:00:00: itr=599: Ntot=25116
+2020-09-04 19:15:09: SST_0: zParticleAdvectionRK4_LandCoastTimeBeachTestUnBeachingAgeSampleZoneDistance
+2020-09-04 19:15:12:Compiled zParticleAdvectionRK4_LandCoastTimeBeachTestUnBeachingAgeSampleZoneDistance ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\4f90952bcb3b6dd2d89a7066bfade529_0.dll

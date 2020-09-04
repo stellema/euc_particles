@@ -762,8 +762,8 @@ def plot_ubtraj(sim_id, var='u', t=22, Z=290, ds=None):
 
 
 def animate_particles(i, sc, ax, particles, field, kernels, runtime, dt,
-                      recovery_kernels, depth_level, domain):
-    particles.execute(kernels, runtime=runtime, dt=dt,
+                      output_file, recovery_kernels, depth_level, domain):
+    particles.execute(kernels, runtime=runtime, dt=dt, output_file=output_file,
                       verbose_progress=False, recovery=recovery_kernels)
     show_time = particles[0].time
 
@@ -784,60 +784,12 @@ def animate_particles(i, sc, ax, particles, field, kernels, runtime, dt,
     titlestr = 'Particles and '
     gphrase = 'depth'
     depth_or_level = round(field[0].grid.depth[depth_level], 0)
-    depthstr = ' at %s %g ' % (gphrase, depth_or_level)
+    depthstr = ' at %s %g m' % (gphrase, depth_or_level)
 
     if plottype == 'vector':
         ax.set_title(titlestr + 'vector field' + depthstr + timestr)
     else:
         ax.set_title(titlestr + field[0].name + depthstr + timestr)
-
-    if plottype == 'vector':
-        data = {}
-        plotlon = {}
-        plotlat = {}
-        for i, fld in enumerate(field):
-            latN, latS, lonE, lonW = parsedomain(domain, fld)
-            if isinstance(fld.grid, CurvilinearGrid):
-                plotlon[i] = fld.grid.lon[latS:latN, lonW:lonE]
-                plotlat[i] = fld.grid.lat[latS:latN, lonW:lonE]
-            else:
-                plotlon[i] = fld.grid.lon[lonW:lonE]
-                plotlat[i] = fld.grid.lat[latS:latN]
-            if fld.grid.time.size > 1:
-                if fld.grid.zdim > 1:
-                    data[i] = np.squeeze(fld.temporal_interpolate_fullfield(idx, show_time))[depth_level, latS:latN, lonW:lonE]
-                else:
-                    data[i] = np.squeeze(fld.temporal_interpolate_fullfield(idx, show_time))[latS:latN, lonW:lonE]
-            else:
-                if fld.grid.zdim > 1:
-                    data[i] = np.squeeze(fld.data)[depth_level, latS:latN, lonW:lonE]
-                else:
-                    data[i] = np.squeeze(fld.data)[latS:latN, lonW:lonE]
-
-
-        if field[0].interp_method == 'cgrid_velocity':
-            d = np.empty_like(data[0])
-            d[:-1, :] = (data[0][:-1, :] + data[0][1:, :]) / 2.
-            d[-1, :] = data[0][-1, :]
-            data[0] = d
-            d = np.empty_like(data[0])
-            d[:, :-1] = (data[0][:, :-1] + data[0][:, 1:]) / 2.
-            d[:, -1] = data[0][:, -1]
-            data[1] = d
-
-        spd = data[0] ** 2 + data[1] ** 2
-        speed = np.where(spd > 0, np.sqrt(spd), 0)
-        vmin = speed.min()
-        vmax=0.3
-        # vmax = speed.max() if vmax is None else vmax
-        if isinstance(field[0].grid, CurvilinearGrid):
-            x, y = plotlon[0], plotlat[0]
-        else:
-            x, y = np.meshgrid(plotlon[0], plotlat[0])
-        u = np.where(speed > 0., data[0]/speed, 0)
-        v = np.where(speed > 0., data[1]/speed, 0)
-        cs = ax.quiver(np.asarray(x), np.asarray(y), np.asarray(u), np.asarray(v), speed, cmap=plt.cm.gist_ncar, clim=[vmin, vmax], scale=50, transform=cartopy.crs.PlateCarree())
-
     # Update particles.
     plon = np.array([p.lon for p in particles])
     plat = np.array([p.lat for p in particles])
