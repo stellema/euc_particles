@@ -43,8 +43,8 @@ def island(k, j, i):
 
 
 for k in range(depth.size):
-    for j in range(1, lat.size-2):
-        for i in range(1, lon.size-2):
+    for j in range(1, lat.size-3):
+        for i in range(1, lon.size-3):
             if island(k, j, i):
                 # Move west.
                 if not island(k, j, i-1):
@@ -79,6 +79,80 @@ for k in range(depth.size):
                     if not island(k-1, j+1, i+1):
                         wb[0, k, j+1, i+1] = -1
 
+                if island(k, j, i-1) and not island(k, j, i+1):
+                    if island(k, j-1, i) and not island(k, j+1, i):
+                        if j != 0 and not island(k, j-1, i+1):  # bottom right
+                            ub[0, k, j, i] = 1
+                            vb[0, k, j, i] = -1
+                        elif i != 0 and not island(k, j+1, i-1):  # top left
+                            ub[0, k, j, i] = -1
+                            vb[0, k, j, i] = 1
+                        elif j != 0 and i != 0 and not island(k, j-1, i-1):  # bottom left
+                            ub[0, k, j, i] = -1
+                            vb[0, k, j, i] = -1
+
+                    elif not island(k, j-1, i) and island(k, j+1, i):
+                        if i != 0 and not island(k, j+1, i-1): # top left
+                            ub[0, k, j+1, i] = -1
+                        elif j != lat.size-2 and not island(k, j+2, i): # above top mid
+                            vb[0, k, j+1, i] = 1
+
+                elif not island(k, j, i-1) and island(k, j, i+1):
+                    if island(k, j-1, i) and not island(k, j+1, i):
+                        if j != 0 and not island(k, j-1, i+1):  # bottom right
+                            vb[0, k, j, i+1] = -1
+                        elif i != lon.size-2 and not island(k, j, i+2): # right of right mid
+                            ub[0, k, j, i+1] = 1
+                    elif not island(k, j-1, i) and island(k, j+1, i):
+                        if i != lon.size-2 and not island(k, j+1, i+2):  # right of top right
+                            ub[0, k, j+1, i+1] = 1
+                        elif j != lat.size-2 and not island(k, j+2, i+1): # above top right
+                            vb[0, k, j+1, i+1] = 1
+
+                    elif not island(k, j-1, i) and not island(k, j+1, i):
+                        if i != lon.size-2 and not island(k, j+1, i+2):  # right of top right
+                            ub[0, k, j+1, i+1] = 1
+                        elif j != lat.size-2 and not island(k, j+2, i+1): # above top right
+                            vb[0, k, j+1, i+1] = 1
+                        elif i != lon.size-2 and not island(k, j, i+2):  # right of mid right
+                            ub[0, k, j, i+1] = 1
+                        elif j != lat.size-2 and not island(k, j-1, i+1): # bottom right
+                            vb[0, k, j, i+1] = -1
+
+                elif not island(k, j, i-1) and not island(k, j, i+1):
+                    if island(k, j-1, i) and not island(k, j+1, i):
+                        if j != 0 and not island(k, j-1, i+1):  # bottom right
+                            ub[0, k, j, i] = 1
+                            vb[0, k, j, i] = -1
+                            vb[0, k, j, i+1] = -1
+                        elif i != 0 and not island(k, j+1, i-1):  # top left
+                            ub[0, k, j, i] = -1
+                            vb[0, k, j, i] = 1
+                        elif j != 0 and i != 0 and not island(k, j-1, i-1):  # bottom left
+                            ub[0, k, j, i] = -1
+                            vb[0, k, j, i] = -1
+                        elif i != lon.size-2 and not island(k, j, i+2):  # right of mid right
+                            ub[0, k, j, i+1] = 1
+
+                    elif not island(k, j-1, i) and island(k, j+1, i):
+                        if i != 0 and not island(k, j+1, i-1):  # top left
+                            ub[0, k, j+1, i] = -1
+                        elif i != lon.size-2 and not island(k, j+1, i+2):  # right of top right
+                            ub[0, k, j+1, i+1] = 1
+                        elif j != lat.size-2 and not island(k, j+2, i):  # above top mid
+                            vb[0, k, j+1, i] = 1
+                        elif j != lat.size-2 and not island(k, j+2, i+1):  # above top right
+                            vb[0, k, j+1, i+1] = 1
+
+                    elif not island(k, j-1, i) and not island(k, j+1, i):
+                        if i != 0 and not island(k, j+1, i-1): # top left
+                            ub[0, k, j+1, i] = -1
+                        elif i != lon.size-2 and not island(k, j+1, i+2):  # right of top right
+                            ub[0, k, j+1, i+1] = 1
+                        elif j != lat.size-2 and not island(k, j+2, i): # above top mid
+                            vb[0, k, j+1, i] = 1
+                        elif j != lat.size-2 and not island(k, j+2, i+1):  # above top right
+                            vb[0, k, j+1, i+1] = 1
 
 
 # Create Dataset.
@@ -110,4 +184,4 @@ db[ds.st_edges_ocean.name] = ds.st_edges_ocean
 db[ds.sw_edges_ocean.name] = ds.sw_edges_ocean
 db.attrs = ds.attrs
 db.attrs['history'] = 'Created {}.'.format(datetime.now().strftime("%Y-%m-%d"))
-db.to_netcdf(path=cfg.data/'OFAM3_unbeach_land_UVW_ucell.nc')
+db.to_netcdf(path=cfg.data/'OFAM3_unbeach_land_UVW_ucellx.nc')
