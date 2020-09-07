@@ -117,7 +117,7 @@ zones = {'VS': [147.7, 149, j1, j1],
          'OOB': [[120, 294.9, -15, -15],
                  [120, 294.9, 14.9, 14.9],
                  [120, 120, -15, 14.9],
-                 [294.9, 294.9, -15, 14.9]],}
+                 [294.9, 294.9, -15, 14.9]]}
 zone_names = ['Vitiaz Strait', 'Solomon Strait', 'Mindanao Current',
               'EUC recirculation', 'South of EUC', 'North of EUC',
               'Indonesian Seas', 'North Interior', 'South Interior', 'OOB']

@@ -103,7 +103,7 @@ particles = pset
 output_file = pset.ParticleFile(cfg.data/'{}{}.nc'.format(test, i),
                                 outputdt=outputdt)
 N = math.floor(T[-1]*runtime.total_seconds()/repeatdt.total_seconds())*pset.size
-logger.info(' {:<3}: N={} rdt>={}: run>={}: itr={}: Ntot={}'
+logger.info(' {:<4}: N={} rdt>={}: run>={}: itr={}: Ntot={} UBmin=0.25'
             .format(sim, pset.size, repeatdt, runtime, T[-1], N))
 logger.info(' {:<3}: {}'.format(sim, kernels.name))
 show_time = particles[0].time

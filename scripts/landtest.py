@@ -40,14 +40,14 @@ fieldset = main.ofam_fieldset(time_bnds='full', exp='hist', chunks=True, cs=300,
 fieldset.computeTimeChunk(0, 0)
 dx = 0.5
 dz = 0.25
-J = [-9.5, -8.2]
-I = [150, 151.5]
-z = 140
+J = [-5.8, -2.7]
+I = [151.8, 153.1]
+z = 150
 # Zonal velocity.
-du = xr.open_dataset(cfg.ofam/'ocean_w_2012_01.nc').w
+du = xr.open_dataset(cfg.ofam/'ocean_u_2012_01.nc').u
 zi = tools.get_edge_depth(z, index=True, edge=False, greater=False)
-u = du.isel(Time=0).sel(sw_ocean=z, method='nearest')
-u = u.sel(yt_ocean=slice(J[0]-0.05, J[1]-0.05), xt_ocean=slice(I[0]-0.05, I[1]-0.05))
+u = du.isel(Time=0, st_ocean=zi)
+u = u.sel(yu_ocean=slice(J[0], J[1]), xu_ocean=slice(I[0], I[1]))
 
 # Land.
 db = xr.open_dataset(cfg.data/'OFAM3_unbeach_land_ucell.nc')
@@ -89,9 +89,9 @@ for iy, y in enumerate(latx):
         fubx[iy, ix] = fieldset.Ub.eval(0, z, y, x, applyConversion=False)
         fvbx[iy, ix] = fieldset.Vb.eval(0, z, y, x, applyConversion=False)
 
-fvz[np.isnan(fvz)] = 0
-fvx[np.isnan(fvx)] = 0
-u = u.where(~np.isnan(u), 0)
+fvz[np.isnan(fvz)] = np.nan
+fvx[np.isnan(fvx)] = np.nan
+u = u.where(~np.isnan(u), np.nan)
 x, y = np.meshgrid(lons, lats)
 
 
@@ -99,7 +99,8 @@ fig, ax = plt.subplots(4, 3, figsize=(15, 17))
 ax = ax.flatten()
 mn, mx = -0.00005, 0.00005
 # cmap = plt.cm.gist_stern
-cmap = plt.cm.viridis_r
+cmap = plt.cm.seismic
+cmap.set_bad('black')
 title = 'Original Zonal Velocity'
 x, y, v = lons, lats, u
 plot_interp(ax, 0, x, y, v, title, mn, mx, cmap)
@@ -110,6 +111,7 @@ x, y, v = lonz, latz, fvz
 plot_interp(ax, 2, x, y, v, title, mn, mx, cmap)
 
 cmap = plt.cm.viridis_r
+cmap.set_bad('black')
 mn, mx = 0.0, 1
 title = 'Original Land Velocity'
 x, y, v = lons, lats, np.fabs(ld)
@@ -121,6 +123,7 @@ x, y, v = lonz, latz, np.fabs(fld)
 plot_interp(ax, 5, x, y, v, title, mn, mx, cmap)
 
 cmap = plt.cm.seismic
+cmap.set_bad('black')
 mn, mx = -1, 1
 title = 'Original unbeachU Velocity'
 x, y, v = lons, lats, ub
