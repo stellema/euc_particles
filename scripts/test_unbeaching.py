@@ -41,6 +41,7 @@ okay at  1.5e-7 CS2
 """
 
 import math
+import cartopy
 import warnings
 import numpy as np
 import xarray as xr
@@ -52,11 +53,10 @@ import matplotlib.animation as animation
 from parcels.field import Field
 from parcels import (ParticleSet, ErrorCode, Variable, JITParticle)
 
-
 import cfg
 import tools
 from main import ofam_fieldset
-from plotparticles import plotfield, animate_particles, plot3Dx, plot_traj
+from plotparticles import plotfield, animate_particles, plot_traj
 from kernels import (AdvectionRK4_Land, BeachTest, UnBeaching, Age,
                      SampleZone, Distance, CoastTime, recovery_kernels)
 

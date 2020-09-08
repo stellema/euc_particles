@@ -76,11 +76,10 @@ def BeachTest(particle, fieldset, time):
 
 def UnBeaching(particle, fieldset, time):
     if particle.beached >= 1:
+        counter = 0
         # Attempt three times to unbeach particle.
-        while particle.beached > 0 and particle.beached <= 3:
-            # latb = math.floor(particle.lat/0.05) * 0.05
-            # lonb = math.floor(particle.lon/0.05) * 0.05
-            # (ub, vb, wb) = fieldset.UVWb[0., particle.depth, latb, lonb]
+        while particle.beached > 0 and counter <= 3:
+
             (ub, vb, wb) = fieldset.UVWb[0., particle.depth, particle.lat, particle.lon]
             # Unbeach by 1m/s (checks if unbeach velocities are close to zero).
             # Longitude.
@@ -100,8 +99,8 @@ def UnBeaching(particle, fieldset, time):
             if (particle.beached == 1
                     and math.fabs(ub) <= fieldset.UBmin
                     and math.fabs(vb) <= fieldset.UBmin):
-                ydir = particle.lat - particle.prev_lat
-                xdir = particle.lon - particle.prev_lon
+                ydir = particle.prev_lat - particle.lat
+                xdir = particle.prev_lon - particle.lon
                 if math.fabs(ydir) > 1e-14:
                     particle.lat += math.copysign(fieldset.UBv, ydir) * math.fabs(particle.dt)
                 if math.fabs(xdir) > 1e-14:
@@ -114,11 +113,11 @@ def UnBeaching(particle, fieldset, time):
                 particle.beached = 0
             else:
                 particle.beached += 1
+            counter += 1
 
         if particle.beached > 0:  # TEST: Fail count.
             particle.ubcount += 1  # TEST: Fail count.
         particle.unbeached += 1
-        particle.beached = 0
 
 
 def CoastTime(particle, fieldset, time):

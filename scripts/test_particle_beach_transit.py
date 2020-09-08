@@ -7,22 +7,23 @@ author: Annette Stellema (astellemas@gmail.com)
 
 """
 import math
-import cfg
-import tools
+import cartopy
 import warnings
 import numpy as np
-from main import ofam_fieldset
 # import xarray as xr
 from operator import attrgetter
 from datetime import timedelta
+import matplotlib.pyplot as plt
+import matplotlib.animation as animation
+from parcels.field import Field
+from parcels import (ParticleSet, Variable, JITParticle)
+
+import cfg
+import tools
+from main import ofam_fieldset
+from plotparticles import plotfield, animate_particles
 from kernels import (AdvectionRK4_Land, CoastTime, BeachTest, UnBeaching,
                      Age, SampleZone, recovery_kernels, Distance)
-from parcels import (ParticleSet, Variable, JITParticle)
-import matplotlib.pyplot as plt
-from parcels.field import Field
-import matplotlib.animation as animation
-from plotparticles import plotfield, animate_particles
-
 
 warnings.filterwarnings("ignore")
 logger = tools.mlogger('test_unbeaching', parcels=True, misc=False)
