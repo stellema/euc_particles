@@ -36,12 +36,12 @@ def plot_interp(ax, i, xx, yy, v, title, mn, mx, cmap):
 
 fieldset = main.ofam_fieldset(time_bnds='full', exp='hist', chunks=True, cs=300,
                               time_periodic=False, add_zone=True, add_unbeach_vel=True,
-                              apply_indicies=False)
+                              apply_indicies=True)
 fieldset.computeTimeChunk(0, 0)
 dx = 0.5
 dz = 0.25
-J = [-5.8, -2.7]
-I = [151.8, 153.1]
+J = [-4.8, -2.6]
+I = [151.8, 153.0]
 z = 150
 # Zonal velocity.
 du = xr.open_dataset(cfg.ofam/'ocean_u_2012_01.nc').u
@@ -50,7 +50,7 @@ u = du.isel(Time=0, st_ocean=zi)
 u = u.sel(yu_ocean=slice(J[0], J[1]), xu_ocean=slice(I[0], I[1]))
 
 # Land.
-db = xr.open_dataset(cfg.data/'OFAM3_unbeach_land_ucell.nc')
+db = xr.open_dataset(cfg.data/'OFAM3_unbeach_land_UVW_ucell.nc')
 ld = db.land.isel(Time=0, st_ocean=zi)
 ld = ld.sel(yu_ocean=slice(J[0], J[1]), xu_ocean=slice(I[0], I[1]))
 
@@ -89,20 +89,20 @@ for iy, y in enumerate(latx):
         fubx[iy, ix] = fieldset.Ub.eval(0, z, y, x, applyConversion=False)
         fvbx[iy, ix] = fieldset.Vb.eval(0, z, y, x, applyConversion=False)
 
-fvz[np.isnan(fvz)] = np.nan
-fvx[np.isnan(fvx)] = np.nan
+fvz[fvz == 0.] = np.nan
+fvx[fvx == 0.] = np.nan
 u = u.where(~np.isnan(u), np.nan)
 x, y = np.meshgrid(lons, lats)
 
 
 fig, ax = plt.subplots(4, 3, figsize=(15, 17))
 ax = ax.flatten()
-mn, mx = -0.00005, 0.00005
+mn, mx = -0.00008, 0.00008
 # cmap = plt.cm.gist_stern
 cmap = plt.cm.seismic
 cmap.set_bad('black')
 title = 'Original Zonal Velocity'
-x, y, v = lons, lats, u
+x, y, v = lons, lats, u/1e4
 plot_interp(ax, 0, x, y, v, title, mn, mx, cmap)
 title = 'Fieldset Velocity'
 x, y, v = lonx, latx, fvx
@@ -149,15 +149,15 @@ plt.tight_layout()
 plt.savefig(cfg.fig/'interp_lat_{}_lon{}_z{}_{}_{}w.png'
             .format(math.ceil(J[0]), math.ceil(I[0]), z, dz, dx), format="png")
 # plt.show()
-# i = 151.9747
-# k = 256.4669
-# j = -11.232549
-# for j in np.arange(-11, -12, -0.05):
-#     print(round(j, 3), round(i, 2),
-#           fieldset.land.eval(0, k, j, i, applyConversion=False),
-#           round(fieldset.U.eval(0, k, j, i, applyConversion=False), 4),
-#           round(fieldset.V.eval(0, k, j, i, applyConversion=False), 4),
-#           round(fieldset.W.eval(0, k, j, i, applyConversion=False), 4),
-#           round(fieldset.Ub.eval(0, k, j, i, applyConversion=False), 4),
-#           round(fieldset.Vb.eval(0, k, j, i, applyConversion=False), 4),
-#           round(fieldset.Wb.eval(0, k, j, i, applyConversion=False), 4))
+i = 156.9
+k = 256.4669
+j = -4.7
+for j in np.arange(-4.91, -4.59, 0.01):
+    print(round(j, 3), round(i, 3),
+          fieldset.land.eval(0, k, j, i, applyConversion=True),
+          round(fieldset.U.eval(0, k, j, i, applyConversion=False), 4),
+          round(fieldset.V.eval(0, k, j, i, applyConversion=False), 4),
+          round(fieldset.W.eval(0, k, j, i, applyConversion=False), 4),
+          round(fieldset.Ub.eval(0, k, j, i, applyConversion=False), 4),
+          round(fieldset.Vb.eval(0, k, j, i, applyConversion=False), 4),
+          round(fieldset.Wb.eval(0, k, j, i, applyConversion=False), 4))

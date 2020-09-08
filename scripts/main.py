@@ -153,7 +153,7 @@ def ofam_fieldset(time_bnds='full', exp='hist', chunks=True, cs=300,
     fieldset.add_constant('landLim', 0.975)
     fieldset.add_constant('coast', 0.01)
     fieldset.add_constant('Vmin', 1e-7)
-    fieldset.add_constant('UBmin', 1e-6)
+    fieldset.add_constant('UBmin', 0.25)
     fieldset.add_constant('UBw', 1e-4)
     fieldset.add_constant('UBv', 1/(1852*60))
 
@@ -177,7 +177,7 @@ def ofam_fieldset(time_bnds='full', exp='hist', chunks=True, cs=300,
 
     if add_unbeach_vel:
         # Add Unbeach velocity vectorfield to fieldset.
-        file = str(cfg.data/'OFAM3_unbeach_land_UVW_ucell.nc')
+        file = str(cfg.data/'OFAM3_unbeach_land_UVW_ucelly.nc')
 
         variables = {'Ub': 'unBeachU',
                      'Vb': 'unBeachV',
@@ -213,8 +213,8 @@ def ofam_fieldset(time_bnds='full', exp='hist', chunks=True, cs=300,
         # Set field units and b-grid interp method.
         fieldset.land.units = parcels.tools.converters.UnitConverter()
         fieldset.Wb.units = parcels.tools.converters.UnitConverter()
-        fieldset.Ub.units = parcels.tools.converters.GeographicPolar()
-        fieldset.Vb.units = parcels.tools.converters.Geographic()
+        fieldset.Ub.units = parcels.tools.converters.UnitConverter()
+        fieldset.Vb.units = parcels.tools.converters.UnitConverter()
 
         fieldset.Ub.interp_method = 'bgrid_velocity'
         fieldset.Vb.interp_method = 'bgrid_velocity'

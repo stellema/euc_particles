@@ -59,7 +59,7 @@ def plotparticles(particles, with_particles=True, show_time=None, field=None,
 
     if field is None:
         spherical = True if particles.fieldset.U.grid.mesh == 'spherical' else False
-        plt, fig, ax, cartopy = create_parcelsfig_axis(spherical, land, projection)
+        fig, ax = create_parcelsfig_axis(spherical, land, projection)
 
         ax.set_title('Particles' + parsetimestr(particles.fieldset.U.grid.time_origin, show_time))
         latN, latS, lonE, lonW = parsedomain(domain, particles.fieldset.U)
@@ -89,7 +89,7 @@ def plotparticles(particles, with_particles=True, show_time=None, field=None,
             field = getattr(particles.fieldset, field)
 
         depth_level = kwargs.pop('depth_level', 0)
-        plt, fig, ax, cartopy = plotfield(field=field, animation=animation, show_time=show_time, domain=domain,
+        fig, ax = plotfield(field=field, animation=animation, show_time=show_time, domain=domain,
                                           projection=projection, land=land, vmin=vmin, vmax=vmax, savefile=None,
                                           titlestr='Particles and ', depth_level=depth_level)
 
@@ -160,7 +160,7 @@ def plotfield(field, show_time=None, domain=None, depth_level=0, projection=None
         logger.warning('Field.show() does not always correctly determine the domain for curvilinear grids. '
                        'Use plotting with caution and perhaps use domain argument as in the NEMO 3D tutorial')
 
-    plt, fig, ax, cartopy = create_parcelsfig_axis(spherical, land, projection=projection)
+    fig, ax = create_parcelsfig_axis(spherical, land, projection=projection)
     if plt is None:
         return None, None, None, None  # creating axes was not possible
 
@@ -296,7 +296,7 @@ def plotfield(field, show_time=None, domain=None, depth_level=0, projection=None
         logger.info('Plot saved to ' + savefile + '.png')
         plt.close()
 
-    return plt, fig, ax, cartopy
+    return fig, ax
 
 
 def create_parcelsfig_axis(spherical, land=True, projection=None, central_longitude=0):
@@ -332,7 +332,7 @@ def create_parcelsfig_axis(spherical, land=True, projection=None, central_longit
         cartopy = None
         fig, ax = plt.subplots(1, 1)
         ax.grid()
-    return plt, fig, ax, cartopy
+    return fig, ax
 
 
 def parsedomain(domain, field):
@@ -410,7 +410,7 @@ def particlesvid(particles, with_particles=True, show_time=None, field=None,
         field = getattr(particles.fieldset, field)
 
     depth_level = kwargs.pop('depth_level', 0)
-    plt, fig, ax, cartopy = plotfield(field=field, animation=animation, show_time=show_time, domain=domain,
+    fig, ax = plotfield(field=field, animation=animation, show_time=show_time, domain=domain,
                                       projection=projection, land=land, vmin=vmin, vmax=vmax, savefile=None,
                                       titlestr='Particles and ', depth_level=depth_level)
 

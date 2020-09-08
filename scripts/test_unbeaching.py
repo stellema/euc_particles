@@ -39,25 +39,31 @@ okay at  1.5e-7 CS2
 # udr = math.copysign(1, u0)
 # vdr = math.copysign(1, v0)
 """
-import cfg
+
 import math
-# import main
-import tools
 import warnings
 import numpy as np
 import xarray as xr
-from operator import attrgetter
 from datetime import timedelta
-from plotparticles import plot3Dx, plot_traj
+from operator import attrgetter
+import matplotlib.pyplot as plt
+import matplotlib.animation as animation
+
+from parcels.field import Field
 from parcels import (ParticleSet, ErrorCode, Variable, JITParticle)
+
+
+import cfg
+import tools
 from main import ofam_fieldset
+from plotparticles import plotfield, animate_particles, plot3Dx, plot_traj
 from kernels import (AdvectionRK4_Land, BeachTest, UnBeaching, Age,
                      SampleZone, Distance, CoastTime, recovery_kernels)
 
 warnings.filterwarnings("ignore")
 logger = tools.mlogger('test_unbeaching', parcels=True, misc=False)
 
-test = ['CS', 'PNG', 'SS'][1]
+test = ['CS', 'PNG', 'SS'][2]
 
 
 def del_land(pset):
@@ -86,6 +92,7 @@ class zParticle(JITParticle):
     ubWcount = Variable('ubWcount', initial=0., dtype=np.float32)
     ubWdepth = Variable('ubWdepth', initial=0., dtype=np.float32)
     zc = Variable('zc', initial=0., dtype=np.float32)
+    ubeachprv = Variable('ubeachprv', initial=0., dtype=np.float32)
     # rounder = Variable('rounder', initial=0., dtype=np.float32)
     # roundZ = Variable('roundZ', initial=0., dtype=np.float32)
     # sgnx = Variable('sgnx', initial=0., dtype=np.float32)
@@ -97,11 +104,10 @@ class zParticle(JITParticle):
 dt = -timedelta(minutes=60)
 stime = fieldset.U.grid.time[-1] - 60
 outputdt = timedelta(minutes=60)
-runtime = timedelta(minutes=60)
-repeatdt = None
-d = 19
+runtime = timedelta(minutes=360)
+repeatdt = timedelta(minutes=720)
 dx = 0.1
-T = np.arange(1, 700)
+T = np.arange(1, 400)
 if test == 'BT':
     dt = -dt
     T = np.arange(1, 144)
@@ -110,7 +116,7 @@ if test == 'BT':
 elif test == 'PNG':
     runtime = timedelta(minutes=180)
     J, I, K = [-6, -1.5], [141, 149], [150]
-    domain = {'N': -1, 'S': -7.5, 'E': 149.5, 'W': 141}
+    domain = {'N': -1, 'S': -7.5, 'E': 155, 'W': 141}
 elif test == 'SS':
     runtime = timedelta(minutes=180)
     J, I, K = [-6, -2], [150.5, 156.5], [150]
@@ -120,9 +126,8 @@ elif test == 'CS':
     J, I, K = [-12.5, -7.5], [147.5, 156.5], [150]  # Normal.
     domain = {'N': -7, 'S': -13.5, 'E': 156, 'W': 147}
 
-
-# fieldtype, vmax, vmin = 'vector', 0.3, None
-fieldtype, vmax, vmin = fieldset.land, 1.2, 0.5
+depth_level = tools.get_edge_depth(K[0])
+field, vmax, vmin = fieldset.land, 1.2, 0.5
 py = np.arange(J[0], J[1] + dx, dx)
 px = np.arange(I[0], I[1], dx)
 pz = np.array(K)
@@ -134,20 +139,18 @@ pset = ParticleSet.from_list(fieldset=fieldset, pclass=zParticle, time=stime,
 
 fieldset.computeTimeChunk(0, 0)
 i = 0
-while cfg.fig.joinpath('parcels/tests/{}_{:02d}'.format(test, i)).exists():
+savefile = cfg.fig/'parcels/tests/{}_{:02d}.mp4'.format(test, i)
+while savefile.exists():
     i += 1
-cfg.fig.joinpath('parcels/tests/{}_{:02d}'.format(test, i)).mkdir()
-savefile = cfg.fig/'parcels/tests/{}_{:02d}/{}_{:02d}_'.format(test, i, test, i)
-sim = savefile.stem[:-1]
+    savefile = cfg.fig/'parcels/tests/{}_{:02d}.mp4'.format(test, i)
+sim = savefile.stem
 savefile = str(savefile)
-logger.info(' {:<3}: Land>={}: Coast>={}: UBv={}: UBmin={}: Loop>=3:'
+logger.info(' {:<3}: Land>={}: Coast>={}: UBv={}: UBmin={}: Loop>=3: '
             .format(sim, fieldset.landLim, fieldset.coast,
-                    fieldset.UBv*(1852*60), fieldset.UBmin) +
-            'Round if >=coast<land: 0.025<a<0.1 find min Land break minLand<1e-7:' +
-            ' RK depth if >=0.5 <Vmin: Depth*(1-Land): ' +
-            'wUB=-{}*dt if wb>UBmin: T==700'.format(fieldset.UBw))
-pset.show(domain=domain, field=fieldtype, depth_level=d, animation=False,
-          vmax=vmax, vmin=vmin, savefile=savefile + str(0).zfill(3))
+                    fieldset.UBv*(1852*60), fieldset.UBmin)
+            + 'Round if >=coast<land: 0.025<a<0.1 break minLand<1e-7: '
+            + 'RK depth if >=0.5 <Vmin: Depth*(1-Land): '
+            + 'wUB=-{}*dt if wb>UBmin: T={}'.format(fieldset.UBw, T[-1]))
 
 pset = del_land(pset)
 N = pset.size
@@ -157,17 +160,33 @@ kernels += pset.Kernel(Distance)
 
 output_file = pset.ParticleFile(cfg.data/'{}{}.nc'.format(test, i),
                                 outputdt=outputdt)
-for t in T:
-    pset.show(domain=domain, field=fieldtype, depth_level=d, animation=False,
-              vmax=vmax, vmin=vmin, savefile=savefile + str(t).zfill(3))
-    pset.execute(kernels, runtime=runtime, dt=dt, output_file=output_file,
-                 verbose_progress=False, recovery=recovery_kernels)
+particles = pset
 
-pset.show(domain=domain, field=fieldtype, depth_level=d, animation=False,
-          vmax=vmax, vmin=vmin, savefile=savefile + str(t).zfill(3))
+show_time = particles[0].time
+if field == 'vector':
+    field = particles.fieldset.UV
+
+fig, ax = plotfield(field=field, animation=animation, show_time=show_time,
+                    domain=domain, projection=None, land=True, vmin=vmin,
+                    vmax=vmax, savefile=None, titlestr='Particles and ',
+                    depth_level=depth_level)
+
+plon = np.array([p.lon for p in particles])
+plat = np.array([p.lat for p in particles])
+c = np.array([p.unbeached for p in particles], dtype=int)
+colors = plt.cm.nipy_spectral(np.append(0, np.linspace(0, 1, 20)))
+sc = ax.scatter(plon, plat, s=1, c=c, zorder=20, vmin=0, vmax=20,
+                cmap=plt.cm.nipy_spectral, transform=cartopy.crs.PlateCarree())
+fargs = (sc, ax, particles, field, kernels, runtime, dt, output_file,
+         recovery_kernels, depth_level, domain)
+ani = animation.FuncAnimation(fig, animate_particles, frames=T, fargs=fargs,
+                              blit=True)
+plt.show()
+ani.save(savefile, writer='ffmpeg', fps=8, bitrate=-1, dpi=250)
 
 pd = pset.particle_data
-for v in ['unbeached', 'coasttime', 'ubcount', 'ubWcount', 'ubWdepth', 'zc']:
+for v in ['unbeached', 'coasttime', 'ubcount', 'ubWcount', 'ubWdepth', 'zc',
+          'ubeachprv']:
     p = pd[v]
     Nb = np.where(p > 0.0, 1, 0).sum()
     pb = np.where(p > 0.0, p, np.nan)
@@ -178,9 +197,5 @@ for v in ['unbeached', 'coasttime', 'ubcount', 'ubWcount', 'ubWdepth', 'zc']:
 v, p = 'depth', pd[v]
 logger.info('{:>6}: {:<9}: N={}, max={} min={:.2f} med={:.2f} mean={:.2f}'
             .format(sim, v, N, p.max(), p.min(), np.median(p), np.mean(p)))
-output = str(cfg.fig/'parcels/gifs') + '/' + str(sim) + '.mp4'
-tools.image2video(savefile + '%03d.png', output, frames=10)
 output_file.export()
-plot3Dx(cfg.data/'{}{}.nc'.format(test, i), ds=None)
-# from analyse_trajectory import plot_traj
-ds, dx = plot_traj(cfg.data/'{}{}.nc'.format(test, i), var='w', traj=12265, t=2, Z=130)
+ds, dx = plot_traj(cfg.data/'{}{}.nc'.format(test, i), var='w', traj=3679, t=2, Z=140)

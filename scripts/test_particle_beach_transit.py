@@ -63,8 +63,8 @@ class zParticle(JITParticle):
 dt = -timedelta(minutes=60)
 stime = fieldset.U.grid.time[-1] - 60
 outputdt = timedelta(minutes=120)
-runtime = timedelta(minutes=240)
-repeatdt = timedelta(minutes=360)
+runtime = timedelta(minutes=360)
+repeatdt = timedelta(minutes=720)
 depth_level = 19
 dx, dz = 0.1, 50
 
@@ -80,7 +80,7 @@ px = np.arange(I[0], I[1] + dx, dx)
 pz = np.arange(K[0], K[1] + dz, dz)
 lon, depth = np.meshgrid(px, pz)
 lat = np.repeat(py, lon.size)
-T = np.arange(0, 600)
+T = np.arange(0, 400)
 
 pset = ParticleSet.from_list(fieldset=fieldset, pclass=zParticle, time=stime,
                              lon=lon, lat=lat, depth=depth, repeatdt=repeatdt)
@@ -92,7 +92,7 @@ while savefile.exists():
     i += 1
     savefile = cfg.fig/'parcels/tests/{}_{:02d}.mp4'.format(test, i)
 
-sim = savefile.stem[:-1]
+sim = savefile.stem
 savefile = str(savefile)
 pset = del_land(pset)
 
@@ -103,16 +103,16 @@ particles = pset
 output_file = pset.ParticleFile(cfg.data/'{}{}.nc'.format(test, i),
                                 outputdt=outputdt)
 N = math.floor(T[-1]*runtime.total_seconds()/repeatdt.total_seconds())*pset.size
-logger.info(' {:<4}: N={} rdt>={}: run>={}: itr={}: Ntot={} UBmin=0.25'
+logger.info(' {:<6}: N={} rdt>={}: run>={}: itr={}: Ntot={} UBmin=0.25'
             .format(sim, pset.size, repeatdt, runtime, T[-1], N))
-logger.info(' {:<3}: {}'.format(sim, kernels.name))
+logger.info(' {:<6}: {}'.format(sim, kernels.name))
 show_time = particles[0].time
 if field == 'vector':
     field = particles.fieldset.UV
 elif not isinstance(field, Field):
     field = getattr(particles.fieldset, field)
 
-plt, fig, ax, cartopy = plotfield(field=field, animation=animation,
+fig, ax = plotfield(field=field, animation=animation,
                                   show_time=show_time, domain=domain,
                                   projection=None, land=True, vmin=vmin,
                                   vmax=vmax, savefile=None,
