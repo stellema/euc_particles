@@ -56,7 +56,7 @@ from parcels import (ParticleSet, ErrorCode, Variable, JITParticle)
 import cfg
 import tools
 from main import ofam_fieldset
-from plotparticles import plotfield, animate_particles, plot_traj
+from plotparticles import plotfield, animate_particles, plot_traj, plot3D
 from kernels import (AdvectionRK4_Land, BeachTest, UnBeaching, Age,
                      SampleZone, Distance, CoastTime, recovery_kernels)
 
@@ -105,9 +105,9 @@ dt = -timedelta(minutes=60)
 stime = fieldset.U.grid.time[-1] - 60
 outputdt = timedelta(minutes=60)
 runtime = timedelta(minutes=360)
-repeatdt = timedelta(minutes=720)
+repeatdt = timedelta(days=4)
 dx = 0.1
-T = np.arange(1, 400)
+T = np.arange(0, 400)
 if test == 'BT':
     dt = -dt
     T = np.arange(1, 144)
@@ -131,11 +131,17 @@ field, vmax, vmin = fieldset.land, 1.2, 0.5
 py = np.arange(J[0], J[1] + dx, dx)
 px = np.arange(I[0], I[1], dx)
 pz = np.array(K)
-lon, lat = np.meshgrid(px, py)
-depth = np.repeat(pz, lon.size)
+lons, lats = np.meshgrid(px, py)
+depths = np.repeat(pz, lons.size)
+repeats = math.floor((runtime * len(T))/repeatdt)
+tr = stime - (np.arange(0, repeats) * repeatdt.total_seconds())
+time = np.repeat(tr, lons.size)
+depth = np.tile(depths, repeats)
+lon = np.tile(lons, repeats)
+lat = np.tile(lats, repeats)
 
 pset = ParticleSet.from_list(fieldset=fieldset, pclass=zParticle, time=stime,
-                             lon=lon, lat=lat, depth=depth, repeatdt=repeatdt)
+                             lon=lon, lat=lat, depth=depth, repeatdt=None)
 
 fieldset.computeTimeChunk(0, 0)
 i = 0
@@ -149,6 +155,7 @@ logger.info(' {:<3}: Land>={}: Coast>={}: UBv={}: UBmin={}: Loop>=3: '
             .format(sim, fieldset.landLim, fieldset.coast,
                     fieldset.UBv*(1852*60), fieldset.UBmin)
             + 'Round if >=coast<land: 0.025<a<0.1 break minLand<1e-7: '
+            + 'If no unbeachUV -UV[prev_lat, prev_lon]: '
             + 'RK depth if >=0.5 <Vmin: Depth*(1-Land): '
             + 'wUB=-{}*dt if wb>UBmin: T={}'.format(fieldset.UBw, T[-1]))
 
@@ -194,8 +201,9 @@ for v in ['unbeached', 'coasttime', 'ubcount', 'ubWcount', 'ubWdepth', 'zc',
     logger.info('{:>6}: {:<9}: N={}({:.1f}%) max={:.2f} med={:.2f} mean={:.2f}'
                 .format(sim, v, Nb, (Nb/N)*100, p.max(),
                         np.nanmedian(pb), np.nanmean(pb)))
-v, p = 'depth', pd[v]
-logger.info('{:>6}: {:<9}: N={}, max={} min={:.2f} med={:.2f} mean={:.2f}'
-            .format(sim, v, N, p.max(), p.min(), np.median(p), np.mean(p)))
+p = pd['depth']
+logger.info('{:>6}: {:<9}: N={}, max={:.2f} min={:.2f} med={:.2f} mean={:.2f}'
+            .format(sim, 'z', N, p.max(), p.min(), np.median(p), np.mean(p)))
 output_file.export()
-ds, dx = plot_traj(cfg.data/'{}{}.nc'.format(test, i), var='w', traj=3679, t=2, Z=140)
+
+plot3D(cfg.data/'{}{}.nc'.format(test, i))

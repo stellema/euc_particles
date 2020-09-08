@@ -59,13 +59,14 @@ class zParticle(JITParticle):
     ubWcount = Variable('ubWcount', initial=0., dtype=np.float32)
     ubWdepth = Variable('ubWdepth', initial=0., dtype=np.float32)
     zc = Variable('zc', initial=0., dtype=np.float32)
+    ubeachprv = Variable('ubeachprv', initial=0., dtype=np.float32)
 
 
 dt = -timedelta(minutes=60)
 stime = fieldset.U.grid.time[-1] - 60
 outputdt = timedelta(minutes=120)
 runtime = timedelta(minutes=360)
-repeatdt = timedelta(minutes=720)
+repeatdt = timedelta(days=1)
 depth_level = 19
 dx, dz = 0.1, 50
 
@@ -81,7 +82,7 @@ px = np.arange(I[0], I[1] + dx, dx)
 pz = np.arange(K[0], K[1] + dz, dz)
 lon, depth = np.meshgrid(px, pz)
 lat = np.repeat(py, lon.size)
-T = np.arange(0, 400)
+T = np.arange(0, 250)
 
 pset = ParticleSet.from_list(fieldset=fieldset, pclass=zParticle, time=stime,
                              lon=lon, lat=lat, depth=depth, repeatdt=repeatdt)
@@ -113,12 +114,10 @@ if field == 'vector':
 elif not isinstance(field, Field):
     field = getattr(particles.fieldset, field)
 
-fig, ax = plotfield(field=field, animation=animation,
-                                  show_time=show_time, domain=domain,
-                                  projection=None, land=True, vmin=vmin,
-                                  vmax=vmax, savefile=None,
-                                  titlestr='Particles and ',
-                                  depth_level=depth_level)
+fig, ax = plotfield(field=field, animation=animation, show_time=show_time,
+                    domain=domain, projection=None, land=True, vmin=vmin,
+                    vmax=vmax, savefile=None, titlestr='Particles and ',
+                    depth_level=depth_level)
 
 plon = np.array([p.lon for p in particles])
 plat = np.array([p.lat for p in particles])
@@ -142,6 +141,6 @@ for v in ['unbeached', 'coasttime', 'ubcount', 'ubWcount', 'ubWdepth', 'zc']:
     logger.info('{:>6}: {:<9}: N={}({:.1f}%) max={:.2f} med={:.2f} mean={:.2f}'
                 .format(sim, v, Nb, (Nb/N)*100, p.max(),
                         np.nanmedian(pb), np.nanmean(pb)))
-v, p = 'depth', pd[v]
-logger.info('{:>6}: {:<9}: N={}, max={} min={:.2f} med={:.2f} mean={:.2f}'
-            .format(sim, v, N, p.max(), p.min(), np.median(p), np.mean(p)))
+p = pd['depth']
+logger.info('{:>6}: {:<9}: N={}, max={:.2f} min={:.2f} med={:.2f} mean={:.2f}'
+            .format(sim, 'z', N, p.max(), p.min(), np.median(p), np.mean(p)))
