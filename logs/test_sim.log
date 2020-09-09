@@ -2882,3 +2882,25 @@
 2020-08-29 20:28:54:Compiled zParticleAdvectionRK4_3D_coastBeachTestUnBeachingAgeZoneDistance ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\6487ab2716dc410f8ab553e6ee1c74ff_0.dll
 2020-08-29 20:37:48:sim_hist_165_v18r0:Completed!: 00:09:05: Rank= 0: Particles: I=1 del=0 F=1
 2020-08-29 20:37:51:sim_hist_165_v18r0:Finished!
+2020-09-09 17:39:33:sim_hist_165_v33r0:Simulation v33r0: Particles=90+0=90
+2020-09-09 17:39:33:sim_hist_165_v33r0:Excecuting 2012-12-31 to 2012-11-25: Runtime=36d
+2020-09-09 17:39:33:sim_hist_165_v33r0:Lon=165: Lat=[-2.6-2.4 x1]: Depth=[25-325m x150]
+2020-09-09 17:39:33:sim_hist_165_v33r0:Dir=YQTNPXLX: Rep=6d: dt=60m: Out=1d: Land=0.975 Eps=1e-07
+2020-09-09 17:39:33:sim_hist_165_v33r0:Rank= 0: Particles: File=0 New=90 West=53 I=37
+2020-09-09 17:39:36:Compiled zParticleAdvectionRK4_LandBeachTestUnBeachingAgeSampleZoneDistance ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\4973c2332ab861ec75921f8a451e151a_0.dll
+2020-09-09 17:40:11:sim_hist_165_v33r0:Completed: 00:01:04: Rank= 0: Particles: Start=37 Del=0 End=37
+2020-09-09 17:40:11:sim_hist_165_v33r0:Finished!
+2020-09-09 18:39:12:sim_hist_165_v38r0:Simulation v55r0: Particles=1+0=1
+2020-09-09 18:39:12:sim_hist_165_v38r0:Excecuting 2012-12-19 to 2012-01-24: Runtime=330d
+2020-09-09 18:39:12:sim_hist_165_v38r0:Lon=165: Lat=-0.4: Depth=175
+2020-09-09 18:39:12:sim_hist_165_v38r0:Dir=MRJZCQFB: Rep=6d: dt=60m: Out=1d: Land=0.975 Eps=1e-07
+2020-09-09 18:39:12:sim_hist_165_v38r0:Rank= 0: Particles: File=0 New=1 West=0 I=1
+2020-09-09 18:39:14:Compiled zParticleAdvectionRK4_LandBeachTestUnBeachingAgeSampleZoneDistance ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\3b16529f10456425ab1c2df85c66e7e2_0.dll
+2020-09-09 18:46:02:sim_hist_165_v38r0:Completed!: 00:06:54: Rank= 0: Particles: I=1 del=0 F=1
+2020-09-09 18:46:04:sim_hist_165_v38r0:Finished!
+2020-09-10 00:13:22:sim_hist_165_v50r0:Simulation v55r0: Particles=1+0=1
+2020-09-10 00:13:22:sim_hist_165_v50r0:Excecuting 2012-12-19 to 2012-01-24: Runtime=330d
+2020-09-10 00:13:22:sim_hist_165_v50r0:Lon=165: Lat=-0.4: Depth=175
+2020-09-10 00:13:22:sim_hist_165_v50r0:Dir=EZZVRBXA: Rep=6d: dt=60m: Out=1d: Land=0.975 Eps=1e-08
+2020-09-10 00:13:22:sim_hist_165_v50r0:Rank= 0: Particles: File=0 New=1 West=0 I=1
+2020-09-10 00:13:25:Compiled zParticleAdvectionRK4_LandBeachTestUnBeachingAgeSampleZoneDistance ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\3b785b48f35f8b82835e8283cf810638_0.dll

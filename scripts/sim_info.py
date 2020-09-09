@@ -6,54 +6,47 @@ author: Annette Stellema (astellemas@gmail.com)
 
 
 """
-import cfg
-import tools
 import numpy as np
 import xarray as xr
-from plotparticles import plot3D
 from argparse import ArgumentParser
+
+import cfg
+import tools
+from plotparticles import plot3D
+
 
 logger = tools.mlogger('particles', parcels=False, misc=False)
 
 
 def particle_info(sim_id, info_only=True):
 
-    ext = ''
+    
     ds = xr.open_dataset(str(sim_id), decode_cf=False)
 
     # Total number of particles
-    start = 159529
+    start = int(195 * 742)
     N = ds.traj.size
 
     # Number of intially westward particles.
     west = start - N
 
-    inds = np.where(ds['time'] == np.nanmin(ds['time']))[0]
+    inds = np.where(ds['time'] == np.nanmin(ds['time']))
 
     # Number of remaining particles.
-    end = inds.size
+    end = inds[0].size
 
     # Number of deleted particles.
     dels = N - end
 
-    if hasattr(ds, 'unbeached'):
-        db = np.unique(ds.where(ds.unbeached >= 1, drop=True).trajectory)
-        unbeached = db[~np.isnan(db)].size
-        ext += ' uB={}({:.1f}%)'.format(unbeached, (unbeached/N)*100)
-        dd = np.unique(ds.where(ds.unbeached < 0, drop=True).trajectory)
-        beached = dd[~np.isnan(dd)].size
-        ext += ' B={}({:.1f}%N{:.1f}%uB)'.format(beached, (beached/N)*100,
-                                                 (beached/unbeached)*100)
+    ub = ds.unbeached.max(dim='obs')
+    ubN = ub[ub > 0].size  # Number of unbeached.
 
-        # Update number of deleted particles minus beached.
-        oob = dels - beached
-        ext += ' OOB={}'.format(oob)
-    else:
-        ext += ' B=N/A OOB=N/A'
 
-    logger.info('{}: I={} W={} N={} F={} del={}({:.1f}%){}'
-                .format(sim_id.stem, start, west, N, end,
-                        dels, (dels/N)*100, ext))
+    logger.info('{}: I={} W={} N={} F={} del={}({:.1f}%): '
+                .format(sim_id.stem, start, west, N, end, dels, (dels/N)*100)
+                + 'uB={}({:.1f}%) max={:.0f} median={:.0f} mean={:.0f}'
+                .format(ubN, (ubN/N)*100, np.nanmax(ub), np.nanmedian(ub), 
+                        np.nanmean(ub)))
 
     # Plot some figures!
     plot3D(sim_id, ds)

@@ -30,7 +30,7 @@ logger = tools.mlogger('test_unbeaching', parcels=True, misc=False)
 
 
 def del_land(pset):
-    inds, = np.where((pset.particle_data['Land'] > 0.00))
+    inds, = np.where((pset.particle_data['land'] > 0.00))
     for d in pset.particle_data:
         pset.particle_data[d] = np.delete(pset.particle_data[d], inds, axis=0)
     return pset
@@ -39,7 +39,7 @@ def del_land(pset):
 fieldset = ofam_fieldset(time_bnds='full', exp='hist', chunks=True,
                          cs=300, time_periodic=False, add_zone=True,
                          add_unbeach_vel=True, apply_indicies=True)
-fieldset.land.grid.time_origin = fieldset.time_origin
+fieldset.Land.grid.time_origin = fieldset.time_origin
 
 
 class zParticle(JITParticle):
@@ -52,7 +52,7 @@ class zParticle(JITParticle):
     prev_lat = Variable('prev_lat', initial=attrgetter('lat'), to_write=False, dtype=np.float32)
     beached = Variable('beached', initial=0., to_write=False, dtype=np.float32)
     unbeached = Variable('unbeached', initial=0., dtype=np.float32)
-    Land = Variable('Land', initial=fieldset.land, dtype=np.float32)
+    land = Variable('land', initial=fieldset.Land, dtype=np.float32)
     # Testers.
     coasttime = Variable('coasttime', initial=0., dtype=np.float32)
     ubcount = Variable('ubcount', initial=0., dtype=np.float32)
@@ -76,7 +76,7 @@ J, I, K = [-2.5], [151, 153], [100, 250]
 domain = {'N': -1.5, 'S': -7, 'E': 157.8, 'W': 150}
 
 # field, vmax, vmin = 'vector', 0.3, None
-field, vmax, vmin = fieldset.land, 1.2, 0.5
+field, vmax, vmin = fieldset.Land, 1.2, 0.5
 py = np.array(J)
 px = np.arange(I[0], I[1] + dx, dx)
 pz = np.arange(K[0], K[1] + dz, dz)

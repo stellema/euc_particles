@@ -18,28 +18,26 @@ def AdvectionRK4_Land(particle, fieldset, time):
     Searches 0.025, 0.05, 0.075 and 0.1 and breaks when off land.
     Loops through i,j=[0c,0f] [0c,1c] [-1f,0f] [-1f,1c] (c:ceil, f:floor)
     """
-    particle.Land = fieldset.land[0., particle.depth, particle.lat, particle.lon]
+    particle.land = fieldset.Land[0., particle.depth, particle.lat, particle.lon]
     lat0 = particle.lat
     lon0 = particle.lon
-    if particle.Land >= fieldset.coast and particle.Land < fieldset.landLim:
-        minLand = particle.Land
+    if particle.land >= fieldset.byland and particle.land <= fieldset.onland:
         d = 0
-        while d < 0.1 and minLand > 1e-7:
+        while d < 0.1 and particle.land > fieldset.byland:
             d += 0.025
-            latr = math.floor(particle.lat/d) * d
-            lonr = math.ceil(particle.lon/d) * d
             i = 0
-            while i > -2 and minLand > 1e-7:
+            rlat = math.floor(particle.lat/d) * d
+            rlon = math.ceil(particle.lon/d) * d
+            while i > -2 and particle.land > fieldset.byland:
                 j = 0
-                while j < 2 and minLand > 1e-7:
-                    Landr = fieldset.land[0., particle.depth, latr + j*d, lonr + i*d]
-                    if minLand > Landr:
-                        minLand = Landr
-                        lat0 = latr + j*d
-                        lon0 = lonr + i*d
+                while j < 2 and particle.land > fieldset.byland:
+                    rLand = fieldset.Land[0., particle.depth, rlat + j*d, rlon + i*d]
+                    if particle.land > rLand:
+                        particle.land = rLand
+                        lat0 = rlat + j*d
+                        lon0 = rlon + i*d
                     j += 1
                 i -= 1
-        particle.Land = minLand
 
     (u1, v1, w1) = fieldset.UVW[time, particle.depth, lat0, lon0]
     lon1 = lon0 + u1*.5*particle.dt
@@ -58,65 +56,105 @@ def AdvectionRK4_Land(particle, fieldset, time):
     particle.lat += (v1 + 2*v2 + 2*v3 + v4) / 6. * particle.dt
 
     # Reduce vertical velocity as it gets closer to the coast.
-    if (particle.Land >= fieldset.coast and math.fabs(u1) < fieldset.Vmin and
-            math.fabs(v1) < fieldset.Vmin):
-        particle.depth += (w1 + 2*w2 + 2*w3 + w4) / 6. * particle.dt * (1 - particle.Land)
-        particle.zc += 1  # Test.
+    if (particle.land >= fieldset.byland and
+            math.fabs(u1) < fieldset.UV_min and
+            math.fabs(v1) < fieldset.UV_min):
+        particle.depth += (w1 + 2*w2 + 2*w3 + w4) / 6. * particle.dt * (1 - particle.land)
     else:
         particle.depth += (w1 + 2*w2 + 2*w3 + w4) / 6. * particle.dt
 
 
 def BeachTest(particle, fieldset, time):
-    particle.Land = fieldset.land[0., particle.depth, particle.lat, particle.lon]
-    if particle.Land < fieldset.landLim:
+    particle.land = fieldset.Land[0., particle.depth, particle.lat, particle.lon]
+    if particle.land < fieldset.onland:
         particle.beached = 0
     else:
         particle.beached += 1
 
 
+# def UnBeaching(particle, fieldset, time):
+#     if particle.beached >= 1:
+#         # Attempt three times to unbeach particle.
+#         while particle.beached > 0 and particle.beached <= 3:
+#             (ub, vb, wb) = fieldset.UVWb[0., particle.depth, particle.lat, particle.lon]
+#             # Unbeach by 1m/s (checks if unbeach velocities are close to zero).
+#             # Longitude.
+#             NMx = fieldset.NM * (1/math.cos(particle.lat * math.pi/180))
+#             if math.fabs(ub) >= fieldset.UB_min:
+#                 particle.lon += math.copysign(NMx, ub) * math.fabs(particle.dt)
+#             # Latitude.
+#             if math.fabs(vb) >= fieldset.UB_min:
+#                 particle.lat += math.copysign(fieldset.NM, vb) * math.fabs(particle.dt)
+#             # Depth.
+#             if math.fabs(wb) >= fieldset.UB_min:
+#                 particle.depth -= fieldset.UBw * math.fabs(particle.dt)
+
+#             # Send back the way particle came and up if no unbeach velocities.
+#             if (math.fabs(ub) < fieldset.UB_min and math.fabs(vb) < fieldset.UB_min):
+#                 (u0, v0) = fieldset.UV[time, particle.depth, particle.prev_lat, particle.prev_lon]
+#                 if math.fabs(u0) > 1e-14:
+#                     particle.lon -= math.copysign(NMx, u0) * math.fabs(particle.dt)
+#                 if math.fabs(v0) > 1e-14:
+#                     particle.lat -= math.copysign(fieldset.NM, v0) * math.fabs(particle.dt)
+
+#             particle.unbeached += 1
+#             # Check if particle is still on land.
+#             particle.land = fieldset.Land[0., particle.depth, particle.lat, particle.lon]
+#             if particle.land < fieldset.onland:
+#                 particle.beached = 0
+#             else:
+#                 particle.beached += 1
+
+#         # Reset beached counter.
+#         particle.beached = 0
 def UnBeaching(particle, fieldset, time):
     if particle.beached >= 1:
-        counter = 0
         # Attempt three times to unbeach particle.
-        while particle.beached > 0 and counter <= 3:
-            (ub, vb, wb) = fieldset.UVWb[0., particle.depth, particle.lat, particle.lon]
+        while particle.beached > 0 and particle.beached <= 3:
+
             # Unbeach by 1m/s (checks if unbeach velocities are close to zero).
             # Longitude.
-            ubx = fieldset.geo * (1/math.cos(particle.lat * math.pi/180))
-            if math.fabs(ub) >= fieldset.UBmin:
-                particle.lon += math.copysign(ubx, ub) * math.fabs(particle.dt)
+            NMx = fieldset.NM * (1/math.cos(particle.lat * math.pi/180))
+            # Round down to 0.1 and test if ceil or floor is nearest.
+            lonb = (math.floor(math.fabs(particle.lon) * 10) / 10)
+            latb = (math.floor(math.fabs(particle.lat) * 10) / 10)
+            (ub, vb, wb) = fieldset.UVWb[0., particle.depth, latb, lonb]
+            if math.fabs(particle.lon) - lonb >= 0.5:
+                lonb = (math.ceil(math.fabs(particle.lon) * 10) / 10)
+            if math.fabs(particle.lat) - latb >= 0.5:
+                latb = (math.ceil(math.fabs(particle.lat) * 10) / 10)
+            if math.fabs(ub) >= fieldset.UB_min:
+                particle.lon += math.copysign(NMx, ub) * math.fabs(particle.dt)
             # Latitude.
-            if math.fabs(vb) >= fieldset.UBmin:
-                particle.lat += math.copysign(fieldset.geo, vb) * math.fabs(particle.dt)
+            if math.fabs(vb) >= fieldset.UB_min:
+                particle.lat += math.copysign(fieldset.NM, vb) * math.fabs(particle.dt)
             # Depth.
-            if math.fabs(wb) >= fieldset.UBmin:
+            if math.fabs(wb) >= fieldset.UB_min:
                 particle.depth -= fieldset.UBw * math.fabs(particle.dt)
-                particle.ubWdepth += fieldset.UBw * math.fabs(particle.dt)  # TEST
-                particle.ubWcount += 1  # TEST
 
-            if (math.fabs(ub) < fieldset.UBmin and math.fabs(vb) < fieldset.UBmin):
-                # Send back the way particle came and up if no unbeach velocities.
-                (u0, v0) = fieldset.UV[time, particle.depth, particle.prev_lat, particle.prev_lon]
-                if math.fabs(u0) > 1e-14:
-                    particle.lon -= math.copysign(ubx, u0) * math.fabs(particle.dt)
-                if math.fabs(v0) > 1e-14:
-                    particle.lat -= math.copysign(fieldset.geo, v0) * math.fabs(particle.dt)
-                    particle.ubeachprv += 1  # TEST.
+            # # Send back the way particle came and up if no unbeach velocities.
+            # if (math.fabs(ub) < fieldset.UB_min and math.fabs(vb) < fieldset.UB_min):
+            #     (u0, v0) = fieldset.UV[time, particle.depth, particle.prev_lat, particle.prev_lon]
+            #     if math.fabs(u0) > 1e-14:
+            #         particle.lon -= math.copysign(NMx, u0) * math.fabs(particle.dt)
+            #     if math.fabs(v0) > 1e-14:
+            #         particle.lat -= math.copysign(fieldset.NM, v0) * math.fabs(particle.dt)
+
+            particle.unbeached += 1
             # Check if particle is still on land.
-            particle.Land = fieldset.land[0., particle.depth, particle.lat, particle.lon]
-            if particle.Land < fieldset.landLim:
+            particle.land = fieldset.Land[0., particle.depth, particle.lat, particle.lon]
+            if particle.land < fieldset.onland:
                 particle.beached = 0
             else:
                 particle.beached += 1
-            counter += 1
-        if particle.beached > 0:  # TEST: Fail count.
-            particle.ubcount += 1  # TEST: Fail count.
-        particle.unbeached += 1
+
+        # Reset beached counter.
+        particle.beached = 0
 
 
 def CoastTime(particle, fieldset, time):
-    particle.Land = fieldset.land[0., particle.depth, particle.lat, particle.lon]
-    if particle.Land > 0.25:
+    particle.land = fieldset.Land[0., particle.depth, particle.lat, particle.lon]
+    if particle.land > 0.25:
         particle.coasttime = particle.coasttime + math.fabs(particle.dt)
 
 
@@ -152,7 +190,7 @@ def DelWest(particle, fieldset, time):
         particle.delete()
 
 def DelLand(particle, fieldset, time):
-    if particle.age == 0. and particle.Land > 0.:
+    if particle.age == 0. and particle.land > 0.:
         particle.delete()
 
 def Age(particle, fieldset, time):

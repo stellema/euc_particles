@@ -246,7 +246,7 @@ def plotfield(field, show_time=None, domain=None, depth_level=0, projection=None
 ##############################################################################
             # cs = ax.pcolormesh(plotlon[0], plotlat[0], d, transform=cartopy.crs.PlateCarree())
 ##############################################################################
-            if type(field) is not VectorField and field[0].name == 'land':
+            if type(field) is not VectorField and field[0].name == 'Land':
                 cs = ax.pcolormesh(plotlon[0], plotlat[0], d, cmap=plt.cm.Greys, transform=cartopy.crs.PlateCarree())
             else:
                 cs = ax.pcolormesh(plotlon[0], plotlat[0], d, transform=cartopy.crs.PlateCarree())
@@ -262,7 +262,7 @@ def plotfield(field, show_time=None, domain=None, depth_level=0, projection=None
     cs.cmap.set_under('w')
     cs.set_clim(vmin, vmax)
 ##############################################################################
-    if type(field) is VectorField and field[0].name != 'land':
+    if type(field) is VectorField and field[0].name != 'Land':
         cartopy_colorbar(cs, plt, fig, ax)
 ##############################################################################
     # cartopy_colorbar(cs, plt, fig, ax)
@@ -395,9 +395,6 @@ def particlesvid(particles, with_particles=True, show_time=None, field=None,
     if isinstance(show_time, datetime):
         show_time = np.datetime64(show_time)
     if isinstance(show_time, np.datetime64):
-        if not particles.time_origin:
-            raise NotImplementedError(
-                'If fieldset.time_origin is not a date, showtime cannot be a date in particleset.show()')
         show_time = particles.time_origin.reltime(show_time)
     if isinstance(show_time, delta):
         show_time = show_time.total_seconds()
@@ -410,9 +407,10 @@ def particlesvid(particles, with_particles=True, show_time=None, field=None,
         field = getattr(particles.fieldset, field)
 
     depth_level = kwargs.pop('depth_level', 0)
-    fig, ax = plotfield(field=field, animation=animation, show_time=show_time, domain=domain,
-                                      projection=projection, land=land, vmin=vmin, vmax=vmax, savefile=None,
-                                      titlestr='Particles and ', depth_level=depth_level)
+    fig, ax = plotfield(field=field, animation=animation, show_time=show_time,
+                        domain=domain, projection=projection, land=land,
+                        vmin=vmin, vmax=vmax, savefile=None,
+                        titlestr='Particles and ', depth_level=depth_level)
 
     if with_particles:
         if unbeach and 'unbeached' in particles.particle_data:
@@ -423,16 +421,19 @@ def particlesvid(particles, with_particles=True, show_time=None, field=None,
             plonb = np.array([p.lon for p in particles if p.unbeached != 0])
             platb = np.array([p.lat for p in particles if p.unbeached != 0])
             # Cycle through cmap for times unbeached.
-            c = np.array([p.unbeached for p in particles if p.unbeached != 0], dtype=int)
+            c = np.array([p.unbeached for p in particles if p.unbeached != 0],
+                         dtype=int)
             colors = plt.cm.gist_rainbow(np.linspace(0, 1, 20))
             c = np.where(c >= 15, 20, c)
         else:
             plon = np.array([p.lon for p in particles])
             plat = np.array([p.lat for p in particles])
         if cartopy:
-            ax.scatter(plon, plat, s=2, color='black', zorder=20, transform=cartopy.crs.PlateCarree())
+            ax.scatter(plon, plat, s=2, color='black', zorder=20,
+                       transform=cartopy.crs.PlateCarree())
             if unbeach and 'unbeached' in particles.particle_data:
-                ax.scatter(plonb, platb, s=2, c=colors[c], zorder=20, transform=cartopy.crs.PlateCarree())
+                ax.scatter(plonb, platb, s=2, c=colors[c], zorder=20,
+                           transform=cartopy.crs.PlateCarree())
         else:
             ax.scatter(plon, plat, s=20, color='black', zorder=20)
 

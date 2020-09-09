@@ -11,10 +11,10 @@ Beach vel too high at 5e-7 (CS1) particle 255
 okay at  1.5e-7 CS2
 
 
-# landBn = fieldset.land[0., particle.depth, particle.lat + 0.03, particle.lon]
-# landBs = fieldset.land[0., particle.depth, particle.lat - 0.03, particle.lon]
-# landBe = fieldset.land[0., particle.depth, particle.lat, particle.lon + 0.03]
-# landBw = fieldset.land[0., particle.depth, particle.lat, particle.lon - 0.03]
+# landBn = fieldset.Land[0., particle.depth, particle.lat + 0.03, particle.lon]
+# landBs = fieldset.Land[0., particle.depth, particle.lat - 0.03, particle.lon]
+# landBe = fieldset.Land[0., particle.depth, particle.lat, particle.lon + 0.03]
+# landBw = fieldset.Land[0., particle.depth, particle.lat, particle.lon - 0.03]
 # if landBn < landP:
 #     particle.lat += fieldset.geo * math.fabs(particle.dt)
 # elif landBs < landP:
@@ -24,8 +24,8 @@ okay at  1.5e-7 CS2
 # elif landBw < landP:
 #     particle.lon += ubx * math.fabs(particle.dt)
 
-                # landBEast = fieldset.land[0., particle.depth, particle.lat, particle.lon + 0.05]
-# landBWest = fieldset.land[0., particle.depth, particle.lat, particle.lon - 0.05]
+                # landBEast = fieldset.Land[0., particle.depth, particle.lat, particle.lon + 0.05]
+# landBWest = fieldset.Land[0., particle.depth, particle.lat, particle.lon - 0.05]
 # if landBEast > landB and landBWest > landB:
 #     particle.beached = 0
 #     particle.beachstr += 1
@@ -67,7 +67,7 @@ test = ['CS', 'PNG', 'SS'][2]
 
 
 def del_land(pset):
-    inds, = np.where((pset.particle_data['Land'] > 0.00) &
+    inds, = np.where((pset.particle_data['land'] > 0.00) &
                      (pset.particle_data['age'] == 0.))
     for d in pset.particle_data:
         pset.particle_data[d] = np.delete(pset.particle_data[d], inds, axis=0)
@@ -77,7 +77,7 @@ def del_land(pset):
 fieldset = ofam_fieldset(time_bnds='full', exp='hist', chunks=True,
                          cs=300, time_periodic=False, add_zone=True,
                          add_unbeach_vel=True, apply_indicies=True)
-fieldset.land.grid.time_origin = fieldset.time_origin
+fieldset.Land.grid.time_origin = fieldset.time_origin
 
 
 class zParticle(JITParticle):
@@ -87,7 +87,7 @@ class zParticle(JITParticle):
     prev_lat = Variable('prev_lat', initial=attrgetter('lat'), to_write=False, dtype=np.float32)
     beached = Variable('beached', initial=0., to_write=False, dtype=np.float32)
     unbeached = Variable('unbeached', initial=0., dtype=np.float32)
-    Land = Variable('Land', initial=fieldset.land, dtype=np.float32)
+    land = Variable('land', initial=fieldset.Land, dtype=np.float32)
     # Testers.
     coasttime = Variable('coasttime', initial=0., dtype=np.float32)
     ubcount = Variable('ubcount', initial=0., dtype=np.float32)
@@ -103,10 +103,10 @@ outputdt = timedelta(minutes=60)
 runtime = timedelta(minutes=360)
 repeatdt = timedelta(days=6)
 dx = 0.1
-T = np.arange(0, 700)
+T = np.arange(0, 200)
 if test == 'BT':
     dt = -dt
-    T = np.arange(1, 700)
+    T = np.arange(1, 200)
     J, I, K = [-5.25, -4.2], [156.65, 157.75], [150]
     domain = {'N': -3.75, 'S': -5.625, 'E': 158, 'W': 156}
 elif test == 'PNG':
@@ -123,7 +123,7 @@ elif test == 'CS':
     domain = {'N': -7, 'S': -13.5, 'E': 156, 'W': 147}
 
 depth_level = tools.get_edge_depth(K[0])
-field, vmax, vmin = fieldset.land, 1.2, 0.5
+field, vmax, vmin = fieldset.Land, 1.2, 0.5
 py = np.arange(J[0], J[1] + dx, dx)
 px = np.arange(I[0], I[1], dx)
 pz = np.array(K)
@@ -141,11 +141,11 @@ while savefile.exists():
     i += 1
     savefile = cfg.fig/'parcels/tests/{}_{:02d}.mp4'.format(test, i)
 sim = savefile.stem
-logger.info(' {:<3}: Land>={}: Coast>={}: UBv={}: UBmin={}: Loop>=3: '
-            .format(sim, fieldset.landLim, fieldset.coast,
-                    1, fieldset.UBmin)
-            + 'Round if >=coast<land: 0.025<a<0.1 break minLand<1e-7: '
-            + 'If no unbeachUV -UV[prev_lat, prev_lon]: '
+logger.info(' {:<3}: Land>={}: Coast>={}: UBv={}: ROUNDUBmin={}: Loop>=3: '
+            .format(sim, fieldset.onland, fieldset.byland,
+                    1, fieldset.UB_min)
+            + 'Round if >=coast<land: 0.025<a<0.1 break minLand<1e-8: '
+            # + 'If no unbeachUV -UV[prev_lat, prev_lon]: '
             + 'RK depth if >=0.5 <Vmin: Depth*(1-Land): '
             + 'wUB=-{}*dt if wb>UBmin: T={}'.format(fieldset.UBw, T[-1]))
 

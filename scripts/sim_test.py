@@ -120,7 +120,7 @@ class zParticle(JITParticle):
     unbeached = Variable('unbeached', initial=0., dtype=np.float32)
 
     # Land field.
-    Land = Variable('Land', initial=fieldset.land, to_write=False, dtype=np.float32)
+    land = Variable('land', initial=fieldset.Land, to_write=False, dtype=np.float32)
 
 
 pclass = zParticle
@@ -180,8 +180,8 @@ xlog['dt'] = dt_mins
 xlog['v'] = v
 xlog['outdt'] = outputdt.days
 xlog['rdt'] = repeatdt.days
-xlog['land'] = fieldset.landLim
-xlog['eps'] = fieldset.Vmin
+xlog['land'] = fieldset.onland
+xlog['eps'] = fieldset.UV_min
 xlog['pset_start'] = pset_start
 xlog['pset_start_r'] = pset.particle_data['time'].max()
 

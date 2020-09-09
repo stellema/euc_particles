@@ -149,11 +149,11 @@ def ofam_fieldset(time_bnds='full', exp='hist', chunks=True, cs=300,
 
     # Convert from geometric to geographic coordinates (m to degree).
     # Nautical mile (1 min of arc at the equator) = 1852
-    fieldset.add_constant('geo', 1/(1852*60))
-    fieldset.add_constant('landLim', 0.975)
-    fieldset.add_constant('coast', 0.1)
-    fieldset.add_constant('Vmin', 1e-7)
-    fieldset.add_constant('UBmin', 0.25)
+    fieldset.add_constant('NM', 1/(1852*60))
+    fieldset.add_constant('onland', 0.975)
+    fieldset.add_constant('byland', 0.1)
+    fieldset.add_constant('UV_min', 1e-8)
+    fieldset.add_constant('UB_min', 0.25)
     fieldset.add_constant('UBw', 1e-4)
 
     if add_zone:
@@ -181,17 +181,17 @@ def ofam_fieldset(time_bnds='full', exp='hist', chunks=True, cs=300,
         variables = {'Ub': 'unBeachU',
                      'Vb': 'unBeachV',
                      'Wb': 'unBeachW',
-                     'land': 'land'}
+                     'Land': 'land'}
 
         dimv = {'Ub': dims['U'],
                 'Vb': dims['U'],
                 'Wb': dims['U'],
-                'land': dims['U']}
+                'Land': dims['U']}
 
         uindices = {'Ub': {'lat': yu_ind, 'lon': xu_ind, 'depth': zu_ind},
                     'Vb': {'lat': yu_ind, 'lon': xu_ind, 'depth': zu_ind},
                     'Wb': {'lat': yu_ind, 'lon': xu_ind, 'depth': zu_ind},
-                    'land': {'lat': yu_ind, 'lon': xu_ind, 'depth': zu_ind}}
+                    'Land': {'lat': yu_ind, 'lon': xu_ind, 'depth': zu_ind}}
 
         fieldsetUB = FieldSet.from_netcdf(file, variables, dimv,
                                           indices=uindices,
@@ -207,10 +207,10 @@ def ofam_fieldset(time_bnds='full', exp='hist', chunks=True, cs=300,
         fieldset.add_field(fieldsetUB.Ub, 'Ub')
         fieldset.add_field(fieldsetUB.Vb, 'Vb')
         fieldset.add_field(fieldsetUB.Wb, 'Wb')
-        fieldset.add_field(fieldsetUB.land, 'land')
+        fieldset.add_field(fieldsetUB.Land, 'Land')
 
         # Set field units and b-grid interp method.
-        fieldset.land.units = parcels.tools.converters.UnitConverter()
+        fieldset.Land.units = parcels.tools.converters.UnitConverter()
         fieldset.Wb.units = parcels.tools.converters.UnitConverter()
         fieldset.Ub.units = parcels.tools.converters.UnitConverter()
         fieldset.Vb.units = parcels.tools.converters.UnitConverter()
@@ -218,7 +218,7 @@ def ofam_fieldset(time_bnds='full', exp='hist', chunks=True, cs=300,
         fieldset.Ub.interp_method = 'bgrid_velocity'
         fieldset.Vb.interp_method = 'bgrid_velocity'
         fieldset.Wb.interp_method = 'bgrid_velocity'
-        fieldset.land.interp_method = 'bgrid_velocity'
+        fieldset.Land.interp_method = 'bgrid_velocity'
 
         UVWb = VectorField('UVWb', fieldset.Ub, fieldset.Vb, fieldset.Wb)
         fieldset.add_vector_field(UVWb)
