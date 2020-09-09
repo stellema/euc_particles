@@ -57,7 +57,7 @@ import cfg
 import tools
 from main import ofam_fieldset
 from plotparticles import plotfield, animate_particles, plot_traj, plot3D
-from kernels import (AdvectionRK4_Land, BeachTest, UnBeaching, Age,
+from kernels import (AdvectionRK4_Land, BeachTest, UnBeaching, Age, DelLand,
                      SampleZone, Distance, CoastTime, recovery_kernels)
 
 warnings.filterwarnings("ignore")
@@ -67,7 +67,8 @@ test = ['CS', 'PNG', 'SS'][2]
 
 
 def del_land(pset):
-    inds, = np.where((pset.particle_data['Land'] > 0.00))
+    inds, = np.where((pset.particle_data['Land'] > 0.00) &
+                     (pset.particle_data['age'] == 0.))
     for d in pset.particle_data:
         pset.particle_data[d] = np.delete(pset.particle_data[d], inds, axis=0)
     return pset
@@ -80,6 +81,7 @@ fieldset.land.grid.time_origin = fieldset.time_origin
 
 
 class zParticle(JITParticle):
+    age = Variable('age', initial=0., dtype=np.float32)
     distance = Variable('distance', initial=0., dtype=np.float32)
     prev_lon = Variable('prev_lon', initial=attrgetter('lon'), to_write=False, dtype=np.float32)
     prev_lat = Variable('prev_lat', initial=attrgetter('lat'), to_write=False, dtype=np.float32)
@@ -93,36 +95,30 @@ class zParticle(JITParticle):
     ubWdepth = Variable('ubWdepth', initial=0., dtype=np.float32)
     zc = Variable('zc', initial=0., dtype=np.float32)
     ubeachprv = Variable('ubeachprv', initial=0., dtype=np.float32)
-    # rounder = Variable('rounder', initial=0., dtype=np.float32)
-    # roundZ = Variable('roundZ', initial=0., dtype=np.float32)
-    # sgnx = Variable('sgnx', initial=0., dtype=np.float32)
-    # sgny = Variable('sgny', initial=0., dtype=np.float32)
-    # alpha = Variable('alpha', initial=0., dtype=np.float32)
-    # calpha = Variable('calpha', initial=0., dtype=np.float32)
 
 
 dt = -timedelta(minutes=60)
 stime = fieldset.U.grid.time[-1] - 60
 outputdt = timedelta(minutes=60)
 runtime = timedelta(minutes=360)
-repeatdt = timedelta(days=4)
+repeatdt = timedelta(days=6)
 dx = 0.1
-T = np.arange(0, 400)
+T = np.arange(0, 700)
 if test == 'BT':
     dt = -dt
-    T = np.arange(1, 144)
+    T = np.arange(1, 700)
     J, I, K = [-5.25, -4.2], [156.65, 157.75], [150]
     domain = {'N': -3.75, 'S': -5.625, 'E': 158, 'W': 156}
 elif test == 'PNG':
-    runtime = timedelta(minutes=180)
+    # runtime = timedelta(minutes=180)
     J, I, K = [-6, -1.5], [141, 149], [150]
     domain = {'N': -1, 'S': -7.5, 'E': 155, 'W': 141}
 elif test == 'SS':
-    runtime = timedelta(minutes=180)
+    # runtime = timedelta(minutes=180)
     J, I, K = [-6, -2], [150.5, 156.5], [150]
     domain = {'N': -2, 'S': -7, 'E': 157.5, 'W': 150}
 elif test == 'CS':
-    runtime = timedelta(minutes=240)
+    # runtime = timedelta(minutes=240)
     J, I, K = [-12.5, -7.5], [147.5, 156.5], [150]  # Normal.
     domain = {'N': -7, 'S': -13.5, 'E': 156, 'W': 147}
 
@@ -132,17 +128,12 @@ py = np.arange(J[0], J[1] + dx, dx)
 px = np.arange(I[0], I[1], dx)
 pz = np.array(K)
 lons, lats = np.meshgrid(px, py)
+lons = lons.flatten()
+lats = lats.flatten()
 depths = np.repeat(pz, lons.size)
-repeats = math.floor((runtime * len(T))/repeatdt)
-tr = stime - (np.arange(0, repeats) * repeatdt.total_seconds())
-time = np.repeat(tr, lons.size)
-depth = np.tile(depths, repeats)
-lon = np.tile(lons, repeats)
-lat = np.tile(lats, repeats)
-
 pset = ParticleSet.from_list(fieldset=fieldset, pclass=zParticle, time=stime,
-                             lon=lon, lat=lat, depth=depth, repeatdt=None)
-
+                             lon=lons, lat=lats, depth=depths, repeatdt=repeatdt)
+pset = del_land(pset)
 fieldset.computeTimeChunk(0, 0)
 i = 0
 savefile = cfg.fig/'parcels/tests/{}_{:02d}.mp4'.format(test, i)
@@ -150,20 +141,20 @@ while savefile.exists():
     i += 1
     savefile = cfg.fig/'parcels/tests/{}_{:02d}.mp4'.format(test, i)
 sim = savefile.stem
-savefile = str(savefile)
 logger.info(' {:<3}: Land>={}: Coast>={}: UBv={}: UBmin={}: Loop>=3: '
             .format(sim, fieldset.landLim, fieldset.coast,
-                    fieldset.UBv*(1852*60), fieldset.UBmin)
+                    1, fieldset.UBmin)
             + 'Round if >=coast<land: 0.025<a<0.1 break minLand<1e-7: '
             + 'If no unbeachUV -UV[prev_lat, prev_lon]: '
             + 'RK depth if >=0.5 <Vmin: Depth*(1-Land): '
             + 'wUB=-{}*dt if wb>UBmin: T={}'.format(fieldset.UBw, T[-1]))
 
-pset = del_land(pset)
+
 N = pset.size
-kernels = pset.Kernel(AdvectionRK4_Land) + pset.Kernel(CoastTime)
+kernels = pset.Kernel(DelLand) + pset.Kernel(AdvectionRK4_Land)
+kernels += pset.Kernel(CoastTime)
 kernels += pset.Kernel(BeachTest) + pset.Kernel(UnBeaching)
-kernels += pset.Kernel(Distance)
+kernels += pset.Kernel(Distance) + pset.Kernel(Age)
 
 output_file = pset.ParticleFile(cfg.data/'{}{}.nc'.format(test, i),
                                 outputdt=outputdt)
@@ -184,12 +175,13 @@ c = np.array([p.unbeached for p in particles], dtype=int)
 colors = plt.cm.nipy_spectral(np.append(0, np.linspace(0, 1, 20)))
 sc = ax.scatter(plon, plat, s=1, c=c, zorder=20, vmin=0, vmax=20,
                 cmap=plt.cm.nipy_spectral, transform=cartopy.crs.PlateCarree())
+plt.show()
 fargs = (sc, ax, particles, field, kernels, runtime, dt, output_file,
          recovery_kernels, depth_level, domain)
 ani = animation.FuncAnimation(fig, animate_particles, frames=T, fargs=fargs,
                               blit=True)
 plt.show()
-ani.save(savefile, writer='ffmpeg', fps=8, bitrate=-1, dpi=250)
+ani.save(str(savefile), writer='ffmpeg', fps=8, bitrate=-1, dpi=250)
 
 pd = pset.particle_data
 for v in ['unbeached', 'coasttime', 'ubcount', 'ubWcount', 'ubWdepth', 'zc',

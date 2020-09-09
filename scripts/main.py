@@ -151,11 +151,10 @@ def ofam_fieldset(time_bnds='full', exp='hist', chunks=True, cs=300,
     # Nautical mile (1 min of arc at the equator) = 1852
     fieldset.add_constant('geo', 1/(1852*60))
     fieldset.add_constant('landLim', 0.975)
-    fieldset.add_constant('coast', 0.01)
+    fieldset.add_constant('coast', 0.1)
     fieldset.add_constant('Vmin', 1e-7)
     fieldset.add_constant('UBmin', 0.25)
     fieldset.add_constant('UBw', 1e-4)
-    fieldset.add_constant('UBv', 1/(1852*60))
 
     if add_zone:
         # Add particle zone boundaries.
@@ -177,7 +176,7 @@ def ofam_fieldset(time_bnds='full', exp='hist', chunks=True, cs=300,
 
     if add_unbeach_vel:
         # Add Unbeach velocity vectorfield to fieldset.
-        file = str(cfg.data/'OFAM3_unbeach_land_UVW_ucelly.nc')
+        file = str(cfg.data/'OFAM3_unbeach_land_UVWx_ucell.nc')
 
         variables = {'Ub': 'unBeachU',
                      'Vb': 'unBeachV',

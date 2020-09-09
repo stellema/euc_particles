@@ -64,8 +64,8 @@ vb = vb.sel(yu_ocean=slice(J[0], J[1]), xu_ocean=slice(I[0], I[1]))
 lats = vb.yu_ocean.values
 lons = vb.xu_ocean.values
 fv = np.zeros((lats.size, lons.size))*np.nan
-latz = lats - 0.05
-lonz = lons - 0.05
+latz = np.interp(np.arange(0, len(lats)-1 + dx, dx), np.arange(0, len(lats)), lats)
+lonz = np.interp(np.arange(0, len(lons)-1 + dx, dx), np.arange(0, len(lons)), lons)
 latx = np.interp(np.arange(0, len(lats)-1 + dz, dz), np.arange(0, len(lats)), lats)
 lonx = np.interp(np.arange(0, len(lons)-1 + dz, dz), np.arange(0, len(lons)), lons)
 fvz = np.zeros((latz.size, lonz.size))
@@ -95,7 +95,7 @@ x, y = np.meshgrid(lons, lats)
 
 fig, ax = plt.subplots(4, 3, figsize=(15, 17))
 ax = ax.flatten()
-mn, mx = -8e-5, 8e-5
+mn, mx = 0.75, 0.75
 cmap = plt.cm.seismic
 cmap.set_bad('black')
 title = 'Original Zonal Velocity'

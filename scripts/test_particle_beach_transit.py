@@ -71,7 +71,7 @@ depth_level = 19
 dx, dz = 0.1, 50
 
 test = ['CS', 'PNG', 'SST'][2]
-runtime = timedelta(minutes=180)
+runtime = timedelta(minutes=240)
 J, I, K = [-2.5], [151, 153], [100, 250]
 domain = {'N': -1.5, 'S': -7, 'E': 157.8, 'W': 150}
 
@@ -82,7 +82,7 @@ px = np.arange(I[0], I[1] + dx, dx)
 pz = np.arange(K[0], K[1] + dz, dz)
 lon, depth = np.meshgrid(px, pz)
 lat = np.repeat(py, lon.size)
-T = np.arange(0, 250)
+T = np.arange(0, 600)
 
 pset = ParticleSet.from_list(fieldset=fieldset, pclass=zParticle, time=stime,
                              lon=lon, lat=lat, depth=depth, repeatdt=repeatdt)

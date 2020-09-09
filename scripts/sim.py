@@ -112,7 +112,7 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
         unbeached = Variable('unbeached', initial=0., dtype=np.float32)
 
         # Land field.
-        Land = Variable('Land', initial=fieldset.land, to_write=False, dtype=np.float32)
+        Land = Variable('Land', initial=0., to_write=False, dtype=np.float32)
 
     pclass = zParticle
 
