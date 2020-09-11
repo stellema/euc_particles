@@ -61,7 +61,7 @@ def AdvectionRK4_Land(particle, fieldset, time):
             math.fabs(u1) < fieldset.UV_min and
             math.fabs(v1) < fieldset.UV_min):
         particle.depth += (w1 + 2*w2 + 2*w3 + w4) / 6. * particle.dt * (1 - particle.land)
-        particle.zc += 1  # TODO: Remove after tests.
+        # particle.zc += 1  # TODO: Remove after tests.
     else:
         particle.depth += (w1 + 2*w2 + 2*w3 + w4) / 6. * particle.dt
 
@@ -92,8 +92,8 @@ def UnBeaching(particle, fieldset, time):
             # Depth.
             if math.fabs(wb) >= fieldset.UB_min:
                 particle.depth -= fieldset.UBw * math.fabs(particle.dt)
-                particle.ubWcount += 1  # TODO: Remove after tests.
-                particle.ubWdepth += fieldset.UBw * math.fabs(particle.dt)  # TODO: Remove after tests.
+                # particle.ubWcount += 1  # TODO: Remove after tests.
+                # particle.ubWdepth += fieldset.UBw * math.fabs(particle.dt)  # TODO: Remove after tests.
 
             # Send back the way particle came and up if no unbeach velocities.
             if (math.fabs(ub) < fieldset.UB_min and math.fabs(vb) < fieldset.UB_min):
@@ -102,17 +102,17 @@ def UnBeaching(particle, fieldset, time):
                     particle.lon -= math.copysign(NMx, u0) * math.fabs(particle.dt)
                 if math.fabs(v0) > 1e-14:
                     particle.lat -= math.copysign(fieldset.NM, v0) * math.fabs(particle.dt)
-                particle.ubeachprv += 1  # TODO: Remove after tests.
+                # particle.ubeachprv += 1  # TODO: Remove after tests.
 
-            particle.unbeached += 1
             # Check if particle is still on land.
             particle.land = fieldset.Land[0., particle.depth, particle.lat, particle.lon]
             if particle.land < fieldset.onland:
                 particle.beached = 0
             else:
                 particle.beached += 1
-        if particle.beached > 0:  # TODO: Fail count (test).
-            particle.ubcount += 1  # TODO: Fail count (test).
+        particle.unbeached += 1
+        # if particle.beached > 0:  # TODO: Fail count (test).
+            # particle.ubcount += 1  # TODO: Fail count (test).
 
 
 def UnBeachR(particle, fieldset, time):
@@ -141,8 +141,8 @@ def UnBeachR(particle, fieldset, time):
             # Depth.
             if math.fabs(wb) >= fieldset.UB_min:
                 particle.depth = fieldset.UBw * math.fabs(particle.dt)
-                particle.ubWcount += 1  # TODO: Remove after tests.
-                particle.ubWdepth += fieldset.UBw * math.fabs(particle.dt)  # TODO: Remove after tests.
+                # particle.ubWcount += 1  # TODO: Remove after tests.
+                # particle.ubWdepth += fieldset.UBw * math.fabs(particle.dt)  # TODO: Remove after tests.
 
             # Send back the way particle came and up if no unbeach velocities.
             if (math.fabs(ub) < fieldset.UB_min and math.fabs(vb) < fieldset.UB_min):
@@ -151,17 +151,17 @@ def UnBeachR(particle, fieldset, time):
                     particle.lon -= math.copysign(NMx, u0) * math.fabs(particle.dt)
                 if math.fabs(v0) > 1e-14:
                     particle.lat -= math.copysign(fieldset.NM, v0) * math.fabs(particle.dt)
-                particle.ubeachprv += 1  # TODO: Remove after tests.
+                # particle.ubeachprv += 1  # TODO: Remove after tests.
 
-            particle.unbeached += 1
             # Check if particle is still on land.
             particle.land = fieldset.Land[0., particle.depth, particle.lat, particle.lon]
             if particle.land < fieldset.onland:
                 particle.beached = 0
             else:
                 particle.beached += 1
-        if particle.beached > 0:  # TODO: Fail count (test).
-            particle.ubcount += 1  # TODO: Fail count (test).
+        particle.unbeached += 1
+        # if particle.beached > 0:  # TODO: Fail count (test).
+            # particle.ubcount += 1  # TODO: Fail count (test).
 
 
 def CoastTime(particle, fieldset, time):
