@@ -799,3 +799,41 @@ def animate_particles(i, sc, ax, particles, field, kernels, runtime, dt,
     sc.set_offsets(X)
     sc.set_array(c)
     return sc,
+
+
+def animate_ds(i, sc, ax, ds, fieldset, field, times, depth_level, domain):
+
+    show_time = times[i].item()
+    field.fieldset.computeTimeChunk(show_time, 1)
+    if type(field) is VectorField:
+        field = [field.U, field.V]
+        plottype = 'vector'
+    elif type(field) is Field:
+        field = [field]
+        plottype = 'scalar'
+    (idx, periods) = field[0].time_index(show_time)
+    show_time -= periods * (field[0].grid.time_full[-1] - field[0].grid.time_full[0])
+    timestr = parsetimestr(field[0].grid.time_origin, show_time)
+    titlestr = 'Particles and '
+    gphrase = 'depth'
+    depth_or_level = round(field[0].grid.depth[depth_level], 0)
+    depthstr = ' at %s %g m' % (gphrase, depth_or_level)
+
+    if plottype == 'vector':
+        ax.set_title(titlestr + 'vector field' + depthstr + timestr)
+    else:
+        ax.set_title(titlestr + field[0].name + depthstr + timestr)
+    dx = ds.where(ds.time == show_time, drop=True).squeeze()
+    # Update particles.
+    plon = np.array(dx.lon.values)
+    plat = np.array(dx.lat.values)
+
+    if 'unbeached' in ds:
+        c = np.array(dx.unbeached.values, dtype=int)
+    plon = np.pad(plon, (0, len(ds.traj)-len(plon)), 'constant', constant_values=np.nan)
+    plat = np.pad(plat, (0, len(ds.traj)-len(plat)), 'constant', constant_values=np.nan)
+    c = np.pad(c, (0, len(ds.traj)-len(c)), 'constant', constant_values=np.nan)
+    X = np.c_[plon, plat]
+    sc.set_offsets(np.array(X))
+    sc.set_array(c)
+    return sc,

@@ -63,7 +63,7 @@ from kernels import (AdvectionRK4_Land, BeachTest, UnBeaching, Age, DelLand,
 warnings.filterwarnings("ignore")
 logger = tools.mlogger('test_unbeaching', parcels=True, misc=False)
 
-test = ['CS', 'PNG', 'SS'][2]
+test = ['CS', 'PNG', 'SS'][0]
 
 
 def del_land(pset):
@@ -103,7 +103,7 @@ outputdt = timedelta(minutes=60)
 runtime = timedelta(minutes=360)
 repeatdt = timedelta(days=6)
 dx = 0.1
-T = np.arange(0, 200)
+T = np.arange(0, 700)
 if test == 'BT':
     dt = -dt
     T = np.arange(1, 200)

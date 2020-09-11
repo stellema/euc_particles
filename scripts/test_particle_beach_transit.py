@@ -23,7 +23,7 @@ import tools
 from main import ofam_fieldset
 from plotparticles import plotfield, animate_particles
 from kernels import (AdvectionRK4_Land, CoastTime, BeachTest, UnBeaching,
-                     Age, SampleZone, recovery_kernels, Distance)
+                     UnBeachR, Age, SampleZone, recovery_kernels, Distance)
 
 warnings.filterwarnings("ignore")
 logger = tools.mlogger('test_unbeaching', parcels=True, misc=False)
@@ -99,7 +99,7 @@ savefile = str(savefile)
 pset = del_land(pset)
 
 kernels = pset.Kernel(AdvectionRK4_Land) + pset.Kernel(CoastTime)
-kernels += pset.Kernel(BeachTest) + pset.Kernel(UnBeaching)
+kernels += pset.Kernel(BeachTest) + pset.Kernel(UnBeachR)
 kernels += pset.Kernel(Age) + pset.Kernel(SampleZone) + pset.Kernel(Distance)
 particles = pset
 output_file = pset.ParticleFile(cfg.data/'{}{}.nc'.format(test, i),

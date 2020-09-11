@@ -60,8 +60,7 @@ def ofam_fieldset(time_bnds='full', exp='hist', chunks=True, cs=300,
     nmaps = {"time": ["Time"],
              "lon": ["xu_ocean", "xt_ocean", "xu_ocean_mod"],
              "lat": ["yu_ocean", "yt_ocean", "yu_ocean_mod"],
-             "depth": ["st_ocean", "sw_ocean", "sw_ocean_mod",
-                       "st_edges_ocean"]}
+             "depth": ["st_ocean", "sw_ocean", "st_edges_ocean"]}
 
     parcels.field.NetcdfFileBuffer._name_maps = nmaps
 
@@ -100,17 +99,17 @@ def ofam_fieldset(time_bnds='full', exp='hist', chunks=True, cs=300,
             'V': {'time': 'Time', 'lat': 'yu_ocean', 'lon': 'xu_ocean',
                   'depth': 'st_edges_ocean'},
             'W': {'time': 'Time', 'lat': 'yu_ocean_mod', 'lon': 'xu_ocean_mod',
-                  'depth': 'sw_ocean_mod'}}
+                  'depth': 'st_edges_ocean'}}
     # Depth coordinate indices.
-    # U,V: Exclude last index of st_edges_ocean.
-    # W: Move last level to top, shift rest down.
+    # U,V: Repeat last level and remove first lat/lon of u-cell.
+    # W: Repeat top level and remove last lat/lon of t-cell.
     X, Y, Z = 1750, 300, 51  # len(xu_ocean), len(yu_ocean), len(st_ocean).
 
     zu_ind = np.append(np.arange(0, Z, dtype=int), Z).tolist()
     yu_ind = np.arange(1, Y, dtype=int).tolist()
     xu_ind = np.arange(1, X, dtype=int).tolist()
 
-    zt_ind = np.append(Z-1, np.arange(0, Z, dtype=int)).tolist()
+    zt_ind = np.append(0, np.arange(0, Z, dtype=int)).tolist()
     yt_ind = np.arange(0, Y - 1, dtype=int).tolist()
     xt_ind = np.arange(0, X - 1, dtype=int).tolist()
 
@@ -119,8 +118,8 @@ def ofam_fieldset(time_bnds='full', exp='hist', chunks=True, cs=300,
             'W': {'lat': yt_ind, 'lon': xt_ind, 'depth': zt_ind}}
 
     if chunks not in ['auto', False]:
-        chunks = {'Time': 1, 'sw_ocean': 1, 'st_ocean': 1,
-                  'st_edges_ocean': 1, 'sw_ocean_mod': 1,
+        chunks = {'Time': 1,
+                  'sw_ocean': 1, 'st_ocean': 1, 'st_edges_ocean': 1,
                   'yt_ocean': cs, 'yu_ocean': cs, 'yu_ocean_mod': cs,
                   'xt_ocean': cs, 'xu_ocean': cs, 'xu_ocean_mod': cs}
 
@@ -128,8 +127,7 @@ def ofam_fieldset(time_bnds='full', exp='hist', chunks=True, cs=300,
                      'V': 'bgrid_velocity',
                      'W': 'bgrid_w_velocity'}
 
-    fieldset = FieldSet.from_netcdf(files, variables, dims,
-                                    indices=inds,
+    fieldset = FieldSet.from_netcdf(files, variables, dims, indices=inds,
                                     mesh='spherical', field_chunksize=chunks,
                                     time_periodic=time_periodic,
                                     creation_log='from_b_grid_dataset',
@@ -152,7 +150,7 @@ def ofam_fieldset(time_bnds='full', exp='hist', chunks=True, cs=300,
     fieldset.add_constant('byland', 0.1)
     fieldset.add_constant('UV_min', 1e-7)
     fieldset.add_constant('UB_min', 0.25)
-    fieldset.add_constant('UBw', 1e-4)
+    fieldset.add_constant('UBw', 1e-5)
 
     if add_zone:
         # Add particle zone boundaries.

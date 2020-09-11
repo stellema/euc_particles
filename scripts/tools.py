@@ -505,7 +505,7 @@ def open_tao_data(frq='mon', dz=slice(10, 355), SI=True):
 def create_mesh_mask():
     """Create OFAM3 mesh mask."""
 
-    f = [cfg.ofam/'ocean_{}_1981_01.nc'.format(var) for var in ['u', 'w']]
+    f = [cfg.ofam/'ocean_{}_2012_01.nc'.format(var) for var in ['u', 'w']]
 
     ds = xr.open_mfdataset(f, combine='by_coords')
 
