@@ -510,22 +510,30 @@ def create_mesh_mask():
     ds = xr.open_mfdataset(f, combine='by_coords')
 
     # Create copy of particle file with initally westward partciles removed.
-    mask = xr.Dataset()
-    mask['xu_ocean'] = ds.xu_ocean
-    mask['yu_ocean'] = ds.yu_ocean
-    mask['xt_ocean'] = ds.xt_ocean
-    mask['yt_ocean'] = ds.yt_ocean
-    mask['sw_ocean'] = ds.sw_ocean
-    mask['st_ocean'] = ds.st_ocean
-    mask['st_edges_ocean'] = ds.st_edges_ocean
-    mask['sw_edges_ocean'] = ds.sw_edges_ocean
-    mod = np.append(np.arange(1, 51, dtype=int), 0)
-    mask['sw_ocean_mod'] = ds.st_edges_ocean.values[mod]
-    mask['st_ocean_mod'] = ds.sw_edges_ocean.values[mod]
-    mask.to_netcdf(cfg.data/'ofam_mesh_grid.nc')
-    ds.close()
-    mask.close()
 
+    mesh = xr.Dataset()
+    mesh['xu_ocean'] = ds.xu_ocean
+    mesh['yu_ocean'] = ds.yu_ocean
+    mesh['xt_ocean'] = ds.xt_ocean
+    mesh['yt_ocean'] = ds.yt_ocean
+    mesh['sw_ocean'] = ds.sw_ocean
+    mesh['st_ocean'] = ds.st_ocean
+    mesh['st_edges_ocean'] = ds.st_edges_ocean
+    mesh['sw_edges_ocean'] = ds.sw_edges_ocean
+
+    Y, X, Z = len(ds.yu_ocean), len(ds.xu_ocean), len(ds.st_ocean)
+    ymod = np.arange(1, Y, dtype=int)
+    xmod = np.arange(1, X, dtype=int)
+    zmod = np.append(np.arange(1, Z, dtype=int), 0)
+    mesh['xu_ocean_mod'] = np.append(ds.xu_ocean.values[xmod],
+                                     ds.xu_ocean[-1].item() + 0.1)
+    mesh['yu_ocean_mod'] = np.append(ds.yu_ocean.values[ymod],
+                                     ds.yu_ocean[-1].item() + 0.1)
+    mesh['sw_ocean_mod'] = ds.st_edges_ocean.values[zmod]
+    mesh['st_ocean_mod'] = ds.sw_edges_ocean.values[zmod]
+    mesh.to_netcdf(cfg.data/'ofam_mesh_grid.nc')
+    ds.close()
+    mesh.close()
     return
 
 

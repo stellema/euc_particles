@@ -58,10 +58,10 @@ def ofam_fieldset(time_bnds='full', exp='hist', chunks=True, cs=300,
     """
     # Add OFAM dimension names to NetcdfFileBuffer namemaps.
     nmaps = {"time": ["Time"],
-             "lon": ["xu_ocean", "xt_ocean"],
-             "lat": ["yu_ocean", "yt_ocean"],
-             "depth": ["st_ocean", "sw_ocean",
-                       "sw_ocean_mod", "st_edges_ocean"]}
+             "lon": ["xu_ocean", "xt_ocean", "xu_ocean_mod"],
+             "lat": ["yu_ocean", "yt_ocean", "yu_ocean_mod"],
+             "depth": ["st_ocean", "sw_ocean", "sw_ocean_mod",
+                       "st_edges_ocean"]}
 
     parcels.field.NetcdfFileBuffer._name_maps = nmaps
 
@@ -99,50 +99,48 @@ def ofam_fieldset(time_bnds='full', exp='hist', chunks=True, cs=300,
                   'depth': 'st_edges_ocean'},
             'V': {'time': 'Time', 'lat': 'yu_ocean', 'lon': 'xu_ocean',
                   'depth': 'st_edges_ocean'},
-            'W': {'time': 'Time', 'lat': 'yu_ocean', 'lon': 'xu_ocean',
+            'W': {'time': 'Time', 'lat': 'yu_ocean_mod', 'lon': 'xu_ocean_mod',
                   'depth': 'sw_ocean_mod'}}
-
     # Depth coordinate indices.
     # U,V: Exclude last index of st_edges_ocean.
     # W: Move last level to top, shift rest down.
-    Z = 51  # len(st_ocean)
-    X = 1750
-    Y = 300
-    if apply_indicies:
-        zu_ind = np.arange(0, Z, dtype=int).tolist()
-        zw_ind = np.append(Z - 1, np.arange(0, Z - 1, dtype=int)).tolist()
-        yu_ind = np.arange(1, Y, dtype=int).tolist()
-        yw_ind = np.arange(0, Y - 1, dtype=int).tolist()
-        xu_ind = np.arange(1, X, dtype=int).tolist()
-        xw_ind = np.arange(0, X - 1, dtype=int).tolist()
-    else:
-        zu_ind = np.arange(0, Z, dtype=int).tolist()
-        zw_ind = np.append(Z - 1, np.arange(0, Z - 1, dtype=int)).tolist()
-        yu_ind = np.arange(0, Y, dtype=int).tolist()
-        yw_ind = np.arange(0, Y, dtype=int).tolist()
-        xu_ind = np.arange(0, X, dtype=int).tolist()
-        xw_ind = np.arange(0, X, dtype=int).tolist()
-    indices = {'U': {'lat': yu_ind, 'lon': xu_ind, 'depth': zu_ind},
-               'V': {'lat': yu_ind, 'lon': xu_ind, 'depth': zu_ind},
-               'W': {'lat': yw_ind, 'lon': xw_ind, 'depth': zw_ind}}
+    X, Y, Z = 1750, 300, 51  # len(xu_ocean), len(yu_ocean), len(st_ocean).
+
+    zu_ind = np.append(np.arange(0, Z, dtype=int), Z).tolist()
+    yu_ind = np.arange(1, Y, dtype=int).tolist()
+    xu_ind = np.arange(1, X, dtype=int).tolist()
+
+    zt_ind = np.append(Z-1, np.arange(0, Z, dtype=int)).tolist()
+    yt_ind = np.arange(0, Y - 1, dtype=int).tolist()
+    xt_ind = np.arange(0, X - 1, dtype=int).tolist()
+
+    inds = {'U': {'lat': yu_ind, 'lon': xu_ind, 'depth': zu_ind},
+            'V': {'lat': yu_ind, 'lon': xu_ind, 'depth': zu_ind},
+            'W': {'lat': yt_ind, 'lon': xt_ind, 'depth': zt_ind}}
 
     if chunks not in ['auto', False]:
-        chunks = {'Time': 1,
-                  'sw_ocean': 1, 'st_ocean': 1,
-                  'sw_ocean_mod': 1, 'st_edges_ocean': 1,
-                  'yt_ocean': cs, 'yu_ocean': cs,
-                  'xt_ocean': cs, 'xu_ocean': cs}
+        chunks = {'Time': 1, 'sw_ocean': 1, 'st_ocean': 1,
+                  'st_edges_ocean': 1, 'sw_ocean_mod': 1,
+                  'yt_ocean': cs, 'yu_ocean': cs, 'yu_ocean_mod': cs,
+                  'xt_ocean': cs, 'xu_ocean': cs, 'xu_ocean_mod': cs}
 
-    fieldset = FieldSet.from_netcdf(files, variables, dims, indices=indices,
+    interp_method = {'U': 'bgrid_velocity',
+                     'V': 'bgrid_velocity',
+                     'W': 'bgrid_w_velocity'}
+
+    fieldset = FieldSet.from_netcdf(files, variables, dims,
+                                    indices=inds,
                                     mesh='spherical', field_chunksize=chunks,
-                                    time_periodic=time_periodic)
+                                    time_periodic=time_periodic,
+                                    creation_log='from_b_grid_dataset',
+                                    interp_method=interp_method)
+    fieldset.W.grid.depth = fieldset.U.grid.depth
 
-    fieldset.U.interp_method = 'bgrid_velocity'
-    fieldset.V.interp_method = 'bgrid_velocity'
-    fieldset.W.interp_method = 'bgrid_w_velocity'
+    # UVW = VectorField('UVW', fieldset.U, fieldset.V, fieldset.W)
+    # fieldset.add_vector_field(UVW)
 
     # Set fieldset minimum depth.
-    fieldset.mindepth = fieldset.U.depth[0]
+    fieldset.mindepth = 5.
 
     # Change W velocity direction scaling factor.
     fieldset.W.set_scaling_factor(-1)
@@ -152,7 +150,7 @@ def ofam_fieldset(time_bnds='full', exp='hist', chunks=True, cs=300,
     fieldset.add_constant('NM', 1/(1852*60))
     fieldset.add_constant('onland', 0.975)
     fieldset.add_constant('byland', 0.1)
-    fieldset.add_constant('UV_min', 1e-8)
+    fieldset.add_constant('UV_min', 1e-7)
     fieldset.add_constant('UB_min', 0.25)
     fieldset.add_constant('UBw', 1e-4)
 
@@ -165,37 +163,45 @@ def ofam_fieldset(time_bnds='full', exp='hist', chunks=True, cs=300,
                 'depth': 'sw_ocean',
                 'lat': 'yu_ocean',
                 'lon': 'xu_ocean'}
-        zindices = {'lat': yu_ind, 'lon': xu_ind}
+        inds_z = {'lat': yu_ind, 'lon': xu_ind}
+        interp_z = {'zone': 'nearest'}  # Nearest values only.
 
-        zfield = Field.from_netcdf(file, 'zone', dimz, indices=zindices,
+        zfield = Field.from_netcdf(file, 'zone', dimz, indices=inds_z,
+                                   interp_method=interp_z,
                                    field_chunksize=chunks,
                                    allow_time_extrapolation=True)
 
         fieldset.add_field(zfield, 'zone')
-        fieldset.zone.interp_method = 'nearest'  # Nearest values only.
 
     if add_unbeach_vel:
         # Add Unbeach velocity vectorfield to fieldset.
-        file = str(cfg.data/'OFAM3_unbeach_land_UVWx_ucell.nc')
+        file = str(cfg.data/'ofam_unbeach_land_ucell.nc')
 
-        variables = {'Ub': 'unBeachU',
-                     'Vb': 'unBeachV',
-                     'Wb': 'unBeachW',
-                     'Land': 'land'}
+        vars_ub = {'Ub': 'Ub',
+                   'Vb': 'Vb',
+                   'Wb': 'Wb',
+                   'Land': 'Land'}
 
-        dimv = {'Ub': dims['U'],
-                'Vb': dims['U'],
-                'Wb': dims['U'],
-                'Land': dims['U']}
+        dims_ub = {'Ub': dims['U'],
+                   'Vb': dims['U'],
+                   'Wb': dims['U'],
+                   'Land': dims['U']}
 
-        uindices = {'Ub': {'lat': yu_ind, 'lon': xu_ind, 'depth': zu_ind},
-                    'Vb': {'lat': yu_ind, 'lon': xu_ind, 'depth': zu_ind},
-                    'Wb': {'lat': yu_ind, 'lon': xu_ind, 'depth': zu_ind},
-                    'Land': {'lat': yu_ind, 'lon': xu_ind, 'depth': zu_ind}}
+        inds_ub = {'Ub': inds['U'],
+                   'Vb': inds['U'],
+                   'Wb': inds['U'],
+                   'Land': inds['U']}
 
-        fieldsetUB = FieldSet.from_netcdf(file, variables, dimv,
-                                          indices=uindices,
+        interp_ub = {'Ub': 'bgrid_velocity',
+                     'Vb': 'bgrid_velocity',
+                     'Wb': 'bgrid_velocity',
+                     'Land': 'bgrid_velocity'}
+
+        fieldsetUB = FieldSet.from_netcdf(file, vars_ub, dims_ub,
+                                          indices=inds_ub,
+                                          interp_method=interp_ub,
                                           field_chunksize=chunks,
+                                          creation_log='from_b_grid_dataset',
                                           allow_time_extrapolation=True)
 
         # Field time origins and calander (probs unnecessary).
@@ -203,22 +209,17 @@ def ofam_fieldset(time_bnds='full', exp='hist', chunks=True, cs=300,
         fieldsetUB.time_origin.time_origin = fieldset.time_origin.time_origin
         fieldsetUB.time_origin.calendar = fieldset.time_origin.calendar
 
+        # Set field units.
+        fieldsetUB.Ub.units = parcels.tools.converters.UnitConverter()
+        fieldsetUB.Vb.units = parcels.tools.converters.UnitConverter()
+        fieldsetUB.Wb.units = parcels.tools.converters.UnitConverter()
+        fieldsetUB.Land.units = parcels.tools.converters.UnitConverter()
+
         # Add beaching velocity and land mask to fieldset.
         fieldset.add_field(fieldsetUB.Ub, 'Ub')
         fieldset.add_field(fieldsetUB.Vb, 'Vb')
         fieldset.add_field(fieldsetUB.Wb, 'Wb')
         fieldset.add_field(fieldsetUB.Land, 'Land')
-
-        # Set field units and b-grid interp method.
-        fieldset.Land.units = parcels.tools.converters.UnitConverter()
-        fieldset.Wb.units = parcels.tools.converters.UnitConverter()
-        fieldset.Ub.units = parcels.tools.converters.UnitConverter()
-        fieldset.Vb.units = parcels.tools.converters.UnitConverter()
-
-        fieldset.Ub.interp_method = 'bgrid_velocity'
-        fieldset.Vb.interp_method = 'bgrid_velocity'
-        fieldset.Wb.interp_method = 'bgrid_velocity'
-        fieldset.Land.interp_method = 'bgrid_velocity'
 
         UVWb = VectorField('UVWb', fieldset.Ub, fieldset.Vb, fieldset.Wb)
         fieldset.add_vector_field(UVWb)
@@ -309,9 +310,9 @@ def log_simulation(xlog, rank, logger):
                     .format(xlog['id'], xlog['Ti'], xlog['Tf'], xlog['run']))
         logger.info('{}:Lon={}: Lat={}: Depth={}'
                     .format(xlog['id'], xlog['x'], xlog['y'], xlog['z']))
-        logger.info('{}:Dir={}: Rep={}d: dt={:.0f}m: Out={:.0f}d: Land={} Eps={}'
+        logger.info('{}:Dir={}: Rep={}d: dt={:.0f}m: Out={:.0f}d: Land={} Vmin={}'
                     .format(xlog['id'], xlog['out'], xlog['rdt'], xlog['dt'],
-                            xlog['outdt'], xlog['land'], xlog['eps']))
+                            xlog['outdt'], xlog['land'], xlog['Vmin']))
 
     logger.debug('{}:Rank={:>2}: Particles: File={} New={} West={} I={}'
                  .format(xlog['id'], rank, xlog['file_r'], xlog['new_r'],

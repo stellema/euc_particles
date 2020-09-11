@@ -153,8 +153,7 @@ def plotfield(field, show_time=None, domain=None, depth_level=0, projection=None
         spherical = True if field.grid.mesh == 'spherical' else False
         field = [field]
         plottype = 'scalar'
-    else:
-        raise RuntimeError('field needs to be a Field or VectorField object')
+
 
     if field[0].grid.gtype in [GridCode.CurvilinearZGrid, GridCode.CurvilinearSGrid]:
         logger.warning('Field.show() does not always correctly determine the domain for curvilinear grids. '

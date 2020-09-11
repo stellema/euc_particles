@@ -183,32 +183,24 @@ for k in range(depth.size):
 
 
 # Create Dataset.
-db = xr.Dataset()
+mesh = xr.open_dataset(cfg.data/'ofam_mesh_grid.nc')
+db = mesh.copy()  # Add all the coords, just in case.
 coords = ds.u.coords
 dims = ('Time', 'st_ocean', 'yu_ocean', 'xu_ocean')
-Ub = xr.DataArray(ub, name='unBeachU', dims=dims, coords=coords,
+Ub = xr.DataArray(ub, name='Ub', dims=dims, coords=coords,
                   attrs=ds.u.attrs)
-Vb = xr.DataArray(vb, name='unBeachV', dims=dims, coords=coords,
+Vb = xr.DataArray(vb, name='Vb', dims=dims, coords=coords,
                   attrs=ds.v.attrs)
-Wb = xr.DataArray(wb, name='unBeachW', dims=dims, coords=coords,
+Wb = xr.DataArray(wb, name='Wb', dims=dims, coords=coords,
                   attrs=ds.v.attrs)
-land = xr.DataArray(ld, name='land', dims=dims, coords=coords,
+Land = xr.DataArray(ld, name='Land', dims=dims, coords=coords,
                     attrs=ds.v.attrs)
 
 db[Ub.name] = Ub
 db[Vb.name] = Vb
 db[Wb.name] = Wb
-db[land.name] = land
+db[Land.name] = Land
 
-# Add all the coords, just in case.
-db[ds.xt_ocean.name] = ds.xt_ocean
-db[ds.yt_ocean.name] = ds.yt_ocean
-db[ds.xu_ocean.name] = ds.xu_ocean
-db[ds.yu_ocean.name] = ds.yu_ocean
-db[ds.st_ocean.name] = ds.st_ocean
-db[ds.sw_ocean.name] = ds.sw_ocean
-db[ds.st_edges_ocean.name] = ds.st_edges_ocean
-db[ds.sw_edges_ocean.name] = ds.sw_edges_ocean
 db.attrs = ds.attrs
 db.attrs['history'] = 'Created {}.'.format(datetime.now().strftime("%Y-%m-%d"))
-db.to_netcdf(path=cfg.data/'OFAM3_unbeach_land_UVW_ucelly.nc')
+db.to_netcdf(path=cfg.data/'ofam_unbeach_land_ucell.nc')
