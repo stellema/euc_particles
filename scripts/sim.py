@@ -16,7 +16,7 @@ from operator import attrgetter
 from datetime import datetime, timedelta
 from argparse import ArgumentParser
 from parcels import (Variable, JITParticle)
-from kernels import (AdvectionRK4_Land, BeachTest, UnBeaching, Age,
+from kernels import (AdvectionRK4_Land, BeachTest, UnBeachR, Age,
                      SampleZone, Distance, recovery_kernels)
 
 try:
@@ -182,7 +182,7 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
 
     # Kernels.
     kernels = pset.Kernel(AdvectionRK4_Land)
-    kernels += pset.Kernel(BeachTest) + pset.Kernel(UnBeaching)
+    kernels += pset.Kernel(BeachTest) + pset.Kernel(UnBeachR)
     kernels += pset.Kernel(Age) + pset.Kernel(SampleZone) + pset.Kernel(Distance)
 
     # ParticleSet execution endtime.

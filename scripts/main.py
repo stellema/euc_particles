@@ -138,7 +138,7 @@ def ofam_fieldset(time_bnds='full', exp='hist', chunks=True, cs=300,
     # fieldset.add_vector_field(UVW)
 
     # Set fieldset minimum depth.
-    fieldset.mindepth = 5.
+    fieldset.mindepth = 0.
 
     # Change W velocity direction scaling factor.
     fieldset.W.set_scaling_factor(-1)
@@ -150,7 +150,7 @@ def ofam_fieldset(time_bnds='full', exp='hist', chunks=True, cs=300,
     fieldset.add_constant('byland', 0.1)
     fieldset.add_constant('UV_min', 1e-7)
     fieldset.add_constant('UB_min', 0.25)
-    fieldset.add_constant('UBw', 1e-5)
+    fieldset.add_constant('UBw', 1e-4)
 
     if add_zone:
         # Add particle zone boundaries.

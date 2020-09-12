@@ -14,7 +14,7 @@ import cfg
 import tools
 from main import (ofam_fieldset, pset_euc, del_westward, generate_sim_id,
                   pset_from_file, log_simulation)
-from kernels import (AdvectionRK4_Land, BeachTest, UnBeaching, Age,
+from kernels import (AdvectionRK4_Land, BeachTest, UnBeachR, Age,
                      SampleZone, Distance, recovery_kernels)
 import xarray as xr
 import numpy as np
@@ -198,7 +198,7 @@ log_simulation(xlog, rank, logger)
 
 # Kernels.
 kernels = pset.Kernel(AdvectionRK4_Land)
-kernels += pset.Kernel(BeachTest) + pset.Kernel(UnBeaching)
+kernels += pset.Kernel(BeachTest) + pset.Kernel(UnBeachR)
 kernels += pset.Kernel(Age) + pset.Kernel(Distance)
 kernels += pset.Kernel(SampleZone)
 # ParticleSet execution endtime.

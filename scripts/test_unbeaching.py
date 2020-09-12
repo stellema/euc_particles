@@ -57,7 +57,7 @@ import cfg
 import tools
 from main import ofam_fieldset
 from plotparticles import plotfield, animate_particles, plot_traj, plot3D
-from kernels import (AdvectionRK4_Land, BeachTest, UnBeaching, Age, DelLand,
+from kernels import (AdvectionRK4_Land, BeachTest, UnBeaching, UnBeachR, Age, DelLand,
                      SampleZone, Distance, CoastTime, recovery_kernels)
 
 warnings.filterwarnings("ignore")
@@ -103,7 +103,7 @@ outputdt = timedelta(minutes=60)
 runtime = timedelta(minutes=360)
 repeatdt = timedelta(days=6)
 dx = 0.1
-T = np.arange(0, 700)
+T = np.arange(0, 400)
 if test == 'BT':
     dt = -dt
     T = np.arange(1, 200)
@@ -141,23 +141,23 @@ while savefile.exists():
     i += 1
     savefile = cfg.fig/'parcels/tests/{}_{:02d}.mp4'.format(test, i)
 sim = savefile.stem
-logger.info(' {:<3}: Land>={}: Coast>={}: UBv={}: ROUNDUBmin={}: Loop>=3: '
+logger.info(' {:<3}: Land>={}: Coast>={}: UBv={}: Round=0.1 UBmin={}: Loop>=4: '
             .format(sim, fieldset.onland, fieldset.byland,
                     1, fieldset.UB_min)
-            + 'Round if >=coast<land: 0.025<a<0.1 break minLand<1e-8: '
-            # + 'If no unbeachUV -UV[prev_lat, prev_lon]: '
-            + 'RK depth if >=0.5 <Vmin: Depth*(1-Land): '
+            + 'Round if >=coast<land: 0.1 nearest break minLand<coast: '
+            + 'If beached<=1 no unbeachUV 1.5*prev_lat - lat]: '
+            # + 'RK depth if >=coast <Vmin: Depth*(1-Land): '
             + 'wUB=-{}*dt if wb>UBmin: T={}'.format(fieldset.UBw, T[-1]))
 
 
 N = pset.size
 kernels = pset.Kernel(DelLand) + pset.Kernel(AdvectionRK4_Land)
 kernels += pset.Kernel(CoastTime)
-kernels += pset.Kernel(BeachTest) + pset.Kernel(UnBeaching)
+kernels += pset.Kernel(BeachTest) + pset.Kernel(UnBeachR)
 kernels += pset.Kernel(Distance) + pset.Kernel(Age)
 
-output_file = pset.ParticleFile(cfg.data/'{}{}.nc'.format(test, i),
-                                outputdt=outputdt)
+output_file = None  # pset.ParticleFile(cfg.data/'{}{}.nc'.format(test, i),
+                                # outputdt=outputdt)
 particles = pset
 
 show_time = particles[0].time
@@ -196,6 +196,6 @@ for v in ['unbeached', 'coasttime', 'ubcount', 'ubWcount', 'ubWdepth', 'zc',
 p = pd['depth']
 logger.info('{:>6}: {:<9}: N={}, max={:.2f} min={:.2f} med={:.2f} mean={:.2f}'
             .format(sim, 'z', N, p.max(), p.min(), np.median(p), np.mean(p)))
-output_file.export()
+# output_file.export()
 
-plot3D(cfg.data/'{}{}.nc'.format(test, i))
+# plot3D(cfg.data/'{}{}.nc'.format(test, i))

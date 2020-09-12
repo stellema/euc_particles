@@ -82,7 +82,7 @@ px = np.arange(I[0], I[1] + dx, dx)
 pz = np.arange(K[0], K[1] + dz, dz)
 lon, depth = np.meshgrid(px, pz)
 lat = np.repeat(py, lon.size)
-T = np.arange(0, 600)
+T = np.arange(0, 400)
 
 pset = ParticleSet.from_list(fieldset=fieldset, pclass=zParticle, time=stime,
                              lon=lon, lat=lat, depth=depth, repeatdt=repeatdt)
@@ -102,8 +102,9 @@ kernels = pset.Kernel(AdvectionRK4_Land) + pset.Kernel(CoastTime)
 kernels += pset.Kernel(BeachTest) + pset.Kernel(UnBeachR)
 kernels += pset.Kernel(Age) + pset.Kernel(SampleZone) + pset.Kernel(Distance)
 particles = pset
-output_file = pset.ParticleFile(cfg.data/'{}{}.nc'.format(test, i),
-                                outputdt=outputdt)
+output_file = None
+# output_file = pset.ParticleFile(cfg.data/'{}{}.nc'.format(test, i),
+#                                 outputdt=outputdt)
 N = math.floor(T[-1]*runtime.total_seconds()/repeatdt.total_seconds())*pset.size
 logger.info(' {:<6}: N={} rdt>={}: run>={}: itr={}: Ntot={} UBmin=0.25'
             .format(sim, pset.size, repeatdt, runtime, T[-1], N))
