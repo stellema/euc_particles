@@ -107,29 +107,16 @@ class zParticle(JITParticle):
     # The 'zone' of the particle.
     zone = Variable('zone', initial=0., dtype=np.float32)
 
-    # The distance travelled
     distance = Variable('distance', initial=0., dtype=np.float32)
-
-    # The previous longitude.
     prev_lon = Variable('prev_lon', initial=attrgetter('lon'), to_write=False, dtype=np.float32)
-
-    # The previous latitude.
     prev_lat = Variable('prev_lat', initial=attrgetter('lat'), to_write=False, dtype=np.float32)
-
-    # Unbeach if beached greater than zero.
+    prev_depth = Variable('prev_depth', initial=attrgetter('depth'), to_write=False, dtype=np.float32)
     beached = Variable('beached', initial=0., to_write=False, dtype=np.float32)
-
-    # Unbeached count.
     unbeached = Variable('unbeached', initial=0., dtype=np.float32)
-
-    # Land field.
-    land = Variable('land', initial=fieldset.Land, to_write=False, dtype=np.float32)
-
+    land = Variable('land', initial=fieldset.Land, dtype=np.float32)
+    # Testers.
     ubcount = Variable('ubcount', initial=0., dtype=np.float32)
-    zc = Variable('zc', initial=0., dtype=np.float32)
     ubeachprv = Variable('ubeachprv', initial=0., dtype=np.float32)
-    ubWcount = Variable('ubWcount', initial=0., dtype=np.float32)
-    ubWdepth = Variable('ubWdepth', initial=0., dtype=np.float32)
 
 pclass = zParticle
 

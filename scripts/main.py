@@ -147,7 +147,7 @@ def ofam_fieldset(time_bnds='full', exp='hist', chunks=True, cs=300,
     # Nautical mile (1 min of arc at the equator) = 1852
     fieldset.add_constant('NM', 1/(1852*60))
     fieldset.add_constant('onland', 0.975)
-    fieldset.add_constant('byland', 0.1)
+    fieldset.add_constant('byland', 0.5)
     fieldset.add_constant('UV_min', 1e-7)
     fieldset.add_constant('UB_min', 0.25)
     fieldset.add_constant('UBw', 1e-4)

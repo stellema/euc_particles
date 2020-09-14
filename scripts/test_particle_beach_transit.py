@@ -43,13 +43,20 @@ fieldset.Land.grid.time_origin = fieldset.time_origin
 
 
 class zParticle(JITParticle):
+
     # The age of the particle.
     age = Variable('age', initial=0., dtype=np.float32)
+
+    # The velocity of the particle.
     u = Variable('u', initial=fieldset.U, to_write='once', dtype=np.float32)
-    zone = Variable('zone', initial=fieldset.zone, dtype=np.float32)
+
+    # The 'zone' of the particle.
+    zone = Variable('zone', initial=0., dtype=np.float32)
+
     distance = Variable('distance', initial=0., dtype=np.float32)
     prev_lon = Variable('prev_lon', initial=attrgetter('lon'), to_write=False, dtype=np.float32)
     prev_lat = Variable('prev_lat', initial=attrgetter('lat'), to_write=False, dtype=np.float32)
+    prev_depth = Variable('prev_depth', initial=attrgetter('depth'), to_write=False, dtype=np.float32)
     beached = Variable('beached', initial=0., to_write=False, dtype=np.float32)
     unbeached = Variable('unbeached', initial=0., dtype=np.float32)
     land = Variable('land', initial=fieldset.Land, dtype=np.float32)
@@ -60,6 +67,7 @@ class zParticle(JITParticle):
     ubWdepth = Variable('ubWdepth', initial=0., dtype=np.float32)
     zc = Variable('zc', initial=0., dtype=np.float32)
     ubeachprv = Variable('ubeachprv', initial=0., dtype=np.float32)
+    ubeachmin = Variable('ubeachmin', initial=0., dtype=np.float32)
 
 
 dt = -timedelta(minutes=60)

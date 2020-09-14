@@ -51,19 +51,19 @@ import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 
 from parcels.field import Field
-from parcels import (ParticleSet, ErrorCode, Variable, JITParticle)
+from parcels import (ParticleSet, ErrorCode, Variable, JITParticle, AdvectionRK4_3D)
 
 import cfg
 import tools
 from main import ofam_fieldset
 from plotparticles import plotfield, animate_particles, plot_traj, plot3D
-from kernels import (AdvectionRK4_Land, BeachTest, UnBeaching, UnBeachR, Age, DelLand,
+from kernels import (AdvectionRK4_Land, BeachTest, UnBeachR, Age, DelLand,
                      SampleZone, Distance, CoastTime, recovery_kernels)
 
 warnings.filterwarnings("ignore")
 logger = tools.mlogger('test_unbeaching', parcels=True, misc=False)
 
-test = ['CS', 'PNG', 'SS'][0]
+test = ['CS', 'PNG', 'SS'][1]
 
 
 def del_land(pset):
@@ -85,16 +85,19 @@ class zParticle(JITParticle):
     distance = Variable('distance', initial=0., dtype=np.float32)
     prev_lon = Variable('prev_lon', initial=attrgetter('lon'), to_write=False, dtype=np.float32)
     prev_lat = Variable('prev_lat', initial=attrgetter('lat'), to_write=False, dtype=np.float32)
+    prev_depth = Variable('prev_depth', initial=attrgetter('depth'), to_write=False, dtype=np.float32)
     beached = Variable('beached', initial=0., to_write=False, dtype=np.float32)
     unbeached = Variable('unbeached', initial=0., dtype=np.float32)
     land = Variable('land', initial=fieldset.Land, dtype=np.float32)
     # Testers.
     coasttime = Variable('coasttime', initial=0., dtype=np.float32)
     ubcount = Variable('ubcount', initial=0., dtype=np.float32)
-    ubWcount = Variable('ubWcount', initial=0., dtype=np.float32)
-    ubWdepth = Variable('ubWdepth', initial=0., dtype=np.float32)
-    zc = Variable('zc', initial=0., dtype=np.float32)
     ubeachprv = Variable('ubeachprv', initial=0., dtype=np.float32)
+    # ubWcount = Variable('ubWcount', initial=0., dtype=np.float32)
+    # ubWdepth = Variable('ubWdepth', initial=0., dtype=np.float32)
+    # zc = Variable('zc', initial=0., dtype=np.float32)
+
+    # ubeachmin = Variable('ubeachmin', initial=0., dtype=np.float32)
 
 
 dt = -timedelta(minutes=60)
@@ -103,7 +106,7 @@ outputdt = timedelta(minutes=60)
 runtime = timedelta(minutes=360)
 repeatdt = timedelta(days=6)
 dx = 0.1
-T = np.arange(0, 400)
+T = np.arange(0, 500)
 if test == 'BT':
     dt = -dt
     T = np.arange(1, 200)
@@ -141,11 +144,11 @@ while savefile.exists():
     i += 1
     savefile = cfg.fig/'parcels/tests/{}_{:02d}.mp4'.format(test, i)
 sim = savefile.stem
-logger.info(' {:<3}: Land>={}: Coast>={}: UBv={}: Round=0.1 UBmin={}: Loop>=4: '
+logger.info(' {:<3}: Land>={}: Coast>={}: UBv={}: Round=0.1 UBmin={}: Loop>=3: '
             .format(sim, fieldset.onland, fieldset.byland,
                     1, fieldset.UB_min)
             + 'Round if >=coast<land: 0.1 nearest break minLand<coast: '
-            + 'If beached<=1 no unbeachUV 1.5*prev_lat - lat]: '
+            + 'If noUB(UVW)- UB[prev_lat]: '
             # + 'RK depth if >=coast <Vmin: Depth*(1-Land): '
             + 'wUB=-{}*dt if wb>UBmin: T={}'.format(fieldset.UBw, T[-1]))
 
@@ -156,8 +159,8 @@ kernels += pset.Kernel(CoastTime)
 kernels += pset.Kernel(BeachTest) + pset.Kernel(UnBeachR)
 kernels += pset.Kernel(Distance) + pset.Kernel(Age)
 
-output_file = None  # pset.ParticleFile(cfg.data/'{}{}.nc'.format(test, i),
-                                # outputdt=outputdt)
+output_file = pset.ParticleFile(cfg.data/'{}{}.nc'.format(test, i),
+                                outputdt=outputdt)
 particles = pset
 
 show_time = particles[0].time
@@ -184,8 +187,7 @@ plt.show()
 ani.save(str(savefile), writer='ffmpeg', fps=8, bitrate=-1, dpi=250)
 
 pd = pset.particle_data
-for v in ['unbeached', 'coasttime', 'ubcount', 'ubWcount', 'ubWdepth', 'zc',
-          'ubeachprv']:
+for v in ['unbeached', 'coasttime', 'ubcount', 'ubeachprv', 'distance']:
     p = pd[v]
     Nb = np.where(p > 0.0, 1, 0).sum()
     pb = np.where(p > 0.0, p, np.nan)
@@ -196,6 +198,6 @@ for v in ['unbeached', 'coasttime', 'ubcount', 'ubWcount', 'ubWdepth', 'zc',
 p = pd['depth']
 logger.info('{:>6}: {:<9}: N={}, max={:.2f} min={:.2f} med={:.2f} mean={:.2f}'
             .format(sim, 'z', N, p.max(), p.min(), np.median(p), np.mean(p)))
-# output_file.export()
+output_file.export()
 
-# plot3D(cfg.data/'{}{}.nc'.format(test, i))
+plot3D(cfg.data/'{}{}.nc'.format(test, i))

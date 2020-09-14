@@ -16,8 +16,8 @@ from operator import attrgetter
 from datetime import datetime, timedelta
 from argparse import ArgumentParser
 from parcels import (Variable, JITParticle)
-from kernels import (AdvectionRK4_Land, BeachTest, UnBeachR, Age,
-                     SampleZone, Distance, recovery_kernels)
+from kernels import (AdvectionRK4_Land, BeachTest, UnBeachR,
+                     AgeZone, Distance, recovery_kernels)
 
 try:
     from mpi4py import MPI
@@ -86,32 +86,15 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
 
     class zParticle(JITParticle):
         """Particle class that saves particle age and zonal velocity."""
-
-        # The age of the particle.
         age = Variable('age', initial=0., dtype=np.float32)
-
-        # The velocity of the particle.
         u = Variable('u', initial=fieldset.U, to_write='once', dtype=np.float32)
-
-        # The 'zone' of the particle.
         zone = Variable('zone', initial=0., dtype=np.float32)
-
-        # The distance travelled
         distance = Variable('distance', initial=0., dtype=np.float32)
-
-        # The previous longitude.
         prev_lon = Variable('prev_lon', initial=attrgetter('lon'), to_write=False, dtype=np.float32)
-
-        # The previous latitude.
         prev_lat = Variable('prev_lat', initial=attrgetter('lat'), to_write=False, dtype=np.float32)
-
-        # Unbeach if beached greater than zero.
+        prev_depth = Variable('prev_depth', initial=attrgetter('depth'), to_write=False, dtype=np.float32)
         beached = Variable('beached', initial=0., to_write=False, dtype=np.float32)
-
-        # Unbeached count.
         unbeached = Variable('unbeached', initial=0., dtype=np.float32)
-
-        # Land field.
         land = Variable('land', initial=0., to_write=False, dtype=np.float32)
 
     pclass = zParticle
@@ -183,7 +166,7 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
     # Kernels.
     kernels = pset.Kernel(AdvectionRK4_Land)
     kernels += pset.Kernel(BeachTest) + pset.Kernel(UnBeachR)
-    kernels += pset.Kernel(Age) + pset.Kernel(SampleZone) + pset.Kernel(Distance)
+    kernels += pset.Kernel(AgeZone) + pset.Kernel(Distance)
 
     # ParticleSet execution endtime.
     endtime = int(pset_start - runtime.total_seconds()) if not final else 0
