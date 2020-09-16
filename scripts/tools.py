@@ -152,7 +152,7 @@ def timeit(method):
     return timed
 
 
-def idx(array, value):
+def idx(array, value, method='closest'):
     """Find index to closet given value in 1D array.
 
     Args:
@@ -162,7 +162,44 @@ def idx(array, value):
     Returns:
         (int): The index of the closest element to value in array.
     """
-    return int(np.abs(array - value).argmin())
+
+    ind = int(np.abs(array - value).argmin())
+
+    if method == 'greater':
+        if array[ind] < value and len(array) >= ind + 1:
+
+            ind = ind + 1
+    elif method == 'lower':
+        ind = ind if array[ind] < value or ind == 0 else ind - 1
+
+    return ind
+
+
+def idx2d(lat, lon, lat2f, lon2f):
+    """Find closet lat/lon indexes in a 2D array.
+
+    Args:
+    lat : array (ndim = 2)
+        Latitude array
+    lon : array (ndim = 2)
+        Longitude array
+    lat2f
+        Latitude to find
+    lon2f
+        Longitude to find
+
+    Returns
+    -------
+    j : int
+        Index of closest latitude
+    i : int
+        Index of closest longitude
+    """
+
+    a = np.abs(lat - lat2f) + np.abs(lon - lon2f)
+    j, i = np.unravel_index(a.argmin(), a.shape)
+
+    return int(j), int(i)
 
 
 def get_date(year, month, day='max'):
