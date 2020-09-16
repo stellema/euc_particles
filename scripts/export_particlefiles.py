@@ -12,16 +12,15 @@ import os
 import numpy as np
 from os import path
 from glob import glob
-from pathlib import Path
 # from argparse import ArgumentParser
 
 from parcels import ParticleFile
 
-# import cfg
+import cfg
 from tools import mlogger
 
-data = Path('E:/')/'GitHub/OFAM/data'
-os.chdir(str(data))
+# data = Path('E:/')/'GitHub/OFAM/data'
+os.chdir(str(cfg.data))
 logger = mlogger('particles', parcels=False, misc=False)
 
 def convert_npydir_to_netcdf(tempwritedir_base, delete_tempfiles=False):
