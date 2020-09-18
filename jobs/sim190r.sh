@@ -15,4 +15,4 @@ module unload openmpi
 module load openmpi/4.0.2
 
 EXP="rcp"
-mpirun python3 /g/data/e14/as3189/OFAM/scripts/sim.py -e $EXP -x 190 -r 972 -v 0
+mpirun python3 /g/data/e14/as3189/OFAM/scripts/sim.py -e $EXP -x 190 -r 780 -v 0

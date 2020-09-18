@@ -234,17 +234,17 @@ def generate_sim_id(lon, v=0, exp='hist', randomise=False,
         i = random.randint(0, 100) if randomise else v
 
         # Increment index or find new random number if the file already exists.
-        while (cfg.data/'{}{:02d}r0.nc'.format(head, i)).exists():
+        while (cfg.data/'{}{}r00.nc'.format(head, i)).exists():
             i = random.randint(0, 100) if randomise else i + 1
 
-        sim_id = cfg.data/'{}{:02d}r0.nc'.format(head, i)
+        sim_id = cfg.data/'{}{}r00.nc'.format(head, i)
         if xlog:
             xlog['v'], xlog['r'] = i, 0
 
     # Increment run index for new output file name.
     elif file:
         sim_id = cfg.data/'{}{:02d}.nc'.format(file.stem[:-1],
-                                               int(file.stem[-1]) + 1)
+                                               int(file.stem[-2:]) + 1)
 
         # Change to the latest run if it was not given.
         if sim_id.exists():
