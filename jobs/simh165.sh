@@ -1,7 +1,7 @@
 #!/bin/bash
 #PBS -P e14
 #PBS -q normal
-#PBS -l walltime=00:10:00
+#PBS -l walltime=00:01:00
 #PBS -l mem=1GB
 #PBS -l ncpus=1
 #PBS -l wd
@@ -63,7 +63,7 @@ if [ $NJOB -lt $NJOBS ]; then
 # 
     NJOB=$(($NJOB+1))
     $ECHO "Submitting job number $NJOB in sequence of $NJOBS jobs"
-    qsub -v NJOBS=5 /g/data/e14/as3189/OFAM/jobs/simh165.sh
+    qsub simh165.sh
 else
     $ECHO "Finished last job in sequence of $NJOBS jobs"
 fi
