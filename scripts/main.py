@@ -243,15 +243,15 @@ def generate_sim_id(lon, v=0, exp='hist', randomise=False,
 
     # Increment run index for new output file name.
     elif file:
-        sim_id = cfg.data/'{}{:02d}.nc'.format(file.stem[:-1],
+        sim_id = cfg.data/'{}{:02d}.nc'.format(file.stem[:-2],
                                                int(file.stem[-2:]) + 1)
 
         # Change to the latest run if it was not given.
         if sim_id.exists():
             sims = [s for s in sim_id.parent.glob(str(sim_id.stem[:-1]) + '*.nc')]
-            rmax = max([int(sim.stem[-1]) for sim in sims])
-            file = cfg.data/'{}{:02d}.nc'.format(file.stem[:-1], rmax)
-            sim_id = cfg.data/'{}{:02d}.nc'.format(file.stem[:-1], rmax + 1)
+            rmax = max([int(sim.stem[-2:]) for sim in sims])
+            file = cfg.data/'{}{:02d}.nc'.format(file.stem[:-2], rmax)
+            sim_id = cfg.data/'{}{:02d}.nc'.format(file.stem[:-2], rmax + 1)
         if xlog:
             xlog['r'] = rmax + 1
 
