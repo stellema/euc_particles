@@ -1,15 +1,14 @@
 #!/bin/bash
 #PBS -P e14
 #PBS -q normal
-#PBS -l walltime=00:01:00
-#PBS -l mem=1GB
-#PBS -l ncpus=1
-#PBS -l wd
-#PBS -M astellemas@gmail.com
-#PBS -m ae
+#PBS -l walltime=48:0:00
+#PBS -l mem=192GB
+#PBS -l ncpus=48
 #PBS -l storage=gdata/hh5+gdata/e14
-#PBS -v NJOBS,NJOB
 #PBS -l wd
+#PBS -m ae
+#PBS -M astellemas@gmail.com
+#PBS -v NJOBS,NJOB
 
 ECHO=/bin/echo
   
@@ -35,10 +34,11 @@ module use /g/data3/hh5/public/modules
 module load conda/analysis3-20.04
 module unload openmpi
 module load openmpi/4.0.2
-EXP="hist"
-FILE1="sim_hist_165_v0r00.nc"
-# mpirun python3 /g/data/e14/as3189/OFAM/scripts/sim.py -e $EXP -x 165 -r 780 -v 0 -f $FILE1
-sleep 30
+EXP="rcp"
+LON=165
+FILE="sim_${EXP}_${LON}_v0r00.nc"
+python3 /g/data/e14/as3189/OFAM/scripts/sim_particleset.py -e $EXP -x $LON -r 0 -v 0
+mpirun python3 /g/data/e14/as3189/OFAM/scripts/sim.py -e $EXP -x $LON -r 780 -v 0 -f $FILE
 
 # 
 # Check the exit status
@@ -63,7 +63,7 @@ if [ $NJOB -lt $NJOBS ]; then
 # 
     NJOB=$(($NJOB+1))
     $ECHO "Submitting job number $NJOB in sequence of $NJOBS jobs"
-    qsub simh165.sh
+    qsub isimh165.sh
 else
     $ECHO "Finished last job in sequence of $NJOBS jobs"
 fi
