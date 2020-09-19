@@ -15,6 +15,8 @@ ECHO=/bin/echo
 if [ X$NJOBS == X ]; then
     $ECHO "NJOBS (total number of jobs in sequence) is not set - defaulting to 1"
     export NJOBS=1
+fi
+  
 if [ X$NJOB == X ]; then
     $ECHO "NJOB (current job number in sequence) is not set - defaulting to 1"
     export NJOB=1
