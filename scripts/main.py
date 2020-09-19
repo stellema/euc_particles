@@ -243,8 +243,8 @@ def generate_sim_id(lon, v=0, exp='hist', randomise=False,
 
     # Increment run index for new output file name.
     elif file:
-        sim_id = cfg.data/'{}{:02d}.nc'.format(file.stem[:-2],
-                                               int(file.stem[-2:]) + 1)
+        rmax = int(file.stem[-2:]) + 1
+        sim_id = cfg.data/'{}{:02d}.nc'.format(file.stem[:-2], rmax)
 
         # Change to the latest run if it was not given.
         if sim_id.exists():
