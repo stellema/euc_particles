@@ -354,7 +354,7 @@ def pset_from_file(fieldset, pclass, filename, repeatdt=None,
 
     if reduced and isinstance(vars['time'][0], np.timedelta64):
         vars['time'] = np.array([t/np.timedelta64(1, 's') for t in vars['time']])
-    elif isinstance(vars['time'][0, 0], np.timedelta64):
+    elif not reduced and isinstance(vars['time'][0, 0], np.timedelta64):
         vars['time'] = np.array([t/np.timedelta64(1, 's') for t in vars['time']])
     if restarttime is None:
         restarttime = np.nanmax(vars['time'])
