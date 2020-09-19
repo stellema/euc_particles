@@ -323,14 +323,19 @@ def log_simulation(xlog, rank, logger):
 
 
 def pset_from_file(fieldset, pclass, filename, repeatdt=None,
-                   restart=True, restarttime=np.nanmin,
+                   restart=True, restarttime=np.nanmin, reduced=True,
                    lonlatdepth_dtype=np.float64, xlog=None, **kwargs):
     """Initialise the ParticleSet from a netcdf ParticleFile.
 
     This creates a new ParticleSet based on locations of all particles written
     in a netcdf ParticleFile at a certain time. Particle IDs are preserved if restart=True
     """
-    pfile = xr.open_dataset(str(filename), decode_cf=False)
+    if reduced:
+        pfile = xr.open_dataset(str(filename.parent/('pset_' + filename.name)),
+                                decode_cf=False)
+    else:
+        pfile = xr.open_dataset(str(filename), decode_cf=False)
+
     pfile_vars = [v for v in pfile.data_vars]
 
     vars = {}
@@ -347,9 +352,10 @@ def pset_from_file(fieldset, pclass, filename, repeatdt=None,
     vars['depth'] = np.ma.filled(pfile.variables['z'], np.nan)
     vars['id'] = np.ma.filled(pfile.variables['trajectory'], np.nan)
 
-    if isinstance(vars['time'][0, 0], np.timedelta64):
+    if reduced and isinstance(vars['time'][0], np.timedelta64):
         vars['time'] = np.array([t/np.timedelta64(1, 's') for t in vars['time']])
-
+    elif isinstance(vars['time'][0, 0], np.timedelta64):
+        vars['time'] = np.array([t/np.timedelta64(1, 's') for t in vars['time']])
     if restarttime is None:
         restarttime = np.nanmax(vars['time'])
     elif callable(restarttime):
@@ -375,8 +381,10 @@ def pset_from_file(fieldset, pclass, filename, repeatdt=None,
                        lat=vars['lat'], depth=vars['depth'], time=vars['time'],
                        pid_orig=vars['id'], repeatdt=repeatdt,
                        lonlatdepth_dtype=lonlatdepth_dtype, **kwargs)
-
-    pclass.setLastID(np.nanmax(pfile.variables['trajectory']) + 1)
+    if reduced:
+        pclass.setLastID(pfile.variables['nextid'].item())
+    else:
+        pclass.setLastID(np.nanmax(pfile.variables['trajectory']) + 1)
     if xlog:
         xlog['file'] = vars['lon'].size
     return pset

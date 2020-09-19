@@ -22,7 +22,7 @@ from parcels import (ParticleSet, ErrorCode, Variable, JITParticle)
 logger = tools.mlogger('sim', parcels=False, misc=False)
 
 
-def reduce_particlefile(filename, exp):
+def reduce_particlefile(lon, exp='hist', v=0, r=0, file=None):
     restart = True
     kwargs = {}
 
@@ -36,7 +36,6 @@ def reduce_particlefile(filename, exp):
     fieldset = main.ofam_fieldset(time_bnds, exp,  chunks=True, cs=300,
                                   time_periodic=False, add_zone=True,
                                   add_unbeach_vel=True)
-
 
     class zParticle(JITParticle):
         """Particle class that saves particle age and zonal velocity."""
@@ -52,7 +51,16 @@ def reduce_particlefile(filename, exp):
         land = Variable('land', initial=0., to_write=False, dtype=np.float32)
     pclass = zParticle
 
-    pfile = xr.open_dataset(str(filename), decode_cf=False)
+    if file is None:
+        file = 'sim_{}_{}_v{}r{:02d}.nc'.format(exp, lon, v, r)
+    file = cfg.data/file
+
+    # Change to the latest run if it was not given.
+    if file.exists():
+        sims = [s for s in file.parent.glob(str(file.stem[:-1]) + '*.nc')]
+        rmax = max([int(sim.stem[-2:]) for sim in sims])
+        file = cfg.data/'{}{:02d}.nc'.format(file.stem[:-2], rmax)
+    pfile = xr.open_dataset(str(file), decode_cf=False)
     pfile_vars = [v for v in pfile.data_vars]
 
     vars = {}
@@ -101,24 +109,26 @@ def reduce_particlefile(filename, exp):
             df[v] = (['traj'], vars[v])
 
     df['nextid'] = nextid
-    # df['vars'] = [v for v in vars]
-    # df['kwargs'] = [k for k in kwargs]
-    df.to_netcdf(cfg.data/('pset_' + filename.name))
-    logger.info('Saved: {}'.format(str(cfg.data/('pset_' + filename.name))))
+    df.to_netcdf(cfg.data/('pset_' + file.name))
+    logger.info('Saved: {}'.format(str(cfg.data/('pset_' + file.name))))
 
     return df
 
 
-# if __name__ == "__main__":
-#     p = ArgumentParser(description="""Reduce EUC ParticleSet.""")
-#     p.add_argument('-f', '--pfile', default='sim_hist_165_v78r0.nc', type=str,
-#                    help='Particle file.')
-#     p.add_argument('-e', '--exp', default='hist', type=str, help='Experiment.')
-#     args = p.parse_args()
-#     filename = cfg.data/args.pfile
-#     exp = args.exp
-#     # if not (cfg.data/('pset_' + filename.name)).exists():
-#     df = reduce_particlefile(filename, exp)
-exp = 'hist'
-filename = cfg.data/'sim_hist_165_v100r00.nc'
-df = reduce_particlefile(filename, exp)
+if __name__ == "__main__":
+    p = ArgumentParser(description="""Reduce EUC ParticleSet.""")
+    p.add_argument('-e', '--exp', default='hist', type=str, help='Experiment.')
+    p.add_argument('-x', '--lon', default=165, type=int, help='Longitude.')
+    p.add_argument('-v', '--version', default=0, type=int, help='Version.')
+    p.add_argument('-r', '--rep', default=0, type=int, help='Repeat')
+    p.add_argument('-f', '--pfile', default=None, type=str, help='ParticleFile.')
+    args = p.parse_args()
+    df = reduce_particlefile(lon=args.lon, exp=args.exp, v=args.version,
+                             r=args.rep, file=args.pfile)
+# exp = 'hist'
+# r = 0
+# v = 0
+# file = None
+# lon = 165
+# file = cfg.data/'sim_hist_165_v0r0.nc'
+# df = (lon, exp, v, r, file)
