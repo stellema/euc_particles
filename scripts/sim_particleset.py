@@ -34,42 +34,22 @@ def reduce_particlefile(filename, exp):
         time_bnds = [datetime(2070, 1, 1), datetime(2101, 12, 31)]
 
     fieldset = main.ofam_fieldset(time_bnds, exp,  chunks=True, cs=300,
-                                  time_periodic=True, add_zone=True,
+                                  time_periodic=False, add_zone=True,
                                   add_unbeach_vel=True)
 
 
     class zParticle(JITParticle):
         """Particle class that saves particle age and zonal velocity."""
-
-        # The age of the particle.
         age = Variable('age', initial=0., dtype=np.float32)
-
-        # The velocity of the particle.
-        u = Variable('u', initial=fieldset.U, to_write='once',
-                     dtype=np.float32)
-
-        # The 'zone' of the particle.
+        u = Variable('u', initial=fieldset.U, to_write='once', dtype=np.float32)
         zone = Variable('zone', initial=0., dtype=np.float32)
-
-        # The distance travelled
         distance = Variable('distance', initial=0., dtype=np.float32)
-
-        # The previous longitude.
-        prev_lon = Variable('prev_lon', initial=attrgetter('lon'),
-                            to_write=False, dtype=np.float32)
-
-        # The previous latitude.
-        prev_lat = Variable('prev_lat', initial=attrgetter('lat'),
-                            to_write=False, dtype=np.float32)
-
-        # Unbeach if beached greater than zero.
-        beached = Variable('beached', initial=0., #to_write=False,
-                           dtype=np.float32)
-
-        # Unbeached count.
-        unbeached = Variable('unbeached', initial=0., #to_write=False,
-                             dtype=np.float32)
-
+        prev_lon = Variable('prev_lon', initial=attrgetter('lon'), to_write=False, dtype=np.float32)
+        prev_lat = Variable('prev_lat', initial=attrgetter('lat'), to_write=False, dtype=np.float32)
+        prev_depth = Variable('prev_depth', initial=attrgetter('depth'), to_write=False, dtype=np.float32)
+        beached = Variable('beached', initial=0., to_write=False, dtype=np.float32)
+        unbeached = Variable('unbeached', initial=0., dtype=np.float32)
+        land = Variable('land', initial=0., to_write=False, dtype=np.float32)
     pclass = zParticle
 
     pfile = xr.open_dataset(str(filename), decode_cf=False)
@@ -81,8 +61,6 @@ def reduce_particlefile(filename, exp):
     for v in pclass.getPType().variables:
         if v.name in pfile_vars:
             vars[v.name] = np.ma.filled(pfile.variables[v.name], np.nan)
-        elif v.name in ['beached', 'unbeached'] and v.to_write:
-            vars[v.name] = vars['age']*0.
         elif v.name not in ['xi', 'yi', 'zi', 'ti', 'dt', '_next_dt',
                             'depth', 'id', 'fileid', 'state'] \
                 and v.to_write:
@@ -131,13 +109,16 @@ def reduce_particlefile(filename, exp):
     return df
 
 
-if __name__ == "__main__":
-    p = ArgumentParser(description="""Reduce EUC ParticleSet.""")
-    p.add_argument('-f', '--pfile', default='sim_hist_165_v78r0.nc', type=str,
-                   help='Particle file.')
-    p.add_argument('-e', '--exp', default='hist', type=str, help='Experiment.')
-    args = p.parse_args()
-    filename = cfg.data/args.pfile
-    exp = args.exp
-    # if not (cfg.data/('pset_' + filename.name)).exists():
-    df = reduce_particlefile(filename, exp)
+# if __name__ == "__main__":
+#     p = ArgumentParser(description="""Reduce EUC ParticleSet.""")
+#     p.add_argument('-f', '--pfile', default='sim_hist_165_v78r0.nc', type=str,
+#                    help='Particle file.')
+#     p.add_argument('-e', '--exp', default='hist', type=str, help='Experiment.')
+#     args = p.parse_args()
+#     filename = cfg.data/args.pfile
+#     exp = args.exp
+#     # if not (cfg.data/('pset_' + filename.name)).exists():
+#     df = reduce_particlefile(filename, exp)
+exp = 'hist'
+filename = cfg.data/'sim_hist_165_v100r00.nc'
+df = reduce_particlefile(filename, exp)

@@ -212,7 +212,7 @@ if __name__ == "__main__" and cfg.home != Path('E:/'):
 elif __name__ == "__main__":
     dy, dz, lon = 1, 150, 165
     dt_mins, repeatdt_days, outputdt_days, runtime_days = 60, 6, 1, 36
-    pfile = ['None', 'sim_hist_165_v25r0.nc'][0]
+    pfile = ['None', 'sim_hist_165_v100r00.nc'][1]
     v = 55
     exp = 'hist'
     chunks = 300

@@ -253,7 +253,7 @@ def generate_sim_id(lon, v=0, exp='hist', randomise=False,
             file = cfg.data/'{}{:02d}.nc'.format(file.stem[:-2], rmax)
             sim_id = cfg.data/'{}{:02d}.nc'.format(file.stem[:-2], rmax + 1)
         if xlog:
-            xlog['r'] = rmax + 1
+            xlog['v'], xlog['r'] = v, rmax + 1
 
     return sim_id
 
@@ -379,4 +379,4 @@ def pset_from_file(fieldset, pclass, filename, repeatdt=None,
     pclass.setLastID(np.nanmax(pfile.variables['trajectory']) + 1)
     if xlog:
         xlog['file'] = vars['lon'].size
-    return pset, vars['lon'].size
+    return pset
