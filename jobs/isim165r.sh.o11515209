@@ -1,0 +1,14 @@
+NJOB (current job number in sequence) is not set - defaulting to 1
+
+======================================================================================
+                  Resource Usage on 2020-09-20 20:52:25:
+   Job Id:             11515209.gadi-pbs
+   Project:            e14
+   Exit Status:        271 (Linux Signal 15 SIGTERM Termination)
+   Service Units:      1199.07
+   NCPUs Requested:    48                     NCPUs Used: 48              
+                                           CPU Time Used: 586:39:41                                  
+   Memory Requested:   192.0GB               Memory Used: 164.58GB        
+   Walltime requested: 48:00:00            Walltime Used: 12:29:25        
+   JobFS requested:    100.0MB                JobFS used: 32.47MB         
+======================================================================================
