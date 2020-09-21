@@ -63,7 +63,7 @@ if [ $NJOB -lt $NJOBS ]; then
 # 
     NJOB=$(($NJOB+1))
     $ECHO "Submitting job number $NJOB in sequence of $NJOBS jobs"
-    qsub isimh165.sh
+    qsub -v NJOBS=$NJOBS isim250r.sh
 else
     $ECHO "Finished last job in sequence of $NJOBS jobs"
 fi
