@@ -1,7 +1,7 @@
 #!/bin/bash
 #PBS -P e14
 #PBS -q normal
-#PBS -l walltime=00:30:00
+#PBS -l walltime=02:00:00
 #PBS -l mem=15GB
 #PBS -l ncpus=1
 #PBS -l wd
@@ -11,4 +11,19 @@
 module use /g/data3/hh5/public/modules
 module load conda/analysis3-20.04
 python3 /g/data/e14/as3189/OFAM/scripts/sim_info.py -f "sim_hist_165_v0r00.nc"
-
+python3 /g/data/e14/as3189/OFAM/scripts/sim_info.py -f "sim_rcp_165_v0r00.nc"
+python3 /g/data/e14/as3189/OFAM/scripts/sim_info.py -f "sim_hist_190_v0r00.nc"
+python3 /g/data/e14/as3189/OFAM/scripts/sim_info.py -f "sim_rcp_190_v0r00.nc" -p 41
+python3 /g/data/e14/as3189/OFAM/scripts/sim_info.py -f "sim_rcp_190_v0r01.nc"
+python3 /g/data/e14/as3189/OFAM/scripts/sim_info.py -f "sim_hist_220_v0r00.nc" -p 41
+python3 /g/data/e14/as3189/OFAM/scripts/sim_info.py -f "sim_hist_220_v0r01.nc"
+python3 /g/data/e14/as3189/OFAM/scripts/sim_info.py -f "sim_hist_220_v0r02.nc"
+python3 /g/data/e14/as3189/OFAM/scripts/sim_info.py -f "sim_rcp_220_v0r00.nc" -p 41
+python3 /g/data/e14/as3189/OFAM/scripts/sim_info.py -f "sim_rcp_220_v0r01.nc"
+python3 /g/data/e14/as3189/OFAM/scripts/sim_info.py -f "sim_rcp_220_v0r02.nc"
+python3 /g/data/e14/as3189/OFAM/scripts/sim_info.py -f "sim_hist_250_v0r00.nc" -p 41
+python3 /g/data/e14/as3189/OFAM/scripts/sim_info.py -f "sim_hist_250_v0r01.nc"
+python3 /g/data/e14/as3189/OFAM/scripts/sim_info.py -f "sim_hist_250_v0r02.nc"
+python3 /g/data/e14/as3189/OFAM/scripts/sim_info.py -f "sim_rcp_250_v0r00.nc" -p 41
+python3 /g/data/e14/as3189/OFAM/scripts/sim_info.py -f "sim_rcp_250_v0r01.nc"
+python3 /g/data/e14/as3189/OFAM/scripts/sim_info.py -f "sim_rcp_250_v0r02.nc"
