@@ -2,8 +2,8 @@
 #PBS -P e14
 #PBS -q normal
 #PBS -l walltime=48:00:00
-#PBS -l mem=192GB
-#PBS -l ncpus=48
+#PBS -l mem=220GB
+#PBS -l ncpus=96
 #PBS -l wd
 #PBS -M astellemas@gmail.com
 #PBS -m ae
@@ -18,4 +18,4 @@ EXP="rcp"
 LON=165
 FILE="sim_${EXP}_${LON}_v0r00.nc"
 python3 /g/data/e14/as3189/OFAM/scripts/sim_particleset.py -e $EXP -x $LON -r 0 -v 0
-mpirun python3 /g/data/e14/as3189/OFAM/scripts/sim.py -e $EXP -x $LON -r 780 -v 0 -f $FILE
+mpirun -np 96 python3 /g/data/e14/as3189/OFAM/scripts/sim.py -e $EXP -x $LON -r 780 -v 0 -f $FILE
