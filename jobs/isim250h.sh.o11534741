@@ -1,0 +1,16 @@
+NJOB (current job number in sequence) is not set - defaulting to 1
+Submitting job number 2 in sequence of 3 jobs
+11554810.gadi-pbs
+
+======================================================================================
+                  Resource Usage on 2020-09-21 21:21:17:
+   Job Id:             11534741.gadi-pbs
+   Project:            e14
+   Exit Status:        0
+   Service Units:      987.36
+   NCPUs Requested:    48                     NCPUs Used: 48              
+                                           CPU Time Used: 447:27:24                                  
+   Memory Requested:   192.0GB               Memory Used: 175.51GB        
+   Walltime requested: 48:00:00            Walltime Used: 10:17:06        
+   JobFS requested:    100.0MB                JobFS used: 32.47MB         
+======================================================================================
