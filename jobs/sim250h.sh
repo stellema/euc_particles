@@ -4,10 +4,10 @@
 #PBS -l walltime=48:00:00
 #PBS -l mem=192GB
 #PBS -l ncpus=48
-#PBS -l wd
-#PBS -M astellemas@gmail.com
-#PBS -m ae
 #PBS -l storage=gdata/hh5+gdata/e14
+#PBS -l wd
+#PBS -m ae
+#PBS -M astellemas@gmail.com
 
 module use /g/data3/hh5/public/modules
 module load conda/analysis3-20.04

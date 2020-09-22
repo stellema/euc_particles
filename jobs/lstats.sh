@@ -18,18 +18,10 @@ python3 /g/data/e14/as3189/OFAM/scripts/sim_info.py -f "sim_rcp_165_v0r00.nc" -p
 python3 /g/data/e14/as3189/OFAM/scripts/sim_info.py -f "sim_rcp_190_v0r00.nc" -p False
 python3 /g/data/e14/as3189/OFAM/scripts/sim_info.py -f "sim_rcp_220_v0r00.nc" -p False
 python3 /g/data/e14/as3189/OFAM/scripts/sim_info.py -f "sim_rcp_250_v0r00.nc" -p False
+python3 /g/data/e14/as3189/OFAM/scripts/sim_info.py -f "sim_hist_165_v0r01.nc"
+python3 /g/data/e14/as3189/OFAM/scripts/sim_info.py -f "sim_hist_190_v0r01.nc"
 python3 /g/data/e14/as3189/OFAM/scripts/sim_info.py -f "sim_hist_220_v0r01.nc" -p False
 python3 /g/data/e14/as3189/OFAM/scripts/sim_info.py -f "sim_hist_250_v0r01.nc" -p False
 python3 /g/data/e14/as3189/OFAM/scripts/sim_info.py -f "sim_rcp_190_v0r01.nc" -p False
 python3 /g/data/e14/as3189/OFAM/scripts/sim_info.py -f "sim_rcp_220_v0r01.nc" -p False 
 python3 /g/data/e14/as3189/OFAM/scripts/sim_info.py -f "sim_rcp_250_v0r01.nc" -p False
-python3 /g/data/e14/as3189/OFAM/scripts/sim_info.py -f "sim_hist_220_v0r02.nc"
-python3 /g/data/e14/as3189/OFAM/scripts/sim_info.py -f "sim_hist_250_v0r02.nc" -p False
-python3 /g/data/e14/as3189/OFAM/scripts/sim_info.py -f "sim_rcp_220_v0r02.nc" -p False
-python3 /g/data/e14/as3189/OFAM/scripts/sim_info.py -f "sim_rcp_250_v0r02.nc" -p False
-python3 /g/data/e14/as3189/OFAM/scripts/sim_info.py -f "sim_hist_250_v0r03.nc"
-python3 /g/data/e14/as3189/OFAM/scripts/sim_info.py -f "sim_rcp_250_v0r03.nc"
-python3 /g/data/e14/as3189/OFAM/scripts/sim_info.py -f "sim_hist_250_v0r04.nc"
-python3 /g/data/e14/as3189/OFAM/scripts/sim_info.py -f "sim_rcp_190_v0r02.nc"
-python3 /g/data/e14/as3189/OFAM/scripts/sim_info.py -f "sim_hist_165_v0r01.nc"
-python3 /g/data/e14/as3189/OFAM/scripts/sim_info.py -f "sim_hist_190_v0r01.nc"
