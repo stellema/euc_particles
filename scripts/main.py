@@ -243,8 +243,8 @@ def generate_sim_id(lon, v=0, exp='hist', randomise=False,
 
     # Increment run index for new output file name.
     elif file:
-        rmax = int(file.stem[-2:]) + 1
-        sim_id = cfg.data/'{}{:02d}.nc'.format(file.stem[:-2], rmax)
+        rmax = int(file.stem[-2:])
+        sim_id = cfg.data/'{}{:02d}.nc'.format(file.stem[:-2], rmax + 1)
 
         # Change to the latest run if it was not given.
         if sim_id.exists():
@@ -312,9 +312,9 @@ def log_simulation(xlog, rank, logger):
                     .format(xlog['id'], xlog['out'], xlog['rdt'], xlog['dt'],
                             xlog['outdt'], xlog['land'], xlog['Vmin']))
 
-    logger.debug('{}:Rank={:>2}: Particles: File={} New={} West={} I={}'
-                 .format(xlog['id'], rank, xlog['file_r'], xlog['new_r'],
-                         xlog['west_r'], xlog['start_r']))
+    logger.debug('{}:Rank={:>2}: {}: File={} New={} West={} I={}'
+                 .format(xlog['id'], rank, xlog['out'], xlog['file_r'],
+                         xlog['new_r'], xlog['west_r'], xlog['start_r']))
 
     if xlog['pset_start_r'] != xlog['pset_start']:
         logger.debug('{}:Rank={:>2}: T0={:>2.0f}: RT0={}'

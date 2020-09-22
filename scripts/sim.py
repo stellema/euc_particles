@@ -118,13 +118,17 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
     # Create particle set from particlefile and add new repeats.
     else:
         # Add path to given ParticleFile name.
-        filename = cfg.data/pfile
+        file = cfg.data/pfile
 
         # Increment run index for new output file name.
-        sim_id = generate_sim_id(lon, v, exp, file=filename, xlog=xlog)
+        sim_id = generate_sim_id(lon, v, exp, file=file, xlog=xlog)
+
+        # Change pset file to last run.
+        file = cfg.data/'{}{:02d}.nc'.format(file.stem[:-2], xlog['r'] - 1)
 
         # Create ParticleSet from the given ParticleFile.
-        pset = pset_from_file(fieldset, pclass=pclass, filename=filename, restart=True, restarttime=np.nanmin, xlog=xlog)
+        pset = pset_from_file(fieldset, pclass=pclass, filename=file,
+                              restart=True, restarttime=np.nanmin, xlog=xlog)
         xlog['file_r'] = pset.size
         # Start date to add new EUC particles.
 
@@ -212,8 +216,8 @@ if __name__ == "__main__" and cfg.home != Path('E:/'):
 elif __name__ == "__main__":
     dy, dz, lon = 1, 150, 165
     dt_mins, repeatdt_days, outputdt_days, runtime_days = 60, 6, 1, 36
-    pfile = ['None', 'sim_hist_165_v100r00.nc'][1]
-    v = 55
+    pfile = ['None', 'sim_hist_165_v9r00.nc'][1]
+    v = 9
     exp = 'hist'
     chunks = 300
     final = False

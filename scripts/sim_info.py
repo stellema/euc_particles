@@ -30,7 +30,7 @@ def particle_info(sim_id, plot=True):
     rp = math.floor((ds.obs.size - 1) / 6)
 
     # Number of new particles.
-    start = int(rp * 18)
+    start = int(rp * 742)
 
     # Number of particles from file.
     file = ds.age.isel(obs=0).where(ds.age.isel(obs=0) > 0, drop=True).size

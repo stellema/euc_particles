@@ -124,11 +124,11 @@ if __name__ == "__main__":
     p.add_argument('-f', '--pfile', default=None, type=str, help='ParticleFile.')
     args = p.parse_args()
     df = reduce_particlefile(lon=args.lon, exp=args.exp, v=args.version,
-                             r=args.rep, file=args.pfile)
+                              r=args.rep, file=args.pfile)
 # exp = 'hist'
 # r = 0
-# v = 0
+# v = 9
 # file = None
 # lon = 165
-# file = cfg.data/'sim_hist_165_v0r0.nc'
-# df = (lon, exp, v, r, file)
+# file = cfg.data/'sim_hist_165_v9r00.nc'
+# df = reduce_particlefile(lon, exp, v, r, file)
