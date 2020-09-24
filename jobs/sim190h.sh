@@ -18,4 +18,4 @@ EXP="hist"
 LON=190
 FILE="sim_${EXP}_${LON}_v0r00.nc"
 python3 /g/data/e14/as3189/OFAM/scripts/sim_particleset.py -e $EXP -x $LON -r 0 -v 0
-mpirun python3 /g/data/e14/as3189/OFAM/scripts/sim.py -e $EXP -x $LON -r 1086 -v 0 -f $FILE
+mpirun python3 /g/data/e14/as3189/OFAM/scripts/sim.py -e $EXP -x $LON -r 696 -v 0 -f $FILE
