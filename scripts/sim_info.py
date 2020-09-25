@@ -49,7 +49,7 @@ def particle_info(sim_id, plot=True):
     ub = ds.unbeached.max(dim='obs')
     ubN = ub[ub > 0].size  # Number of unbeached.
 
-    logger.info('{}: File={} New={} West={}({:.0f}) N={} F={} del={}({:.1f}%): '
+    logger.info('{}: File={} New={} W={}({:.0f}%) N={} F={} del={}({:.1f}%) '
                 .format(sim_id.stem, file, start, west, (west/start)*100,
                         N, end, dels, (dels/N)*100)
                 + 'uB={}({:.1f}%) max={:.0f} median={:.0f} mean={:.0f}'
