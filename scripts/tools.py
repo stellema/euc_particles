@@ -175,7 +175,7 @@ def idx(array, value, method='closest'):
     return ind
 
 
-def idx2d(lat, lon, lat2f, lon2f):
+def idx2d(lat, lon, lat2f, lon2f, method='closest'):
     """Find closet lat/lon indexes in a 2D array.
 
     Args:
@@ -198,7 +198,24 @@ def idx2d(lat, lon, lat2f, lon2f):
 
     a = np.abs(lat - lat2f) + np.abs(lon - lon2f)
     j, i = np.unravel_index(a.argmin(), a.shape)
-
+    if method == 'greater_lat':
+        if lat[j, i] < lat2f:
+            try:
+                if lat[j+1, i] >= lat[j, i]:
+                    j = j + 1
+                else:
+                    j = j - 1
+            except:
+                pass
+    elif method == 'lower_lat':
+        if lat[j, i] > lat2f:
+            try:
+                if lat[j-1, i] <= lat[j, i]:
+                    j = j - 1
+                else:
+                    j = j + 1
+            except:
+                pass
     return int(j), int(i)
 
 
