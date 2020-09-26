@@ -182,7 +182,8 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
     xlog['end_r'] = pset.size
     xlog['del_r'] = xlog['start_r'] + xlog['file_r'] - xlog['end_r']
     logger.info('{:>18}:Completed: {}: Rank={:>2}: Particles: Start={} Del={} End={}'
-                .format(xlog['id'], timed, rank, xlog['start_r'], xlog['del_r'], xlog['end_r']))
+                .format(xlog['id'], timed, rank, xlog['file_r'] + xlog['start_r'], 
+                        xlog['del_r'], xlog['end_r']))
 
     # Save to netcdf.
     output_file.export()
