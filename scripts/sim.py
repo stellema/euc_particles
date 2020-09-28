@@ -29,7 +29,7 @@ logger = tools.mlogger('sim', parcels=True, misc=False)
 
 def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
             outputdt_days=1, runtime_days=186, v=1, chunks=300,
-            pfile='None', final=False):
+            pfile='None', final=False, tempwritedir=False):
     """Run Lagrangian EUC particle experiment.
 
     Args:
@@ -117,6 +117,7 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
 
     # Create particle set from particlefile and add new repeats.
     else:
+
         # Add path to given ParticleFile name.
         file = cfg.data/pfile
 
@@ -125,23 +126,48 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
 
         # Change pset file to last run.
         file = cfg.data/'{}{:02d}.nc'.format(file.stem[:-2], xlog['r'] - 1)
+        if tempwritedir:
+            import os
+            import numpy as np
+            from os import path
+            from glob import glob
+            from parcels import ParticleFile, ParticleSet
+            os.chdir(str("/g/data/e14/as3189/OFAM/data"))
+            tempwritedir_base = tempwritedir
 
-        # Create ParticleSet from the given ParticleFile.
-        pset = pset_from_file(fieldset, pclass=pclass, filename=file,
-                              restart=True, restarttime=np.nanmin, xlog=xlog)
-        xlog['file_r'] = pset.size
-        # Start date to add new EUC particles.
+            tempwritedir = sorted(glob(path.join("%s" % tempwritedir_base, "*")),
+                                  key=lambda x: int(path.basename(x)))[0]
+            pyset_file = path.join(tempwritedir, 'pset_info.npy')
+            if not path.isdir(tempwritedir):
+                raise ValueError('Output directory "%s" does not exist' % tempwritedir)
+            if not path.isfile(pyset_file):
+                raise ValueError('Output directory "%s" does not contain a pset_info.npy file' % tempwritedir)
 
-        pset_start = np.nanmin(pset.time)
-        psetx = pset_euc(fieldset, pclass, lon, dy, dz, repeatdt,
-                         pset_start, repeats, xlog=xlog)
+            pset_info = np.load(pyset_file, allow_pickle=True).item()
+            pfile = ParticleFile(None, None, pset_info=pset_info, tempwritedir=tempwritedir_base, convert_at_end=False)
+            pfile.close(delete_tempfiles=False)
+            pset = ParticleSet.from_particlefile(fieldset, pclass, pset_info['name'], restart=True, restarttime=np.nanmin, repeatdt=None, lonlatdepth_dtype=None)
+            pset_start = np.nanmin(pset.time)
+            xlog['file_r'] = pset.size
+            xlog['new_r'] = 0
+            xlog['west_r'] = 0
+        else:
+            # Create ParticleSet from the given ParticleFile.
+            pset = pset_from_file(fieldset, pclass=pclass, filename=file,
+                                  restart=True, restarttime=np.nanmin, xlog=xlog)
+            xlog['file_r'] = pset.size
+            # Start date to add new EUC particles.
 
-        xlog['new_r'] = psetx.size
-        psetx = del_westward(psetx)
-        xlog['start_r'] = psetx.size
-        xlog['west_r'] = xlog['new_r'] - xlog['start_r']
+            pset_start = np.nanmin(pset.time)
+            psetx = pset_euc(fieldset, pclass, lon, dy, dz, repeatdt,
+                             pset_start, repeats, xlog=xlog)
 
-        pset.add(psetx)
+            xlog['new_r'] = psetx.size
+            psetx = del_westward(psetx)
+            xlog['start_r'] = psetx.size
+            xlog['west_r'] = xlog['new_r'] - xlog['start_r']
+
+            pset.add(psetx)
 
     # ParticleSet start time (for log).
     start = (fieldset.time_origin.time_origin + timedelta(seconds=pset_start))
@@ -182,7 +208,7 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
     xlog['end_r'] = pset.size
     xlog['del_r'] = xlog['start_r'] + xlog['file_r'] - xlog['end_r']
     logger.info('{:>18}:Completed: {}: Rank={:>2}: Particles: Start={} Del={} End={}'
-                .format(xlog['id'], timed, rank, xlog['file_r'] + xlog['start_r'], 
+                .format(xlog['id'], timed, rank, xlog['file_r'] + xlog['start_r'],
                         xlog['del_r'], xlog['end_r']))
 
     # Save to netcdf.
@@ -207,12 +233,13 @@ if __name__ == "__main__" and cfg.home != Path('E:/'):
     p.add_argument('-v', '--version', default=0, type=int, help='File Index.')
     p.add_argument('-f', '--pfile', default='None', type=str, help='Particle file.')
     p.add_argument('-final', '--final', default=False, type=bool, help='Final run.')
+    p.add_argument('-t', '--temp', default=False, type=bool, help='Final run.')
     args = p.parse_args()
 
     run_EUC(dy=args.dy, dz=args.dz, lon=args.lon, exp=args.exp,
             runtime_days=args.runtime, dt_mins=args.dt,
             repeatdt_days=args.repeatdt, outputdt_days=args.outputdt,
-            v=args.version, pfile=args.pfile, final=args.final)
+            v=args.version, pfile=args.pfile, final=args.final, tempwritedir=args.temp)
 
 elif __name__ == "__main__":
     dy, dz, lon = 1, 150, 165
