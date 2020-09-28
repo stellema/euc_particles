@@ -128,6 +128,7 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
         file = cfg.data/'{}{:02d}.nc'.format(file.stem[:-2], xlog['r'] - 1)
         if tempwritedir:
             import os
+            import xarray as xr
             import numpy as np
             from os import path
             from glob import glob
@@ -147,7 +148,10 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
             pfile = ParticleFile(None, None, pset_info=pset_info, tempwritedir=tempwritedir_base, convert_at_end=False)
             pfile.close(delete_tempfiles=False)
             pset = ParticleSet.from_particlefile(fieldset, pclass, pset_info['name'], restart=True, restarttime=np.nanmin, repeatdt=None, lonlatdepth_dtype=None)
-            pset_start = np.nanmin(pset.time)
+
+
+            ds = xr.open_dataset(str(file.parent/('pset_' + file.name)), decode_cf=True)
+            pset_start = int(np.nanmin(pfile['time']))
             xlog['file_r'] = pset.size
             xlog['new_r'] = 0
             xlog['west_r'] = 0
