@@ -9,8 +9,10 @@ import tools
 # import main
 from main import (ofam_fieldset, pset_euc, del_westward, generate_sim_id,
                   pset_from_file, log_simulation)
+from mpi_ncpu import test_cpu_lim
 import math
 import numpy as np
+import xarray as xr
 from pathlib import Path
 from operator import attrgetter
 from datetime import datetime, timedelta
@@ -27,9 +29,9 @@ except ImportError:
 logger = tools.mlogger('sim', parcels=True, misc=False)
 
 
-def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
-            outputdt_days=1, runtime_days=186, v=1, chunks=300,
-            pfile='None', final=False):
+def restart_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
+                outputdt_days=1, runtime_days=186, v=1, chunks=300,
+                pfile='None', final=False):
     """Run Lagrangian EUC particle experiment.
 
     Args:
@@ -48,16 +50,7 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
         None.
 
     """
-    xlog = {'file': 0, 'new': 0, 'west_r': 0, 'new_r': 0, 'final_r': 0,
-            'file_r': 0, 'y': '', 'x': '', 'z': ''}
-    ts = datetime.now()
-
-    # Get MPI rank or set to zero.
-    rank = MPI.COMM_WORLD.Get_rank() if MPI else 0
-
-    # Start from end of Fieldset time or restart from ParticleFile.
-    restart = False if pfile == 'None' else True
-
+    xlog = {'file': 0, 'new': 0, 'y': '', 'x': '', 'z': ''}
     # # Ensure run ends on a repeat day.
     if not final:
         while runtime_days % repeatdt_days != 0:
@@ -90,58 +83,49 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
         u = Variable('u', initial=fieldset.U, to_write='once', dtype=np.float32)
         zone = Variable('zone', initial=0., dtype=np.float32)
         distance = Variable('distance', initial=0., dtype=np.float32)
-        prev_lon = Variable('prev_lon', initial=attrgetter('lon'), to_write=False, dtype=np.float32)
-        prev_lat = Variable('prev_lat', initial=attrgetter('lat'), to_write=False, dtype=np.float32)
-        prev_depth = Variable('prev_depth', initial=attrgetter('depth'), to_write=False, dtype=np.float32)
-        beached = Variable('beached', initial=0., to_write=False, dtype=np.float32)
+        # prev_lon = Variable('prev_lon', initial=attrgetter('lon'), to_write=False, dtype=np.float32)
+        # prev_lat = Variable('prev_lat', initial=attrgetter('lat'), to_write=False, dtype=np.float32)
+        # prev_depth = Variable('prev_depth', initial=attrgetter('depth'), to_write=False, dtype=np.float32)
+        # beached = Variable('beached', initial=0., to_write=False, dtype=np.float32)
         unbeached = Variable('unbeached', initial=0., dtype=np.float32)
-        land = Variable('land', initial=0., to_write=False, dtype=np.float32)
+        # land = Variable('land', initial=0., to_write=False, dtype=np.float32)
 
     pclass = zParticle
 
-    # Create ParticleSet.
-    if not restart:
-        # Generate file name for experiment (random number if not using MPI).
-        rdm = False if MPI else True
-        sim_id = generate_sim_id(lon, v, exp, randomise=rdm, xlog=xlog)
+    # Add path to given ParticleFile name.
+    file = cfg.data/pfile
 
-        # Set ParticleSet start as last fieldset time.
-        pset_start = fieldset.U.grid.time[-1]
+    # Increment run index for new output file name.
+    sim_id = generate_sim_id(lon, v, exp, file=file, xlog=xlog)
 
-        # Create ParticleSet.
-        pset = pset_euc(fieldset, pclass, lon, dy, dz, repeatdt, pset_start, repeats, xlog=xlog)
-        xlog['new_r'] = pset.size
-        pset = del_westward(pset)
-        xlog['start_r'] = pset.size
-        xlog['west_r'] = xlog['new_r'] - xlog['start_r']
+    # Change pset file to last run.
+    file = cfg.data/'{}{:02d}.nc'.format(file.stem[:-2], xlog['r']-1)
+    # Create ParticleSet from the given ParticleFile.
+    pset = pset_from_file(fieldset, pclass=pclass, filename=file, restart=True,
+                          reduced=False, restarttime=np.nanmin, xlog=xlog)
+    xlog['file'] = pset.size
+    nextid = np.nanmax(pset.particle_data['id']) + 1
+    # Start date to add new EUC particles.
 
-    # Create particle set from particlefile and add new repeats.
-    else:
-        # Add path to given ParticleFile name.
-        file = cfg.data/pfile
+    pset_start = np.nanmin(pset.time)
+    psetx = pset_euc(fieldset, pclass, lon, dy, dz, repeatdt,
+                     pset_start, repeats, xlog=xlog)
 
-        # Increment run index for new output file name.
-        sim_id = generate_sim_id(lon, v, exp, file=file, xlog=xlog)
+    xlog['new'] = psetx.size
+    psetx = del_westward(psetx)
+    xlog['start'] = psetx.size
+    xlog['west'] = xlog['new'] - xlog['start']
 
-        # Change pset file to last run.
-        file = cfg.data/'{}{:02d}.nc'.format(file.stem[:-2], xlog['r'])
-        # Create ParticleSet from the given ParticleFile.
-        pset = pset_from_file(fieldset, pclass=pclass, filename=file, reduced=True,
-                              restart=True, restarttime=None, xlog=xlog)
-        pset_start = xlog['pset_start']
-        xlog['start_r'] = pset.size
-        xlog['new_r'] = np.count_nonzero(pset.particle_data['age'] == 0.)
+    pset.add(psetx)
 
     # ParticleSet start time (for log).
     start = (fieldset.time_origin.time_origin + timedelta(seconds=pset_start))
 
-    # Create output ParticleFile p_name and time steps to write output.
-    output_file = pset.ParticleFile(cfg.data/sim_id.stem, outputdt=outputdt)
     xlog['Ti'] = start.strftime('%Y-%m-%d')
     xlog['Tf'] = (start - runtime).strftime('%Y-%m-%d')
     xlog['N'] = xlog['new'] + xlog['file']
     xlog['id'] = sim_id.stem
-    xlog['out'] = output_file.tempwritedir_base[-8:]
+    xlog['out'] = ''
     xlog['run'] = runtime.days
     xlog['dt'] = dt_mins
     xlog['outdt'] = outputdt.days
@@ -151,35 +135,45 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
     xlog['UBmin'] = fieldset.UB_min
     xlog['UBw'] = fieldset.UBw
     xlog['pset_start'] = pset_start
-    xlog['pset_start_r'] = pset.particle_data['time'].max()
 
     # Log experiment details.
-    log_simulation(xlog, rank, logger)
+    logger.info('{}:Simulation v{}r{}: File={} New={} West={} I={} Total={}'
+                .format(xlog['id'], xlog['v'], xlog['r'], xlog['file'],
+                        xlog['new'], xlog['west'], xlog['start'], pset.size))
+    logger.info('{}:Excecuting {} to {}: Runtime={}d'
+                .format(xlog['id'], xlog['Ti'], xlog['Tf'], xlog['run']))
+    logger.info('{}:Lon={}: Lat={}: Depth={}'
+                .format(xlog['id'], xlog['x'], xlog['y'], xlog['z']))
+    logger.info('{}:Rep={}d: dt={:.0f}m: Out={:.0f}d: Land={} Vmin={}'
+                .format(xlog['id'], xlog['rdt'], xlog['dt'],
+                        xlog['outdt'], xlog['land'], xlog['Vmin']))
 
-    # Kernels.
-    kernels = pset.Kernel(AdvectionRK4_Land)
-    kernels += pset.Kernel(BeachTest) + pset.Kernel(UnBeachR)
-    kernels += pset.Kernel(AgeZone) + pset.Kernel(Distance)
+    vars = {}
+    for v in pclass.getPType().variables:
+        if v.name in pset.particle_data and v.to_write in [True, 'once']:
+            vars[v.name] = np.ma.filled(pset.particle_data[v.name], np.nan)
 
-    # ParticleSet execution endtime.
-    endtime = int(pset_start - runtime.total_seconds()) if not final else 0
-
-    pset.execute(kernels, endtime=endtime, dt=dt, output_file=output_file,
-                 verbose_progress=True, recovery=recovery_kernels)
-
-    timed = tools.timer(ts)
-    xlog['end_r'] = pset.size
-    xlog['del_r'] = xlog['start_r'] + xlog['file_r'] - xlog['end_r']
-    logger.info('{:>18}:Completed: {}: Rank={:>2}: Particles: Start={} Del={} End={}'
-                .format(xlog['id'], timed, rank, xlog['file_r'] + xlog['start_r'],
-                        xlog['del_r'], xlog['end_r']))
+    df = xr.Dataset()
+    df.coords['traj'] = np.arange(len(vars['lon']))
+    for v in vars:
+        if v == 'depth':
+            df['z'] = (['traj'], vars[v])
+        elif v == 'id':
+            df['trajectory'] = (['traj'], vars[v])
+        else:
+            df[v] = (['traj'], vars[v])
+    df['nextid'] = nextid
+    df['restarttime'] = pset_start
 
     # Save to netcdf.
-    output_file.export()
+    df.to_netcdf(cfg.data/('r_' + sim_id.name))
+    logger.info('Saved: {}'.format(str(cfg.data/('r_' + sim_id.name))))
 
-    if rank == 0:
-        logger.info('{}:Finished!'.format(xlog['id']))
-
+    lon = pset.particle_data['lon']
+    lat = pset.particle_data['lat']
+    coords = np.vstack((lon, lat)).transpose()
+    ncpu = test_cpu_lim(coords, lon, cpu_lim=None)
+    logger.info('{}: Max NCPU={}'.format(xlog['id'], ncpu))
     return
 
 
@@ -198,20 +192,19 @@ if __name__ == "__main__" and cfg.home != Path('E:/'):
     p.add_argument('-final', '--final', default=False, type=bool, help='Final run.')
     args = p.parse_args()
 
-    run_EUC(dy=args.dy, dz=args.dz, lon=args.lon, exp=args.exp,
-            runtime_days=args.runtime, dt_mins=args.dt,
-            repeatdt_days=args.repeatdt, outputdt_days=args.outputdt,
-            v=args.version, pfile=args.pfile, final=args.final)
+    restart_EUC(dy=args.dy, dz=args.dz, lon=args.lon, exp=args.exp,
+                runtime_days=args.runtime, dt_mins=args.dt,
+                repeatdt_days=args.repeatdt, outputdt_days=args.outputdt,
+                v=args.version, pfile=args.pfile, final=args.final)
 
 elif __name__ == "__main__":
     dy, dz, lon = 1, 150, 165
     dt_mins, repeatdt_days, outputdt_days, runtime_days = 60, 6, 1, 36
     pfile = ['None', 'sim_hist_165_v69r00.nc'][1]
-    # pfile = ['None', 'sim_rcp_165_v0r01.nc'][1]
-    v = 69
+    v = 169
     exp = 'hist'
     chunks = 300
     final = False
-    run_EUC(dy=dy, dz=dz, lon=lon, dt_mins=dt_mins,
-            repeatdt_days=repeatdt_days, outputdt_days=outputdt_days,
-            v=v, runtime_days=runtime_days, pfile=pfile, final=final)
+    restart_EUC(dy=dy, dz=dz, lon=lon, dt_mins=dt_mins,
+                repeatdt_days=repeatdt_days, outputdt_days=outputdt_days,
+                v=v, runtime_days=runtime_days, pfile=pfile, final=final)

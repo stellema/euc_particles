@@ -33,40 +33,39 @@ from pathlib import Path
 from datetime import timedelta
 from sklearn.cluster import KMeans
 from argparse import ArgumentParser
+from parcels import Variable, JITParticle
+from operator import attrgetter
 
+# def particlefile_vars(filename, lon, add_particles=True):
+#     """Initialise the ParticleSet from a netcdf ParticleFile.
 
-def particlefile_vars(filename, lon, add_particles=True):
-    """Initialise the ParticleSet from a netcdf ParticleFile.
+#     This creates a new ParticleSet based on locations of all particles written
+#     in a netcdf ParticleFile at a certain time. Particle IDs are preserved if restart=True
+#     """
+#     # Particle release latitudes, depths and longitudes.
+#     p_lats = np.round(np.arange(-2.6, 2.6 + 0.05, 0.1), 2)
+#     p_depths = np.arange(25, 350 + 20, 25)
+#     p_lons = np.array([lon])
 
-    This creates a new ParticleSet based on locations of all particles written
-    in a netcdf ParticleFile at a certain time. Particle IDs are preserved if restart=True
-    """
-    # Particle release latitudes, depths and longitudes.
-    p_lats = np.round(np.arange(-2.6, 2.6 + 0.05, 0.1), 2)
-    p_depths = np.arange(25, 350 + 20, 25)
-    p_lons = np.array([lon])
+#     fieldset = main.ofam_fieldset(time_bnds='full')
 
-    fieldset = main.ofam_fieldset(time_bnds='full')
+#     # Add particles on the next day that regularly repeat.
+#     print('Particlefile particles.')
+#     psetx = main.pset_from_file(fieldset, pclass=zParticle, filename=filename,
+#                                 restart=True, restarttime=np.nanmin)
+#     print('EUC particles.')
+#     pset_start = np.nanmin(psetx.time)
+#     pset = main.pset_euc(fieldset, zParticle, lon, 0.1, 25,
+#                          timedelta(days=6), pset_start, repeats=2)
 
-    zParticle = main.get_zParticle(fieldset)
+#     print('Adding particles.')
+#     pset.add(psetx)
 
-    # Add particles on the next day that regularly repeat.
-    print('Particlefile particles.')
-    psetx = main.particleset_from_particlefile(fieldset, pclass=zParticle, filename=filename,
-                                               restart=True, restarttime=np.nanmin)
-    print('EUC particles.')
-    pset_start = np.nanmin(psetx.time)
-    pset = main.EUC_pset(fieldset, zParticle, p_lats, p_lons, p_depths,
-                         pset_start, repeatdt=timedelta(days=6))
+#     lon = pset.particle_data['lon']
+#     lat = pset.particle_data['lat']
+#     coords = np.vstack((lon, lat)).transpose()
 
-    print('Adding particles.')
-    pset.add(psetx)
-
-    lon = pset.particle_data['lon']
-    lat = pset.particle_data['lat']
-    coords = np.vstack((lon, lat)).transpose()
-
-    return lat, lon, coords
+#     return lat, lon, coords
 
 
 def test_ncpu(mpi_size, coords, lon, coordsx=None, lonx=None, show=True):
@@ -119,10 +118,14 @@ def test_cpu_lim(coords, lon, cpu_lim=None, coordsx=None, lonx=None):
     """
     if cpu_lim is None:
         cpu_lim = int(np.floor(np.sqrt(lon.size)))
+        nodes = np.arange(1, cpu_lim + 1, dtype=int)
+    else:
+        cpu_lim = 48
+        nodes = np.arange(48/4, 144, 48/4, dtype=int)
     ncpu = []
 
     # Check all cpu sizes to see which would work, append the number then print the max size.
-    for mpi_size in range(1, cpu_lim + 1):
+    for mpi_size in nodes:
         works = test_ncpu(mpi_size, coords, lon, coordsx, lonx, show=False)
         if works:
             ncpu.append(mpi_size)
@@ -131,69 +134,79 @@ def test_cpu_lim(coords, lon, cpu_lim=None, coordsx=None, lonx=None):
     return ncpu
 
 
-if __name__ == "__main__" and cfg.home != Path('E:/'):
-    p = ArgumentParser(description="""Run EUC Lagrangian experiment.""")
-    p.add_argument('-f', '--filename', default='sim_190_v0r0.nc', type=str, help='Filename.')
-    p.add_argument('-n', '--mpi_size', default=25, type=int, help='Number of CPUs.')
-    p.add_argument('-x', '--lon', default=190, type=int, help='Longitude.')
-    args = p.parse_args()
-    filename = cfg.data/args.filename
-    mpi_size = args.mpi_size
-    lon = args.lon
-    fieldset = main.ofam_fieldset(time_bnds='full', chunks=300)
+# if __name__ == "__main__" and cfg.home != Path('E:/'):
+#     p = ArgumentParser(description="""Run EUC Lagrangian experiment.""")
+#     p.add_argument('-f', '--filename', default='sim_190_v0r0.nc', type=str, help='Filename.')
+#     p.add_argument('-n', '--mpi_size', default=25, type=int, help='Number of CPUs.')
+#     p.add_argument('-x', '--lon', default=190, type=int, help='Longitude.')
+#     args = p.parse_args()
+#     filename = cfg.data/args.filename
+#     mpi_size = args.mpi_size
+#     lon = args.lon
+#     fieldset = main.ofam_fieldset(time_bnds='full', chunks=300)
 
-else:
-    # Lat and lon of particles (whatever goes into your ParticleSet).
-    # Doesn't matter if repeatdt is not None, only the pset size at the start counts.
-    filename = cfg.data/'sim_165_v0r0.nc'
-    mpi_size = 53
-    lon = 190
-    fieldset = main.ofam_fieldset(time_bnds='full')
+# else:
+#     # Lat and lon of particles (whatever goes into your ParticleSet).
+#     # Doesn't matter if repeatdt is not None, only the pset size at the start counts.
+#     filename = cfg.data/'sim_rcp_165_v0r01.nc'
+#     mpi_size = 53
+#     lon = 165
+#     fieldset = main.ofam_fieldset(time_bnds='full')
 
-mpi_size = 48
-repeats = 5
-repeatdt = timedelta(days=6)  # Repeat particle release time.
-py = np.round(np.arange(-2.6, 2.6 + 0.05, 0.1), 2)
-pz = np.arange(25, 350 + 20, 25)
-px = np.array([lon])
+# mpi_size = 48
+# repeats = 5
+# repeatdt = timedelta(days=6)  # Repeat particle release time.
+# py = np.round(np.arange(-2.6, 2.6 + 0.05, 0.1), 2)
+# pz = np.arange(25, 350 + 20, 25)
+# px = np.array([lon])
 
-zParticle = main.get_zParticle(fieldset)
+# class zParticle(JITParticle):
+#     age = Variable('age', initial=0., dtype=np.float32)
+#     u = Variable('u', initial=fieldset.U, to_write='once', dtype=np.float32)
+#     zone = Variable('zone', initial=0., dtype=np.float32)
+#     distance = Variable('distance', initial=0., dtype=np.float32)
+#     prev_lon = Variable('prev_lon', initial=attrgetter('lon'), to_write=False, dtype=np.float32)
+#     prev_lat = Variable('prev_lat', initial=attrgetter('lat'), to_write=False, dtype=np.float32)
+#     prev_depth = Variable('prev_depth', initial=attrgetter('depth'), to_write=False, dtype=np.float32)
+#     beached = Variable('beached', initial=0., to_write=False, dtype=np.float32)
+#     unbeached = Variable('unbeached', initial=0., dtype=np.float32)
+#     land = Variable('land', initial=0., to_write=False, dtype=np.float32)
 
-# # Add particles on the next day that regularly repeat.
-# print('Particlefile particles.')
-# psetx = main.particleset_from_particlefile(fieldset, pclass=zParticle, filename=filename,
-#                                            restart=True, restarttime=np.nanmin)
-# lonx = psetx.particle_data['lon']
-# latx = psetx.particle_data['lat']
-# coordsx = np.vstack((lonx, latx)).transpose()
+# # # Add particles on the next day that regularly repeat.
+# # print('Particlefile particles.')
+# # psetx = main.particleset_from_particlefile(fieldset, pclass=zParticle, filename=filename,
+# #                                            restart=True, restarttime=np.nanmin)
+# # lonx = psetx.particle_data['lon']
+# # latx = psetx.particle_data['lat']
+# # coordsx = np.vstack((lonx, latx)).transpose()
 
 
-# print('EUC particles.')
-# # pset_start = np.nanmin(psetx.time)
-# repeats = 110
-# pset = main.pset_euc(fieldset, zParticle, py, px, pz,
-#                       timedelta(days=6), fieldset.U.grid.time[-1], repeats)
+# # print('EUC particles.')
+# # # pset_start = np.nanmin(psetx.time)
+# # repeats = 110
+# # pset = main.pset_euc(fieldset, zParticle, py, px, pz,
+# #                       timedelta(days=6), fieldset.U.grid.time[-1], repeats)
 
-# # print('Adding particles.')
-# # pset.add(psetx)
+# # # print('Adding particles.')
+# # # pset.add(psetx)
 
-# lon = pset.particle_data['lon']
-# lat = pset.particle_data['lat']
-lats = np.repeat(py, pz.size*px.size)
-depths = np.repeat(np.tile(pz, py.size), px.size)
-lons = np.repeat(px, pz.size*py.size)
+# # lon = pset.particle_data['lon']
+# # lat = pset.particle_data['lat']
+# lats = np.repeat(py, pz.size*px.size)
+# depths = np.repeat(np.tile(pz, py.size), px.size)
+# lons = np.repeat(px, pz.size*py.size)
 
-# Duplicate for each repeat.
-tr = fieldset.U.grid.time[-1] - (np.arange(0, repeats) * repeatdt.total_seconds())
-time = np.repeat(tr, lons.size)
-lon = np.tile(lons, repeats)
-lat = np.tile(lats, repeats)
-coords = np.vstack((lon, lat)).transpose()
-
-print('Testing.')
+# # Duplicate for each repeat.
+# tr = fieldset.U.grid.time[-1] - (np.arange(0, repeats) * repeatdt.total_seconds())
+# time = np.repeat(tr, lons.size)
+# lon = np.tile(lons, repeats)
+# lat = np.tile(lats, repeats)
+# coords = np.vstack((lon, lat)).transpose()
+# lat, lon, coords = particlefile_vars(filename, lon, add_particles=True)
+# print('Testing.')
 # partitionsx = test_ncpu(mpi_size, coords, lon, lonx=lonx, coordsx=coordsx)
 # ncpu = test_cpu_lim(coords, lon, cpu_lim=50, coordsx=coordsx, lonx=lonx)
 
-partitionsx = test_ncpu(mpi_size, coords, lon)
+# partitionsx = test_ncpu(mpi_size, coords, lon)
 
-ncpu = test_cpu_lim(coords, lon, cpu_lim=48)
+# ncpu = test_cpu_lim(coords, lon, cpu_lim=48)

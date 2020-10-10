@@ -301,9 +301,8 @@ def del_westward(pset):
 
 def log_simulation(xlog, rank, logger):
     if rank == 0:
-        logger.info('{}:Simulation v{}r{}: Particles={}+{:}={}'
-                    .format(xlog['id'], xlog['v'], xlog['r'], xlog['new'],
-                            xlog['file'], xlog['N']))
+        logger.info('{}:Simulation v{}r{}: Particles={}'
+                    .format(xlog['id'], xlog['v'], xlog['r'], xlog['N']))
         logger.info('{}:Excecuting {} to {}: Runtime={}d'
                     .format(xlog['id'], xlog['Ti'], xlog['Tf'], xlog['run']))
         logger.info('{}:Lon={}: Lat={}: Depth={}'
@@ -316,10 +315,10 @@ def log_simulation(xlog, rank, logger):
                  .format(xlog['id'], rank, xlog['out'], xlog['file_r'],
                          xlog['new_r'], xlog['west_r'], xlog['start_r']))
 
-    if xlog['pset_start_r'] != xlog['pset_start']:
-        logger.debug('{}:Rank={:>2}: T0={:>2.0f}: RT0={}'
-                     .format(xlog['id'], rank, xlog['pset_start'],
-                             xlog['pset_start_r']))
+    # if xlog['pset_start_r'] != xlog['pset_start']:
+    #     logger.debug('{}:Rank={:>2}: T0={:>2.0f}: RT0={}'
+    #                  .format(xlog['id'], rank, xlog['pset_start'],
+    #                          xlog['pset_start_r']))
 
 
 def pset_from_file(fieldset, pclass, filename, repeatdt=None,
@@ -331,7 +330,7 @@ def pset_from_file(fieldset, pclass, filename, repeatdt=None,
     in a netcdf ParticleFile at a certain time. Particle IDs are preserved if restart=True
     """
     if reduced:
-        pfile = xr.open_dataset(str(filename.parent/('pset_' + filename.name)),
+        pfile = xr.open_dataset(str(filename.parent/('r_' + filename.name)),
                                 decode_cf=False)
     else:
         pfile = xr.open_dataset(str(filename), decode_cf=False)
@@ -356,22 +355,27 @@ def pset_from_file(fieldset, pclass, filename, repeatdt=None,
         vars['time'] = np.array([t/np.timedelta64(1, 's') for t in vars['time']])
     elif not reduced and isinstance(vars['time'][0, 0], np.timedelta64):
         vars['time'] = np.array([t/np.timedelta64(1, 's') for t in vars['time']])
-    if restarttime is None:
-        restarttime = np.nanmax(vars['time'])
-    elif callable(restarttime):
-        restarttime = restarttime(vars['time'])
+
+    if reduced:
+        for v in vars:
+            if v not in ['lon', 'lat', 'depth', 'time', 'id']:
+                kwargs[v] = vars[v]
     else:
-        restarttime = restarttime
+        if restarttime is None:
+            restarttime = np.nanin(vars['time'])
+        if callable(restarttime):
+            restarttime = restarttime(vars['time'])
+        else:
+            restarttime = restarttime
 
-    inds = np.where(vars['time'] == restarttime)
-    for v in vars:
-        if to_write[v] is True:
-            vars[v] = vars[v][inds]
-        elif to_write[v] == 'once':
-            vars[v] = vars[v][inds[0]]
-        if v not in ['lon', 'lat', 'depth', 'time', 'id']:
-            kwargs[v] = vars[v]
-
+        inds = np.where(vars['time'] == restarttime)
+        for v in vars:
+            if to_write[v] is True:
+                vars[v] = vars[v][inds]
+            elif to_write[v] == 'once':
+                vars[v] = vars[v][inds[0]]
+            if v not in ['lon', 'lat', 'depth', 'time', 'id']:
+                kwargs[v] = vars[v]
     if restart:
         pclass.setLastID(0)  # reset to zero offset
     else:
@@ -381,10 +385,13 @@ def pset_from_file(fieldset, pclass, filename, repeatdt=None,
                        lat=vars['lat'], depth=vars['depth'], time=vars['time'],
                        pid_orig=vars['id'], repeatdt=repeatdt,
                        lonlatdepth_dtype=lonlatdepth_dtype, **kwargs)
-    if reduced:
+    if reduced and 'nextid' in pfile.variables:
         pclass.setLastID(pfile.variables['nextid'].item())
     else:
         pclass.setLastID(np.nanmax(pfile.variables['trajectory']) + 1)
+
     if xlog:
         xlog['file'] = vars['lon'].size
+        if reduced and 'restarttime' in pfile.variables:
+            xlog['pset_start'] = pfile.variables['restarttime'].item()
     return pset
