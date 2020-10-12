@@ -83,11 +83,11 @@ def restart_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
         u = Variable('u', initial=fieldset.U, to_write='once', dtype=np.float32)
         zone = Variable('zone', initial=0., dtype=np.float32)
         distance = Variable('distance', initial=0., dtype=np.float32)
+        unbeached = Variable('unbeached', initial=0., dtype=np.float32)
         # prev_lon = Variable('prev_lon', initial=attrgetter('lon'), to_write=False, dtype=np.float32)
         # prev_lat = Variable('prev_lat', initial=attrgetter('lat'), to_write=False, dtype=np.float32)
         # prev_depth = Variable('prev_depth', initial=attrgetter('depth'), to_write=False, dtype=np.float32)
         # beached = Variable('beached', initial=0., to_write=False, dtype=np.float32)
-        unbeached = Variable('unbeached', initial=0., dtype=np.float32)
         # land = Variable('land', initial=0., to_write=False, dtype=np.float32)
 
     pclass = zParticle
@@ -99,7 +99,9 @@ def restart_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
     sim_id = generate_sim_id(lon, v, exp, file=file, xlog=xlog)
 
     # Change pset file to last run.
-    file = cfg.data/'{}{:02d}.nc'.format(file.stem[:-2], xlog['r']-1)
+    file = cfg.data/'{}{:02d}.nc'.format(file.stem[:-2], xlog['r'] - 1)
+    logger.info('Generating restart file from: {}'.format(file.stem))
+
     # Create ParticleSet from the given ParticleFile.
     pset = pset_from_file(fieldset, pclass=pclass, filename=file, restart=True,
                           reduced=False, restarttime=np.nanmin, xlog=xlog)
@@ -168,12 +170,11 @@ def restart_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
     # Save to netcdf.
     df.to_netcdf(cfg.data/('r_' + sim_id.name))
     logger.info('Saved: {}'.format(str(cfg.data/('r_' + sim_id.name))))
-
-    lon = pset.particle_data['lon']
-    lat = pset.particle_data['lat']
-    coords = np.vstack((lon, lat)).transpose()
-    ncpu = test_cpu_lim(coords, lon, cpu_lim=None)
-    logger.info('{}: Max NCPU={}'.format(xlog['id'], ncpu))
+    # lon = pset.particle_data['lon']
+    # lat = pset.particle_data['lat']
+    # coords = np.vstack((lon, lat)).transpose()
+    # ncpu = test_cpu_lim(coords, lon, cpu_lim=None)
+    # logger.info('{}: Max NCPU={}'.format(xlog['id'], ncpu))
     return
 
 

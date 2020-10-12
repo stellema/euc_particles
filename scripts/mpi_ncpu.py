@@ -121,7 +121,7 @@ def test_cpu_lim(coords, lon, cpu_lim=None, coordsx=None, lonx=None):
         nodes = np.arange(1, cpu_lim + 1, dtype=int)
     else:
         cpu_lim = 48
-        nodes = np.arange(48/4, 144, 48/4, dtype=int)
+        nodes = [96, 144]
     ncpu = []
 
     # Check all cpu sizes to see which would work, append the number then print the max size.
