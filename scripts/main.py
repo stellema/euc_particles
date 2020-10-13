@@ -329,11 +329,7 @@ def pset_from_file(fieldset, pclass, filename, repeatdt=None,
     This creates a new ParticleSet based on locations of all particles written
     in a netcdf ParticleFile at a certain time. Particle IDs are preserved if restart=True
     """
-    if reduced:
-        pfile = xr.open_dataset(str(filename.parent/('r_' + filename.name)),
-                                decode_cf=False)
-    else:
-        pfile = xr.open_dataset(str(filename), decode_cf=False)
+    pfile = xr.open_dataset(str(filename), decode_cf=False)
 
     pfile_vars = [v for v in pfile.data_vars]
 
@@ -392,6 +388,11 @@ def pset_from_file(fieldset, pclass, filename, repeatdt=None,
 
     if xlog:
         xlog['file'] = vars['lon'].size
-        if reduced and 'restarttime' in pfile.variables:
-            xlog['pset_start'] = pfile.variables['restarttime'].item()
+        if reduced:
+            if 'restarttime' in pfile.variables:
+                xlog['pset_start'] = pfile.variables['restarttime'].item()
+            if 'runtime' in pfile.variables:
+                xlog['runtime'] = pfile.variables['runtime'].item()
+            if 'endtime' in pfile.variables:
+                xlog['endtime'] = pfile.variables['endtime'].item()
     return pset
