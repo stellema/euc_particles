@@ -65,7 +65,7 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
     elif exp == 'rcp':
         time_bnds = [datetime(2070, 1, 1), datetime(2101, 12, 31)]
 
-    fieldset = ofam_fieldset(time_bnds, exp,  chunks=True, cs=chunks,
+    fieldset = ofam_fieldset(time_bnds, exp,  chunks=True, cs=300,
                              time_periodic=False, add_zone=True,
                              add_unbeach_vel=True)
 
@@ -85,7 +85,7 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
     pclass = zParticle
 
     sim_id = cfg.data/'sim_{}_{}_t{}.nc'.format(exp, lon, v)
-    file = cfg.data/'r_sim_{}_{}_t{}.nc'.format(exp, lon, v)
+    file = cfg.data/'r_sim_{}_{}_{}d.nc'.format(exp, lon, runtime_days)
     # Create ParticleSet from the given ParticleFile.
     pset = pset_from_file(fieldset, pclass=pclass, filename=file, reduced=True,
                           restart=True, restarttime=None, xlog=xlog)

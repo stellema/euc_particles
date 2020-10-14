@@ -83,7 +83,7 @@ def restart_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
 
     pclass = zParticle
     # Increment run index for new output file name.
-    sim_id = cfg.data/'sim_{}_{}_t{}.nc'.format(exp, lon, v)
+    sim_id = cfg.data/'sim_{}_{}_{}d.nc'.format(exp, lon, runtime_days)
 
     # Restart filename.
     file = cfg.data/'sim_{}_{}_v0r01.nc'.format(exp, lon)

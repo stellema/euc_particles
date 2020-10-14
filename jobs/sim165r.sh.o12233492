@@ -1,0 +1,14 @@
+96 total processes failed to start
+
+======================================================================================
+                  Resource Usage on 2020-10-12 16:10:38:
+   Job Id:             12233492.gadi-pbs
+   Project:            e14
+   Exit Status:        134 (Linux Signal 6 SIGABRT Abort)
+   Service Units:      886.13
+   NCPUs Requested:    96                     NCPUs Used: 96              
+                                           CPU Time Used: 04:31:50                                   
+   Memory Requested:   383.0GB               Memory Used: 84.86GB         
+   Walltime requested: 48:00:00            Walltime Used: 04:36:55        
+   JobFS requested:    200.0MB                JobFS used: 8.16MB          
+======================================================================================

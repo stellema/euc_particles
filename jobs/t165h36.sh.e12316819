@@ -1,0 +1,239 @@
+[31m--------------------------------------------------------------------------------[0m
+[37;41mWARNING[0m: This Conda environment (analysis3-20.04) is no longer supported and is
+         scheduled for removal after the next NCI quarterly maintenance. 
+         Please use module 'conda/analysis3' to get the most recent stable 
+         environment
+[31m--------------------------------------------------------------------------------[0m
+Generating restart file from: sim_hist_165_v0r01
+sim_hist_165_t36:Simulation v36: File=99803 New=14840 West=4261 I=10579 Total=110382
+sim_hist_165_t36:Excecuting 2008-09-23 to 2008-05-24: Runtime=122d
+sim_hist_165_t36:Lon=165: Lat=[-2.6-2.6 x0.1]: Depth=[25-350m x25]
+sim_hist_165_t36:Rep=6d: dt=60m: Out=1d: Land=0.975 Vmin=1e-07
+Saved: /g/data/e14/as3189/OFAM/data/r_sim_hist_165_t36.nc: t=00:58:42
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/euc_trial.py", line 164, in <module>
+    v=args.version, pfile=args.pfile, final=args.final)
+  File "/g/data/e14/as3189/OFAM/scripts/euc_trial.py", line 68, in run_EUC
+    fieldset = ofam_fieldset(time_bnds, exp,  chunks=True, cs=chunks,
+NameError: name 'chunks' is not defined
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/euc_trial.py", line 164, in <module>
+    v=args.version, pfile=args.pfile, final=args.final)
+  File "/g/data/e14/as3189/OFAM/scripts/euc_trial.py", line 68, in run_EUC
+    fieldset = ofam_fieldset(time_bnds, exp,  chunks=True, cs=chunks,
+NameError: name 'chunks' is not defined
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/euc_trial.py", line 164, in <module>
+    v=args.version, pfile=args.pfile, final=args.final)
+  File "/g/data/e14/as3189/OFAM/scripts/euc_trial.py", line 68, in run_EUC
+    fieldset = ofam_fieldset(time_bnds, exp,  chunks=True, cs=chunks,
+NameError: name 'chunks' is not defined
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/euc_trial.py", line 164, in <module>
+    v=args.version, pfile=args.pfile, final=args.final)
+  File "/g/data/e14/as3189/OFAM/scripts/euc_trial.py", line 68, in run_EUC
+    fieldset = ofam_fieldset(time_bnds, exp,  chunks=True, cs=chunks,
+NameError: name 'chunks' is not defined
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/euc_trial.py", line 164, in <module>
+    v=args.version, pfile=args.pfile, final=args.final)
+  File "/g/data/e14/as3189/OFAM/scripts/euc_trial.py", line 68, in run_EUC
+    fieldset = ofam_fieldset(time_bnds, exp,  chunks=True, cs=chunks,
+NameError: name 'chunks' is not defined
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/euc_trial.py", line 164, in <module>
+    v=args.version, pfile=args.pfile, final=args.final)
+  File "/g/data/e14/as3189/OFAM/scripts/euc_trial.py", line 68, in run_EUC
+    fieldset = ofam_fieldset(time_bnds, exp,  chunks=True, cs=chunks,
+NameError: name 'chunks' is not defined
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/euc_trial.py", line 164, in <module>
+    v=args.version, pfile=args.pfile, final=args.final)
+  File "/g/data/e14/as3189/OFAM/scripts/euc_trial.py", line 68, in run_EUC
+    fieldset = ofam_fieldset(time_bnds, exp,  chunks=True, cs=chunks,
+NameError: name 'chunks' is not defined
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/euc_trial.py", line 164, in <module>
+    v=args.version, pfile=args.pfile, final=args.final)
+  File "/g/data/e14/as3189/OFAM/scripts/euc_trial.py", line 68, in run_EUC
+    fieldset = ofam_fieldset(time_bnds, exp,  chunks=True, cs=chunks,
+NameError: name 'chunks' is not defined
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/euc_trial.py", line 164, in <module>
+    v=args.version, pfile=args.pfile, final=args.final)
+  File "/g/data/e14/as3189/OFAM/scripts/euc_trial.py", line 68, in run_EUC
+    fieldset = ofam_fieldset(time_bnds, exp,  chunks=True, cs=chunks,
+NameError: name 'chunks' is not defined
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/euc_trial.py", line 164, in <module>
+    v=args.version, pfile=args.pfile, final=args.final)
+  File "/g/data/e14/as3189/OFAM/scripts/euc_trial.py", line 68, in run_EUC
+    fieldset = ofam_fieldset(time_bnds, exp,  chunks=True, cs=chunks,
+NameError: name 'chunks' is not defined
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/euc_trial.py", line 164, in <module>
+    v=args.version, pfile=args.pfile, final=args.final)
+  File "/g/data/e14/as3189/OFAM/scripts/euc_trial.py", line 68, in run_EUC
+    fieldset = ofam_fieldset(time_bnds, exp,  chunks=True, cs=chunks,
+NameError: name 'chunks' is not defined
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/euc_trial.py", line 164, in <module>
+    v=args.version, pfile=args.pfile, final=args.final)
+  File "/g/data/e14/as3189/OFAM/scripts/euc_trial.py", line 68, in run_EUC
+    fieldset = ofam_fieldset(time_bnds, exp,  chunks=True, cs=chunks,
+NameError: name 'chunks' is not defined
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/euc_trial.py", line 164, in <module>
+    v=args.version, pfile=args.pfile, final=args.final)
+  File "/g/data/e14/as3189/OFAM/scripts/euc_trial.py", line 68, in run_EUC
+    fieldset = ofam_fieldset(time_bnds, exp,  chunks=True, cs=chunks,
+NameError: name 'chunks' is not defined
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/euc_trial.py", line 164, in <module>
+    v=args.version, pfile=args.pfile, final=args.final)
+  File "/g/data/e14/as3189/OFAM/scripts/euc_trial.py", line 68, in run_EUC
+    fieldset = ofam_fieldset(time_bnds, exp,  chunks=True, cs=chunks,
+NameError: name 'chunks' is not defined
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/euc_trial.py", line 164, in <module>
+    v=args.version, pfile=args.pfile, final=args.final)
+  File "/g/data/e14/as3189/OFAM/scripts/euc_trial.py", line 68, in run_EUC
+    fieldset = ofam_fieldset(time_bnds, exp,  chunks=True, cs=chunks,
+NameError: name 'chunks' is not defined
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/euc_trial.py", line 164, in <module>
+    v=args.version, pfile=args.pfile, final=args.final)
+  File "/g/data/e14/as3189/OFAM/scripts/euc_trial.py", line 68, in run_EUC
+    fieldset = ofam_fieldset(time_bnds, exp,  chunks=True, cs=chunks,
+NameError: name 'chunks' is not defined
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/euc_trial.py", line 164, in <module>
+    v=args.version, pfile=args.pfile, final=args.final)
+  File "/g/data/e14/as3189/OFAM/scripts/euc_trial.py", line 68, in run_EUC
+    fieldset = ofam_fieldset(time_bnds, exp,  chunks=True, cs=chunks,
+NameError: name 'chunks' is not defined
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/euc_trial.py", line 164, in <module>
+    v=args.version, pfile=args.pfile, final=args.final)
+  File "/g/data/e14/as3189/OFAM/scripts/euc_trial.py", line 68, in run_EUC
+    fieldset = ofam_fieldset(time_bnds, exp,  chunks=True, cs=chunks,
+NameError: name 'chunks' is not defined
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/euc_trial.py", line 164, in <module>
+    v=args.version, pfile=args.pfile, final=args.final)
+  File "/g/data/e14/as3189/OFAM/scripts/euc_trial.py", line 68, in run_EUC
+    fieldset = ofam_fieldset(time_bnds, exp,  chunks=True, cs=chunks,
+NameError: name 'chunks' is not defined
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/euc_trial.py", line 164, in <module>
+    v=args.version, pfile=args.pfile, final=args.final)
+  File "/g/data/e14/as3189/OFAM/scripts/euc_trial.py", line 68, in run_EUC
+    fieldset = ofam_fieldset(time_bnds, exp,  chunks=True, cs=chunks,
+NameError: name 'chunks' is not defined
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/euc_trial.py", line 164, in <module>
+    v=args.version, pfile=args.pfile, final=args.final)
+  File "/g/data/e14/as3189/OFAM/scripts/euc_trial.py", line 68, in run_EUC
+    fieldset = ofam_fieldset(time_bnds, exp,  chunks=True, cs=chunks,
+NameError: name 'chunks' is not defined
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/euc_trial.py", line 164, in <module>
+    v=args.version, pfile=args.pfile, final=args.final)
+  File "/g/data/e14/as3189/OFAM/scripts/euc_trial.py", line 68, in run_EUC
+    fieldset = ofam_fieldset(time_bnds, exp,  chunks=True, cs=chunks,
+NameError: name 'chunks' is not defined
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/euc_trial.py", line 164, in <module>
+    v=args.version, pfile=args.pfile, final=args.final)
+  File "/g/data/e14/as3189/OFAM/scripts/euc_trial.py", line 68, in run_EUC
+    fieldset = ofam_fieldset(time_bnds, exp,  chunks=True, cs=chunks,
+NameError: name 'chunks' is not defined
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/euc_trial.py", line 164, in <module>
+    v=args.version, pfile=args.pfile, final=args.final)
+  File "/g/data/e14/as3189/OFAM/scripts/euc_trial.py", line 68, in run_EUC
+    fieldset = ofam_fieldset(time_bnds, exp,  chunks=True, cs=chunks,
+NameError: name 'chunks' is not defined
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/euc_trial.py", line 164, in <module>
+    v=args.version, pfile=args.pfile, final=args.final)
+  File "/g/data/e14/as3189/OFAM/scripts/euc_trial.py", line 68, in run_EUC
+    fieldset = ofam_fieldset(time_bnds, exp,  chunks=True, cs=chunks,
+NameError: name 'chunks' is not defined
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/euc_trial.py", line 164, in <module>
+    v=args.version, pfile=args.pfile, final=args.final)
+  File "/g/data/e14/as3189/OFAM/scripts/euc_trial.py", line 68, in run_EUC
+    fieldset = ofam_fieldset(time_bnds, exp,  chunks=True, cs=chunks,
+NameError: name 'chunks' is not defined
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/euc_trial.py", line 164, in <module>
+    v=args.version, pfile=args.pfile, final=args.final)
+  File "/g/data/e14/as3189/OFAM/scripts/euc_trial.py", line 68, in run_EUC
+    fieldset = ofam_fieldset(time_bnds, exp,  chunks=True, cs=chunks,
+NameError: name 'chunks' is not defined
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/euc_trial.py", line 164, in <module>
+    v=args.version, pfile=args.pfile, final=args.final)
+  File "/g/data/e14/as3189/OFAM/scripts/euc_trial.py", line 68, in run_EUC
+    fieldset = ofam_fieldset(time_bnds, exp,  chunks=True, cs=chunks,
+NameError: name 'chunks' is not defined
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/euc_trial.py", line 164, in <module>
+    v=args.version, pfile=args.pfile, final=args.final)
+  File "/g/data/e14/as3189/OFAM/scripts/euc_trial.py", line 68, in run_EUC
+    fieldset = ofam_fieldset(time_bnds, exp,  chunks=True, cs=chunks,
+NameError: name 'chunks' is not defined
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/euc_trial.py", line 164, in <module>
+    v=args.version, pfile=args.pfile, final=args.final)
+  File "/g/data/e14/as3189/OFAM/scripts/euc_trial.py", line 68, in run_EUC
+    fieldset = ofam_fieldset(time_bnds, exp,  chunks=True, cs=chunks,
+NameError: name 'chunks' is not defined
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/euc_trial.py", line 164, in <module>
+    v=args.version, pfile=args.pfile, final=args.final)
+  File "/g/data/e14/as3189/OFAM/scripts/euc_trial.py", line 68, in run_EUC
+    fieldset = ofam_fieldset(time_bnds, exp,  chunks=True, cs=chunks,
+NameError: name 'chunks' is not defined
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/euc_trial.py", line 164, in <module>
+    v=args.version, pfile=args.pfile, final=args.final)
+  File "/g/data/e14/as3189/OFAM/scripts/euc_trial.py", line 68, in run_EUC
+    fieldset = ofam_fieldset(time_bnds, exp,  chunks=True, cs=chunks,
+NameError: name 'chunks' is not defined
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/euc_trial.py", line 164, in <module>
+    v=args.version, pfile=args.pfile, final=args.final)
+  File "/g/data/e14/as3189/OFAM/scripts/euc_trial.py", line 68, in run_EUC
+    fieldset = ofam_fieldset(time_bnds, exp,  chunks=True, cs=chunks,
+NameError: name 'chunks' is not defined
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/euc_trial.py", line 164, in <module>
+    v=args.version, pfile=args.pfile, final=args.final)
+  File "/g/data/e14/as3189/OFAM/scripts/euc_trial.py", line 68, in run_EUC
+    fieldset = ofam_fieldset(time_bnds, exp,  chunks=True, cs=chunks,
+NameError: name 'chunks' is not defined
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/euc_trial.py", line 164, in <module>
+    v=args.version, pfile=args.pfile, final=args.final)
+  File "/g/data/e14/as3189/OFAM/scripts/euc_trial.py", line 68, in run_EUC
+    fieldset = ofam_fieldset(time_bnds, exp,  chunks=True, cs=chunks,
+NameError: name 'chunks' is not defined
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/euc_trial.py", line 164, in <module>
+    v=args.version, pfile=args.pfile, final=args.final)
+  File "/g/data/e14/as3189/OFAM/scripts/euc_trial.py", line 68, in run_EUC
+    fieldset = ofam_fieldset(time_bnds, exp,  chunks=True, cs=chunks,
+NameError: name 'chunks' is not defined
+--------------------------------------------------------------------------
+Primary job  terminated normally, but 1 process returned
+a non-zero exit code. Per user-direction, the job has been aborted.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+mpirun detected that one or more processes exited with non-zero status, thus causing
+the job to be terminated. The first process to do so was:
+
+  Process name: [[10769,1],33]
+  Exit code:    1
+--------------------------------------------------------------------------

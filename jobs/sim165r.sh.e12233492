@@ -1,0 +1,18 @@
+Generating restart file from: sim_rcp_165_v0r01
+sim_rcp_165_v0r02:Simulation v0r2: File=96153 New=85330 West=25282 I=60048 Total=156201
+sim_rcp_165_v0r02:Excecuting 2097-12-15 to 2096-01-19: Runtime=696d
+sim_rcp_165_v0r02:Lon=165: Lat=[-2.6-2.6 x0.1]: Depth=[25-350m x25]
+sim_rcp_165_v0r02:Rep=6d: dt=60m: Out=1d: Land=0.975 Vmin=1e-07
+Saved: /g/data/e14/as3189/OFAM/data/r_sim_rcp_165_v0r02.nc
+--------------------------------------------------------------------------
+mpirun was unable to find the specified executable file, and therefore
+did not launch the job.  This error was first reported for process
+rank 0; it may have occurred for other processes as well.
+
+NOTE: A common cause for this error is misspelling a mpirun command
+      line parameter option (remember that mpirun interprets the first
+      unrecognized command line token as the executable).
+
+Node:       gadi-cpu-clx-0057
+Executable: 96
+--------------------------------------------------------------------------
