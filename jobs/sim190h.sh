@@ -10,12 +10,11 @@
 #PBS -M astellemas@gmail.com
 
 module use /g/data3/hh5/public/modules
-module load conda/analysis3-20.04
+module load conda/analysis3-20.07
 module unload openmpi
 module load openmpi/4.0.2
 
 EXP="hist"
 LON=190
-FILE="sim_${EXP}_${LON}_v0r00.nc"
-python3 /g/data/e14/as3189/OFAM/scripts/sim_particleset.py -e $EXP -x $LON -r 0 -v 0
-mpirun python3 /g/data/e14/as3189/OFAM/scripts/sim.py -e $EXP -x $LON -r 696 -v 0 -f $FILE
+python3 /g/data/e14/as3189/OFAM/scripts/sim_particleset.py -e $EXP -x $LON -r 696 -v 0
+mpirun python3 /g/data/e14/as3189/OFAM/scripts/sim.py -e $EXP -x $LON -r 696 -v 0 -f True
