@@ -225,11 +225,11 @@ def ofam_fieldset(time_bnds='full', exp='hist', chunks=True, cs=300,
 
 
 def generate_sim_id(lon, v=0, exp='hist', randomise=False,
-                    file=None, xlog=None):
+                    restart=True, xlog=None):
     """Create name to save particle file (looks for unsaved filename)."""
-    if not file:
-        head = 'sim_{}_{}_v'.format(exp, int(lon))  # Start of filename.
 
+    if not restart:
+        head = 'sim_{}_{}_v'.format(exp, int(lon))  # Start of filename.
         # Copy given index or find a random number.
         i = random.randint(0, 100) if randomise else v
 
@@ -242,18 +242,14 @@ def generate_sim_id(lon, v=0, exp='hist', randomise=False,
             xlog['v'], xlog['r'] = i, 0
 
     # Increment run index for new output file name.
-    elif file:
-        rmax = int(file.stem[-2:])
-        sim_id = cfg.data/'{}{:02d}.nc'.format(file.stem[:-2], rmax + 1)
-
-        # Change to the latest run if it was not given.
-        if sim_id.exists():
-            sims = [s for s in sim_id.parent.glob(str(sim_id.stem[:-1]) + '*.nc')]
-            rmax = max([int(sim.stem[-2:]) for sim in sims])
-            file = cfg.data/'{}{:02d}.nc'.format(file.stem[:-2], rmax)
-            sim_id = cfg.data/'{}{:02d}.nc'.format(file.stem[:-2], rmax + 1)
+    else:
+        r = 0
+        sim_id = cfg.data/'sim_{}_{}_v{}r00.nc'.format(exp, int(lon), v)
+        sims = [s for s in sim_id.parent.glob(str(sim_id.stem[:-2]) + '*.nc')]
+        r = max([int(sim.stem[-2:]) for sim in sims]) + 1
+        sim_id = cfg.data/'{}{:02d}.nc'.format(sim_id.stem[:-2], r)
         if xlog:
-            xlog['v'], xlog['r'] = v, rmax + 1
+            xlog['v'], xlog['r'] = v, r
 
     return sim_id
 
@@ -314,11 +310,6 @@ def log_simulation(xlog, rank, logger):
     logger.debug('{}:Rank={:>2}: {}: File={} New={} West={} I={}'
                  .format(xlog['id'], rank, xlog['out'], xlog['file_r'],
                          xlog['new_r'], xlog['west_r'], xlog['start_r']))
-
-    # if xlog['pset_start_r'] != xlog['pset_start']:
-    #     logger.debug('{}:Rank={:>2}: T0={:>2.0f}: RT0={}'
-    #                  .format(xlog['id'], rank, xlog['pset_start'],
-    #                          xlog['pset_start_r']))
 
 
 def pset_from_file(fieldset, pclass, filename, repeatdt=None,
