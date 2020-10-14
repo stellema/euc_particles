@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/sim_particleset.py", line 168, in <module>
+    v=args.version, pfile=args.pfile, final=args.final)
+AttributeError: 'Namespace' object has no attribute 'pfile'
