@@ -1,4 +1,0 @@
-sim_rcp_190_v0r3: init=338064 u<0=52647 rem=285417 final=236428 deleted=48989(17.2%)
-/local/spool/pbs/mom_priv/jobs/9443255.gadi-pbs.SC: line 13: 418397 Killed                  python3 /g/data/e14/as3189/OFAM/scripts/sim_info.py -f "sim_rcp_190_v0r3.nc"
-sim_rcp_165_v0r2: init=280121 u<0=38632 rem=241489 final=183893 deleted=57596(23.9%)
-=>> PBS: job killed: walltime 54113 exceeded limit 54000
