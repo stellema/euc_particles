@@ -126,8 +126,11 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
         pset = pset_from_file(fieldset, pclass, filename, reduced=True,
                               restart=True, restarttime=None, xlog=xlog)
         pset_start = xlog['pset_start']
-        endtime = xlog['endtime']
-        runtime = timedelta(seconds=xlog['runtime'])
+        try:
+            endtime = xlog['endtime']
+            runtime = timedelta(seconds=xlog['runtime'])
+        except:
+            endtime = int(pset_start - runtime.total_seconds())
         xlog['start_r'] = pset.size
 
     # Create output ParticleFile p_name and time steps to write output.
