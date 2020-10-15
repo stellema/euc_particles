@@ -165,7 +165,7 @@ if __name__ == "__main__" and cfg.home != Path('E:/'):
 
     restart_EUC(dy=args.dy, dz=args.dz, lon=args.lon, exp=args.exp,
                 runtime_days=args.runtime, repeatdt_days=args.repeatdt,
-                v=args.version, pfile=args.pfile, final=args.final)
+                v=args.version, final=args.final)
 
 elif __name__ == "__main__":
     dy, dz, lon = 1, 150, 165

@@ -10,6 +10,7 @@ import tools
 from main import (ofam_fieldset, pset_euc, del_westward, generate_sim_id,
                   pset_from_file, log_simulation)
 import math
+import dask
 import numpy as np
 from pathlib import Path
 from operator import attrgetter
@@ -23,7 +24,7 @@ try:
     from mpi4py import MPI
 except ImportError:
     MPI = None
-
+dask.config.set({"array.slicing.split_large_chunks": True})
 logger = tools.mlogger('sim', parcels=True, misc=False)
 
 
@@ -200,7 +201,7 @@ if __name__ == "__main__" and cfg.home != Path('E:/'):
 elif __name__ == "__main__":
     dy, dz, lon = 1, 150, 165
     dt_mins, repeatdt_days, outputdt_days, runtime_days = 60, 6, 1, 36
-    restart = True
+    restart = False
     v = 72
     exp = 'hist'
     final = False

@@ -75,6 +75,7 @@ def restart_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
 
     class zParticle(JITParticle):
         """Particle class that saves particle age and zonal velocity."""
+
         age = Variable('age', initial=0., dtype=np.float32)
         u = Variable('u', initial=fieldset.U, to_write='once', dtype=np.float32)
         zone = Variable('zone', initial=0., dtype=np.float32)
@@ -86,7 +87,8 @@ def restart_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
     sim_id = cfg.data/'sim_{}_{}_{}d.nc'.format(exp, lon, runtime_days)
 
     # Restart filename.
-    file = cfg.data/'sim_{}_{}_v0r01.nc'.format(exp, lon)
+    rp = 1 if lon == 165 else 4
+    file = cfg.data/'sim_{}_{}_v0r0{}.nc'.format(exp, lon, rp)
     logger.info('Generating restart file from: {}'.format(file.stem))
 
     # Create ParticleSet from the given ParticleFile.
@@ -159,7 +161,7 @@ def restart_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
     timed = tools.timer(ts)
     # Save to netcdf.
     df.to_netcdf(cfg.data/('r_' + sim_id.name))
-    logger.info('Saved: {}: t={}'.format(str(cfg.data/('r_' + sim_id.name)), timed))
+    logger.info(' Saved: {}: t={}'.format(str(cfg.data/('r_' + sim_id.name)), timed))
     return
 
 
