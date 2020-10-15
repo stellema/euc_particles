@@ -1,0 +1,825 @@
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/parcels/field.py:330: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray
+  timeslices = np.array(timeslices)
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/parcels/field.py:332: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray
+  dataFiles = np.concatenate(np.array(dataFiles))
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/parcels/field.py:366: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray
+  field_timeslices = np.array(field_timeslices)
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/parcels/field.py:368: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray
+  dataFiles = np.concatenate(np.array(dataFiles))
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/parcels/field.py:330: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray
+  timeslices = np.array(timeslices)
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/parcels/field.py:332: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray
+  dataFiles = np.concatenate(np.array(dataFiles))
+Generating restart file from: sim_hist_220_v0r04
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/xarray/core/indexing.py:1367: PerformanceWarning: Slicing is producing a large chunk. To accept the large
+chunk and silence this warning, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': False}):
+    ...     array[indexer]
+
+To avoid creating the large chunks, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': True}):
+    ...     array[indexer]
+  value = value[(slice(None),) * axis + (subkey,)]
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/xarray/core/indexing.py:1367: PerformanceWarning: Slicing is producing a large chunk. To accept the large
+chunk and silence this warning, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': False}):
+    ...     array[indexer]
+
+To avoid creating the large chunks, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': True}):
+    ...     array[indexer]
+  value = value[(slice(None),) * axis + (subkey,)]
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/xarray/core/indexing.py:1367: PerformanceWarning: Slicing is producing a large chunk. To accept the large
+chunk and silence this warning, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': False}):
+    ...     array[indexer]
+
+To avoid creating the large chunks, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': True}):
+    ...     array[indexer]
+  value = value[(slice(None),) * axis + (subkey,)]
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/xarray/core/indexing.py:1367: PerformanceWarning: Slicing is producing a large chunk. To accept the large
+chunk and silence this warning, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': False}):
+    ...     array[indexer]
+
+To avoid creating the large chunks, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': True}):
+    ...     array[indexer]
+  value = value[(slice(None),) * axis + (subkey,)]
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/xarray/core/indexing.py:1367: PerformanceWarning: Slicing is producing a large chunk. To accept the large
+chunk and silence this warning, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': False}):
+    ...     array[indexer]
+
+To avoid creating the large chunks, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': True}):
+    ...     array[indexer]
+  value = value[(slice(None),) * axis + (subkey,)]
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/xarray/core/indexing.py:1367: PerformanceWarning: Slicing is producing a large chunk. To accept the large
+chunk and silence this warning, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': False}):
+    ...     array[indexer]
+
+To avoid creating the large chunks, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': True}):
+    ...     array[indexer]
+  value = value[(slice(None),) * axis + (subkey,)]
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/xarray/core/indexing.py:1367: PerformanceWarning: Slicing is producing a large chunk. To accept the large
+chunk and silence this warning, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': False}):
+    ...     array[indexer]
+
+To avoid creating the large chunks, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': True}):
+    ...     array[indexer]
+  value = value[(slice(None),) * axis + (subkey,)]
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/xarray/core/indexing.py:1367: PerformanceWarning: Slicing is producing a large chunk. To accept the large
+chunk and silence this warning, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': False}):
+    ...     array[indexer]
+
+To avoid creating the large chunks, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': True}):
+    ...     array[indexer]
+  value = value[(slice(None),) * axis + (subkey,)]
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/xarray/core/indexing.py:1367: PerformanceWarning: Slicing is producing a large chunk. To accept the large
+chunk and silence this warning, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': False}):
+    ...     array[indexer]
+
+To avoid creating the large chunks, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': True}):
+    ...     array[indexer]
+  value = value[(slice(None),) * axis + (subkey,)]
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/xarray/core/indexing.py:1367: PerformanceWarning: Slicing is producing a large chunk. To accept the large
+chunk and silence this warning, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': False}):
+    ...     array[indexer]
+
+To avoid creating the large chunks, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': True}):
+    ...     array[indexer]
+  value = value[(slice(None),) * axis + (subkey,)]
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/xarray/core/indexing.py:1367: PerformanceWarning: Slicing is producing a large chunk. To accept the large
+chunk and silence this warning, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': False}):
+    ...     array[indexer]
+
+To avoid creating the large chunks, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': True}):
+    ...     array[indexer]
+  value = value[(slice(None),) * axis + (subkey,)]
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/xarray/core/indexing.py:1367: PerformanceWarning: Slicing is producing a large chunk. To accept the large
+chunk and silence this warning, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': False}):
+    ...     array[indexer]
+
+To avoid creating the large chunks, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': True}):
+    ...     array[indexer]
+  value = value[(slice(None),) * axis + (subkey,)]
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/xarray/core/indexing.py:1367: PerformanceWarning: Slicing is producing a large chunk. To accept the large
+chunk and silence this warning, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': False}):
+    ...     array[indexer]
+
+To avoid creating the large chunks, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': True}):
+    ...     array[indexer]
+  value = value[(slice(None),) * axis + (subkey,)]
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/xarray/core/indexing.py:1367: PerformanceWarning: Slicing is producing a large chunk. To accept the large
+chunk and silence this warning, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': False}):
+    ...     array[indexer]
+
+To avoid creating the large chunks, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': True}):
+    ...     array[indexer]
+  value = value[(slice(None),) * axis + (subkey,)]
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/xarray/core/indexing.py:1367: PerformanceWarning: Slicing is producing a large chunk. To accept the large
+chunk and silence this warning, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': False}):
+    ...     array[indexer]
+
+To avoid creating the large chunks, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': True}):
+    ...     array[indexer]
+  value = value[(slice(None),) * axis + (subkey,)]
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/xarray/core/indexing.py:1367: PerformanceWarning: Slicing is producing a large chunk. To accept the large
+chunk and silence this warning, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': False}):
+    ...     array[indexer]
+
+To avoid creating the large chunks, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': True}):
+    ...     array[indexer]
+  value = value[(slice(None),) * axis + (subkey,)]
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/xarray/core/indexing.py:1367: PerformanceWarning: Slicing is producing a large chunk. To accept the large
+chunk and silence this warning, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': False}):
+    ...     array[indexer]
+
+To avoid creating the large chunks, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': True}):
+    ...     array[indexer]
+  value = value[(slice(None),) * axis + (subkey,)]
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/xarray/core/indexing.py:1367: PerformanceWarning: Slicing is producing a large chunk. To accept the large
+chunk and silence this warning, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': False}):
+    ...     array[indexer]
+
+To avoid creating the large chunks, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': True}):
+    ...     array[indexer]
+  value = value[(slice(None),) * axis + (subkey,)]
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/xarray/core/indexing.py:1367: PerformanceWarning: Slicing is producing a large chunk. To accept the large
+chunk and silence this warning, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': False}):
+    ...     array[indexer]
+
+To avoid creating the large chunks, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': True}):
+    ...     array[indexer]
+  value = value[(slice(None),) * axis + (subkey,)]
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/xarray/core/indexing.py:1367: PerformanceWarning: Slicing is producing a large chunk. To accept the large
+chunk and silence this warning, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': False}):
+    ...     array[indexer]
+
+To avoid creating the large chunks, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': True}):
+    ...     array[indexer]
+  value = value[(slice(None),) * axis + (subkey,)]
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/xarray/core/indexing.py:1367: PerformanceWarning: Slicing is producing a large chunk. To accept the large
+chunk and silence this warning, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': False}):
+    ...     array[indexer]
+
+To avoid creating the large chunks, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': True}):
+    ...     array[indexer]
+  value = value[(slice(None),) * axis + (subkey,)]
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/xarray/core/indexing.py:1367: PerformanceWarning: Slicing is producing a large chunk. To accept the large
+chunk and silence this warning, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': False}):
+    ...     array[indexer]
+
+To avoid creating the large chunks, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': True}):
+    ...     array[indexer]
+  value = value[(slice(None),) * axis + (subkey,)]
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/xarray/core/indexing.py:1367: PerformanceWarning: Slicing is producing a large chunk. To accept the large
+chunk and silence this warning, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': False}):
+    ...     array[indexer]
+
+To avoid creating the large chunks, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': True}):
+    ...     array[indexer]
+  value = value[(slice(None),) * axis + (subkey,)]
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/xarray/core/indexing.py:1367: PerformanceWarning: Slicing is producing a large chunk. To accept the large
+chunk and silence this warning, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': False}):
+    ...     array[indexer]
+
+To avoid creating the large chunks, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': True}):
+    ...     array[indexer]
+  value = value[(slice(None),) * axis + (subkey,)]
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/xarray/core/indexing.py:1367: PerformanceWarning: Slicing is producing a large chunk. To accept the large
+chunk and silence this warning, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': False}):
+    ...     array[indexer]
+
+To avoid creating the large chunks, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': True}):
+    ...     array[indexer]
+  value = value[(slice(None),) * axis + (subkey,)]
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/xarray/core/indexing.py:1367: PerformanceWarning: Slicing is producing a large chunk. To accept the large
+chunk and silence this warning, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': False}):
+    ...     array[indexer]
+
+To avoid creating the large chunks, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': True}):
+    ...     array[indexer]
+  value = value[(slice(None),) * axis + (subkey,)]
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/xarray/core/indexing.py:1367: PerformanceWarning: Slicing is producing a large chunk. To accept the large
+chunk and silence this warning, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': False}):
+    ...     array[indexer]
+
+To avoid creating the large chunks, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': True}):
+    ...     array[indexer]
+  value = value[(slice(None),) * axis + (subkey,)]
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/xarray/core/indexing.py:1367: PerformanceWarning: Slicing is producing a large chunk. To accept the large
+chunk and silence this warning, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': False}):
+    ...     array[indexer]
+
+To avoid creating the large chunks, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': True}):
+    ...     array[indexer]
+  value = value[(slice(None),) * axis + (subkey,)]
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/xarray/core/indexing.py:1367: PerformanceWarning: Slicing is producing a large chunk. To accept the large
+chunk and silence this warning, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': False}):
+    ...     array[indexer]
+
+To avoid creating the large chunks, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': True}):
+    ...     array[indexer]
+  value = value[(slice(None),) * axis + (subkey,)]
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/xarray/core/indexing.py:1367: PerformanceWarning: Slicing is producing a large chunk. To accept the large
+chunk and silence this warning, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': False}):
+    ...     array[indexer]
+
+To avoid creating the large chunks, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': True}):
+    ...     array[indexer]
+  value = value[(slice(None),) * axis + (subkey,)]
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/xarray/core/indexing.py:1367: PerformanceWarning: Slicing is producing a large chunk. To accept the large
+chunk and silence this warning, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': False}):
+    ...     array[indexer]
+
+To avoid creating the large chunks, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': True}):
+    ...     array[indexer]
+  value = value[(slice(None),) * axis + (subkey,)]
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/xarray/core/indexing.py:1367: PerformanceWarning: Slicing is producing a large chunk. To accept the large
+chunk and silence this warning, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': False}):
+    ...     array[indexer]
+
+To avoid creating the large chunks, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': True}):
+    ...     array[indexer]
+  value = value[(slice(None),) * axis + (subkey,)]
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/xarray/core/indexing.py:1367: PerformanceWarning: Slicing is producing a large chunk. To accept the large
+chunk and silence this warning, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': False}):
+    ...     array[indexer]
+
+To avoid creating the large chunks, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': True}):
+    ...     array[indexer]
+  value = value[(slice(None),) * axis + (subkey,)]
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/xarray/core/indexing.py:1367: PerformanceWarning: Slicing is producing a large chunk. To accept the large
+chunk and silence this warning, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': False}):
+    ...     array[indexer]
+
+To avoid creating the large chunks, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': True}):
+    ...     array[indexer]
+  value = value[(slice(None),) * axis + (subkey,)]
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/xarray/core/indexing.py:1367: PerformanceWarning: Slicing is producing a large chunk. To accept the large
+chunk and silence this warning, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': False}):
+    ...     array[indexer]
+
+To avoid creating the large chunks, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': True}):
+    ...     array[indexer]
+  value = value[(slice(None),) * axis + (subkey,)]
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/xarray/core/indexing.py:1367: PerformanceWarning: Slicing is producing a large chunk. To accept the large
+chunk and silence this warning, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': False}):
+    ...     array[indexer]
+
+To avoid creating the large chunks, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': True}):
+    ...     array[indexer]
+  value = value[(slice(None),) * axis + (subkey,)]
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/xarray/core/indexing.py:1367: PerformanceWarning: Slicing is producing a large chunk. To accept the large
+chunk and silence this warning, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': False}):
+    ...     array[indexer]
+
+To avoid creating the large chunks, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': True}):
+    ...     array[indexer]
+  value = value[(slice(None),) * axis + (subkey,)]
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/xarray/core/indexing.py:1367: PerformanceWarning: Slicing is producing a large chunk. To accept the large
+chunk and silence this warning, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': False}):
+    ...     array[indexer]
+
+To avoid creating the large chunks, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': True}):
+    ...     array[indexer]
+  value = value[(slice(None),) * axis + (subkey,)]
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/xarray/core/indexing.py:1367: PerformanceWarning: Slicing is producing a large chunk. To accept the large
+chunk and silence this warning, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': False}):
+    ...     array[indexer]
+
+To avoid creating the large chunks, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': True}):
+    ...     array[indexer]
+  value = value[(slice(None),) * axis + (subkey,)]
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/xarray/core/indexing.py:1367: PerformanceWarning: Slicing is producing a large chunk. To accept the large
+chunk and silence this warning, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': False}):
+    ...     array[indexer]
+
+To avoid creating the large chunks, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': True}):
+    ...     array[indexer]
+  value = value[(slice(None),) * axis + (subkey,)]
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/xarray/core/indexing.py:1367: PerformanceWarning: Slicing is producing a large chunk. To accept the large
+chunk and silence this warning, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': False}):
+    ...     array[indexer]
+
+To avoid creating the large chunks, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': True}):
+    ...     array[indexer]
+  value = value[(slice(None),) * axis + (subkey,)]
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/xarray/core/indexing.py:1367: PerformanceWarning: Slicing is producing a large chunk. To accept the large
+chunk and silence this warning, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': False}):
+    ...     array[indexer]
+
+To avoid creating the large chunks, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': True}):
+    ...     array[indexer]
+  value = value[(slice(None),) * axis + (subkey,)]
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/xarray/core/indexing.py:1367: PerformanceWarning: Slicing is producing a large chunk. To accept the large
+chunk and silence this warning, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': False}):
+    ...     array[indexer]
+
+To avoid creating the large chunks, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': True}):
+    ...     array[indexer]
+  value = value[(slice(None),) * axis + (subkey,)]
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/xarray/core/indexing.py:1367: PerformanceWarning: Slicing is producing a large chunk. To accept the large
+chunk and silence this warning, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': False}):
+    ...     array[indexer]
+
+To avoid creating the large chunks, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': True}):
+    ...     array[indexer]
+  value = value[(slice(None),) * axis + (subkey,)]
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/xarray/core/indexing.py:1367: PerformanceWarning: Slicing is producing a large chunk. To accept the large
+chunk and silence this warning, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': False}):
+    ...     array[indexer]
+
+To avoid creating the large chunks, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': True}):
+    ...     array[indexer]
+  value = value[(slice(None),) * axis + (subkey,)]
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/xarray/core/indexing.py:1367: PerformanceWarning: Slicing is producing a large chunk. To accept the large
+chunk and silence this warning, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': False}):
+    ...     array[indexer]
+
+To avoid creating the large chunks, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': True}):
+    ...     array[indexer]
+  value = value[(slice(None),) * axis + (subkey,)]
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/xarray/core/indexing.py:1367: PerformanceWarning: Slicing is producing a large chunk. To accept the large
+chunk and silence this warning, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': False}):
+    ...     array[indexer]
+
+To avoid creating the large chunks, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': True}):
+    ...     array[indexer]
+  value = value[(slice(None),) * axis + (subkey,)]
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/xarray/core/indexing.py:1367: PerformanceWarning: Slicing is producing a large chunk. To accept the large
+chunk and silence this warning, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': False}):
+    ...     array[indexer]
+
+To avoid creating the large chunks, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': True}):
+    ...     array[indexer]
+  value = value[(slice(None),) * axis + (subkey,)]
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/xarray/core/indexing.py:1367: PerformanceWarning: Slicing is producing a large chunk. To accept the large
+chunk and silence this warning, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': False}):
+    ...     array[indexer]
+
+To avoid creating the large chunks, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': True}):
+    ...     array[indexer]
+  value = value[(slice(None),) * axis + (subkey,)]
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/xarray/core/indexing.py:1367: PerformanceWarning: Slicing is producing a large chunk. To accept the large
+chunk and silence this warning, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': False}):
+    ...     array[indexer]
+
+To avoid creating the large chunks, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': True}):
+    ...     array[indexer]
+  value = value[(slice(None),) * axis + (subkey,)]
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/xarray/core/indexing.py:1367: PerformanceWarning: Slicing is producing a large chunk. To accept the large
+chunk and silence this warning, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': False}):
+    ...     array[indexer]
+
+To avoid creating the large chunks, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': True}):
+    ...     array[indexer]
+  value = value[(slice(None),) * axis + (subkey,)]
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/xarray/core/indexing.py:1367: PerformanceWarning: Slicing is producing a large chunk. To accept the large
+chunk and silence this warning, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': False}):
+    ...     array[indexer]
+
+To avoid creating the large chunks, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': True}):
+    ...     array[indexer]
+  value = value[(slice(None),) * axis + (subkey,)]
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/xarray/core/indexing.py:1367: PerformanceWarning: Slicing is producing a large chunk. To accept the large
+chunk and silence this warning, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': False}):
+    ...     array[indexer]
+
+To avoid creating the large chunks, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': True}):
+    ...     array[indexer]
+  value = value[(slice(None),) * axis + (subkey,)]
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/xarray/core/indexing.py:1367: PerformanceWarning: Slicing is producing a large chunk. To accept the large
+chunk and silence this warning, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': False}):
+    ...     array[indexer]
+
+To avoid creating the large chunks, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': True}):
+    ...     array[indexer]
+  value = value[(slice(None),) * axis + (subkey,)]
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/xarray/core/indexing.py:1367: PerformanceWarning: Slicing is producing a large chunk. To accept the large
+chunk and silence this warning, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': False}):
+    ...     array[indexer]
+
+To avoid creating the large chunks, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': True}):
+    ...     array[indexer]
+  value = value[(slice(None),) * axis + (subkey,)]
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/xarray/core/indexing.py:1367: PerformanceWarning: Slicing is producing a large chunk. To accept the large
+chunk and silence this warning, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': False}):
+    ...     array[indexer]
+
+To avoid creating the large chunks, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': True}):
+    ...     array[indexer]
+  value = value[(slice(None),) * axis + (subkey,)]
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/xarray/core/indexing.py:1367: PerformanceWarning: Slicing is producing a large chunk. To accept the large
+chunk and silence this warning, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': False}):
+    ...     array[indexer]
+
+To avoid creating the large chunks, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': True}):
+    ...     array[indexer]
+  value = value[(slice(None),) * axis + (subkey,)]
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/xarray/core/indexing.py:1367: PerformanceWarning: Slicing is producing a large chunk. To accept the large
+chunk and silence this warning, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': False}):
+    ...     array[indexer]
+
+To avoid creating the large chunks, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': True}):
+    ...     array[indexer]
+  value = value[(slice(None),) * axis + (subkey,)]
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/xarray/core/indexing.py:1367: PerformanceWarning: Slicing is producing a large chunk. To accept the large
+chunk and silence this warning, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': False}):
+    ...     array[indexer]
+
+To avoid creating the large chunks, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': True}):
+    ...     array[indexer]
+  value = value[(slice(None),) * axis + (subkey,)]
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/xarray/core/indexing.py:1367: PerformanceWarning: Slicing is producing a large chunk. To accept the large
+chunk and silence this warning, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': False}):
+    ...     array[indexer]
+
+To avoid creating the large chunks, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': True}):
+    ...     array[indexer]
+  value = value[(slice(None),) * axis + (subkey,)]
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/xarray/core/indexing.py:1367: PerformanceWarning: Slicing is producing a large chunk. To accept the large
+chunk and silence this warning, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': False}):
+    ...     array[indexer]
+
+To avoid creating the large chunks, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': True}):
+    ...     array[indexer]
+  value = value[(slice(None),) * axis + (subkey,)]
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/xarray/core/indexing.py:1367: PerformanceWarning: Slicing is producing a large chunk. To accept the large
+chunk and silence this warning, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': False}):
+    ...     array[indexer]
+
+To avoid creating the large chunks, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': True}):
+    ...     array[indexer]
+  value = value[(slice(None),) * axis + (subkey,)]
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/xarray/core/indexing.py:1367: PerformanceWarning: Slicing is producing a large chunk. To accept the large
+chunk and silence this warning, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': False}):
+    ...     array[indexer]
+
+To avoid creating the large chunks, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': True}):
+    ...     array[indexer]
+  value = value[(slice(None),) * axis + (subkey,)]
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/xarray/core/indexing.py:1367: PerformanceWarning: Slicing is producing a large chunk. To accept the large
+chunk and silence this warning, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': False}):
+    ...     array[indexer]
+
+To avoid creating the large chunks, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': True}):
+    ...     array[indexer]
+  value = value[(slice(None),) * axis + (subkey,)]
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/xarray/core/indexing.py:1367: PerformanceWarning: Slicing is producing a large chunk. To accept the large
+chunk and silence this warning, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': False}):
+    ...     array[indexer]
+
+To avoid creating the large chunks, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': True}):
+    ...     array[indexer]
+  value = value[(slice(None),) * axis + (subkey,)]
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/xarray/core/indexing.py:1367: PerformanceWarning: Slicing is producing a large chunk. To accept the large
+chunk and silence this warning, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': False}):
+    ...     array[indexer]
+
+To avoid creating the large chunks, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': True}):
+    ...     array[indexer]
+  value = value[(slice(None),) * axis + (subkey,)]
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/xarray/core/indexing.py:1367: PerformanceWarning: Slicing is producing a large chunk. To accept the large
+chunk and silence this warning, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': False}):
+    ...     array[indexer]
+
+To avoid creating the large chunks, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': True}):
+    ...     array[indexer]
+  value = value[(slice(None),) * axis + (subkey,)]
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/xarray/core/indexing.py:1367: PerformanceWarning: Slicing is producing a large chunk. To accept the large
+chunk and silence this warning, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': False}):
+    ...     array[indexer]
+
+To avoid creating the large chunks, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': True}):
+    ...     array[indexer]
+  value = value[(slice(None),) * axis + (subkey,)]
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/xarray/core/indexing.py:1367: PerformanceWarning: Slicing is producing a large chunk. To accept the large
+chunk and silence this warning, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': False}):
+    ...     array[indexer]
+
+To avoid creating the large chunks, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': True}):
+    ...     array[indexer]
+  value = value[(slice(None),) * axis + (subkey,)]
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/xarray/core/indexing.py:1367: PerformanceWarning: Slicing is producing a large chunk. To accept the large
+chunk and silence this warning, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': False}):
+    ...     array[indexer]
+
+To avoid creating the large chunks, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': True}):
+    ...     array[indexer]
+  value = value[(slice(None),) * axis + (subkey,)]
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/xarray/core/indexing.py:1367: PerformanceWarning: Slicing is producing a large chunk. To accept the large
+chunk and silence this warning, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': False}):
+    ...     array[indexer]
+
+To avoid creating the large chunks, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': True}):
+    ...     array[indexer]
+  value = value[(slice(None),) * axis + (subkey,)]
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/xarray/core/indexing.py:1367: PerformanceWarning: Slicing is producing a large chunk. To accept the large
+chunk and silence this warning, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': False}):
+    ...     array[indexer]
+
+To avoid creating the large chunks, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': True}):
+    ...     array[indexer]
+  value = value[(slice(None),) * axis + (subkey,)]
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/xarray/core/indexing.py:1367: PerformanceWarning: Slicing is producing a large chunk. To accept the large
+chunk and silence this warning, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': False}):
+    ...     array[indexer]
+
+To avoid creating the large chunks, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': True}):
+    ...     array[indexer]
+  value = value[(slice(None),) * axis + (subkey,)]
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/xarray/core/indexing.py:1367: PerformanceWarning: Slicing is producing a large chunk. To accept the large
+chunk and silence this warning, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': False}):
+    ...     array[indexer]
+
+To avoid creating the large chunks, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': True}):
+    ...     array[indexer]
+  value = value[(slice(None),) * axis + (subkey,)]
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/xarray/core/indexing.py:1367: PerformanceWarning: Slicing is producing a large chunk. To accept the large
+chunk and silence this warning, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': False}):
+    ...     array[indexer]
+
+To avoid creating the large chunks, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': True}):
+    ...     array[indexer]
+  value = value[(slice(None),) * axis + (subkey,)]
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/xarray/core/indexing.py:1367: PerformanceWarning: Slicing is producing a large chunk. To accept the large
+chunk and silence this warning, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': False}):
+    ...     array[indexer]
+
+To avoid creating the large chunks, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': True}):
+    ...     array[indexer]
+  value = value[(slice(None),) * axis + (subkey,)]
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/xarray/core/indexing.py:1367: PerformanceWarning: Slicing is producing a large chunk. To accept the large
+chunk and silence this warning, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': False}):
+    ...     array[indexer]
+
+To avoid creating the large chunks, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': True}):
+    ...     array[indexer]
+  value = value[(slice(None),) * axis + (subkey,)]
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/xarray/core/indexing.py:1367: PerformanceWarning: Slicing is producing a large chunk. To accept the large
+chunk and silence this warning, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': False}):
+    ...     array[indexer]
+
+To avoid creating the large chunks, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': True}):
+    ...     array[indexer]
+  value = value[(slice(None),) * axis + (subkey,)]
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/xarray/core/indexing.py:1367: PerformanceWarning: Slicing is producing a large chunk. To accept the large
+chunk and silence this warning, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': False}):
+    ...     array[indexer]
+
+To avoid creating the large chunks, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': True}):
+    ...     array[indexer]
+  value = value[(slice(None),) * axis + (subkey,)]
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/xarray/core/indexing.py:1367: PerformanceWarning: Slicing is producing a large chunk. To accept the large
+chunk and silence this warning, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': False}):
+    ...     array[indexer]
+
+To avoid creating the large chunks, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': True}):
+    ...     array[indexer]
+  value = value[(slice(None),) * axis + (subkey,)]
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/xarray/core/indexing.py:1367: PerformanceWarning: Slicing is producing a large chunk. To accept the large
+chunk and silence this warning, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': False}):
+    ...     array[indexer]
+
+To avoid creating the large chunks, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': True}):
+    ...     array[indexer]
+  value = value[(slice(None),) * axis + (subkey,)]
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/xarray/core/indexing.py:1367: PerformanceWarning: Slicing is producing a large chunk. To accept the large
+chunk and silence this warning, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': False}):
+    ...     array[indexer]
+
+To avoid creating the large chunks, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': True}):
+    ...     array[indexer]
+  value = value[(slice(None),) * axis + (subkey,)]
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/xarray/core/indexing.py:1367: PerformanceWarning: Slicing is producing a large chunk. To accept the large
+chunk and silence this warning, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': False}):
+    ...     array[indexer]
+
+To avoid creating the large chunks, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': True}):
+    ...     array[indexer]
+  value = value[(slice(None),) * axis + (subkey,)]
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/xarray/core/indexing.py:1367: PerformanceWarning: Slicing is producing a large chunk. To accept the large
+chunk and silence this warning, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': False}):
+    ...     array[indexer]
+
+To avoid creating the large chunks, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': True}):
+    ...     array[indexer]
+  value = value[(slice(None),) * axis + (subkey,)]
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/xarray/core/indexing.py:1367: PerformanceWarning: Slicing is producing a large chunk. To accept the large
+chunk and silence this warning, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': False}):
+    ...     array[indexer]
+
+To avoid creating the large chunks, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': True}):
+    ...     array[indexer]
+  value = value[(slice(None),) * axis + (subkey,)]
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/xarray/core/indexing.py:1367: PerformanceWarning: Slicing is producing a large chunk. To accept the large
+chunk and silence this warning, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': False}):
+    ...     array[indexer]
+
+To avoid creating the large chunks, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': True}):
+    ...     array[indexer]
+  value = value[(slice(None),) * axis + (subkey,)]
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/xarray/core/indexing.py:1367: PerformanceWarning: Slicing is producing a large chunk. To accept the large
+chunk and silence this warning, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': False}):
+    ...     array[indexer]
+
+To avoid creating the large chunks, set the option
+    >>> with dask.config.set(**{'array.slicing.split_large_chunks': True}):
+    ...     array[indexer]
+  value = value[(slice(None),) * axis + (subkey,)]
+sim_hist_220_180d:Simulation v24: File=175875 New=21518 West=11628 I=9890 Total=185765
+sim_hist_220_180d:Excecuting 2003-03-30 to 2002-10-01: Runtime=180d
+sim_hist_220_180d:Lon=220: Lat=[-2.6-2.6 x0.1]: Depth=[25-350m x25]
+sim_hist_220_180d:Rep=6d: dt=60m: Out=1d: Land=0.975 Vmin=1e-07
+ Saved: /g/data/e14/as3189/OFAM/data/r_sim_hist_220_180d.nc: t=01:43:13
