@@ -5339,3 +5339,10 @@
 2020-10-15 01:18:50:  sim_hist_165_t12:Completed: 09:35:30: Rank= 5: Particles: Start=9069 Del=169 End=8900
 2020-10-15 04:08:09:  sim_hist_165_t12:Completed: 12:24:49: Rank= 0: Particles: Start=22908 Del=235 End=22673
 2020-10-15 04:09:23:sim_hist_165_t12:Finished!
+2020-10-15 16:46:14:Generating restart file from: sim_hist_220_v0r04
+2020-10-15 16:46:14:sim_hist_165_t11:Simulation v11r0: Particles=110382
+2020-10-15 16:46:14:sim_hist_165_t11:Excecuting 2008-09-23 to 2008-05-24: Runtime=122d
+2020-10-15 16:46:14:sim_hist_165_t11:Lon=: Lat=: Depth=
+2020-10-15 16:46:14:sim_hist_165_t11:Dir=KGGYPCDJ: Rep=6d: dt=60m: Out=1d: Land=0.975 Vmin=1e-07
+2020-10-15 16:46:14:sim_hist_165_t11:Rank= 0: KGGYPCDJ: File=0 New=0 West=0 I=110382
+2020-10-15 16:46:18:Compiled zParticleAdvectionRK4_LandBeachTestUnBeachRAgeZoneDistance ==> /jobfs/12409722.gadi-pbs/parcels-12904/89b39fa3f2da467c4929ec28f247bc65_0.so

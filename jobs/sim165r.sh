@@ -16,5 +16,4 @@ module load openmpi/4.0.2
 
 EXP="rcp"
 LON=165
-python3 /g/data/e14/as3189/OFAM/scripts/sim_particleset.py -e $EXP -x $LON -r 696 -v 0
 mpirun python3 /g/data/e14/as3189/OFAM/scripts/sim.py -e $EXP -x $LON -r 696 -v 0 -f True
