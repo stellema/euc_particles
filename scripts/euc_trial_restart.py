@@ -87,7 +87,7 @@ def restart_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
     sim_id = cfg.data/'sim_{}_{}_{}d.nc'.format(exp, lon, runtime_days)
 
     # Restart filename.
-    rp = 1 if lon == 165 else 4
+    rp = 1 if lon == 165 else 5
     file = cfg.data/'sim_{}_{}_v0r0{}.nc'.format(exp, lon, rp)
     logger.info('Generating restart file from: {}'.format(file.stem))
 
