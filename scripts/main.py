@@ -27,6 +27,7 @@ OFAM variable coordinates:
 
 """
 import cfg
+import dask
 import math
 import random
 import parcels
@@ -56,6 +57,7 @@ def ofam_fieldset(time_bnds='full', exp='hist', chunks=True, cs=300,
         fieldset (parcels.Fieldset)
 
     """
+    dask.config.set({"array.slicing.split_large_chunks": True})
     # Add OFAM dimension names to NetcdfFileBuffer namemaps.
     nmaps = {"time": ["Time"],
              "lon": ["xu_ocean", "xt_ocean", "xu_ocean_mod"],
@@ -118,10 +120,11 @@ def ofam_fieldset(time_bnds='full', exp='hist', chunks=True, cs=300,
             'W': {'lat': yt_ind, 'lon': xt_ind, 'depth': zt_ind}}
 
     if chunks not in ['auto', False]:
+        cs = [4, 512, 768]
         chunks = {'Time': 1,
-                  'sw_ocean': 1, 'st_ocean': 1, 'st_edges_ocean': 1,
-                  'yt_ocean': cs, 'yu_ocean': cs, 'yu_ocean_mod': cs,
-                  'xt_ocean': cs, 'xu_ocean': cs, 'xu_ocean_mod': cs}
+                  'sw_ocean': cs[0], 'st_ocean': cs[0], 'st_edges_ocean': cs[0],
+                  'yt_ocean': cs[1], 'yu_ocean': cs[1], 'yu_ocean_mod': cs[1],
+                  'xt_ocean': cs[2], 'xu_ocean': cs[2], 'xu_ocean_mod': cs[2]}
 
     interp_method = {'U': 'bgrid_velocity',
                      'V': 'bgrid_velocity',
