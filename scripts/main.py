@@ -120,7 +120,7 @@ def ofam_fieldset(time_bnds='full', exp='hist', chunks=True, cs=300,
             'W': {'lat': yt_ind, 'lon': xt_ind, 'depth': zt_ind}}
 
     if chunks not in ['auto', False]:
-        cs = [4, 512, 768]
+        cs = [4, 300, 300]
         chunks = {'Time': 1,
                   'sw_ocean': cs[0], 'st_ocean': cs[0], 'st_edges_ocean': cs[0],
                   'yt_ocean': cs[1], 'yu_ocean': cs[1], 'yu_ocean_mod': cs[1],

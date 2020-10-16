@@ -16,4 +16,4 @@ module load openmpi/4.0.2
 
 EXP="hist"
 LON=220
-mpirun python3 /g/data/e14/as3189/OFAM/scripts/euc_trial.py -e $EXP -x $LON -r 180 -v 96
+mpirun python3 /g/data/e14/as3189/OFAM/scripts/euc_trial.py -e $EXP -x $LON -r 180 -v 97
