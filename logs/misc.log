@@ -2299,3 +2299,111 @@
 2020-10-16 16:36:52:Chunksize=[4, 512, 1792]: Timer=15.86320161819458
 2020-10-16 16:36:57:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\83a99e817f37d0b8dcadf4ebd0a7bcce_0.dll
 2020-10-16 16:37:10:Chunksize=[4, 512, 2048]: Timer=15.548487186431885
+2020-10-16 21:42:48:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\42cb1167ab289ec4dcc1a138045f0bef_0.dll
+2020-10-16 21:43:10:Chunksize=[3, 299, 128]: Timer=23.600809574127197
+2020-10-16 21:43:15:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\7fe03bb9d0546f651e6639e9e86ff412_0.dll
+2020-10-16 21:43:28:Chunksize=[3, 299, 256]: Timer=15.692351341247559
+2020-10-16 21:43:33:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\bb0161d71ba4c31a3b3d29a01631e33a_0.dll
+2020-10-16 21:43:47:Chunksize=[3, 299, 299]: Timer=15.569746255874634
+2020-10-16 21:43:52:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\03c9cb148995324e4efbbc237511006f_0.dll
+2020-10-16 21:44:04:Chunksize=[3, 299, 512]: Timer=14.413357257843018
+2020-10-16 21:44:09:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\83bc5321db4e20c152d81dfa9ef56d2b_0.dll
+2020-10-16 21:44:20:Chunksize=[3, 299, 583]: Timer=13.374130487442017
+2020-10-16 21:44:25:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\4fad8664d5a2f5cabc7f33b6334382ca_0.dll
+2020-10-16 21:44:37:Chunksize=[3, 299, 768]: Timer=13.755453824996948
+2020-10-16 21:44:42:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\7395f2f318c03db9577b3b5fbee118c1_0.dll
+2020-10-16 21:44:54:Chunksize=[3, 299, 1024]: Timer=14.318974256515503
+2020-10-16 21:44:59:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\fef5348c4f2c61b06e0ba9003e2b5fc4_0.dll
+2020-10-16 21:45:12:Chunksize=[3, 299, 1280]: Timer=15.206586837768555
+2020-10-16 21:45:18:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\2afcf962fbe10dba2b2ed6fa4a7ccb59_0.dll
+2020-10-16 21:45:31:Chunksize=[3, 299, 1536]: Timer=15.444899559020996
+2020-10-16 21:45:36:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\93cff992d6359ee0d28ce28def3ba4c6_0.dll
+2020-10-16 21:45:48:Chunksize=[3, 299, 1792]: Timer=13.871241092681885
+2020-10-16 21:45:53:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\bd49ac62ce11607aaf7ae35e362ccdce_0.dll
+2020-10-16 21:46:05:Chunksize=[3, 299, 2048]: Timer=14.390637397766113
+2020-10-16 21:47:39:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\e1bd27a4966f54e4e38dcb6ec1926000_0.dll
+2020-10-16 21:48:11:Chunksize=[1, 299, 128]: Mem=966.23828125 Timer=34.477494955062866
+2020-10-16 21:48:16:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\936ec6f1b16f058e8b66bac2bf55cbe7_0.dll
+2020-10-16 21:48:38:Chunksize=[1, 299, 256]: Mem=877.171875 Timer=24.057936191558838
+2020-10-16 21:48:43:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\3f32e46a1f0d63475d1e2069231bf137_0.dll
+2020-10-16 21:49:15:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\958736f17a3e759d1fd5a348bb3b2327_0.dll
+2020-10-16 21:49:32:Chunksize=[4, 299, 128]: Mem=751.69921875 Timer=18.834649562835693
+2020-10-16 21:49:37:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\8f529aa2d5a8c0bf58aa3e5dd9f3f3ed_0.dll
+2020-10-16 21:49:50:Chunksize=[4, 299, 256]: Mem=740.38671875 Timer=15.352236986160278
+2020-10-16 21:49:55:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\20d5c3013948eaf6e0426f4919f0ed5e_0.dll
+2020-10-16 21:50:08:Chunksize=[4, 299, 299]: Mem=734.01171875 Timer=14.961164474487305
+2020-10-16 21:50:13:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\295da3a9eebf69ba4420b815bc7210ec_0.dll
+2020-10-16 21:50:26:Chunksize=[4, 299, 512]: Mem=749.55078125 Timer=15.009734869003296
+2020-10-16 21:50:31:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\36ce18524ca0d0177176ddceb521f2eb_0.dll
+2020-10-16 21:50:43:Chunksize=[4, 299, 583]: Mem=766.29296875 Timer=14.064355850219727
+2020-10-16 21:50:48:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\e4f49b9ded27156b5c30884de22adf4b_0.dll
+2020-10-16 21:51:00:Chunksize=[4, 299, 768]: Mem=745.15625 Timer=14.633537530899048
+2020-10-16 21:51:05:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\280d3dcff36b8f48e67620fdafeb679d_0.dll
+2020-10-16 21:51:19:Chunksize=[4, 299, 1024]: Mem=748.23828125 Timer=15.970295906066895
+2020-10-16 21:51:24:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\091f71185ec14609efdc6d6725b6c575_0.dll
+2020-10-16 21:51:39:Chunksize=[4, 299, 1280]: Mem=764.80078125 Timer=16.719545364379883
+2020-10-16 21:51:44:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\adfc34a22be3a583e4d35fc77a8a0da5_0.dll
+2020-10-16 21:51:59:Chunksize=[4, 299, 1536]: Mem=767.04296875 Timer=17.095802545547485
+2020-10-16 21:52:04:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\b52213572f9df0d1828368c12380c1d2_0.dll
+2020-10-16 21:52:18:Chunksize=[4, 299, 1792]: Mem=763.828125 Timer=16.727553129196167
+2020-10-16 21:52:23:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\682ae0447bb0b261797753230fcd7ad4_0.dll
+2020-10-16 21:52:38:Chunksize=[4, 299, 2048]: Mem=764.80859375 Timer=16.68076467514038
+2020-10-16 21:54:11:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\2b25c6f98d0b1090d89354d2ad5d7e83_0.dll
+2020-10-16 21:54:35:Chunksize=[1, 299, 128]: Mem=965.5234375 Timer=26.321922540664673
+2020-10-16 21:54:40:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\b9536c59763db29851533ce98c16c9f7_0.dll
+2020-10-16 21:55:02:Chunksize=[1, 299, 256]: Mem=874.234375 Timer=23.812214136123657
+2020-10-16 21:55:07:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\3f68cb5b5c1d04edb571e554f1afefad_0.dll
+2020-10-16 21:55:31:Chunksize=[1, 299, 299]: Mem=907.17578125 Timer=26.256999969482422
+2020-10-16 21:55:36:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\e7dfa72b349e87bdf4d5e1dc4fedacd1_0.dll
+2020-10-16 21:55:36:File E:\model_output\OFAM\trop_pac\ocean_v_1981_01.nc could not be decoded properly by xarray (version 0.16.0).
+         It will be opened with no decoding. Filling values might be wrongly parsed.
+2020-10-16 21:56:02:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\c28d1acfd1c12383aa9c3d5d9928fd5e_0.dll
+2020-10-16 21:56:20:Chunksize=[3, 299, 128]: Mem=790.02734375 Timer=20.504015684127808
+2020-10-16 21:56:25:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\6672846f5fd61e802b04ca8b763da6ae_0.dll
+2020-10-16 21:56:38:Chunksize=[3, 299, 256]: Mem=757.3203125 Timer=15.462735176086426
+2020-10-16 21:56:43:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\81ff5480204a7fd5f594aef79f358243_0.dll
+2020-10-16 21:56:56:Chunksize=[3, 299, 299]: Mem=753.2578125 Timer=14.948346614837646
+2020-10-16 21:57:01:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\3e2aed0936387ba937baf9c4e21f6fef_0.dll
+2020-10-16 21:57:13:Chunksize=[3, 299, 512]: Mem=761.09375 Timer=14.410234928131104
+2020-10-16 21:57:18:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\22f64597d88355ccd1d8354cccd3e26a_0.dll
+2020-10-16 21:57:29:Chunksize=[3, 299, 583]: Mem=769.62109375 Timer=12.958657503128052
+2020-10-16 21:57:34:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\d322ecf5cfd8773aa17e0b762b335403_0.dll
+2020-10-16 21:57:45:Chunksize=[3, 299, 768]: Mem=756.5078125 Timer=13.482662439346313
+2020-10-16 21:57:50:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\8569909f3e0b16aa442c10344a8fcc7b_0.dll
+2020-10-16 21:58:02:Chunksize=[3, 299, 1024]: Mem=759.60546875 Timer=13.752590894699097
+2020-10-16 21:58:07:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\546e3e2142ec4990fe58866c27034ef2_0.dll
+2020-10-16 21:58:19:Chunksize=[3, 299, 1280]: Mem=770.18359375 Timer=14.092324018478394
+2020-10-16 21:59:58:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\50250b7704d4ee623ee3c51ac133ed1e_0.dll
+2020-10-16 22:00:13:Chunksize=[4, 300, 128]: Mem=714.63671875 Timer=16.91003942489624
+2020-10-16 22:00:17:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\df94ace65b6936e0e70ee01e3cf0343d_0.dll
+2020-10-16 22:00:30:Chunksize=[4, 300, 256]: Mem=718.80859375 Timer=14.312360763549805
+2020-10-16 22:00:35:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\706a2df73d6d27586f1a04fb4a37803e_0.dll
+2020-10-16 22:00:46:Chunksize=[4, 300, 299]: Mem=718.2734375 Timer=13.93905758857727
+2020-10-16 22:00:51:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\84d5d380935ad4246c667a3db5845b20_0.dll
+2020-10-16 22:01:03:Chunksize=[4, 300, 300]: Mem=719.125 Timer=13.988420248031616
+2020-10-16 22:01:08:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\fd619a5c5797862ab07ced6dc1a88bcb_0.dll
+2020-10-16 22:01:20:Chunksize=[4, 300, 512]: Mem=733.328125 Timer=14.166284084320068
+2020-10-16 22:01:25:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\05eec7833045cd5b32c682d18702bc7a_0.dll
+2020-10-16 22:01:36:Chunksize=[4, 300, 583]: Mem=751.0625 Timer=13.393399238586426
+2020-10-16 22:01:41:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\2d38ae3d46d3e031d23e4ba37ddf7665_0.dll
+2020-10-16 22:01:53:Chunksize=[4, 300, 768]: Mem=731.671875 Timer=13.875925064086914
+2020-10-16 22:01:58:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\092e9a672af37d561755f73e1c24c150_0.dll
+2020-10-16 22:02:11:Chunksize=[4, 300, 1024]: Mem=733.9765625 Timer=14.872511148452759
+2020-10-16 22:02:16:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\b8b0f03e66b0b2b03fb984ff9f23b321_0.dll
+2020-10-16 22:02:29:Chunksize=[4, 300, 1280]: Mem=751.85546875 Timer=15.906745195388794
+2020-10-16 22:32:55:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\2ae7f77269e79178c92a1f91fe7e9c4b_0.dll
+2020-10-16 22:33:19:Chunksize=[1, 300, 128]: Mem=856.890625 Timer=26.578816175460815
+2020-10-16 22:33:25:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\74ba00333b8952846f3ea3f9916e46ae_0.dll
+2020-10-16 22:33:48:Chunksize=[1, 300, 256]: Mem=854.52734375 Timer=24.833635568618774
+2020-10-16 22:33:53:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\94759db89d8e9b65348f1fe69ef68668_0.dll
+2020-10-16 22:34:16:Chunksize=[1, 300, 299]: Mem=887.296875 Timer=25.162439584732056
+2020-10-16 22:34:22:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\bdce3148a895323c3be483f006b14182_0.dll
+2020-10-16 22:34:45:Chunksize=[1, 300, 300]: Mem=887.703125 Timer=25.082082271575928
+2020-10-16 22:34:50:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\80fcc3b6674a480fcfecaabfc1f33fe7_0.dll
+2020-10-16 22:35:18:Chunksize=[1, 300, 512]: Mem=962.52734375 Timer=30.33433723449707
+2020-10-16 22:35:25:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\7116776de0ad240b3b4a369930d59c49_0.dll
+2020-10-16 22:35:54:Chunksize=[1, 300, 583]: Mem=1039.625 Timer=31.757882833480835
+2020-10-16 22:36:00:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\642394183d6424ceb003387021309c38_0.dll
+2020-10-16 22:36:30:Chunksize=[1, 300, 768]: Mem=914.37890625 Timer=32.87462306022644
+2020-10-16 22:36:36:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\ebdb9f43922672598d9d91f9ecf819f4_0.dll
+2020-10-16 22:37:09:Chunksize=[1, 300, 1024]: Mem=940.85546875 Timer=35.32078695297241

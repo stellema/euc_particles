@@ -275,7 +275,7 @@ def pset_euc(fieldset, pclass, lon, dy, dz, repeatdt, pset_start, repeats,
         xlog['new'] = pz.size * py.size * px.size * repeats
         xlog['y'] = '[{}-{} x{}]'.format(py[0], py[py.size - 1], dy)
         xlog['x'] = '{}'.format(*px)
-        xlog['z'] = '[{}-{}m x{}]'.format(pz[0], pz[pz.size - 1], dz)
+        xlog['z'] = '[{}-{}m x{}]f32'.format(pz[0], pz[pz.size - 1], dz)
 
     # Duplicate for each repeat.
     tr = pset_start - (np.arange(0, repeats) * repeatdt.total_seconds())
@@ -286,7 +286,7 @@ def pset_euc(fieldset, pclass, lon, dy, dz, repeatdt, pset_start, repeats,
 
     pset = ParticleSet.from_list(fieldset=fieldset, pclass=pclass,
                                  lon=lon, lat=lat, depth=depth, time=time,
-                                 lonlatdepth_dtype=np.float64)
+                                 lonlatdepth_dtype=np.float32)
     return pset
 
 

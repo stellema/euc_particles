@@ -20,7 +20,7 @@ Chunksize=[4, 128, 1792]: Timer=14.120564937591553 0:00:01
 Chunksize=[4, 128, 1536]: Timer=15.730258703231812 0:00:02 780
 Chunksize=[4, 128, 1280]: Timer=15.326657056808472 0:00:02 780
 Chunksize=[4, 128, 1024]: Timer=14.865509986877441 0:00:02 780
-
+[3, 2, 1, 3, 51, 1, 299, 583, 583, 583]
 """
 import os
 import time
@@ -219,13 +219,13 @@ def test_ofam_fieldset(chunks=True, cs=None):
 
 func_time = []
 mem_used_GB = []
-zcs = 4
-
-chunksize = [128, 256, 512, 768, 1024, 1280, 1536,
-             1792, 2048]#, 'auto', False]
+zcs = 1
+ycs = 300
+chunksize = [128, 256, 299, 300, 512, 583, 768, 1024]
+ #, 1280 1536, 1792, 2048, 'auto', False]
 
 for cs in chunksize:
-    css = [zcs, 512, cs]
+    css = [zcs, ycs, cs]
     fieldset = test_ofam_fieldset(cs=css)
     pset = ParticleSet(fieldset=fieldset, pclass=JITParticle, repeatdt=delta(days=2),
                        lon=[fieldset.U.lon[800]], lat=[fieldset.U.lat[151]],
@@ -236,31 +236,29 @@ for cs in chunksize:
     process = psutil.Process(os.getpid())
     mem_B_used = process.memory_info().rss
     mem_used_GB.append(mem_B_used / (1024 * 1024))
-    logger.info('Chunksize={}: Timer={}'.format(css, time.time()-tic))
+    logger.info('Chunksize={}: Mem={} Timer={}'.format(css, mem_used_GB[-1], time.time()-tic))
 
 
 fig, ax = plt.subplots(1, 1, figsize=(15, 7))
 
-ax.plot(chunksize[:-2], func_time[:-2], 'o-')
+ax.plot(chunksize, func_time, 'o-')
 # ax.plot([0, 2800], [func_time[-2], func_time[-2]], '--', label=chunksize[-2])
 # ax.plot([0, 2800], [func_time[-1], func_time[-1]], '--', label=chunksize[-1])
-plt.xlim([0, 2800])
+plt.xlim([0, chunksize[-1]])
 plt.legend()
 ax.set_xlabel('field_chunksize')
 ax.set_ylabel('Time spent in pset.execute() [s]')
-plt.savefig(cfg.fig/'dask_chunk_time_euc_z{}_y512.png'.format(zcs))
+plt.savefig(cfg.fig/'dask_chunk_time_euc_z{}_y{}.png'.format(zcs, ycs))
 plt.show()
 plt.clf()
 plt.close()
 
 fig, ax = plt.subplots(1, 1, figsize=(15, 12))
-ax.plot(chunksize[:-2], mem_used_GB[:-2], '--', label="memory_blocked [MB]")
-# ax.plot([0, 2800], [mem_used_GB[-2], mem_used_GB[-2]], 'x-', label="auto [MB]")
-# ax.plot([0, 2800], [mem_used_GB[-1], mem_used_GB[-1]], '--', label="no chunking [MB]")
+ax.plot(chunksize, mem_used_GB, '--', label="memory_blocked [MB]")
 plt.legend()
 ax.set_xlabel('field_chunksize')
 ax.set_ylabel('Memory blocked in pset.execute() [MB]')
-plt.savefig(cfg.fig/'dask_chunk_mem_euc_z{}_y512.png'.format(zcs))
+plt.savefig(cfg.fig/'dask_chunk_mem_euc_z{}_y{}.png'.format(zcs, ycs))
 plt.show()
 plt.clf()
 plt.close()
