@@ -1,0 +1,931 @@
+2020-10-15 16:46:14:Generating restart file from: sim_hist_220_v0r04
+2020-10-15 18:01:11:Generating restart file from: sim_hist_165_v0r03
+2020-10-15 18:22:44: Saved: /g/data/e14/as3189/OFAM/data/r_sim_hist_220_180d.nc: t=01:43:13
+2020-10-13 22:26:20:sim_hist_165_t36:Simulation v36: File=99803 New=14840 West=4261 I=10579 Total=110382
+2020-10-13 22:26:20:sim_hist_165_t36:Excecuting 2008-09-23 to 2008-05-24: Runtime=122d
+2020-10-13 22:26:20:sim_hist_165_t36:Lon=165: Lat=[-2.6-2.6 x0.1]: Depth=[25-350m x25]
+2020-10-13 22:26:20:sim_hist_165_t36:Rep=6d: dt=60m: Out=1d: Land=0.975 Vmin=1e-07
+2020-10-13 22:26:20:Saved: /g/data/e14/as3189/OFAM/data/r_sim_hist_165_t36.nc: t=00:58:42
+2020-10-13 23:03:06:sim_hist_165_t36:Rank= 8: QTJYBAGP: File=0 New=0 West=0 I=4033
+2020-10-13 23:03:06:sim_hist_165_t36:Rank= 4: QTJYBAGP: File=0 New=0 West=0 I=10251
+2020-10-13 23:03:06:sim_hist_165_t36:Rank=17: QTJYBAGP: File=0 New=0 West=0 I=563
+2020-10-13 23:03:06:sim_hist_165_t36:Rank=19: QTJYBAGP: File=0 New=0 West=0 I=1546
+2020-10-13 23:03:06:sim_hist_165_t36:Rank=21: QTJYBAGP: File=0 New=0 West=0 I=1837
+2020-10-13 23:03:06:sim_hist_165_t36:Rank=33: QTJYBAGP: File=0 New=0 West=0 I=2632
+2020-10-13 23:03:06:sim_hist_165_t36:Rank= 5: QTJYBAGP: File=0 New=0 West=0 I=3785
+2020-10-13 23:03:06:sim_hist_165_t36:Rank=31: QTJYBAGP: File=0 New=0 West=0 I=2861
+2020-10-13 23:03:06:sim_hist_165_t36:Rank=30: QTJYBAGP: File=0 New=0 West=0 I=676
+2020-10-13 23:03:06:sim_hist_165_t36:Rank=34: QTJYBAGP: File=0 New=0 West=0 I=1426
+2020-10-13 23:03:06:sim_hist_165_t36:Rank=35: QTJYBAGP: File=0 New=0 West=0 I=2539
+2020-10-13 23:03:06:sim_hist_165_t36:Rank=24: QTJYBAGP: File=0 New=0 West=0 I=2845
+2020-10-13 23:03:06:sim_hist_165_t36:Rank=16: QTJYBAGP: File=0 New=0 West=0 I=3974
+2020-10-13 23:03:06:sim_hist_165_t36:Rank= 1: QTJYBAGP: File=0 New=0 West=0 I=4990
+2020-10-13 23:03:06:sim_hist_165_t36:Rank=26: QTJYBAGP: File=0 New=0 West=0 I=3586
+2020-10-13 23:03:06:sim_hist_165_t36:Rank= 2: QTJYBAGP: File=0 New=0 West=0 I=2790
+2020-10-13 23:03:06:sim_hist_165_t36:Rank=13: QTJYBAGP: File=0 New=0 West=0 I=485
+2020-10-13 23:03:06:sim_hist_165_t36:Rank= 9: QTJYBAGP: File=0 New=0 West=0 I=992
+2020-10-13 23:03:06:sim_hist_165_t36:Rank=10: QTJYBAGP: File=0 New=0 West=0 I=4998
+2020-10-13 23:03:06:sim_hist_165_t36:Rank=12: QTJYBAGP: File=0 New=0 West=0 I=1330
+2020-10-13 23:03:06:sim_hist_165_t36:Rank= 7: QTJYBAGP: File=0 New=0 West=0 I=4977
+2020-10-13 23:03:06:sim_hist_165_t36:Simulation v36r0: Particles=110382
+2020-10-13 23:03:06:sim_hist_165_t36:Rank=20: QTJYBAGP: File=0 New=0 West=0 I=3416
+2020-10-13 23:03:06:sim_hist_165_t36:Rank=22: QTJYBAGP: File=0 New=0 West=0 I=1039
+2020-10-13 23:03:06:sim_hist_165_t36:Rank= 3: QTJYBAGP: File=0 New=0 West=0 I=4048
+2020-10-13 23:03:06:sim_hist_165_t36:Rank=11: QTJYBAGP: File=0 New=0 West=0 I=1845
+2020-10-13 23:03:06:sim_hist_165_t36:Rank=18: QTJYBAGP: File=0 New=0 West=0 I=5630
+2020-10-13 23:03:06:sim_hist_165_t36:Rank=23: QTJYBAGP: File=0 New=0 West=0 I=3419
+2020-10-13 23:03:06:sim_hist_165_t36:Rank=32: QTJYBAGP: File=0 New=0 West=0 I=5909
+2020-10-13 23:03:06:sim_hist_165_t36:Rank=29: QTJYBAGP: File=0 New=0 West=0 I=7869
+2020-10-13 23:03:06:sim_hist_165_t36:Rank=25: QTJYBAGP: File=0 New=0 West=0 I=2591
+2020-10-13 23:03:06:sim_hist_165_t36:Rank=27: QTJYBAGP: File=0 New=0 West=0 I=2869
+2020-10-13 23:03:06:sim_hist_165_t36:Rank=28: QTJYBAGP: File=0 New=0 West=0 I=3511
+2020-10-13 23:03:06:sim_hist_165_t36:Rank=14: QTJYBAGP: File=0 New=0 West=0 I=2601
+2020-10-13 23:03:06:sim_hist_165_t36:Rank=15: QTJYBAGP: File=0 New=0 West=0 I=302
+2020-10-13 23:03:06:sim_hist_165_t36:Rank= 6: QTJYBAGP: File=0 New=0 West=0 I=970
+2020-10-13 23:03:06:sim_hist_165_t36:Excecuting 2008-09-23 to 2008-05-24: Runtime=122d
+2020-10-13 23:03:06:sim_hist_165_t36:Lon=: Lat=: Depth=
+2020-10-13 23:03:06:sim_hist_165_t36:Dir=QTJYBAGP: Rep=6d: dt=60m: Out=1d: Land=0.975 Vmin=1e-07
+2020-10-13 23:03:06:sim_hist_165_t36:Rank= 0: QTJYBAGP: File=0 New=0 West=0 I=1247
+2020-10-13 23:09:50:  sim_hist_165_t36:Completed: 00:13:46: Rank=23: Particles: Start=3419 Del=1160 End=2259
+2020-10-13 23:12:15:  sim_hist_165_t36:Completed: 00:16:11: Rank=30: Particles: Start=676 Del=217 End=459
+2020-10-13 23:13:31:  sim_hist_165_t36:Completed: 00:17:27: Rank=22: Particles: Start=1039 Del=107 End=932
+2020-10-13 23:14:31:  sim_hist_165_t36:Completed: 00:18:27: Rank=26: Particles: Start=3586 Del=192 End=3394
+2020-10-13 23:17:30:  sim_hist_165_t36:Completed: 00:21:26: Rank=13: Particles: Start=485 Del=157 End=328
+2020-10-13 23:18:54:  sim_hist_165_t36:Completed: 00:22:50: Rank=21: Particles: Start=1837 Del=181 End=1656
+2020-10-13 23:29:56:  sim_hist_165_t36:Completed: 00:33:52: Rank=12: Particles: Start=1330 Del=18 End=1312
+2020-10-13 23:37:28:  sim_hist_165_t36:Completed: 00:41:24: Rank= 1: Particles: Start=4990 Del=543 End=4447
+2020-10-13 23:41:04:  sim_hist_165_t36:Completed: 00:44:60: Rank=15: Particles: Start=302 Del=1 End=301
+2020-10-13 23:41:41:  sim_hist_165_t36:Completed: 00:45:37: Rank=27: Particles: Start=2869 Del=48 End=2821
+2020-10-13 23:55:31:  sim_hist_165_t36:Completed: 00:59:27: Rank=16: Particles: Start=3974 Del=110 End=3864
+2020-10-14 00:20:30:  sim_hist_165_t36:Completed: 01:24:26: Rank= 2: Particles: Start=2790 Del=14 End=2776
+2020-10-14 00:27:39:  sim_hist_165_t36:Completed: 01:31:35: Rank= 6: Particles: Start=970 Del=108 End=862
+2020-10-14 00:38:24:  sim_hist_165_t36:Completed: 01:42:20: Rank=17: Particles: Start=563 Del=3 End=560
+2020-10-14 00:57:29:  sim_hist_165_t36:Completed: 02:01:26: Rank=11: Particles: Start=1845 Del=23 End=1822
+2020-10-14 01:00:29:  sim_hist_165_t36:Completed: 02:04:25: Rank=10: Particles: Start=4998 Del=17 End=4981
+2020-10-14 01:00:40:  sim_hist_165_t36:Completed: 02:04:36: Rank=14: Particles: Start=2601 Del=11 End=2590
+2020-10-14 01:03:23:  sim_hist_165_t36:Completed: 02:07:19: Rank=24: Particles: Start=2845 Del=20 End=2825
+2020-10-14 01:15:47:  sim_hist_165_t36:Completed: 02:19:43: Rank=28: Particles: Start=3511 Del=0 End=3511
+2020-10-14 01:19:26:  sim_hist_165_t36:Completed: 02:23:22: Rank= 7: Particles: Start=4977 Del=17 End=4960
+2020-10-14 01:20:16:  sim_hist_165_t36:Completed: 02:24:12: Rank=25: Particles: Start=2591 Del=0 End=2591
+2020-10-14 01:31:37:  sim_hist_165_t36:Completed: 02:35:33: Rank=35: Particles: Start=2539 Del=9 End=2530
+2020-10-14 01:50:28:  sim_hist_165_t36:Completed: 02:54:24: Rank=18: Particles: Start=5630 Del=8 End=5622
+2020-10-14 02:10:38:  sim_hist_165_t36:Completed: 03:14:34: Rank=19: Particles: Start=1546 Del=24 End=1522
+2020-10-14 02:12:34:  sim_hist_165_t36:Completed: 03:16:30: Rank= 4: Particles: Start=10251 Del=2 End=10249
+2020-10-14 02:20:17:  sim_hist_165_t36:Completed: 03:24:13: Rank=34: Particles: Start=1426 Del=63 End=1363
+2020-10-14 02:23:24:  sim_hist_165_t36:Completed: 03:27:20: Rank=31: Particles: Start=2861 Del=508 End=2353
+2020-10-14 02:30:27:  sim_hist_165_t36:Completed: 03:34:23: Rank= 8: Particles: Start=4033 Del=0 End=4033
+2020-10-14 02:49:59:  sim_hist_165_t36:Completed: 03:53:55: Rank=32: Particles: Start=5909 Del=10 End=5899
+2020-10-14 03:31:47:  sim_hist_165_t36:Completed: 04:35:43: Rank= 5: Particles: Start=3785 Del=0 End=3785
+2020-10-14 03:46:38:  sim_hist_165_t36:Completed: 04:50:35: Rank= 0: Particles: Start=1247 Del=6 End=1241
+2020-10-14 03:54:24:  sim_hist_165_t36:Completed: 04:58:20: Rank=33: Particles: Start=2632 Del=0 End=2632
+2020-10-14 03:54:25:  sim_hist_165_t36:Completed: 04:58:21: Rank=20: Particles: Start=3416 Del=0 End=3416
+2020-10-14 03:57:52:  sim_hist_165_t36:Completed: 05:01:48: Rank= 9: Particles: Start=992 Del=0 End=992
+2020-10-14 04:00:31:  sim_hist_165_t36:Completed: 05:04:27: Rank= 3: Particles: Start=4048 Del=97 End=3951
+2020-10-14 06:19:23:  sim_hist_165_t36:Completed: 07:23:19: Rank=29: Particles: Start=7869 Del=0 End=7869
+2020-10-14 06:22:03:sim_hist_165_t36:Finished!
+2020-10-14 14:02:30:sim_hist_165_t24:Rank=21: LGIXCRNO: File=0 New=0 West=0 I=2356
+2020-10-14 14:02:30:sim_hist_165_t24:Rank=17: LGIXCRNO: File=0 New=0 West=0 I=1226
+2020-10-14 14:02:30:sim_hist_165_t24:Rank=13: LGIXCRNO: File=0 New=0 West=0 I=3257
+2020-10-14 14:02:30:sim_hist_165_t24:Rank=14: LGIXCRNO: File=0 New=0 West=0 I=4176
+2020-10-14 14:02:30:sim_hist_165_t24:Rank=11: LGIXCRNO: File=0 New=0 West=0 I=3117
+2020-10-14 14:02:30:sim_hist_165_t24:Rank= 6: LGIXCRNO: File=0 New=0 West=0 I=2005
+2020-10-14 14:02:30:sim_hist_165_t24:Rank=19: LGIXCRNO: File=0 New=0 West=0 I=1753
+2020-10-14 14:02:30:sim_hist_165_t24:Rank=15: LGIXCRNO: File=0 New=0 West=0 I=543
+2020-10-14 14:02:30:sim_hist_165_t24:Rank=12: LGIXCRNO: File=0 New=0 West=0 I=1533
+2020-10-14 14:02:30:sim_hist_165_t24:Rank= 4: LGIXCRNO: File=0 New=0 West=0 I=19360
+2020-10-14 14:02:30:sim_hist_165_t24:Rank= 3: LGIXCRNO: File=0 New=0 West=0 I=4468
+2020-10-14 14:02:30:sim_hist_165_t24:Rank=22: LGIXCRNO: File=0 New=0 West=0 I=961
+2020-10-14 14:02:30:sim_hist_165_t24:Rank= 7: LGIXCRNO: File=0 New=0 West=0 I=6581
+2020-10-14 14:02:30:sim_hist_165_t24:Rank= 5: LGIXCRNO: File=0 New=0 West=0 I=4332
+2020-10-14 14:02:30:sim_hist_165_t24:Rank=20: LGIXCRNO: File=0 New=0 West=0 I=5326
+2020-10-14 14:02:30:sim_hist_165_t24:Rank= 2: LGIXCRNO: File=0 New=0 West=0 I=3694
+2020-10-14 14:02:30:sim_hist_165_t24:Rank= 9: LGIXCRNO: File=0 New=0 West=0 I=1081
+2020-10-14 14:02:30:sim_hist_165_t24:Rank=10: LGIXCRNO: File=0 New=0 West=0 I=7806
+2020-10-14 14:02:30:sim_hist_165_t24:Rank= 8: LGIXCRNO: File=0 New=0 West=0 I=6584
+2020-10-14 14:02:30:sim_hist_165_t24:Rank=18: LGIXCRNO: File=0 New=0 West=0 I=9901
+2020-10-14 14:02:30:sim_hist_165_t24:Rank= 1: LGIXCRNO: File=0 New=0 West=0 I=6001
+2020-10-14 14:02:30:sim_hist_165_t24:Rank=16: LGIXCRNO: File=0 New=0 West=0 I=6484
+2020-10-14 14:02:30:sim_hist_165_t24:Rank=23: LGIXCRNO: File=0 New=0 West=0 I=6354
+2020-10-14 14:02:30:sim_hist_165_t24:Simulation v24r0: Particles=110382
+2020-10-14 14:02:30:sim_hist_165_t24:Excecuting 2008-09-23 to 2008-05-24: Runtime=122d
+2020-10-14 14:02:30:sim_hist_165_t24:Lon=: Lat=: Depth=
+2020-10-14 14:02:30:sim_hist_165_t24:Dir=LGIXCRNO: Rep=6d: dt=60m: Out=1d: Land=0.975 Vmin=1e-07
+2020-10-14 14:02:30:sim_hist_165_t24:Rank= 0: LGIXCRNO: File=0 New=0 West=0 I=1483
+2020-10-14 14:13:10:  sim_hist_165_t24:Completed: 00:18:04: Rank=21: Particles: Start=2356 Del=191 End=2165
+2020-10-14 14:15:06:  sim_hist_165_t24:Completed: 00:19:60: Rank=22: Particles: Start=961 Del=253 End=708
+2020-10-14 14:27:15:  sim_hist_165_t24:Completed: 00:32:09: Rank=12: Particles: Start=1533 Del=90 End=1443
+2020-10-14 14:30:41:  sim_hist_165_t24:Completed: 00:35:36: Rank=23: Particles: Start=6354 Del=1590 End=4764
+2020-10-14 14:48:07:  sim_hist_165_t24:Completed: 00:53:01: Rank= 1: Particles: Start=6001 Del=270 End=5731
+2020-10-14 15:10:37:  sim_hist_165_t24:Completed: 01:15:31: Rank= 5: Particles: Start=4332 Del=66 End=4266
+2020-10-14 15:35:14:  sim_hist_165_t24:Completed: 01:40:08: Rank=15: Particles: Start=543 Del=3 End=540
+2020-10-14 15:38:30:  sim_hist_165_t24:Completed: 01:43:24: Rank=17: Particles: Start=1226 Del=112 End=1114
+2020-10-14 15:49:47:sim_hist_165_t12:Rank= 4: NSBXYSZV: File=0 New=0 West=0 I=3220
+2020-10-14 15:49:47:sim_hist_165_t12:Rank= 9: NSBXYSZV: File=0 New=0 West=0 I=797
+2020-10-14 15:49:47:sim_hist_165_t12:Rank= 2: NSBXYSZV: File=0 New=0 West=0 I=8902
+2020-10-14 15:49:47:sim_hist_165_t12:Rank= 5: NSBXYSZV: File=0 New=0 West=0 I=9069
+2020-10-14 15:49:47:sim_hist_165_t12:Simulation v12r0: Particles=110382
+2020-10-14 15:49:47:sim_hist_165_t12:Rank= 7: NSBXYSZV: File=0 New=0 West=0 I=9528
+2020-10-14 15:49:47:sim_hist_165_t12:Rank= 6: NSBXYSZV: File=0 New=0 West=0 I=12133
+2020-10-14 15:49:47:sim_hist_165_t12:Rank= 1: NSBXYSZV: File=0 New=0 West=0 I=6533
+2020-10-14 15:49:47:sim_hist_165_t12:Rank= 8: NSBXYSZV: File=0 New=0 West=0 I=11441
+2020-10-14 15:49:47:sim_hist_165_t12:Rank=11: NSBXYSZV: File=0 New=0 West=0 I=10766
+2020-10-14 15:49:47:sim_hist_165_t12:Rank= 3: NSBXYSZV: File=0 New=0 West=0 I=10191
+2020-10-14 15:49:47:sim_hist_165_t12:Rank=10: NSBXYSZV: File=0 New=0 West=0 I=4894
+2020-10-14 15:49:47:sim_hist_165_t12:Excecuting 2008-09-23 to 2008-05-24: Runtime=122d
+2020-10-14 15:49:47:sim_hist_165_t12:Lon=: Lat=: Depth=
+2020-10-14 15:49:47:sim_hist_165_t12:Dir=NSBXYSZV: Rep=6d: dt=60m: Out=1d: Land=0.975 Vmin=1e-07
+2020-10-14 15:49:47:sim_hist_165_t12:Rank= 0: NSBXYSZV: File=0 New=0 West=0 I=22908
+2020-10-14 15:49:59:sim_hist_165_t48:Rank=38: UGUPNEXC: File=0 New=0 West=0 I=7165
+2020-10-14 15:49:59:sim_hist_165_t48:Rank=46: UGUPNEXC: File=0 New=0 West=0 I=1202
+2020-10-14 15:49:59:sim_hist_165_t48:Rank= 4: UGUPNEXC: File=0 New=0 West=0 I=3284
+2020-10-14 15:49:59:sim_hist_165_t48:Rank=36: UGUPNEXC: File=0 New=0 West=0 I=857
+2020-10-14 15:49:59:sim_hist_165_t48:Simulation v48r0: Particles=110382
+2020-10-14 15:49:59:sim_hist_165_t48:Rank=43: UGUPNEXC: File=0 New=0 West=0 I=9145
+2020-10-14 15:49:59:sim_hist_165_t48:Rank=37: UGUPNEXC: File=0 New=0 West=0 I=2244
+2020-10-14 15:49:59:sim_hist_165_t48:Rank=39: UGUPNEXC: File=0 New=0 West=0 I=1596
+2020-10-14 15:49:59:sim_hist_165_t48:Rank=10: UGUPNEXC: File=0 New=0 West=0 I=302
+2020-10-14 15:49:59:sim_hist_165_t48:Rank=24: UGUPNEXC: File=0 New=0 West=0 I=639
+2020-10-14 15:49:59:sim_hist_165_t48:Rank=40: UGUPNEXC: File=0 New=0 West=0 I=547
+2020-10-14 15:49:59:sim_hist_165_t48:Rank=23: UGUPNEXC: File=0 New=0 West=0 I=959
+2020-10-14 15:49:59:sim_hist_165_t48:Rank= 9: UGUPNEXC: File=0 New=0 West=0 I=3101
+2020-10-14 15:49:59:sim_hist_165_t48:Rank= 1: UGUPNEXC: File=0 New=0 West=0 I=1756
+2020-10-14 15:49:59:sim_hist_165_t48:Rank=31: UGUPNEXC: File=0 New=0 West=0 I=1776
+2020-10-14 15:49:59:sim_hist_165_t48:Rank=19: UGUPNEXC: File=0 New=0 West=0 I=1351
+2020-10-14 15:49:59:sim_hist_165_t48:Rank=45: UGUPNEXC: File=0 New=0 West=0 I=3615
+2020-10-14 15:49:59:sim_hist_165_t48:Rank=41: UGUPNEXC: File=0 New=0 West=0 I=2106
+2020-10-14 15:49:59:sim_hist_165_t48:Rank=34: UGUPNEXC: File=0 New=0 West=0 I=2830
+2020-10-14 15:49:59:sim_hist_165_t48:Rank=28: UGUPNEXC: File=0 New=0 West=0 I=894
+2020-10-14 15:49:59:sim_hist_165_t48:Rank=27: UGUPNEXC: File=0 New=0 West=0 I=1397
+2020-10-14 15:49:59:sim_hist_165_t48:Rank=14: UGUPNEXC: File=0 New=0 West=0 I=3421
+2020-10-14 15:49:59:sim_hist_165_t48:Rank=25: UGUPNEXC: File=0 New=0 West=0 I=1926
+2020-10-14 15:49:59:sim_hist_165_t48:Rank= 8: UGUPNEXC: File=0 New=0 West=0 I=2630
+2020-10-14 15:49:59:sim_hist_165_t48:Rank=30: UGUPNEXC: File=0 New=0 West=0 I=2490
+2020-10-14 15:49:59:sim_hist_165_t48:Rank=12: UGUPNEXC: File=0 New=0 West=0 I=1256
+2020-10-14 15:49:59:sim_hist_165_t48:Rank=13: UGUPNEXC: File=0 New=0 West=0 I=1268
+2020-10-14 15:49:59:sim_hist_165_t48:Rank=26: UGUPNEXC: File=0 New=0 West=0 I=2913
+2020-10-14 15:49:59:sim_hist_165_t48:Rank=18: UGUPNEXC: File=0 New=0 West=0 I=2632
+2020-10-14 15:49:59:sim_hist_165_t48:Rank= 6: UGUPNEXC: File=0 New=0 West=0 I=1931
+2020-10-14 15:49:59:sim_hist_165_t48:Rank=47: UGUPNEXC: File=0 New=0 West=0 I=2676
+2020-10-14 15:49:59:sim_hist_165_t48:Rank=20: UGUPNEXC: File=0 New=0 West=0 I=3409
+2020-10-14 15:49:59:sim_hist_165_t48:Rank=11: UGUPNEXC: File=0 New=0 West=0 I=1108
+2020-10-14 15:49:59:sim_hist_165_t48:Rank= 2: UGUPNEXC: File=0 New=0 West=0 I=3346
+2020-10-14 15:49:59:sim_hist_165_t48:Rank=35: UGUPNEXC: File=0 New=0 West=0 I=1802
+2020-10-14 15:49:59:sim_hist_165_t48:Rank=32: UGUPNEXC: File=0 New=0 West=0 I=2276
+2020-10-14 15:49:59:sim_hist_165_t48:Rank=21: UGUPNEXC: File=0 New=0 West=0 I=1084
+2020-10-14 15:49:59:sim_hist_165_t48:Rank=44: UGUPNEXC: File=0 New=0 West=0 I=2794
+2020-10-14 15:49:59:sim_hist_165_t48:Rank= 7: UGUPNEXC: File=0 New=0 West=0 I=2314
+2020-10-14 15:49:59:sim_hist_165_t48:Rank=17: UGUPNEXC: File=0 New=0 West=0 I=4377
+2020-10-14 15:49:59:sim_hist_165_t48:Rank=33: UGUPNEXC: File=0 New=0 West=0 I=2728
+2020-10-14 15:49:59:sim_hist_165_t48:Rank= 5: UGUPNEXC: File=0 New=0 West=0 I=2094
+2020-10-14 15:49:59:sim_hist_165_t48:Rank=15: UGUPNEXC: File=0 New=0 West=0 I=2309
+2020-10-14 15:49:59:sim_hist_165_t48:Rank=16: UGUPNEXC: File=0 New=0 West=0 I=923
+2020-10-14 15:49:59:sim_hist_165_t48:Rank=29: UGUPNEXC: File=0 New=0 West=0 I=2861
+2020-10-14 15:49:59:sim_hist_165_t48:Rank= 3: UGUPNEXC: File=0 New=0 West=0 I=1350
+2020-10-14 15:49:59:sim_hist_165_t48:Rank=22: UGUPNEXC: File=0 New=0 West=0 I=2426
+2020-10-14 15:49:59:sim_hist_165_t48:Rank=42: UGUPNEXC: File=0 New=0 West=0 I=364
+2020-10-14 15:49:59:sim_hist_165_t48:Excecuting 2008-09-23 to 2008-05-24: Runtime=122d
+2020-10-14 15:49:59:sim_hist_165_t48:Lon=: Lat=: Depth=
+2020-10-14 15:49:59:sim_hist_165_t48:Dir=UGUPNEXC: Rep=6d: dt=60m: Out=1d: Land=0.975 Vmin=1e-07
+2020-10-14 15:49:59:sim_hist_165_t48:Rank= 0: UGUPNEXC: File=0 New=0 West=0 I=2908
+2020-10-14 15:50:01:sim_hist_165_t96:Rank=64: CEHRZHJD: File=0 New=0 West=0 I=1124
+2020-10-14 15:50:01:sim_hist_165_t96:Simulation v96r0: Particles=110382
+2020-10-14 15:50:01:sim_hist_165_t96:Rank=80: CEHRZHJD: File=0 New=0 West=0 I=1232
+2020-10-14 15:50:01:sim_hist_165_t96:Rank=16: CEHRZHJD: File=0 New=0 West=0 I=1256
+2020-10-14 15:50:01:sim_hist_165_t96:Rank=32: CEHRZHJD: File=0 New=0 West=0 I=1217
+2020-10-14 15:50:01:sim_hist_165_t96:Rank=48: CEHRZHJD: File=0 New=0 West=0 I=2250
+2020-10-14 15:50:01:sim_hist_165_t96:Excecuting 2008-09-23 to 2008-05-24: Runtime=122d
+2020-10-14 15:50:01:sim_hist_165_t96:Rank=52: CEHRZHJD: File=0 New=0 West=0 I=1314
+2020-10-14 15:50:01:sim_hist_165_t96:Rank= 8: CEHRZHJD: File=0 New=0 West=0 I=1113
+2020-10-14 15:50:01:sim_hist_165_t96:Rank=84: CEHRZHJD: File=0 New=0 West=0 I=756
+2020-10-14 15:50:01:sim_hist_165_t96:Rank= 4: CEHRZHJD: File=0 New=0 West=0 I=465
+2020-10-14 15:50:01:sim_hist_165_t96:Rank=72: CEHRZHJD: File=0 New=0 West=0 I=362
+2020-10-14 15:50:01:sim_hist_165_t96:Rank=20: CEHRZHJD: File=0 New=0 West=0 I=532
+2020-10-14 15:50:01:sim_hist_165_t96:Rank=68: CEHRZHJD: File=0 New=0 West=0 I=4924
+2020-10-14 15:50:01:sim_hist_165_t96:Rank=40: CEHRZHJD: File=0 New=0 West=0 I=324
+2020-10-14 15:50:01:sim_hist_165_t96:Rank=76: CEHRZHJD: File=0 New=0 West=0 I=505
+2020-10-14 15:50:01:sim_hist_165_t96:Rank=36: CEHRZHJD: File=0 New=0 West=0 I=847
+2020-10-14 15:50:01:sim_hist_165_t96:Rank=56: CEHRZHJD: File=0 New=0 West=0 I=265
+2020-10-14 15:50:01:sim_hist_165_t96:Rank=12: CEHRZHJD: File=0 New=0 West=0 I=820
+2020-10-14 15:50:01:sim_hist_165_t96:Rank=50: CEHRZHJD: File=0 New=0 West=0 I=1890
+2020-10-14 15:50:01:sim_hist_165_t96:Rank=18: CEHRZHJD: File=0 New=0 West=0 I=1514
+2020-10-14 15:50:01:sim_hist_165_t96:Rank=88: CEHRZHJD: File=0 New=0 West=0 I=1358
+2020-10-14 15:50:01:sim_hist_165_t96:Rank= 2: CEHRZHJD: File=0 New=0 West=0 I=1620
+2020-10-14 15:50:01:sim_hist_165_t96:Rank=70: CEHRZHJD: File=0 New=0 West=0 I=360
+2020-10-14 15:50:01:sim_hist_165_t96:Rank= 6: CEHRZHJD: File=0 New=0 West=0 I=1486
+2020-10-14 15:50:01:sim_hist_165_t96:Rank=66: CEHRZHJD: File=0 New=0 West=0 I=417
+2020-10-14 15:50:01:sim_hist_165_t96:Rank=24: CEHRZHJD: File=0 New=0 West=0 I=1396
+2020-10-14 15:50:01:sim_hist_165_t96:Rank=62: CEHRZHJD: File=0 New=0 West=0 I=543
+2020-10-14 15:50:01:sim_hist_165_t96:Rank=33: CEHRZHJD: File=0 New=0 West=0 I=135
+2020-10-14 15:50:01:sim_hist_165_t96:Rank=94: CEHRZHJD: File=0 New=0 West=0 I=1915
+2020-10-14 15:50:01:sim_hist_165_t96:Rank=30: CEHRZHJD: File=0 New=0 West=0 I=131
+2020-10-14 15:50:01:sim_hist_165_t96:Rank=65: CEHRZHJD: File=0 New=0 West=0 I=1059
+2020-10-14 15:50:01:sim_hist_165_t96:Rank=17: CEHRZHJD: File=0 New=0 West=0 I=317
+2020-10-14 15:50:01:sim_hist_165_t96:Rank=57: CEHRZHJD: File=0 New=0 West=0 I=143
+2020-10-14 15:50:01:sim_hist_165_t96:Rank=19: CEHRZHJD: File=0 New=0 West=0 I=489
+2020-10-14 15:50:01:sim_hist_165_t96:Rank=53: CEHRZHJD: File=0 New=0 West=0 I=749
+2020-10-14 15:50:01:sim_hist_165_t96:Rank= 7: CEHRZHJD: File=0 New=0 West=0 I=1053
+2020-10-14 15:50:01:sim_hist_165_t96:Rank=67: CEHRZHJD: File=0 New=0 West=0 I=1624
+2020-10-14 15:50:01:sim_hist_165_t96:Rank=35: CEHRZHJD: File=0 New=0 West=0 I=547
+2020-10-14 15:50:01:sim_hist_165_t96:Rank=59: CEHRZHJD: File=0 New=0 West=0 I=979
+2020-10-14 15:50:01:sim_hist_165_t96:Rank=13: CEHRZHJD: File=0 New=0 West=0 I=815
+2020-10-14 15:50:01:sim_hist_165_t96:Rank=49: CEHRZHJD: File=0 New=0 West=0 I=706
+2020-10-14 15:50:01:sim_hist_165_t96:Rank=38: CEHRZHJD: File=0 New=0 West=0 I=243
+2020-10-14 15:50:01:sim_hist_165_t96:Rank=78: CEHRZHJD: File=0 New=0 West=0 I=986
+2020-10-14 15:50:01:sim_hist_165_t96:Rank=23: CEHRZHJD: File=0 New=0 West=0 I=841
+2020-10-14 15:50:01:sim_hist_165_t96:Rank=63: CEHRZHJD: File=0 New=0 West=0 I=1651
+2020-10-14 15:50:01:sim_hist_165_t96:Rank=25: CEHRZHJD: File=0 New=0 West=0 I=625
+2020-10-14 15:50:01:sim_hist_165_t96:Rank=55: CEHRZHJD: File=0 New=0 West=0 I=1035
+2020-10-14 15:50:01:sim_hist_165_t96:Rank=44: CEHRZHJD: File=0 New=0 West=0 I=2017
+2020-10-14 15:50:01:sim_hist_165_t96:Rank=85: CEHRZHJD: File=0 New=0 West=0 I=588
+2020-10-14 15:50:01:sim_hist_165_t96:Rank= 1: CEHRZHJD: File=0 New=0 West=0 I=1056
+2020-10-14 15:50:01:sim_hist_165_t96:Rank=60: CEHRZHJD: File=0 New=0 West=0 I=528
+2020-10-14 15:50:01:sim_hist_165_t96:Rank=14: CEHRZHJD: File=0 New=0 West=0 I=1320
+2020-10-14 15:50:01:sim_hist_165_t96:Rank=83: CEHRZHJD: File=0 New=0 West=0 I=758
+2020-10-14 15:50:01:sim_hist_165_t96:Rank=21: CEHRZHJD: File=0 New=0 West=0 I=1663
+2020-10-14 15:50:01:sim_hist_165_t96:Rank=54: CEHRZHJD: File=0 New=0 West=0 I=1656
+2020-10-14 15:50:01:sim_hist_165_t96:Rank=43: CEHRZHJD: File=0 New=0 West=0 I=663
+2020-10-14 15:50:01:sim_hist_165_t96:Rank=51: CEHRZHJD: File=0 New=0 West=0 I=820
+2020-10-14 15:50:01:sim_hist_165_t96:Rank=28: CEHRZHJD: File=0 New=0 West=0 I=5406
+2020-10-14 15:50:01:sim_hist_165_t96:Rank=81: CEHRZHJD: File=0 New=0 West=0 I=1726
+2020-10-14 15:50:01:sim_hist_165_t96:Rank=15: CEHRZHJD: File=0 New=0 West=0 I=1674
+2020-10-14 15:50:01:sim_hist_165_t96:Rank=61: CEHRZHJD: File=0 New=0 West=0 I=875
+2020-10-14 15:50:01:sim_hist_165_t96:Rank=29: CEHRZHJD: File=0 New=0 West=0 I=509
+2020-10-14 15:50:01:sim_hist_165_t96:Rank=89: CEHRZHJD: File=0 New=0 West=0 I=1420
+2020-10-14 15:50:01:sim_hist_165_t96:Rank=34: CEHRZHJD: File=0 New=0 West=0 I=1937
+2020-10-14 15:50:01:sim_hist_165_t96:Rank=71: CEHRZHJD: File=0 New=0 West=0 I=155
+2020-10-14 15:50:01:sim_hist_165_t96:Rank=27: CEHRZHJD: File=0 New=0 West=0 I=984
+2020-10-14 15:50:01:sim_hist_165_t96:Rank=95: CEHRZHJD: File=0 New=0 West=0 I=1483
+2020-10-14 15:50:01:sim_hist_165_t96:Rank=41: CEHRZHJD: File=0 New=0 West=0 I=1397
+2020-10-14 15:50:01:sim_hist_165_t96:Rank=93: CEHRZHJD: File=0 New=0 West=0 I=746
+2020-10-14 15:50:01:sim_hist_165_t96:Rank=11: CEHRZHJD: File=0 New=0 West=0 I=1775
+2020-10-14 15:50:01:sim_hist_165_t96:Rank=87: CEHRZHJD: File=0 New=0 West=0 I=1320
+2020-10-14 15:50:01:sim_hist_165_t96:Rank=37: CEHRZHJD: File=0 New=0 West=0 I=603
+2020-10-14 15:50:01:sim_hist_165_t96:Rank=92: CEHRZHJD: File=0 New=0 West=0 I=313
+2020-10-14 15:50:01:sim_hist_165_t96:Rank= 5: CEHRZHJD: File=0 New=0 West=0 I=1195
+2020-10-14 15:50:01:sim_hist_165_t96:Rank=69: CEHRZHJD: File=0 New=0 West=0 I=1411
+2020-10-14 15:50:01:sim_hist_165_t96:Rank=47: CEHRZHJD: File=0 New=0 West=0 I=1691
+2020-10-14 15:50:01:sim_hist_165_t96:Rank=91: CEHRZHJD: File=0 New=0 West=0 I=214
+2020-10-14 15:50:01:sim_hist_165_t96:Rank= 9: CEHRZHJD: File=0 New=0 West=0 I=133
+2020-10-14 15:50:01:sim_hist_165_t96:Rank=79: CEHRZHJD: File=0 New=0 West=0 I=1157
+2020-10-14 15:50:01:sim_hist_165_t96:Rank= 3: CEHRZHJD: File=0 New=0 West=0 I=1226
+2020-10-14 15:50:01:sim_hist_165_t96:Rank=77: CEHRZHJD: File=0 New=0 West=0 I=653
+2020-10-14 15:50:01:sim_hist_165_t96:Rank=31: CEHRZHJD: File=0 New=0 West=0 I=420
+2020-10-14 15:50:01:sim_hist_165_t96:Rank=82: CEHRZHJD: File=0 New=0 West=0 I=1160
+2020-10-14 15:50:01:sim_hist_165_t96:Rank=22: CEHRZHJD: File=0 New=0 West=0 I=1231
+2020-10-14 15:50:01:sim_hist_165_t96:Rank=73: CEHRZHJD: File=0 New=0 West=0 I=1482
+2020-10-14 15:50:01:sim_hist_165_t96:Rank=39: CEHRZHJD: File=0 New=0 West=0 I=2133
+2020-10-14 15:50:01:sim_hist_165_t96:Rank=86: CEHRZHJD: File=0 New=0 West=0 I=884
+2020-10-14 15:50:01:sim_hist_165_t96:Rank=46: CEHRZHJD: File=0 New=0 West=0 I=1999
+2020-10-14 15:50:01:sim_hist_165_t96:Rank=75: CEHRZHJD: File=0 New=0 West=0 I=1572
+2020-10-14 15:50:01:sim_hist_165_t96:Rank=45: CEHRZHJD: File=0 New=0 West=0 I=984
+2020-10-14 15:50:01:sim_hist_165_t96:Rank=58: CEHRZHJD: File=0 New=0 West=0 I=1581
+2020-10-14 15:50:01:sim_hist_165_t96:Rank=10: CEHRZHJD: File=0 New=0 West=0 I=4379
+2020-10-14 15:50:01:sim_hist_165_t96:Rank=74: CEHRZHJD: File=0 New=0 West=0 I=1356
+2020-10-14 15:50:01:sim_hist_165_t96:Rank=26: CEHRZHJD: File=0 New=0 West=0 I=1027
+2020-10-14 15:50:01:sim_hist_165_t96:Rank=90: CEHRZHJD: File=0 New=0 West=0 I=208
+2020-10-14 15:50:01:sim_hist_165_t96:Rank=42: CEHRZHJD: File=0 New=0 West=0 I=911
+2020-10-14 15:50:01:sim_hist_165_t96:Lon=: Lat=: Depth=
+2020-10-14 15:50:01:sim_hist_165_t96:Dir=CEHRZHJD: Rep=6d: dt=60m: Out=1d: Land=0.975 Vmin=1e-07
+2020-10-14 15:50:01:sim_hist_165_t96:Rank= 0: CEHRZHJD: File=0 New=0 West=0 I=2050
+2020-10-14 15:54:30:  sim_hist_165_t96:Completed: 00:13:01: Rank=75: Particles: Start=1572 Del=77 End=1495
+2020-10-14 15:54:32:  sim_hist_165_t96:Completed: 00:13:03: Rank=60: Particles: Start=528 Del=46 End=482
+2020-10-14 15:54:38:  sim_hist_165_t96:Completed: 00:13:09: Rank=56: Particles: Start=265 Del=108 End=157
+2020-10-14 15:55:03:  sim_hist_165_t96:Completed: 00:13:34: Rank=23: Particles: Start=841 Del=10 End=831
+2020-10-14 15:55:05:  sim_hist_165_t96:Completed: 00:13:36: Rank=32: Particles: Start=1217 Del=0 End=1217
+2020-10-14 15:55:29:  sim_hist_165_t96:Completed: 00:13:60: Rank=15: Particles: Start=1674 Del=645 End=1029
+2020-10-14 15:55:34:  sim_hist_165_t96:Completed: 00:14:05: Rank=34: Particles: Start=1937 Del=671 End=1266
+2020-10-14 15:55:38:  sim_hist_165_t96:Completed: 00:14:09: Rank=33: Particles: Start=135 Del=72 End=63
+2020-10-14 15:56:39:  sim_hist_165_t96:Completed: 00:15:10: Rank=42: Particles: Start=911 Del=40 End=871
+2020-10-14 15:56:42:  sim_hist_165_t96:Completed: 00:15:13: Rank=95: Particles: Start=1483 Del=195 End=1288
+2020-10-14 15:56:49:  sim_hist_165_t96:Completed: 00:15:20: Rank=72: Particles: Start=362 Del=95 End=267
+2020-10-14 15:56:57:  sim_hist_165_t96:Completed: 00:15:28: Rank=26: Particles: Start=1027 Del=14 End=1013
+2020-10-14 15:57:05:  sim_hist_165_t96:Completed: 00:15:36: Rank=17: Particles: Start=317 Del=122 End=195
+2020-10-14 15:57:08:  sim_hist_165_t96:Completed: 00:15:39: Rank=29: Particles: Start=509 Del=61 End=448
+2020-10-14 15:57:56:  sim_hist_165_t48:Completed: 00:14:36: Rank=18: Particles: Start=2632 Del=860 End=1772
+2020-10-14 15:58:19:  sim_hist_165_t96:Completed: 00:16:50: Rank=84: Particles: Start=756 Del=160 End=596
+2020-10-14 15:58:54:  sim_hist_165_t96:Completed: 00:17:25: Rank=49: Particles: Start=706 Del=23 End=683
+2020-10-14 15:58:58:  sim_hist_165_t96:Completed: 00:17:28: Rank=39: Particles: Start=2133 Del=128 End=2005
+2020-10-14 15:59:28:  sim_hist_165_t96:Completed: 00:17:59: Rank=79: Particles: Start=1157 Del=0 End=1157
+2020-10-14 15:59:47:  sim_hist_165_t96:Completed: 00:18:18: Rank=30: Particles: Start=131 Del=0 End=131
+2020-10-14 15:59:50:  sim_hist_165_t48:Completed: 00:16:30: Rank=30: Particles: Start=2490 Del=709 End=1781
+2020-10-14 16:00:16:  sim_hist_165_t96:Completed: 00:18:46: Rank=46: Particles: Start=1999 Del=175 End=1824
+2020-10-14 16:00:16:  sim_hist_165_t48:Completed: 00:16:56: Rank=36: Particles: Start=857 Del=89 End=768
+2020-10-14 16:00:20:  sim_hist_165_t48:Completed: 00:16:59: Rank=44: Particles: Start=2794 Del=85 End=2709
+2020-10-14 16:00:59:  sim_hist_165_t48:Completed: 00:17:39: Rank=42: Particles: Start=364 Del=155 End=209
+2020-10-14 16:02:35:  sim_hist_165_t48:Completed: 00:19:15: Rank=46: Particles: Start=1202 Del=27 End=1175
+2020-10-14 16:03:05:  sim_hist_165_t48:Completed: 00:19:45: Rank= 9: Particles: Start=3101 Del=135 End=2966
+2020-10-14 16:03:57:  sim_hist_165_t96:Completed: 00:22:27: Rank= 5: Particles: Start=1195 Del=71 End=1124
+2020-10-14 16:04:26:  sim_hist_165_t96:Completed: 00:22:57: Rank=91: Particles: Start=214 Del=59 End=155
+2020-10-14 16:04:34:  sim_hist_165_t24:Completed: 02:09:29: Rank=16: Particles: Start=6484 Del=146 End=6338
+2020-10-14 16:06:17:  sim_hist_165_t48:Completed: 00:22:57: Rank=24: Particles: Start=639 Del=217 End=422
+2020-10-14 16:07:56:  sim_hist_165_t96:Completed: 00:26:27: Rank=61: Particles: Start=875 Del=14 End=861
+2020-10-14 16:08:57:  sim_hist_165_t96:Completed: 00:27:28: Rank= 9: Particles: Start=133 Del=0 End=133
+2020-10-14 16:09:10:  sim_hist_165_t96:Completed: 00:27:41: Rank=19: Particles: Start=489 Del=31 End=458
+2020-10-14 16:09:55:  sim_hist_165_t96:Completed: 00:28:26: Rank=53: Particles: Start=749 Del=328 End=421
+2020-10-14 16:09:58:  sim_hist_165_t96:Completed: 00:28:29: Rank=78: Particles: Start=986 Del=0 End=986
+2020-10-14 16:10:02:  sim_hist_165_t48:Completed: 00:26:42: Rank=35: Particles: Start=1802 Del=22 End=1780
+2020-10-14 16:10:54:  sim_hist_165_t96:Completed: 00:29:24: Rank=25: Particles: Start=625 Del=5 End=620
+2020-10-14 16:10:59:  sim_hist_165_t96:Completed: 00:29:30: Rank=77: Particles: Start=653 Del=0 End=653
+2020-10-14 16:12:00:  sim_hist_165_t48:Completed: 00:28:40: Rank=12: Particles: Start=1256 Del=164 End=1092
+2020-10-14 16:13:05:  sim_hist_165_t48:Completed: 00:29:45: Rank= 7: Particles: Start=2314 Del=89 End=2225
+2020-10-14 16:13:10:  sim_hist_165_t96:Completed: 00:31:41: Rank=55: Particles: Start=1035 Del=5 End=1030
+2020-10-14 16:14:08:  sim_hist_165_t96:Completed: 00:32:39: Rank=50: Particles: Start=1890 Del=0 End=1890
+2020-10-14 16:15:21:  sim_hist_165_t48:Completed: 00:32:01: Rank=23: Particles: Start=959 Del=25 End=934
+2020-10-14 16:15:23:  sim_hist_165_t96:Completed: 00:33:54: Rank=92: Particles: Start=313 Del=34 End=279
+2020-10-14 16:16:11:  sim_hist_165_t96:Completed: 00:34:42: Rank=51: Particles: Start=820 Del=20 End=800
+2020-10-14 16:17:18:  sim_hist_165_t96:Completed: 00:35:49: Rank=45: Particles: Start=984 Del=24 End=960
+2020-10-14 16:17:25:  sim_hist_165_t96:Completed: 00:35:56: Rank= 1: Particles: Start=1056 Del=5 End=1051
+2020-10-14 16:18:40:  sim_hist_165_t96:Completed: 00:37:11: Rank= 6: Particles: Start=1486 Del=36 End=1450
+2020-10-14 16:20:53:  sim_hist_165_t96:Completed: 00:39:23: Rank=58: Particles: Start=1581 Del=9 End=1572
+2020-10-14 16:22:35:  sim_hist_165_t96:Completed: 00:41:06: Rank=90: Particles: Start=208 Del=0 End=208
+2020-10-14 16:24:04:  sim_hist_165_t96:Completed: 00:42:35: Rank=94: Particles: Start=1915 Del=0 End=1915
+2020-10-14 16:24:15:  sim_hist_165_t96:Completed: 00:42:46: Rank=71: Particles: Start=155 Del=1 End=154
+2020-10-14 16:24:36:  sim_hist_165_t96:Completed: 00:43:07: Rank= 7: Particles: Start=1053 Del=0 End=1053
+2020-10-14 16:24:47:  sim_hist_165_t96:Completed: 00:43:18: Rank=47: Particles: Start=1691 Del=6 End=1685
+2020-10-14 16:25:54:  sim_hist_165_t96:Completed: 00:44:25: Rank=89: Particles: Start=1420 Del=0 End=1420
+2020-10-14 16:27:36:  sim_hist_165_t96:Completed: 00:46:07: Rank=12: Particles: Start=820 Del=17 End=803
+2020-10-14 16:29:10:  sim_hist_165_t96:Completed: 00:47:41: Rank=52: Particles: Start=1314 Del=2 End=1312
+2020-10-14 16:30:40:  sim_hist_165_t96:Completed: 00:49:11: Rank=38: Particles: Start=243 Del=0 End=243
+2020-10-14 16:30:58:  sim_hist_165_t96:Completed: 00:49:29: Rank=81: Particles: Start=1726 Del=0 End=1726
+2020-10-14 16:31:59:  sim_hist_165_t96:Completed: 00:50:30: Rank=57: Particles: Start=143 Del=2 End=141
+2020-10-14 16:32:45:  sim_hist_165_t96:Completed: 00:51:16: Rank=68: Particles: Start=4924 Del=0 End=4924
+2020-10-14 16:35:00:  sim_hist_165_t48:Completed: 00:51:40: Rank=33: Particles: Start=2728 Del=151 End=2577
+2020-10-14 16:35:32:  sim_hist_165_t12:Completed: 00:52:12: Rank= 3: Particles: Start=10191 Del=1755 End=8436
+2020-10-14 16:35:43:  sim_hist_165_t48:Completed: 00:52:23: Rank=27: Particles: Start=1397 Del=20 End=1377
+2020-10-14 16:36:13:  sim_hist_165_t48:Completed: 00:52:52: Rank=10: Particles: Start=302 Del=1 End=301
+2020-10-14 16:36:18:  sim_hist_165_t96:Completed: 00:54:49: Rank=14: Particles: Start=1320 Del=0 End=1320
+2020-10-14 16:40:06:  sim_hist_165_t96:Completed: 00:58:36: Rank=93: Particles: Start=746 Del=6 End=740
+2020-10-14 16:40:32:  sim_hist_165_t96:Completed: 00:59:03: Rank=67: Particles: Start=1624 Del=1 End=1623
+2020-10-14 16:40:35:  sim_hist_165_t96:Completed: 00:59:06: Rank=86: Particles: Start=884 Del=8 End=876
+2020-10-14 16:42:54:  sim_hist_165_t96:Completed: 01:01:25: Rank=24: Particles: Start=1396 Del=0 End=1396
+2020-10-14 16:43:56:  sim_hist_165_t96:Completed: 01:02:26: Rank=27: Particles: Start=984 Del=0 End=984
+2020-10-14 16:43:57:  sim_hist_165_t24:Completed: 02:48:52: Rank=11: Particles: Start=3117 Del=21 End=3096
+2020-10-14 16:44:27:  sim_hist_165_t24:Completed: 02:49:21: Rank= 2: Particles: Start=3694 Del=15 End=3679
+2020-10-14 16:46:38:  sim_hist_165_t96:Completed: 01:05:09: Rank=88: Particles: Start=1358 Del=0 End=1358
+2020-10-14 16:48:39:  sim_hist_165_t96:Completed: 01:07:10: Rank= 2: Particles: Start=1620 Del=12 End=1608
+2020-10-14 16:50:24:  sim_hist_165_t96:Completed: 01:08:54: Rank=13: Particles: Start=815 Del=0 End=815
+2020-10-14 16:52:14:  sim_hist_165_t96:Completed: 01:10:45: Rank=11: Particles: Start=1775 Del=7 End=1768
+2020-10-14 16:55:31:  sim_hist_165_t96:Completed: 01:14:02: Rank=21: Particles: Start=1663 Del=15 End=1648
+2020-10-14 16:56:15:  sim_hist_165_t96:Completed: 01:14:46: Rank=16: Particles: Start=1256 Del=0 End=1256
+2020-10-14 16:56:21:  sim_hist_165_t96:Completed: 01:14:52: Rank= 3: Particles: Start=1226 Del=0 End=1226
+2020-10-14 16:59:13:  sim_hist_165_t96:Completed: 01:17:44: Rank=36: Particles: Start=847 Del=0 End=847
+2020-10-14 16:59:15:  sim_hist_165_t96:Completed: 01:17:46: Rank=70: Particles: Start=360 Del=0 End=360
+2020-10-14 16:59:33:  sim_hist_165_t96:Completed: 01:18:04: Rank=76: Particles: Start=505 Del=3 End=502
+2020-10-14 17:00:10:  sim_hist_165_t96:Completed: 01:18:41: Rank= 0: Particles: Start=2050 Del=8 End=2042
+2020-10-14 17:03:37:  sim_hist_165_t96:Completed: 01:22:07: Rank=37: Particles: Start=603 Del=0 End=603
+2020-10-14 17:06:53:  sim_hist_165_t96:Completed: 01:25:24: Rank= 8: Particles: Start=1113 Del=138 End=975
+2020-10-14 17:08:50:  sim_hist_165_t96:Completed: 01:27:21: Rank=20: Particles: Start=532 Del=0 End=532
+2020-10-14 17:08:51:  sim_hist_165_t96:Completed: 01:27:22: Rank=35: Particles: Start=547 Del=0 End=547
+2020-10-14 17:08:56:  sim_hist_165_t96:Completed: 01:27:27: Rank=83: Particles: Start=758 Del=0 End=758
+2020-10-14 17:11:00:  sim_hist_165_t96:Completed: 01:29:31: Rank=69: Particles: Start=1411 Del=0 End=1411
+2020-10-14 17:11:46:  sim_hist_165_t96:Completed: 01:30:17: Rank=63: Particles: Start=1651 Del=0 End=1651
+2020-10-14 17:11:47:  sim_hist_165_t96:Completed: 01:30:18: Rank=41: Particles: Start=1397 Del=0 End=1397
+2020-10-14 17:14:50:  sim_hist_165_t96:Completed: 01:33:21: Rank=85: Particles: Start=588 Del=0 End=588
+2020-10-14 17:15:31:  sim_hist_165_t24:Completed: 03:20:25: Rank=19: Particles: Start=1753 Del=39 End=1714
+2020-10-14 17:16:53:  sim_hist_165_t96:Completed: 01:35:24: Rank=54: Particles: Start=1656 Del=1 End=1655
+2020-10-14 17:17:04:  sim_hist_165_t48:Completed: 01:33:44: Rank= 1: Particles: Start=1756 Del=11 End=1745
+2020-10-14 17:19:07:  sim_hist_165_t96:Completed: 01:37:37: Rank=43: Particles: Start=663 Del=48 End=615
+2020-10-14 17:19:44:  sim_hist_165_t48:Completed: 01:36:24: Rank=41: Particles: Start=2106 Del=14 End=2092
+2020-10-14 17:20:14:  sim_hist_165_t96:Completed: 01:38:44: Rank=18: Particles: Start=1514 Del=0 End=1514
+2020-10-14 17:20:24:  sim_hist_165_t48:Completed: 01:37:03: Rank= 2: Particles: Start=3346 Del=7 End=3339
+2020-10-14 17:21:31:  sim_hist_165_t48:Completed: 01:38:11: Rank=16: Particles: Start=923 Del=105 End=818
+2020-10-14 17:24:33:  sim_hist_165_t48:Completed: 01:41:13: Rank=40: Particles: Start=547 Del=2 End=545
+2020-10-14 17:24:58:  sim_hist_165_t96:Completed: 01:43:29: Rank=82: Particles: Start=1160 Del=0 End=1160
+2020-10-14 17:25:29:  sim_hist_165_t12:Completed: 01:42:09: Rank= 9: Particles: Start=797 Del=14 End=783
+2020-10-14 17:29:48:  sim_hist_165_t96:Completed: 01:48:19: Rank=80: Particles: Start=1232 Del=0 End=1232
+2020-10-14 17:30:00:  sim_hist_165_t48:Completed: 01:46:40: Rank= 5: Particles: Start=2094 Del=7 End=2087
+2020-10-14 17:33:33:  sim_hist_165_t96:Completed: 01:52:04: Rank=74: Particles: Start=1356 Del=0 End=1356
+2020-10-14 17:36:15:  sim_hist_165_t48:Completed: 01:52:54: Rank=45: Particles: Start=3615 Del=11 End=3604
+2020-10-14 17:36:44:  sim_hist_165_t96:Completed: 01:55:15: Rank=73: Particles: Start=1482 Del=66 End=1416
+2020-10-14 17:37:50:  sim_hist_165_t96:Completed: 01:56:21: Rank=66: Particles: Start=417 Del=1 End=416
+2020-10-14 17:42:01:  sim_hist_165_t96:Completed: 02:00:32: Rank=40: Particles: Start=324 Del=0 End=324
+2020-10-14 17:42:20:  sim_hist_165_t96:Completed: 02:00:51: Rank=59: Particles: Start=979 Del=44 End=935
+2020-10-14 17:42:32:  sim_hist_165_t48:Completed: 01:59:12: Rank=29: Particles: Start=2861 Del=0 End=2861
+2020-10-14 17:43:42:  sim_hist_165_t48:Completed: 02:00:22: Rank=37: Particles: Start=2244 Del=2 End=2242
+2020-10-14 17:44:47:  sim_hist_165_t48:Completed: 02:01:27: Rank=25: Particles: Start=1926 Del=422 End=1504
+2020-10-14 17:45:18:  sim_hist_165_t48:Completed: 02:01:58: Rank=19: Particles: Start=1351 Del=0 End=1351
+2020-10-14 17:45:51:  sim_hist_165_t96:Completed: 02:04:22: Rank=48: Particles: Start=2250 Del=0 End=2250
+2020-10-14 17:46:17:  sim_hist_165_t48:Completed: 02:02:57: Rank=20: Particles: Start=3409 Del=8 End=3401
+2020-10-14 17:46:27:  sim_hist_165_t48:Completed: 02:03:06: Rank=14: Particles: Start=3421 Del=7 End=3414
+2020-10-14 17:48:02:  sim_hist_165_t96:Completed: 02:06:33: Rank=31: Particles: Start=420 Del=3 End=417
+2020-10-14 17:49:24:  sim_hist_165_t48:Completed: 02:06:03: Rank=39: Particles: Start=1596 Del=20 End=1576
+2020-10-14 17:54:00:  sim_hist_165_t96:Completed: 02:12:31: Rank=64: Particles: Start=1124 Del=0 End=1124
+2020-10-14 17:57:40:  sim_hist_165_t96:Completed: 02:16:11: Rank=65: Particles: Start=1059 Del=0 End=1059
+2020-10-14 17:57:42:  sim_hist_165_t96:Completed: 02:16:13: Rank=87: Particles: Start=1320 Del=0 End=1320
+2020-10-14 18:03:34:  sim_hist_165_t96:Completed: 02:22:05: Rank=28: Particles: Start=5406 Del=2 End=5404
+2020-10-14 18:04:09:  sim_hist_165_t96:Completed: 02:22:40: Rank= 4: Particles: Start=465 Del=0 End=465
+2020-10-14 18:06:12:  sim_hist_165_t24:Completed: 04:11:06: Rank= 6: Particles: Start=2005 Del=71 End=1934
+2020-10-14 18:06:30:  sim_hist_165_t24:Completed: 04:11:24: Rank=14: Particles: Start=4176 Del=10 End=4166
+2020-10-14 18:06:33:  sim_hist_165_t48:Completed: 02:23:13: Rank= 6: Particles: Start=1931 Del=10 End=1921
+2020-10-14 18:07:24:  sim_hist_165_t48:Completed: 02:24:04: Rank=26: Particles: Start=2913 Del=10 End=2903
+2020-10-14 18:11:35:  sim_hist_165_t96:Completed: 02:30:06: Rank=62: Particles: Start=543 Del=0 End=543
+2020-10-14 18:18:26:  sim_hist_165_t48:Completed: 02:35:06: Rank=31: Particles: Start=1776 Del=0 End=1776
+2020-10-14 18:19:59:  sim_hist_165_t12:Completed: 02:36:39: Rank= 7: Particles: Start=9528 Del=272 End=9256
+2020-10-14 18:26:16:  sim_hist_165_t48:Completed: 02:42:56: Rank=13: Particles: Start=1268 Del=19 End=1249
+2020-10-14 18:32:40:  sim_hist_165_t48:Completed: 02:49:20: Rank=17: Particles: Start=4377 Del=1 End=4376
+2020-10-14 18:33:03:  sim_hist_165_t24:Completed: 04:37:57: Rank=10: Particles: Start=7806 Del=15 End=7791
+2020-10-14 18:35:08:  sim_hist_165_t96:Completed: 02:53:38: Rank=22: Particles: Start=1231 Del=0 End=1231
+2020-10-14 18:40:07:  sim_hist_165_t24:Completed: 04:45:02: Rank= 7: Particles: Start=6581 Del=41 End=6540
+2020-10-14 18:45:02:  sim_hist_165_t48:Completed: 03:01:42: Rank=43: Particles: Start=9145 Del=2 End=9143
+2020-10-14 18:48:58:  sim_hist_165_t24:Completed: 04:53:52: Rank= 9: Particles: Start=1081 Del=0 End=1081
+2020-10-14 18:49:14:  sim_hist_165_t48:Completed: 03:05:53: Rank=34: Particles: Start=2830 Del=0 End=2830
+2020-10-14 18:49:22:  sim_hist_165_t48:Completed: 03:06:02: Rank=22: Particles: Start=2426 Del=0 End=2426
+2020-10-14 18:55:23:  sim_hist_165_t24:Completed: 05:00:17: Rank=18: Particles: Start=9901 Del=24 End=9877
+2020-10-14 19:00:13:  sim_hist_165_t48:Completed: 03:16:53: Rank=21: Particles: Start=1084 Del=7 End=1077
+2020-10-14 19:04:51:  sim_hist_165_t48:Completed: 03:21:31: Rank= 3: Particles: Start=1350 Del=67 End=1283
+2020-10-14 19:08:57:  sim_hist_165_t24:Completed: 05:13:52: Rank=20: Particles: Start=5326 Del=0 End=5326
+2020-10-14 19:10:22:  sim_hist_165_t48:Completed: 03:27:02: Rank=47: Particles: Start=2676 Del=0 End=2676
+2020-10-14 19:11:42:  sim_hist_165_t24:Completed: 05:16:36: Rank=13: Particles: Start=3257 Del=130 End=3127
+2020-10-14 19:13:47:  sim_hist_165_t48:Completed: 03:30:27: Rank= 0: Particles: Start=2908 Del=30 End=2878
+2020-10-14 19:18:20:  sim_hist_165_t24:Completed: 05:23:14: Rank= 0: Particles: Start=1483 Del=6 End=1477
+2020-10-14 19:19:50:  sim_hist_165_t48:Completed: 03:36:29: Rank= 8: Particles: Start=2630 Del=0 End=2630
+2020-10-14 19:21:38:  sim_hist_165_t96:Completed: 03:40:08: Rank=44: Particles: Start=2017 Del=0 End=2017
+2020-10-14 19:21:53:  sim_hist_165_t24:Completed: 05:26:48: Rank= 3: Particles: Start=4468 Del=579 End=3889
+2020-10-14 19:32:23:  sim_hist_165_t48:Completed: 03:49:03: Rank=15: Particles: Start=2309 Del=157 End=2152
+2020-10-14 19:32:54:  sim_hist_165_t48:Completed: 03:49:34: Rank= 4: Particles: Start=3284 Del=0 End=3284
+2020-10-14 19:43:48:  sim_hist_165_t96:Completed: 04:02:19: Rank=10: Particles: Start=4379 Del=0 End=4379
+2020-10-14 19:55:37:sim_hist_165_t96:Finished!
+2020-10-14 20:05:30:  sim_hist_165_t48:Completed: 04:22:10: Rank=11: Particles: Start=1108 Del=6 End=1102
+2020-10-14 20:13:22:  sim_hist_165_t48:Completed: 04:30:02: Rank=28: Particles: Start=894 Del=0 End=894
+2020-10-14 20:56:48:  sim_hist_165_t12:Completed: 05:13:28: Rank= 8: Particles: Start=11441 Del=51 End=11390
+2020-10-14 21:03:22:  sim_hist_165_t48:Completed: 05:20:02: Rank=32: Particles: Start=2276 Del=0 End=2276
+2020-10-14 21:11:11:  sim_hist_165_t24:Completed: 07:16:05: Rank= 8: Particles: Start=6584 Del=0 End=6584
+2020-10-14 21:16:37:  sim_hist_165_t12:Completed: 05:33:17: Rank= 6: Particles: Start=12133 Del=72 End=12061
+2020-10-14 21:23:24:  sim_hist_165_t48:Completed: 05:40:04: Rank=38: Particles: Start=7165 Del=0 End=7165
+2020-10-14 21:27:11:sim_hist_165_t48:Finished!
+2020-10-14 22:06:26:  sim_hist_165_t12:Completed: 06:23:06: Rank= 1: Particles: Start=6533 Del=61 End=6472
+2020-10-14 22:55:21:  sim_hist_165_t12:Completed: 07:12:01: Rank=11: Particles: Start=10766 Del=51 End=10715
+2020-10-14 23:02:32:  sim_hist_165_t12:Completed: 07:19:12: Rank= 2: Particles: Start=8902 Del=796 End=8106
+2020-10-14 23:37:13:  sim_hist_165_t12:Completed: 07:53:53: Rank=10: Particles: Start=4894 Del=43 End=4851
+2020-10-14 23:37:45:  sim_hist_165_t12:Completed: 07:54:25: Rank= 4: Particles: Start=3220 Del=155 End=3065
+2020-10-14 23:58:30:  sim_hist_165_t24:Completed: 10:03:24: Rank= 4: Particles: Start=19360 Del=2 End=19358
+2020-10-15 00:00:37:sim_hist_165_t24:Finished!
+2020-10-15 01:18:50:  sim_hist_165_t12:Completed: 09:35:30: Rank= 5: Particles: Start=9069 Del=169 End=8900
+2020-10-15 04:08:09:  sim_hist_165_t12:Completed: 12:24:49: Rank= 0: Particles: Start=22908 Del=235 End=22673
+2020-10-15 04:09:23:sim_hist_165_t12:Finished!
+2020-10-15 16:46:14:sim_hist_165_t11:Simulation v11r0: Particles=110382
+2020-10-15 16:46:14:sim_hist_165_t11:Excecuting 2008-09-23 to 2008-05-24: Runtime=122d
+2020-10-15 16:46:14:sim_hist_165_t11:Lon=: Lat=: Depth=
+2020-10-15 16:46:14:sim_hist_165_t11:Dir=KGGYPCDJ: Rep=6d: dt=60m: Out=1d: Land=0.975 Vmin=1e-07
+2020-10-15 16:46:14:sim_hist_165_t11:Rank= 0: KGGYPCDJ: File=0 New=0 West=0 I=110382
+2020-10-15 18:22:44:sim_hist_220_180d:Simulation v24: File=175875 New=21518 West=11628 I=9890 Total=185765
+2020-10-15 18:22:44:sim_hist_220_180d:Excecuting 2003-03-30 to 2002-10-01: Runtime=180d
+2020-10-15 18:22:44:sim_hist_220_180d:Lon=220: Lat=[-2.6-2.6 x0.1]: Depth=[25-350m x25]
+2020-10-15 18:22:44:sim_hist_220_180d:Rep=6d: dt=60m: Out=1d: Land=0.975 Vmin=1e-07
+2020-10-15 19:59:30:sim_hist_220_t48:Rank=25: VXGWTGDP: File=0 New=0 West=0 I=3626
+2020-10-15 19:59:30:sim_hist_220_t48:Rank=26: VXGWTGDP: File=0 New=0 West=0 I=1784
+2020-10-15 19:59:30:sim_hist_220_t48:Rank= 5: VXGWTGDP: File=0 New=0 West=0 I=17104
+2020-10-15 19:59:30:sim_hist_220_t48:Rank=24: VXGWTGDP: File=0 New=0 West=0 I=6158
+2020-10-15 19:59:30:sim_hist_220_t48:Rank=41: VXGWTGDP: File=0 New=0 West=0 I=2416
+2020-10-15 19:59:30:sim_hist_220_t48:Rank= 7: VXGWTGDP: File=0 New=0 West=0 I=3282
+2020-10-15 19:59:30:sim_hist_220_t48:Rank=40: VXGWTGDP: File=0 New=0 West=0 I=2030
+2020-10-15 19:59:30:sim_hist_220_t48:Rank= 6: VXGWTGDP: File=0 New=0 West=0 I=1996
+2020-10-15 19:59:30:sim_hist_220_t48:Rank=37: VXGWTGDP: File=0 New=0 West=0 I=1602
+2020-10-15 19:59:30:sim_hist_220_t48:Rank=12: VXGWTGDP: File=0 New=0 West=0 I=1675
+2020-10-15 19:59:30:sim_hist_220_t48:Rank=18: VXGWTGDP: File=0 New=0 West=0 I=2723
+2020-10-15 19:59:30:sim_hist_220_t48:Rank=31: VXGWTGDP: File=0 New=0 West=0 I=2223
+2020-10-15 19:59:30:sim_hist_220_t48:Rank=20: VXGWTGDP: File=0 New=0 West=0 I=5507
+2020-10-15 19:59:30:sim_hist_220_t48:Rank= 8: VXGWTGDP: File=0 New=0 West=0 I=4161
+2020-10-15 19:59:30:sim_hist_220_t48:Rank=35: VXGWTGDP: File=0 New=0 West=0 I=1091
+2020-10-15 19:59:30:sim_hist_220_t48:Rank=19: VXGWTGDP: File=0 New=0 West=0 I=3644
+2020-10-15 19:59:30:sim_hist_220_t48:Rank=10: VXGWTGDP: File=0 New=0 West=0 I=2798
+2020-10-15 19:59:30:sim_hist_220_t48:Rank= 3: VXGWTGDP: File=0 New=0 West=0 I=2621
+2020-10-15 19:59:30:sim_hist_220_t48:Simulation v48r0: Particles=185765
+2020-10-15 19:59:30:sim_hist_220_t48:Rank=44: VXGWTGDP: File=0 New=0 West=0 I=5424
+2020-10-15 19:59:30:sim_hist_220_t48:Rank=11: VXGWTGDP: File=0 New=0 West=0 I=5034
+2020-10-15 19:59:30:sim_hist_220_t48:Rank=28: VXGWTGDP: File=0 New=0 West=0 I=1170
+2020-10-15 19:59:30:sim_hist_220_t48:Rank=14: VXGWTGDP: File=0 New=0 West=0 I=2975
+2020-10-15 19:59:30:sim_hist_220_t48:Rank=29: VXGWTGDP: File=0 New=0 West=0 I=4153
+2020-10-15 19:59:30:sim_hist_220_t48:Rank=46: VXGWTGDP: File=0 New=0 West=0 I=2849
+2020-10-15 19:59:30:sim_hist_220_t48:Rank=45: VXGWTGDP: File=0 New=0 West=0 I=2796
+2020-10-15 19:59:30:sim_hist_220_t48:Rank=34: VXGWTGDP: File=0 New=0 West=0 I=3660
+2020-10-15 19:59:30:sim_hist_220_t48:Rank=30: VXGWTGDP: File=0 New=0 West=0 I=3084
+2020-10-15 19:59:30:sim_hist_220_t48:Rank=13: VXGWTGDP: File=0 New=0 West=0 I=5592
+2020-10-15 19:59:30:sim_hist_220_t48:Rank=43: VXGWTGDP: File=0 New=0 West=0 I=5722
+2020-10-15 19:59:30:sim_hist_220_t48:Rank=36: VXGWTGDP: File=0 New=0 West=0 I=2397
+2020-10-15 19:59:30:sim_hist_220_t48:Rank=33: VXGWTGDP: File=0 New=0 West=0 I=5647
+2020-10-15 19:59:30:sim_hist_220_t48:Rank=15: VXGWTGDP: File=0 New=0 West=0 I=7259
+2020-10-15 19:59:30:sim_hist_220_t48:Rank=27: VXGWTGDP: File=0 New=0 West=0 I=6264
+2020-10-15 19:59:30:sim_hist_220_t48:Rank=47: VXGWTGDP: File=0 New=0 West=0 I=5012
+2020-10-15 19:59:30:sim_hist_220_t48:Rank=38: VXGWTGDP: File=0 New=0 West=0 I=2480
+2020-10-15 19:59:30:sim_hist_220_t48:Rank=39: VXGWTGDP: File=0 New=0 West=0 I=1508
+2020-10-15 19:59:30:sim_hist_220_t48:Rank=23: VXGWTGDP: File=0 New=0 West=0 I=2904
+2020-10-15 19:59:30:sim_hist_220_t48:Rank=42: VXGWTGDP: File=0 New=0 West=0 I=4064
+2020-10-15 19:59:30:sim_hist_220_t48:Rank=22: VXGWTGDP: File=0 New=0 West=0 I=4387
+2020-10-15 19:59:30:sim_hist_220_t48:Rank= 2: VXGWTGDP: File=0 New=0 West=0 I=5417
+2020-10-15 19:59:30:sim_hist_220_t48:Rank=32: VXGWTGDP: File=0 New=0 West=0 I=5459
+2020-10-15 19:59:30:sim_hist_220_t48:Rank=17: VXGWTGDP: File=0 New=0 West=0 I=3542
+2020-10-15 19:59:30:sim_hist_220_t48:Rank= 4: VXGWTGDP: File=0 New=0 West=0 I=1322
+2020-10-15 19:59:30:sim_hist_220_t48:Rank=16: VXGWTGDP: File=0 New=0 West=0 I=2153
+2020-10-15 19:59:30:sim_hist_220_t48:Rank= 1: VXGWTGDP: File=0 New=0 West=0 I=2978
+2020-10-15 19:59:30:sim_hist_220_t48:Rank= 9: VXGWTGDP: File=0 New=0 West=0 I=5839
+2020-10-15 19:59:30:sim_hist_220_t48:Rank=21: VXGWTGDP: File=0 New=0 West=0 I=5493
+2020-10-15 19:59:30:sim_hist_220_t48:Excecuting 2003-03-30 to 2002-10-01: Runtime=180d
+2020-10-15 19:59:30:sim_hist_220_t48:Lon=: Lat=: Depth=
+2020-10-15 19:59:30:sim_hist_220_t48:Dir=VXGWTGDP: Rep=6d: dt=60m: Out=1d: Land=0.975 Vmin=1e-07
+2020-10-15 19:59:30:sim_hist_220_t48:Rank= 0: VXGWTGDP: File=0 New=0 West=0 I=2740
+2020-10-15 19:59:42:sim_hist_220_t96:Rank=64: BUBANNRD: File=0 New=0 West=0 I=2022
+2020-10-15 19:59:42:sim_hist_220_t96:Simulation v96r0: Particles=185765
+2020-10-15 19:59:42:sim_hist_220_t96:Rank=48: BUBANNRD: File=0 New=0 West=0 I=1371
+2020-10-15 19:59:42:sim_hist_220_t96:Rank=36: BUBANNRD: File=0 New=0 West=0 I=2441
+2020-10-15 19:59:42:sim_hist_220_t96:Rank=68: BUBANNRD: File=0 New=0 West=0 I=2426
+2020-10-15 19:59:42:sim_hist_220_t96:Rank=16: BUBANNRD: File=0 New=0 West=0 I=1079
+2020-10-15 19:59:42:sim_hist_220_t96:Rank=80: BUBANNRD: File=0 New=0 West=0 I=269
+2020-10-15 19:59:42:sim_hist_220_t96:Rank= 4: BUBANNRD: File=0 New=0 West=0 I=2920
+2020-10-15 19:59:42:sim_hist_220_t96:Rank=52: BUBANNRD: File=0 New=0 West=0 I=2897
+2020-10-15 19:59:42:sim_hist_220_t96:Rank=32: BUBANNRD: File=0 New=0 West=0 I=1029
+2020-10-15 19:59:42:sim_hist_220_t96:Rank=72: BUBANNRD: File=0 New=0 West=0 I=641
+2020-10-15 19:59:42:sim_hist_220_t96:Excecuting 2003-03-30 to 2002-10-01: Runtime=180d
+2020-10-15 19:59:42:sim_hist_220_t96:Rank=88: BUBANNRD: File=0 New=0 West=0 I=903
+2020-10-15 19:59:42:sim_hist_220_t96:Rank= 8: BUBANNRD: File=0 New=0 West=0 I=2684
+2020-10-15 19:59:42:sim_hist_220_t96:Rank=76: BUBANNRD: File=0 New=0 West=0 I=1827
+2020-10-15 19:59:42:sim_hist_220_t96:Rank=40: BUBANNRD: File=0 New=0 West=0 I=1329
+2020-10-15 19:59:42:sim_hist_220_t96:Rank=56: BUBANNRD: File=0 New=0 West=0 I=1200
+2020-10-15 19:59:42:sim_hist_220_t96:Rank=44: BUBANNRD: File=0 New=0 West=0 I=462
+2020-10-15 19:59:42:sim_hist_220_t96:Rank=49: BUBANNRD: File=0 New=0 West=0 I=896
+2020-10-15 19:59:42:sim_hist_220_t96:Rank=12: BUBANNRD: File=0 New=0 West=0 I=1383
+2020-10-15 19:59:42:sim_hist_220_t96:Rank=50: BUBANNRD: File=0 New=0 West=0 I=3176
+2020-10-15 19:59:42:sim_hist_220_t96:Rank=20: BUBANNRD: File=0 New=0 West=0 I=1398
+2020-10-15 19:59:42:sim_hist_220_t96:Rank=65: BUBANNRD: File=0 New=0 West=0 I=996
+2020-10-15 19:59:42:sim_hist_220_t96:Rank=33: BUBANNRD: File=0 New=0 West=0 I=1128
+2020-10-15 19:59:42:sim_hist_220_t96:Rank=82: BUBANNRD: File=0 New=0 West=0 I=3059
+2020-10-15 19:59:42:sim_hist_220_t96:Rank=24: BUBANNRD: File=0 New=0 West=0 I=2673
+2020-10-15 19:59:42:sim_hist_220_t96:Rank=70: BUBANNRD: File=0 New=0 West=0 I=2097
+2020-10-15 19:59:42:sim_hist_220_t96:Rank=17: BUBANNRD: File=0 New=0 West=0 I=1718
+2020-10-15 19:59:42:sim_hist_220_t96:Rank=66: BUBANNRD: File=0 New=0 West=0 I=431
+2020-10-15 19:59:42:sim_hist_220_t96:Rank= 1: BUBANNRD: File=0 New=0 West=0 I=1598
+2020-10-15 19:59:42:sim_hist_220_t96:Rank=54: BUBANNRD: File=0 New=0 West=0 I=1335
+2020-10-15 19:59:42:sim_hist_220_t96:Rank= 2: BUBANNRD: File=0 New=0 West=0 I=3772
+2020-10-15 19:59:42:sim_hist_220_t96:Rank=86: BUBANNRD: File=0 New=0 West=0 I=1494
+2020-10-15 19:59:42:sim_hist_220_t96:Rank=34: BUBANNRD: File=0 New=0 West=0 I=1401
+2020-10-15 19:59:42:sim_hist_220_t96:Rank=51: BUBANNRD: File=0 New=0 West=0 I=1421
+2020-10-15 19:59:42:sim_hist_220_t96:Rank=18: BUBANNRD: File=0 New=0 West=0 I=1469
+2020-10-15 19:59:42:sim_hist_220_t96:Rank=71: BUBANNRD: File=0 New=0 West=0 I=2094
+2020-10-15 19:59:42:sim_hist_220_t96:Rank=22: BUBANNRD: File=0 New=0 West=0 I=1660
+2020-10-15 19:59:42:sim_hist_220_t96:Rank=83: BUBANNRD: File=0 New=0 West=0 I=1246
+2020-10-15 19:59:42:sim_hist_220_t96:Rank=38: BUBANNRD: File=0 New=0 West=0 I=1595
+2020-10-15 19:59:42:sim_hist_220_t96:Rank=67: BUBANNRD: File=0 New=0 West=0 I=1375
+2020-10-15 19:59:42:sim_hist_220_t96:Rank= 6: BUBANNRD: File=0 New=0 West=0 I=3011
+2020-10-15 19:59:42:sim_hist_220_t96:Rank=84: BUBANNRD: File=0 New=0 West=0 I=1644
+2020-10-15 19:59:42:sim_hist_220_t96:Rank= 3: BUBANNRD: File=0 New=0 West=0 I=1396
+2020-10-15 19:59:42:sim_hist_220_t96:Rank=73: BUBANNRD: File=0 New=0 West=0 I=1617
+2020-10-15 19:59:42:sim_hist_220_t96:Rank=19: BUBANNRD: File=0 New=0 West=0 I=2323
+2020-10-15 19:59:42:sim_hist_220_t96:Rank=60: BUBANNRD: File=0 New=0 West=0 I=954
+2020-10-15 19:59:42:sim_hist_220_t96:Rank= 7: BUBANNRD: File=0 New=0 West=0 I=1858
+2020-10-15 19:59:42:sim_hist_220_t96:Rank=95: BUBANNRD: File=0 New=0 West=0 I=2200
+2020-10-15 19:59:42:sim_hist_220_t96:Rank=31: BUBANNRD: File=0 New=0 West=0 I=2563
+2020-10-15 19:59:42:sim_hist_220_t96:Rank=79: BUBANNRD: File=0 New=0 West=0 I=1464
+2020-10-15 19:59:42:sim_hist_220_t96:Rank=39: BUBANNRD: File=0 New=0 West=0 I=3082
+2020-10-15 19:59:42:sim_hist_220_t96:Rank=94: BUBANNRD: File=0 New=0 West=0 I=1256
+2020-10-15 19:59:42:sim_hist_220_t96:Rank=47: BUBANNRD: File=0 New=0 West=0 I=2165
+2020-10-15 19:59:42:sim_hist_220_t96:Rank=55: BUBANNRD: File=0 New=0 West=0 I=1279
+2020-10-15 19:59:42:sim_hist_220_t96:Rank=28: BUBANNRD: File=0 New=0 West=0 I=549
+2020-10-15 19:59:42:sim_hist_220_t96:Rank=78: BUBANNRD: File=0 New=0 West=0 I=1213
+2020-10-15 19:59:42:sim_hist_220_t96:Rank=15: BUBANNRD: File=0 New=0 West=0 I=1387
+2020-10-15 19:59:42:sim_hist_220_t96:Rank=63: BUBANNRD: File=0 New=0 West=0 I=918
+2020-10-15 19:59:42:sim_hist_220_t96:Rank=35: BUBANNRD: File=0 New=0 West=0 I=2151
+2020-10-15 19:59:42:sim_hist_220_t96:Rank=57: BUBANNRD: File=0 New=0 West=0 I=2865
+2020-10-15 19:59:42:sim_hist_220_t96:Rank=23: BUBANNRD: File=0 New=0 West=0 I=2843
+2020-10-15 19:59:42:sim_hist_220_t96:Rank=85: BUBANNRD: File=0 New=0 West=0 I=3389
+2020-10-15 19:59:42:sim_hist_220_t96:Rank=41: BUBANNRD: File=0 New=0 West=0 I=1410
+2020-10-15 19:59:42:sim_hist_220_t96:Rank=61: BUBANNRD: File=0 New=0 West=0 I=2639
+2020-10-15 19:59:42:sim_hist_220_t96:Rank=14: BUBANNRD: File=0 New=0 West=0 I=1331
+2020-10-15 19:59:42:sim_hist_220_t96:Rank=77: BUBANNRD: File=0 New=0 West=0 I=1444
+2020-10-15 19:59:42:sim_hist_220_t96:Rank= 9: BUBANNRD: File=0 New=0 West=0 I=1697
+2020-10-15 19:59:42:sim_hist_220_t96:Rank=89: BUBANNRD: File=0 New=0 West=0 I=666
+2020-10-15 19:59:42:sim_hist_220_t96:Rank=30: BUBANNRD: File=0 New=0 West=0 I=2363
+2020-10-15 19:59:42:sim_hist_220_t96:Rank=93: BUBANNRD: File=0 New=0 West=0 I=1677
+2020-10-15 19:59:42:sim_hist_220_t96:Rank=46: BUBANNRD: File=0 New=0 West=0 I=2501
+2020-10-15 19:59:42:sim_hist_220_t96:Rank=62: BUBANNRD: File=0 New=0 West=0 I=1356
+2020-10-15 19:59:42:sim_hist_220_t96:Rank=21: BUBANNRD: File=0 New=0 West=0 I=1392
+2020-10-15 19:59:42:sim_hist_220_t96:Rank=87: BUBANNRD: File=0 New=0 West=0 I=1914
+2020-10-15 19:59:42:sim_hist_220_t96:Rank=45: BUBANNRD: File=0 New=0 West=0 I=917
+2020-10-15 19:59:42:sim_hist_220_t96:Rank=92: BUBANNRD: File=0 New=0 West=0 I=2744
+2020-10-15 19:59:42:sim_hist_220_t96:Rank=25: BUBANNRD: File=0 New=0 West=0 I=2339
+2020-10-15 19:59:42:sim_hist_220_t96:Rank=69: BUBANNRD: File=0 New=0 West=0 I=1381
+2020-10-15 19:59:42:sim_hist_220_t96:Rank=29: BUBANNRD: File=0 New=0 West=0 I=1808
+2020-10-15 19:59:42:sim_hist_220_t96:Rank=59: BUBANNRD: File=0 New=0 West=0 I=1797
+2020-10-15 19:59:42:sim_hist_220_t96:Rank= 5: BUBANNRD: File=0 New=0 West=0 I=3434
+2020-10-15 19:59:42:sim_hist_220_t96:Rank=75: BUBANNRD: File=0 New=0 West=0 I=1762
+2020-10-15 19:59:42:sim_hist_220_t96:Rank=37: BUBANNRD: File=0 New=0 West=0 I=2406
+2020-10-15 19:59:42:sim_hist_220_t96:Rank=91: BUBANNRD: File=0 New=0 West=0 I=3115
+2020-10-15 19:59:42:sim_hist_220_t96:Rank=43: BUBANNRD: File=0 New=0 West=0 I=3160
+2020-10-15 19:59:42:sim_hist_220_t96:Rank=81: BUBANNRD: File=0 New=0 West=0 I=5656
+2020-10-15 19:59:42:sim_hist_220_t96:Rank=27: BUBANNRD: File=0 New=0 West=0 I=854
+2020-10-15 19:59:42:sim_hist_220_t96:Rank=90: BUBANNRD: File=0 New=0 West=0 I=3808
+2020-10-15 19:59:42:sim_hist_220_t96:Rank=10: BUBANNRD: File=0 New=0 West=0 I=1999
+2020-10-15 19:59:42:sim_hist_220_t96:Rank=58: BUBANNRD: File=0 New=0 West=0 I=2650
+2020-10-15 19:59:42:sim_hist_220_t96:Rank=11: BUBANNRD: File=0 New=0 West=0 I=7502
+2020-10-15 19:59:42:sim_hist_220_t96:Rank=74: BUBANNRD: File=0 New=0 West=0 I=2051
+2020-10-15 19:59:42:sim_hist_220_t96:Rank=42: BUBANNRD: File=0 New=0 West=0 I=1421
+2020-10-15 19:59:42:sim_hist_220_t96:Rank=53: BUBANNRD: File=0 New=0 West=0 I=611
+2020-10-15 19:59:42:sim_hist_220_t96:Rank=26: BUBANNRD: File=0 New=0 West=0 I=1370
+2020-10-15 19:59:42:sim_hist_220_t96:Rank=13: BUBANNRD: File=0 New=0 West=0 I=3187
+2020-10-15 19:59:42:sim_hist_220_t96:Lon=: Lat=: Depth=
+2020-10-15 19:59:42:sim_hist_220_t96:Dir=BUBANNRD: Rep=6d: dt=60m: Out=1d: Land=0.975 Vmin=1e-07
+2020-10-15 19:59:42:sim_hist_220_t96:Rank= 0: BUBANNRD: File=0 New=0 West=0 I=2361
+2020-10-15 20:06:08:  sim_hist_220_t96:Completed: 00:13:11: Rank=65: Particles: Start=996 Del=0 End=996
+2020-10-15 20:06:08:  sim_hist_220_t48:Completed: 00:13:06: Rank=30: Particles: Start=3084 Del=100 End=2984
+2020-10-15 20:06:08:  sim_hist_220_t96:Completed: 00:13:17: Rank= 7: Particles: Start=1858 Del=36 End=1822
+2020-10-15 20:06:32:  sim_hist_220_t96:Completed: 00:13:42: Rank=21: Particles: Start=1392 Del=0 End=1392
+2020-10-15 20:07:21:  sim_hist_220_t96:Completed: 00:14:31: Rank=38: Particles: Start=1595 Del=126 End=1469
+2020-10-15 20:07:25:  sim_hist_220_t96:Completed: 00:14:29: Rank=89: Particles: Start=666 Del=155 End=511
+2020-10-15 20:07:37:  sim_hist_220_t96:Completed: 00:14:46: Rank=26: Particles: Start=1370 Del=205 End=1165
+2020-10-15 20:07:37:  sim_hist_220_t48:Completed: 00:14:35: Rank=31: Particles: Start=2223 Del=231 End=1992
+2020-10-15 20:07:40:  sim_hist_220_t96:Completed: 00:14:50: Rank=14: Particles: Start=1331 Del=240 End=1091
+2020-10-15 20:07:55:  sim_hist_220_t96:Completed: 00:14:59: Rank=78: Particles: Start=1213 Del=0 End=1213
+2020-10-15 20:08:05:  sim_hist_220_t48:Completed: 00:15:04: Rank= 3: Particles: Start=2621 Del=0 End=2621
+2020-10-15 20:08:10:  sim_hist_220_t96:Completed: 00:15:19: Rank=37: Particles: Start=2406 Del=49 End=2357
+2020-10-15 20:08:11:  sim_hist_220_t96:Completed: 00:15:15: Rank=71: Particles: Start=2094 Del=55 End=2039
+2020-10-15 20:08:11:  sim_hist_220_t96:Completed: 00:15:21: Rank= 3: Particles: Start=1396 Del=24 End=1372
+2020-10-15 20:08:15:  sim_hist_220_t96:Completed: 00:15:24: Rank=18: Particles: Start=1469 Del=0 End=1469
+2020-10-15 20:08:17:  sim_hist_220_t96:Completed: 00:15:21: Rank=55: Particles: Start=1279 Del=41 End=1238
+2020-10-15 20:08:22:  sim_hist_220_t48:Completed: 00:15:21: Rank= 6: Particles: Start=1996 Del=53 End=1943
+2020-10-15 20:08:32:  sim_hist_220_t96:Completed: 00:15:36: Rank=59: Particles: Start=1797 Del=91 End=1706
+2020-10-15 20:08:33:  sim_hist_220_t48:Completed: 00:15:32: Rank=18: Particles: Start=2723 Del=342 End=2381
+2020-10-15 20:08:35:  sim_hist_220_t96:Completed: 00:15:44: Rank= 6: Particles: Start=3011 Del=46 End=2965
+2020-10-15 20:08:37:  sim_hist_220_t96:Completed: 00:15:41: Rank=93: Particles: Start=1677 Del=71 End=1606
+2020-10-15 20:08:41:  sim_hist_220_t48:Completed: 00:15:39: Rank=47: Particles: Start=5012 Del=108 End=4904
+2020-10-15 20:08:49:  sim_hist_220_t96:Completed: 00:15:59: Rank=47: Particles: Start=2165 Del=148 End=2017
+2020-10-15 20:08:51:  sim_hist_220_t96:Completed: 00:16:01: Rank=30: Particles: Start=2363 Del=964 End=1399
+2020-10-15 20:08:52:  sim_hist_220_t96:Completed: 00:15:55: Rank=76: Particles: Start=1827 Del=586 End=1241
+2020-10-15 20:09:15:  sim_hist_220_t96:Completed: 00:16:24: Rank=33: Particles: Start=1128 Del=7 End=1121
+2020-10-15 20:09:28:  sim_hist_220_t48:Completed: 00:16:26: Rank=17: Particles: Start=3542 Del=93 End=3449
+2020-10-15 20:09:37:  sim_hist_220_t48:Completed: 00:16:35: Rank=26: Particles: Start=1784 Del=24 End=1760
+2020-10-15 20:09:41:  sim_hist_220_t96:Completed: 00:16:45: Rank=70: Particles: Start=2097 Del=53 End=2044
+2020-10-15 20:09:55:  sim_hist_220_t48:Completed: 00:16:53: Rank= 1: Particles: Start=2978 Del=232 End=2746
+2020-10-15 20:10:15:  sim_hist_220_t48:Completed: 00:17:13: Rank=14: Particles: Start=2975 Del=1245 End=1730
+2020-10-15 20:10:17:  sim_hist_220_t96:Completed: 00:17:26: Rank=46: Particles: Start=2501 Del=67 End=2434
+2020-10-15 20:10:19:  sim_hist_220_t96:Completed: 00:17:23: Rank=60: Particles: Start=954 Del=108 End=846
+2020-10-15 20:10:28:  sim_hist_220_t96:Completed: 00:17:38: Rank=29: Particles: Start=1808 Del=0 End=1808
+2020-10-15 20:10:39:  sim_hist_220_t96:Completed: 00:17:43: Rank=56: Particles: Start=1200 Del=78 End=1122
+2020-10-15 20:10:45:  sim_hist_220_t96:Completed: 00:17:49: Rank=84: Particles: Start=1644 Del=0 End=1644
+2020-10-15 20:10:49:  sim_hist_220_t48:Completed: 00:17:48: Rank=34: Particles: Start=3660 Del=85 End=3575
+2020-10-15 20:10:55:  sim_hist_220_t96:Completed: 00:18:05: Rank=45: Particles: Start=917 Del=94 End=823
+2020-10-15 20:11:02:  sim_hist_220_t48:Completed: 00:18:00: Rank=46: Particles: Start=2849 Del=7 End=2842
+2020-10-15 20:11:20:  sim_hist_220_t48:Completed: 00:18:19: Rank=37: Particles: Start=1602 Del=152 End=1450
+2020-10-15 20:11:35:  sim_hist_220_t96:Completed: 00:18:44: Rank=27: Particles: Start=854 Del=54 End=800
+2020-10-15 20:11:39:  sim_hist_220_t96:Completed: 00:18:49: Rank=42: Particles: Start=1421 Del=9 End=1412
+2020-10-15 20:11:46:  sim_hist_220_t96:Completed: 00:18:55: Rank=28: Particles: Start=549 Del=135 End=414
+2020-10-15 20:11:48:  sim_hist_220_t96:Completed: 00:18:52: Rank=49: Particles: Start=896 Del=110 End=786
+2020-10-15 20:12:32:  sim_hist_220_t96:Completed: 00:19:36: Rank=95: Particles: Start=2200 Del=14 End=2186
+2020-10-15 20:12:37:  sim_hist_220_t48:Completed: 00:19:35: Rank=22: Particles: Start=4387 Del=95 End=4292
+2020-10-15 20:12:40:  sim_hist_220_t96:Completed: 00:19:44: Rank=73: Particles: Start=1617 Del=0 End=1617
+2020-10-15 20:12:49:  sim_hist_220_t96:Completed: 00:19:58: Rank=19: Particles: Start=2323 Del=76 End=2247
+2020-10-15 20:12:52:  sim_hist_220_t96:Completed: 00:19:56: Rank=79: Particles: Start=1464 Del=0 End=1464
+2020-10-15 20:12:59:  sim_hist_220_t48:Completed: 00:19:57: Rank=29: Particles: Start=4153 Del=22 End=4131
+2020-10-15 20:13:04:  sim_hist_220_t96:Completed: 00:20:08: Rank=92: Particles: Start=2744 Del=10 End=2734
+2020-10-15 20:13:06:  sim_hist_220_t48:Completed: 00:20:05: Rank=39: Particles: Start=1508 Del=120 End=1388
+2020-10-15 20:13:24:  sim_hist_220_t48:Completed: 00:20:22: Rank=12: Particles: Start=1675 Del=133 End=1542
+2020-10-15 20:13:34:  sim_hist_220_t96:Completed: 00:20:43: Rank=36: Particles: Start=2441 Del=0 End=2441
+2020-10-15 20:13:42:  sim_hist_220_t96:Completed: 00:20:46: Rank=82: Particles: Start=3059 Del=0 End=3059
+2020-10-15 20:14:17:  sim_hist_220_t96:Completed: 00:21:21: Rank=72: Particles: Start=641 Del=123 End=518
+2020-10-15 20:14:23:  sim_hist_220_t48:Completed: 00:21:21: Rank=25: Particles: Start=3626 Del=513 End=3113
+2020-10-15 20:14:33:  sim_hist_220_t96:Completed: 00:21:42: Rank= 9: Particles: Start=1697 Del=26 End=1671
+2020-10-15 20:14:42:  sim_hist_220_t96:Completed: 00:21:51: Rank=13: Particles: Start=3187 Del=0 End=3187
+2020-10-15 20:15:06:  sim_hist_220_t48:Completed: 00:22:05: Rank=19: Particles: Start=3644 Del=21 End=3623
+2020-10-15 20:15:08:  sim_hist_220_t48:Completed: 00:22:07: Rank= 7: Particles: Start=3282 Del=30 End=3252
+2020-10-15 20:15:12:  sim_hist_220_t96:Completed: 00:22:21: Rank=23: Particles: Start=2843 Del=0 End=2843
+2020-10-15 20:15:23:  sim_hist_220_t96:Completed: 00:22:32: Rank=32: Particles: Start=1029 Del=6 End=1023
+2020-10-15 20:15:47:  sim_hist_220_t96:Completed: 00:22:51: Rank=52: Particles: Start=2897 Del=0 End=2897
+2020-10-15 20:15:55:  sim_hist_220_t48:Completed: 00:22:53: Rank=11: Particles: Start=5034 Del=0 End=5034
+2020-10-15 20:15:55:  sim_hist_220_t96:Completed: 00:22:59: Rank=68: Particles: Start=2426 Del=0 End=2426
+2020-10-15 20:16:19:  sim_hist_220_t96:Completed: 00:23:28: Rank=10: Particles: Start=1999 Del=240 End=1759
+2020-10-15 20:16:30:  sim_hist_220_t96:Completed: 00:23:40: Rank= 1: Particles: Start=1598 Del=7 End=1591
+2020-10-15 20:16:33:  sim_hist_220_t96:Completed: 00:23:43: Rank= 4: Particles: Start=2920 Del=0 End=2920
+2020-10-15 20:17:39:  sim_hist_220_t48:Completed: 00:24:37: Rank=38: Particles: Start=2480 Del=2 End=2478
+2020-10-15 20:18:10:  sim_hist_220_t48:Completed: 00:25:08: Rank=44: Particles: Start=5424 Del=4 End=5420
+2020-10-15 20:18:23:  sim_hist_220_t48:Completed: 00:25:22: Rank= 4: Particles: Start=1322 Del=228 End=1094
+2020-10-15 20:18:23:  sim_hist_220_t48:Completed: 00:25:22: Rank=32: Particles: Start=5459 Del=0 End=5459
+2020-10-15 20:18:35:  sim_hist_220_t96:Completed: 00:25:39: Rank=64: Particles: Start=2022 Del=0 End=2022
+2020-10-15 20:18:47:  sim_hist_220_t96:Completed: 00:25:56: Rank=44: Particles: Start=462 Del=68 End=394
+2020-10-15 20:20:15:  sim_hist_220_t96:Completed: 00:27:19: Rank=80: Particles: Start=269 Del=5 End=264
+2020-10-15 20:22:42:  sim_hist_220_t96:Completed: 00:29:51: Rank= 2: Particles: Start=3772 Del=0 End=3772
+2020-10-15 20:22:50:  sim_hist_220_t96:Completed: 00:29:59: Rank=35: Particles: Start=2151 Del=0 End=2151
+2020-10-15 20:22:53:  sim_hist_220_t48:Completed: 00:29:52: Rank=20: Particles: Start=5507 Del=0 End=5507
+2020-10-15 20:26:55:  sim_hist_220_t96:Completed: 00:34:04: Rank=20: Particles: Start=1398 Del=0 End=1398
+2020-10-15 20:27:05:  sim_hist_220_t96:Completed: 00:34:14: Rank=43: Particles: Start=3160 Del=0 End=3160
+2020-10-15 20:29:00:  sim_hist_220_t96:Completed: 00:36:03: Rank=75: Particles: Start=1762 Del=0 End=1762
+2020-10-15 20:31:09:  sim_hist_220_t96:Completed: 00:38:12: Rank=85: Particles: Start=3389 Del=0 End=3389
+2020-10-15 20:31:51:  sim_hist_220_t48:Completed: 00:38:49: Rank=35: Particles: Start=1091 Del=192 End=899
+2020-10-15 20:32:39:  sim_hist_220_t48:Completed: 00:39:38: Rank=33: Particles: Start=5647 Del=0 End=5647
+2020-10-15 20:32:49:  sim_hist_220_t96:Completed: 00:39:53: Rank=88: Particles: Start=903 Del=214 End=689
+2020-10-15 20:34:08:  sim_hist_220_t96:Completed: 00:41:12: Rank=51: Particles: Start=1421 Del=77 End=1344
+2020-10-15 20:35:56:  sim_hist_220_t96:Completed: 00:43:05: Rank=41: Particles: Start=1410 Del=7 End=1403
+2020-10-15 20:38:10:  sim_hist_220_t96:Completed: 00:45:14: Rank=91: Particles: Start=3115 Del=0 End=3115
+2020-10-15 20:39:05:  sim_hist_220_t96:Completed: 00:46:14: Rank=24: Particles: Start=2673 Del=0 End=2673
+2020-10-15 20:39:31:  sim_hist_220_t96:Completed: 00:46:41: Rank= 0: Particles: Start=2361 Del=0 End=2361
+2020-10-15 20:41:38:  sim_hist_220_t96:Completed: 00:48:42: Rank=61: Particles: Start=2639 Del=0 End=2639
+2020-10-15 20:46:14:  sim_hist_220_t96:Completed: 00:53:24: Rank=34: Particles: Start=1401 Del=0 End=1401
+2020-10-15 20:46:15:  sim_hist_220_t96:Completed: 00:53:24: Rank=12: Particles: Start=1383 Del=0 End=1383
+2020-10-15 20:51:19:  sim_hist_220_t48:Completed: 00:58:18: Rank= 2: Particles: Start=5417 Del=2 End=5415
+2020-10-15 20:52:34:  sim_hist_220_t48:Completed: 00:59:32: Rank=28: Particles: Start=1170 Del=219 End=951
+2020-10-15 20:52:40:  sim_hist_220_t96:Completed: 00:59:44: Rank=58: Particles: Start=2650 Del=0 End=2650
+2020-10-15 20:54:43:  sim_hist_220_t96:Completed: 01:01:47: Rank=57: Particles: Start=2865 Del=0 End=2865
+2020-10-15 20:57:29:  sim_hist_220_t96:Completed: 01:04:38: Rank=25: Particles: Start=2339 Del=0 End=2339
+2020-10-15 20:57:34:  sim_hist_220_t96:Completed: 01:04:38: Rank=90: Particles: Start=3808 Del=0 End=3808
+2020-10-15 21:00:56:  sim_hist_220_t96:Completed: 01:07:59: Rank=74: Particles: Start=2051 Del=0 End=2051
+2020-10-15 21:03:05:  sim_hist_220_t96:Completed: 01:10:09: Rank=66: Particles: Start=431 Del=65 End=366
+2020-10-15 21:04:13:  sim_hist_220_t96:Completed: 01:11:22: Rank=16: Particles: Start=1079 Del=321 End=758
+2020-10-15 21:04:35:  sim_hist_220_t48:Completed: 01:11:33: Rank=42: Particles: Start=4064 Del=0 End=4064
+2020-10-15 21:05:15:  sim_hist_220_t96:Completed: 01:12:19: Rank=87: Particles: Start=1914 Del=0 End=1914
+2020-10-15 21:05:41:  sim_hist_220_t96:Completed: 01:12:45: Rank=62: Particles: Start=1356 Del=3 End=1353
+2020-10-15 21:05:50:  sim_hist_220_t96:Completed: 01:12:54: Rank=77: Particles: Start=1444 Del=0 End=1444
+2020-10-15 21:08:13:  sim_hist_220_t96:Completed: 01:15:23: Rank=17: Particles: Start=1718 Del=0 End=1718
+2020-10-15 21:11:41:  sim_hist_220_t96:Completed: 01:18:45: Rank=94: Particles: Start=1256 Del=339 End=917
+2020-10-15 21:13:51:  sim_hist_220_t96:Completed: 01:21:00: Rank=31: Particles: Start=2563 Del=0 End=2563
+2020-10-15 21:14:27:  sim_hist_220_t96:Completed: 01:21:31: Rank=54: Particles: Start=1335 Del=235 End=1100
+2020-10-15 21:19:35:  sim_hist_220_t48:Completed: 01:26:34: Rank=15: Particles: Start=7259 Del=0 End=7259
+2020-10-15 21:22:02:  sim_hist_220_t96:Completed: 01:29:06: Rank=83: Particles: Start=1246 Del=0 End=1246
+2020-10-15 21:22:05:  sim_hist_220_t96:Completed: 01:29:14: Rank=22: Particles: Start=1660 Del=0 End=1660
+2020-10-15 21:22:48:  sim_hist_220_t96:Completed: 01:29:58: Rank=39: Particles: Start=3082 Del=0 End=3082
+2020-10-15 21:25:51:  sim_hist_220_t96:Completed: 01:33:01: Rank= 5: Particles: Start=3434 Del=0 End=3434
+2020-10-15 21:26:15:  sim_hist_220_t96:Completed: 01:33:19: Rank=63: Particles: Start=918 Del=0 End=918
+2020-10-15 21:31:07:  sim_hist_220_t96:Completed: 01:38:10: Rank=67: Particles: Start=1375 Del=4 End=1371
+2020-10-15 21:34:03:  sim_hist_220_t96:Completed: 01:41:07: Rank=50: Particles: Start=3176 Del=0 End=3176
+2020-10-15 21:34:40:  sim_hist_220_t48:Completed: 01:41:38: Rank=43: Particles: Start=5722 Del=2 End=5720
+2020-10-15 21:37:08:  sim_hist_220_t48:Completed: 01:44:07: Rank= 0: Particles: Start=2740 Del=192 End=2548
+2020-10-15 21:37:58:  sim_hist_220_t96:Completed: 01:45:02: Rank=53: Particles: Start=611 Del=93 End=518
+2020-10-15 21:42:09:  sim_hist_220_t96:Completed: 01:49:18: Rank=11: Particles: Start=7502 Del=0 End=7502
+2020-10-15 21:46:11:  sim_hist_220_t48:Completed: 01:53:10: Rank=36: Particles: Start=2397 Del=59 End=2338
+2020-10-15 21:50:31:  sim_hist_220_t48:Completed: 01:57:29: Rank=24: Particles: Start=6158 Del=0 End=6158
+2020-10-15 21:51:30:  sim_hist_220_t96:Completed: 01:58:40: Rank= 8: Particles: Start=2684 Del=0 End=2684
+2020-10-15 21:53:08:  sim_hist_220_t48:Completed: 02:00:06: Rank= 9: Particles: Start=5839 Del=0 End=5839
+2020-10-15 21:53:49:  sim_hist_220_t48:Completed: 02:00:47: Rank= 8: Particles: Start=4161 Del=5 End=4156
+2020-10-15 21:57:58:  sim_hist_220_t96:Completed: 02:05:02: Rank=69: Particles: Start=1381 Del=5 End=1376
+2020-10-15 21:59:55:  sim_hist_220_t48:Completed: 02:06:53: Rank=13: Particles: Start=5592 Del=11 End=5581
+2020-10-15 22:10:16:  sim_hist_220_t96:Completed: 02:17:20: Rank=86: Particles: Start=1494 Del=17 End=1477
+2020-10-15 22:11:39:  sim_hist_220_t96:Completed: 02:18:48: Rank=40: Particles: Start=1329 Del=32 End=1297
+2020-10-15 22:12:50:  sim_hist_220_t48:Completed: 02:19:48: Rank=45: Particles: Start=2796 Del=244 End=2552
+2020-10-15 22:27:01:  sim_hist_220_t48:Completed: 02:33:59: Rank=41: Particles: Start=2416 Del=14 End=2402
+2020-10-15 22:27:30:  sim_hist_220_t96:Completed: 02:34:39: Rank=15: Particles: Start=1387 Del=427 End=960
+2020-10-15 22:34:54:  sim_hist_220_t48:Completed: 02:41:53: Rank=40: Particles: Start=2030 Del=94 End=1936
+2020-10-15 22:38:01:  sim_hist_220_t96:Completed: 02:45:05: Rank=48: Particles: Start=1371 Del=329 End=1042
+2020-10-15 22:49:01:  sim_hist_220_t48:Completed: 02:55:60: Rank=27: Particles: Start=6264 Del=1 End=6263
+2020-10-15 22:49:38:  sim_hist_220_t96:Completed: 02:56:41: Rank=81: Particles: Start=5656 Del=0 End=5656
+2020-10-15 23:07:31:sim_hist_220_t96:Finished!
+2020-10-15 23:17:07:  sim_hist_220_t48:Completed: 03:24:06: Rank=10: Particles: Start=2798 Del=379 End=2419
+2020-10-15 23:18:01:  sim_hist_220_t48:Completed: 03:24:60: Rank=16: Particles: Start=2153 Del=552 End=1601
+2020-10-15 23:35:53:  sim_hist_220_t48:Completed: 03:42:52: Rank=21: Particles: Start=5493 Del=24 End=5469
+2020-10-15 23:40:54:sim_hist_220_t12:Rank= 4: SQKHMIYT: File=0 New=0 West=0 I=15137
+2020-10-15 23:40:54:sim_hist_220_t12:Rank= 5: SQKHMIYT: File=0 New=0 West=0 I=17282
+2020-10-15 23:40:54:sim_hist_220_t12:Rank= 8: SQKHMIYT: File=0 New=0 West=0 I=9039
+2020-10-15 23:40:54:sim_hist_220_t12:Rank= 6: SQKHMIYT: File=0 New=0 West=0 I=13489
+2020-10-15 23:40:54:sim_hist_220_t12:Rank= 2: SQKHMIYT: File=0 New=0 West=0 I=15776
+2020-10-15 23:40:54:sim_hist_220_t12:Rank= 9: SQKHMIYT: File=0 New=0 West=0 I=15789
+2020-10-15 23:40:54:sim_hist_220_t12:Rank= 1: SQKHMIYT: File=0 New=0 West=0 I=12270
+2020-10-15 23:40:54:sim_hist_220_t12:Rank= 3: SQKHMIYT: File=0 New=0 West=0 I=10787
+2020-10-15 23:40:54:sim_hist_220_t12:Rank=10: SQKHMIYT: File=0 New=0 West=0 I=15706
+2020-10-15 23:40:54:sim_hist_220_t12:Rank=11: SQKHMIYT: File=0 New=0 West=0 I=18931
+2020-10-15 23:40:54:sim_hist_220_t12:Rank= 7: SQKHMIYT: File=0 New=0 West=0 I=13631
+2020-10-15 23:40:54:sim_hist_220_t12:Simulation v12r0: Particles=185765
+2020-10-15 23:40:54:sim_hist_220_t12:Excecuting 2003-03-30 to 2002-10-01: Runtime=180d
+2020-10-15 23:40:54:sim_hist_220_t12:Lon=: Lat=: Depth=
+2020-10-15 23:40:54:sim_hist_220_t12:Dir=SQKHMIYT: Rep=6d: dt=60m: Out=1d: Land=0.975 Vmin=1e-07
+2020-10-15 23:40:54:sim_hist_220_t12:Rank= 0: SQKHMIYT: File=0 New=0 West=0 I=27928
+2020-10-15 23:40:58:sim_hist_220_t24:Rank=16: ULGIKEKV: File=0 New=0 West=0 I=11746
+2020-10-15 23:40:58:sim_hist_220_t24:Rank= 8: ULGIKEKV: File=0 New=0 West=0 I=7417
+2020-10-15 23:40:58:sim_hist_220_t24:Rank=20: ULGIKEKV: File=0 New=0 West=0 I=3100
+2020-10-15 23:40:58:sim_hist_220_t24:Rank= 1: ULGIKEKV: File=0 New=0 West=0 I=4858
+2020-10-15 23:40:58:sim_hist_220_t24:Rank=23: ULGIKEKV: File=0 New=0 West=0 I=9683
+2020-10-15 23:40:58:sim_hist_220_t24:Rank=22: ULGIKEKV: File=0 New=0 West=0 I=5101
+2020-10-15 23:40:58:sim_hist_220_t24:Rank=19: ULGIKEKV: File=0 New=0 West=0 I=3729
+2020-10-15 23:40:58:sim_hist_220_t24:Rank=17: ULGIKEKV: File=0 New=0 West=0 I=4085
+2020-10-15 23:40:58:sim_hist_220_t24:Rank=14: ULGIKEKV: File=0 New=0 West=0 I=8988
+2020-10-15 23:40:58:sim_hist_220_t24:Rank= 2: ULGIKEKV: File=0 New=0 West=0 I=8275
+2020-10-15 23:40:58:sim_hist_220_t24:Rank=18: ULGIKEKV: File=0 New=0 West=0 I=5828
+2020-10-15 23:40:58:sim_hist_220_t24:Rank= 9: ULGIKEKV: File=0 New=0 West=0 I=3000
+2020-10-15 23:40:58:sim_hist_220_t24:Rank= 4: ULGIKEKV: File=0 New=0 West=0 I=9873
+2020-10-15 23:40:58:sim_hist_220_t24:Rank=11: ULGIKEKV: File=0 New=0 West=0 I=10394
+2020-10-15 23:40:58:sim_hist_220_t24:Rank= 5: ULGIKEKV: File=0 New=0 West=0 I=21528
+2020-10-15 23:40:58:sim_hist_220_t24:Rank=10: ULGIKEKV: File=0 New=0 West=0 I=6698
+2020-10-15 23:40:58:sim_hist_220_t24:Rank=12: ULGIKEKV: File=0 New=0 West=0 I=8733
+2020-10-15 23:40:58:sim_hist_220_t24:Rank=13: ULGIKEKV: File=0 New=0 West=0 I=9580
+2020-10-15 23:40:58:sim_hist_220_t24:Rank=21: ULGIKEKV: File=0 New=0 West=0 I=6908
+2020-10-15 23:40:58:sim_hist_220_t24:Rank=15: ULGIKEKV: File=0 New=0 West=0 I=5384
+2020-10-15 23:40:58:sim_hist_220_t24:Rank= 6: ULGIKEKV: File=0 New=0 West=0 I=10013
+2020-10-15 23:40:58:sim_hist_220_t24:Rank= 3: ULGIKEKV: File=0 New=0 West=0 I=9760
+2020-10-15 23:40:58:sim_hist_220_t24:Rank= 7: ULGIKEKV: File=0 New=0 West=0 I=6901
+2020-10-15 23:40:58:sim_hist_220_t24:Simulation v24r0: Particles=185765
+2020-10-15 23:40:58:sim_hist_220_t24:Excecuting 2003-03-30 to 2002-10-01: Runtime=180d
+2020-10-15 23:40:58:sim_hist_220_t24:Lon=: Lat=: Depth=
+2020-10-15 23:40:58:sim_hist_220_t24:Dir=ULGIKEKV: Rep=6d: dt=60m: Out=1d: Land=0.975 Vmin=1e-07
+2020-10-15 23:40:58:sim_hist_220_t24:Rank= 0: ULGIKEKV: File=0 New=0 West=0 I=4183
+2020-10-15 23:50:40:  sim_hist_220_t24:Completed: 00:15:47: Rank= 9: Particles: Start=3000 Del=74 End=2926
+2020-10-15 23:50:41:  sim_hist_220_t24:Completed: 00:15:48: Rank=21: Particles: Start=6908 Del=628 End=6280
+2020-10-15 23:51:24:  sim_hist_220_t12:Completed: 00:16:31: Rank= 8: Particles: Start=9039 Del=678 End=8361
+2020-10-15 23:52:27:  sim_hist_220_t24:Completed: 00:17:34: Rank= 2: Particles: Start=8275 Del=189 End=8086
+2020-10-15 23:52:39:  sim_hist_220_t12:Completed: 00:17:46: Rank= 1: Particles: Start=12270 Del=277 End=11993
+2020-10-15 23:53:35:  sim_hist_220_t24:Completed: 00:18:42: Rank=22: Particles: Start=5101 Del=7 End=5094
+2020-10-15 23:54:40:  sim_hist_220_t24:Completed: 00:19:47: Rank=10: Particles: Start=6698 Del=188 End=6510
+2020-10-15 23:55:24:  sim_hist_220_t24:Completed: 00:20:31: Rank=13: Particles: Start=9580 Del=154 End=9426
+2020-10-15 23:55:33:  sim_hist_220_t24:Completed: 00:20:40: Rank=20: Particles: Start=3100 Del=183 End=2917
+2020-10-15 23:56:37:  sim_hist_220_t24:Completed: 00:21:44: Rank= 8: Particles: Start=7417 Del=1870 End=5547
+2020-10-15 23:56:53:  sim_hist_220_t24:Completed: 00:22:00: Rank=18: Particles: Start=5828 Del=66 End=5762
+2020-10-16 00:01:36:  sim_hist_220_t12:Completed: 00:26:43: Rank= 6: Particles: Start=13489 Del=2065 End=11424
+2020-10-16 00:01:37:  sim_hist_220_t24:Completed: 00:26:43: Rank= 4: Particles: Start=9873 Del=10 End=9863
+2020-10-16 00:01:59:  sim_hist_220_t12:Completed: 00:27:05: Rank= 7: Particles: Start=13631 Del=227 End=13404
+2020-10-16 00:02:07:  sim_hist_220_t24:Completed: 00:27:14: Rank=14: Particles: Start=8988 Del=157 End=8831
+2020-10-16 00:05:10:  sim_hist_220_t12:Completed: 00:30:16: Rank= 2: Particles: Start=15776 Del=222 End=15554
+2020-10-16 00:06:40:  sim_hist_220_t12:Completed: 00:31:47: Rank=10: Particles: Start=15706 Del=131 End=15575
+2020-10-16 00:15:09:  sim_hist_220_t24:Completed: 00:40:16: Rank=23: Particles: Start=9683 Del=181 End=9502
+2020-10-16 00:18:10:  sim_hist_220_t24:Completed: 00:43:17: Rank= 0: Particles: Start=4183 Del=32 End=4151
+2020-10-16 00:43:55:  sim_hist_220_t48:Completed: 04:50:54: Rank=23: Particles: Start=2904 Del=465 End=2439
+2020-10-16 01:21:46:  sim_hist_220_t48:Completed: 05:28:45: Rank= 5: Particles: Start=17104 Del=0 End=17104
+2020-10-16 01:31:32:sim_hist_220_t48:Finished!
+2020-10-16 02:00:16:  sim_hist_220_t24:Completed: 02:25:23: Rank= 6: Particles: Start=10013 Del=148 End=9865
+2020-10-16 02:03:04:  sim_hist_220_t12:Completed: 02:28:11: Rank= 4: Particles: Start=15137 Del=199 End=14938
+2020-10-16 02:19:49:  sim_hist_220_t24:Completed: 02:44:55: Rank=12: Particles: Start=8733 Del=9 End=8724
+2020-10-16 02:41:52:  sim_hist_220_t24:Completed: 03:06:59: Rank= 7: Particles: Start=6901 Del=90 End=6811
+2020-10-16 03:08:31:  sim_hist_220_t24:Completed: 03:33:38: Rank= 3: Particles: Start=9760 Del=2 End=9758
+2020-10-16 03:11:29:  sim_hist_220_t24:Completed: 03:36:36: Rank=16: Particles: Start=11746 Del=91 End=11655
+2020-10-16 03:13:40:  sim_hist_220_t24:Completed: 03:38:46: Rank=17: Particles: Start=4085 Del=55 End=4030
+2020-10-16 03:24:50:  sim_hist_220_t24:Completed: 03:49:57: Rank= 1: Particles: Start=4858 Del=379 End=4479
+2020-10-16 04:08:51:  sim_hist_220_t24:Completed: 04:33:58: Rank=11: Particles: Start=10394 Del=36 End=10358
+2020-10-16 04:37:37:  sim_hist_220_t12:Completed: 05:02:43: Rank= 9: Particles: Start=15789 Del=209 End=15580
+2020-10-16 05:09:31:  sim_hist_220_t24:Completed: 05:34:38: Rank=19: Particles: Start=3729 Del=853 End=2876
+2020-10-16 05:46:14:  sim_hist_220_t24:Completed: 06:11:21: Rank=15: Particles: Start=5384 Del=810 End=4574
+2020-10-16 06:15:41:  sim_hist_220_t12:Completed: 06:40:47: Rank= 3: Particles: Start=10787 Del=360 End=10427
+2020-10-16 06:49:32:  sim_hist_220_t24:Completed: 07:14:38: Rank= 5: Particles: Start=21528 Del=83 End=21445
+2020-10-16 06:52:40:sim_hist_220_t24:Finished!
+2020-10-16 09:29:51:sim_hist_220_t36:Rank=14: AHTSNCBC: File=0 New=0 West=0 I=19270
+2020-10-16 09:29:51:sim_hist_220_t36:Rank=33: AHTSNCBC: File=0 New=0 West=0 I=5209
+2020-10-16 09:29:51:sim_hist_220_t36:Rank= 7: AHTSNCBC: File=0 New=0 West=0 I=7104
+2020-10-16 09:29:51:sim_hist_220_t36:Rank=31: AHTSNCBC: File=0 New=0 West=0 I=7939
+2020-10-16 09:29:51:sim_hist_220_t36:Rank=20: AHTSNCBC: File=0 New=0 West=0 I=3346
+2020-10-16 09:29:51:sim_hist_220_t36:Rank=28: AHTSNCBC: File=0 New=0 West=0 I=6700
+2020-10-16 09:29:51:sim_hist_220_t36:Rank=25: AHTSNCBC: File=0 New=0 West=0 I=1949
+2020-10-16 09:29:51:sim_hist_220_t36:Rank=23: AHTSNCBC: File=0 New=0 West=0 I=2581
+2020-10-16 09:29:51:sim_hist_220_t36:Rank=15: AHTSNCBC: File=0 New=0 West=0 I=4373
+2020-10-16 09:29:51:sim_hist_220_t36:Rank= 6: AHTSNCBC: File=0 New=0 West=0 I=3345
+2020-10-16 09:29:51:sim_hist_220_t36:Rank=30: AHTSNCBC: File=0 New=0 West=0 I=6970
+2020-10-16 09:29:51:sim_hist_220_t36:Rank=34: AHTSNCBC: File=0 New=0 West=0 I=7064
+2020-10-16 09:29:51:sim_hist_220_t36:Rank=12: AHTSNCBC: File=0 New=0 West=0 I=1338
+2020-10-16 09:29:51:sim_hist_220_t36:Rank=19: AHTSNCBC: File=0 New=0 West=0 I=2711
+2020-10-16 09:29:51:sim_hist_220_t36:Rank=17: AHTSNCBC: File=0 New=0 West=0 I=7497
+2020-10-16 09:29:51:sim_hist_220_t36:Rank=26: AHTSNCBC: File=0 New=0 West=0 I=2748
+2020-10-16 09:29:51:sim_hist_220_t36:Rank=32: AHTSNCBC: File=0 New=0 West=0 I=6534
+2020-10-16 09:29:51:sim_hist_220_t36:Rank= 3: AHTSNCBC: File=0 New=0 West=0 I=6492
+2020-10-16 09:29:51:sim_hist_220_t36:Rank= 8: AHTSNCBC: File=0 New=0 West=0 I=7100
+2020-10-16 09:29:51:sim_hist_220_t36:Rank= 9: AHTSNCBC: File=0 New=0 West=0 I=5812
+2020-10-16 09:29:51:sim_hist_220_t36:Rank=35: AHTSNCBC: File=0 New=0 West=0 I=1935
+2020-10-16 09:29:51:sim_hist_220_t36:Rank=10: AHTSNCBC: File=0 New=0 West=0 I=2250
+2020-10-16 09:29:51:sim_hist_220_t36:Rank= 4: AHTSNCBC: File=0 New=0 West=0 I=3290
+2020-10-16 09:29:51:sim_hist_220_t36:Rank= 1: AHTSNCBC: File=0 New=0 West=0 I=2385
+2020-10-16 09:29:51:sim_hist_220_t36:Rank=21: AHTSNCBC: File=0 New=0 West=0 I=3151
+2020-10-16 09:29:51:sim_hist_220_t36:Rank=16: AHTSNCBC: File=0 New=0 West=0 I=6494
+2020-10-16 09:29:51:sim_hist_220_t36:Rank=29: AHTSNCBC: File=0 New=0 West=0 I=3517
+2020-10-16 09:29:51:sim_hist_220_t36:Rank= 2: AHTSNCBC: File=0 New=0 West=0 I=8819
+2020-10-16 09:29:51:sim_hist_220_t36:Rank=13: AHTSNCBC: File=0 New=0 West=0 I=5952
+2020-10-16 09:29:51:sim_hist_220_t36:Rank=24: AHTSNCBC: File=0 New=0 West=0 I=1514
+2020-10-16 09:29:51:sim_hist_220_t36:Rank=11: AHTSNCBC: File=0 New=0 West=0 I=3756
+2020-10-16 09:29:51:sim_hist_220_t36:Rank=22: AHTSNCBC: File=0 New=0 West=0 I=2853
+2020-10-16 09:29:51:sim_hist_220_t36:Rank= 5: AHTSNCBC: File=0 New=0 West=0 I=6163
+2020-10-16 09:29:51:sim_hist_220_t36:Rank=18: AHTSNCBC: File=0 New=0 West=0 I=8219
+2020-10-16 09:29:51:sim_hist_220_t36:Rank=27: AHTSNCBC: File=0 New=0 West=0 I=3214
+2020-10-16 09:29:51:sim_hist_220_t36:Simulation v36r0: Particles=185765
+2020-10-16 09:29:51:sim_hist_220_t36:Excecuting 2003-03-30 to 2002-10-01: Runtime=180d
+2020-10-16 09:29:51:sim_hist_220_t36:Lon=: Lat=: Depth=
+2020-10-16 09:29:51:sim_hist_220_t36:Dir=AHTSNCBC: Rep=6d: dt=60m: Out=1d: Land=0.975 Vmin=1e-07
+2020-10-16 09:29:51:sim_hist_220_t36:Rank= 0: AHTSNCBC: File=0 New=0 West=0 I=6171
+2020-10-16 09:38:48:  sim_hist_220_t36:Completed: 00:15:15: Rank=10: Particles: Start=2250 Del=45 End=2205
+2020-10-16 09:38:49:  sim_hist_220_t36:Completed: 00:15:16: Rank=23: Particles: Start=2581 Del=237 End=2344
+2020-10-16 09:38:49:  sim_hist_220_t36:Completed: 00:15:17: Rank= 6: Particles: Start=3345 Del=375 End=2970
+2020-10-16 09:38:56:  sim_hist_220_t36:Completed: 00:15:24: Rank=15: Particles: Start=4373 Del=93 End=4280
+2020-10-16 09:39:14:  sim_hist_220_t36:Completed: 00:15:41: Rank=21: Particles: Start=3151 Del=0 End=3151
+2020-10-16 09:40:36:  sim_hist_220_t36:Completed: 00:17:03: Rank= 9: Particles: Start=5812 Del=160 End=5652
+2020-10-16 09:40:43:  sim_hist_220_t36:Completed: 00:17:11: Rank=13: Particles: Start=5952 Del=145 End=5807
+2020-10-16 09:41:53:  sim_hist_220_t36:Completed: 00:18:20: Rank=11: Particles: Start=3756 Del=16 End=3740
+2020-10-16 09:42:26:  sim_hist_220_t36:Completed: 00:18:54: Rank= 1: Particles: Start=2385 Del=114 End=2271
+2020-10-16 09:42:54:  sim_hist_220_t36:Completed: 00:19:22: Rank=25: Particles: Start=1949 Del=159 End=1790
+2020-10-16 09:42:55:  sim_hist_220_t36:Completed: 00:19:23: Rank=32: Particles: Start=6534 Del=144 End=6390
+2020-10-16 09:43:31:  sim_hist_220_t36:Completed: 00:19:59: Rank=35: Particles: Start=1935 Del=283 End=1652
+2020-10-16 09:44:16:  sim_hist_220_t36:Completed: 00:20:44: Rank=33: Particles: Start=5209 Del=114 End=5095
+2020-10-16 09:45:10:  sim_hist_220_t36:Completed: 00:21:38: Rank= 3: Particles: Start=6492 Del=1830 End=4662
+2020-10-16 09:46:16:  sim_hist_220_t36:Completed: 00:22:44: Rank= 5: Particles: Start=6163 Del=0 End=6163
+2020-10-16 09:47:37:  sim_hist_220_t36:Completed: 00:24:04: Rank=16: Particles: Start=6494 Del=3 End=6491
+2020-10-16 09:47:51:  sim_hist_220_t36:Completed: 00:24:19: Rank=28: Particles: Start=6700 Del=9 End=6691
+2020-10-16 09:49:34:  sim_hist_220_t36:Completed: 00:26:02: Rank=30: Particles: Start=6970 Del=0 End=6970
+2020-10-16 09:49:44:  sim_hist_220_t12:Completed: 10:14:51: Rank= 0: Particles: Start=27928 Del=351 End=27577
+2020-10-16 09:58:50:  sim_hist_220_t36:Completed: 00:35:18: Rank=24: Particles: Start=1514 Del=270 End=1244
+2020-10-16 10:09:13:  sim_hist_220_t36:Completed: 00:45:41: Rank=26: Particles: Start=2748 Del=12 End=2736
+2020-10-16 10:26:04:  sim_hist_220_t36:Completed: 01:02:32: Rank=12: Particles: Start=1338 Del=239 End=1099
+2020-10-16 10:34:57:  sim_hist_220_t36:Completed: 01:11:25: Rank= 8: Particles: Start=7100 Del=1 End=7099
+2020-10-16 10:41:32:  sim_hist_220_t36:Completed: 01:17:60: Rank= 2: Particles: Start=8819 Del=0 End=8819
+2020-10-16 10:53:04:  sim_hist_220_t12:Completed: 11:18:11: Rank= 5: Particles: Start=17282 Del=969 End=16313
+2020-10-16 10:57:20:  sim_hist_220_t12:Completed: 11:22:27: Rank=11: Particles: Start=18931 Del=607 End=18324
+2020-10-16 10:59:25:sim_hist_220_t12:Finished!
+2020-10-16 11:00:03:  sim_hist_220_t36:Completed: 01:36:31: Rank=22: Particles: Start=2853 Del=85 End=2768
+2020-10-16 11:32:38:  sim_hist_220_t36:Completed: 02:09:06: Rank=31: Particles: Start=7939 Del=7 End=7932
+2020-10-16 11:47:55:  sim_hist_220_t36:Completed: 02:24:23: Rank= 0: Particles: Start=6171 Del=77 End=6094
+2020-10-16 12:00:11:  sim_hist_220_t36:Completed: 02:36:39: Rank=34: Particles: Start=7064 Del=19 End=7045
+2020-10-16 12:18:13:  sim_hist_220_t36:Completed: 02:54:41: Rank=17: Particles: Start=7497 Del=0 End=7497
+2020-10-16 12:19:34:  sim_hist_220_t36:Completed: 02:56:02: Rank=27: Particles: Start=3214 Del=276 End=2938
+2020-10-16 12:37:04:  sim_hist_220_t36:Completed: 03:13:32: Rank=20: Particles: Start=3346 Del=18 End=3328
+2020-10-16 12:47:03:  sim_hist_220_t36:Completed: 03:23:31: Rank=18: Particles: Start=8219 Del=2 End=8217
+2020-10-16 12:52:38:  sim_hist_220_t36:Completed: 03:29:05: Rank= 7: Particles: Start=7104 Del=50 End=7054
+2020-10-16 13:00:56:  sim_hist_220_t36:Completed: 03:37:24: Rank= 4: Particles: Start=3290 Del=410 End=2880
+2020-10-16 13:13:28:  sim_hist_220_t36:Completed: 03:49:56: Rank=19: Particles: Start=2711 Del=596 End=2115
+2020-10-16 14:33:19:  sim_hist_220_t36:Completed: 05:09:46: Rank=29: Particles: Start=3517 Del=494 End=3023
+2020-10-16 15:42:49:  sim_hist_220_t36:Completed: 06:19:16: Rank=14: Particles: Start=19270 Del=12 End=19258
+2020-10-16 15:50:34:sim_hist_220_t36:Finished!
