@@ -1,10 +1,9 @@
 #!/bin/bash
 #PBS -P e14
 #PBS -q normal
-#PBS -l walltime=48:00:00
-#PBS -l mem=384GB
-#PBS -l ncpus=96
-#PBS -l jobfs=4GB
+#PBS -l walltime=20:00:00
+#PBS -l mem=144GB
+#PBS -l ncpus=36
 #PBS -l storage=gdata/hh5+gdata/e14
 #PBS -l wd
 #PBS -m ae
@@ -15,6 +14,6 @@ module load conda/analysis3-20.07
 module unload openmpi
 module load openmpi/4.0.2
 
-EXP="rcp"
-LON=165
-mpirun python3 /g/data/e14/as3189/OFAM/scripts/sim.py -e $EXP -x $LON -r 696 -v 0 -f True
+EXP="hist"
+LON=220
+mpirun python3 /g/data/e14/as3189/OFAM/scripts/euc_trial.py -e $EXP -x $LON -r 180 -v 36
