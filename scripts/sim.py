@@ -24,7 +24,7 @@ try:
     from mpi4py import MPI
 except ImportError:
     MPI = None
-dask.config.set({"array.slicing.split_large_chunks": True})
+#dask.config.set({"array.slicing.split_large_chunks": True})
 logger = tools.mlogger('sim', parcels=True, misc=False)
 
 

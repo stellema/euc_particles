@@ -5,6 +5,7 @@
 #PBS -l mem=192GB
 #PBS -l ncpus=48
 #PBS -l storage=gdata/hh5+gdata/e14
+#PBS -l other=hyperthread
 #PBS -l wd
 #PBS -m ae
 #PBS -M astellemas@gmail.com
@@ -16,4 +17,4 @@ module load openmpi/4.0.2
 
 EXP="hist"
 LON=220
-mpirun python3 /g/data/e14/as3189/OFAM/scripts/euc_trial.py -e $EXP -x $LON -r 180 -v 48
+mpirun --report-bindings --oversubscribe -np 48 python3 /g/data/e14/as3189/OFAM/scripts/euc_trial.py -e $EXP -x $LON -r 180 -v 48
