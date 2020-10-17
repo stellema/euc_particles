@@ -221,11 +221,11 @@ func_time = []
 mem_used_GB = []
 zcs = 1
 ycs = 300
-chunksize = [128, 256, 299, 300, 512, 583, 768, 1024]
+chunksize = [32, 64, 128, 256, 299, 300, 512, 583, 768, 1024]
  #, 1280 1536, 1792, 2048, 'auto', False]
 
 for cs in chunksize:
-    css = [zcs, ycs, cs]
+    css = [zcs, cs, ycs]
     fieldset = test_ofam_fieldset(cs=css)
     pset = ParticleSet(fieldset=fieldset, pclass=JITParticle, repeatdt=delta(days=2),
                        lon=[fieldset.U.lon[800]], lat=[fieldset.U.lat[151]],
@@ -248,7 +248,7 @@ plt.xlim([0, chunksize[-1]])
 plt.legend()
 ax.set_xlabel('field_chunksize')
 ax.set_ylabel('Time spent in pset.execute() [s]')
-plt.savefig(cfg.fig/'dask_chunk_time_euc_z{}_y{}.png'.format(zcs, ycs))
+plt.savefig(cfg.fig/'dask_chunk_time_euc_z{}_x{}.png'.format(zcs, ycs))
 plt.show()
 plt.clf()
 plt.close()
@@ -258,7 +258,7 @@ ax.plot(chunksize, mem_used_GB, '--', label="memory_blocked [MB]")
 plt.legend()
 ax.set_xlabel('field_chunksize')
 ax.set_ylabel('Memory blocked in pset.execute() [MB]')
-plt.savefig(cfg.fig/'dask_chunk_mem_euc_z{}_y{}.png'.format(zcs, ycs))
+plt.savefig(cfg.fig/'dask_chunk_mem_euc_z{}_x{}.png'.format(zcs, ycs))
 plt.show()
 plt.clf()
 plt.close()

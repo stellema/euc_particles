@@ -24,7 +24,7 @@ try:
 except ImportError:
     MPI = None
 
-logger = tools.mlogger('sim', parcels=True, misc=False)
+logger = tools.mlogger('test_ncpu', parcels=True, misc=False)
 
 
 def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
