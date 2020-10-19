@@ -317,7 +317,7 @@ def log_simulation(xlog, rank, logger):
 
 def pset_from_file(fieldset, pclass, filename, repeatdt=None,
                    restart=True, restarttime=np.nanmin, reduced=True,
-                   lonlatdepth_dtype=np.float64, xlog=None, **kwargs):
+                   lonlatdepth_dtype=np.float32, xlog=None, **kwargs):
     """Initialise the ParticleSet from a netcdf ParticleFile.
 
     This creates a new ParticleSet based on locations of all particles written
