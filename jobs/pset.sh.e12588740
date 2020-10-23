@@ -1,0 +1,251 @@
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/parcels/field.py:330: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray
+  timeslices = np.array(timeslices)
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/parcels/field.py:332: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray
+  dataFiles = np.concatenate(np.array(dataFiles))
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/parcels/field.py:366: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray
+  field_timeslices = np.array(field_timeslices)
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/parcels/field.py:368: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray
+  dataFiles = np.concatenate(np.array(dataFiles))
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/parcels/field.py:330: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray
+  timeslices = np.array(timeslices)
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/parcels/field.py:332: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray
+  dataFiles = np.concatenate(np.array(dataFiles))
+Generating restart file from: sim_rcp_190_v0r03
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/parcels/field.py:330: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray
+  timeslices = np.array(timeslices)
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/parcels/field.py:332: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray
+  dataFiles = np.concatenate(np.array(dataFiles))
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/parcels/field.py:366: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray
+  field_timeslices = np.array(field_timeslices)
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/parcels/field.py:368: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray
+  dataFiles = np.concatenate(np.array(dataFiles))
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/parcels/field.py:330: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray
+  timeslices = np.array(timeslices)
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/parcels/field.py:332: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray
+  dataFiles = np.concatenate(np.array(dataFiles))
+Generating restart file from: sim_rcp_220_v0r03
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/parcels/field.py:330: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray
+  timeslices = np.array(timeslices)
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/parcels/field.py:332: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray
+  dataFiles = np.concatenate(np.array(dataFiles))
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/parcels/field.py:366: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray
+  field_timeslices = np.array(field_timeslices)
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/parcels/field.py:368: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray
+  dataFiles = np.concatenate(np.array(dataFiles))
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/parcels/field.py:330: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray
+  timeslices = np.array(timeslices)
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/parcels/field.py:332: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray
+  dataFiles = np.concatenate(np.array(dataFiles))
+Generating restart file from: sim_rcp_250_v0r06
+
+------------------------------------------------------------------------
+Job 12588740 has exceeded memory allocation on node gadi-cpu-clx-0649.gadi.nci.org.au
+Process "bash", pid 463643, rss 3063808, vmem 20779008
+Process "12588740.gadi-p", pid 463691, rss 2924544, vmem 227966976
+Process "python3", pid 463956, rss 960622592, vmem 2565275648
+Process "python3", pid 463957, rss 7330480128, vmem 9178087424
+Process "python3", pid 463958, rss 1042350080, vmem 2565263360
+Process "python3", pid 463959, rss 7483047936, vmem 9847070720
+Process "python3", pid 463960, rss 1147142144, vmem 2674036736
+Process "python3", pid 463961, rss 7555584000, vmem 10966601728
+Process "orted", pid 463976, rss 7180288, vmem 315527168
+Process "orted", pid 463979, rss 7090176, vmem 315527168
+Process "orted", pid 463980, rss 7036928, vmem 315527168
+Process "orted", pid 463981, rss 7163904, vmem 315527168
+Process "orted", pid 463982, rss 7114752, vmem 315527168
+Process "orted", pid 463983, rss 7323648, vmem 315527168
+------------------------------------------------------------------------
+For more information visit https://opus.nci.org.au/x/SwGRAQ
+------------------------------------------------------------------------
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/parcels/field.py:330: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray
+  timeslices = np.array(timeslices)
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/parcels/field.py:332: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray
+  dataFiles = np.concatenate(np.array(dataFiles))
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/parcels/field.py:366: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray
+  field_timeslices = np.array(field_timeslices)
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/parcels/field.py:368: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray
+  dataFiles = np.concatenate(np.array(dataFiles))
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/parcels/field.py:330: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray
+  timeslices = np.array(timeslices)
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/parcels/field.py:332: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray
+  dataFiles = np.concatenate(np.array(dataFiles))
+Generating restart file from: sim_hist_220_v0r04
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/parcels/field.py:330: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray
+  timeslices = np.array(timeslices)
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/parcels/field.py:332: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray
+  dataFiles = np.concatenate(np.array(dataFiles))
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/parcels/field.py:366: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray
+  field_timeslices = np.array(field_timeslices)
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/parcels/field.py:368: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray
+  dataFiles = np.concatenate(np.array(dataFiles))
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/parcels/field.py:330: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray
+  timeslices = np.array(timeslices)
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/parcels/field.py:332: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray
+  dataFiles = np.concatenate(np.array(dataFiles))
+Generating restart file from: sim_hist_190_v0r02
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/parcels/field.py:330: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray
+  timeslices = np.array(timeslices)
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/parcels/field.py:332: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray
+  dataFiles = np.concatenate(np.array(dataFiles))
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/parcels/field.py:366: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray
+  field_timeslices = np.array(field_timeslices)
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/parcels/field.py:368: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray
+  dataFiles = np.concatenate(np.array(dataFiles))
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/parcels/field.py:330: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray
+  timeslices = np.array(timeslices)
+/g/data3/hh5/public/apps/miniconda3/envs/analysis3-20.07/lib/python3.7/site-packages/parcels/field.py:332: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray
+  dataFiles = np.concatenate(np.array(dataFiles))
+Generating restart file from: sim_hist_250_v0r06
+ sim_hist_190_v0r03: Particles: File=135235 New=85330 West=35435 I=49895 Total=185130
+ sim_hist_190_v0r03: Runtime=696d: 2006-10-28 to 2004-12-01: Rep=6d (x115)
+ sim_hist_190_v0r03: Lon=190: Lat=[-2.6-2.6 x0.1]: Depth=[25-350m x25]f32
+ Saved: /g/data/e14/as3189/OFAM/data/r_sim_hist_190_v0r03.nc
+/local/spool/pbs/mom_priv/jobs/12588740.gadi-pbs.SC: line 23: 463957 Killed                  python3 /g/data/e14/as3189/OFAM/scripts/sim_particleset.py -e "rcp" -x 190 -r 696 -v 0
+/local/spool/pbs/mom_priv/jobs/12588740.gadi-pbs.SC: line 23: 463958 Killed                  python3 /g/data/e14/as3189/OFAM/scripts/sim_particleset.py -e "hist" -x 220 -r 780 -v 0
+/local/spool/pbs/mom_priv/jobs/12588740.gadi-pbs.SC: line 23: 463959 Killed                  python3 /g/data/e14/as3189/OFAM/scripts/sim_particleset.py -e "rcp" -x 220 -r 780 -v 0
+/local/spool/pbs/mom_priv/jobs/12588740.gadi-pbs.SC: line 23: 463960 Killed                  python3 /g/data/e14/as3189/OFAM/scripts/sim_particleset.py -e "hist" -x 250 -r 780 -v 0
+/local/spool/pbs/mom_priv/jobs/12588740.gadi-pbs.SC: line 23: 463961 Killed                  python3 /g/data/e14/as3189/OFAM/scripts/sim_particleset.py -e "rcp" -x 250 -r 780 -v 0
