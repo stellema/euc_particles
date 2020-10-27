@@ -12,11 +12,6 @@ OFAM project main functions, classes and variable definitions.
 This file can be imported as a module and contains the following
 functions:
 
-76 - b_grid_velocity
-54 - e12
-36 - 3D unbeach - NO CHANGE
-29 - b_grid_velocity + 3D - NO CHANGE FROM b_velocity
-
 notes:
 OFAM variable coordinates:
     u - st_ocean, yu_ocean, xu_ocean
@@ -24,7 +19,11 @@ OFAM variable coordinates:
     salt - st_ocean, yt_ocean, xt_ocean
     temp - st_ocean, yt_ocean, xt_ocean
 
-
+TODO: check unbeachW interpolation ('bgrid_w_velocity' vs 'bgrid_velocity')
+TODO: modify ubeach, land and zone for new fields
+TODO: create new OFAM3 mesh mask
+TODO: Check chunking
+TODO:
 """
 import cfg
 import dask
@@ -38,9 +37,39 @@ from datetime import datetime, timedelta
 from parcels import (FieldSet, Field, ParticleSet, VectorField)
 
 
-def ofam_fieldset(time_bnds='full', exp='hist', chunks=True, cs=300,
-                  time_periodic=False, add_zone=True, add_unbeach_vel=True,
-                  apply_indicies=True):
+def from_ofam(filenames, variables, dimensions, indices=None, mesh='spherical',
+              allow_time_extrapolation=None, field_chunksize='auto',
+              interp_method=None, tracer_interp_method='bgrid_tracer',
+              time_periodic=False, **kwargs):
+    if interp_method is None:
+        interp_method = {}
+        for v in variables:
+            if v in ['U', 'V', 'Ub', 'Vb', 'Land']:
+                interp_method[v] = 'bgrid_velocity'
+            elif v in ['W', 'Wb']:
+                interp_method[v] = 'bgrid_w_velocity'
+            elif v in ['zone']:
+                interp_method[v] = 'nearest'
+            else:
+                interp_method[v] = tracer_interp_method
+
+    if 'creation_log' not in kwargs.keys():
+        kwargs['creation_log'] = 'from_mom5'
+
+    fieldset = FieldSet.from_netcdf(filenames, variables, dimensions, mesh=mesh,
+                                    indices=indices, time_periodic=time_periodic,
+                                    allow_time_extrapolation=allow_time_extrapolation,
+                                    field_chunksize=field_chunksize,
+                                    gridindexingtype='mom5', **kwargs)
+
+    if hasattr(fieldset, 'W'):
+        fieldset.W.set_scaling_factor(-1)
+
+    return fieldset
+
+
+def ofam_fieldset(time_bnds='full', exp='hist', chunks=True,
+                  cs=[1, 1, 1], add_xfields=True):
     """Create a 3D parcels fieldset from OFAM model output.
 
     Between two dates useing FieldSet.from_b_grid_dataset.
@@ -57,24 +86,12 @@ def ofam_fieldset(time_bnds='full', exp='hist', chunks=True, cs=300,
         fieldset (parcels.Fieldset)
 
     """
-    dask.config.set({"array.slicing.split_large_chunks": False})
-    # Add OFAM dimension names to NetcdfFileBuffer namemaps.
-    nmaps = {"time": ["Time"],
-             "lon": ["xu_ocean", "xt_ocean", "xu_ocean_mod"],
-             "lat": ["yu_ocean", "yt_ocean", "yu_ocean_mod"],
-             "depth": ["st_ocean", "sw_ocean", "st_edges_ocean"]}
-
-    parcels.field.NetcdfFileBuffer._name_maps = nmaps
-
     if time_bnds == 'full':
         if exp == 'hist':
             y1 = 1981 if cfg.home != Path('E:/') else 2012
             time_bnds = [datetime(y1, 1, 1), datetime(2012, 12, 31)]
         elif exp == 'rcp':
             time_bnds = [datetime(2070, 1, 1), datetime(2101, 12, 31)]
-
-    if time_periodic:
-        time_periodic = timedelta(days=(time_bnds[1] - time_bnds[0]).days + 1)
 
     # Create file list based on selected years and months.
     u, v, w = [], [], []
@@ -85,69 +102,73 @@ def ofam_fieldset(time_bnds='full', exp='hist', chunks=True, cs=300,
             w.append(str(cfg.ofam/('ocean_w_{}_{:02d}.nc'.format(y, m))))
 
     # Mesh contains all OFAM3 coords.
-    mesh = str(cfg.data/'ofam_mesh_grid.nc')
-    # sw_ocean_mod = sw_ocean[np.append(np.arange(1, 51, dtype=int), 0)]
+    mesh = [str(cfg.data/'ofam_mesh_grid.nc')]
 
-    variables = {'U': 'u',
-                 'V': 'v',
-                 'W': 'w'}
+    variables = {'U': 'u', 'V': 'v', 'W': 'w'}
 
     files = {'U': {'depth': mesh, 'lat': mesh, 'lon': mesh, 'data': u},
              'V': {'depth': mesh, 'lat': mesh, 'lon': mesh, 'data': v},
              'W': {'depth': mesh, 'lat': mesh, 'lon': mesh, 'data': w}}
 
-    dims = {'U': {'time': 'Time', 'lat': 'yu_ocean', 'lon': 'xu_ocean',
-                  'depth': 'st_edges_ocean'},
-            'V': {'time': 'Time', 'lat': 'yu_ocean', 'lon': 'xu_ocean',
-                  'depth': 'st_edges_ocean'},
-            'W': {'time': 'Time', 'lat': 'yu_ocean_mod', 'lon': 'xu_ocean_mod',
-                  'depth': 'st_edges_ocean'}}
-    # Depth coordinate indices.
-    # U,V: Repeat last level and remove first lat/lon of u-cell.
-    # W: Repeat top level and remove last lat/lon of t-cell.
-    X, Y, Z = 1750, 300, 51  # len(xu_ocean), len(yu_ocean), len(st_ocean).
+    dims = {'U': {'lat': 'yu_ocean', 'lon': 'xu_ocean', 'depth': 'sw_ocean', 'time': 'Time'},
+            'V': {'lat': 'yu_ocean', 'lon': 'xu_ocean', 'depth': 'sw_ocean', 'time': 'Time'},
+            'W': {'lat': 'yu_ocean', 'lon': 'xu_ocean', 'depth': 'sw_ocean', 'time': 'Time'}}
 
-    zu_ind = np.append(np.arange(0, Z, dtype=int), Z).tolist()
-    yu_ind = np.arange(1, Y, dtype=int).tolist()
-    xu_ind = np.arange(1, X, dtype=int).tolist()
-
-    zt_ind = np.append(0, np.arange(0, Z, dtype=int)).tolist()
-    yt_ind = np.arange(0, Y - 1, dtype=int).tolist()
-    xt_ind = np.arange(0, X - 1, dtype=int).tolist()
-
-    inds = {'U': {'lat': yu_ind, 'lon': xu_ind, 'depth': zu_ind},
-            'V': {'lat': yu_ind, 'lon': xu_ind, 'depth': zu_ind},
-            'W': {'lat': yt_ind, 'lon': xt_ind, 'depth': zt_ind}}
-
+    # BUG: Error passing nmaps with auto or False chunks?
+    nmap = None
     if chunks not in ['auto', False]:
-        cs = [1, 300, 300]
+        # OFAM3 dimensions for NetcdfFileBuffer namemaps (chunkdims_name_map).
+        nmap = {"time": ["Time"],
+                "lon": ["xu_ocean", "xt_ocean"],
+                "lat": ["yu_ocean", "yt_ocean"],
+                "depth": ["st_ocean", "sw_ocean"]}
+        # field_chunksize.
         chunks = {'Time': 1,
-                  'sw_ocean': cs[0], 'st_ocean': cs[0], 'st_edges_ocean': cs[0],
-                  'yt_ocean': cs[1], 'yu_ocean': cs[1], 'yu_ocean_mod': cs[1],
-                  'xt_ocean': cs[2], 'xu_ocean': cs[2], 'xu_ocean_mod': cs[2]}
+                  'sw_ocean': cs[0], 'st_ocean': cs[0],
+                  'yt_ocean': cs[1], 'yu_ocean': cs[1],
+                  'xt_ocean': cs[2], 'xu_ocean': cs[2]}
 
-    interp_method = {'U': 'bgrid_velocity',
-                     'V': 'bgrid_velocity',
-                     'W': 'bgrid_w_velocity'}
+    fieldset = from_ofam(files, variables, dims,
+                         field_chunksize=chunks, chunkdims_name_map=nmap)
 
-    fieldset = FieldSet.from_netcdf(files, variables, dims, indices=inds,
-                                    mesh='spherical', field_chunksize=chunks,
-                                    time_periodic=time_periodic,
-                                    creation_log='from_b_grid_dataset',
-                                    interp_method=interp_method)
-    fieldset.W.grid.depth = fieldset.U.grid.depth
+    if add_xfields:
+        # Add Unbeach velocity vectorfield to fieldset.
+        xfiles = [str(cfg.data/'ofam_unbeach_land_ucell.nc'),
+                  str(cfg.data/'OFAM3_ucell_zones.nc')]
 
-    # UVW = VectorField('UVW', fieldset.U, fieldset.V, fieldset.W)
-    # fieldset.add_vector_field(UVW)
+        uvars = {'Ub': 'Ub',
+                 'Vb': 'Vb',
+                 'Wb': 'Wb',
+                 'Land': 'Land',
+                 'zone': 'zone'}
 
-    # Set fieldset minimum depth.
-    fieldset.mindepth = 0.
+        ufiles = {'Ub': xfiles[0],
+                  'Vb': xfiles[0],
+                  'Wb': xfiles[0],
+                  'Land': xfiles[0],
+                  'zone': xfiles[1]}
 
-    # Change W velocity direction scaling factor.
-    fieldset.W.set_scaling_factor(-1)
+        fieldsetUB = from_ofam(ufiles, uvars, dims['U'],
+                               tracer_interp_method='bgrid_velocity',
+                               allow_time_extrapolation=True,
+                               field_chunksize=chunks, chunkdims_name_map=nmap)
 
-    # Convert from geometric to geographic coordinates (m to degree).
-    # Nautical mile (1 min of arc at the equator) = 1852
+        # Field time origins and calander (probs unnecessary).
+        fieldsetUB.time_origin = fieldset.time_origin
+        fieldsetUB.time_origin.time_origin = fieldset.time_origin.time_origin
+        fieldsetUB.time_origin.calendar = fieldset.time_origin.calendar
+
+        # Add units and beaching velocity and land mask to fieldset.
+        for fld in fieldsetUB.get_fields():
+            fld.units = parcels.tools.converters.UnitConverter()
+            fieldset.add_field(fld, fld.name)
+
+        UVWb = VectorField('UVWb', fieldset.Ub, fieldset.Vb, fieldset.Wb)
+        fieldset.add_vector_field(UVWb)
+
+    # Constants.
+    # Convert geometric to geographic coordinates (m to degree).
+    # Nautical mile = 1852 (1 min of arc at equator)
     fieldset.add_constant('NM', 1/(1852*60))
     fieldset.add_constant('onland', 0.975)
     fieldset.add_constant('byland', 0.5)
@@ -155,82 +176,12 @@ def ofam_fieldset(time_bnds='full', exp='hist', chunks=True, cs=300,
     fieldset.add_constant('UB_min', 0.25)
     fieldset.add_constant('UBw', 1e-4)
 
-    if add_zone:
-        # Add particle zone boundaries.
-        file = str(cfg.data/'OFAM3_ucell_zones.nc')
-
-        # NB: Zone is constant with depth.
-        dimz = {'time': 'Time',
-                'depth': 'sw_ocean',
-                'lat': 'yu_ocean',
-                'lon': 'xu_ocean'}
-        inds_z = {'lat': yu_ind, 'lon': xu_ind}
-        interp_z = {'zone': 'nearest'}  # Nearest values only.
-
-        zfield = Field.from_netcdf(file, 'zone', dimz, indices=inds_z,
-                                   interp_method=interp_z,
-                                   field_chunksize=chunks,
-                                   allow_time_extrapolation=True)
-
-        fieldset.add_field(zfield, 'zone')
-
-    if add_unbeach_vel:
-        # Add Unbeach velocity vectorfield to fieldset.
-        file = str(cfg.data/'ofam_unbeach_land_ucell.nc')
-
-        vars_ub = {'Ub': 'Ub',
-                   'Vb': 'Vb',
-                   'Wb': 'Wb',
-                   'Land': 'Land'}
-
-        dims_ub = {'Ub': dims['U'],
-                   'Vb': dims['U'],
-                   'Wb': dims['U'],
-                   'Land': dims['U']}
-
-        inds_ub = {'Ub': inds['U'],
-                   'Vb': inds['U'],
-                   'Wb': inds['U'],
-                   'Land': inds['U']}
-
-        interp_ub = {'Ub': 'bgrid_velocity',
-                     'Vb': 'bgrid_velocity',
-                     'Wb': 'bgrid_velocity',
-                     'Land': 'bgrid_velocity'}
-
-        fieldsetUB = FieldSet.from_netcdf(file, vars_ub, dims_ub,
-                                          indices=inds_ub,
-                                          interp_method=interp_ub,
-                                          field_chunksize=chunks,
-                                          creation_log='from_b_grid_dataset',
-                                          allow_time_extrapolation=True)
-
-        # Field time origins and calander (probs unnecessary).
-        fieldsetUB.time_origin = fieldset.time_origin
-        fieldsetUB.time_origin.time_origin = fieldset.time_origin.time_origin
-        fieldsetUB.time_origin.calendar = fieldset.time_origin.calendar
-
-        # Set field units.
-        fieldsetUB.Ub.units = parcels.tools.converters.UnitConverter()
-        fieldsetUB.Vb.units = parcels.tools.converters.UnitConverter()
-        fieldsetUB.Wb.units = parcels.tools.converters.UnitConverter()
-        fieldsetUB.Land.units = parcels.tools.converters.UnitConverter()
-
-        # Add beaching velocity and land mask to fieldset.
-        fieldset.add_field(fieldsetUB.Ub, 'Ub')
-        fieldset.add_field(fieldsetUB.Vb, 'Vb')
-        fieldset.add_field(fieldsetUB.Wb, 'Wb')
-        fieldset.add_field(fieldsetUB.Land, 'Land')
-
-        UVWb = VectorField('UVWb', fieldset.Ub, fieldset.Vb, fieldset.Wb)
-        fieldset.add_vector_field(UVWb)
     return fieldset
 
 
 def generate_sim_id(lon, v=0, exp='hist', randomise=False,
                     restart=True, xlog=None):
     """Create name to save particle file (looks for unsaved filename)."""
-
     if not restart:
         head = 'sim_{}_{}_v'.format(exp, int(lon))  # Start of filename.
         # Copy given index or find a random number.
