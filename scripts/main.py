@@ -26,15 +26,14 @@ TODO: Check chunking
 TODO:
 """
 import cfg
-import dask
 import math
 import random
 import parcels
 import numpy as np
 import xarray as xr
 from pathlib import Path
-from datetime import datetime, timedelta
-from parcels import (FieldSet, Field, ParticleSet, VectorField)
+from datetime import datetime
+from parcels import (FieldSet, ParticleSet, VectorField)
 
 
 def from_ofam(filenames, variables, dimensions, indices=None, mesh='spherical',
@@ -44,7 +43,7 @@ def from_ofam(filenames, variables, dimensions, indices=None, mesh='spherical',
     if interp_method is None:
         interp_method = {}
         for v in variables:
-            if v in ['U', 'V', 'Ub', 'Vb', 'Wb','Land']:
+            if v in ['U', 'V', 'Ub', 'Vb', 'Wb', 'Land']:
                 interp_method[v] = 'bgrid_velocity'
             elif v in ['W']:
                 interp_method[v] = 'bgrid_w_velocity'
@@ -107,13 +106,12 @@ def ofam_fieldset(time_bnds='full', exp='hist', chunks=300, add_xfields=True):
     mesh = [str(cfg.data/'ofam_mesh_grid_part.nc')]
 
     variables = {'U': 'u', 'V': 'v', 'W': 'w'}
-
+    dims = {'lat': 'yu_ocean',
+            'lon': 'xu_ocean', 'depth': 'sw_ocean', 'time': 'Time'}
     files = {'U': {'depth': mesh, 'lat': mesh, 'lon': mesh, 'data': u},
              'V': {'depth': mesh, 'lat': mesh, 'lon': mesh, 'data': v},
              'W': {'depth': mesh, 'lat': mesh, 'lon': mesh, 'data': w}}
 
-    dims = {'lat': 'yu_ocean', 'lon': 'xu_ocean', 'depth': 'sw_ocean', 'time': 'Time'}
-    # BUG: Error passing nmaps with auto or False chunks?
     nmap = None
     if chunks not in ['auto', False]:
         # OFAM3 dimensions for NetcdfFileBuffer namemaps (chunkdims_name_map).
@@ -150,8 +148,6 @@ def ofam_fieldset(time_bnds='full', exp='hist', chunks=300, add_xfields=True):
         if chunks not in ['auto', False]:
             nmap = {"time": ["Time"], "depth": ["sw_ocean"],
                     "lat": ["yu_ocean"], "lon": ["xu_ocean"]}
-            # chunks = {'Time': 1, 'sw_ocean': 1,
-            #           'yu_ocean': cs, 'xu_ocean': cs}
             chunks = (1, 1, cs, cs)
 
         fieldsetUB = from_ofam(xfiles, xvars, dims,

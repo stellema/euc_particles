@@ -220,6 +220,5 @@ ds = xr.open_dataset(sim_id, decode_cf=True)
 #     print(j, mx, tj[-1])
 
 # ds = plot3D(sim_id)
-ds, dx = plot_traj(sim_id, var='u', traj=2, t=2, Z=180, ds=ds)
-ds, dx = plot_traj(sim_id, var='u', traj=4, t=3, Z=180, ds=ds)
-ds, dx = plot_traj(sim_id, var='u', traj=1, t=2, Z=180, ds=ds)
+ds, dx = plot_traj(sim_id, var='u', traj=None, t=2, Z=180, ds=ds)
+
