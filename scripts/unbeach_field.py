@@ -7,13 +7,15 @@ author: Annette Stellema (astellemas@gmail.com)
 Creates file that defines OFAM3 land points and unbeaching velocity.
 """
 
-import cfg
 import numpy as np
 import xarray as xr
 from datetime import datetime
 
+import cfg
+from tools import FrozenDict
+
 files = [str(cfg.ofam/'ocean_{}_1981_01.nc'.format(var))
-         for var in ['u', 'v', 'w', 'temp']]
+         for var in ['u', 'v', 'w']]
 ds = xr.open_mfdataset(files, combine='by_coords').isel(Time=slice(0, 1))
 
 lon = ds.xu_ocean
@@ -25,10 +27,10 @@ U = np.array(ds.u)*0 + 1
 V = np.array(ds.v)*0 + 1
 U[np.isnan(U)] = 0
 V[np.isnan(V)] = 0
-ld = np.zeros(ds.u.shape)
-ub = np.zeros(ds.u.shape)
-vb = np.zeros(ds.u.shape)
-wb = np.zeros(ds.u.shape)
+ld = np.zeros(ds.u.shape, dtype=np.float32)
+ub = np.zeros(ds.u.shape, dtype=np.float32)
+vb = np.zeros(ds.u.shape, dtype=np.float32)
+wb = np.zeros(ds.u.shape, dtype=np.float32)
 
 
 def island(k, j, i):
@@ -43,6 +45,7 @@ def island(k, j, i):
 
 
 def islandlocked(k, j, i, nlats=300, nlons=1750):
+    """Check if point is landlocked."""
     if j != 0 and i != 0 and j != nlats and i != nlons:
         edge_j = [j-1, j-1, j-1, j, j, j, j+1, j+1, j+1]
         edge_i = [i-1, i, i+1, i-1, i, i+1, i-1, i, i+1]
@@ -66,7 +69,6 @@ def islandlocked(k, j, i, nlats=300, nlons=1750):
         edge_i = [i-1, i, i-1, i, i-1, i]
 
     return all([island(k, jj, ii) for jj, ii in zip(edge_j, edge_i)])
-
 
 
 for k in range(depth.size):
@@ -105,6 +107,7 @@ for k in range(depth.size):
                         wb[0, k, j+1, i] = -1
                     if not island(k-1, j+1, i+1):
                         wb[0, k, j+1, i+1] = -1
+
                 if not islandlocked(k, j, i):
                     if island(k, j, i-1) and not island(k, j, i+1):
                         if island(k, j-1, i) and not island(k, j+1, i):
@@ -182,25 +185,27 @@ for k in range(depth.size):
                                 vb[0, k, j+1, i+1] = 1
 
 
-# Create Dataset.
-mesh = xr.open_dataset(cfg.data/'ofam_mesh_grid.nc')
-db = mesh.copy()  # Add all the coords, just in case.
-coords = ds.u.coords
-dims = ('Time', 'st_ocean', 'yu_ocean', 'xu_ocean')
-Ub = xr.DataArray(ub, name='Ub', dims=dims, coords=coords,
-                  attrs=ds.u.attrs)
-Vb = xr.DataArray(vb, name='Vb', dims=dims, coords=coords,
-                  attrs=ds.v.attrs)
-Wb = xr.DataArray(wb, name='Wb', dims=dims, coords=coords,
-                  attrs=ds.v.attrs)
-Land = xr.DataArray(ld, name='Land', dims=dims, coords=coords,
-                    attrs=ds.v.attrs)
+# Create DataArrays.
+dims = ('Time', 'sw_ocean', 'yu_ocean', 'xu_ocean')
+Ub = xr.DataArray(ub, name='Ub', dims=dims, attrs=ds.u.attrs)
+Vb = xr.DataArray(vb, name='Vb', dims=dims, attrs=ds.v.attrs)
+Wb = xr.DataArray(wb, name='Wb', dims=dims, attrs=ds.v.attrs)
+Land = xr.DataArray(ld, name='Land', dims=dims, attrs=ds.v.attrs)
 
+# Create Dataset.
+db = xr.Dataset()
 db[Ub.name] = Ub
 db[Vb.name] = Vb
 db[Wb.name] = Wb
 db[Land.name] = Land
-
-db.attrs = ds.attrs
+# Add coordinates for dims.
+for g in list(dims):
+    if g not in ['Time']:
+        db.coords[g] = ds[g].astype(dtype=np.float32)
+    else:
+        db.coords[g] = ds[g]
 db.attrs['history'] = 'Created {}.'.format(datetime.now().strftime("%Y-%m-%d"))
-db.to_netcdf(path=cfg.data/'ofam_unbeach_land_ucell.nc')
+db = db.chunk({'Time': 1, 'sw_ocean': 1, 'yu_ocean': 300, 'xu_ocean': 300})
+db.to_netcdf(path=cfg.data/'ofam_beach_field.nc')
+print(db, db.Ub.dtype, db.Ub.chunks)
+db.close()

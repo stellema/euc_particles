@@ -11,10 +11,10 @@ class CustomAdapter(logging.LoggerAdapter):
 """
 import os
 import sys
-import cfg
 import math
 import logging
 import calendar
+import collections
 import numpy as np
 import xarray as xr
 import pandas as pd
@@ -25,6 +25,8 @@ from datetime import datetime
 import matplotlib.pyplot as plt
 import matplotlib.colors as colors
 from matplotlib.offsetbox import AnchoredText
+
+import cfg
 
 
 def mlogger(name, parcels=False, misc=True):
@@ -558,34 +560,21 @@ def open_tao_data(frq='mon', dz=slice(10, 355), SI=True):
 
 def create_mesh_mask():
     """Create OFAM3 mesh mask."""
-
-    f = [cfg.ofam/'ocean_{}_2012_01.nc'.format(var) for var in ['u', 'w']]
-
+    f = [cfg.ofam/'ocean_{}_1981_01.nc'.format(var) for var in ['u', 'w']]
     ds = xr.open_mfdataset(f, combine='by_coords')
+    mesh = xr.Dataset(coords=ds.coords)
+    mesh = mesh.drop(['nv', 'Time'])
+    # Convert coords dtype to np.float32
+    for c in mesh.coords.variables:
+        mesh.coords[c] = mesh.coords[c].astype(dtype=np.float32)
+        mesh.coords[c].encoding['dtype'] = np.dtype('float32')
 
-    # Create copy of particle file with initally westward partciles removed.
-
-    mesh = xr.Dataset()
-    mesh['xu_ocean'] = ds.xu_ocean
-    mesh['yu_ocean'] = ds.yu_ocean
-    mesh['xt_ocean'] = ds.xt_ocean
-    mesh['yt_ocean'] = ds.yt_ocean
-    mesh['sw_ocean'] = ds.sw_ocean
-    mesh['st_ocean'] = ds.st_ocean
-    mesh['st_edges_ocean'] = ds.st_edges_ocean
-    mesh['sw_edges_ocean'] = ds.sw_edges_ocean
-
-    Y, X, Z = len(ds.yu_ocean), len(ds.xu_ocean), len(ds.st_ocean)
-    ymod = np.arange(1, Y, dtype=int)
-    xmod = np.arange(1, X, dtype=int)
-    zmod = np.append(np.arange(1, Z, dtype=int), 0)
-    mesh['xu_ocean_mod'] = np.append(ds.xu_ocean.values[xmod],
-                                     ds.xu_ocean[-1].item() + 0.1)
-    mesh['yu_ocean_mod'] = np.append(ds.yu_ocean.values[ymod],
-                                     ds.yu_ocean[-1].item() + 0.1)
-    mesh['sw_ocean_mod'] = ds.st_edges_ocean.values[zmod]
-    mesh['st_ocean_mod'] = ds.sw_edges_ocean.values[zmod]
     mesh.to_netcdf(cfg.data/'ofam_mesh_grid.nc')
+    for c in mesh.coords.variables:
+        if c in ['st_edges_ocean', 'sw_edges_ocean']:
+            mesh = mesh.drop(c)
+    mesh.to_netcdf(cfg.data/'ofam_mesh_grid_part.nc')
+
     ds.close()
     mesh.close()
     return
@@ -648,7 +637,6 @@ def tidy_files(logs=True, jobs=True):
 
 
 def zone_cmap():
-
     zmap = colors.ListedColormap(['darkorange', 'deeppink',
                                    'mediumspringgreen',
                                    'deepskyblue', 'seagreen', 'blue',
@@ -657,17 +645,15 @@ def zone_cmap():
     return zmap, norm
 
 
-def zone_fieldset(plot=True, cell='u'):
+def zone_field(plot=False):
     """Create fieldset or plot zone definitions."""
     # Copy 2D empty OFGAM3 velocity grid.
-    # d = xr.open_dataset(cfg.ofam/'ocean_temp_1981_01.nc')
-    files = [str(cfg.ofam/'ocean_{}_1981_01.nc'.format(v))
-             for v in ['u', 'w', 'temp']]
-    dr = xr.open_mfdataset(files, combine='by_coords')
+    file = [str(cfg.ofam/'ocean_{}_1981_01.nc'.format(v)) for v in ['u', 'w']]
+    dr = xr.open_mfdataset(file, combine='by_coords')
     dr = dr.isel(st_ocean=slice(0, 1), Time=slice(0, 1))
     d = dr.u.where(np.isnan(dr.u), 0)
     d = d.rename({'st_ocean': 'sw_ocean'})
-    d.coords['sw_ocean'] = np.array([5.0])
+    d.coords['sw_ocean'] = np.array([5.0], dtype=np.float32)
 
     eps = 0 if not plot else 0.1  # Add a bit of padding to the plotted lines.
     for n, zone in enumerate(cfg.zones):
@@ -686,7 +672,6 @@ def zone_fieldset(plot=True, cell='u'):
 
     if plot:
         d = d.isel(Time=0, sw_ocean=0)
-        # d = d.sel(yu_ocean=slice(-7.5, 10), xu_ocean=slice(120, 255))
         d = d.sel(yu_ocean=slice(-15, 10), xu_ocean=slice(120, 255))
 
         cmap = colors.ListedColormap(['darkorange', 'deeppink', 'mediumspringgreen',
@@ -708,16 +693,17 @@ def zone_fieldset(plot=True, cell='u'):
 
         plt.savefig(cfg.fig/'particle_boundariesx.png')
     if not plot:
-
         ds = d.to_dataset(name='zone').transpose('Time', 'sw_ocean',
                                                  'yu_ocean', 'xu_ocean')
-        if cell == 't':
-            ds['zone'] = (dr.temp.dims, ds.zone)
-        ds[dr.xt_ocean.name] = dr.xt_ocean
-        ds[dr.yt_ocean.name] = dr.yt_ocean
         ds[dr.st_ocean.name] = dr.st_ocean.isel(st_ocean=slice(0, 1))
+        for v in ds.variables:
+            if v not in ['Time']:
+                ds[v] = ds[v].astype(dtype=np.float32)
+
         ds.attrs['history'] = 'Created {}.'.format(datetime.now().strftime("%Y-%m-%d"))
-        ds.to_netcdf(cfg.data/'OFAM3_{}cell_zones.nc'.format(cell))
+        ds = ds.chunk()
+        ds.to_netcdf(cfg.data/'ofam_zone_field.nc')
+        ds.close()
 
     d.close()
     return
@@ -734,3 +720,35 @@ def image2video(files, output, frames=10):
         print('Created:', str(output))
 
     return
+
+# def chunk_frozen_dict():
+class FrozenDict(collections.Mapping):
+    """Don't forget the docstrings.
+
+    https://stackoverflow.com/questions/2703599/what-would-a-frozen-dict-be
+    """
+    def __init__(self, *args, **kwargs):
+        self._d = dict(*args, **kwargs)
+        self._hash = None
+
+    def __iter__(self):
+        return iter(self._d)
+
+    def __len__(self):
+        return len(self._d)
+
+    def __getitem__(self, key):
+        return self._d[key]
+
+    def __hash__(self):
+        # It would have been simpler and maybe more obvious to
+        # use hash(tuple(sorted(self._d.iteritems()))) from this discussion
+        # so far, but this solution is O(n). I don't know what kind of
+        # n we are going to run into, but sometimes it's hard to resist the
+        # urge to optimize when it will gain improved algorithmic performance.
+        if self._hash is None:
+            hash_ = 0
+            for pair in self.items():
+                hash_ ^= hash(pair)
+            self._hash = hash_
+        return self._hash

@@ -25,38 +25,12 @@ from parcels import ErrorCode
 logger = mlogger(Path(sys.argv[0]).stem, parcels=True)
 
 
-def set_ofam_fieldset_3D(cs):
-    """Load fieldset for different chunksizes (cs)."""
-    date_bnds = [get_date(1981, 1, 1), get_date(1981, 1, 'max')]
-    u, v, w = [], [], []
-    for y in range(date_bnds[0].year, date_bnds[1].year + 1):
-        for m in range(date_bnds[0].month, date_bnds[1].month + 1):
-            u.append(cfg.ofam/('ocean_u_{}_{:02d}.nc'.format(y, m)))
-            v.append(cfg.ofam/('ocean_v_{}_{:02d}.nc'.format(y, m)))
-            w.append(cfg.ofam/('ocean_w_{}_{:02d}.nc'.format(y, m)))
-    files = {'U': {'lon': u[0], 'lat': u[0], 'depth': w[0], 'data': u},
-             'V': {'lon': u[0], 'lat': u[0], 'depth': w[0], 'data': v},
-             'W': {'lon': u[0], 'lat': u[0], 'depth': w[0], 'data': w}}
-
-    dimensions = {'lon': 'xu_ocean', 'lat': 'yu_ocean',
-                  'depth': 'sw_ocean', 'time': 'Time'}
-
-    variables = {'U': 'u', 'V': 'v', 'W': 'w'}
-
-    if cs not in ['auto', False]:
-        cs = (1, 1, cs, cs)
-
-    return FieldSet.from_b_grid_dataset(files, variables, dimensions,
-                                        field_chunksize=cs, mesh='spherical')
-
-
 # chunksize_3D = ['auto']
 chunksize_3D = [128, 256, 512, 768, 1024, 1280,
                 1536, 1792, 2048, 2610, 'auto', False]
 func_time3D = []
 for cs in chunksize_3D:
-
-    fieldset = set_ofam_fieldset_3D(cs)
+    fieldset = main.ofam_fieldset(cs=cs)
     pset = ParticleSet(fieldset=fieldset, pclass=JITParticle,
                        lon=[fieldset.U.lon[800]], lat=[fieldset.U.lat[151]],
                        depth=[fieldset.U.depth[20]], repeatdt=delta(hours=1))
