@@ -3238,3 +3238,23 @@
 2020-10-14 18:21:27:Compiled zParticleAdvectionRK4_LandBeachTestUnBeachRAgeZoneDistance ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\2be938a8ddba30a3270392fad291e069_0.dll
 2020-10-14 18:22:08: sim_hist_165_v72r01: Completed: 00:01:38: Rank= 0: Particles: Start=73 Del=0 End=73
 2020-10-14 18:22:08:sim_hist_165_v72r01: Finished!: Timer=00:01:38
+2020-10-27 00:12:29:Did not find xu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'xu_ocean': <number>, ... }.
+2020-10-27 00:12:29:Did not find yu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'yu_ocean': <number>, ... }.
+2020-10-28 23:48:51:Did not find xu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'xu_ocean': <number>, ... }.
+2020-10-28 23:48:51:Did not find yu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'yu_ocean': <number>, ... }.
+2020-10-28 23:49:13: sim_hist_165_v53r00: Run=36d: 2012-12-31 to 2012-11-25: Particles=90
+2020-10-28 23:49:13: sim_hist_165_v53r00: Rep=6d: dt=60m: Out=1d: Land=0.975 Vmin=1e-07
+2020-10-28 23:49:13: sim_hist_165_v53r00: Rank= 0: LNKWNEVG: Particles=39
+2020-10-28 23:49:15:Compiled zParticleAdvectionRK4_LandBeachTestUnBeachRAgeZoneDistance ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\1111f2cd2f5aaa259bcc73c33525d14b_0.dll
+2020-10-28 23:49:48: sim_hist_165_v53r00: Completed: 00:00:57: Rank= 0: Particles: Start=39 Del=0 End=39
+2020-10-28 23:49:48: sim_hist_165_v53r00: Finished!: Timer=00:00:58
+2020-10-28 23:54:23:sim_hist_165_v1r00:Simulation v55r0: Particles=4
+2020-10-28 23:54:23:sim_hist_165_v1r00:Excecuting 2012-12-31 to 2012-02-15: Runtime=320d
+2020-10-28 23:54:23:sim_hist_165_v1r00:Lon=165: Lat=-0.7: Depth=225
+2020-10-28 23:54:23:sim_hist_165_v1r00:Dir=XIZEXCNR: Rep=6d: dt=60m: Out=1d: Land=0.975 Vmin=1e-07
+2020-10-28 23:54:23:sim_hist_165_v1r00:Rank= 0: XIZEXCNR: File=0 New=4 West=0 I=4
+2020-10-28 23:54:26:Compiled zParticleAdvectionRK4_LandBeachTestUnBeachRAgeDistanceSampleZone ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\8c49fc1655b97b89794b85ea166fbf3b_0.dll

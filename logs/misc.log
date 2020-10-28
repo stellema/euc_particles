@@ -2432,3 +2432,350 @@
 2020-10-17 17:53:12:Chunksize=[1, 768, 300]: Mem=1891.9375 Timer=19.57995629310608
 2020-10-17 17:53:17:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\1df46dcd8c6cb350c755adf8d632eafc_0.dll
 2020-10-17 17:53:35:Chunksize=[1, 1024, 300]: Mem=1891.609375 Timer=20.066535472869873
+2020-10-23 19:00:38:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\b36be3d94535cd26ebda0cf47de8fe86_0.dll
+2020-10-23 19:01:38:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\d15625395b7551131d710df4b71e1b6b_0.dll
+2020-10-23 19:30:48:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\4c9bb9861a5aa938f827c2143ade8675_0.dll
+2020-10-23 19:36:06:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\d02885646ddd256280a9b5a3a47eb06a_0.dll
+2020-10-25 00:53:32:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\dbf47042a9156874a5c351e28bac0a7e_0.dll
+2020-10-25 01:00:35:Did not find xu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'xu_ocean': <number>, ... }.
+2020-10-25 01:00:35:Did not find yu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'yu_ocean': <number>, ... }.
+2020-10-25 01:00:38:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\95959e0f6a896946a03a6642a0ec5e80_0.dll
+2020-10-25 01:01:09:Chunksize=[1, 32, 300]: Mem=560.35546875 Timer=34.27162957191467
+2020-10-25 01:01:13:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\309fb0d9414b76a6b855e655f046ce45_0.dll
+2020-10-25 01:01:47:Chunksize=[1, 64, 300]: Mem=946.15625 Timer=36.59056639671326
+2020-10-25 01:01:50:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\9d95528d3f15fed965818ffa5af7bc3f_0.dll
+2020-10-27 00:21:59:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\4d6fc9e560237311384b729bd090d8f1_0.dll
+2020-10-27 00:24:05:Compiled JITParticleAdvectionRK4 ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\48bb6c0fa6797e4445e0648d0693fb26_0.dll
+2020-10-27 00:24:26:Compiled JITParticleAdvectionRK4 ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\60a8f84c8da9e0f574d4d66d2ccfcd03_0.dll
+2020-10-27 00:24:40:Compiled JITParticleAdvectionRK4 ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\db3c30b488a60c40a719c175117c2a83_0.dll
+2020-10-27 00:25:43:Compiled JITParticleAdvectionRK4 ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\67044328aeaa251e59b41745b17c1eed_0.dll
+2020-10-27 00:25:57:Compiled JITParticleAdvectionRK4 ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\be32727b59fa222343167aedd126b4e5_0.dll
+2020-10-27 00:26:05:Compiled JITParticleAdvectionRK4 ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\802234d55ab9334c92189859fb9e31c9_0.dll
+2020-10-27 00:27:00:Compiled JITParticleAdvectionRK4 ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\ae8719af7f4858a4b1387119786bd445_0.dll
+2020-10-27 00:32:24:Compiled JITParticleAdvectionRK4 ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\04e05393042a7416d4176499ec18ffee_0.dll
+2020-10-27 00:34:05:Compiled JITParticleAdvectionRK4 ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\17cedd54982af5230fd529d9f9937fd9_0.dll
+2020-10-27 00:37:16:Compiled JITParticleAdvectionRK4 ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\4e84b8ce4b029d174e3a6375de3ad34f_0.dll
+2020-10-27 00:37:33:Compiled JITParticleAdvectionRK4 ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\aa0271ac9047befa10776a21eef88b1b_0.dll
+2020-10-27 00:38:22:Compiled JITParticleAdvectionRK4 ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\fdd4cc149f58c19022c32a1d02af8928_0.dll
+2020-10-27 01:23:09:Compiled JITParticleAdvectionRK4 ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\8bb1a4f6d12f63f3e5215522c6197d32_0.dll
+2020-10-27 01:40:22:Compiled JITParticleAdvectionRK4 ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\dec9294f2f15fe17ec17007930004e7e_0.dll
+2020-10-27 12:36:11:Compiled JITParticleAdvectionRK4 ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\ec4370dbd3ef0c6248d9ae3bc5e94526_0.dll
+2020-10-27 12:39:04:Compiled JITParticleAdvectionRK4 ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\3209fbd7b4e176a0ab77d779b779051a_0.dll
+2020-10-27 12:41:04:Compiled JITParticleAdvectionRK4 ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\969d3fef85430e9d59d0bb07f843c3f3_0.dll
+2020-10-27 12:52:36:Compiled JITParticleAdvectionRK4 ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\7d179c2567fbbd75172fedeaa4853f4b_0.dll
+2020-10-27 12:52:43:Chunksize=[1, 300, 300]: Mem=253.47265625 Timer=8.542640686035156
+2020-10-27 12:52:53:Compiled JITParticleAdvectionRK4 ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\08b3a02415d7bea509dca5d6b6b09754_0.dll
+2020-10-27 12:52:57:Chunksize=[1, 300, 300]: Mem=251.94921875 Timer=5.888409614562988
+2020-10-27 12:53:31:Casting lon data to np.float32
+2020-10-27 12:53:31:Casting lat data to np.float32
+2020-10-27 12:53:31:Casting depth data to np.float32
+2020-10-27 12:53:31:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-10-27 12:53:33:Compiled JITParticleAdvectionRK4 ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\100783597d1f99576f2b7b42ac0cc924_0.dll
+2020-10-27 12:53:37:Chunksize=[1, 300, 300]: Mem=252.0390625 Timer=5.945430517196655
+2020-10-27 13:11:27:Casting lon data to np.float32
+2020-10-27 13:11:27:Casting lat data to np.float32
+2020-10-27 13:11:27:Casting depth data to np.float32
+2020-10-27 13:11:27:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-10-27 13:11:30:Compiled JITParticleAdvectionRK4 ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\a96abc0ccd1ebac59d880ba209830b4a_0.dll
+2020-10-27 13:11:34:Chunksize=[1, 300, 300]: Mem=263.07421875 Timer=6.636203765869141
+2020-10-27 13:13:25:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\241e7406336a349eff8f2ae681e17264_0.dll
+2020-10-27 13:13:32:Chunksize=[1, 300, 300]: Mem=298.11328125 Timer=8.890584945678711
+2020-10-27 13:14:05:Casting field data to np.float32
+2020-10-27 13:14:08:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\81b6b4bef278af194be4927fb5ea7ba6_0.dll
+2020-10-27 13:14:13:Chunksize=[1, 300, 300]: Mem=433.453125 Timer=7.880926132202148
+2020-10-27 20:48:20:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\941a7d0aece7b45da34be8aa7b5246d9_0.dll
+2020-10-27 20:53:45:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\39f7159b8e5d5dac7aa4a46ce277e44a_0.dll
+2020-10-27 20:55:39:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\fa5bcc98e4de11f149b35961f2d8c9da_0.dll
+2020-10-27 21:04:52:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\cf25240bb538d4a40d4241f08c6cc0cf_0.dll
+2020-10-27 21:09:02:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\0cbbdaef77384edd1e89626a6be3b146_0.dll
+2020-10-27 21:14:00:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\c3f8500ea5bd0ea8ed14b19031174b0d_0.dll
+2020-10-27 21:16:17:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\1efd135598209848c538ab82b3d4b238_0.dll
+2020-10-27 21:17:31:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\fda7cacd06141c8f890a1a0bccf56181_0.dll
+2020-10-27 21:20:30:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\9a0fbbe42aaf606264e66316fdf32267_0.dll
+2020-10-27 21:20:39:Chunksize=[1, 300, 300]: Mem=328.15234375 Timer=11.480352640151978
+2020-10-27 21:51:49:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\60863e359addc2e36679ecc39d7549b1_0.dll
+2020-10-27 21:51:54:Chunksize=[1, 300, 300]: Mem=294.05859375 Timer=7.983317136764526
+2020-10-27 22:02:05:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\aa86de43cdbf473bd63a3d442c626312_0.dll
+2020-10-27 22:02:11:Chunksize=[1, 300, 300]: Mem=1476.80859375 Timer=7.8881776332855225
+2020-10-27 23:19:53:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\a563688abcf0c1e25c8ea3039753e571_0.dll
+2020-10-28 00:46:19:Did not find xu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'xu_ocean': <number>, ... }.
+2020-10-28 00:46:19:Did not find yu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'yu_ocean': <number>, ... }.
+2020-10-28 00:51:25:Did not find xu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'xu_ocean': <number>, ... }.
+2020-10-28 00:51:25:Did not find yu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'yu_ocean': <number>, ... }.
+2020-10-28 01:24:09:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\f65fa70979555acf8379db5e3f3046f3_0.dll
+2020-10-28 01:25:45:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\137718d32109d6b68ebf6b9091bd616f_0.dll
+2020-10-28 01:25:53:Chunksize=[1, 300, 300]: Mem=292.5625 Timer=11.659358024597168
+2020-10-28 01:28:56:Chunksize=auto: Mem=852.55078125 Timer=290.2545928955078
+2020-10-28 01:36:37:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\b1182a09609756a1a0e13e8a8b147ea6_0.dll
+2020-10-28 01:37:00:Chunksize=[1, 64, 64]: Mem=1022.04296875 Timer=25.959733963012695
+2020-10-28 01:37:03:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\48ed7693af4c3c49b055df8200a7be4b_0.dll
+2020-10-28 01:38:25:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\0e0e1613ea70b0e577720751419fccde_0.dll
+2020-10-28 01:38:56:Did not find xu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'xu_ocean': <number>, ... }.
+2020-10-28 01:38:56:Did not find yu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'yu_ocean': <number>, ... }.
+2020-10-28 01:38:59:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\db019c00808e9e705ba9e541794a5a60_0.dll
+2020-10-28 01:39:20:Chunksize=[1, 64, 64]: Mem=890.06640625 Timer=24.022638082504272
+2020-10-28 01:39:23:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\b83b81d250b12d21db9b56f48ba9fac2_0.dll
+2020-10-28 01:39:33:Chunksize=[1, 128, 128]: Mem=415.58203125 Timer=12.505804538726807
+2020-10-28 01:39:36:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\2703773eeeeeacff3719b82c5288d300_0.dll
+2020-10-28 01:39:45:Chunksize=[1, 256, 256]: Mem=364.94921875 Timer=10.530334711074829
+2020-10-28 01:39:48:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\9c212c1897e40ee56ecab4eff88d6085_0.dll
+2020-10-28 01:39:55:Chunksize=[1, 299, 299]: Mem=326.62109375 Timer=9.369122982025146
+2020-10-28 01:39:58:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\7ec6f52715e4c6a3b8315a61e8372291_0.dll
+2020-10-28 01:40:03:Chunksize=[1, 300, 300]: Mem=326.84375 Timer=7.941267490386963
+2020-10-28 01:40:06:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\ba74e2edccb72a261936caac31a33b38_0.dll
+2020-10-28 01:40:12:Chunksize=[1, 512, 512]: Mem=389.796875 Timer=8.196649312973022
+2020-10-28 01:40:15:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\a6b07b0a086cd0d9defc5a18cfd4cdd9_0.dll
+2020-10-28 01:40:31:Chunksize=[1, 83, 83]: Mem=625.60546875 Timer=17.92231845855713
+2020-10-28 01:40:34:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\4ab21cd7a6394f85db41ae046243574e_0.dll
+2020-10-28 01:40:41:Chunksize=[1, 768, 768]: Mem=1034.8125 Timer=9.51553201675415
+2020-10-28 01:40:44:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\e5094341fe71d809448f8f57de72ee8d_0.dll
+2020-10-28 01:40:51:Chunksize=[1, 1024, 1024]: Mem=426.4375 Timer=9.330243349075317
+2020-10-28 01:40:54:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\8af512d75f2a6dc64cbee88af7499e26_0.dll
+2020-10-28 01:41:02:Chunksize=[1, 1280, 1280]: Mem=557.59765625 Timer=10.392502069473267
+2020-10-28 01:41:05:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\41f74061f8b79752db42f60a7eebef51_0.dll
+2020-10-28 01:41:14:Chunksize=[1, 1536, 1536]: Mem=653.01953125 Timer=11.54462718963623
+2020-10-28 01:43:30:Did not find xu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'xu_ocean': <number>, ... }.
+2020-10-28 01:43:30:Did not find yu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'yu_ocean': <number>, ... }.
+2020-10-28 01:43:32:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\48ee4986acb60bacb258c06e46ef6e9b_0.dll
+2020-10-28 01:43:42:Chunksize=[1, 128, 128]: Mem=413.90625 Timer=11.75454306602478
+2020-10-28 01:43:45:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\1665081f5056d727549e3728c914bc70_0.dll
+2020-10-28 01:43:51:Chunksize=[1, 256, 256]: Mem=365.7734375 Timer=9.016766548156738
+2020-10-28 01:43:54:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\dbd595c8c682144f1118f33e739988ec_0.dll
+2020-10-28 01:44:01:Chunksize=[1, 299, 299]: Mem=324.62109375 Timer=8.835282564163208
+2020-10-28 01:44:04:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\8a2b5635f3c1b098ef813cb97f419f71_0.dll
+2020-10-28 01:44:09:Chunksize=[1, 300, 300]: Mem=338.8359375 Timer=7.782708168029785
+2020-10-28 01:44:12:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\7576a57ccf3917cc38c3c78406b9569d_0.dll
+2020-10-28 01:44:18:Chunksize=[1, 512, 512]: Mem=405.453125 Timer=8.148062944412231
+2020-10-28 01:44:21:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\5ec131fabecdc0935b695c94ce8e8054_0.dll
+2020-10-28 01:44:28:Chunksize=[1, 683, 683]: Mem=561.3359375 Timer=9.116908311843872
+2020-10-28 01:44:31:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\137700b1a0d724057762ab2c3d3f3283_0.dll
+2020-10-28 01:44:38:Chunksize=[1, 768, 768]: Mem=619.8671875 Timer=9.391552686691284
+2020-10-28 01:44:41:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\47a81c115787d321301bb49333d93a6e_0.dll
+2020-10-28 01:44:47:Chunksize=[1, 1024, 1024]: Mem=410.59375 Timer=8.661120176315308
+2020-10-28 01:44:50:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\061410493a9764023b639ec61034bb20_0.dll
+2020-10-28 01:44:58:Chunksize=[1, 1280, 1280]: Mem=520.55078125 Timer=9.915999174118042
+2020-10-28 01:45:01:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\af1a2ea78c48a5872de2eb23a587cee7_0.dll
+2020-10-28 01:45:10:Chunksize=[1, 1536, 1536]: Mem=616.46484375 Timer=10.969602346420288
+2020-10-28 10:19:16:Did not find xu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'xu_ocean': <number>, ... }.
+2020-10-28 10:19:16:Did not find yu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'yu_ocean': <number>, ... }.
+2020-10-28 10:19:19:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\bd7fcdd94cf5d97d533ce72abaeb169a_0.dll
+2020-10-28 10:19:28:Chunksize=[1, 128, 128]: Mem=410.2265625 Timer=11.926362037658691
+2020-10-28 10:19:32:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\0e0da4f8c292c43542a396107976e638_0.dll
+2020-10-28 10:19:38:Chunksize=[1, 256, 256]: Mem=365.62109375 Timer=8.995128154754639
+2020-10-28 10:19:41:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\eb809808b3c6abc56d3bf8f7b1dc9ab5_0.dll
+2020-10-28 10:19:48:Chunksize=[1, 299, 299]: Mem=333.39453125 Timer=8.876508712768555
+2020-10-28 10:19:51:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\d19864ac657b565a9c10b5299f39d4a9_0.dll
+2020-10-28 10:19:56:Chunksize=[1, 300, 300]: Mem=319.7421875 Timer=7.843309640884399
+2020-10-28 10:19:59:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\3d5d299c556d25b51593ee2a2a6d0011_0.dll
+2020-10-28 10:20:05:Chunksize=[1, 512, 512]: Mem=383.30078125 Timer=8.205312252044678
+2020-10-28 10:20:08:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\111e04a547237a14f33cc6b18a83d8be_0.dll
+2020-10-28 10:20:15:Chunksize=[1, 683, 683]: Mem=560.5078125 Timer=9.213565587997437
+2020-10-28 10:20:18:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\892d0b2930922f42304254be9a4300bc_0.dll
+2020-10-28 10:20:28:Chunksize=[1, 768, 768]: Mem=587.61328125 Timer=12.284367322921753
+2020-10-28 10:20:32:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\fe4f865c2de8ea074d172bfd1b8d1e1e_0.dll
+2020-10-28 10:20:39:Chunksize=[1, 1024, 1024]: Mem=381.03125 Timer=9.987974882125854
+2020-10-28 10:20:42:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\01ecc058f574dad95db2fd966bc37165_0.dll
+2020-10-28 10:20:51:Chunksize=[1, 1280, 1280]: Mem=515.359375 Timer=11.064678430557251
+2020-10-28 10:20:54:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\34b2c915bf3acc1a71ca8dd8d23706e4_0.dll
+2020-10-28 10:21:04:Chunksize=[1, 1536, 1536]: Mem=611.16015625 Timer=12.042672872543335
+2020-10-28 13:05:24:Did not find xu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'xu_ocean': <number>, ... }.
+2020-10-28 13:05:24:Did not find yu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'yu_ocean': <number>, ... }.
+2020-10-28 13:05:27:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\011d0f31bc09ceb275cdc83ebad8d939_0.dll
+2020-10-28 13:05:38:Chunksize=[1, 100, 128]: Mem=442.53515625 Timer=13.924097537994385
+2020-10-28 13:05:41:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\8613e6f87b235c4db94594f0d83a8d30_0.dll
+2020-10-28 13:05:52:Chunksize=[1, 100, 256]: Mem=401.625 Timer=13.284534692764282
+2020-10-28 13:06:39:Did not find xu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'xu_ocean': <number>, ... }.
+2020-10-28 13:06:39:Did not find yu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'yu_ocean': <number>, ... }.
+2020-10-28 13:06:42:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\4481f75d836730b9aec6ae2130192dfb_0.dll
+2020-10-28 15:55:36:Did not find xu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'xu_ocean': <number>, ... }.
+2020-10-28 15:55:36:Did not find yu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'yu_ocean': <number>, ... }.
+2020-10-28 15:55:39:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\21c7c149e14eea7c1a61150b2c2f8c70_0.dll
+2020-10-28 15:55:50:Chunksize=[1, 100, 128]: Mem=1138.06640625 Timer=14.13621973991394
+2020-10-28 15:55:53:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\f36420feddde30603ad019fe3ce6fcd1_0.dll
+2020-10-28 15:56:05:Chunksize=[1, 100, 256]: Mem=1096.55078125 Timer=14.402934551239014
+2020-10-28 15:56:08:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\3633c88fe163eac4170f63d44f907b96_0.dll
+2020-10-28 15:56:19:Chunksize=[1, 100, 300]: Mem=1051.13671875 Timer=13.497928619384766
+2020-10-28 15:56:23:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\81486e8959bd9cbd2f9e8d72b6ae0795_0.dll
+2020-10-28 15:56:33:Chunksize=[1, 100, 512]: Mem=1122.015625 Timer=12.786012172698975
+2020-10-28 15:56:36:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\8f1071e9d65d7bcc9f8648eb1f4bc67b_0.dll
+2020-10-28 15:56:47:Chunksize=[1, 100, 768]: Mem=1309.4375 Timer=13.8480863571167
+2020-10-28 15:56:50:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\1248915fbdf0209525a4ddde755ac8ae_0.dll
+2020-10-28 15:57:00:Chunksize=[1, 100, 1024]: Mem=1092.125 Timer=12.155560493469238
+2020-10-28 15:57:03:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\a1b2b9db4487d54ccecad95d4bd3974d_0.dll
+2020-10-28 15:57:14:Chunksize=[1, 100, 1280]: Mem=1269.765625 Timer=12.985347032546997
+2020-10-28 15:57:17:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\d8af9f6e61d5871f4d62c66a2de0afa0_0.dll
+2020-10-28 15:57:28:Chunksize=[1, 100, 1536]: Mem=1383.046875 Timer=13.95089340209961
+2020-10-28 15:58:21:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\15b4e70b47d0e8777bbb57135be93579_0.dll
+2020-10-28 15:58:30:Did not find xu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'xu_ocean': <number>, ... }.
+2020-10-28 15:58:30:Did not find yu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'yu_ocean': <number>, ... }.
+2020-10-28 15:58:32:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\438564988a444990a870613c5963c8ac_0.dll
+2020-10-28 16:08:37:Did not find xu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'xu_ocean': <number>, ... }.
+2020-10-28 16:08:37:Did not find yu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'yu_ocean': <number>, ... }.
+2020-10-28 16:08:40:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\d0f1e883ea4de41f45400fee0a3ca262_0.dll
+2020-10-28 16:08:51:Chunksize=[1, 100, 128]: Mem=444.32421875 Timer=14.00583028793335
+2020-10-28 16:08:54:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\17ba5186acf74fd2f657cde33e77cfeb_0.dll
+2020-10-28 16:09:05:Chunksize=[1, 100, 256]: Mem=404.4609375 Timer=13.49609637260437
+2020-10-28 16:09:08:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\7ed064fdcaf0710a50f9ff2f865f1a50_0.dll
+2020-10-28 16:09:19:Chunksize=[1, 100, 300]: Mem=357.3984375 Timer=12.876598119735718
+2020-10-28 16:09:22:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\314a92ae3765742012d6309b4c971562_0.dll
+2020-10-28 16:10:16:Did not find xu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'xu_ocean': <number>, ... }.
+2020-10-28 16:10:16:Did not find yu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'yu_ocean': <number>, ... }.
+2020-10-28 16:10:18:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\cb3ebf5f7321fec0266893c70c7a3d24_0.dll
+2020-10-28 16:10:30:Chunksize=[1, 100, 128]: Mem=442.06640625 Timer=13.93399715423584
+2020-10-28 16:10:30:File E:\model_output\OFAM\trop_pac\ocean_v_2012_04.nc could not be decoded properly by xarray (version 0.16.1).
+         It will be opened with no decoding. Filling values might be wrongly parsed.
+2020-10-28 16:17:31:Did not find xu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'xu_ocean': <number>, ... }.
+2020-10-28 16:17:31:Did not find yu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'yu_ocean': <number>, ... }.
+2020-10-28 16:17:34:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\7d8efda4faff586aad593fa4302464b8_0.dll
+2020-10-28 16:17:41:File E:\model_output\OFAM\trop_pac\ocean_w_2012_01.nc could not be decoded properly by xarray (version 0.16.1).
+         It will be opened with no decoding. Filling values might be wrongly parsed.
+2020-10-28 16:17:50:Did not find xu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'xu_ocean': <number>, ... }.
+2020-10-28 16:17:50:Did not find yu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'yu_ocean': <number>, ... }.
+2020-10-28 16:17:53:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\3a3f052c2077c65d4bab59fbcfd30cfd_0.dll
+2020-10-28 16:18:04:Chunksize=[1, 100, 128]: Mem=442.80859375 Timer=13.915995597839355
+2020-10-28 18:04:40:Did not find xu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'xu_ocean': <number>, ... }.
+2020-10-28 18:04:40:Did not find yu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'yu_ocean': <number>, ... }.
+2020-10-28 18:04:43:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\ccadb0d821892ab51843d472be47ba91_0.dll
+2020-10-28 18:04:52:Chunksize=[1, 300, 300]: Mem=293.16796875 Timer=11.567265748977661
+2020-10-28 18:05:55:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\c4a8dc5b48322c062c7a37dcfc5dcc20_0.dll
+2020-10-28 18:06:00:Chunksize=[1, 300, 300]: Mem=412.3828125 Timer=7.529388666152954
+2020-10-28 18:06:23:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\54a5a543291a15f23373db1d7684b4f5_0.dll
+2020-10-28 18:06:28:Chunksize=[1, 300, 300]: Mem=415.05078125 Timer=7.4463210105896
+2020-10-28 18:06:31:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\aefec33fc8cd71ea6788a45eae08dd11_0.dll
+2020-10-28 18:06:47:Chunksize=[1, 300, 'auto']: Mem=801.84765625 Timer=18.621211290359497
+2020-10-28 18:10:07:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\18fb86be454e939522e32745f91ca526_0.dll
+2020-10-28 18:10:12:Chunksize=[1, 300, 300]: Mem=698.5234375 Timer=7.8037943840026855
+2020-10-28 18:10:15:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\43bcdab4c75dd9d613f166e2edc6d548_0.dll
+2020-10-28 18:10:20:Chunksize=[1, 300, 300]: Mem=714.07421875 Timer=7.806369781494141
+2020-10-28 18:10:23:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\46c1d64fad2efe2ae66293c69819a57d_0.dll
+2020-10-28 18:10:41:Chunksize=[1, 300, 'auto']: Mem=1009.3046875 Timer=19.97894287109375
+2020-10-28 18:15:23:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\e5198958a4b06033f9f54cdf475d5ac9_0.dll
+2020-10-28 18:15:28:Chunksize=[1, 300, 300]: Mem=714.8671875 Timer=7.662573337554932
+2020-10-28 18:15:31:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\f8d729f050b8caf1c9394cc09395365a_0.dll
+2020-10-28 18:15:36:Chunksize=[1, 300, 300]: Mem=712.03125 Timer=7.6179585456848145
+2020-10-28 18:15:39:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\b72d7fc4ce35f89b507aac1dde22875b_0.dll
+2020-10-28 18:15:55:Chunksize=[1, 300, 'auto']: Mem=1096.03515625 Timer=18.83423089981079
+2020-10-28 18:17:23:Compiled JITParticleAdvectionRK4_3D ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\0a85e851bfaa92a88a17ce79787ba619_0.dll
+2020-10-28 18:19:16:Compiled JITParticleAdvectionRK4_3Dftest ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\86223ca506ef4c2e6d3470245345b575_0.dll
+2020-10-28 18:24:27:Compiled JITParticleAdvectionRK4_3Dftest ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\19b03dc5806ad5e7521278a994dab243_0.dll
+2020-10-28 18:24:33:Chunksize=[1, 300, 300]: Mem=487.69921875 Timer=7.938945055007935
+2020-10-28 18:24:35:Compiled JITParticleAdvectionRK4_3Dftest ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\ca464c0d9ad1e86db15983001fa1e5c6_0.dll
+2020-10-28 18:24:41:Chunksize=[1, 300, 300]: Mem=558.21875 Timer=7.986391305923462
+2020-10-28 18:24:44:Compiled JITParticleAdvectionRK4_3Dftest ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\439abe88ec0052f67398fb4f6d17ffc6_0.dll
+2020-10-28 18:25:01:Chunksize=[1, 300, 'auto']: Mem=1046.84375 Timer=19.70298743247986
+2020-10-28 18:37:11:Compiled JITParticleAdvectionRK4_3Dftest ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\411bce151399bbadd4ca2d7d8f57cad9_0.dll
+2020-10-28 18:37:18:Chunksize=256: Mem=886.22265625 Timer=9.256519794464111
+2020-10-28 18:37:21:Compiled JITParticleAdvectionRK4_3Dftest ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\1f57774259998f98a38cf7c7f50f4ca5_0.dll
+2020-10-28 18:37:26:Chunksize=300: Mem=874.5625 Timer=8.110845565795898
+2020-10-28 18:37:29:Compiled JITParticleAdvectionRK4_3Dftest ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\4fd1c3289c98c5f8dccf2114e191e2a3_0.dll
+2020-10-28 18:37:35:Chunksize=512: Mem=952.58984375 Timer=8.50806474685669
+2020-10-28 18:37:38:Compiled JITParticleAdvectionRK4_3Dftest ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\449e1667dd6a3b6f1b27eb3f43ba2b71_0.dll
+2020-10-28 18:37:55:Chunksize=auto: Mem=1439.36328125 Timer=19.41690969467163
+2020-10-28 18:43:26:Compiled JITParticleAdvectionRK4_3Dftest ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\299c98c1c8e5f77bdf2df072ed1870d8_0.dll
+2020-10-28 18:43:32:Chunksize=256: Mem=905.23046875 Timer=9.361949443817139
+2020-10-28 18:43:35:Compiled JITParticleAdvectionRK4_3Dftest ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\0a1dff337051f3fff465b25c31f3020e_0.dll
+2020-10-28 18:43:41:Chunksize=300: Mem=865.90625 Timer=8.363882780075073
+2020-10-28 18:43:44:Compiled JITParticleAdvectionRK4_3Dftest ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\e1e4feaa92013ec53e6e26483abb07e4_0.dll
+2020-10-28 18:43:50:Chunksize=512: Mem=963.6875 Timer=8.567797660827637
+2020-10-28 18:43:53:Compiled JITParticleAdvectionRK4_3Dftest ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\7dd9df72c3f1fa95f4c4e28e4e0819b8_0.dll
+2020-10-28 18:44:00:Chunksize=768: Mem=1195.98828125 Timer=9.90220332145691
+2020-10-28 18:44:03:Compiled JITParticleAdvectionRK4_3Dftest ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\bc2ac445479a2d6bd4dd497912901966_0.dll
+2020-10-28 18:44:20:Chunksize=auto: Mem=1272.95703125 Timer=19.52305555343628
+2020-10-28 18:47:41:Compiled JITParticleAdvectionRK4_3Dftest ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\139fd353fe36db995f5cdbf01f794517_0.dll
+2020-10-28 18:47:47:Chunksize=256: Mem=907.453125 Timer=9.614778518676758
+2020-10-28 18:47:50:Compiled JITParticleAdvectionRK4_3Dftest ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\ee227534eab7de2f9181aba8f19aeeda_0.dll
+2020-10-28 18:47:56:Chunksize=300: Mem=884.3359375 Timer=8.331707954406738
+2020-10-28 18:47:59:Compiled JITParticleAdvectionRK4_3Dftest ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\a09fef1e625f9d3b92f570f9dcdf2f4a_0.dll
+2020-10-28 18:48:05:Chunksize=512: Mem=940.9375 Timer=8.825115203857422
+2020-10-28 18:48:08:Compiled JITParticleAdvectionRK4_3Dftest ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\6d7521245bd8db2465e67b0a418d7e0b_0.dll
+2020-10-28 18:48:16:Chunksize=768: Mem=1198.90625 Timer=10.290212154388428
+2020-10-28 18:48:19:Compiled JITParticleAdvectionRK4_3Dftest ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\a1f28b5e5b561d1173850ee0b06032e9_0.dll
+2020-10-28 18:48:36:Chunksize=auto: Mem=1685.22265625 Timer=19.69146227836609
+2020-10-28 18:50:12:Compiled JITParticleAdvectionRK4_3Dftest ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\89fdf2612eeef25d5267b693d2bd4809_0.dll
+2020-10-28 18:50:19:Chunksize=256: Mem=895.32 Timer=9.54
+2020-10-28 18:50:22:Compiled JITParticleAdvectionRK4_3Dftest ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\404083067ba475146697943a55dea700_0.dll
+2020-10-28 18:50:28:Chunksize=300: Mem=869.97 Timer=8.40
+2020-10-28 18:50:31:Compiled JITParticleAdvectionRK4_3Dftest ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\d13a8d5b01f1cdc61c43c9eee5662210_0.dll
+2020-10-28 18:50:37:Chunksize=512: Mem=974.77 Timer=8.44
+2020-10-28 18:50:40:Compiled JITParticleAdvectionRK4_3Dftest ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\d9dde90a7a6451926667c71a951cc2a0_0.dll
+2020-10-28 18:50:47:Chunksize=768: Mem=1200.04 Timer=9.87
+2020-10-28 18:50:50:Compiled JITParticleAdvectionRK4_3Dftest ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\0f73d6a4a8a7e223e447fdb394b8e8bd_0.dll
+2020-10-28 18:51:08:Chunksize=auto: Mem=1244.41 Timer=19.96
+2020-10-28 19:16:13:Compiled JITParticleAdvectionRK4_3Dftest ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\255423629a6ee538451c6c673fc54ca5_0.dll
+2020-10-28 19:16:20:Chunksize=256: Mem=1430.55GB Timer=9.46s
+2020-10-28 19:16:23:Compiled JITParticleAdvectionRK4_3Dftest ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\b50eeb0f63f39cc3726074ddfbe7c303_0.dll
+2020-10-28 19:16:28:Chunksize=300: Mem=1392.41GB Timer=8.23s
+2020-10-28 19:16:32:Compiled JITParticleAdvectionRK4_3Dftest ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\8ef2a004797d46642ef13326b1a049d1_0.dll
+2020-10-28 19:16:38:Chunksize=512: Mem=1486.70GB Timer=9.26s
+2020-10-28 19:16:42:Compiled JITParticleAdvectionRK4_3Dftest ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\53a84885ca5bc392a13e57d6dc14e65f_0.dll
+2020-10-28 19:16:49:Chunksize=768: Mem=1721.94GB Timer=10.16s
+2020-10-28 19:16:52:Compiled JITParticleAdvectionRK4_3Dftest ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\2c43cbcea7ff1cf58b3a3b3a2f8a93cc_0.dll
+2020-10-28 19:17:09:Chunksize=auto: Mem=2208.32GB Timer=18.93s
+2020-10-28 21:42:47:Compiled JITParticleAdvectionRK4_3Dftest ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\3df833bc4c82466075e9c231dd9f4ea6_0.dll
+2020-10-28 21:42:54:Chunksize=256: Mem=1002.07GB Timer=9.70s
+2020-10-28 21:42:57:Compiled JITParticleAdvectionRK4_3Dftest ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\1bf378bab3e48274268b392e84241742_0.dll
+2020-10-28 21:43:03:Chunksize=300: Mem=980.38GB Timer=8.01s
+2020-10-28 21:43:06:Compiled JITParticleAdvectionRK4_3Dftest ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\09cef7d789bf8f30b8f9bb740c36a028_0.dll
+2020-10-28 21:43:12:Chunksize=512: Mem=1063.76GB Timer=8.83s
+2020-10-28 21:43:16:Compiled JITParticleAdvectionRK4_3Dftest ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\6e2a1b3510d76c148e06322298db1971_0.dll
+2020-10-28 21:43:23:Chunksize=768: Mem=1301.48GB Timer=9.99s
+2020-10-28 21:43:26:Compiled JITParticleAdvectionRK4_3Dftest ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\146a9cd7de7d9c89431d54c7e1751b83_0.dll
+2020-10-28 21:43:43:Chunksize=auto: Mem=1336.81GB Timer=19.47s
+2020-10-28 21:47:54:Did not find xu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'xu_ocean': <number>, ... }.
+2020-10-28 21:47:54:Did not find yu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'yu_ocean': <number>, ... }.
+2020-10-28 21:47:57:Compiled JITParticleAdvectionRK4_3Dftest ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\e703819ccb3d680b65b2f031aa9a3452_0.dll
+2020-10-28 21:48:04:Chunksize=256: Mem=1494.13GB Timer=9.61s
+2020-10-28 21:48:07:Compiled JITParticleAdvectionRK4_3Dftest ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\0edabce42e81f8c9ac52999ce0229c97_0.dll
+2020-10-28 21:48:13:Chunksize=300: Mem=1342.82GB Timer=8.19s
+2020-10-28 21:48:16:Compiled JITParticleAdvectionRK4_3Dftest ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\37d46417d643f889911f6ce63b017fa2_0.dll
+2020-10-28 21:48:20:Compiled JITParticleAdvectionRK4_3Dftest ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\7e79dbbaa44ab3cf3d7fba481c5e86a3_0.dll
+2020-10-28 21:48:22:Chunksize=512: Mem=1423.83GB Timer=8.69s
+2020-10-28 21:48:26:Compiled JITParticleAdvectionRK4_3Dftest ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\65e7c8e424d352042e48b8e118673755_0.dll
+2020-10-28 21:48:28:Chunksize=256: Mem=1107.61GB Timer=10.32s
+2020-10-28 21:48:32:Compiled JITParticleAdvectionRK4_3Dftest ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\cc914a2b2a3979d715ed7b7198039f76_0.dll
+2020-10-28 21:48:33:Chunksize=768: Mem=1643.51GB Timer=10.43s
+2020-10-28 21:48:37:Compiled JITParticleAdvectionRK4_3Dftest ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\020287cf577bae49c72482d0da877d69_0.dll
+2020-10-28 21:48:38:Chunksize=300: Mem=1084.45GB Timer=9.20s
+2020-10-28 21:48:54:Chunksize=auto: Mem=2130.84GB Timer=19.97s
+2020-10-28 21:49:14:Compiled JITParticleAdvectionRK4_3Dftest ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\a1431452cd7f28eba3e86c198966618d_0.dll
+2020-10-28 21:49:21:Chunksize=256: Mem=622.52GB Timer=9.38s
+2020-10-28 21:49:24:Compiled JITParticleAdvectionRK4_3Dftest ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\7de5dfed5a84e5e9ae4c1d0ce031b0ec_0.dll
+2020-10-28 21:49:29:Chunksize=300: Mem=596.70GB Timer=8.17s
+2020-10-28 21:49:32:Compiled JITParticleAdvectionRK4_3Dftest ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\fbba8f6b8007e93d2cfdb176fee8c84f_0.dll
+2020-10-28 21:49:38:Chunksize=512: Mem=684.80GB Timer=8.45s
+2020-10-28 21:49:41:Compiled JITParticleAdvectionRK4_3Dftest ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\4551acda16c890440e036205660eec47_0.dll
+2020-10-28 21:49:49:Chunksize=768: Mem=915.41GB Timer=9.92s
+2020-10-28 21:49:52:Compiled JITParticleAdvectionRK4_3Dftest ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\515792ff5e39c5ef5c2f8b5e4f30b69f_0.dll
+2020-10-28 21:50:10:Chunksize=auto: Mem=1400.88GB Timer=20.33s

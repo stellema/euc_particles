@@ -90,9 +90,7 @@ repeatdt = timedelta(days=repeatdt_days)  # Repeat particle release time.
 outputdt = timedelta(days=outputdt_days)  # Advection steps to write.
 repeats = 4  # math.floor(runtime/repeatdt) - 1
 time_bnds = [datetime(2012, 1, 1), datetime(2012, 12, 31)]
-fieldset = ofam_fieldset(time_bnds, exp, chunks=True, cs=chunks,
-                         time_periodic=False, add_zone=True,
-                         add_unbeach_vel=True)
+fieldset = ofam_fieldset(time_bnds, exp, chunks=300)
 
 
 class zParticle(JITParticle):
@@ -115,8 +113,8 @@ class zParticle(JITParticle):
     unbeached = Variable('unbeached', initial=0., dtype=np.float32)
     land = Variable('land', initial=fieldset.Land, dtype=np.float32)
     # Testers.
-    ubcount = Variable('ubcount', initial=0., dtype=np.float32)
-    ubeachprv = Variable('ubeachprv', initial=0., dtype=np.float32)
+    # ubcount = Variable('ubcount', initial=0., dtype=np.float32)
+    # ubeachprv = Variable('ubeachprv', initial=0., dtype=np.float32)
 
 pclass = zParticle
 
@@ -125,7 +123,7 @@ pclass = zParticle
 if not restart:
     # Generate file name for experiment (random number if not using MPI).
     rdm = False if MPI else True
-    sim_id = generate_sim_id(lon, v, exp, randomise=rdm, xlog=xlog)
+    sim_id = generate_sim_id(lon, v, exp, randomise=rdm, restart=False, xlog=xlog)
 
     # Set ParticleSet start as last fieldset time.
     pset_start = fieldset.U.grid.time[-1] - offset

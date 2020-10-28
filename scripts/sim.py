@@ -76,9 +76,9 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
     elif exp == 'rcp':
         time_bnds = [datetime(2070, 1, 1), datetime(2101, 12, 31)]
 
-    fieldset = ofam_fieldset(time_bnds, exp,  chunks=True, cs=300,
-                             time_periodic=False, add_zone=True,
-                             add_unbeach_vel=True)
+    fieldset = ofam_fieldset(time_bnds, exp)#,  chunks=True, cs=add_xfields=False)
+                             # time_periodic=False, add_zone=True,
+                             # add_unbeach_vel=True)
 
     class zParticle(JITParticle):
         """Particle class that saves particle age and zonal velocity."""

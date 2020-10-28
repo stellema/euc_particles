@@ -22,7 +22,6 @@ from parcels.field import Field
 from parcels.field import VectorField
 from parcels.grid import GridCode
 from parcels.grid import CurvilinearGrid
-from parcels.tools.error import TimeExtrapolationError
 from parcels.tools.loggers import logger
 warnings.filterwarnings("ignore")
 
