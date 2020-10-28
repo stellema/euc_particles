@@ -23,7 +23,7 @@ lon = np.arange(165, 279)
 lat, depth = [-2.6, 2.6], [25, 350]
 
 
-def CMIP_EUC(time, depth, lat, lon, mip=5, lx=lx6, mod=mod6):
+def CMIP_EUC(time, depth, lat, lon, mip=6, lx=lx6, mod=mod6):
     # Scenario, month, longitude, model.
     var = 'uvo'
     exp = lx['exp']
@@ -37,10 +37,13 @@ def CMIP_EUC(time, depth, lat, lon, mip=5, lx=lx6, mod=mod6):
 
             # Removed westward transport.
             dx = dx.where(dx > 0)
-
-            dxx = dx.sum(dim=[mod[m]['cs'][0], dx.dims[2]])
-            lat_str = [s for s in dx.dims if s in
-                       ['lat', 'j', 'y', 'rlat', 'nlat']][0]
+            if mod[m]['id'] in ['CMCC-CM2-SR5']:
+                dxx = dx.sum(dim=[mod[m]['cs'][0], 'i'])
+                lat_str = 'i'
+            else:
+                dxx = dx.sum(dim=[mod[m]['cs'][0], dx.dims[2]])
+                lat_str = [s for s in dx.dims if s in
+                           ['lat', 'j', 'y', 'rlat', 'nlat']][0]
             dxx = dx.sum(dim=[mod[m]['cs'][0], lat_str])
             # if s == 0 and mod[m]['nd'] == 1:
             #     print('{}. {}:'.format(m, mod[m]['id']), dx[mod[m]['cs'][1]].coords)
@@ -56,7 +59,7 @@ def OFAM_EUC():
     fr = xr.open_dataset(cfg.ofam/'ocean_u_2070-2101_climo.nc')
 
     # Length of grid cells [m].
-    dz = xr.open_dataset(cfg.ofam/'ocean_u_1981_01.nc').st_edges_ocean
+    dz = xr.open_dataset(cfg.ofam/'ocean_u_2012_06.nc').st_edges_ocean
 
 
     # EUC depth boundary indexes.
@@ -131,11 +134,17 @@ ax.set_xticks(lon[::15])
 ax.set_xticklabels(coord_formatter(lon[::15], convert='lon'))
 ax.legend()
 plt.tight_layout()
+plt.show()
 plt.savefig(cfg.fig/'EUC_transport_models.png')
 plt.clf()
 plt.close()
 
 # # Scatter plot
-lon = 240
-plt.scatter(dh6.sel(lon=lon), (dr6 - dh6).sel(lon=lon), color=c[1])
-plt.scatter(dh5.sel(lon=lon), (dr5 - dh5).sel(lon=lon), color=c[2])
+lon = 220
+fig = plt.figure(figsize=(12, 5))
+plt.title('lon={}'.format(lon))
+plt.scatter(dh6.sel(lon=lon), (dr6 - dh6).sel(lon=lon), color=c[1], label='CMIP6')
+plt.scatter(dh5.sel(lon=lon), (dr5 - dh5).sel(lon=lon), color=c[2], label='CMIP5')
+plt.xlabel('historical transport')
+plt.ylabel('Projected change')
+plt.legend()

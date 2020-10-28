@@ -428,8 +428,11 @@ def subset_cmip(mip, m, var, exp, depth, lat, lon):
         dx = ds[var]
         # Depth level indexes.
         # Convert depths to centimetres to find levels.
-        c = 100 if (mip == 6 and hasattr(dx[dx.dims[1]], 'units') and
-                    dx[dx.dims[1]].attrs['units'] != 'm') else 1
+        if (mip == 6 and hasattr(dx[dx.dims[1]], 'units') and dx[dx.dims[1]].attrs['units'] != 'm'):
+            c = 1
+            dx.coords[dx.dims[1]] = dx[dx.dims[1]]/100
+        else:
+            c = 1
         zi = [idx(dx[mod[m]['cs'][0]], depth[0] * c),
               idx(dx[mod[m]['cs'][0]], depth[1] * c) + 1]
 
@@ -478,7 +481,10 @@ def subset_cmip(mip, m, var, exp, depth, lat, lon):
         if 'y' in dx.dims:
             dx = dx.isel(y=slice(yf[0], yf[1]), x=xi)
         elif 'j' in dx.dims:
-            dx = dx.isel(j=slice(yf[0], yf[1]), i=xi)
+            if mod[m]['id'] in ['CMCC-CM2-SR5']:
+                dx = dx.isel(i=slice(yf[0], yf[1]), j=xi)
+            else:
+                dx = dx.isel(j=slice(yf[0], yf[1]), i=xi)
         elif 'nlat' in dx.dims:
             dx = dx.isel(nlat=slice(yf[0], yf[1]), nlon=xi)
         elif 'rlat' in dx.dims:
@@ -487,4 +493,7 @@ def subset_cmip(mip, m, var, exp, depth, lat, lon):
             dx = dx.isel(lat=slice(yf[0], yf[1]), lon=xi)
         else:
             print('NI:Lat dim of {} dims={}'.format(mod[m]['id'], dx.dims))
+
+        if mip == 6 and var in ['uvo', 'vvo'] and mod[m]['id'] in ['MIROC-ES2L', 'MIROC6']:
+            dx = dx*-1
     return dx
