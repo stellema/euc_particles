@@ -49,15 +49,14 @@ def mlogger(name, parcels=False, misc=True):
         parcels = True
         misc = False
 
-
     class NoWarnFilter(logging.Filter):
         def filter(self, record):
             show = True
-            for key in ['Casting', 'Trying', 'Particle init', 'Plot saved']:
+            for key in ['Casting', 'Trying', 'Particle init', 'Plot saved',
+                        'Did not find', 'field_chunksize']:
                 if record.getMessage().startswith(key):
                     show = False
             return show
-
 
     # logger = logging.getLogger(__name__)
     if loggers.get(name):
@@ -88,7 +87,7 @@ def mlogger(name, parcels=False, misc=True):
         logger.addHandler(c_handler)
         logger.addHandler(f_handler)
         logger.setLevel(logging.DEBUG)
-        logger.addFilter(NoWarnFilter())
+        # logger.addFilter(NoWarnFilter())
 
         # logger.propagate = False
         loggers[name] = logger

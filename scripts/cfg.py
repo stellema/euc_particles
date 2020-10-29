@@ -8,12 +8,12 @@ author: Annette Stellema (astellemas@gmail.com)
 """
 import sys
 import string
+import warnings
 import calendar
 import numpy as np
 import xarray as xr
 from pathlib import Path
 import matplotlib.pyplot as plt
-from parcels import JITParticle, ScipyParticle
 
 
 home = Path.home()
@@ -215,3 +215,5 @@ lx5 = {'var': ['uo', 'vo'],
 lx6 = {'var': ['uo', 'vo'],
       'exp': ['historical', 'ssp585'],
       'years': [[1901, 2000], [2050, 2099]]}
+
+warnings.filterwarnings("ignore", category=DeprecationWarning)
