@@ -4758,3 +4758,8 @@ New parcels version
 2020-10-29 01:43:28:  sim_rcp_165_v0r02: Completed: 01:29:06: Rank=34: Particles: Start=900 Del=55 End=845
 2020-10-29 01:44:48:  sim_rcp_165_v0r02: Completed: 01:30:26: Rank=30: Particles: Start=212 Del=24 End=188
 2020-10-29 02:25:49: sim_rcp_165_v0r02: Finished!: Timer=02:11:28
+2020-10-29 16:16:09:Did not find xu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'xu_ocean': <number>, ... }.
+2020-10-29 16:16:09:Did not find yu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'yu_ocean': <number>, ... }.
+2020-10-29 16:16:10:Generating restart file from: sim_rcp_165_v0r02
