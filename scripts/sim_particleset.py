@@ -68,9 +68,7 @@ def restart_EUC(dy=0.1, dz=25, lon=165, exp='hist', repeatdt_days=6,
     elif exp == 'rcp':
         time_bnds = [datetime(2070, 1, 1), datetime(2101, 12, 31)]
 
-    fieldset = ofam_fieldset(time_bnds, exp,  chunks=True, cs=300,
-                             time_periodic=False, add_zone=True,
-                             add_unbeach_vel=True)
+    fieldset = ofam_fieldset(time_bnds, exp)
 
     class zParticle(JITParticle):
         """Particle class that saves particle age and zonal velocity."""
