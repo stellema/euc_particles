@@ -13,7 +13,7 @@ from datetime import datetime
 
 import cfg
 
-hfile = [cfg.ofam/'ocean_u_{}_{:02d}.nc'.format(y, m) for m in range(1, 2) for y in range(1981, 2013)]
+hfile = [cfg.ofam/'ocean_u_{}_{:02d}.nc'.format(y, m) for m in range(1, 13) for y in range(1981, 2013)]
 rfile = [cfg.ofam/'ocean_u_{}_{:02d}.nc'.format(y, m) for m in range(1, 13) for y in range(2070, 2102)]
 lat = 2.6
 lon = np.arange(165, 279)
@@ -39,12 +39,12 @@ dyz = dz * cfg.LAT_DEG * 0.1
 dh = dh.where(dh > 0, np.nan)
 dr = dr.where(dr > 0, np.nan)
 
-dh = dh.groupby('Time.month').mean('Time')
-dr = dr.groupby('Time.month').mean('Time')
-
 # # Multiply by depth and width.
 dh = dh * dyz
 dr = dr * dyz
+
+dh = dh.groupby('Time.month').mean('Time')
+dr = dr.groupby('Time.month').mean('Time')
 # dh = dh.sum(dim=['st_ocean', 'yu_ocean'])
 # dr = dr.sum(dim=['st_ocean', 'yu_ocean'])
 
