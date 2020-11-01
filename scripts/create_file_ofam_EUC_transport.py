@@ -33,8 +33,7 @@ dz = dsh.st_edges_ocean.diff(dim='st_edges_ocean')
 dz = dz.rename({'st_edges_ocean': 'st_ocean'})
 dz = dz.isel(st_ocean=slice(zi1, zi2+1))
 dz.coords['st_ocean'] = dh['st_ocean']  # Copy st_ocean coords
-dy = dh.yu_ocean.diff(dim='yu_ocean') * cfg.LAT_DEG
-dyz = dz * dy
+dyz = dz * cfg.LAT_DEG * 0.1
 
 # Remove negative/zero velocities.
 dh = dh.where(dh > 0, np.nan)

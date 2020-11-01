@@ -4763,3 +4763,541 @@ New parcels version
 2020-10-29 16:16:09:Did not find yu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
  field_chunksize={ 'yu_ocean': <number>, ... }.
 2020-10-29 16:16:10:Generating restart file from: sim_rcp_165_v0r02
+2020-10-29 21:12:18: sim_rcp_165_v0r03: Particles: File=125946 New=135044 West=38222 I=96822 Total=222768
+2020-10-29 21:12:18: sim_rcp_165_v0r03: Runtime=1098d: 2096-01-19 to 2093-01-16: Rep=6d (x182)
+2020-10-29 21:12:18: sim_rcp_165_v0r03: Lon=165: Lat=[-2.6-2.6 x0.1]: Depth=[25-350m x25]f32
+2020-10-29 21:12:19: Saved: /g/data/e14/as3189/OFAM/data/r_sim_rcp_165_v0r03.nc
+2020-10-29 21:14:26:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-10-29 21:14:26:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-10-29 21:14:26:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-10-29 21:14:26:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-10-29 21:14:26:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-10-29 21:14:26:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-10-29 21:14:26:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-10-29 21:14:26:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-10-29 21:14:26:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-10-29 21:14:26:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-10-29 21:14:26:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-10-29 21:14:26:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-10-29 21:14:26:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-10-29 21:14:26:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-10-29 21:14:26:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-10-29 21:14:26:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-10-29 21:14:26:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-10-29 21:14:26:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-10-29 21:14:26:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-10-29 21:14:26:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-10-29 21:14:26:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-10-29 21:14:26:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-10-29 21:14:26:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-10-29 21:14:26:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-10-29 21:14:26:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-10-29 21:14:26:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-10-29 21:14:26:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-10-29 21:14:26:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-10-29 21:14:26:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-10-29 21:14:26:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-10-29 21:14:26:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-10-29 21:14:26:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-10-29 21:14:26:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-10-29 21:14:26:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-10-29 21:14:26:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-10-29 21:14:26:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-10-29 21:14:26:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-10-29 21:14:26:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-10-29 21:14:26:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-10-29 21:14:26:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-10-29 21:14:26:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-10-29 21:14:26:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-10-29 21:14:26:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-10-29 21:14:26:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-10-29 21:14:26:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-10-29 21:14:26:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-10-29 21:14:26:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-10-29 21:14:26:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-10-29 21:16:31:Did not find xu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'xu_ocean': <number>, ... }.
+2020-10-29 21:16:31:Did not find yu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'yu_ocean': <number>, ... }.
+2020-10-29 21:16:31:Did not find xu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'xu_ocean': <number>, ... }.
+2020-10-29 21:16:31:Did not find yu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'yu_ocean': <number>, ... }.
+2020-10-29 21:16:31:Did not find xu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'xu_ocean': <number>, ... }.
+2020-10-29 21:16:31:Did not find yu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'yu_ocean': <number>, ... }.
+2020-10-29 21:16:31:Did not find xu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'xu_ocean': <number>, ... }.
+2020-10-29 21:16:31:Did not find yu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'yu_ocean': <number>, ... }.
+2020-10-29 21:16:31:Did not find xu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'xu_ocean': <number>, ... }.
+2020-10-29 21:16:31:Did not find yu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'yu_ocean': <number>, ... }.
+2020-10-29 21:16:31:Did not find xu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'xu_ocean': <number>, ... }.
+2020-10-29 21:16:31:Did not find xu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'xu_ocean': <number>, ... }.
+2020-10-29 21:16:31:Did not find xu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'xu_ocean': <number>, ... }.
+2020-10-29 21:16:31:Did not find xu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'xu_ocean': <number>, ... }.
+2020-10-29 21:16:31:Did not find xu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'xu_ocean': <number>, ... }.
+2020-10-29 21:16:31:Did not find xu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'xu_ocean': <number>, ... }.
+2020-10-29 21:16:31:Did not find yu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'yu_ocean': <number>, ... }.
+2020-10-29 21:16:31:Did not find yu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'yu_ocean': <number>, ... }.
+2020-10-29 21:16:31:Did not find yu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'yu_ocean': <number>, ... }.
+2020-10-29 21:16:31:Did not find yu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'yu_ocean': <number>, ... }.
+2020-10-29 21:16:31:Did not find xu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'xu_ocean': <number>, ... }.
+2020-10-29 21:16:31:Did not find yu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'yu_ocean': <number>, ... }.
+2020-10-29 21:16:31:Did not find yu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'yu_ocean': <number>, ... }.
+2020-10-29 21:16:31:Did not find xu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'xu_ocean': <number>, ... }.
+2020-10-29 21:16:31:Did not find xu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'xu_ocean': <number>, ... }.
+2020-10-29 21:16:31:Did not find xu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'xu_ocean': <number>, ... }.
+2020-10-29 21:16:31:Did not find xu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'xu_ocean': <number>, ... }.
+2020-10-29 21:16:31:Did not find xu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'xu_ocean': <number>, ... }.
+2020-10-29 21:16:31:Did not find yu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'yu_ocean': <number>, ... }.
+2020-10-29 21:16:31:Did not find xu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'xu_ocean': <number>, ... }.
+2020-10-29 21:16:31:Did not find xu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'xu_ocean': <number>, ... }.
+2020-10-29 21:16:31:Did not find xu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'xu_ocean': <number>, ... }.
+2020-10-29 21:16:31:Did not find xu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'xu_ocean': <number>, ... }.
+2020-10-29 21:16:31:Did not find xu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'xu_ocean': <number>, ... }.
+2020-10-29 21:16:31:Did not find yu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'yu_ocean': <number>, ... }.
+2020-10-29 21:16:31:Did not find xu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'xu_ocean': <number>, ... }.
+2020-10-29 21:16:31:Did not find yu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'yu_ocean': <number>, ... }.
+2020-10-29 21:16:31:Did not find xu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'xu_ocean': <number>, ... }.
+2020-10-29 21:16:31:Did not find yu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'yu_ocean': <number>, ... }.
+2020-10-29 21:16:31:Did not find xu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'xu_ocean': <number>, ... }.
+2020-10-29 21:16:31:Did not find yu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'yu_ocean': <number>, ... }.
+2020-10-29 21:16:31:Did not find xu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'xu_ocean': <number>, ... }.
+2020-10-29 21:16:31:Did not find xu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'xu_ocean': <number>, ... }.
+2020-10-29 21:16:31:Did not find xu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'xu_ocean': <number>, ... }.
+2020-10-29 21:16:31:Did not find xu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'xu_ocean': <number>, ... }.
+2020-10-29 21:16:31:Did not find xu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'xu_ocean': <number>, ... }.
+2020-10-29 21:16:31:Did not find xu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'xu_ocean': <number>, ... }.
+2020-10-29 21:16:31:Did not find xu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'xu_ocean': <number>, ... }.
+2020-10-29 21:16:31:Did not find yu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'yu_ocean': <number>, ... }.
+2020-10-29 21:16:31:Did not find xu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'xu_ocean': <number>, ... }.
+2020-10-29 21:16:31:Did not find xu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'xu_ocean': <number>, ... }.
+2020-10-29 21:16:31:Did not find xu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'xu_ocean': <number>, ... }.
+2020-10-29 21:16:31:Did not find xu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'xu_ocean': <number>, ... }.
+2020-10-29 21:16:31:Did not find xu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'xu_ocean': <number>, ... }.
+2020-10-29 21:16:31:Did not find xu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'xu_ocean': <number>, ... }.
+2020-10-29 21:16:31:Did not find xu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'xu_ocean': <number>, ... }.
+2020-10-29 21:16:31:Did not find yu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'yu_ocean': <number>, ... }.
+2020-10-29 21:16:31:Did not find yu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'yu_ocean': <number>, ... }.
+2020-10-29 21:16:31:Did not find yu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'yu_ocean': <number>, ... }.
+2020-10-29 21:16:31:Did not find yu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'yu_ocean': <number>, ... }.
+2020-10-29 21:16:31:Did not find yu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'yu_ocean': <number>, ... }.
+2020-10-29 21:16:31:Did not find yu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'yu_ocean': <number>, ... }.
+2020-10-29 21:16:31:Did not find yu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'yu_ocean': <number>, ... }.
+2020-10-29 21:16:31:Did not find yu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'yu_ocean': <number>, ... }.
+2020-10-29 21:16:31:Did not find yu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'yu_ocean': <number>, ... }.
+2020-10-29 21:16:31:Did not find yu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'yu_ocean': <number>, ... }.
+2020-10-29 21:16:31:Did not find yu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'yu_ocean': <number>, ... }.
+2020-10-29 21:16:31:Did not find yu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'yu_ocean': <number>, ... }.
+2020-10-29 21:16:31:Did not find yu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'yu_ocean': <number>, ... }.
+2020-10-29 21:16:31:Did not find yu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'yu_ocean': <number>, ... }.
+2020-10-29 21:16:31:Did not find yu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'yu_ocean': <number>, ... }.
+2020-10-29 21:16:31:Did not find yu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'yu_ocean': <number>, ... }.
+2020-10-29 21:16:31:Did not find yu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'yu_ocean': <number>, ... }.
+2020-10-29 21:16:31:Did not find yu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'yu_ocean': <number>, ... }.
+2020-10-29 21:16:31:Did not find yu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'yu_ocean': <number>, ... }.
+2020-10-29 21:16:31:Did not find yu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'yu_ocean': <number>, ... }.
+2020-10-29 21:16:31:Did not find yu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'yu_ocean': <number>, ... }.
+2020-10-29 21:16:31:Did not find yu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'yu_ocean': <number>, ... }.
+2020-10-29 21:16:31:Did not find xu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'xu_ocean': <number>, ... }.
+2020-10-29 21:16:31:Did not find xu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'xu_ocean': <number>, ... }.
+2020-10-29 21:16:31:Did not find xu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'xu_ocean': <number>, ... }.
+2020-10-29 21:16:31:Did not find xu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'xu_ocean': <number>, ... }.
+2020-10-29 21:16:31:Did not find yu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'yu_ocean': <number>, ... }.
+2020-10-29 21:16:31:Did not find yu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'yu_ocean': <number>, ... }.
+2020-10-29 21:16:31:Did not find xu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'xu_ocean': <number>, ... }.
+2020-10-29 21:16:31:Did not find yu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'yu_ocean': <number>, ... }.
+2020-10-29 21:16:31:Did not find xu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'xu_ocean': <number>, ... }.
+2020-10-29 21:16:31:Did not find yu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'yu_ocean': <number>, ... }.
+2020-10-29 21:16:31:Did not find xu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'xu_ocean': <number>, ... }.
+2020-10-29 21:16:31:Did not find xu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'xu_ocean': <number>, ... }.
+2020-10-29 21:16:31:Did not find yu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'yu_ocean': <number>, ... }.
+2020-10-29 21:16:31:Did not find yu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'yu_ocean': <number>, ... }.
+2020-10-29 21:16:31:Did not find yu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'yu_ocean': <number>, ... }.
+2020-10-29 21:16:31:Did not find yu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'yu_ocean': <number>, ... }.
+2020-10-29 21:16:31:Did not find xu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'xu_ocean': <number>, ... }.
+2020-10-29 21:16:31:Did not find yu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'yu_ocean': <number>, ... }.
+2020-10-29 21:16:51: sim_rcp_165_v0r03: Run=1098d: 2096-01-19 to 2093-01-16: Particles=222768
+2020-10-29 21:16:51: sim_rcp_165_v0r03: Rep=6d: dt=60m: Out=1d: Land=0.975 Vmin=1e-07
+2020-10-29 21:16:51: sim_rcp_165_v0r03: Rank= 0: EWTLOYOP: Particles=3963
+2020-10-29 21:16:51: sim_rcp_165_v0r03: Rank=20: EWTLOYOP: Particles=1348
+2020-10-29 21:16:51: sim_rcp_165_v0r03: Rank=36: EWTLOYOP: Particles=3701
+2020-10-29 21:16:51: sim_rcp_165_v0r03: Rank= 4: EWTLOYOP: Particles=36582
+2020-10-29 21:16:51: sim_rcp_165_v0r03: Rank=32: EWTLOYOP: Particles=1052
+2020-10-29 21:16:51: sim_rcp_165_v0r03: Rank=12: EWTLOYOP: Particles=1738
+2020-10-29 21:16:51: sim_rcp_165_v0r03: Rank= 9: EWTLOYOP: Particles=34995
+2020-10-29 21:16:51: sim_rcp_165_v0r03: Rank= 1: EWTLOYOP: Particles=4693
+2020-10-29 21:16:51: sim_rcp_165_v0r03: Rank=16: EWTLOYOP: Particles=1865
+2020-10-29 21:16:51: sim_rcp_165_v0r03: Rank=17: EWTLOYOP: Particles=2555
+2020-10-29 21:16:51: sim_rcp_165_v0r03: Rank=10: EWTLOYOP: Particles=656
+2020-10-29 21:16:51: sim_rcp_165_v0r03: Rank= 2: EWTLOYOP: Particles=2632
+2020-10-29 21:16:51: sim_rcp_165_v0r03: Rank=42: EWTLOYOP: Particles=1614
+2020-10-29 21:16:51: sim_rcp_165_v0r03: Rank=18: EWTLOYOP: Particles=3539
+2020-10-29 21:16:51: sim_rcp_165_v0r03: Rank=26: EWTLOYOP: Particles=3577
+2020-10-29 21:16:51: sim_rcp_165_v0r03: Rank=28: EWTLOYOP: Particles=970
+2020-10-29 21:16:51: sim_rcp_165_v0r03: Rank= 6: EWTLOYOP: Particles=3452
+2020-10-29 21:16:51: sim_rcp_165_v0r03: Rank=33: EWTLOYOP: Particles=1655
+2020-10-29 21:16:51: sim_rcp_165_v0r03: Rank=40: EWTLOYOP: Particles=2877
+2020-10-29 21:16:51: sim_rcp_165_v0r03: Rank=46: EWTLOYOP: Particles=3451
+2020-10-29 21:16:51: sim_rcp_165_v0r03: Rank= 8: EWTLOYOP: Particles=4279
+2020-10-29 21:16:51: sim_rcp_165_v0r03: Rank=14: EWTLOYOP: Particles=3021
+2020-10-29 21:16:51: sim_rcp_165_v0r03: Rank=22: EWTLOYOP: Particles=3046
+2020-10-29 21:16:51: sim_rcp_165_v0r03: Rank=30: EWTLOYOP: Particles=3588
+2020-10-29 21:16:51: sim_rcp_165_v0r03: Rank= 3: EWTLOYOP: Particles=1694
+2020-10-29 21:16:51: sim_rcp_165_v0r03: Rank=11: EWTLOYOP: Particles=453
+2020-10-29 21:16:51: sim_rcp_165_v0r03: Rank=15: EWTLOYOP: Particles=5808
+2020-10-29 21:16:51: sim_rcp_165_v0r03: Rank=27: EWTLOYOP: Particles=856
+2020-10-29 21:16:51: sim_rcp_165_v0r03: Rank=34: EWTLOYOP: Particles=405
+2020-10-29 21:16:51: sim_rcp_165_v0r03: Rank=37: EWTLOYOP: Particles=524
+2020-10-29 21:16:51: sim_rcp_165_v0r03: Rank=19: EWTLOYOP: Particles=3914
+2020-10-29 21:16:51: sim_rcp_165_v0r03: Rank= 7: EWTLOYOP: Particles=2295
+2020-10-29 21:16:51: sim_rcp_165_v0r03: Rank=24: EWTLOYOP: Particles=2879
+2020-10-29 21:16:51: sim_rcp_165_v0r03: Rank= 5: EWTLOYOP: Particles=3064
+2020-10-29 21:16:51: sim_rcp_165_v0r03: Rank=31: EWTLOYOP: Particles=33891
+2020-10-29 21:16:51: sim_rcp_165_v0r03: Rank=21: EWTLOYOP: Particles=2555
+2020-10-29 21:16:51: sim_rcp_165_v0r03: Rank=35: EWTLOYOP: Particles=2112
+2020-10-29 21:16:51: sim_rcp_165_v0r03: Rank=25: EWTLOYOP: Particles=2977
+2020-10-29 21:16:51: sim_rcp_165_v0r03: Rank=23: EWTLOYOP: Particles=4198
+2020-10-29 21:16:51: sim_rcp_165_v0r03: Rank=29: EWTLOYOP: Particles=3028
+2020-10-29 21:16:51: sim_rcp_165_v0r03: Rank=13: EWTLOYOP: Particles=2077
+2020-10-29 21:16:51: sim_rcp_165_v0r03: Rank=47: EWTLOYOP: Particles=541
+2020-10-29 21:16:51: sim_rcp_165_v0r03: Rank=43: EWTLOYOP: Particles=698
+2020-10-29 21:16:51: sim_rcp_165_v0r03: Rank=39: EWTLOYOP: Particles=3311
+2020-10-29 21:16:51: sim_rcp_165_v0r03: Rank=38: EWTLOYOP: Particles=2657
+2020-10-29 21:16:51: sim_rcp_165_v0r03: Rank=45: EWTLOYOP: Particles=3657
+2020-10-29 21:16:51: sim_rcp_165_v0r03: Rank=44: EWTLOYOP: Particles=3333
+2020-10-29 21:16:51: sim_rcp_165_v0r03: Rank=41: EWTLOYOP: Particles=4992
+2020-10-29 21:16:57:Compiled zParticleAdvectionRK4_LandBeachTestUnBeachRAgeZoneDistance ==> /jobfs/13000873.gadi-pbs/parcels-12904/054449d3ae8a5619147419e26870eb15_1.so
+2020-10-29 21:16:57:Compiled zParticleAdvectionRK4_LandBeachTestUnBeachRAgeZoneDistance ==> /jobfs/13000873.gadi-pbs/parcels-12904/054449d3ae8a5619147419e26870eb15_44.so
+2020-10-29 21:16:57:Compiled zParticleAdvectionRK4_LandBeachTestUnBeachRAgeZoneDistance ==> /jobfs/13000873.gadi-pbs/parcels-12904/054449d3ae8a5619147419e26870eb15_47.so
+2020-10-29 21:16:57:Compiled zParticleAdvectionRK4_LandBeachTestUnBeachRAgeZoneDistance ==> /jobfs/13000873.gadi-pbs/parcels-12904/054449d3ae8a5619147419e26870eb15_29.so
+2020-10-29 21:16:57:Compiled zParticleAdvectionRK4_LandBeachTestUnBeachRAgeZoneDistance ==> /jobfs/13000873.gadi-pbs/parcels-12904/054449d3ae8a5619147419e26870eb15_26.so
+2020-10-29 21:16:57:Compiled zParticleAdvectionRK4_LandBeachTestUnBeachRAgeZoneDistance ==> /jobfs/13000873.gadi-pbs/parcels-12904/054449d3ae8a5619147419e26870eb15_34.so
+2020-10-29 21:16:57:Compiled zParticleAdvectionRK4_LandBeachTestUnBeachRAgeZoneDistance ==> /jobfs/13000873.gadi-pbs/parcels-12904/054449d3ae8a5619147419e26870eb15_28.so
+2020-10-29 21:16:57:Compiled zParticleAdvectionRK4_LandBeachTestUnBeachRAgeZoneDistance ==> /jobfs/13000873.gadi-pbs/parcels-12904/054449d3ae8a5619147419e26870eb15_15.so
+2020-10-29 21:16:57:Compiled zParticleAdvectionRK4_LandBeachTestUnBeachRAgeZoneDistance ==> /jobfs/13000873.gadi-pbs/parcels-12904/054449d3ae8a5619147419e26870eb15_23.so
+2020-10-29 21:16:57:Compiled zParticleAdvectionRK4_LandBeachTestUnBeachRAgeZoneDistance ==> /jobfs/13000873.gadi-pbs/parcels-12904/054449d3ae8a5619147419e26870eb15_16.so
+2020-10-29 21:16:57:Compiled zParticleAdvectionRK4_LandBeachTestUnBeachRAgeZoneDistance ==> /jobfs/13000873.gadi-pbs/parcels-12904/054449d3ae8a5619147419e26870eb15_14.so
+2020-10-29 21:16:57:Compiled zParticleAdvectionRK4_LandBeachTestUnBeachRAgeZoneDistance ==> /jobfs/13000873.gadi-pbs/parcels-12904/054449d3ae8a5619147419e26870eb15_19.so
+2020-10-29 21:16:57:Compiled zParticleAdvectionRK4_LandBeachTestUnBeachRAgeZoneDistance ==> /jobfs/13000873.gadi-pbs/parcels-12904/054449d3ae8a5619147419e26870eb15_12.so
+2020-10-29 21:16:57:Compiled zParticleAdvectionRK4_LandBeachTestUnBeachRAgeZoneDistance ==> /jobfs/13000873.gadi-pbs/parcels-12904/054449d3ae8a5619147419e26870eb15_13.so
+2020-10-29 21:16:57:Compiled zParticleAdvectionRK4_LandBeachTestUnBeachRAgeZoneDistance ==> /jobfs/13000873.gadi-pbs/parcels-12904/054449d3ae8a5619147419e26870eb15_7.so
+2020-10-29 21:16:57:Compiled zParticleAdvectionRK4_LandBeachTestUnBeachRAgeZoneDistance ==> /jobfs/13000873.gadi-pbs/parcels-12904/054449d3ae8a5619147419e26870eb15_3.so
+2020-10-29 21:16:57:Compiled zParticleAdvectionRK4_LandBeachTestUnBeachRAgeZoneDistance ==> /jobfs/13000873.gadi-pbs/parcels-12904/054449d3ae8a5619147419e26870eb15_0.so
+2020-10-29 21:16:57:Compiled zParticleAdvectionRK4_LandBeachTestUnBeachRAgeZoneDistance ==> /jobfs/13000873.gadi-pbs/parcels-12904/054449d3ae8a5619147419e26870eb15_41.so
+2020-10-29 21:16:57:Compiled zParticleAdvectionRK4_LandBeachTestUnBeachRAgeZoneDistance ==> /jobfs/13000873.gadi-pbs/parcels-12904/054449d3ae8a5619147419e26870eb15_2.so
+2020-10-29 21:16:57:Compiled zParticleAdvectionRK4_LandBeachTestUnBeachRAgeZoneDistance ==> /jobfs/13000873.gadi-pbs/parcels-12904/054449d3ae8a5619147419e26870eb15_40.so
+2020-10-29 21:16:57:Compiled zParticleAdvectionRK4_LandBeachTestUnBeachRAgeZoneDistance ==> /jobfs/13000873.gadi-pbs/parcels-12904/054449d3ae8a5619147419e26870eb15_33.so
+2020-10-29 21:16:57:Compiled zParticleAdvectionRK4_LandBeachTestUnBeachRAgeZoneDistance ==> /jobfs/13000873.gadi-pbs/parcels-12904/054449d3ae8a5619147419e26870eb15_43.so
+2020-10-29 21:16:57:Compiled zParticleAdvectionRK4_LandBeachTestUnBeachRAgeZoneDistance ==> /jobfs/13000873.gadi-pbs/parcels-12904/054449d3ae8a5619147419e26870eb15_42.so
+2020-10-29 21:16:57:Compiled zParticleAdvectionRK4_LandBeachTestUnBeachRAgeZoneDistance ==> /jobfs/13000873.gadi-pbs/parcels-12904/054449d3ae8a5619147419e26870eb15_37.so
+2020-10-29 21:16:57:Compiled zParticleAdvectionRK4_LandBeachTestUnBeachRAgeZoneDistance ==> /jobfs/13000873.gadi-pbs/parcels-12904/054449d3ae8a5619147419e26870eb15_36.so
+2020-10-29 21:16:57:Compiled zParticleAdvectionRK4_LandBeachTestUnBeachRAgeZoneDistance ==> /jobfs/13000873.gadi-pbs/parcels-12904/054449d3ae8a5619147419e26870eb15_32.so
+2020-10-29 21:16:57:Compiled zParticleAdvectionRK4_LandBeachTestUnBeachRAgeZoneDistance ==> /jobfs/13000873.gadi-pbs/parcels-12904/054449d3ae8a5619147419e26870eb15_25.so
+2020-10-29 21:16:57:Compiled zParticleAdvectionRK4_LandBeachTestUnBeachRAgeZoneDistance ==> /jobfs/13000873.gadi-pbs/parcels-12904/054449d3ae8a5619147419e26870eb15_31.so
+2020-10-29 21:16:57:Compiled zParticleAdvectionRK4_LandBeachTestUnBeachRAgeZoneDistance ==> /jobfs/13000873.gadi-pbs/parcels-12904/054449d3ae8a5619147419e26870eb15_30.so
+2020-10-29 21:16:58:Compiled zParticleAdvectionRK4_LandBeachTestUnBeachRAgeZoneDistance ==> /jobfs/13000873.gadi-pbs/parcels-12904/054449d3ae8a5619147419e26870eb15_35.so
+2020-10-29 21:16:58:Compiled zParticleAdvectionRK4_LandBeachTestUnBeachRAgeZoneDistance ==> /jobfs/13000873.gadi-pbs/parcels-12904/054449d3ae8a5619147419e26870eb15_27.so
+2020-10-29 21:16:58:Compiled zParticleAdvectionRK4_LandBeachTestUnBeachRAgeZoneDistance ==> /jobfs/13000873.gadi-pbs/parcels-12904/054449d3ae8a5619147419e26870eb15_45.so
+2020-10-29 21:16:58:Compiled zParticleAdvectionRK4_LandBeachTestUnBeachRAgeZoneDistance ==> /jobfs/13000873.gadi-pbs/parcels-12904/054449d3ae8a5619147419e26870eb15_20.so
+2020-10-29 21:16:58:Compiled zParticleAdvectionRK4_LandBeachTestUnBeachRAgeZoneDistance ==> /jobfs/13000873.gadi-pbs/parcels-12904/054449d3ae8a5619147419e26870eb15_17.so
+2020-10-29 21:16:58:Compiled zParticleAdvectionRK4_LandBeachTestUnBeachRAgeZoneDistance ==> /jobfs/13000873.gadi-pbs/parcels-12904/054449d3ae8a5619147419e26870eb15_21.so
+2020-10-29 21:16:58:Compiled zParticleAdvectionRK4_LandBeachTestUnBeachRAgeZoneDistance ==> /jobfs/13000873.gadi-pbs/parcels-12904/054449d3ae8a5619147419e26870eb15_38.so
+2020-10-29 21:16:58:Compiled zParticleAdvectionRK4_LandBeachTestUnBeachRAgeZoneDistance ==> /jobfs/13000873.gadi-pbs/parcels-12904/054449d3ae8a5619147419e26870eb15_39.so
+2020-10-29 21:16:58:Compiled zParticleAdvectionRK4_LandBeachTestUnBeachRAgeZoneDistance ==> /jobfs/13000873.gadi-pbs/parcels-12904/054449d3ae8a5619147419e26870eb15_4.so
+2020-10-29 21:16:59:Compiled zParticleAdvectionRK4_LandBeachTestUnBeachRAgeZoneDistance ==> /jobfs/13000873.gadi-pbs/parcels-12904/054449d3ae8a5619147419e26870eb15_11.so
+2020-10-29 21:16:59:Compiled zParticleAdvectionRK4_LandBeachTestUnBeachRAgeZoneDistance ==> /jobfs/13000873.gadi-pbs/parcels-12904/054449d3ae8a5619147419e26870eb15_10.so
+2020-10-29 21:16:59:Compiled zParticleAdvectionRK4_LandBeachTestUnBeachRAgeZoneDistance ==> /jobfs/13000873.gadi-pbs/parcels-12904/054449d3ae8a5619147419e26870eb15_8.so
+2020-10-29 21:16:59:Compiled zParticleAdvectionRK4_LandBeachTestUnBeachRAgeZoneDistance ==> /jobfs/13000873.gadi-pbs/parcels-12904/054449d3ae8a5619147419e26870eb15_6.so
+2020-10-29 21:16:59:Compiled zParticleAdvectionRK4_LandBeachTestUnBeachRAgeZoneDistance ==> /jobfs/13000873.gadi-pbs/parcels-12904/054449d3ae8a5619147419e26870eb15_9.so
+2020-10-29 21:16:59:Compiled zParticleAdvectionRK4_LandBeachTestUnBeachRAgeZoneDistance ==> /jobfs/13000873.gadi-pbs/parcels-12904/054449d3ae8a5619147419e26870eb15_5.so
+2020-10-29 21:16:59:Compiled zParticleAdvectionRK4_LandBeachTestUnBeachRAgeZoneDistance ==> /jobfs/13000873.gadi-pbs/parcels-12904/054449d3ae8a5619147419e26870eb15_46.so
+2020-10-29 21:16:59:Compiled zParticleAdvectionRK4_LandBeachTestUnBeachRAgeZoneDistance ==> /jobfs/13000873.gadi-pbs/parcels-12904/054449d3ae8a5619147419e26870eb15_24.so
+2020-10-29 21:16:59:Compiled zParticleAdvectionRK4_LandBeachTestUnBeachRAgeZoneDistance ==> /jobfs/13000873.gadi-pbs/parcels-12904/054449d3ae8a5619147419e26870eb15_22.so
+2020-10-29 21:16:59:Compiled zParticleAdvectionRK4_LandBeachTestUnBeachRAgeZoneDistance ==> /jobfs/13000873.gadi-pbs/parcels-12904/054449d3ae8a5619147419e26870eb15_18.so
+2020-10-29 23:39:19: sim_rcp_165_v0r03: Completed: 02:26:43: Rank=17: Particles: Start=2555 Del=629 End=1926
+2020-10-29 23:41:23: sim_rcp_165_v0r03: Completed: 02:28:48: Rank=24: Particles: Start=2879 Del=1563 End=1316
+2020-10-29 23:41:24: sim_rcp_165_v0r03: Completed: 02:28:48: Rank=13: Particles: Start=2077 Del=1040 End=1037
+2020-10-29 23:41:24: sim_rcp_165_v0r03: Completed: 02:28:49: Rank=19: Particles: Start=3914 Del=1354 End=2560
+2020-10-29 23:51:30: sim_rcp_165_v0r03: Completed: 02:38:54: Rank=38: Particles: Start=2657 Del=1433 End=1224
+2020-10-29 23:53:35: sim_rcp_165_v0r03: Completed: 02:40:60: Rank= 8: Particles: Start=4279 Del=936 End=3343
+2020-10-29 23:59:38: sim_rcp_165_v0r03: Completed: 02:47:03: Rank=22: Particles: Start=3046 Del=1485 End=1561
+2020-10-30 00:03:21: sim_rcp_165_v0r03: Completed: 02:50:46: Rank=18: Particles: Start=3539 Del=358 End=3181
+2020-10-30 00:07:46: sim_rcp_165_v0r03: Completed: 02:55:10: Rank=20: Particles: Start=1348 Del=760 End=588
+2020-10-30 00:08:58: sim_rcp_165_v0r03: Completed: 02:56:22: Rank= 4: Particles: Start=36582 Del=7089 End=29493
+2020-10-30 00:14:14: sim_rcp_165_v0r03: Completed: 03:01:38: Rank=14: Particles: Start=3021 Del=132 End=2889
+2020-10-30 00:18:48: sim_rcp_165_v0r03: Completed: 03:06:13: Rank=28: Particles: Start=970 Del=529 End=441
+2020-10-30 00:19:12: sim_rcp_165_v0r03: Completed: 03:06:37: Rank=43: Particles: Start=698 Del=399 End=299
+2020-10-30 00:19:16: sim_rcp_165_v0r03: Completed: 03:06:41: Rank=42: Particles: Start=1614 Del=286 End=1328
+2020-10-30 00:19:19: sim_rcp_165_v0r03: Completed: 03:06:43: Rank= 0: Particles: Start=3963 Del=1806 End=2157
+2020-10-30 00:21:21: sim_rcp_165_v0r03: Completed: 03:08:45: Rank=39: Particles: Start=3311 Del=2857 End=454
+2020-10-30 00:21:54: sim_rcp_165_v0r03: Completed: 03:09:19: Rank=40: Particles: Start=2877 Del=2288 End=589
+2020-10-30 00:23:49: sim_rcp_165_v0r03: Completed: 03:11:14: Rank= 9: Particles: Start=34995 Del=3345 End=31650
+2020-10-30 00:27:15: sim_rcp_165_v0r03: Completed: 03:14:39: Rank=25: Particles: Start=2977 Del=793 End=2184
+2020-10-30 00:29:14: sim_rcp_165_v0r03: Completed: 03:16:39: Rank= 5: Particles: Start=3064 Del=1726 End=1338
+2020-10-30 00:31:48: sim_rcp_165_v0r03: Completed: 03:19:12: Rank=30: Particles: Start=3588 Del=952 End=2636
+2020-10-30 00:32:10: sim_rcp_165_v0r03: Completed: 03:19:34: Rank=12: Particles: Start=1738 Del=108 End=1630
+2020-10-30 00:34:37: sim_rcp_165_v0r03: Completed: 03:22:02: Rank=33: Particles: Start=1655 Del=136 End=1519
+2020-10-30 00:34:38: sim_rcp_165_v0r03: Completed: 03:22:02: Rank=34: Particles: Start=405 Del=217 End=188
+2020-10-30 00:39:23: sim_rcp_165_v0r03: Completed: 03:26:47: Rank= 2: Particles: Start=2632 Del=829 End=1803
+2020-10-30 00:42:51: sim_rcp_165_v0r03: Completed: 03:30:16: Rank=29: Particles: Start=3028 Del=1045 End=1983
+2020-10-30 00:43:04: sim_rcp_165_v0r03: Completed: 03:30:29: Rank=16: Particles: Start=1865 Del=1003 End=862
+2020-10-30 00:43:06: sim_rcp_165_v0r03: Completed: 03:30:30: Rank=35: Particles: Start=2112 Del=1061 End=1051
+2020-10-30 00:47:21: sim_rcp_165_v0r03: Completed: 03:34:45: Rank=15: Particles: Start=5808 Del=922 End=4886
+2020-10-30 00:51:18: sim_rcp_165_v0r03: Completed: 03:38:43: Rank= 7: Particles: Start=2295 Del=973 End=1322
+2020-10-30 00:56:27: sim_rcp_165_v0r03: Completed: 03:43:52: Rank=41: Particles: Start=4992 Del=1274 End=3718
+2020-10-30 00:56:34: sim_rcp_165_v0r03: Completed: 03:43:58: Rank=23: Particles: Start=4198 Del=1028 End=3170
+2020-10-30 00:58:13: sim_rcp_165_v0r03: Completed: 03:45:37: Rank=45: Particles: Start=3657 Del=1575 End=2082
+2020-10-30 01:02:22: sim_rcp_165_v0r03: Completed: 03:49:46: Rank= 3: Particles: Start=1694 Del=1064 End=630
+2020-10-30 01:07:37: sim_rcp_165_v0r03: Completed: 03:55:01: Rank=47: Particles: Start=541 Del=243 End=298
+2020-10-30 01:08:20: sim_rcp_165_v0r03: Completed: 03:55:44: Rank=36: Particles: Start=3701 Del=678 End=3023
+2020-10-30 01:09:30: sim_rcp_165_v0r03: Completed: 03:56:54: Rank=46: Particles: Start=3451 Del=124 End=3327
+2020-10-30 01:09:42: sim_rcp_165_v0r03: Completed: 03:57:07: Rank=26: Particles: Start=3577 Del=146 End=3431
+2020-10-30 01:13:42: sim_rcp_165_v0r03: Completed: 04:01:07: Rank=44: Particles: Start=3333 Del=315 End=3018
+2020-10-30 01:13:50: sim_rcp_165_v0r03: Completed: 04:01:15: Rank=27: Particles: Start=856 Del=492 End=364
+2020-10-30 01:21:59: sim_rcp_165_v0r03: Completed: 04:09:24: Rank= 1: Particles: Start=4693 Del=112 End=4581
+2020-10-30 01:22:09: sim_rcp_165_v0r03: Completed: 04:09:34: Rank=21: Particles: Start=2555 Del=153 End=2402
+2020-10-30 01:27:57: sim_rcp_165_v0r03: Completed: 04:15:22: Rank=31: Particles: Start=33891 Del=5425 End=28466
+2020-10-30 01:28:32: sim_rcp_165_v0r03: Completed: 04:15:57: Rank=11: Particles: Start=453 Del=68 End=385
+2020-10-30 01:29:40: sim_rcp_165_v0r03: Completed: 04:17:05: Rank=32: Particles: Start=1052 Del=115 End=937
+2020-10-30 01:36:46: sim_rcp_165_v0r03: Completed: 04:24:10: Rank=37: Particles: Start=524 Del=82 End=442
+2020-10-30 01:38:05: sim_rcp_165_v0r03: Completed: 04:25:30: Rank= 6: Particles: Start=3452 Del=563 End=2889
+2020-10-30 01:43:07: sim_rcp_165_v0r03: Completed: 04:30:32: Rank=10: Particles: Start=656 Del=81 End=575
+2020-10-30 03:26:32: sim_rcp_165_v0r03: Finished!: Timer=06:13:57
+2020-11-02 01:25:49: sim_rcp_190_v1r00: Rank=34: ZDBYBTKM: Particles=1712
+2020-11-02 01:25:49: sim_rcp_190_v1r00: Rank=33: ZDBYBTKM: Particles=1494
+2020-11-02 01:25:49: sim_rcp_190_v1r00: Rank=27: ZDBYBTKM: Particles=1091
+2020-11-02 01:25:49: sim_rcp_190_v1r00: Rank=32: ZDBYBTKM: Particles=1653
+2020-11-02 01:25:49: sim_rcp_190_v1r00: Rank=36: ZDBYBTKM: Particles=1812
+2020-11-02 01:25:49: sim_rcp_190_v1r00: Rank=40: ZDBYBTKM: Particles=1570
+2020-11-02 01:25:49: sim_rcp_190_v1r00: Rank= 7: ZDBYBTKM: Particles=1550
+2020-11-02 01:25:49: sim_rcp_190_v1r00: Run=972d: 2101-12-31 to 2099-05-03: Particles=119462
+2020-11-02 01:25:49: sim_rcp_190_v1r00: Rank= 1: ZDBYBTKM: Particles=1678
+2020-11-02 01:25:49: sim_rcp_190_v1r00: Rank=16: ZDBYBTKM: Particles=1288
+2020-11-02 01:25:49: sim_rcp_190_v1r00: Rank= 4: ZDBYBTKM: Particles=1786
+2020-11-02 01:25:49: sim_rcp_190_v1r00: Rank=28: ZDBYBTKM: Particles=1807
+2020-11-02 01:25:49: sim_rcp_190_v1r00: Rank=31: ZDBYBTKM: Particles=1559
+2020-11-02 01:25:49: sim_rcp_190_v1r00: Rank=20: ZDBYBTKM: Particles=1765
+2020-11-02 01:25:49: sim_rcp_190_v1r00: Rank=23: ZDBYBTKM: Particles=1679
+2020-11-02 01:25:49: sim_rcp_190_v1r00: Rank=17: ZDBYBTKM: Particles=1729
+2020-11-02 01:25:49: sim_rcp_190_v1r00: Rank=45: ZDBYBTKM: Particles=1361
+2020-11-02 01:25:49: sim_rcp_190_v1r00: Rank= 2: ZDBYBTKM: Particles=1081
+2020-11-02 01:25:49: sim_rcp_190_v1r00: Rank=43: ZDBYBTKM: Particles=1534
+2020-11-02 01:25:49: sim_rcp_190_v1r00: Rank=19: ZDBYBTKM: Particles=2444
+2020-11-02 01:25:49: sim_rcp_190_v1r00: Rank=35: ZDBYBTKM: Particles=1690
+2020-11-02 01:25:49: sim_rcp_190_v1r00: Rank=44: ZDBYBTKM: Particles=754
+2020-11-02 01:25:49: sim_rcp_190_v1r00: Rank=39: ZDBYBTKM: Particles=1802
+2020-11-02 01:25:49: sim_rcp_190_v1r00: Rank=24: ZDBYBTKM: Particles=1017
+2020-11-02 01:25:49: sim_rcp_190_v1r00: Rank=11: ZDBYBTKM: Particles=1437
+2020-11-02 01:25:49: sim_rcp_190_v1r00: Rank=18: ZDBYBTKM: Particles=1616
+2020-11-02 01:25:49: sim_rcp_190_v1r00: Rank=12: ZDBYBTKM: Particles=1024
+2020-11-02 01:25:49: sim_rcp_190_v1r00: Rank=29: ZDBYBTKM: Particles=1776
+2020-11-02 01:25:49: sim_rcp_190_v1r00: Rank=26: ZDBYBTKM: Particles=1531
+2020-11-02 01:25:49: sim_rcp_190_v1r00: Rank=25: ZDBYBTKM: Particles=1742
+2020-11-02 01:25:49: sim_rcp_190_v1r00: Rank=13: ZDBYBTKM: Particles=1861
+2020-11-02 01:25:49: sim_rcp_190_v1r00: Rank= 8: ZDBYBTKM: Particles=1723
+2020-11-02 01:25:49: sim_rcp_190_v1r00: Rank=41: ZDBYBTKM: Particles=1636
+2020-11-02 01:25:49: sim_rcp_190_v1r00: Rank=42: ZDBYBTKM: Particles=1365
+2020-11-02 01:25:49: sim_rcp_190_v1r00: Rank=21: ZDBYBTKM: Particles=705
+2020-11-02 01:25:49: sim_rcp_190_v1r00: Rank= 9: ZDBYBTKM: Particles=1593
+2020-11-02 01:25:49: sim_rcp_190_v1r00: Rank= 3: ZDBYBTKM: Particles=1800
+2020-11-02 01:25:49: sim_rcp_190_v1r00: Rank=47: ZDBYBTKM: Particles=1045
+2020-11-02 01:25:49: sim_rcp_190_v1r00: Rank= 5: ZDBYBTKM: Particles=806
+2020-11-02 01:25:49: sim_rcp_190_v1r00: Rank=10: ZDBYBTKM: Particles=1756
+2020-11-02 01:25:49: sim_rcp_190_v1r00: Rank=37: ZDBYBTKM: Particles=1791
+2020-11-02 01:25:49: sim_rcp_190_v1r00: Rank=15: ZDBYBTKM: Particles=1808
+2020-11-02 01:25:49: sim_rcp_190_v1r00: Rep=6d: dt=60m: Out=2d: Land=0.975 Vmin=1e-07
+2020-11-02 01:25:49: sim_rcp_190_v1r00: Rank= 0: ZDBYBTKM: Particles=2327
+2020-11-02 01:25:53: sim_rcp_190_v1r00: Rank= 6: ZDBYBTKM: Particles=3222
+2020-11-02 01:25:53: sim_rcp_190_v1r00: Rank=22: ZDBYBTKM: Particles=1704
+2020-11-02 01:25:53: sim_rcp_190_v1r00: Rank=14: ZDBYBTKM: Particles=1456
+2020-11-02 01:25:53: sim_rcp_190_v1r00: Rank=46: ZDBYBTKM: Particles=1696
+2020-11-02 01:25:53: sim_rcp_190_v1r00: Rank=38: ZDBYBTKM: Particles=1776
+2020-11-02 01:25:53: sim_rcp_190_v1r00: Rank=30: ZDBYBTKM: Particles=1786
+2020-11-02 01:25:54:Compiled zParticleAdvectionRK4_LandBeachTestUnBeachRAgeZoneDistance ==> /jobfs/13108405.gadi-pbs/parcels-12904/44fc913acc4cdfb87fc9f2b2acec340a_44.so
+2020-11-02 01:25:54:Compiled zParticleAdvectionRK4_LandBeachTestUnBeachRAgeZoneDistance ==> /jobfs/13108405.gadi-pbs/parcels-12904/44fc913acc4cdfb87fc9f2b2acec340a_11.so
+2020-11-02 01:25:54:Compiled zParticleAdvectionRK4_LandBeachTestUnBeachRAgeZoneDistance ==> /jobfs/13108405.gadi-pbs/parcels-12904/44fc913acc4cdfb87fc9f2b2acec340a_20.so
+2020-11-02 01:25:54:Compiled zParticleAdvectionRK4_LandBeachTestUnBeachRAgeZoneDistance ==> /jobfs/13108405.gadi-pbs/parcels-12904/44fc913acc4cdfb87fc9f2b2acec340a_0.so
+2020-11-02 01:25:54:Compiled zParticleAdvectionRK4_LandBeachTestUnBeachRAgeZoneDistance ==> /jobfs/13108405.gadi-pbs/parcels-12904/44fc913acc4cdfb87fc9f2b2acec340a_43.so
+2020-11-02 01:25:54:Compiled zParticleAdvectionRK4_LandBeachTestUnBeachRAgeZoneDistance ==> /jobfs/13108405.gadi-pbs/parcels-12904/44fc913acc4cdfb87fc9f2b2acec340a_4.so
+2020-11-02 01:25:54:Compiled zParticleAdvectionRK4_LandBeachTestUnBeachRAgeZoneDistance ==> /jobfs/13108405.gadi-pbs/parcels-12904/44fc913acc4cdfb87fc9f2b2acec340a_16.so
+2020-11-02 01:25:54:Compiled zParticleAdvectionRK4_LandBeachTestUnBeachRAgeZoneDistance ==> /jobfs/13108405.gadi-pbs/parcels-12904/44fc913acc4cdfb87fc9f2b2acec340a_47.so
+2020-11-02 01:25:54:Compiled zParticleAdvectionRK4_LandBeachTestUnBeachRAgeZoneDistance ==> /jobfs/13108405.gadi-pbs/parcels-12904/44fc913acc4cdfb87fc9f2b2acec340a_41.so
+2020-11-02 01:25:54:Compiled zParticleAdvectionRK4_LandBeachTestUnBeachRAgeZoneDistance ==> /jobfs/13108405.gadi-pbs/parcels-12904/44fc913acc4cdfb87fc9f2b2acec340a_23.so
+2020-11-02 01:25:54:Compiled zParticleAdvectionRK4_LandBeachTestUnBeachRAgeZoneDistance ==> /jobfs/13108405.gadi-pbs/parcels-12904/44fc913acc4cdfb87fc9f2b2acec340a_12.so
+2020-11-02 01:25:54:Compiled zParticleAdvectionRK4_LandBeachTestUnBeachRAgeZoneDistance ==> /jobfs/13108405.gadi-pbs/parcels-12904/44fc913acc4cdfb87fc9f2b2acec340a_18.so
+2020-11-02 01:25:54:Compiled zParticleAdvectionRK4_LandBeachTestUnBeachRAgeZoneDistance ==> /jobfs/13108405.gadi-pbs/parcels-12904/44fc913acc4cdfb87fc9f2b2acec340a_19.so
+2020-11-02 01:25:54:Compiled zParticleAdvectionRK4_LandBeachTestUnBeachRAgeZoneDistance ==> /jobfs/13108405.gadi-pbs/parcels-12904/44fc913acc4cdfb87fc9f2b2acec340a_28.so
+2020-11-02 01:25:54:Compiled zParticleAdvectionRK4_LandBeachTestUnBeachRAgeZoneDistance ==> /jobfs/13108405.gadi-pbs/parcels-12904/44fc913acc4cdfb87fc9f2b2acec340a_25.so
+2020-11-02 01:25:54:Compiled zParticleAdvectionRK4_LandBeachTestUnBeachRAgeZoneDistance ==> /jobfs/13108405.gadi-pbs/parcels-12904/44fc913acc4cdfb87fc9f2b2acec340a_36.so
+2020-11-02 01:25:54:Compiled zParticleAdvectionRK4_LandBeachTestUnBeachRAgeZoneDistance ==> /jobfs/13108405.gadi-pbs/parcels-12904/44fc913acc4cdfb87fc9f2b2acec340a_33.so
+2020-11-02 01:25:54:Compiled zParticleAdvectionRK4_LandBeachTestUnBeachRAgeZoneDistance ==> /jobfs/13108405.gadi-pbs/parcels-12904/44fc913acc4cdfb87fc9f2b2acec340a_42.so
+2020-11-02 01:25:54:Compiled zParticleAdvectionRK4_LandBeachTestUnBeachRAgeZoneDistance ==> /jobfs/13108405.gadi-pbs/parcels-12904/44fc913acc4cdfb87fc9f2b2acec340a_45.so
+2020-11-02 01:25:54:Compiled zParticleAdvectionRK4_LandBeachTestUnBeachRAgeZoneDistance ==> /jobfs/13108405.gadi-pbs/parcels-12904/44fc913acc4cdfb87fc9f2b2acec340a_39.so
+2020-11-02 01:25:54:Compiled zParticleAdvectionRK4_LandBeachTestUnBeachRAgeZoneDistance ==> /jobfs/13108405.gadi-pbs/parcels-12904/44fc913acc4cdfb87fc9f2b2acec340a_31.so
+2020-11-02 01:25:54:Compiled zParticleAdvectionRK4_LandBeachTestUnBeachRAgeZoneDistance ==> /jobfs/13108405.gadi-pbs/parcels-12904/44fc913acc4cdfb87fc9f2b2acec340a_29.so
+2020-11-02 01:25:54:Compiled zParticleAdvectionRK4_LandBeachTestUnBeachRAgeZoneDistance ==> /jobfs/13108405.gadi-pbs/parcels-12904/44fc913acc4cdfb87fc9f2b2acec340a_26.so
+2020-11-02 01:25:54:Compiled zParticleAdvectionRK4_LandBeachTestUnBeachRAgeZoneDistance ==> /jobfs/13108405.gadi-pbs/parcels-12904/44fc913acc4cdfb87fc9f2b2acec340a_27.so
+2020-11-02 01:25:54:Compiled zParticleAdvectionRK4_LandBeachTestUnBeachRAgeZoneDistance ==> /jobfs/13108405.gadi-pbs/parcels-12904/44fc913acc4cdfb87fc9f2b2acec340a_35.so
+2020-11-02 01:25:54:Compiled zParticleAdvectionRK4_LandBeachTestUnBeachRAgeZoneDistance ==> /jobfs/13108405.gadi-pbs/parcels-12904/44fc913acc4cdfb87fc9f2b2acec340a_34.so
+2020-11-02 01:25:54:Compiled zParticleAdvectionRK4_LandBeachTestUnBeachRAgeZoneDistance ==> /jobfs/13108405.gadi-pbs/parcels-12904/44fc913acc4cdfb87fc9f2b2acec340a_32.so
+2020-11-02 01:25:55:Compiled zParticleAdvectionRK4_LandBeachTestUnBeachRAgeZoneDistance ==> /jobfs/13108405.gadi-pbs/parcels-12904/44fc913acc4cdfb87fc9f2b2acec340a_40.so
+2020-11-02 01:25:55:Compiled zParticleAdvectionRK4_LandBeachTestUnBeachRAgeZoneDistance ==> /jobfs/13108405.gadi-pbs/parcels-12904/44fc913acc4cdfb87fc9f2b2acec340a_24.so
+2020-11-02 01:25:55:Compiled zParticleAdvectionRK4_LandBeachTestUnBeachRAgeZoneDistance ==> /jobfs/13108405.gadi-pbs/parcels-12904/44fc913acc4cdfb87fc9f2b2acec340a_13.so
+2020-11-02 01:25:55:Compiled zParticleAdvectionRK4_LandBeachTestUnBeachRAgeZoneDistance ==> /jobfs/13108405.gadi-pbs/parcels-12904/44fc913acc4cdfb87fc9f2b2acec340a_17.so
+2020-11-02 01:25:55:Compiled zParticleAdvectionRK4_LandBeachTestUnBeachRAgeZoneDistance ==> /jobfs/13108405.gadi-pbs/parcels-12904/44fc913acc4cdfb87fc9f2b2acec340a_15.so
+2020-11-02 01:25:55:Compiled zParticleAdvectionRK4_LandBeachTestUnBeachRAgeZoneDistance ==> /jobfs/13108405.gadi-pbs/parcels-12904/44fc913acc4cdfb87fc9f2b2acec340a_21.so
+2020-11-02 01:25:55:Compiled zParticleAdvectionRK4_LandBeachTestUnBeachRAgeZoneDistance ==> /jobfs/13108405.gadi-pbs/parcels-12904/44fc913acc4cdfb87fc9f2b2acec340a_5.so
+2020-11-02 01:25:55:Compiled zParticleAdvectionRK4_LandBeachTestUnBeachRAgeZoneDistance ==> /jobfs/13108405.gadi-pbs/parcels-12904/44fc913acc4cdfb87fc9f2b2acec340a_8.so
+2020-11-02 01:25:55:Compiled zParticleAdvectionRK4_LandBeachTestUnBeachRAgeZoneDistance ==> /jobfs/13108405.gadi-pbs/parcels-12904/44fc913acc4cdfb87fc9f2b2acec340a_7.so
+2020-11-02 01:25:55:Compiled zParticleAdvectionRK4_LandBeachTestUnBeachRAgeZoneDistance ==> /jobfs/13108405.gadi-pbs/parcels-12904/44fc913acc4cdfb87fc9f2b2acec340a_10.so
+2020-11-02 01:25:55:Compiled zParticleAdvectionRK4_LandBeachTestUnBeachRAgeZoneDistance ==> /jobfs/13108405.gadi-pbs/parcels-12904/44fc913acc4cdfb87fc9f2b2acec340a_1.so
+2020-11-02 01:25:55:Compiled zParticleAdvectionRK4_LandBeachTestUnBeachRAgeZoneDistance ==> /jobfs/13108405.gadi-pbs/parcels-12904/44fc913acc4cdfb87fc9f2b2acec340a_9.so
+2020-11-02 01:25:55:Compiled zParticleAdvectionRK4_LandBeachTestUnBeachRAgeZoneDistance ==> /jobfs/13108405.gadi-pbs/parcels-12904/44fc913acc4cdfb87fc9f2b2acec340a_2.so
+2020-11-02 01:25:55:Compiled zParticleAdvectionRK4_LandBeachTestUnBeachRAgeZoneDistance ==> /jobfs/13108405.gadi-pbs/parcels-12904/44fc913acc4cdfb87fc9f2b2acec340a_3.so
+2020-11-02 01:25:55:Compiled zParticleAdvectionRK4_LandBeachTestUnBeachRAgeZoneDistance ==> /jobfs/13108405.gadi-pbs/parcels-12904/44fc913acc4cdfb87fc9f2b2acec340a_46.so
+2020-11-02 01:25:55:Compiled zParticleAdvectionRK4_LandBeachTestUnBeachRAgeZoneDistance ==> /jobfs/13108405.gadi-pbs/parcels-12904/44fc913acc4cdfb87fc9f2b2acec340a_22.so
+2020-11-02 01:25:55:Compiled zParticleAdvectionRK4_LandBeachTestUnBeachRAgeZoneDistance ==> /jobfs/13108405.gadi-pbs/parcels-12904/44fc913acc4cdfb87fc9f2b2acec340a_14.so
+2020-11-02 01:25:55:Compiled zParticleAdvectionRK4_LandBeachTestUnBeachRAgeZoneDistance ==> /jobfs/13108405.gadi-pbs/parcels-12904/44fc913acc4cdfb87fc9f2b2acec340a_6.so
+2020-11-02 01:25:55:Compiled zParticleAdvectionRK4_LandBeachTestUnBeachRAgeZoneDistance ==> /jobfs/13108405.gadi-pbs/parcels-12904/44fc913acc4cdfb87fc9f2b2acec340a_38.so
+2020-11-02 01:25:55:Compiled zParticleAdvectionRK4_LandBeachTestUnBeachRAgeZoneDistance ==> /jobfs/13108405.gadi-pbs/parcels-12904/44fc913acc4cdfb87fc9f2b2acec340a_30.so
+2020-11-02 01:25:56:Compiled zParticleAdvectionRK4_LandBeachTestUnBeachRAgeZoneDistance ==> /jobfs/13108405.gadi-pbs/parcels-12904/44fc913acc4cdfb87fc9f2b2acec340a_37.so
+2020-11-02 03:31:25: sim_rcp_190_v1r00: Completed: 02:22:59: Rank=24: Particles: Start=1017 Del=6 End=1011
+2020-11-02 03:31:25: sim_rcp_190_v1r00: Completed: 02:22:60: Rank=11: Particles: Start=1437 Del=21 End=1416
+2020-11-02 03:31:26: sim_rcp_190_v1r00: Completed: 02:23:01: Rank=30: Particles: Start=1786 Del=242 End=1544
+2020-11-02 03:32:33: sim_rcp_190_v1r00: Completed: 02:24:08: Rank=34: Particles: Start=1712 Del=201 End=1511
+2020-11-02 03:33:14: sim_rcp_190_v1r00: Completed: 02:24:48: Rank=21: Particles: Start=705 Del=3 End=702
+2020-11-02 03:33:27: sim_rcp_190_v1r00: Completed: 02:25:02: Rank= 2: Particles: Start=1081 Del=5 End=1076
+2020-11-02 03:34:12: sim_rcp_190_v1r00: Completed: 02:25:47: Rank=35: Particles: Start=1690 Del=172 End=1518
+2020-11-02 03:34:26: sim_rcp_190_v1r00: Completed: 02:26:01: Rank= 1: Particles: Start=1678 Del=195 End=1483
+2020-11-02 03:35:05: sim_rcp_190_v1r00: Completed: 02:26:40: Rank=13: Particles: Start=1861 Del=8 End=1853
+2020-11-02 03:36:56: sim_rcp_190_v1r00: Completed: 02:28:31: Rank=14: Particles: Start=1456 Del=113 End=1343
+2020-11-02 03:37:32: sim_rcp_190_v1r00: Completed: 02:29:07: Rank= 5: Particles: Start=806 Del=1 End=805
+2020-11-02 03:38:29: sim_rcp_190_v1r00: Completed: 02:30:04: Rank=31: Particles: Start=1559 Del=101 End=1458
+2020-11-02 03:38:35: sim_rcp_190_v1r00: Completed: 02:30:10: Rank=37: Particles: Start=1791 Del=240 End=1551
+2020-11-02 03:38:40: sim_rcp_190_v1r00: Completed: 02:30:15: Rank=12: Particles: Start=1024 Del=38 End=986
+2020-11-02 03:38:44: sim_rcp_190_v1r00: Completed: 02:30:19: Rank=28: Particles: Start=1807 Del=227 End=1580
+2020-11-02 03:38:53: sim_rcp_190_v1r00: Completed: 02:30:28: Rank=25: Particles: Start=1742 Del=217 End=1525
+2020-11-02 03:38:55: sim_rcp_190_v1r00: Completed: 02:30:30: Rank=40: Particles: Start=1570 Del=104 End=1466
+2020-11-02 03:39:14: sim_rcp_190_v1r00: Completed: 02:30:49: Rank=10: Particles: Start=1756 Del=206 End=1550
+2020-11-02 03:40:38: sim_rcp_190_v1r00: Completed: 02:32:13: Rank=36: Particles: Start=1812 Del=235 End=1577
+2020-11-02 03:41:33: sim_rcp_190_v1r00: Completed: 02:33:08: Rank=17: Particles: Start=1729 Del=206 End=1523
+2020-11-02 03:41:34: sim_rcp_190_v1r00: Completed: 02:33:09: Rank= 3: Particles: Start=1800 Del=234 End=1566
+2020-11-02 03:42:20: sim_rcp_190_v1r00: Completed: 02:33:55: Rank= 0: Particles: Start=2327 Del=141 End=2186
+2020-11-02 03:42:26: sim_rcp_190_v1r00: Completed: 02:34:00: Rank= 8: Particles: Start=1723 Del=202 End=1521
+2020-11-02 03:43:18: sim_rcp_190_v1r00: Completed: 02:34:53: Rank=26: Particles: Start=1531 Del=47 End=1484
+2020-11-02 03:44:48: sim_rcp_190_v1r00: Completed: 02:36:23: Rank=42: Particles: Start=1365 Del=109 End=1256
+2020-11-02 03:45:25: sim_rcp_190_v1r00: Completed: 02:37:00: Rank=45: Particles: Start=1361 Del=12 End=1349
+2020-11-02 03:45:37: sim_rcp_190_v1r00: Completed: 02:37:12: Rank= 4: Particles: Start=1786 Del=240 End=1546
+2020-11-02 03:46:19: sim_rcp_190_v1r00: Completed: 02:37:54: Rank=43: Particles: Start=1534 Del=132 End=1402
+2020-11-02 03:48:34: sim_rcp_190_v1r00: Completed: 02:40:09: Rank=47: Particles: Start=1045 Del=34 End=1011
+2020-11-02 03:49:17: sim_rcp_190_v1r00: Completed: 02:40:52: Rank= 7: Particles: Start=1550 Del=64 End=1486
+2020-11-02 03:49:18: sim_rcp_190_v1r00: Completed: 02:40:53: Rank=38: Particles: Start=1776 Del=226 End=1550
+2020-11-02 03:52:14: sim_rcp_190_v1r00: Completed: 02:43:49: Rank=19: Particles: Start=2444 Del=15 End=2429
+2020-11-02 03:54:01: sim_rcp_190_v1r00: Completed: 02:45:36: Rank= 9: Particles: Start=1593 Del=137 End=1456
+2020-11-02 03:54:08: sim_rcp_190_v1r00: Completed: 02:45:43: Rank=27: Particles: Start=1091 Del=53 End=1038
+2020-11-02 03:55:09: sim_rcp_190_v1r00: Completed: 02:46:44: Rank=18: Particles: Start=1616 Del=148 End=1468
+2020-11-02 03:56:26: sim_rcp_190_v1r00: Completed: 02:48:01: Rank=15: Particles: Start=1808 Del=226 End=1582
+2020-11-02 03:59:30: sim_rcp_190_v1r00: Completed: 02:51:05: Rank=16: Particles: Start=1288 Del=95 End=1193
+2020-11-02 04:05:08: sim_rcp_190_v1r00: Completed: 02:56:43: Rank=41: Particles: Start=1636 Del=151 End=1485
+2020-11-02 04:08:56: sim_rcp_190_v1r00: Completed: 03:00:31: Rank=20: Particles: Start=1765 Del=202 End=1563
+2020-11-02 04:10:51: sim_rcp_190_v1r00: Completed: 03:02:26: Rank=39: Particles: Start=1802 Del=217 End=1585
+2020-11-02 04:11:12: sim_rcp_190_v1r00: Completed: 03:02:47: Rank=33: Particles: Start=1494 Del=30 End=1464
+2020-11-02 04:12:52: sim_rcp_190_v1r00: Completed: 03:04:27: Rank=44: Particles: Start=754 Del=1 End=753
+2020-11-02 04:13:13: sim_rcp_190_v1r00: Completed: 03:04:48: Rank=22: Particles: Start=1704 Del=208 End=1496
+2020-11-02 04:15:06: sim_rcp_190_v1r00: Completed: 03:06:41: Rank=32: Particles: Start=1653 Del=182 End=1471
+2020-11-02 04:17:30: sim_rcp_190_v1r00: Completed: 03:09:05: Rank=29: Particles: Start=1776 Del=218 End=1558
+2020-11-02 04:32:49: sim_rcp_190_v1r00: Completed: 03:24:23: Rank= 6: Particles: Start=3222 Del=304 End=2918
+2020-11-02 04:36:23: sim_rcp_190_v1r00: Completed: 03:27:58: Rank=46: Particles: Start=1696 Del=8 End=1688
+2020-11-02 04:36:57: sim_rcp_190_v1r00: Completed: 03:28:32: Rank=23: Particles: Start=1679 Del=213 End=1466
+2020-11-02 05:03:22: sim_rcp_190_v1r00: Finished!: Timer=03:54:56

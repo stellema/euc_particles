@@ -10,4 +10,4 @@
 #PBS -l storage=gdata/hh5+gdata/e14
 module use /g/data3/hh5/public/modules
 module load conda/analysis3-20.10
-python3 /g/data/e14/as3189/OFAM/scripts/create_file_ofam_euc_transport.py
+python3 /g/data/e14/as3189/OFAM/scripts/create_file_ofam_EUC_transport.py

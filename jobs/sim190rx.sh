@@ -14,5 +14,5 @@ module load conda/analysis3-20.10
 
 EXP="rcp"
 LON=190
-mpirun -np 48 python3 /g/data/e14/as3189/OFAM/scripts/sim.py -e $EXP -x $LON -r 972 -v 1 -f False
+mpirun -np 48 python3 /g/data/e14/as3189/OFAM/scripts/sim.py -e $EXP -x $LON -r 972 -v 1 -f 0
 python3 /g/data/e14/as3189/OFAM/scripts/sim_info.py -f "sim_rcp_190_v1r00.nc"
