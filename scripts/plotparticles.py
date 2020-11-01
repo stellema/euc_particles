@@ -615,7 +615,7 @@ def plot_traj(sim_id, var='u', traj=None, t=None, Z=290, ds=None):
 
     if not t:
         t = 22
-    dsv = xr.open_dataset(cfg.ofam/'ocean_{}_2012_12.nc'.format(var)).isel(Time=t)[var]
+    dsv = xr.open_dataset(cfg.ofam/'ocean_{}_2012_06.nc'.format(var)).isel(Time=t)[var]
 
     if var in ['u', 'v']:
         var_str = 'Zonal' if var == 'u' else 'Meridional'
@@ -625,7 +625,7 @@ def plot_traj(sim_id, var='u', traj=None, t=None, Z=290, ds=None):
         lat, lon, z = dv.yu_ocean, dv.xu_ocean, dv.st_ocean
     else:
         var_str = 'Vertical'
-        vmax = 0.001
+        vmax = 0.00025
         dv = dsv.sel(xt_ocean=slice(X[0], X[1]),
                      yt_ocean=slice(Y[0], Y[1])).sel(sw_ocean=Z, method='nearest')
         lat, lon, z = dv.yt_ocean, dv.xt_ocean, dv.sw_ocean

@@ -36,23 +36,14 @@ def del_land(pset):
     return pset
 
 
-fieldset = ofam_fieldset(time_bnds='full', exp='hist', chunks=True,
-                         cs=300, time_periodic=False, add_zone=True,
-                         add_unbeach_vel=True, apply_indicies=True)
+fieldset = ofam_fieldset(time_bnds='full', exp='hist')
 fieldset.Land.grid.time_origin = fieldset.time_origin
 
 
 class zParticle(JITParticle):
-
-    # The age of the particle.
     age = Variable('age', initial=0., dtype=np.float32)
-
-    # The velocity of the particle.
     u = Variable('u', initial=fieldset.U, to_write='once', dtype=np.float32)
-
-    # The 'zone' of the particle.
     zone = Variable('zone', initial=0., dtype=np.float32)
-
     distance = Variable('distance', initial=0., dtype=np.float32)
     prev_lon = Variable('prev_lon', initial=attrgetter('lon'), to_write=False, dtype=np.float32)
     prev_lat = Variable('prev_lat', initial=attrgetter('lat'), to_write=False, dtype=np.float32)

@@ -63,7 +63,7 @@ from kernels import (AdvectionRK4_Land, BeachTest, UnBeachR, Age, DelLand,
 warnings.filterwarnings("ignore")
 logger = tools.mlogger('test_unbeaching', parcels=True, misc=False)
 
-test = ['CS', 'PNG', 'SS'][1]
+test = ['CS', 'PNG', 'SS'][0]
 
 
 def del_land(pset):
@@ -74,9 +74,7 @@ def del_land(pset):
     return pset
 
 
-fieldset = ofam_fieldset(time_bnds='full', exp='hist', chunks=True,
-                         cs=300, time_periodic=False, add_zone=True,
-                         add_unbeach_vel=True, apply_indicies=True)
+fieldset = ofam_fieldset(time_bnds='full', exp='hist')
 fieldset.Land.grid.time_origin = fieldset.time_origin
 
 
@@ -96,7 +94,6 @@ class zParticle(JITParticle):
     # ubWcount = Variable('ubWcount', initial=0., dtype=np.float32)
     # ubWdepth = Variable('ubWdepth', initial=0., dtype=np.float32)
     # zc = Variable('zc', initial=0., dtype=np.float32)
-
     # ubeachmin = Variable('ubeachmin', initial=0., dtype=np.float32)
 
 
@@ -149,7 +146,6 @@ logger.info(' {:<3}: Land>={}: Coast>={}: UBv={}: Round=0.1 UBmin={}: Loop>=3: '
                     1, fieldset.UB_min)
             + 'Round if >=coast<land: 0.1 nearest break minLand<coast: '
             + 'If noUB(UVW)- UB[prev_lat]: '
-            # + 'RK depth if >=coast <Vmin: Depth*(1-Land): '
             + 'wUB=-{}*dt if wb>UBmin: T={}'.format(fieldset.UBw, T[-1]))
 
 
