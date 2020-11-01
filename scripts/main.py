@@ -58,7 +58,7 @@ def from_ofam(filenames, variables, dimensions, indices=None, mesh='spherical',
     fieldset = FieldSet.from_netcdf(filenames, variables, dimensions, mesh=mesh,
                                     indices=indices, time_periodic=time_periodic,
                                     allow_time_extrapolation=allow_time_extrapolation,
-                                    field_chunksize=field_chunksize,
+                                    field_chunksize=field_chunksize, interp_method=interp_method,
                                     gridindexingtype='mom5', **kwargs)
 
     if hasattr(fieldset, 'W'):
@@ -131,8 +131,8 @@ def ofam_fieldset(time_bnds='full', exp='hist', chunks=300, add_xfields=True):
                          field_chunksize=chunks, chunkdims_name_map=nmap)
     # Add Unbeach velocity vectorfield to fieldset.
     if add_xfields:
-        xf = [str(cfg.data/'ofam_beach_field.nc')]
-        zf = [str(cfg.data/'ofam_zone_field.nc')]
+        xf = [str(cfg.data/'ofam_field_beach.nc')]
+        zf = [str(cfg.data/'ofam_field_zone.nc')]
 
         xvars = {'Ub': 'Ub',
                  'Vb': 'Vb',
@@ -178,7 +178,6 @@ def ofam_fieldset(time_bnds='full', exp='hist', chunks=300, add_xfields=True):
     fieldset.add_constant('UV_min', 1e-7)
     fieldset.add_constant('UB_min', 0.25)
     fieldset.add_constant('UBw', 1e-4)
-
     return fieldset
 
 

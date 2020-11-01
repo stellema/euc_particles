@@ -117,7 +117,8 @@ def UnBeaching(particle, fieldset, time):
 def UnBeachR(particle, fieldset, time):
     if particle.beached >= 1:
         # Attempt three times to unbeach particle.
-        while particle.beached > 0 and particle.beached <= 3:
+        counter = 0
+        while particle.beached > 0 and counter < 3:
             # Unbeach by 1m/s (checks if unbeach velocities are close to zero).
             r = 0.1  # Round down to 0.1 and test if ceil or floor is nearest.
             lonb = math.floor(particle.lon/r) * r
@@ -151,10 +152,12 @@ def UnBeachR(particle, fieldset, time):
             particle.land = fieldset.Land[0., particle.depth, particle.lat, particle.lon]
             if particle.land < fieldset.onland:
                 particle.beached = 0
-            else:
-                particle.beached += 1
+            counter = counter + 1
         particle.unbeached += 1
-        particle.beached = 0
+
+        if particle.beached > 250:  # Kill switch~ 24 beach/day*10 days=240
+            particle.delete()
+            print("Deleted beached particle id: %d" % (particle.id))
 
 
 def CoastTime(particle, fieldset, time):
@@ -164,25 +167,24 @@ def CoastTime(particle, fieldset, time):
 
 
 
-def AdvectionRK4_3Db(particle, fieldset, time):
+def AdvectionRK4_3D(particle, fieldset, time):
     """Fourth-order Runge-Kutta 3D particle advection."""
-    if particle.beached == 0:
-        (u1, v1, w1) = fieldset.UVW[time, particle.depth, particle.lat, particle.lon]
-        lon1 = particle.lon + u1*.5*particle.dt
-        lat1 = particle.lat + v1*.5*particle.dt
-        dep1 = particle.depth + w1*.5*particle.dt
-        (u2, v2, w2) = fieldset.UVW[time + .5 * particle.dt, dep1, lat1, lon1]
-        lon2 = particle.lon + u2*.5*particle.dt
-        lat2 = particle.lat + v2*.5*particle.dt
-        dep2 = particle.depth + w2*.5*particle.dt
-        (u3, v3, w3) = fieldset.UVW[time + .5 * particle.dt, dep2, lat2, lon2]
-        lon3 = particle.lon + u3*particle.dt
-        lat3 = particle.lat + v3*particle.dt
-        dep3 = particle.depth + w3*particle.dt
-        (u4, v4, w4) = fieldset.UVW[time + particle.dt, dep3, lat3, lon3]
-        particle.lon += (u1 + 2*u2 + 2*u3 + u4) / 6. * particle.dt
-        particle.lat += (v1 + 2*v2 + 2*v3 + v4) / 6. * particle.dt
-        particle.depth += (w1 + 2*w2 + 2*w3 + w4) / 6. * particle.dt
+    (u1, v1, w1) = fieldset.UVW[time, particle.depth, particle.lat, particle.lon]
+    lon1 = particle.lon + u1*.5*particle.dt
+    lat1 = particle.lat + v1*.5*particle.dt
+    dep1 = particle.depth + w1*.5*particle.dt
+    (u2, v2, w2) = fieldset.UVW[time + .5 * particle.dt, dep1, lat1, lon1]
+    lon2 = particle.lon + u2*.5*particle.dt
+    lat2 = particle.lat + v2*.5*particle.dt
+    dep2 = particle.depth + w2*.5*particle.dt
+    (u3, v3, w3) = fieldset.UVW[time + .5 * particle.dt, dep2, lat2, lon2]
+    lon3 = particle.lon + u3*particle.dt
+    lat3 = particle.lat + v3*particle.dt
+    dep3 = particle.depth + w3*particle.dt
+    (u4, v4, w4) = fieldset.UVW[time + particle.dt, dep3, lat3, lon3]
+    particle.lon += (u1 + 2*u2 + 2*u3 + u4) / 6. * particle.dt
+    particle.lat += (v1 + 2*v2 + 2*v3 + v4) / 6. * particle.dt
+    particle.depth += (w1 + 2*w2 + 2*w3 + w4) / 6. * particle.dt
 
 
 
@@ -223,7 +225,7 @@ def Distance(particle, fieldset, time):
     # using 1.11e2 kilometer per degree latitude).
     lat_dist = (particle.lat - particle.prev_lat) * 111320
     # Calculate the distance in longitudinal direction,
-    # using cosine(latitude) - spherical earth.
+    # using cosine(latitude) - spherical earth.-
     lon_dist = ((particle.lon - particle.prev_lon) * 111320 *
                 math.cos(particle.lat * math.pi / 180))
     depth_dist = particle.depth - particle.prev_depth

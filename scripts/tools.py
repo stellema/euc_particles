@@ -87,7 +87,7 @@ def mlogger(name, parcels=False, misc=True):
         logger.addHandler(c_handler)
         logger.addHandler(f_handler)
         logger.setLevel(logging.DEBUG)
-        # logger.addFilter(NoWarnFilter())
+        logger.addFilter(NoWarnFilter())
 
         # logger.propagate = False
         loggers[name] = logger
@@ -557,28 +557,6 @@ def open_tao_data(frq='mon', dz=slice(10, 355), SI=True):
     return [du_165, du_190, du_220]
 
 
-def create_mesh_mask():
-    """Create OFAM3 mesh mask."""
-    f = [cfg.ofam/'ocean_{}_1981_01.nc'.format(var) for var in ['u', 'w']]
-    ds = xr.open_mfdataset(f, combine='by_coords')
-    mesh = xr.Dataset(coords=ds.coords)
-    mesh = mesh.drop(['nv', 'Time'])
-    # Convert coords dtype to np.float32
-    for c in mesh.coords.variables:
-        mesh.coords[c] = mesh.coords[c].astype(dtype=np.float32)
-        mesh.coords[c].encoding['dtype'] = np.dtype('float32')
-
-    mesh.to_netcdf(cfg.data/'ofam_mesh_grid.nc')
-    for c in mesh.coords.variables:
-        if c in ['st_edges_ocean', 'sw_edges_ocean']:
-            mesh = mesh.drop(c)
-    mesh.to_netcdf(cfg.data/'ofam_mesh_grid_part.nc')
-
-    ds.close()
-    mesh.close()
-    return
-
-
 def coriolis(lat):
     """Calculate the Coriolis and Rossby parameters.
 
@@ -605,12 +583,13 @@ def coriolis(lat):
     return f, beta
 
 
-def get_edge_depth(z, index=True, edge=False, greater=False):
+def get_edge_depth(z, index=True, edge=True, greater=False):
     """Integration OFAM3 depth levels."""
-    dg = xr.open_dataset(cfg.ofam/'ocean_u_1981_01.nc')
-    zi = idx(dg.st_edges_ocean, z)
-    zi = zi + 1 if dg.st_edges_ocean[zi] < z and greater else zi
-    z_new = dg.st_edges_ocean[zi].item() if edge else dg.st_ocean[zi].item()
+    dg = xr.open_mfdataset([cfg.ofam/'ocean_{}_2012_01.nc'.format(v)
+                            for v in ['u', 'w']])
+    zi = idx(dg.st_ocean, z)
+    zi = zi + 1 if dg.st_ocean[zi] < z and greater else zi
+    z_new = dg.sw_ocean[zi].item() if edge else dg.st_ocean[zi].item()
     dg.close()
 
     if index:
@@ -635,119 +614,85 @@ def tidy_files(logs=True, jobs=True):
     return
 
 
+def create_mesh_grid():
+    """Create OFAM3 mesh mask."""
+    f = [cfg.ofam/'ocean_{}_1981_01.nc'.format(var) for var in ['u', 'w']]
+    ds = xr.open_mfdataset(f, combine='by_coords')
+    mesh = xr.Dataset(coords=ds.coords)
+    mesh = mesh.drop(['nv', 'Time'])
+    # Convert coords dtype to np.float32
+    for c in mesh.coords.variables:
+        mesh.coords[c] = mesh.coords[c].astype(dtype=np.float32)
+        mesh.coords[c].encoding['dtype'] = np.dtype('float32')
+
+    mesh.to_netcdf(cfg.data/'ofam_mesh_grid.nc')
+    for c in mesh.coords.variables:
+        if c in ['st_edges_ocean', 'sw_edges_ocean']:
+            mesh = mesh.drop(c)
+    mesh.to_netcdf(cfg.data/'ofam_mesh_grid_part.nc')
+
+    ds.close()
+    mesh.close()
+    return
+
+
 def zone_cmap():
-    zmap = colors.ListedColormap(['darkorange', 'deeppink',
-                                   'mediumspringgreen',
-                                   'deepskyblue', 'seagreen', 'blue',
-                                   'red', 'darkviolet', 'k', 'm', 'y'])
+    zcolor = ['darkorange', 'deeppink', 'mediumspringgreen', 'deepskyblue',
+              'seagreen', 'blue', 'red', 'darkviolet', 'k', 'm', 'y']
+    zmap = colors.ListedColormap(zcolor)
     norm = colors.BoundaryNorm(np.linspace(1, 10, 11), zmap.N)
     return zmap, norm
 
 
 def zone_field(plot=False):
     """Create fieldset or plot zone definitions."""
-    # Copy 2D empty OFGAM3 velocity grid.
     file = [str(cfg.ofam/'ocean_{}_1981_01.nc'.format(v)) for v in ['u', 'w']]
     dr = xr.open_mfdataset(file, combine='by_coords')
     dr = dr.isel(st_ocean=slice(0, 1), Time=slice(0, 1))
     d = dr.u.where(np.isnan(dr.u), 0)
     d = d.rename({'st_ocean': 'sw_ocean'})
     d.coords['sw_ocean'] = np.array([5.0], dtype=np.float32)
-
-    eps = 0 if not plot else 0.1  # Add a bit of padding to the plotted lines.
     for n, zone in enumerate(cfg.zones):
-        if type(cfg.zones[zone][0]) == list:
-            coords = cfg.zones[zone]
-        else:
-            coords = [cfg.zones[zone]]
-
+        coords = cfg.zones[zone]
+        coords = [coords] if type(coords[0]) != list else coords
         for c in coords:
-            xx = [d.xu_ocean[idx(d.xu_ocean, i+ep)].item()
-                  for i, ep in zip(c[0:2], [-eps, eps])]
+            xx = [d.xu_ocean[idx(d.xu_ocean, i)].item() for i in c[0:2]]
             yy = [d.yu_ocean[idx(d.yu_ocean, i)].item() for i in c[2:4]]
             d = xr.where((d.xu_ocean >= xx[0]) & (d.xu_ocean <= xx[1]) &
                          (d.yu_ocean >= yy[0]) & (d.yu_ocean <= yy[1]) &
                          ~np.isnan(d), n + 1, d)
+    # Correctly order array dimensions.
+    d = d.transpose('Time', 'sw_ocean', 'yu_ocean', 'xu_ocean')
+    # Create dataset.
+    ds = d.to_dataset(name='zone')
+    for v in ds.variables:
+        if v not in ['Time']:
+            ds[v] = ds[v].astype(dtype=np.float32)
 
+    ds.attrs['history'] = 'Created {}.'.format(datetime.now().strftime("%Y-%m-%d"))
+    ds = ds.chunk()
+    ds.to_netcdf(cfg.data/'ofam_field_zone.nc')
+    ds.close()
     if plot:
-        d = d.isel(Time=0, sw_ocean=0)
-        d = d.sel(yu_ocean=slice(-15, 10), xu_ocean=slice(120, 255))
-
-        cmap = colors.ListedColormap(['darkorange', 'deeppink', 'mediumspringgreen',
-                                      'deepskyblue', 'seagreen', 'blue',
-                                      'red', 'darkviolet', 'k', 'm'])
+        dz = d[0, 0].sel(yu_ocean=slice(-10, 10.11), xu_ocean=slice(120.1, 255))
+        lon = np.append([120], np.around(dz.xu_ocean.values, 1))
+        lat = np.append([-10.1], np.around(dz.yu_ocean.values, 2))
+        # Colour map.
+        zcl = ['darkorange', 'deeppink', 'mediumspringgreen', 'deepskyblue',
+               'seagreen', 'blue', 'red', 'darkviolet', 'k', 'm']
+        cmap = colors.ListedColormap(zcl)
         cmap.set_bad('grey')
         cmap.set_under('white')
+
         fig = plt.figure(figsize=(16, 9))
-        cs = plt.pcolormesh(d.xu_ocean.values, d.yu_ocean.values, d.T,
-                            cmap=cmap, snap=False, linewidth=2, vmin=0.5)
+        cs = plt.pcolormesh(lon, lat, dz.values, cmap=cmap, edgecolors='face',
+                            shading='flat', linewidth=6, vmin=0.5)
 
-        plt.xticks(d.xu_ocean[::100], coord_formatter(d.xu_ocean[::100], 'lon'))
-        plt.yticks(d.yu_ocean[::25], coord_formatter(
-            np.arange(d.yu_ocean[0], d.yu_ocean[-1] + 2.5, 2.5), 'lat'))
-        cbar = fig.colorbar(cs, ticks=np.arange(1, 10), orientation='horizontal',
+        plt.xticks(lon[::100], coord_formatter(lon[::100], 'lon'))
+        plt.yticks(lat[::25], coord_formatter(lat[::25], 'lat'))
+        cbar = fig.colorbar(cs, ticks=range(1, 10), orientation='horizontal',
                             boundaries=np.arange(0.5, 9.6), pad=0.075)
-        znames = ['{}:{}'.format(i + 1, z) for i, z in enumerate(cfg.zone_names[:-1])]
-        cbar.ax.set_xticklabels(znames, fontsize=10)
-
-        plt.savefig(cfg.fig/'particle_boundariesx.png')
-    if not plot:
-        ds = d.to_dataset(name='zone').transpose('Time', 'sw_ocean',
-                                                 'yu_ocean', 'xu_ocean')
-        ds[dr.st_ocean.name] = dr.st_ocean.isel(st_ocean=slice(0, 1))
-        for v in ds.variables:
-            if v not in ['Time']:
-                ds[v] = ds[v].astype(dtype=np.float32)
-
-        ds.attrs['history'] = 'Created {}.'.format(datetime.now().strftime("%Y-%m-%d"))
-        ds = ds.chunk()
-        ds.to_netcdf(cfg.data/'ofam_zone_field.nc')
-        ds.close()
-
-    d.close()
+        znm = ['{}:{}'.format(i+1, z) for i, z in enumerate(cfg.zone_names)]
+        cbar.ax.set_xticklabels(znm[:-1], fontsize=10)
+        plt.savefig(cfg.fig/'particle_boundaries.png')
     return
-
-
-def image2video(files, output, frames=10):
-    import subprocess
-    if Path(files).parent.exists() and not Path(output).exists():
-        cmd = ['ffmpeg', '-framerate', str(int(frames)), '-i', str(files),
-               '-c:v', 'libx264', '-pix_fmt', 'yuv420p', str(output)]
-        retcode = subprocess.call(cmd)
-        if not retcode == 0:
-            raise ValueError('Error {} executing command: {}'.format(retcode, ' '.join(cmd)))
-        print('Created:', str(output))
-
-    return
-
-# def chunk_frozen_dict():
-class FrozenDict(collections.Mapping):
-    """Don't forget the docstrings.
-
-    https://stackoverflow.com/questions/2703599/what-would-a-frozen-dict-be
-    """
-    def __init__(self, *args, **kwargs):
-        self._d = dict(*args, **kwargs)
-        self._hash = None
-
-    def __iter__(self):
-        return iter(self._d)
-
-    def __len__(self):
-        return len(self._d)
-
-    def __getitem__(self, key):
-        return self._d[key]
-
-    def __hash__(self):
-        # It would have been simpler and maybe more obvious to
-        # use hash(tuple(sorted(self._d.iteritems()))) from this discussion
-        # so far, but this solution is O(n). I don't know what kind of
-        # n we are going to run into, but sometimes it's hard to resist the
-        # urge to optimize when it will gain improved algorithmic performance.
-        if self._hash is None:
-            hash_ = 0
-            for pair in self.items():
-                hash_ ^= hash(pair)
-            self._hash = hash_
-        return self._hash
