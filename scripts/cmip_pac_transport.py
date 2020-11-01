@@ -64,6 +64,9 @@ def OFAM_EUC():
 
     # EUC depth boundary indexes.
     zi = [idx(dz[1:], depth[0]), idx(dz[1:], depth[1], 'greater') + 1]
+    # zi1 = 5  # sw_ocean[4]=25, st_ocean[5]=28, sw_ocean[5]=31.2
+    # zi2 = 29  # st_ocean[29]=325.88, sw_ocean[29]=349.5
+    # zi = [4, 29+1]
 
     # Slice lat, lon and depth.
     fh = fh.u.sel(yu_ocean=slice(-2.6, 2.6), xu_ocean=lon).isel(st_ocean=slice(zi[0], zi[1]))
@@ -72,15 +75,15 @@ def OFAM_EUC():
     dz = dz.diff(dim='st_edges_ocean').rename({'st_edges_ocean': 'st_ocean'})
     dz = dz.isel(st_ocean=slice(zi[0], zi[1]))
     dz.coords['st_ocean'] = fh['st_ocean']  # Copy st_ocean coords
-
-    # Multiply by depth and width.
-    fh = fh * dz * cfg.LAT_DEG * 0.1
-    fr = fr * dz * cfg.LAT_DEG * 0.1
+    dy = fh.yu_ocean.diff(dim='yu_ocean') * cfg.LAT_DEG
 
     # Remove westward flow.
     fh = fh.where(fh > 0)
     fr = fr.where(fr > 0)
 
+    # Multiply by depth and width.
+    fh = fh * dz * dy
+    fr = fr * dz * dy
     fh = fh.sum(dim=['st_ocean', 'yu_ocean'])
     fr = fr.sum(dim=['st_ocean', 'yu_ocean'])
 
@@ -134,17 +137,20 @@ ax.set_xticks(lon[::15])
 ax.set_xticklabels(coord_formatter(lon[::15], convert='lon'))
 ax.legend()
 plt.tight_layout()
+plt.savefig(cfg.fig/'cmip/EUC_transport_models.png')
 plt.show()
-plt.savefig(cfg.fig/'EUC_transport_models.png')
 plt.clf()
 plt.close()
 
 # # Scatter plot
-lon = 220
+X = 220
 fig = plt.figure(figsize=(12, 5))
-plt.title('lon={}'.format(lon))
-plt.scatter(dh6.sel(lon=lon), (dr6 - dh6).sel(lon=lon), color=c[1], label='CMIP6')
-plt.scatter(dh5.sel(lon=lon), (dr5 - dh5).sel(lon=lon), color=c[2], label='CMIP5')
+plt.title('lon={}'.format(X))
+plt.scatter(dh6.sel(lon=X), (dr6 - dh6).sel(lon=X), color=c[1], label='CMIP6')
+plt.scatter(dh5.sel(lon=X), (dr5 - dh5).sel(lon=X), color=c[2], label='CMIP5')
 plt.xlabel('historical transport')
 plt.ylabel('Projected change')
 plt.legend()
+# 180 - CMIP6 'NorESM1-ME' 'NorESM1-M' large dx, mid x
+# 220 - CMIP6 'MPI-ESM1-2-LR' zero x and dx
+# 220 - CMIP5 'MPI-ESM1-2-LR' zero x and dx
