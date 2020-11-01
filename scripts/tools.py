@@ -644,7 +644,7 @@ def zone_cmap():
     return zmap, norm
 
 
-def zone_field(plot=False):
+def zone_field(plot=False, savefile=True):
     """Create fieldset or plot zone definitions."""
     file = [str(cfg.ofam/'ocean_{}_1981_01.nc'.format(v)) for v in ['u', 'w']]
     dr = xr.open_mfdataset(file, combine='by_coords')
@@ -659,20 +659,25 @@ def zone_field(plot=False):
             xx = [d.xu_ocean[idx(d.xu_ocean, i)].item() for i in c[0:2]]
             yy = [d.yu_ocean[idx(d.yu_ocean, i)].item() for i in c[2:4]]
             d = xr.where((d.xu_ocean >= xx[0]) & (d.xu_ocean <= xx[1]) &
-                         (d.yu_ocean >= yy[0]) & (d.yu_ocean <= yy[1]) &
-                         ~np.isnan(d), n + 1, d)
+                         (d.yu_ocean >= yy[0]) & (d.yu_ocean <= yy[1]), n + 1, d)
+            # xx = [d.xu_ocean[idx(d.xu_ocean, i+ep)].item()
+            #       for i, ep in zip(c[0:2], [-eps, eps])]
+            # yy = [d.yu_ocean[idx(d.yu_ocean, i+ep)].item() for i, ep in zip(c[2:4], [-eps, eps])]
+            # d = xr.where((d.xu_ocean >= xx[0]) & (d.xu_ocean <= xx[1]) &
+            #              (d.yu_ocean >= yy[0]) & (d.yu_ocean <= yy[1]), n + 1, d)
     # Correctly order array dimensions.
     d = d.transpose('Time', 'sw_ocean', 'yu_ocean', 'xu_ocean')
     # Create dataset.
-    ds = d.to_dataset(name='zone')
-    for v in ds.variables:
-        if v not in ['Time']:
-            ds[v] = ds[v].astype(dtype=np.float32)
+    if savefile:
+        ds = d.to_dataset(name='zone')
+        for v in ds.variables:
+            if v not in ['Time']:
+                ds[v] = ds[v].astype(dtype=np.float32)
 
-    ds.attrs['history'] = 'Created {}.'.format(datetime.now().strftime("%Y-%m-%d"))
-    ds = ds.chunk()
-    ds.to_netcdf(cfg.data/'ofam_field_zone.nc')
-    ds.close()
+        ds.attrs['history'] = 'Created {}.'.format(datetime.now().strftime("%Y-%m-%d"))
+        ds = ds.chunk()
+        ds.to_netcdf(cfg.data/'ofam_field_zone.nc')
+        ds.close()
     if plot:
         dz = d[0, 0].sel(yu_ocean=slice(-10, 10.11), xu_ocean=slice(120.1, 255))
         lon = np.append([120], np.around(dz.xu_ocean.values, 1))
