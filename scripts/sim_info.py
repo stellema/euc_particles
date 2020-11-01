@@ -33,7 +33,10 @@ def particle_info(sim_id, plot=True):
     start = int(rp * 742)
 
     # Number of particles from file.
-    file = ds.age.isel(obs=0).where(ds.age.isel(obs=0) > 0, drop=True).size
+    try:
+        file = ds.age.isel(obs=0).where(ds.age.isel(obs=0) > 0, drop=True).size
+    except IndexError:
+        file = 0
 
     ind_f = np.where(ds['time'] == np.nanmin(ds['time']))
 
@@ -65,7 +68,7 @@ def particle_info(sim_id, plot=True):
 
 if __name__ == "__main__":
     p = ArgumentParser(description="""Run EUC Lagrangian experiment.""")
-    p.add_argument('-f', '--file', default='sim_hist_165_v78r1.nc', type=str,
+    p.add_argument('-f', '--file', default='sim_hist_190_v13r00.nc', type=str,
                    help='ParticleFile name.')
     p.add_argument('-p', '--plot', default=True, type=bool, help='Plot.')
     args = p.parse_args()

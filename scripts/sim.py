@@ -29,7 +29,7 @@ logger = tools.mlogger('sim', parcels=True, misc=False)
 
 
 def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
-            outputdt_days=1, runtime_days=186, v=0, restart=True, final=False):
+            outputdt_days=2, runtime_days=972, v=0, restart=True, final=False):
     """Run Lagrangian EUC particle experiment.
 
     Args:
@@ -185,10 +185,10 @@ if __name__ == "__main__" and cfg.home != Path('E:/'):
     p.add_argument('-dz', '--dz', default=25, type=int, help='Particle depth spacing [m].')
     p.add_argument('-x', '--lon', default=165, type=int, help='Particle start longitude(s).')
     p.add_argument('-e', '--exp', default='hist', type=str, help='Scenario.')
-    p.add_argument('-r', '--runtime', default=240, type=int, help='Runtime days.')
+    p.add_argument('-r', '--runtime', default=972, type=int, help='Runtime days.')
     p.add_argument('-dt', '--dt', default=60, type=int, help='Advection timestep [min].')
     p.add_argument('-rdt', '--repeatdt', default=6, type=int, help='Release repeat [day].')
-    p.add_argument('-out', '--outputdt', default=1, type=int, help='Advection write freq [day].')
+    p.add_argument('-out', '--outputdt', default=2, type=int, help='Advection write freq [day].')
     p.add_argument('-v', '--version', default=0, type=int, help='File Index.')
     p.add_argument('-f', '--restart', default=True, type=bool, help='Particle file.')
     p.add_argument('-final', '--final', default=False, type=bool, help='Final run.')
@@ -200,8 +200,8 @@ if __name__ == "__main__" and cfg.home != Path('E:/'):
             v=args.version, restart=args.restart, final=args.final)
 
 elif __name__ == "__main__":
-    dy, dz, lon = 1, 150, 165
-    dt_mins, repeatdt_days, outputdt_days, runtime_days = 60, 6, 1, 36
+    dy, dz, lon = 1, 150, 190
+    dt_mins, repeatdt_days, outputdt_days, runtime_days = 60, 6, 2, 36
     restart = False
     v = 72
     exp = 'hist'
