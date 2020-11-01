@@ -29,7 +29,7 @@ logger = tools.mlogger('sim', parcels=True, misc=False)
 
 
 def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
-            outputdt_days=2, runtime_days=972, v=0, restart=True, final=False):
+            outputdt_days=2, runtime_days=972, v=0, restart=1, final=0):
     """Run Lagrangian EUC particle experiment.
 
     Args:
@@ -154,7 +154,7 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
     if rank == 0:
         logger.info(' {}: Run={}d: {} to {}: Particles={}'.format(xlog['id'], xlog['run'], xlog['Ti'], xlog['Tf'], xlog['N']))
         logger.info(' {}: Rep={}d: dt={:.0f}m: Out={:.0f}d: Land={} Vmin={}'.format(xlog['id'], xlog['rdt'], xlog['dt'], xlog['outdt'], xlog['land'], xlog['Vmin']))
-    logger.debug(' {}: Rank={:>2}: {}: Particles={}'.format(xlog['id'], rank, xlog['out'], xlog['start_r']))
+    # logger.debug(' {}: Rank={:>2}: {}: Particles={}'.format(xlog['id'], rank, xlog['out'], xlog['start_r']))
 
     # Kernels.
     kernels = pset.Kernel(AdvectionRK4_Land)
@@ -174,7 +174,7 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
 
     if rank == 0:
         timed = tools.timer(ts)
-        logger.info(' {}: Finished!: Timer={}'.format(xlog['id'], timed))
+        logger.info('{}: Finished!: Timer={}'.format(xlog['id'], timed))
 
     return
 
@@ -190,8 +190,8 @@ if __name__ == "__main__" and cfg.home != Path('E:/'):
     p.add_argument('-rdt', '--repeatdt', default=6, type=int, help='Release repeat [day].')
     p.add_argument('-out', '--outputdt', default=2, type=int, help='Advection write freq [day].')
     p.add_argument('-v', '--version', default=0, type=int, help='File Index.')
-    p.add_argument('-f', '--restart', default=True, type=bool, help='Particle file.')
-    p.add_argument('-final', '--final', default=False, type=bool, help='Final run.')
+    p.add_argument('-f', '--restart', default=1, type=int, help='Particle file.')
+    p.add_argument('-final', '--final', default=0, type=int, help='Final run.')
     args = p.parse_args()
 
     run_EUC(dy=args.dy, dz=args.dz, lon=args.lon, exp=args.exp,
