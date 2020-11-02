@@ -15,83 +15,15 @@ import matplotlib.pyplot as plt
 import cfg
 from cfg import mod6, mod5, lx5, lx6
 from tools import idx, idx2d, coord_formatter
-from cmip_fncs import subset_cmip
+from cmip_fncs import subset_cmip, OFAM_EUC, CMIP_EUC
 warnings.filterwarnings(action='ignore', message='Mean of empty slice')
 
 time = cfg.mon
 lon = np.arange(165, 279)
 lat, depth = [-2.6, 2.6], [25, 350]
 
-
-def CMIP_EUC(time, depth, lat, lon, mip=6, lx=lx6, mod=mod6):
-    # Scenario, month, longitude, model.
-    var = 'uvo'
-    exp = lx['exp']
-    model = np.array([mod[i]['id'] for i in range(len(mod))])
-    ec = np.zeros((len(exp), len(time), len(lon), len(mod)))
-    ds = xr.Dataset({'ec': (['exp', 'time', 'lon', 'model'], ec)},
-                    coords={'exp': exp, 'time': time, 'lon': lon, 'model': model})
-    for m in mod:
-        for s, ex in enumerate(exp):
-            dx = subset_cmip(mip, m, var, exp[s], depth, lat, lon)
-
-            # Removed westward transport.
-            dx = dx.where(dx > 0)
-            if mod[m]['id'] in ['CMCC-CM2-SR5']:
-                dxx = dx.sum(dim=[mod[m]['cs'][0], 'i'])
-                lat_str = 'i'
-            else:
-                dxx = dx.sum(dim=[mod[m]['cs'][0], dx.dims[2]])
-                lat_str = [s for s in dx.dims if s in
-                           ['lat', 'j', 'y', 'rlat', 'nlat']][0]
-            dxx = dx.sum(dim=[mod[m]['cs'][0], lat_str])
-            # if s == 0 and mod[m]['nd'] == 1:
-            #     print('{}. {}:'.format(m, mod[m]['id']), dx[mod[m]['cs'][1]].coords)
-            # elif s == 0:
-            #     print('{}. {}:'.format(m, mod[m]['id']), dx[mod[m]['cs'][1]][:, 0].coords)
-            ds['ec'][s, :, :, m] = dxx.values
-            dx.close()
-    return ds
-
-
-def OFAM_EUC():
-    fh = xr.open_dataset(cfg.ofam/'ocean_u_1981-2012_climo.nc')
-    fr = xr.open_dataset(cfg.ofam/'ocean_u_2070-2101_climo.nc')
-
-    # Length of grid cells [m].
-    dz = xr.open_dataset(cfg.ofam/'ocean_u_2012_06.nc').st_edges_ocean
-
-
-    # EUC depth boundary indexes.
-    zi = [idx(dz[1:], depth[0]), idx(dz[1:], depth[1], 'greater') + 1]
-    # zi1 = 5  # sw_ocean[4]=25, st_ocean[5]=28, sw_ocean[5]=31.2
-    # zi2 = 29  # st_ocean[29]=325.88, sw_ocean[29]=349.5
-    # zi = [4, 29+1]
-
-    # Slice lat, lon and depth.
-    fh = fh.u.sel(yu_ocean=slice(-2.6, 2.6), xu_ocean=lon).isel(st_ocean=slice(zi[0], zi[1]))
-    fr = fr.u.sel(yu_ocean=slice(-2.6, 2.6), xu_ocean=lon).isel(st_ocean=slice(zi[0], zi[1]))
-
-    dz = dz.diff(dim='st_edges_ocean').rename({'st_edges_ocean': 'st_ocean'})
-    dz = dz.isel(st_ocean=slice(zi[0], zi[1]))
-    dz.coords['st_ocean'] = fh['st_ocean']  # Copy st_ocean coords
-    dy = fh.yu_ocean.diff(dim='yu_ocean') * cfg.LAT_DEG
-
-    # Remove westward flow.
-    fh = fh.where(fh > 0)
-    fr = fr.where(fr > 0)
-
-    # Multiply by depth and width.
-    fh = fh * dz * dy
-    fr = fr * dz * dy
-    fh = fh.sum(dim=['st_ocean', 'yu_ocean'])
-    fr = fr.sum(dim=['st_ocean', 'yu_ocean'])
-
-    return fh, fr
-
-
 # OFAM
-fh, fr = OFAM_EUC()
+fh, fr = OFAM_EUC(depth, lat, lon)
 fh = fh.mean('Time')/1e6
 fr = fr.mean('Time')/1e6
 
@@ -142,15 +74,44 @@ plt.show()
 plt.clf()
 plt.close()
 
-# # Scatter plot
-X = 220
-fig = plt.figure(figsize=(12, 5))
-plt.title('lon={}'.format(X))
-plt.scatter(dh6.sel(lon=X), (dr6 - dh6).sel(lon=X), color=c[1], label='CMIP6')
-plt.scatter(dh5.sel(lon=X), (dr5 - dh5).sel(lon=X), color=c[2], label='CMIP5')
-plt.xlabel('historical transport')
-plt.ylabel('Projected change')
-plt.legend()
-# 180 - CMIP6 'NorESM1-ME' 'NorESM1-M' large dx, mid x
-# 220 - CMIP6 'MPI-ESM1-2-LR' zero x and dx
-# 220 - CMIP5 'MPI-ESM1-2-LR' zero x and dx
+# Scatter plot
+fig, ax = plt.subplots(2, 2, figsize=(12, 8))
+ax = ax.flatten()
+for i, X in enumerate([165, 190, 220, 250]):
+    ax[i].set_title('{}Equatorial Undercurrent at {}\u00b0E'
+                    .format(cfg.lt[i], X), loc='left')
+    ax[i].scatter(dh5.sel(lon=X), (dr5 - dh5).sel(lon=X), color=c[2], label='CMIP5')
+    ax[i].scatter(dh6.sel(lon=X), (dr6 - dh6).sel(lon=X), color=c[1], label='CMIP6')
+    ax[i].scatter(fh.sel(xu_ocean=X), (fr - fh).sel(xu_ocean=X), color='m', label='OFAM3')
+    ax[i].set_xlabel('Historical transport [Sv]')
+    ax[i].set_ylabel('Projected change [Sv]')
+    if i % 2 != 0:
+        ax[i].legend()
+plt.tight_layout()
+plt.savefig(cfg.fig/'cmip/EUC_transport_scatter.png')
+print((dr5 - dh5).sel(lon=[165, 190, 220, 250]))
+# CMIP6: 165E NorESM1-ME(-2), NorESM1-M(-1) (large dx, mid x)
+# CMIP5: 220E NorESM1-ME(-2), NorESM1-M(-1) (large dx) (#-1;-2) 'MPI-ESM-LR' (small x and dx)
+# CMIP5&6: 220E MPI-ESM1-2-LR(#-6) (small x and dx)
+
+# Scatter plot (outliers removed)
+fig, ax = plt.subplots(2, 2, figsize=(12, 8))
+ax = ax.flatten()
+outliers = ['MPI-ESM-LR', 'MPI-ESM1-2-LR']  #'NorESM1-ME', 'NorESM1-M',
+inds5 = [i for i, x in enumerate(dh5.model) if x not in outliers]
+inds6 = [i for i, x in enumerate(dh6.model) if x not in outliers]
+dh5_, dr5_ = dh5.isel(model=inds5), dr5.isel(model=inds5)
+dh6_, dr6_ = dh6.isel(model=inds6), dr6.isel(model=inds6)
+
+for i, X in enumerate([165, 190, 220, 250]):
+    ax[i].set_title('{}Equatorial Undercurrent at {}\u00b0E'
+                    .format(cfg.lt[i], X), loc='left')
+    ax[i].scatter(dh5_.sel(lon=X), (dr5_ - dh5_).sel(lon=X), color=c[2], label='CMIP5')
+    ax[i].scatter(dh6_.sel(lon=X), (dr6_ - dh6_).sel(lon=X), color=c[1], label='CMIP6')
+    ax[i].scatter(fh.sel(xu_ocean=X), (fr - fh).sel(xu_ocean=X), color='m', label='OFAM3')
+    ax[i].set_xlabel('Historical transport [Sv]')
+    ax[i].set_ylabel('Projected change [Sv]')
+    if i % 2 != 0:
+        ax[i].legend()
+plt.tight_layout()
+plt.savefig(cfg.fig/'cmip/EUC_transport_scatter_no_outliers.png')

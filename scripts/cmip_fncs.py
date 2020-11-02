@@ -112,3 +112,69 @@ def subset_cmip(mip, m, var, exp, depth, lat, lon):
         if mip == 6 and var in ['uvo', 'vvo'] and mod[m]['id'] in ['MIROC-ES2L', 'MIROC6']:
             dx = dx*-1
     return dx
+
+
+def CMIP_EUC(time, depth, lat, lon, mip, lx, mod):
+    # Scenario, month, longitude, model.
+    var = 'uvo'
+    exp = lx['exp']
+    model = np.array([mod[i]['id'] for i in range(len(mod))])
+    ec = np.zeros((len(exp), len(time), len(lon), len(mod)))
+    ds = xr.Dataset({'ec': (['exp', 'time', 'lon', 'model'], ec)},
+                    coords={'exp': exp, 'time': time, 'lon': lon, 'model': model})
+    for m in mod:
+        for s, ex in enumerate(exp):
+            dx = subset_cmip(mip, m, var, exp[s], depth, lat, lon)
+
+            # Removed westward transport.
+            dx = dx.where(dx > 0)
+            if mod[m]['id'] in ['CMCC-CM2-SR5']:
+                dxx = dx.sum(dim=[mod[m]['cs'][0], 'i'])
+                lat_str = 'i'
+            else:
+                dxx = dx.sum(dim=[mod[m]['cs'][0], dx.dims[2]])
+                lat_str = [s for s in dx.dims if s in
+                           ['lat', 'j', 'y', 'rlat', 'nlat']][0]
+            dxx = dx.sum(dim=[mod[m]['cs'][0], lat_str])
+            # if s == 0 and mod[m]['nd'] == 1:
+            #     print('{}. {}:'.format(m, mod[m]['id']), dx[mod[m]['cs'][1]].coords)
+            # elif s == 0:
+            #     print('{}. {}:'.format(m, mod[m]['id']), dx[mod[m]['cs'][1]][:, 0].coords)
+            ds['ec'][s, :, :, m] = dxx.values
+            dx.close()
+    return ds
+
+
+def OFAM_EUC(depth, lat, lon):
+    fh = xr.open_dataset(cfg.ofam/'ocean_u_1981-2012_climo.nc')
+    fr = xr.open_dataset(cfg.ofam/'ocean_u_2070-2101_climo.nc')
+
+    # Length of grid cells [m].
+    dz = xr.open_dataset(cfg.ofam/'ocean_u_2012_06.nc').st_edges_ocean
+
+
+    # EUC depth boundary indexes.
+    zi = [idx(dz[1:], depth[0]), idx(dz[1:], depth[1], 'greater') + 1]
+    zi1 = 5  # sw_ocean[4]=25, st_ocean[5]=28, sw_ocean[5]=31.2
+    zi2 = 29  # st_ocean[29]=325.88, sw_ocean[29]=349.5
+    zi = [5, 29+1]
+
+    # Slice lat, lon and depth.
+    fh = fh.u.sel(yu_ocean=slice(lat[0], lat[1]), xu_ocean=lon).isel(st_ocean=slice(zi[0], zi[1]))
+    fr = fr.u.sel(yu_ocean=slice(lat[0], lat[1]), xu_ocean=lon).isel(st_ocean=slice(zi[0], zi[1]))
+
+    dz = dz.diff(dim='st_edges_ocean').rename({'st_edges_ocean': 'st_ocean'})
+    dz = dz.isel(st_ocean=slice(zi[0], zi[1]))
+    dz.coords['st_ocean'] = fh['st_ocean']  # Copy st_ocean coords
+
+    # Remove westward flow.
+    fh = fh.where(fh > 0)
+    fr = fr.where(fr > 0)
+
+    # Multiply by depth and width.
+    fh = fh * dz * cfg.LAT_DEG * 0.1
+    fr = fr * dz * cfg.LAT_DEG * 0.1
+    fh = fh.sum(dim=['st_ocean', 'yu_ocean'])
+    fr = fr.sum(dim=['st_ocean', 'yu_ocean'])
+
+    return fh, fr
