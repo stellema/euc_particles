@@ -202,8 +202,8 @@ def generate_xid(lon, v=0, exp='hist', randomise=False,
     else:
         r = 0
         xid = cfg.data/'plx_{}_{}_v{}r00.nc'.format(exp, int(lon), v)
-        sims = [s for s in xid.parent.glob(str(xid.stem[:-2]) + '*.nc')]
-        r = max([int(xid.stem[-2:]) for sim in sims]) + 1
+        files = [s for s in xid.parent.glob(str(xid.stem[:-2]) + '*.nc')]
+        r = max([int(f.stem[-2:]) for f in files]) + 1
         xid = cfg.data/'{}{:02d}.nc'.format(xid.stem[:-2], r)
         if xlog:
             xlog['v'], xlog['r'] = v, r

@@ -86,7 +86,7 @@ def mlogger(name, parcels=False, misc=True):
         logger.addHandler(c_handler)
         logger.addHandler(f_handler)
         logger.setLevel(logging.DEBUG)
-        # logger.addFilter(NoWarnFilter())
+        logger.addFilter(NoWarnFilter())
 
         # logger.propagate = False
         loggers[name] = logger
