@@ -13,7 +13,7 @@ from pathlib import Path
 from collections import OrderedDict
 
 import cfg
-from tools import mlogger, timeit, idx, get_edge_depth
+from tools import mlogger, timeit, idx, get_edge_depth, get_depth_width
 
 logger = mlogger(Path(sys.argv[0]).stem)
 
@@ -248,7 +248,8 @@ def EUC_vbounds(du, depths, i, v_bnd=0.3, index=False):
         return v_max, z1i, z2i
 
 
-def EUC_bnds_static(du, lon=None, z1=25, z2=350, lat=2.6):
+def EUC_bnds_static(du, lon=None, z1=25, z2=350, lat=2.6,
+                    resample=None, area=None):
     """Apply static EUC definition to zonal velocity at a longitude.
 
     Args:
@@ -257,22 +258,32 @@ def EUC_bnds_static(du, lon=None, z1=25, z2=350, lat=2.6):
         z1 (float): First depth level.
         z2 (float): Final depth level.
         lat (float): Latitude bounds.
+        resample (str): resample to monthly means (="1MS").
+        area: multiply by cell area (width x depth).
 
     Returns:
         du4 (DataArray): The zonal velocity in the EUC region.
 
     """
-    z1 = get_edge_depth(z1, index=False)
-    z2 = get_edge_depth(z2, index=False)
+    z1 = get_edge_depth(z1, index=True)
+    z2 = get_edge_depth(z2, index=True)
 
     # Slice depth and longitude.
-    du = du.sel(st_ocean=slice(z1, z2), yu_ocean=slice(-lat, lat))
+    du = du.isel(st_ocean=slice(z1, z2 + 1)).sel(yu_ocean=slice(-lat, lat))
     if lon is not None:
         du = du.sel(xu_ocean=lon)
+
+    if resample:
+        du = du.resample(Time=resample).mean()
 
     # Remove negative/zero velocities.
     du = du.u.where(du.u > 0, np.nan)
 
+    # Multiple by cell area (depth x width).
+    if area:
+        dz = get_depth_width()
+        dz = dz.isel(st_ocean=slice(z1, z2 + 1))
+        du = du * dz * cfg.LAT_DEG * 0.1
     return du
 
 

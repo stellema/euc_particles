@@ -8,58 +8,52 @@ author: Annette Stellema (astellemas@gmail.com)
 """
 
 import numpy as np
+import pandas as pd
 import xarray as xr
 from datetime import datetime
 
 import cfg
-
-hfile = [cfg.ofam/'ocean_u_{}_{:02d}.nc'.format(y, m) for m in range(1, 13) for y in range(1981, 2013)]
+from vfncs import EUC_bnds_static
+hfile = [cfg.ofam/'ocean_u_{}_{:02d}.nc'.format(y, m) for m in range(1, 13) for y in range(2012, 2013)]
 rfile = [cfg.ofam/'ocean_u_{}_{:02d}.nc'.format(y, m) for m in range(1, 13) for y in range(2070, 2102)]
+rfile=hfile
 lat = 2.6
 lon = np.arange(165, 279)
 z1, z2 = 25, 350
-zi1 = 4  # sw_ocean[4]=25, st_ocean[5]=28, sw_ocean[5]=31.2
-zi2 = 30  # st_ocean[29]=325.88, sw_ocean[29]=349.5
-dsh = xr.open_mfdataset(hfile)
-dsr = xr.open_mfdataset(rfile)
+dh = xr.open_mfdataset(hfile)
+dr = xr.open_mfdataset(rfile)
 
-dh = dsh.u.isel(st_ocean=slice(zi1, zi2+1)).sel(yu_ocean=slice(-lat, lat), xu_ocean=lon)
-dr = dsr.u.isel(st_ocean=slice(zi1, zi2+1)).sel(yu_ocean=slice(-lat, lat), xu_ocean=lon)
+# Subset data, remove westward, resample monthly and multiply by cell area.
+dh = EUC_bnds_static(dh, lon, z1, z2, lat, "1MS", area=True)
+dr = EUC_bnds_static(dr, lon, z1, z2, lat, "1MS", area=True)
 
-z1, z2 = dh.st_ocean[0].item(), dh.st_ocean[-1].item()  # Attribute
+# Merge data along new dimension "exp".
+du = xr.concat([dh, dr], pd.Index(['historical', 'rcp85'], name="exp"))
 
-# Cell witdth and depth.
-dz = dsh.st_edges_ocean.diff(dim='st_edges_ocean')
-dz = dz.rename({'st_edges_ocean': 'st_ocean'})
-dz = dz.isel(st_ocean=slice(zi1, zi2+1))
-dz.coords['st_ocean'] = dh['st_ocean']  # Copy st_ocean coords
-dyz = dz * cfg.LAT_DEG * 0.1
+# Vertical integration bounds (to save as attribute).
+z1, z2 = dh.st_ocean[0].item(), dh.st_ocean[-1].item()
 
-# Remove negative/zero velocities.
-dh = dh.where(dh > 0, np.nan)
-dr = dr.where(dr > 0, np.nan)
+# Calculate transport sum.
+du = du.sum(dim=['st_ocean', 'yu_ocean'])
 
-# # Multiply by depth and width.
-dh = dh * dyz
-dr = dr * dyz
+# Calculate climotology.
+du = du.groupby('Time.month').mean('Time')
 
-dh = dh.groupby('Time.month').mean('Time')
-dr = dr.groupby('Time.month').mean('Time')
-# dh = dh.sum(dim=['st_ocean', 'yu_ocean'])
-# dr = dr.sum(dim=['st_ocean', 'yu_ocean'])
+# Renaming 'month' coord back to 'Time'.
+du = du.rename({'month': 'Time'})
 
-# Save.
-dtx = xr.Dataset()
-dtx['euc_h'] = dh
-dtx['euc_r'] = dr
+# Create dataset.
+var = 'euc'
+du.name = var
 
-for var in ['euc_h', 'euc_r']:
-    dtx[var].attrs['long_name'] = 'OFAM3 EUC monthly climo transport'
-    dtx[var].attrs['units'] = 'm3/s'
-
-    dtx[var].attrs['bounds'] = ('Integrated between z=({}, {}), y=({}, {})'
-                                .format(z1, z2, -lat, lat))
+dtx = du.to_dataset()
+dtx[var].attrs['long_name'] = 'OFAM3 EUC monthly climo transport'
+dtx[var].attrs['units'] = 'm3/s'
+dtx[var].attrs['bounds'] = ('Integrated between z=({}, {}), y=({}, {})'
+                            .format(z1, z2, -lat, lat))
+dtx[var].attrs['info'] = ('Monthly mean, sel u > 0, * area, climo mean')
 dtx.attrs['history'] = (datetime.now().strftime('%a %b %d %H:%M:%S %Y') +
                         ': Depth-integrated velocity (github.com/stellema)\n')
-# # Save to /data as a netcdf file.
+
+# Save to /data as a netcdf file.
 dtx.to_netcdf(cfg.data/'ofam_EUC_transport.nc')

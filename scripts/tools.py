@@ -597,6 +597,15 @@ def get_edge_depth(z, index=True, edge=True, greater=False):
         return z_new
 
 
+def get_depth_width():
+    dz = xr.open_dataset(cfg.data/'ofam_mesh_grid.nc')
+    st_ocean = dz['st_ocean']  # Copy st_ocean coords
+    dz = dz.st_edges_ocean.diff(dim='st_edges_ocean')
+    dz = dz.rename({'st_edges_ocean': 'st_ocean'})
+    dz.coords['st_ocean'] = st_ocean
+    return dz
+
+
 def tidy_files(logs=True, jobs=True):
     """Delete empty logs and job result files."""
     # logger.handlers.clear()
