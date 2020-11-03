@@ -6,17 +6,16 @@ author: Annette Stellema (astellemas@gmail.com)
 
 
 """
-import cfg
-import tools
-import cartopy
 import numpy as np
 import xarray as xr
 import cartopy.crs as ccrs
 import matplotlib.pyplot as plt
 import shapely.geometry as sgeom
-from airsea import prescribed_momentum, bulk_fluxes, flux_data, reduce
 from cartopy.mpl.gridliner import LONGITUDE_FORMATTER, LATITUDE_FORMATTER
-from tools import wind_stress_curl, coord_formatter
+
+import cfg
+from tools import wind_stress_curl, coord_formatter, coriolis
+from airsea_conversion import prescribed_momentum, bulk_fluxes, flux_data, reduce
 
 
 def get_wsc(data='jra55', flux='bulk', res=0.1, mean_t=True, interp='', mask=None):
@@ -92,7 +91,7 @@ def zonal_sverdrup(curl, lat, lon, SFinit=0):
     # Distance between longitudes in metres.
     dx = (dlon/180)*np.pi*cfg.EARTH_RADIUS*np.cos(np.radians(lat))
 
-    beta = tools.coriolis(lat)[1]  # Rossby parameter at each latitude.
+    beta = coriolis(lat)[1]  # Rossby parameter at each latitude.
 
     curl = np.fliplr(curl)  # Reverse curl by longitude.
     curl = np.nancumsum(curl, axis=1)  # Cumsum from east to west.

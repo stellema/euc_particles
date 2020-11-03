@@ -27,13 +27,14 @@ https://cran.r-project.org/web/packages/humidity/vignettes/humidity-measures.htm
 
 ds = xr.open_dataset(cfg.data/'{}_uas_climo.nc'.format(data[0])).uas
 """
-import cfg
-import tools
 import numpy as np
 import xarray as xr
 import pandas as pd
 from warnings import warn
 from scipy.interpolate import griddata
+
+import cfg
+from tools import idx
 
 
 def reduce(ds, mean_t=False, res=0.1, interp='', x2=[], y2=[]):
@@ -760,7 +761,7 @@ def prescribed_momentum(u, v, method='static'):
                     # YEAGER LARGE (approx).
                     elif method == 'LARGE_approx':
                         drag = pd.read_csv(cfg.data/'cdrag.csv')
-                        xi = tools.idx(drag['u'].values, U.item())
+                        xi = idx(drag['u'].values, U.item())
 
                         if (drag['u'][xi] != U[j, i] and
                             xi != 0 and xi != len(drag['u']-1)):

@@ -25,10 +25,7 @@ Chunksize=[4, 128, 1024]: Timer=14.865509986877441 0:00:02 780
 """
 import os
 import time
-import cfg
-import tools
 import sys
-import main
 import psutil
 import parcels
 import dask
@@ -38,12 +35,17 @@ from glob import glob
 from pathlib import Path
 import matplotlib.pyplot as plt
 from datetime import timedelta as delta
-from parcels import (FieldSet, ParticleSet, JITParticle, AdvectionRK4_3D, Variable, ErrorCode, Field, VectorField)
+from parcels import (FieldSet, ParticleSet, JITParticle, AdvectionRK4_3D,
+                     Variable, ErrorCode, Field, VectorField)
+
+import cfg
+from main import ofam_fieldset
+from tools import mlogger
 
 def ftest(particle, fieldset, time):
     uub = fieldset.Ub[0., particle.depth, particle.lat, particle.lon]
 
-logger = tools.mlogger(Path(sys.argv[0]).stem, parcels=True)
+logger = mlogger(Path(sys.argv[0]).stem, parcels=True)
 
 func_time = []
 mem_used_GB = []
@@ -51,7 +53,7 @@ chunksize = [256, 300, 512, 768, 'auto']
 # [128, 256, 300, 512, 768, 1024, 1280, 1536, 1792, 2048, 'auto', False]
 
 for cs in chunksize:
-    fieldset = main.ofam_fieldset(chunks=cs, add_xfields=True)
+    fieldset = ofam_fieldset(chunks=cs, add_xfields=True)
     pset = ParticleSet(fieldset=fieldset, pclass=JITParticle, repeatdt=delta(days=2),
                        lon=[fieldset.U.lon[800]], lat=[fieldset.U.lat[151]],
                        depth=[fieldset.U.depth[16]], time=[fieldset.U.grid.time[0]])

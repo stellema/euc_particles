@@ -14,8 +14,8 @@ import matplotlib.pyplot as plt
 
 import cfg
 from cfg import mod6, mod5, lx5, lx6
-from tools import idx, idx2d, coord_formatter
-from cmip_fncs import subset_cmip, OFAM_EUC, CMIP_EUC
+from tools import coord_formatter
+from cmip_fncs import OFAM_EUC, CMIP_EUC
 warnings.filterwarnings(action='ignore', message='Mean of empty slice')
 
 time = cfg.mon

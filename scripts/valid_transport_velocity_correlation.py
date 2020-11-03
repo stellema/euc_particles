@@ -7,16 +7,19 @@ author: Annette Stellema (astellemas@gmail.com)
 
 """
 
-import cfg
-from cfg import SV, width, height, tbnds_tao, tbnds_ofam
-import tools
+
+
 import warnings
 import numpy as np
 import xarray as xr
 import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
-from main import EUC_vbounds, EUC_bnds_grenier, EUC_bnds_izumo, EUC_bnds_static
-from tools import open_tao_data, cor_scatter_plot, regress
+
+import cfg
+from cfg import SV, width, height, tbnds_tao, tbnds_ofam
+from tools import (idx, legend_without_duplicate_labels, open_tao_data,
+                   cor_scatter_plot, regress)
+from vfncs import EUC_vbounds, EUC_bnds_grenier, EUC_bnds_izumo, EUC_bnds_static
 from valid_nino34 import nino_events
 warnings.filterwarnings('ignore')
 
@@ -243,7 +246,7 @@ def plot_tao_ofam_transport_timeseries(z1=25, z2=350, T=1, dk=5,
 
         if i == 0:
             # ax.legend(loc=1)
-            tools.legend_without_duplicate_labels(ax, loc=1)
+            legend_without_duplicate_labels(ax, loc=1)
         # cor_r, cor_p = regress(dtaom*m[i] + b[i], d3xm/SV)[0:2]
 
         # print('{}: R={:.2f}, p={:.3f} (stats.spearmanr)'.format(lon, cor_r,
@@ -340,7 +343,7 @@ def plt_EUC_def_bounds(du, ds, dt, time='mon', lon=None, depth=450, exp=0):
     ax = ax.flatten()
     for i in rge:
         lonx = lon if time == 'mon' else cfg.lons[i]
-        x = tools.idx(np.array(cfg.lons), lonx) if time == 'mon' else i
+        x = idx(np.array(cfg.lons), lonx) if time == 'mon' else i
 
         if time != 'mon' or i == 0:
             dux = du.sel(xu_ocean=lonx)
@@ -362,10 +365,10 @@ def plt_EUC_def_bounds(du, ds, dt, time='mon', lon=None, depth=450, exp=0):
             dzt = dz[i] if time == 'mon' else dz[time]
 
             # Slice lon/depth of du to where EUC definitions are sliced.
-            iz = [tools.idx(du.st_ocean, dz.st_ocean[0]),
-                  tools.idx(du.st_ocean, dz.st_ocean[-1])]
-            iy = [tools.idx(du.yu_ocean, dz.yu_ocean[0]),
-                  tools.idx(du.yu_ocean, dz.yu_ocean[-1])]
+            iz = [idx(du.st_ocean, dz.st_ocean[0]),
+                  idx(du.st_ocean, dz.st_ocean[-1])]
+            iy = [idx(du.yu_ocean, dz.yu_ocean[0]),
+                  idx(du.yu_ocean, dz.yu_ocean[-1])]
 
             # Fill EUC values from def (with nan values changes to const).
             dq[iz[0]:iz[1]+1, iy[0]:iy[1]+1] = dzt.where(~np.isnan(dzt), const)

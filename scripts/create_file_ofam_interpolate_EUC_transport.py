@@ -6,9 +6,11 @@ author: Annette Stellema (astellemas@gmail.com)
 
 
 """
-import cfg
+
 import numpy as np
 import xarray as xr
+
+import cfg
 
 # Area = metres in a degree of latitude x cell width x cell depth
 area = cfg.LAT_DEG * 0.1 * 5

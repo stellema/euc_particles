@@ -6,8 +6,7 @@ author: Annette Stellema (astellemas@gmail.com)
 
 
 """
-import cfg
-import tools
+
 import cartopy
 import numpy as np
 import xarray as xr
@@ -15,8 +14,11 @@ import cartopy.crs as ccrs
 import matplotlib.pyplot as plt
 import shapely.geometry as sgeom
 import matplotlib.gridspec as gridspec
-from valid_nino34 import enso_u_ofam, nino_events
 from cartopy.mpl.gridliner import LONGITUDE_FORMATTER, LATITUDE_FORMATTER
+
+import cfg
+from tools import get_edge_depth, legend_without_duplicate_labels, coord_formatter
+from valid_nino34 import enso_u_ofam, nino_events
 
 
 def plot_llwbc_enso(euc, oni, vs, sg, ss, mc):
@@ -104,7 +106,7 @@ def plot_llwbc_profile(vs, sg, ss, mc, mon=False):
                                         facecolor=c1, alpha=0.2)
                     ax[i].fill_betweenx(enso[1].st_ocean, x1[1], x2[1],
                                         facecolor=c2, alpha=0.2)
-                    tools.legend_without_duplicate_labels(ax[i], loc=4, fontsize=10)
+                    legend_without_duplicate_labels(ax[i], loc=4, fontsize=10)
                 # Set these for velocity profiles only.
                 ymin = ds.st_ocean[-1] if k != 3 else 550
                 ax[i].set_ylim(ymax=ds.st_ocean[0], ymin=ymin)
@@ -205,7 +207,7 @@ def plot_llwbc_velocity(vs, sg, ss, ni, mc):
         cbar = fig.colorbar(cs, ax=ax[i], orientation='horizontal')
         cbar.set_label('[m/s]', size=9)
         ax[i].set_xticks(xticks[i])
-        ax[i].set_xticklabels(tools.coord_formatter(xticks[i], 'lon'))
+        ax[i].set_xticklabels(coord_formatter(xticks[i], 'lon'))
         if i == 0 or i == 3:
             ax[i].set_ylabel('Depth [m]')
     plt.tight_layout()
@@ -224,11 +226,11 @@ mc = xr.open_dataset(cfg.data/'ofam_transport_mc.nc')
 # plot_llwbc_velocity(vs, sg, ss, ni, mc)
 
 euc = euc.resample(Time='MS').mean().uvo/cfg.SV
-vs = vs.isel(st_ocean=slice(0, tools.get_edge_depth(1200)))
-sg = sg.isel(st_ocean=slice(0, tools.get_edge_depth(1200)))
-ss = ss.isel(st_ocean=slice(0, tools.get_edge_depth(1200)))
-ni = ni.isel(st_ocean=slice(0, tools.get_edge_depth(1200)))
-mc = mc.isel(st_ocean=slice(0, tools.get_edge_depth(550)))
+vs = vs.isel(st_ocean=slice(0, get_edge_depth(1200)))
+sg = sg.isel(st_ocean=slice(0, get_edge_depth(1200)))
+ss = ss.isel(st_ocean=slice(0, get_edge_depth(1200)))
+ni = ni.isel(st_ocean=slice(0, get_edge_depth(1200)))
+mc = mc.isel(st_ocean=slice(0, get_edge_depth(550)))
 
 # plot_llwbc_enso(euc, oni, vs, sg, ss, mc)
 # plot_llwbc_profile(vs, sg, ss, mc)

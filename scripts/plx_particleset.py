@@ -14,8 +14,8 @@ from argparse import ArgumentParser
 from parcels import (Variable, JITParticle)
 
 import cfg
-import tools
-from main import (ofam_fieldset, pset_euc, del_westward, generate_sim_id,
+from tools import mlogger
+from main import (ofam_fieldset, pset_euc, del_westward, generate_xid,
                   pset_from_file)
 
 
@@ -24,7 +24,7 @@ try:
 except ImportError:
     MPI = None
 
-logger = tools.mlogger('sim', parcels=True, misc=False)
+logger = mlogger('plx', parcels=True, misc=False)
 
 
 def restart_EUC(dy=0.1, dz=25, lon=165, exp='hist', repeatdt_days=6,
@@ -86,10 +86,10 @@ def restart_EUC(dy=0.1, dz=25, lon=165, exp='hist', repeatdt_days=6,
     pclass = zParticle
 
     # Increment run index for new output file name.
-    sim_id = generate_sim_id(lon, v, exp, restart=True, xlog=xlog)
+    xid = generate_xid(lon, v, exp, restart=True, xlog=xlog)
 
     # Change pset file to last run.
-    file = cfg.data/'{}{:02d}.nc'.format(sim_id.stem[:-2], xlog['r'] - 1)
+    file = cfg.data/'{}{:02d}.nc'.format(xid.stem[:-2], xlog['r'] - 1)
     logger.info('Generating restart file from: {}'.format(file.stem))
 
     # Create ParticleSet from the given ParticleFile.
@@ -115,7 +115,7 @@ def restart_EUC(dy=0.1, dz=25, lon=165, exp='hist', repeatdt_days=6,
     xlog['Ti'] = start.strftime('%Y-%m-%d')
     xlog['Tf'] = (start - runtime).strftime('%Y-%m-%d')
     xlog['N'] = xlog['new'] + xlog['file']
-    xlog['id'] = sim_id.stem
+    xlog['id'] = xid.stem
     xlog['run'] = runtime.days
     xlog['rdt'] = repeatdt.days
 
@@ -144,8 +144,8 @@ def restart_EUC(dy=0.1, dz=25, lon=165, exp='hist', repeatdt_days=6,
     df['endtime'] = int(pset_start - runtime.total_seconds())
 
     # Save to netcdf.
-    df.to_netcdf(cfg.data/('r_' + sim_id.name))
-    logger.info(' Saved: {}'.format(str(cfg.data/('r_' + sim_id.name))))
+    df.to_netcdf(cfg.data/('r_' + xid.name))
+    logger.info(' Saved: {}'.format(str(cfg.data/('r_' + xid.name))))
     return
 
 

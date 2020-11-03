@@ -7,13 +7,13 @@ Created on Thu Aug  1 00:58:55 2019
 Sanity check if OFAM files transfered correctly from CSIRO.
 
 Requires user to input variable (u, v, w, salt, temp).
-This script: 
-    - Opens each monthly file for the variable. 
-    - Warns if the files time array is not the correct length. 
-    - Plots a timeseries at two locations for each month (creates figure for 
+This script:
+    - Opens each monthly file for the variable.
+    - Warns if the files time array is not the correct length.
+    - Plots a timeseries at two locations for each month (creates figure for
     each year with 12 monthly subplots).
 
-Used with interactive job: 
+Used with interactive job:
 qsub -I -l walltime=5:00:00,ncpus=1,mem=10GB -P e14 -q normal -X -l wd
 """
 
@@ -24,11 +24,9 @@ import calendar
 import nc_time_axis
 import xarray as xr
 from pathlib import Path
-from main import paths, im_ext
 import matplotlib.pyplot as plt
 
-# Path to save figures, save data and OFAM model output.
-fpath, dpath, xpath = paths()
+import cfg
 
 # Path to temporary hh5 directory of OFAM files.
 tpath = Path('/g', 'data3', 'hh5', 'tmp', 'as3189', 'OFAM')
@@ -36,7 +34,7 @@ tpath = Path('/g', 'data3', 'hh5', 'tmp', 'as3189', 'OFAM')
 # Takes input u, v, w, salt, temp.
 var = str(sys.argv[1])
 
-# Tests two locations (both at depth d). 
+# Tests two locations (both at depth d).
 lat0, lon0 = 0, 165
 lat1, lon1 = 2, 180
 d = 100
@@ -56,22 +54,22 @@ for y in range(2070, 2101 + 1):
             ds1 = ds[var].sel(xu_ocean=lon1, yu_ocean=lat1, st_ocean=d, method='nearest')
         elif var in ['w']:
             ds0 = ds[var].sel(xt_ocean=lon0, yt_ocean=lat0, sw_ocean=d, method='nearest')
-            ds1 = ds[var].sel(xt_ocean=lon1, yt_ocean=lat1, sw_ocean=d, method='nearest') 
+            ds1 = ds[var].sel(xt_ocean=lon1, yt_ocean=lat1, sw_ocean=d, method='nearest')
         elif var in ['temp', 'salt']:
             ds0 = ds[var].sel(xt_ocean=lon0, yt_ocean=lat0, st_ocean=d, method='nearest')
             ds1 = ds[var].sel(xt_ocean=lon1, yt_ocean=lat1, st_ocean=d, method='nearest')
-            
-        # Number of days in each month.    
+
+        # Number of days in each month.
         N = calendar.monthrange(y, m)[1]
-    
+
         # Warn if time array length doesn't match number of days in that month.
         if len(ds.Time) != N:
             warnings.warn('Time array error: ocean_{}_{}_{:02d}.nc'.format(var, y, m))
-    
+
         # Time arrays for plotting.
         d_time = [cftime.datetime(year=y, month=m, day=n) for n in range(1, N + 1)]
         c_d_time = [nc_time_axis.CalendarDateTime(item, "360_day") for item in d_time]
-    
+
         # Plot monthly timeseries at each location.
         ax = fig.add_subplot(4, 3, i + 1)
         ax.plot(c_d_time, ds0, 'k', label='({}°, {}°)'.format(lat0, lon0))
@@ -82,5 +80,5 @@ for y in range(2070, 2101 + 1):
         ds.close()
         ds0.close()
         ds1.close()
-    plt.savefig(fpath.joinpath('file_check', 'check_{}_{}{}'.format(var, y, im_ext)))
+    plt.savefig(cfg.fig/'file_check', 'check_{}_{}.png'.format(var, y))
     plt.close()

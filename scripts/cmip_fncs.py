@@ -6,19 +6,15 @@ author: Annette Stellema (astellemas@gmail.com)
 
 
 """
-import sys
-import cfg
-import tools
 import numpy as np
 import xarray as xr
-from tools import timeit, idx, idx2d
-from pathlib import Path
-from collections import OrderedDict
+
+import cfg
+from tools import idx, idx2d
 
 
 def subset_cmip(mip, m, var, exp, depth, lat, lon):
     mod = cfg.mod6 if mip == 6 else cfg.mod5
-    lx = cfg.lx6 if mip == 6 else cfg.lx5
     lon_alt = np.where(lon > 180, -1 * (360 - lon), lon)
 
     cmip = cfg.home/'model_output/CMIP{}/CLIMOS/'.format(mip)
@@ -151,7 +147,6 @@ def OFAM_EUC(depth, lat, lon):
 
     # Length of grid cells [m].
     dz = xr.open_dataset(cfg.ofam/'ocean_u_2012_06.nc').st_edges_ocean
-
 
     # EUC depth boundary indexes.
     zi = [idx(dz[1:], depth[0]), idx(dz[1:], depth[1], 'greater') + 1]

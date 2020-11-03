@@ -29,15 +29,15 @@ os.environ["PROJ_LIB"] = str(Path.home().joinpath('Anaconda3',
 
 #load particle data and get distribution
 @tools.timeit
-def plot_particle_movie(sim_id, movie_forward=False):
+def plot_particle_movie(xid, movie_forward=False):
     os.environ["HDF5_USE_FILE_LOCKING"] = "FALSE"
 
     recordedvar = None
     writer = animation.writers['ffmpeg'](fps=50)
     try:
-        ds = xr.open_dataset(str(sim_id), decode_cf=True)
+        ds = xr.open_dataset(str(xid), decode_cf=True)
     except:
-        ds = xr.open_dataset(str(sim_id), decode_cf=False)
+        ds = xr.open_dataset(str(xid), decode_cf=False)
     lon = np.ma.filled(ds.variables['lon'], np.nan)
     lat = np.ma.filled(ds.variables['lat'], np.nan)
     time = np.ma.filled(ds.variables['time'], np.nan)
@@ -97,11 +97,11 @@ def plot_particle_movie(sim_id, movie_forward=False):
     plt.tight_layout()
     plt.close()
     i = 0
-    while (cfg.fig/'gifs/{}_{}.mp4'.format(sim_id.stem, i)).exists():
+    while (cfg.fig/'gifs/{}_{}.mp4'.format(xid.stem, i)).exists():
         i += 0
-    anim.save(str(cfg.fig/'parcels/gifs/{}_{}.mp4'.format(sim_id.stem, i)),
+    anim.save(str(cfg.fig/'parcels/gifs/{}_{}.mp4'.format(xid.stem, i)),
               writer=writer)
 
 
-sim_id = cfg.data/'sim_hist_165_v2r0.nc'
-# plot_particle_movie(sim_id, movie_forward=True)
+xid = cfg.data/'plx_hist_165_v2r0.nc'
+# plot_particle_movie(xid, movie_forward=True)

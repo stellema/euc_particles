@@ -9,12 +9,13 @@ and temp for time periods averaged over 1981 to 2012 and 2070 to 2101.
 
 """
 
-import cfg
 import sys
 import os
 import warnings
 from cdo import Cdo
 from argparse import ArgumentParser
+
+import cfg
 
 cdo = Cdo()
 i = int(sys.argv[1])  # Variable index (e.g. u or salt) [0-4].

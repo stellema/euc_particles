@@ -40,7 +40,6 @@ okay at  1.5e-7 CS2
 # vdr = math.copysign(1, v0)
 """
 
-import math
 import cartopy
 import warnings
 import numpy as np
@@ -54,14 +53,14 @@ from parcels.field import Field
 from parcels import (ParticleSet, ErrorCode, Variable, JITParticle, AdvectionRK4_3D)
 
 import cfg
-import tools
+from tools import mlogger, get_edge_depth
 from main import ofam_fieldset
-from plotparticles import plotfield, animate_particles, plot_traj, plot3D
+from plot_particles import plotfield, animate_particles, plot_traj, plot3D
 from kernels import (AdvectionRK4_Land, BeachTest, UnBeachR, Age, DelLand,
                      SampleZone, Distance, CoastTime, recovery_kernels)
 
 warnings.filterwarnings("ignore")
-logger = tools.mlogger('test_unbeaching', parcels=True, misc=False)
+logger = mlogger('test_unbeaching', parcels=True, misc=False)
 
 test = ['CS', 'PNG', 'SS'][0]
 
@@ -122,7 +121,7 @@ elif test == 'CS':
     J, I, K = [-12.5, -7.5], [147.5, 156.5], [150]  # Normal.
     domain = {'N': -7, 'S': -13.5, 'E': 156, 'W': 147}
 
-depth_level = tools.get_edge_depth(K[0])
+depth_level = get_edge_depth(K[0])
 field, vmax, vmin = fieldset.Land, 1.2, 0.5
 py = np.arange(J[0], J[1] + dx, dx)
 px = np.arange(I[0], I[1], dx)
@@ -140,9 +139,9 @@ savefile = cfg.fig/'parcels/tests/{}_{:02d}.mp4'.format(test, i)
 while savefile.exists():
     i += 1
     savefile = cfg.fig/'parcels/tests/{}_{:02d}.mp4'.format(test, i)
-sim = savefile.stem
+xid = savefile.stem
 logger.info(' {:<3}: Land>={}: Coast>={}: UBv={}: Round=0.1 UBmin={}: Loop>=3: '
-            .format(sim, fieldset.onland, fieldset.byland,
+            .format(xid, fieldset.onland, fieldset.byland,
                     1, fieldset.UB_min)
             + 'Round if >=coast<land: 0.1 nearest break minLand<coast: '
             + 'If noUB(UVW)- UB[prev_lat]: '
@@ -189,11 +188,11 @@ for v in ['unbeached', 'coasttime', 'ubcount', 'ubeachprv', 'distance']:
     pb = np.where(p > 0.0, p, np.nan)
     pb = pb[~np.isnan(pb)]
     logger.info('{:>6}: {:<9}: N={}({:.1f}%) max={:.2f} med={:.2f} mean={:.2f}'
-                .format(sim, v, Nb, (Nb/N)*100, p.max(),
+                .format(xid, v, Nb, (Nb/N)*100, p.max(),
                         np.nanmedian(pb), np.nanmean(pb)))
 p = pd['depth']
 logger.info('{:>6}: {:<9}: N={}, max={:.2f} min={:.2f} med={:.2f} mean={:.2f}'
-            .format(sim, 'z', N, p.max(), p.min(), np.median(p), np.mean(p)))
+            .format(xid, 'z', N, p.max(), p.min(), np.median(p), np.mean(p)))
 output_file.export()
 
 plot3D(cfg.data/'{}{}.nc'.format(test, i))

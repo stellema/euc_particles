@@ -6,14 +6,15 @@ author: Annette Stellema (astellemas@gmail.com)
 
 
 """
-import cfg
-import tools
+
 import numpy as np
 import xarray as xr
 import matplotlib.pyplot as plt
-from main import EUC_vbounds
 from scipy import interpolate
 
+import cfg
+from tools import open_tao_data
+from vfncs import EUC_vbounds
 
 def plot_eq_velocity(fig, z, t, u, i, name,
                      max_depth=355, min_depth=10, rows=1):
@@ -190,7 +191,7 @@ def plot_eq_velocity_timeseries_tao_ofam(ds, d3, v_bnd='half_max',
 T = 1
 
 # Open dataset of TAO data at the frequency.
-ds = tools.open_tao_data(frq=cfg.frq_short[T], dz=slice(10, 360))
+ds = open_tao_data(frq=cfg.frq_short[T], dz=slice(10, 360))
 d3 = xr.open_dataset(cfg.data.joinpath('ofam_EUC_int_transport.nc'))
 
 # plot_tao_velocity_timeseries()

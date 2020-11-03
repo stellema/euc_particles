@@ -33,17 +33,15 @@ BUGS:
     - Flag if a particle needs to be checked in next file
     - Change zone files to u-cell coords
 """
-import cfg
-import tools
-import math
-import random
-import parcels
+
 import numpy as np
 import xarray as xr
 
+import cfg
+from plot_particles import plot_traj
 
-sim_id = cfg.data/'sim_hist_190_v0r4.nc'
-ds = xr.open_dataset(sim_id, decode_cf=False)
+xid = cfg.data/'plx_hist_190_v0r4.nc'
+ds = xr.open_dataset(xid, decode_cf=False)
 ds = ds.isel(traj=slice(0, 400))
 ds = ds.where(ds.u > 0, drop=True)
 
@@ -77,4 +75,4 @@ for n, zone in enumerate(cfg.zones):
 d[:, 0] = ds.zone.isel(obs=0)
 d = d.ffill('obs')
 ds['zone'] = d
-ds, dx = plot_traj(sim_id, var='u', traj=43, t=2, Z=290, ds=ds)
+ds, dx = plot_traj(xid, var='u', traj=43, t=2, Z=290, ds=ds)

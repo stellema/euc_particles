@@ -19,14 +19,14 @@ from parcels.field import Field
 from parcels import (ParticleSet, Variable, JITParticle)
 
 import cfg
-import tools
+from tools import mlogger
 from main import ofam_fieldset
-from plotparticles import plotfield, animate_particles
+from plot_particles import plotfield, animate_particles
 from kernels import (AdvectionRK4_Land, CoastTime, BeachTest, UnBeaching,
                      UnBeachR, Age, SampleZone, recovery_kernels, Distance)
 
 warnings.filterwarnings("ignore")
-logger = tools.mlogger('test_unbeaching', parcels=True, misc=False)
+logger = mlogger('test_unbeaching', parcels=True, misc=False)
 
 
 def del_land(pset):
@@ -93,7 +93,7 @@ while savefile.exists():
     i += 1
     savefile = cfg.fig/'parcels/tests/{}_{:02d}.mp4'.format(test, i)
 
-sim = savefile.stem
+xid = savefile.stem
 savefile = str(savefile)
 pset = del_land(pset)
 
@@ -106,8 +106,8 @@ output_file = None
 #                                 outputdt=outputdt)
 N = math.floor(T[-1]*runtime.total_seconds()/repeatdt.total_seconds())*pset.size
 logger.info(' {:<6}: N={} rdt>={}: run>={}: itr={}: Ntot={} UBmin=0.25'
-            .format(sim, pset.size, repeatdt, runtime, T[-1], N))
-logger.info(' {:<6}: {}'.format(sim, kernels.name))
+            .format(xid, pset.size, repeatdt, runtime, T[-1], N))
+logger.info(' {:<6}: {}'.format(xid, kernels.name))
 show_time = particles[0].time
 if field == 'vector':
     field = particles.fieldset.UV
@@ -139,8 +139,8 @@ for v in ['unbeached', 'coasttime', 'ubcount', 'ubWcount', 'ubWdepth', 'zc']:
     pb = np.where(p > 0.0, p, np.nan)
     pb = pb[~np.isnan(pb)]
     logger.info('{:>6}: {:<9}: N={}({:.1f}%) max={:.2f} med={:.2f} mean={:.2f}'
-                .format(sim, v, Nb, (Nb/N)*100, p.max(),
+                .format(xid, v, Nb, (Nb/N)*100, p.max(),
                         np.nanmedian(pb), np.nanmean(pb)))
 p = pd['depth']
 logger.info('{:>6}: {:<9}: N={}, max={:.2f} min={:.2f} med={:.2f} mean={:.2f}'
-            .format(sim, 'z', N, p.max(), p.min(), np.median(p), np.mean(p)))
+            .format(xid, 'z', N, p.max(), p.min(), np.median(p), np.mean(p)))

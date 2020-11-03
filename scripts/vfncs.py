@@ -7,15 +7,15 @@ author: Annette Stellema (astellemas@gmail.com)
 
 """
 import sys
-import cfg
-import tools
 import numpy as np
 import xarray as xr
-from tools import timeit, idx, idx2d
 from pathlib import Path
 from collections import OrderedDict
 
-logger = tools.mlogger(Path(sys.argv[0]).stem)
+import cfg
+from tools import mlogger, timeit, idx, get_edge_depth
+
+logger = mlogger(Path(sys.argv[0]).stem)
 
 
 def remove_westward_particles(pset):
@@ -39,7 +39,7 @@ def remove_westward_particles(pset):
 
 
 @timeit
-def ParticleFile_transport(sim_id, dy, dz, save=True):
+def ParticleFile_transport(xid, dy, dz, save=True):
     """Remove westward particles and calculate transport.
 
     Remove particles that were intially travellling westward and
@@ -59,7 +59,7 @@ def ParticleFile_transport(sim_id, dy, dz, save=True):
 
     """
     # Open the output Particle File.
-    df = xr.open_dataset(sim_id, decode_times=False)
+    df = xr.open_dataset(xid, decode_times=False)
 
     # Number of particles.
     N = len(df.traj)
@@ -88,30 +88,29 @@ def ParticleFile_transport(sim_id, dy, dz, save=True):
 
     if save:
         # Saves with same file name, with 't' appended.
-        df.to_netcdf(cfg.data/(sim_id.stem + 't.nc'))
+        df.to_netcdf(cfg.data/(xid.stem + 't.nc'))
 
     return df
 
 
-
-def particlefile_merge(sim_id):
+def particlefile_merge(xid):
     """Merge continued ParticleFiles.
 
     Args:
-        sim_id (pathlib.Path): Path to a ParticleFile.
+        xid (pathlib.Path): Path to a ParticleFile.
 
     Returns:
         dm (DataSet): Merged dataset.
 
     """
-    def merged(sim_id1, sim_id2):
+    def merged(xid1, xid2):
         """Merge two ParticleFiles."""
         # Open datasets.
         try:
-            ds1 = xr.open_dataset(sim_id1, decode_cf=False)
+            ds1 = xr.open_dataset(xid1, decode_cf=False)
         except AttributeError:
-            ds1 = sim_id1
-        ds2 = xr.open_dataset(sim_id2, decode_cf=False)
+            ds1 = xid1
+        ds2 = xr.open_dataset(xid2, decode_cf=False)
 
         ds1 = ds1.where(ds1.u >= 0., drop=True)
         ds2 = ds2.where(ds2.u >= 0., drop=True)
@@ -138,7 +137,7 @@ def particlefile_merge(sim_id):
 
         return dm
 
-    sims = [s for s in sim_id.parent.glob(str(sim_id.stem[:-1]) + '*.nc')]
+    sims = [s for s in xid.parent.glob(str(xid.stem[:-1]) + '*.nc')]
     dm = merged(sims[0], sims[1])
 
     if len(sims) >= 3:
@@ -217,9 +216,9 @@ def EUC_vbounds(du, depths, i, v_bnd=0.3, index=False):
                                 top[0:j] = top[0:j]*np.nan
                             break
 
-                z1i[t] = tools.idx(top, target)
+                z1i[t] = idx(top, target)
                 z1[t] = depths[int(z1i[t])]
-                z2i[t] = tools.idx(low, target) + v_imax[t]
+                z2i[t] = idx(low, target) + v_imax[t]
                 z2[t] = depths[int(z2i[t])]
                 count += 1
                 if abs(z2[t] - z1[t]) < 50:
@@ -263,8 +262,8 @@ def EUC_bnds_static(du, lon=None, z1=25, z2=350, lat=2.6):
         du4 (DataArray): The zonal velocity in the EUC region.
 
     """
-    z1 = tools.get_edge_depth(z1, index=False)
-    z2 = tools.get_edge_depth(z2, index=False)
+    z1 = get_edge_depth(z1, index=False)
+    z2 = get_edge_depth(z2, index=False)
 
     # Slice depth and longitude.
     du = du.sel(st_ocean=slice(z1, z2), yu_ocean=slice(-lat, lat))
@@ -301,9 +300,9 @@ def EUC_bnds_grenier(du, dt, ds, lon):
     rho2 = 26.8
 
     # Find exact latitude longitudes to slice dt and ds.
-    lat_i = dt.yt_ocean[tools.idx(dt.yt_ocean, -lat + 0.05)].item()
-    lat_f = dt.yt_ocean[tools.idx(dt.yt_ocean, lat + 0.05)].item()
-    lon_i = dt.xt_ocean[tools.idx(dt.xt_ocean, lon + 0.05)].item()
+    lat_i = dt.yt_ocean[idx(dt.yt_ocean, -lat + 0.05)].item()
+    lat_f = dt.yt_ocean[idx(dt.yt_ocean, lat + 0.05)].item()
+    lon_i = dt.xt_ocean[idx(dt.xt_ocean, lon + 0.05)].item()
     du = du.sel(xu_ocean=lon, yu_ocean=slice(-lat, lat))
     dt = dt.sel(xt_ocean=lon_i, yt_ocean=slice(lat_i, lat_f))
     ds = ds.sel(xt_ocean=lon_i, yt_ocean=slice(lat_i, lat_f))
@@ -355,12 +354,12 @@ def EUC_bnds_izumo(du, dt, ds, lon, interpolated=False):
         z_15, z1, z2 = 15, 25, 300
     else:
         # Modified because this is the correct level for OFAM3 grid.
-        z1 = tools.get_edge_depth(25, index=False)
-        z2 = tools.get_edge_depth(300, index=False)
+        z1 = get_edge_depth(25, index=False)
+        z2 = get_edge_depth(300, index=False)
         z_15 = 17
 
     # Find exact latitude longitudes to slice dt and ds.
-    lon_i = dt.xt_ocean[tools.idx(dt.xt_ocean, lon + 0.05)].item()
+    lon_i = dt.xt_ocean[idx(dt.xt_ocean, lon + 0.05)].item()
 
     # Slice depth and longitude.
     du = du.sel(xu_ocean=lon, st_ocean=slice(z1, z2), yu_ocean=slice(-4, 4))
@@ -377,7 +376,7 @@ def EUC_bnds_izumo(du, dt, ds, lon, interpolated=False):
 
     for z in range(len(du.st_ocean)):
         # Remove latitides via function between 25-200 m.
-        if z <= tools.get_edge_depth(200, index=False) - 1:
+        if z <= get_edge_depth(200, index=False) - 1:
             du1[:, z, :] = du.u.isel(st_ocean=z).where(du.yu_ocean > y1[z])
             du1[:, z, :] = du1.isel(st_ocean=z).where(du.yu_ocean < y2[z])
 

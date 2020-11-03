@@ -7,13 +7,15 @@ created: Tue Sep 10 18:44:15 2019
 author: Annette Stellema (astellemas@gmail.com)
 
 """
-import cfg
-import tools
+
 import gsw
 import numpy as np
 import xarray as xr
 import matplotlib.colors
 import matplotlib.pyplot as plt
+
+import cfg
+from tools import idx, coord_formatter
 from cfg import width, height, LAT_DEG, SV, im_ext
 
 years = [[1985, 2000], [2070, 2101]]  # cfg.years
@@ -31,7 +33,7 @@ dsh = xr.open_dataset(cfg.ofam/('ocean_salt_{}-{}_climo.nc'.format(*years[0])))
 dsf = xr.open_dataset(cfg.ofam/('ocean_salt_{}-{}_climo.nc'.format(*years[1])))
 
 
-depth = duh.st_ocean[tools.idx(duh.st_ocean, 500)].item()
+depth = duh.st_ocean[idx(duh.st_ocean, 500)].item()
 
 # Slice data to selected latitudes and longitudes.
 duh = duh.sel(yu_ocean=slice(-5.0, 5.), st_ocean=slice(2.5, depth))
@@ -202,7 +204,7 @@ def plot_ofam_EUC_profile(du, exp=0, vmax=1.2, dt=None, ds=None,
 
 def plot_transport(dh, dr):
     """Plot historical, RCP8.5 and projected change of EUC transport."""
-    depth = dh.st_ocean[tools.idx(dh.st_ocean, 350)].item()
+    depth = dh.st_ocean[idx(dh.st_ocean, 350)].item()
 
     # Slice data to selected latitudes and lonitudes.
     dh = dh.sel(yu_ocean=slice(-2.6, 2.7), st_ocean=slice(2.5, depth),
@@ -335,7 +337,7 @@ for j, du, label in zip(range(2), [dj.UM, dh.u], ['Observed', 'OFAM3']):
 
         # Define latitude tick labels that are either North or South.
         xticks = np.arange(-4, 5, 2)
-        xtickl = tools.coord_formatter(xticks, convert='lat')
+        xtickl = coord_formatter(xticks, convert='lat')
 
         ax[i].set_xticks(xticks)
         if j == 1:

@@ -15,7 +15,6 @@ from mpl_toolkits.axes_grid1 import make_axes_locatable
 import cfg
 from cmip_fncs import subset_cmip
 from cfg import mod6, mod5, lx5, lx6
-from tools import idx, idx2d, coord_formatter
 warnings.filterwarnings(action='ignore', message='Mean of empty slice')
 
 

@@ -17,13 +17,13 @@ import xarray as xr
 from operator import attrgetter
 from datetime import datetime, timedelta
 from parcels import (ParticleSet, Variable, JITParticle)
-# Local
+
 import cfg
-import tools
-from main import (ofam_fieldset, del_westward, generate_sim_id, pset_from_file)
+from tools import mlogger, timer
+from main import (ofam_fieldset, del_westward, generate_xid, pset_from_file)
 from kernels import (AdvectionRK4_Land, BeachTest, UnBeachR, Age,
                      SampleZone, Distance, recovery_kernels, AdvectionRK4_3D)
-from plotparticles import plot_traj, plot3D
+from plot_particles import plot_traj, plot3D
 
 try:
     from mpi4py import MPI
@@ -67,10 +67,10 @@ def pset_euc(fieldset, pclass, lon, dy, dz, repeatdt, pset_start, repeats,
 
 xlog = {'file': 0, 'new': 0, 'west_r': 0, 'new_r': 0, 'final_r': 0,
         'file_r': 0, 'y': '', 'x': '', 'z': '', 'v': 0}
-logger = tools.mlogger('test_sim', parcels=True, misc=False)
+logger = mlogger('test_plx', parcels=True, misc=False)
 dt_mins, repeatdt_days, outputdt_days, runtime_days = 60, 6, 1, 180  # TODO
 chunks, exp, v, rank = 300, 'hist', 0, 0
-pfile = ['None', 'sim_hist_165_v47r0.nc'][0]  # TODO
+pfile = ['None', 'plx_hist_165_v47r0.nc'][0]  # TODO
 dy, dz, lon = -0.4, 175, 165
 # dy, dz, lon = -6.22, 185, 150  # Starting on near land
 offset = 12*24*3600
@@ -108,16 +108,16 @@ pclass = zParticle
 if not restart:
     # Generate file name for experiment (random number if not using MPI).
     rdm = False if MPI else True
-    sim_id = generate_sim_id(lon, v, exp, randomise=rdm, restart=False, xlog=xlog)
+    xid = generate_xid(lon, v, exp, randomise=rdm, restart=False, xlog=xlog)
     pset_start = fieldset.U.grid.time[-1] - offset  # TODO
     pset = pset_euc(fieldset, pclass, lon, dy, dz, repeatdt, pset_start, repeats, xlog=xlog)  # TODO
     xlog['new_r'] = pset.size
-    # pset = del_westward(pset)
+    pset = del_westward(pset)
     xlog['start_r'] = pset.size
     xlog['west_r'] = xlog['new_r'] - xlog['start_r']
 else:
     filename = cfg.data/pfile
-    sim_id = generate_sim_id(lon, v, exp, file=filename, xlog=xlog)
+    xid = generate_xid(lon, v, exp, file=filename, xlog=xlog)
     pset = pset_from_file(fieldset, pclass=pclass, filename=filename,
                           restart=True, restarttime=np.nanmin, xlog=xlog)
     xlog['file_r'] = pset.size
@@ -125,18 +125,18 @@ else:
     psetx = pset_euc(fieldset, pclass, lon, dy, dz, repeatdt,
                      pset_start, repeats, xlog=xlog)
     xlog['new_r'] = psetx.size
-    # psetx = del_westward(psetx)
+    psetx = del_westward(psetx)
     xlog['start_r'] = psetx.size
     xlog['west_r'] = xlog['new_r'] - xlog['start_r']
     pset.add(psetx)
 
 # ParticleSet start time (for log).
 start = (fieldset.time_origin.time_origin + timedelta(seconds=pset_start))
-output_file = pset.ParticleFile(cfg.data/sim_id.stem, outputdt=outputdt)
+output_file = pset.ParticleFile(cfg.data/xid.stem, outputdt=outputdt)
 xlog['Ti'] = start.strftime('%Y-%m-%d')
 xlog['Tf'] = (start - runtime).strftime('%Y-%m-%d')
 xlog['N'] = xlog['new'] + xlog['file']
-xlog['id'] = sim_id.stem
+xlog['id'] = xid.stem
 xlog['out'] = output_file.tempwritedir_base[-8:]
 xlog['run'] = runtime.days
 xlog['dt'] = dt_mins
@@ -150,7 +150,7 @@ logger.info(' {}: Run={}d: {} to {}: Particles={}'.format(xlog['id'], xlog['run'
 logger.info(' {}: Rep={}d: dt={:.0f}m: Out={:.0f}d: Land={} Vmin={}'.format(xlog['id'], xlog['rdt'], xlog['dt'], xlog['outdt'], xlog['land'], xlog['Vmin']))
 
 # Kernels.
-kernels = pset.Kernel(AdvectionRK4_3D)  #_Land
+kernels = pset.Kernel(AdvectionRK4_Land)
 kernels += pset.Kernel(BeachTest) + pset.Kernel(UnBeachR)
 kernels += pset.Kernel(Age) + pset.Kernel(Distance)
 kernels += pset.Kernel(SampleZone)
@@ -159,7 +159,7 @@ endtime = int(pset_start - runtime.total_seconds())
 pset.execute(kernels, endtime=endtime, dt=dt, output_file=output_file,
              verbose_progress=True, recovery=recovery_kernels)
 
-timed = tools.timer(ts)
+timed = timer(ts)
 xlog['end_r'] = pset.size
 xlog['del_r'] = xlog['start_r'] - xlog['end_r']
 logger.info('{}:Completed!: {}: Rank={:>2}: Particles: I={} del={} F={}'
@@ -167,9 +167,9 @@ logger.info('{}:Completed!: {}: Rank={:>2}: Particles: I={} del={} F={}'
 
 # Save to netcdf.
 output_file.export()
-ds = xr.open_dataset(sim_id, decode_cf=True)
-ds = plot3D(sim_id)
-ds, dx = plot_traj(sim_id, var='w', traj=None, t=22, Z=190, ds=ds)
+ds = xr.open_dataset(xid, decode_cf=True)
+ds = plot3D(xid)
+ds, dx = plot_traj(xid, var='w', traj=None, t=22, Z=190, ds=ds)
 
 # print(np.nanmax(np.fabs(ds.unbeached), axis=1))
 

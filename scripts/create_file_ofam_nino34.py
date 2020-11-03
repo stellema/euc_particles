@@ -6,18 +6,19 @@ author: Annette Stellema (astellemas@gmail.com)
 
 
 """
-# Load required modules.
-import cfg
-import tools
+
 import numpy as np
 import xarray as xr
+
+import cfg
+from tools import get_date
 
 np.set_printoptions(suppress=True)
 
 exp = 1
 year1 = cfg.years[exp][0] - 1 if exp == 0 else cfg.years[exp][0]
-date_bnds = [tools.get_date(year1, 1, 1),
-             tools.get_date(cfg.years[exp][1], 12, 'max')]
+date_bnds = [get_date(year1, 1, 1),
+             get_date(cfg.years[exp][1], 12, 'max')]
 
 temp = []
 

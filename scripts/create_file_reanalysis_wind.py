@@ -34,18 +34,21 @@ ERA-Interim (erai):
     - Sea level pressure (psl) [Pa]
 
 """
-import cfg
-import tools
+
 import sys
 import numpy as np
 import xarray as xr
 from datetime import datetime
 
+import cfg
+from tools import idx, timeit, mlogger
+
+
 product = str(sys.argv[1])  # 'jra55' or 'erai'.
 vari = int(sys.argv[2])  # 0-4 for jra55 and 0-5 for erai.
 
 
-@tools.timeit
+@timeit
 def reanalysis_wind(product, vari, lon, lat):
     def slice_vars(ds):
         """Preprocess slice and rename variables."""
@@ -69,14 +72,14 @@ def reanalysis_wind(product, vari, lon, lat):
         if hasattr(ds, 'iews'):
             ds = ds.reindex(lat=ds.lat[::-1])
 
-        x0 = tools.idx(ds.lon.values, lon[0])
+        x0 = idx(ds.lon.values, lon[0])
         x0 = x0 - 1 if ds.lon[x0] > lon[0] else x0
-        x1 = tools.idx(ds.lon.values, lon[1])
+        x1 = idx(ds.lon.values, lon[1])
         x1 = x1 + 1 if ds.lon[x1] > lon[1] else x1
 
-        y0 = tools.idx(ds.lat.values, lat[0])
+        y0 = idx(ds.lat.values, lat[0])
         y0 = y0 - 1 if ds.lat[y0] > lat[0] else y0
-        y1 = tools.idx(ds.lat.values, lat[1])
+        y1 = idx(ds.lat.values, lat[1])
         y1 = y1 + 1 if ds.lat[y1] > lat[1] else y1
 
         ds = ds.isel(lat=slice(y0, y1+1), lon=slice(x0, x1+1))
@@ -148,7 +151,7 @@ def reanalysis_wind(product, vari, lon, lat):
     return
 
 
-logger = tools.mlogger('reanalysis')
+logger = mlogger('reanalysis')
 now = datetime.now()
 
 lon = [120, 295]

@@ -3379,3 +3379,25 @@
 2020-11-01 18:50:02: sim_hist_165_v92r00: Rep=6d: dt=60m: Out=1d: Land=0.975 Vmin=1e-07
 2020-11-01 18:50:05:Compiled zParticleAdvectionRK4_3DBeachTestUnBeachRAgeDistanceSampleZone ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\2702792499f7a152e61223e63a5e15a2_0.dll
 2020-11-01 18:53:58:sim_hist_165_v92r00:Completed!: 00:04:46: Rank= 0: Particles: I=29 del=0 F=29
+2020-11-02 19:06:38:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-11-02 19:06:39:Did not find xu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'xu_ocean': <number>, ... }.
+2020-11-02 19:06:39:Did not find yu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'yu_ocean': <number>, ... }.
+2020-11-02 19:06:40:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-11-02 19:07:00: sim_hist_190_v31r00: Run=36d: 2012-12-31 to 2012-11-25: Particles=90
+2020-11-02 19:07:00: sim_hist_190_v31r00: Rep=6d: dt=60m: Out=2d: Land=0.975 Vmin=1e-07
+2020-11-02 19:07:03:Compiled zParticleAdvectionRK4_LandBeachTestUnBeachRAgeZoneDistance ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\ada73a228233a4b336f714ee314247c0_0.dll
+2020-11-02 19:07:35:sim_hist_190_v31r00: Completed: 00:00:57: Rank= 0: Particles: Start=31 Del=0 End=31
+2020-11-02 19:07:35:sim_hist_190_v31r00: Finished!: Timer=00:00:57
+2020-11-03 13:51:21:Trying to initialize a shared grid with different chunking sizes - action prohibited. Replacing requested field_chunksize with grid's master chunksize.
+2020-11-03 13:51:22:Did not find xu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'xu_ocean': <number>, ... }.
+2020-11-03 13:51:22:Did not find yu_ocean in NetCDF dims. Please specifiy field_chunksize as dictionary for NetCDF dimension names, e.g.
+ field_chunksize={ 'yu_ocean': <number>, ... }.
+2020-11-03 13:51:23:Particle initialisation from field can be very slow as it is computed in scipy mode.
+2020-11-03 13:51:43: plx_hist_190_v48r00: Run=36d: 2012-12-31 to 2012-11-25: Particles=90
+2020-11-03 13:51:43: plx_hist_190_v48r00: Rep=6d: dt=60m: Out=2d: Land=0.975 Vmin=1e-07
+2020-11-03 13:51:46:Compiled zParticleAdvectionRK4_LandBeachTestUnBeachRAgeZoneDistance ==> C:\Users\Annette\AppData\Local\Temp\parcels-tmp\c0bba1e549cef38275d996c716d100fb_0.dll
+2020-11-03 13:52:17:plx_hist_190_v48r00: Completed: 00:00:57: Rank= 0: Particles: Start=31 Del=0 End=31
+2020-11-03 13:52:18:plx_hist_190_v48r00: Finished!: Timer=00:00:57

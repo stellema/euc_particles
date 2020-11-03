@@ -6,13 +6,14 @@ author: Annette Stellema (astellemas@gmail.com)
 
 
 """
-import cfg
-import tools
 import numpy as np
 import xarray as xr
 from datetime import datetime
 from argparse import ArgumentParser
-from main import EUC_bnds_static, EUC_bnds_grenier, EUC_bnds_izumo
+
+import cfg
+from tools import idx
+from vfncs import EUC_bnds_static, EUC_bnds_grenier, EUC_bnds_izumo
 
 
 """ Input at terminal """
@@ -63,8 +64,8 @@ dz = cfg.dz()
 
 dz_i, dz_f = [],  []
 for i, lon in enumerate(cfg.lons):
-    dz_i.append(tools.idx(du.st_ocean, dx[i].st_ocean[0]))
-    dz_f.append(tools.idx(du.st_ocean, dx[i].st_ocean[-1]))
+    dz_i.append(idx(du.st_ocean, dx[i].st_ocean[0]))
+    dz_f.append(idx(du.st_ocean, dx[i].st_ocean[-1]))
 
     dr = (dx[i]*dy).sum(dim='yu_ocean')
     if method != 'grenier':

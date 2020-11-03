@@ -447,18 +447,18 @@ def particlesvid(particles, with_particles=True, show_time=None, field=None,
 
 
 
-def plot3D(sim_id, ds=None):
+def plot3D(xid, ds=None):
     """Plot 3D figure of particle trajectories over time."""
     import matplotlib.ticker as ticker
     if not ds:
         # Open ParticleFile.
-        ds = xr.open_dataset(sim_id, decode_cf=True)
+        ds = xr.open_dataset(xid, decode_cf=True)
 
     N = len(ds.traj)
     x, y, z = ds.lon, ds.lat, ds.z
 
     fig = plt.figure(figsize=(13, 10))
-    # plt.suptitle(sim_id.stem, y=0.89, x=0.23)
+    # plt.suptitle(xid.stem, y=0.89, x=0.23)
     ax = fig.add_subplot(111, projection='3d')
     colors = plt.cm.rainbow(np.linspace(0, 1, len(ds.traj)))
     ax.set_xlim(tools.rounddown(np.nanmin(x)), tools.roundup(np.nanmax(x)))
@@ -482,7 +482,7 @@ def plot3D(sim_id, ds=None):
     ax.zaxis.set_major_formatter(ticker.FixedFormatter(zlabels))
     plt.tight_layout(pad=0)
 
-    fig.savefig(cfg.fig/('parcels/' + sim_id.stem + cfg.im_ext),
+    fig.savefig(cfg.fig/('parcels/' + xid.stem + cfg.im_ext),
                 bbox_inches='tight')
     plt.show()
     plt.close()
@@ -490,7 +490,7 @@ def plot3D(sim_id, ds=None):
     return
 
 
-def plot3Dx(sim_id, ds=None):
+def plot3Dx(xid, ds=None):
     """Plot 3D figure of particle trajectories over time."""
 
     def setup(ax, xticks, yticks, zticks, xax='lon', yax='lat'):
@@ -507,7 +507,7 @@ def plot3Dx(sim_id, ds=None):
 
     if not ds:
         # Open ParticleFile.
-        ds = xr.open_dataset(sim_id, decode_cf=True)
+        ds = xr.open_dataset(xid, decode_cf=True)
 
     N = len(ds.traj)
     x, y, z = ds.lon, ds.lat, ds.z
@@ -518,7 +518,7 @@ def plot3Dx(sim_id, ds=None):
 
     # Plot figure.
     fig = plt.figure(figsize=(18, 16))
-    plt.suptitle(sim_id.stem, y=0.92, x=0.1)
+    plt.suptitle(xid.stem, y=0.92, x=0.1)
 
     ax = fig.add_subplot(221, projection='3d')
     ax.set_xlim(xlim[0], xlim[1])
@@ -568,7 +568,7 @@ def plot3Dx(sim_id, ds=None):
     ax = setup(ax, xticks, yticks, zticks, xax='lat', yax='lon')
 
     plt.tight_layout(pad=0)
-    fig.savefig(cfg.fig/('parcels/' + sim_id.stem + 'x' + cfg.im_ext))
+    fig.savefig(cfg.fig/('parcels/' + xid.stem + 'x' + cfg.im_ext))
     # plt.show()
     plt.close()
     ds.close()
@@ -576,10 +576,10 @@ def plot3Dx(sim_id, ds=None):
     return
 
 
-def plot_traj(sim_id, var='u', traj=None, t=None, Z=290, ds=None):
+def plot_traj(xid, var='u', traj=None, t=None, Z=290, ds=None):
     """Plot individual trajectory (3D line and 2D scatter)."""
     if not ds:
-        ds = xr.open_dataset(sim_id, decode_cf=True)
+        ds = xr.open_dataset(xid, decode_cf=True)
     if not traj:
         try:
             ub = np.unique(ds.where(ds.unbeached >= 1).trajectory)
@@ -636,7 +636,7 @@ def plot_traj(sim_id, var='u', traj=None, t=None, Z=290, ds=None):
     fig = plt.figure(figsize=(12, 9))
 
     ax = fig.add_subplot(221, projection='3d')
-    ax.set_title(sim_id.stem + ': traj=' + str(traj))
+    ax.set_title(xid.stem + ': traj=' + str(traj))
     ax.plot3D(dx.lon, dx.lat, dx.z, color='b', marker='o', linewidth=1.5, markersize=3)
     ax.scatter3D(dx.lon[bc], dx.lat[bc], dx.z[bc], color='r', s=3, zorder=3)
     ax.set_xlim(math.floor(np.nanmin(dx.lon)), math.ceil(np.nanmax(dx.lon)))
@@ -662,7 +662,7 @@ def plot_traj(sim_id, var='u', traj=None, t=None, Z=290, ds=None):
 
 
     ax = fig.add_subplot(223)
-    ax.set_title(sim_id.stem + ' traj=' + str(traj))
+    ax.set_title(xid.stem + ' traj=' + str(traj))
     ax.plot(dx.lat, dx.z, color='k', marker='o', linewidth=1.7, markersize=4)
     ax.scatter(dx.lat[bc], dx.z[bc], color='r', s=3, zorder=3)
     ax.set_ylim(np.max(dx.z), np.min(dx.z))
@@ -670,7 +670,7 @@ def plot_traj(sim_id, var='u', traj=None, t=None, Z=290, ds=None):
     ax.set_ylabel("Depth")
 
     ax = fig.add_subplot(224)
-    ax.set_title(sim_id.stem + ' traj=' + str(traj))
+    ax.set_title(xid.stem + ' traj=' + str(traj))
     ax.scatter(dx.lon[bc], dx.z[bc], color='r', s=4, zorder=3)
     ax.plot(dx.lon, dx.z, color='k', marker='o', linewidth=1.7, markersize=4)
     ax.set_ylim(np.max(dx.z), np.min(dx.z))
@@ -679,15 +679,15 @@ def plot_traj(sim_id, var='u', traj=None, t=None, Z=290, ds=None):
 
     # plt.tight_layout()
     plt.savefig(cfg.fig/'parcels/tests/traj_{}_{}_{}.png'
-                .format(sim_id.stem, traj, var))
+                .format(xid.stem, traj, var))
     plt.show()
 
     return ds, dx
 
 
-def plot_beached(sim_id, depth=None):
+def plot_beached(xid, depth=None):
 
-    ds = xr.open_dataset(sim_id, decode_cf=True)
+    ds = xr.open_dataset(xid, decode_cf=True)
     ds = ds.where(ds.u >= 0., drop=True)
 
     if depth:
@@ -710,10 +710,10 @@ def plot_beached(sim_id, depth=None):
     return ds, tr
 
 
-def plot_ubtraj(sim_id, var='u', t=22, Z=290, ds=None):
+def plot_ubtraj(xid, var='u', t=22, Z=290, ds=None):
     """Plot individual trajectory (3D line and 2D scatter)."""
     if not ds:
-        ds = xr.open_dataset(sim_id, decode_cf=True)
+        ds = xr.open_dataset(xid, decode_cf=True)
 
     ub = np.unique(ds.where(ds.unbeached < 0).trajectory)
     ub = ub[~np.isnan(ub)].astype(int)
@@ -741,7 +741,7 @@ def plot_ubtraj(sim_id, var='u', t=22, Z=290, ds=None):
     fig = plt.figure(figsize=(12, 9))
     zmap, norm = tools.zone_cmap()
     ax = fig.add_subplot()
-    ax.set_title(sim_id.stem)
+    ax.set_title(xid.stem)
 
     ax.set_title(var_str + ' velocity at {:.1f} m'.format(z.item()))
     ax.pcolormesh(lon, lat, dv, cmap=cmap, vmax=vmax, vmin=-vmax)
@@ -754,7 +754,7 @@ def plot_ubtraj(sim_id, var='u', t=22, Z=290, ds=None):
     plt.colorbar(im)
 
     plt.savefig(cfg.fig/'parcels/tests/{}_beached.png'
-                .format(sim_id.stem))
+                .format(xid.stem))
     plt.show()
 
     return ds, dx

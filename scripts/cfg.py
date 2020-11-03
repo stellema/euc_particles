@@ -15,6 +15,7 @@ import xarray as xr
 from pathlib import Path
 import matplotlib.pyplot as plt
 
+warnings.filterwarnings("ignore", category=DeprecationWarning)
 
 home = Path.home()
 if home.drive == 'C:':
@@ -208,12 +209,10 @@ mod5 = {0:  {'id': 'ACCESS1-0',        'nd': 2, 'z': 'lev', 'cs':  cs[0]},
 
 # Create dict of various items.
 lx5 = {'var': ['uo', 'vo'],
-      'exp': ['historical', 'rcp85'],
-      'years': [[1901, 2000], [2050, 2099]]}
+       'exp': ['historical', 'rcp85'],
+       'years': [[1901, 2000], [2050, 2099]]}
 
 # Create dict of various items.
 lx6 = {'var': ['uo', 'vo'],
-      'exp': ['historical', 'ssp585'],
-      'years': [[1901, 2000], [2050, 2099]]}
-
-warnings.filterwarnings("ignore", category=DeprecationWarning)
+       'exp': ['historical', 'ssp585'],
+       'years': [[1901, 2000], [2050, 2099]]}

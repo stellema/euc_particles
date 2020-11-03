@@ -19,10 +19,12 @@ in the form: ocean_u_1981-2012.nc and ocean_u_2070-2101.nc
 Output file is saved to: home/data/EUC_transport_grid.nc
 
 """
-import cfg
-import tools
+
 import numpy as np
 import xarray as xr
+
+import cfg
+from tools import idx
 
 # Longitudes to integrate velocity.
 # 143E, 156E, 165E, 170E, 180E, 170W, 155W, 140W, 125W, 110W, 95W
@@ -47,8 +49,8 @@ for exp, years in enumerate(cfg.years):
 
     # Find indexes of each depth level for depth bounds.
     # NOTE must calculate on unsliced dataset.
-    k0 = tools.idx(clim.st_ocean, levs[0])
-    k1 = tools.idx(clim.st_ocean, levs[-1])
+    k0 = idx(clim.st_ocean, levs[0])
+    k1 = idx(clim.st_ocean, levs[-1])
 
     # Slice st_ocean_edges (used to calculate width of grid cells 'dk').
     ds = ds.isel(st_edges_ocean=slice(k0 + 1, k1 + 2))

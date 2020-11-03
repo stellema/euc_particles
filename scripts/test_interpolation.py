@@ -11,14 +11,10 @@ import copy
 import math
 import numpy as np
 import xarray as xr
-# from pathlib import Path
 import matplotlib.pyplot as plt
-# from datetime import datetime, timedelta
-# from parcels import (FieldSet, Field, ParticleSet, VectorField,
-#                      ErrorCode, AdvectionRK4)
 
 import cfg
-import tools
+from tools import get_edge_depth
 from main import ofam_fieldset
 
 def plot_interp(ax, i, xx, yy, v, title, mn, mx, cmap, contour=True,
@@ -63,7 +59,7 @@ xstr = 'z-1'
 # varname =
 
 # Closest depth index in netcdf files.
-zi = tools.get_edge_depth(z, index=True, edge=False, greater=False)
+zi = get_edge_depth(z, index=True, edge=False, greater=False)
 
 # Original OFAM3 velocity from NetCDF file.
 du = xr.open_dataset(cfg.ofam/'ocean_{}_2012_01.nc'.format('u'))['u']

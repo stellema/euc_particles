@@ -30,14 +30,16 @@ print('Maximum size index: {}, lon: {:.2f}'
       .format(np.max(mx), sfc.xu_ocean[np.max(mx)].item()))
 
 """
-import cfg
-import tools
+
 import sys
 import numpy as np
 import xarray as xr
 from datetime import datetime, timedelta
 
-logger = tools.mlogger('file_transport')
+import cfg
+from tools import idx, mlogger, deg_m
+
+logger = mlogger('file_transport')
 
 s = int(sys.argv[1])
 
@@ -47,16 +49,16 @@ now = datetime.now()
 
 def bnd_idx(ds, lat, lon):
     if type(lat) == list:
-        ilat = slice(tools.idx(ds.yu_ocean, lat[0]),
-                     tools.idx(ds.yu_ocean, lat[1]) + 1)
+        ilat = slice(idx(ds.yu_ocean, lat[0]),
+                     idx(ds.yu_ocean, lat[1]) + 1)
     elif type(lat) != list:
-        ilat = tools.idx(ds.yu_ocean, lat)
+        ilat = idx(ds.yu_ocean, lat)
 
     if type(lon) == list:
-        ilon = slice(tools.idx(ds.xu_ocean, lon[0]),
-                     tools.idx(ds.xu_ocean, lon[1]) + 1)
+        ilon = slice(idx(ds.xu_ocean, lon[0]),
+                     idx(ds.xu_ocean, lon[1]) + 1)
     elif type(lon) != list:
-        ilon = tools.idx(ds.xu_ocean, lon)
+        ilon = idx(ds.xu_ocean, lon)
 
     bnds = [ilat, ilon]
     return bnds
@@ -133,7 +135,7 @@ df = df.resample(Time="MS", loffset=timedelta(days=15)).mean()
 dz = cfg.dz()[:, np.newaxis]
 
 # Convert degrees to metres to multiply velocity
-dx, dy = tools.deg_m(df.yu_ocean.values, df.xu_ocean.values)
+dx, dy = deg_m(df.yu_ocean.values, df.xu_ocean.values)
 
 if df.yu_ocean.shape == () and var == 'v':
     area = np.ones(df[var].shape)*dz*dx

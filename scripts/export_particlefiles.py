@@ -4,7 +4,7 @@ created: Tue Sep 15 13:50:45 2020
 
 author: Annette Stellema (astellemas@gmail.com)
 
-sim_rcp not finished: 'out-DKTSCCHC'
+plx_rcp not finished: 'out-DKTSCCHC'
 """
 
 

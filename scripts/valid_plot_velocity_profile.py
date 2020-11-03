@@ -6,13 +6,16 @@ author: Annette Stellema (astellemas@gmail.com)
 
 
 """
-import cfg
-import tools
+
 import numpy as np
 import xarray as xr
 import matplotlib.pyplot as plt
-from valid_nino34 import enso_u_tao, enso_u_ofam, nino_events
+
+import cfg
 from cfg import width, height, tbnds_tao, tbnds_ofam
+from tools import open_tao_data
+from valid_nino34 import enso_u_tao, enso_u_ofam, nino_events
+
 plt.rcParams.update({'font.size': 10})
 
 # Saved data frequency (1 for monthly and 0 for daily data).
@@ -24,7 +27,7 @@ def plot_eq_velocty_profile(z1=25, z2=300, anom=True, print_max=True):
     oni_mod = xr.open_dataset(cfg.data/'ofam_sst_anom_nino34_hist.nc')
     # oni_obs = xr.open_dataset(cfg.data/'noaa_sst_anom_nino34.nc').rename({'time': 'Time'})
     du_mod = xr.open_dataset(cfg.data/'ofam_EUC_int_transport.nc')
-    du_obs = tools.open_tao_data(frq=cfg.frq_short[1], dz=slice(10, 360))
+    du_obs = open_tao_data(frq=cfg.frq_short[1], dz=slice(10, 360))
 
     nino, nina = nino_events(oni_mod.oni)
     nio = [[2, -1], [2, 8], [2, 8]]
@@ -56,7 +59,7 @@ def plot_eq_velocty_profile(z1=25, z2=300, anom=True, print_max=True):
                 enso_obs = enso_u_tao(oni_mod, du_obs, ninox, ninax)
                 if anom:
                     umod = enso_mod[j-1, :, i] - umod_mean
-                    zi = tools.idx(enso_obs[j-1, :, i].st_ocean,
+                    zi = idx(enso_obs[j-1, :, i].st_ocean,
                                    uobs_mean.depth[-1])
                     tmp_obs = enso_obs[j-1, 0:zi+1, i]
                     uobs = tmp_obs.where(tmp_obs != None) - uobs_mean.values

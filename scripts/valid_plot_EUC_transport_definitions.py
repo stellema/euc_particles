@@ -6,17 +6,19 @@ author: Annette Stellema (astellemas@gmail.com)
 
 
 """
-import cfg
-import tools
+
 import warnings
 import itertools
 import numpy as np
 import xarray as xr
 import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
+
+import cfg
+# import tools
 from cfg import SV, width, height
-from tools import regress, correlation_str
-from main import EUC_bnds_static, EUC_bnds_grenier, EUC_bnds_izumo
+from tools import idx, regress, correlation_str
+from vfncs import EUC_bnds_static, EUC_bnds_grenier, EUC_bnds_izumo
 
 warnings.filterwarnings('ignore')
 
@@ -198,7 +200,7 @@ def plot_EUC_def_bounds(time='mon', lon=None, depth=450, exp=0, off=0):
     ax = ax.flatten()
     for i in rge:
         lonx = lon if time == 'mon' else cfg.lons[i]
-        x = tools.idx(np.array(cfg.lons), lonx) if time == 'mon' else i
+        x = idx(np.array(cfg.lons), lonx) if time == 'mon' else i
         dux = du.sel(xu_ocean=lonx)
         u = dux.u[i] if time == 'mon' else dux.u[time]
         if exp != 2:
@@ -224,10 +226,10 @@ def plot_EUC_def_bounds(time='mon', lon=None, depth=450, exp=0, off=0):
             dzt = dz[i] if time == 'mon' else dz[time]
 
             # Slice lon/depth of du to where EUC definitions are sliced.
-            iz = [tools.idx(du.st_ocean, dz.st_ocean[0]),
-                  tools.idx(du.st_ocean, dz.st_ocean[-1])]
-            iy = [tools.idx(du.yu_ocean, dz.yu_ocean[0]),
-                  tools.idx(du.yu_ocean, dz.yu_ocean[-1])]
+            iz = [idx(du.st_ocean, dz.st_ocean[0]),
+                  idx(du.st_ocean, dz.st_ocean[-1])]
+            iy = [idx(du.yu_ocean, dz.yu_ocean[0]),
+                  idx(du.yu_ocean, dz.yu_ocean[-1])]
 
             # Fill EUC values from def (with nan values changes to const).
             dq[iz[0]:iz[1]+1, iy[0]:iy[1]+1] = dzt.where(~np.isnan(dzt), const)

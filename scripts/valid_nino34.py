@@ -6,12 +6,13 @@ author: Annette Stellema (astellemas@gmail.com)
 
 
 """
-import cfg
-import tools
+
 import numpy as np
 import xarray as xr
 import matplotlib.pyplot as plt
 
+import cfg
+from tools import open_tao_data
 
 def find_runs(x):
     """Find runs of consecutive items in an array."""
@@ -196,7 +197,7 @@ oni_mod = xr.open_dataset(cfg.data/'ofam_sst_anom_nino34_hist.nc')
 oni_obs = xr.open_dataset(cfg.data/'noaa_sst_anom_nino34.nc').rename({'time':
                                                                       'Time'})
 du_mod = xr.open_dataset(cfg.data/'ofam_EUC_int_transport.nc')
-du_obs = tools.open_tao_data(frq=cfg.frq_short[1], dz=slice(10, 360))
+du_obs = open_tao_data(frq=cfg.frq_short[1], dz=slice(10, 360))
 
 
 # enso_mod = enso_u_ofam(oni_mod, du_mod.u)

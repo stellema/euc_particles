@@ -26,8 +26,7 @@ author: Annette Stellema (astellemas@gmail.com)
 
 
 """
-import main
-import cfg
+
 import numpy as np
 from pathlib import Path
 from datetime import timedelta
@@ -35,6 +34,10 @@ from sklearn.cluster import KMeans
 from argparse import ArgumentParser
 from parcels import Variable, JITParticle
 from operator import attrgetter
+
+import cfg
+from main import (ofam_fieldset, pset_euc, del_westward, generate_xid,
+                  pset_from_file, log_simulation)
 
 # def particlefile_vars(filename, lon, add_particles=True):
 #     """Initialise the ParticleSet from a netcdf ParticleFile.
@@ -47,15 +50,15 @@ from operator import attrgetter
 #     p_depths = np.arange(25, 350 + 20, 25)
 #     p_lons = np.array([lon])
 
-#     fieldset = main.ofam_fieldset(time_bnds='full')
+#     fieldset = ofam_fieldset(time_bnds='full')
 
 #     # Add particles on the next day that regularly repeat.
 #     print('Particlefile particles.')
-#     psetx = main.pset_from_file(fieldset, pclass=zParticle, filename=filename,
+#     psetx = pset_from_file(fieldset, pclass=zParticle, filename=filename,
 #                                 restart=True, restarttime=np.nanmin)
 #     print('EUC particles.')
 #     pset_start = np.nanmin(psetx.time)
-#     pset = main.pset_euc(fieldset, zParticle, lon, 0.1, 25,
+#     pset = pset_euc(fieldset, zParticle, lon, 0.1, 25,
 #                          timedelta(days=6), pset_start, repeats=2)
 
 #     print('Adding particles.')
@@ -136,22 +139,22 @@ def test_cpu_lim(coords, lon, cpu_lim=None, coordsx=None, lonx=None):
 
 # if __name__ == "__main__" and cfg.home != Path('E:/'):
 #     p = ArgumentParser(description="""Run EUC Lagrangian experiment.""")
-#     p.add_argument('-f', '--filename', default='sim_190_v0r0.nc', type=str, help='Filename.')
+#     p.add_argument('-f', '--filename', default='plx_190_v0r0.nc', type=str, help='Filename.')
 #     p.add_argument('-n', '--mpi_size', default=25, type=int, help='Number of CPUs.')
 #     p.add_argument('-x', '--lon', default=190, type=int, help='Longitude.')
 #     args = p.parse_args()
 #     filename = cfg.data/args.filename
 #     mpi_size = args.mpi_size
 #     lon = args.lon
-#     fieldset = main.ofam_fieldset(time_bnds='full', chunks=300)
+#     fieldset = ofam_fieldset(time_bnds='full', chunks=300)
 
 # else:
 #     # Lat and lon of particles (whatever goes into your ParticleSet).
 #     # Doesn't matter if repeatdt is not None, only the pset size at the start counts.
-#     filename = cfg.data/'sim_rcp_165_v0r01.nc'
+#     filename = cfg.data/'plx_rcp_165_v0r01.nc'
 #     mpi_size = 53
 #     lon = 165
-#     fieldset = main.ofam_fieldset(time_bnds='full')
+#     fieldset = ofam_fieldset(time_bnds='full')
 
 # mpi_size = 48
 # repeats = 5
@@ -174,7 +177,7 @@ def test_cpu_lim(coords, lon, cpu_lim=None, coordsx=None, lonx=None):
 
 # # # Add particles on the next day that regularly repeat.
 # # print('Particlefile particles.')
-# # psetx = main.particleset_from_particlefile(fieldset, pclass=zParticle, filename=filename,
+# # psetx = particleset_from_particlefile(fieldset, pclass=zParticle, filename=filename,
 # #                                            restart=True, restarttime=np.nanmin)
 # # lonx = psetx.particle_data['lon']
 # # latx = psetx.particle_data['lat']
@@ -184,7 +187,7 @@ def test_cpu_lim(coords, lon, cpu_lim=None, coordsx=None, lonx=None):
 # # print('EUC particles.')
 # # # pset_start = np.nanmin(psetx.time)
 # # repeats = 110
-# # pset = main.pset_euc(fieldset, zParticle, py, px, pz,
+# # pset = pset_euc(fieldset, zParticle, py, px, pz,
 # #                       timedelta(days=6), fieldset.U.grid.time[-1], repeats)
 
 # # # print('Adding particles.')

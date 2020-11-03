@@ -25,7 +25,7 @@ TODO: create new OFAM3 mesh mask
 TODO: Check chunking
 TODO:
 """
-import cfg
+
 import math
 import random
 import parcels
@@ -35,6 +35,7 @@ from pathlib import Path
 from datetime import datetime
 from parcels import (FieldSet, ParticleSet, VectorField)
 
+import cfg
 
 def from_ofam(filenames, variables, dimensions, indices=None, mesh='spherical',
               allow_time_extrapolation=None, field_chunksize='auto',
@@ -181,11 +182,11 @@ def ofam_fieldset(time_bnds='full', exp='hist', chunks=300, add_xfields=True):
     return fieldset
 
 
-def generate_sim_id(lon, v=0, exp='hist', randomise=False,
-                    restart=True, xlog=None):
+def generate_xid(lon, v=0, exp='hist', randomise=False,
+                 restart=True, xlog=None):
     """Create name to save particle file (looks for unsaved filename)."""
     if not restart:
-        head = 'sim_{}_{}_v'.format(exp, int(lon))  # Start of filename.
+        head = 'plx_{}_{}_v'.format(exp, int(lon))  # Start of filename.
         # Copy given index or find a random number.
         i = random.randint(0, 100) if randomise else v
 
@@ -193,21 +194,21 @@ def generate_sim_id(lon, v=0, exp='hist', randomise=False,
         while (cfg.data/'{}{}r00.nc'.format(head, i)).exists():
             i = random.randint(0, 100) if randomise else i + 1
 
-        sim_id = cfg.data/'{}{}r00.nc'.format(head, i)
+        xid = cfg.data/'{}{}r00.nc'.format(head, i)
         if xlog:
             xlog['v'], xlog['r'] = i, 0
 
     # Increment run index for new output file name.
     else:
         r = 0
-        sim_id = cfg.data/'sim_{}_{}_v{}r00.nc'.format(exp, int(lon), v)
-        sims = [s for s in sim_id.parent.glob(str(sim_id.stem[:-2]) + '*.nc')]
-        r = max([int(sim.stem[-2:]) for sim in sims]) + 1
-        sim_id = cfg.data/'{}{:02d}.nc'.format(sim_id.stem[:-2], r)
+        xid = cfg.data/'plx_{}_{}_v{}r00.nc'.format(exp, int(lon), v)
+        sims = [s for s in xid.parent.glob(str(xid.stem[:-2]) + '*.nc')]
+        r = max([int(xid.stem[-2:]) for sim in sims]) + 1
+        xid = cfg.data/'{}{:02d}.nc'.format(xid.stem[:-2], r)
         if xlog:
             xlog['v'], xlog['r'] = v, r
 
-    return sim_id
+    return xid
 
 
 def pset_euc(fieldset, pclass, lon, dy, dz, repeatdt, pset_start, repeats,

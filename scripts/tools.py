@@ -6,15 +6,14 @@ author: Annette Stellema (astellemas@gmail.com)
 
 class CustomAdapter(logging.LoggerAdapter):
     def process(self, msg, kwargs):
-        return '[%s] %s' % (self.extra['sim_id'], msg), kwargs
-    loggen = CustomAdapter(logger, {'sim_id': sim_id.stem})
+        return '[%s] %s' % (self.extra['xid'], msg), kwargs
+    loggen = CustomAdapter(logger, {'xid': xid.stem})
 """
 import os
 import sys
 import math
 import logging
 import calendar
-import collections
 import numpy as np
 import xarray as xr
 import pandas as pd
@@ -44,7 +43,7 @@ def mlogger(name, parcels=False, misc=True):
 
     loggers = cfg.loggers
     name = 'misc' if misc else name
-    if Path(sys.argv[0]).stem in ['sim', 'sim_test']:
+    if Path(sys.argv[0]).stem in ['plx', 'plx_test']:
         name = 'sim' if cfg.home != Path('E:/') else 'test_sim'
         parcels = True
         misc = False
@@ -87,7 +86,7 @@ def mlogger(name, parcels=False, misc=True):
         logger.addHandler(c_handler)
         logger.addHandler(f_handler)
         logger.setLevel(logging.DEBUG)
-        logger.addFilter(NoWarnFilter())
+        # logger.addFilter(NoWarnFilter())
 
         # logger.propagate = False
         loggers[name] = logger
