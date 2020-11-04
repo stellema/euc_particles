@@ -14,9 +14,8 @@ from datetime import datetime
 
 import cfg
 from vfncs import EUC_bnds_static
-hfile = [cfg.ofam/'ocean_u_{}_{:02d}.nc'.format(y, m) for m in range(1, 13) for y in range(2012, 2013)]
+hfile = [cfg.ofam/'ocean_u_{}_{:02d}.nc'.format(y, m) for m in range(1, 13) for y in range(1981, 2013)]
 rfile = [cfg.ofam/'ocean_u_{}_{:02d}.nc'.format(y, m) for m in range(1, 13) for y in range(2070, 2102)]
-rfile=hfile
 lat = 2.6
 lon = np.arange(165, 279)
 z1, z2 = 25, 350
@@ -54,6 +53,6 @@ dtx[var].attrs['bounds'] = ('Integrated between z=({}, {}), y=({}, {})'
 dtx[var].attrs['info'] = ('Monthly mean, sel u > 0, * area, climo mean')
 dtx.attrs['history'] = (datetime.now().strftime('%a %b %d %H:%M:%S %Y') +
                         ': Depth-integrated velocity (github.com/stellema)\n')
-
+dtx_loaded = dtx.load()
 # Save to /data as a netcdf file.
-dtx.to_netcdf(cfg.data/'ofam_EUC_transport.nc')
+dtx_loaded.to_netcdf(cfg.data/'ofam_EUC_transport.nc')
