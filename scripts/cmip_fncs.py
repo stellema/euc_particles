@@ -15,98 +15,80 @@ from tools import idx, idx2d
 
 def subset_cmip(mip, m, var, exp, depth, lat, lon):
     mod = cfg.mod6 if mip == 6 else cfg.mod5
-    lon_alt = np.where(lon > 180, -1 * (360 - lon), lon)
-
+    # File path.
     cmip = cfg.home/'model_output/CMIP{}/CLIMOS/'.format(mip)
     if var in ['uvo', 'vvo']:
         cmip = cmip/'ocean_transport/'
-
     file = cmip/'{}_Omon_{}_{}_climo.nc'.format(var, mod[m]['id'], exp)
-    # Fixed lon to search in 2D coords.
-    lat_ = 0
-    if np.array(lon).size == 1:
-        lon_ = lon
-        lon_alt_ = lon_alt
+
+    # Make sure single points are lists.
+    lat = [lat] if np.array(lat).size == 1 else lat
+    lon = [lon] if np.array(lon).size == 1 else lon
+    ds = xr.open_dataset(str(file))
+    # Fixes random error.
+    if mod[m]['id'] in ['GFDL-CM3', 'GFDL-ESM2G', 'GFDL-ESM2M']:
+        ds.coords['lon'] = xr.where(ds.lon < 0, ds.lon + 360, ds.lon)
+
+    dx = ds[var]
+    # Depth level indexes.
+    # Convert depths to centimetres to find levels.
+    if (mip == 6 and hasattr(dx[dx.dims[1]], 'units') and dx[dx.dims[1]].attrs['units'] != 'm'):
+        dx.coords[dx.dims[1]] = dx[dx.dims[1]]/100
+
+    zi = [idx(dx[mod[m]['cs'][0]], z) for z in depth]
+
+    if mod[m]['nd'] == 1:  # 1D coords.
+        yi = [idx(dx[mod[m]['cs'][1]], y) for y in lat]
+        xi = [idx(dx[mod[m]['cs'][2]], x) for x in lon]
+
+    elif mod[m]['nd'] == 2:  # 2D coords.
+        yi = [idx2d(dx[mod[m]['cs'][1]], dx[mod[m]['cs'][2]], y, lon[0])[0] for y in lat]
+        # Longitude conversion check.
+        if dx[mod[m]['cs'][2]].max() >= 350:
+            xi = [idx2d(dx[mod[m]['cs'][1]], dx[mod[m]['cs'][2]], lat[0], x)[1] for x in lon]
+            if 'rlon' in dx.dims and 'lon' in ds.coords:  # Weird error fix.
+                xi = [idx2d(ds.lat, ds.lon, lat[0], x)[1] for x in lon]
+        else:
+            lon_alt = [np.where(x > 180, -1 * (360 - x), x) for x in lon]
+            xi = [idx2d(dx[mod[m]['cs'][1]], dx[mod[m]['cs'][2]], lat[0], x)[1] for x in lon_alt]
+
+    # Switch indexes if lat goes N->S.
+    # Subset depths.
+    if 'lev' in dx.dims:
+        dx = dx.isel(lev=slice(zi[0], zi[1] + 1))
+    elif 'olevel' in dx.dims:
+        dx = dx.isel(olevel=slice(zi[0], zi[1] + 1))
     else:
-        lon_ = lon[0]
-        lon_alt_ = lon_alt[0]
+        print('NI: Depth dim of {} dims={}'.format(mod[m]['id'], dx.dims))
 
-    if file.exists():
-        ds = xr.open_dataset(str(file))
-
-        if mod[m]['id'] in ['GFDL-CM3', 'GFDL-ESM2G', 'GFDL-ESM2M']:
-            ds.coords['lon'] = xr.where(ds.lon < 0, ds.lon+360, ds.lon)
-        dx = ds[var]
-        # Depth level indexes.
-        # Convert depths to centimetres to find levels.
-        if (mip == 6 and hasattr(dx[dx.dims[1]], 'units') and dx[dx.dims[1]].attrs['units'] != 'm'):
-            c = 1
-            dx.coords[dx.dims[1]] = dx[dx.dims[1]]/100
-        else:
-            c = 1
-        zi = [idx(dx[mod[m]['cs'][0]], depth[0] * c),
-              idx(dx[mod[m]['cs'][0]], depth[1] * c) + 1]
-
-        if mod[m]['nd'] == 1: # 1D coords.
-            yi = [idx(dx[mod[m]['cs'][1]], lat[0]),
-                  idx(dx[mod[m]['cs'][1]], lat[1]) + 1]
-            if np.array(lon).size == 1:  # If only looking for one lon
-                xi = idx(dx[mod[m]['cs'][2]], lon_)
-            else:
-                xi = [idx(dx[mod[m]['cs'][2]], xx) for xx in lon]
-        else:  # 2D coords.
-            yi = [idx2d(dx[mod[m]['cs'][1]], dx[mod[m]['cs'][2]], lat[0], lon_)[0],
-                  idx2d(dx[mod[m]['cs'][1]], dx[mod[m]['cs'][2]], lat[1], lon_)[0] + 1]
-
-            # Longitude conversion check.
-            if dx[mod[m]['cs'][2]].max() >= 350:
-                if np.array(lon).size == 1:  # If only looking for one lon
-                    xi = idx2d(dx[mod[m]['cs'][1]], dx[mod[m]['cs'][2]], lat_, lon_)[1]
-                    if 'rlon' in dx.dims and 'lon' in ds.coords:
-                        xi = idx2d(ds.lat, ds.lon, lat_, lon_)[1]
-                else:
-                    xi = [idx2d(dx[mod[m]['cs'][1]], dx[mod[m]['cs'][2]], lat_, xx)[1] for xx in lon]
-                    if 'rlon' in dx.dims and 'lon' in ds.coords:
-                        xi = [idx2d(ds.lat, ds.lon, lat_, xx)[1] for xx in lon]
-            else:
-                if np.array(lon).size == 1:  # If only looking for one lon
-                    xi = idx2d(dx[mod[m]['cs'][1]], dx[mod[m]['cs'][2]], lat_, lon_alt_)[1]
-
-                else:
-                    xi = [idx2d(dx[mod[m]['cs'][1]], dx[mod[m]['cs'][2]], lat_, xx)[1] for xx in lon_alt]
-
-        # Switch indexes if lat goes N->S.
-        yf = yi
+    # Subset lats/lons (dx) and sum transport (dxx).
+    yf, xf = yi, xi
+    if np.array(lat).size > 1:
+        yf = slice(yi[0], yi[1] + 1)
         if yi[0] > yi[1]:
-            yf[0], yf[1] = yi[1] - 1, yi[0] + 1
-
-        # Subset depths.
-        if 'lev' in dx.dims:
-            dx = dx.isel(lev=slice(zi[0], zi[1]))
-        elif 'olevel' in dx.dims:
-            dx = dx.isel(olevel=slice(zi[0], zi[1]))
+            yf = slice(yi[1], yi[0] + 1)
+    if np.array(lon).size > 1:
+        xf = slice(xi[0], xi[1] + 1)
+        if xi[0] > xi[1]:
+            xf = np.append(np.arange(xi[0], dx.shape[-1]), np.arange(xi[1]+1))
+    if 'y' in dx.dims:
+        dx = dx.isel(y=yf, x=xf)
+    elif 'j' in dx.dims:
+        if mod[m]['id'] in ['CMCC-CM2-SR5']:
+            dx = dx.isel(i=yf, j=xf)
         else:
-            print('NI: Depth dim of {} dims={}'.format(mod[m]['id'], dx.dims))
+            dx = dx.isel(j=yf, i=xf)
+    elif 'nlat' in dx.dims:
+        dx = dx.isel(nlat=yf, nlon=xf)
+    elif 'rlat' in dx.dims:
+        dx = dx.isel(rlat=yf, rlon=xf)
+    elif 'lat' in dx.dims:
+        dx = dx.isel(lat=yf, lon=xf)
+    else:
+        print('NI:Lat dim of {} dims={}'.format(mod[m]['id'], dx.dims))
 
-        # Subset lats/lons (dx) and sum transport (dxx).
-        if 'y' in dx.dims:
-            dx = dx.isel(y=slice(yf[0], yf[1]), x=xi)
-        elif 'j' in dx.dims:
-            if mod[m]['id'] in ['CMCC-CM2-SR5']:
-                dx = dx.isel(i=slice(yf[0], yf[1]), j=xi)
-            else:
-                dx = dx.isel(j=slice(yf[0], yf[1]), i=xi)
-        elif 'nlat' in dx.dims:
-            dx = dx.isel(nlat=slice(yf[0], yf[1]), nlon=xi)
-        elif 'rlat' in dx.dims:
-            dx = dx.isel(rlat=slice(yf[0], yf[1]), rlon=xi)
-        elif 'lat' in dx.dims:
-            dx = dx.isel(lat=slice(yf[0], yf[1]), lon=xi)
-        else:
-            print('NI:Lat dim of {} dims={}'.format(mod[m]['id'], dx.dims))
-
-        if mip == 6 and var in ['uvo', 'vvo'] and mod[m]['id'] in ['MIROC-ES2L', 'MIROC6']:
-            dx = dx*-1
+    if mip == 6 and var in ['uvo', 'vvo'] and mod[m]['id'] in ['MIROC-ES2L', 'MIROC6']:
+        dx = dx*-1
     return dx
 
 
@@ -152,7 +134,7 @@ def OFAM_EUC(depth, lat, lon):
     zi = [idx(dz[1:], depth[0]), idx(dz[1:], depth[1], 'greater') + 1]
     zi1 = 5  # sw_ocean[4]=25, st_ocean[5]=28, sw_ocean[5]=31.2
     zi2 = 29  # st_ocean[29]=325.88, sw_ocean[29]=349.5
-    zi = [5, 29+1]
+    zi = [4, 30+1]
 
     # Slice lat, lon and depth.
     fh = fh.u.sel(yu_ocean=slice(lat[0], lat[1]), xu_ocean=lon).isel(st_ocean=slice(zi[0], zi[1]))

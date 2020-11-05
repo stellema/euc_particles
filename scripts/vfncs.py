@@ -11,6 +11,7 @@ import numpy as np
 import xarray as xr
 from pathlib import Path
 from collections import OrderedDict
+from datetime import timedelta
 
 import cfg
 from tools import mlogger, timeit, idx, get_edge_depth, get_depth_width
@@ -265,25 +266,26 @@ def EUC_bnds_static(du, lon=None, z1=25, z2=350, lat=2.6,
         du4 (DataArray): The zonal velocity in the EUC region.
 
     """
-    z1 = get_edge_depth(z1, index=True)
-    z2 = get_edge_depth(z2, index=True)
+    z1 = get_edge_depth(z1, index=True) + 1  # 5
+    z2 = get_edge_depth(z2, index=True) - 1  # 29 = 350 sw/325 st
 
     # Slice depth and longitude.
-    du = du.isel(st_ocean=slice(z1, z2 + 1)).sel(yu_ocean=slice(-lat, lat))
+    du = du.u.isel(st_ocean=slice(z1, z2 + 1)).sel(yu_ocean=slice(-lat, lat))
     if lon is not None:
         du = du.sel(xu_ocean=lon)
 
     if resample:
-        du = du.resample(Time=resample).mean()
-
-    # Remove negative/zero velocities.
-    du = du.u.where(du.u > 0, np.nan)
+        du = du.resample(Time=resample, skipna=True, keep_attrs=True,
+                         loffset=timedelta(days=15)).mean("Time")
 
     # Multiple by cell area (depth x width).
     if area:
         dz = get_depth_width()
         dz = dz.isel(st_ocean=slice(z1, z2 + 1))
         du = du * dz * cfg.LAT_DEG * 0.1
+
+    # Remove negative/zero velocities.
+    du = du.where(du > 0, np.nan)
     return du
 
 

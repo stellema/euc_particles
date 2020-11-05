@@ -26,6 +26,9 @@ lat, depth = [-2.6, 2.6], [25, 350]
 fh, fr = OFAM_EUC(depth, lat, lon)
 fh = fh.mean('Time')/1e6
 fr = fr.mean('Time')/1e6
+ds = xr.open_dataset(cfg.data/'ofam_EUC_transport.nc')
+fh = ds.euc.mean('Time').isel(exp=0)/1e6
+fr = ds.euc.mean('Time').isel(exp=1)/1e6
 
 # CMIP6
 d6 = CMIP_EUC(time, depth, lat, lon, mip=6, lx=lx6, mod=mod6)

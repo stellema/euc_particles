@@ -14,17 +14,21 @@ from datetime import datetime
 
 import cfg
 from vfncs import EUC_bnds_static
-hfile = [cfg.ofam/'ocean_u_{}_{:02d}.nc'.format(y, m) for m in range(1, 13) for y in range(1981, 2013)]
-rfile = [cfg.ofam/'ocean_u_{}_{:02d}.nc'.format(y, m) for m in range(1, 13) for y in range(2070, 2102)]
+
+hfile = [cfg.ofam/'ocean_u_{}_{:02d}.nc'.format(y, m) for y in range(1981, 2013) for m in range(1, 13)]
+rfile = [cfg.ofam/'ocean_u_{}_{:02d}.nc'.format(y, m) for y in range(2070, 2102) for m in range(1, 13)]
+# hfile = [cfg.ofam/'ocean_u_{}_{:02d}.nc'.format(y, m) for y in range(2012, 2013) for m in range(1, 13)]
+# rfile=hfile
 lat = 2.6
 lon = np.arange(165, 279)
 z1, z2 = 25, 350
-dh = xr.open_mfdataset(hfile)
-dr = xr.open_mfdataset(rfile)
+
+dh = xr.open_mfdataset(hfile, combine='by_coords', concat_dim="Time")
+dr = xr.open_mfdataset(rfile, combine='by_coords', concat_dim="Time")
 
 # Subset data, remove westward, resample monthly and multiply by cell area.
-dh = EUC_bnds_static(dh, lon, z1, z2, lat, "1MS", area=True)
-dr = EUC_bnds_static(dr, lon, z1, z2, lat, "1MS", area=True)
+dh = EUC_bnds_static(dh, lon, z1, z2, lat, "MS", area=True)
+dr = EUC_bnds_static(dr, lon, z1, z2, lat, "MS", area=True)
 
 # Merge data along new dimension "exp".
 du = xr.concat([dh, dr], pd.Index(['historical', 'rcp85'], name="exp"))
@@ -33,7 +37,10 @@ du = xr.concat([dh, dr], pd.Index(['historical', 'rcp85'], name="exp"))
 z1, z2 = dh.st_ocean[0].item(), dh.st_ocean[-1].item()
 
 # Calculate transport sum.
-du = du.sum(dim=['st_ocean', 'yu_ocean'])
+du = du.sum(dim=['st_ocean', 'yu_ocean'], skipna=True)
+
+# Sum of NaNs is zero.
+du = du.where(du != 0, np.nan)
 
 # Calculate climotology.
 du = du.groupby('Time.month').mean('Time')
@@ -55,4 +62,4 @@ dtx.attrs['history'] = (datetime.now().strftime('%a %b %d %H:%M:%S %Y') +
                         ': Depth-integrated velocity (github.com/stellema)\n')
 dtx_loaded = dtx.load()
 # Save to /data as a netcdf file.
-dtx_loaded.to_netcdf(cfg.data/'ofam_EUC_transport.nc')
+dtx_loaded.to_netcdf(cfg.data/'ofam_EUC_transportx.nc')
