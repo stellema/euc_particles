@@ -19,7 +19,14 @@ from plot_particles import plot3D
 logger = mlogger('particles', parcels=False, misc=False)
 
 
-def particle_info(xid, plot=True):
+def particle_info(xid, latest=True, plot=True):
+    if latest:
+        try:
+            files = [s for s in xid.parent.glob(str(xid.stem[:-2]) + '*.nc')]
+            r = max([int(f.stem[-2:]) for f in files])
+            xid = cfg.data/'{}{:02d}.nc'.format(xid.stem[:-2], r)
+        except:
+            pass
 
     ds = xr.open_dataset(str(xid), decode_cf=False)
 
@@ -56,8 +63,8 @@ def particle_info(xid, plot=True):
                 .format(xid.stem, file, start, west, (west/start)*100,
                         N, end, dels, (dels/N)*100)
                 + 'uB={}({:.1f}%) max={:.0f} median={:.0f} mean={:.0f}'
-                .format(ubN, (ubN/N)*100, np.nanmax(ub), np.nanmedian(ub[ub > 0]),
-                        np.nanmean(ub[ub > 0])))
+                .format(ubN, (ubN/N)*100, np.nanmax(ub),
+                        np.nanmedian(ub[ub > 0]), np.nanmean(ub[ub > 0])))
 
     # Plot some figures!
     if plot:
@@ -70,12 +77,14 @@ if __name__ == "__main__" and cfg.home.drive != 'E:':
     p = ArgumentParser(description="""Run EUC Lagrangian experiment.""")
     p.add_argument('-f', '--file', default='plx_hist_190_v13r00.nc', type=str,
                    help='ParticleFile name.')
+    p.add_argument('-n', '--latest', default=1, type=int,
+                   help='Latest restart file.')
     p.add_argument('-p', '--plot', default=1, type=int, help='Plot.')
     args = p.parse_args()
     file = args.file
     xid = cfg.data/file
-    particle_info(xid, plot=args.plot)
+    particle_info(xid, latest=args.latest, plot=args.plot)
 elif __name__ == "__main__":
-    xid = cfg.data/'plx_rcp_190_v0r00.nc'
+    xid = cfg.data/'plx_hist_190_v48r00.nc'
     plot = 0
     particle_info(xid, plot)

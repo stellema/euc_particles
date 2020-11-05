@@ -153,7 +153,7 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
     # Log experiment details.
     if rank == 0:
         logger.info(' {}: Run={}d: {} to {}: Particles={}'.format(xlog['id'], xlog['run'], xlog['Ti'], xlog['Tf'], xlog['N']))
-        logger.info(' {}: Rep={}d: dt={:.0f}m: Out={:.0f}d: Land={} Vmin={}'.format(xlog['id'], xlog['rdt'], xlog['dt'], xlog['outdt'], xlog['land'], xlog['Vmin']))
+        logger.info(' {}: Tmp={}: Rep={}d: dt={:.0f}m: Out={:.0f}d: Land={} Vmin={}'.format(xlog['id'], xlog['out'], xlog['rdt'], xlog['dt'], xlog['outdt'], xlog['land'], xlog['Vmin']))
     # logger.debug(' {}: Rank={:>2}: {}: Particles={}'.format(xlog['id'], rank, xlog['out'], xlog['start_r']))
 
     # Kernels.
