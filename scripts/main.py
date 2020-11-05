@@ -132,7 +132,7 @@ def ofam_fieldset(time_bnds='full', exp='hist', chunks=300, add_xfields=True):
                          field_chunksize=chunks, chunkdims_name_map=nmap)
     # Add Unbeach velocity vectorfield to fieldset.
     if add_xfields:
-        xf = [str(cfg.data/'ofam_field_beach.nc')]
+        xf = [str(cfg.data/'ofam_field_beachx.nc')]
         zf = [str(cfg.data/'ofam_field_zone.nc')]
 
         xvars = {'Ub': 'Ub',
