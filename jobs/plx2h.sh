@@ -16,4 +16,3 @@ EXP="hist"
 LON=220
 python3 /g/data/e14/as3189/OFAM/scripts/plx_particleset.py -e $EXP -x $LON -r 1200 -v 1
 mpirun -np 48 python3 /g/data/e14/as3189/OFAM/scripts/plx.py -e $EXP -x $LON -r 1200 -v 1 -f 1
-python3 /g/data/e14/as3189/OFAM/scripts/plx_info.py -f "plx_${EXP}_${LON}_v1r00.nc" -n 1
