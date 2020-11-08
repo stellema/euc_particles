@@ -21,12 +21,10 @@ logger = mlogger('particles', parcels=False, misc=False)
 
 def particle_info(xid, latest=True, plot=True):
     if latest:
-        try:
-            files = [s for s in xid.parent.glob(str(xid.stem[:-2]) + '*.nc')]
-            r = max([int(f.stem[-2:]) for f in files])
-            xid = cfg.data/'{}{:02d}.nc'.format(xid.stem[:-2], r)
-        except:
-            pass
+        r = int(xid.stem[-2:])
+        r = np.max([int(f.stem[-2:]) for f in xid.parent.glob(str(xid.stem[:-2]) + '*.nc')])
+        xid = cfg.data/'{}{:02d}.nc'.format(xid.stem[:-2], r)
+        print(r, xid.name)
 
     ds = xr.open_dataset(str(xid), decode_cf=False)
 

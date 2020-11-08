@@ -43,7 +43,9 @@ du = du.sum(dim=['st_ocean', 'yu_ocean'], skipna=True)
 du = du.where(du != 0, np.nan)
 
 # Calculate climotology.
+print("EUC transport climatology calculating...")
 du = du.groupby('Time.month').mean('Time')
+print("EUC transport climatology calculated.")
 
 # Renaming 'month' coord back to 'Time'.
 du = du.rename({'month': 'Time'})
@@ -60,6 +62,9 @@ dtx[var].attrs['bounds'] = ('Integrated between z=({}, {}), y=({}, {})'
 dtx[var].attrs['info'] = ('Monthly mean, sel u > 0, * area, climo mean')
 dtx.attrs['history'] = (datetime.now().strftime('%a %b %d %H:%M:%S %Y') +
                         ': Depth-integrated velocity (github.com/stellema)\n')
+print("EUC transport loading...")
 dtx_loaded = dtx.load()
+print("EUC transport loaded.")
 # Save to /data as a netcdf file.
 dtx_loaded.to_netcdf(cfg.data/'ofam_EUC_transportx.nc')
+print("Saved: ofam_EUC_transportx.nc.")
