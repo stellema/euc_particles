@@ -19,7 +19,7 @@ from plot_particles import plot3D
 logger = mlogger('particles', parcels=False, misc=False)
 
 
-def particle_info(xid, latest=True, plot=True):
+def particle_info(xid, latest=True):
     if latest:
         r = int(xid.stem[-2:])
         r = np.max([int(f.stem[-2:]) for f in xid.parent.glob(str(xid.stem[:-2]) + '*.nc')])
@@ -65,8 +65,7 @@ def particle_info(xid, latest=True, plot=True):
                         np.nanmedian(ub[ub > 0]), np.nanmean(ub[ub > 0])))
 
     # Plot some figures!
-    if plot:
-        plot3D(xid, ds)
+    plot3D(xid, ds)
 
     return
 
@@ -77,12 +76,10 @@ if __name__ == "__main__" and cfg.home.drive != 'E:':
                    help='ParticleFile name.')
     p.add_argument('-n', '--latest', default=1, type=int,
                    help='Latest restart file.')
-    p.add_argument('-p', '--plot', default=1, type=int, help='Plot.')
     args = p.parse_args()
     file = args.file
     xid = cfg.data/file
-    particle_info(xid, latest=args.latest, plot=args.plot)
+    particle_info(xid, latest=args.latest)
 elif __name__ == "__main__":
     xid = cfg.data/'plx_hist_190_v48r00.nc'
-    plot = 0
-    particle_info(xid, plot)
+    particle_info(xid)

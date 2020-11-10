@@ -1,0 +1,13 @@
+[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m
+======================================================================================
+                  Resource Usage on 2020-11-09 22:57:28:
+   Job Id:             13344077.gadi-pbs
+   Project:            e14
+   Exit Status:        0
+   Service Units:      1233.25
+   NCPUs Requested:    48                     NCPUs Used: 48              
+                                           CPU Time Used: 296:23:04                                  
+   Memory Requested:   192.0GB               Memory Used: 165.77GB        
+   Walltime requested: 14:00:00            Walltime Used: 12:50:47        
+   JobFS requested:    100.0MB                JobFS used: 11.87MB         
+======================================================================================

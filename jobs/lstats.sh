@@ -10,12 +10,16 @@
 #PBS -l storage=gdata/hh5+gdata/e14
 module use /g/data3/hh5/public/modules
 module load conda/analysis3-20.10
-python3 /g/data/e14/as3189/OFAM/scripts/plx_info.py -f "plx_hist_165_v0r03.nc"
-python3 /g/data/e14/as3189/OFAM/scripts/plx_info.py -f "plx_hist_190_v0r03.nc"
-python3 /g/data/e14/as3189/OFAM/scripts/plx_info.py -f "plx_hist_220_v0r03.nc"
-python3 /g/data/e14/as3189/OFAM/scripts/plx_info.py -f "plx_hist_250_v0r03.nc"
-python3 /g/data/e14/as3189/OFAM/scripts/plx_info.py -f "plx_rcp_165_v0r03.nc"
-python3 /g/data/e14/as3189/OFAM/scripts/plx_info.py -f "plx_rcp_190_v0r03.nc"
-python3 /g/data/e14/as3189/OFAM/scripts/plx_info.py -f "plx_rcp_220_v0r03.nc"
-python3 /g/data/e14/as3189/OFAM/scripts/plx_info.py -f "plx_rcp_250_v0r03.nc"
+python3 /g/data/e14/as3189/OFAM/scripts/plx_info.py -f "plx_hist_165_v1r03.nc" -n 0
+python3 /g/data/e14/as3189/OFAM/scripts/plx_info.py -f "plx_hist_190_v1r03.nc" -n 0
+python3 /g/data/e14/as3189/OFAM/scripts/plx_info.py -f "plx_hist_220_v1r03.nc" -n 0
+python3 /g/data/e14/as3189/OFAM/scripts/plx_info.py -f "plx_hist_250_v1r03.nc" -n 0
+python3 /g/data/e14/as3189/OFAM/scripts/plx_info.py -f "plx_rcp_165_v1r03.nc" -n 0
+python3 /g/data/e14/as3189/OFAM/scripts/plx_info.py -f "plx_rcp_190_v1r03.nc" -n 0
+python3 /g/data/e14/as3189/OFAM/scripts/plx_info.py -f "plx_rcp_220_v1r03.nc" -n 0
+python3 /g/data/e14/as3189/OFAM/scripts/plx_info.py -f "plx_rcp_250_v1r03.nc" -n 0
+python3 /g/data/e14/as3189/OFAM/scripts/plx_info.py -f "plx_rcp_165_v1r04.nc" -n 0
+python3 /g/data/e14/as3189/OFAM/scripts/plx_info.py -f "plx_rcp_190_v1r04.nc" -n 0
+python3 /g/data/e14/as3189/OFAM/scripts/plx_info.py -f "plx_rcp_220_v1r04.nc" -n 0
+python3 /g/data/e14/as3189/OFAM/scripts/plx_info.py -f "plx_rcp_250_v1r04.nc" -n 0
 

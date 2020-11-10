@@ -178,3 +178,78 @@
 2020-11-08 06:34:10: plx_rcp_220_v1r05: Runtime=1200d: 2085-07-27 to 2082-04-14: Rep=6d (x199)
 2020-11-08 06:34:10: plx_rcp_220_v1r05: Lon=220: Lat=[-2.6-2.6 x0.1]: Depth=[25-350m x25]f32
 2020-11-08 06:34:10: Saved: /g/data/e14/as3189/OFAM/data/r_plx_rcp_220_v1r05.nc
+2020-11-09 10:12:20:Generating restart file from: plx_rcp_190_v1r05
+2020-11-09 10:12:20:Generating restart file from: plx_rcp_165_v1r05
+2020-11-09 10:12:20:Generating restart file from: plx_rcp_220_v1r05
+2020-11-09 10:12:20:Generating restart file from: plx_rcp_250_v1r05
+2020-11-09 10:12:47:Generating restart file from: plx_hist_165_v1r04
+2020-11-09 10:12:47:Generating restart file from: plx_hist_220_v1r04
+2020-11-09 10:12:47:Generating restart file from: plx_hist_250_v1r04
+2020-11-09 10:12:47:Generating restart file from: plx_hist_190_v1r04
+2020-11-09 14:43:05: plx_rcp_190_v1r06: Particles: File=279645 New=147658 West=57059 I=90599 Total=370244
+2020-11-09 14:43:05: plx_rcp_190_v1r06: Runtime=1200d: 2082-04-14 to 2078-12-31: Rep=6d (x199)
+2020-11-09 14:43:05: plx_rcp_190_v1r06: Lon=190: Lat=[-2.6-2.6 x0.1]: Depth=[25-350m x25]f32
+2020-11-09 14:43:05: Saved: /g/data/e14/as3189/OFAM/data/r_plx_rcp_190_v1r06.nc
+2020-11-09 15:20:20: plx_hist_190_v1r05: Particles: File=249035 New=147658 West=59589 I=88069 Total=337104
+2020-11-09 15:20:20: plx_hist_190_v1r05: Runtime=1200d: 1996-07-28 to 1993-04-15: Rep=6d (x199)
+2020-11-09 15:20:20: plx_hist_190_v1r05: Lon=190: Lat=[-2.6-2.6 x0.1]: Depth=[25-350m x25]f32
+2020-11-09 15:20:20: Saved: /g/data/e14/as3189/OFAM/data/r_plx_hist_190_v1r05.nc
+2020-11-09 15:25:23: plx_rcp_165_v1r06: Particles: File=243588 New=147658 West=45416 I=102242 Total=345830
+2020-11-09 15:25:23: plx_rcp_165_v1r06: Runtime=1200d: 2082-04-14 to 2078-12-31: Rep=6d (x199)
+2020-11-09 15:25:23: plx_rcp_165_v1r06: Lon=165: Lat=[-2.6-2.6 x0.1]: Depth=[25-350m x25]f32
+2020-11-09 15:25:23: Saved: /g/data/e14/as3189/OFAM/data/r_plx_rcp_165_v1r06.nc
+2020-11-09 15:28:12: plx_rcp_250_v1r06: Particles: File=255531 New=147658 West=75010 I=72648 Total=328179
+2020-11-09 15:28:12: plx_rcp_250_v1r06: Runtime=1200d: 2082-04-14 to 2078-12-31: Rep=6d (x199)
+2020-11-09 15:28:12: plx_rcp_250_v1r06: Lon=250: Lat=[-2.6-2.6 x0.1]: Depth=[25-350m x25]f32
+2020-11-09 15:28:12: Saved: /g/data/e14/as3189/OFAM/data/r_plx_rcp_250_v1r06.nc
+2020-11-09 15:29:16: plx_rcp_220_v1r06: Particles: File=267993 New=147658 West=66931 I=80727 Total=348720
+2020-11-09 15:29:16: plx_rcp_220_v1r06: Runtime=1200d: 2082-04-14 to 2078-12-31: Rep=6d (x199)
+2020-11-09 15:29:16: plx_rcp_220_v1r06: Lon=220: Lat=[-2.6-2.6 x0.1]: Depth=[25-350m x25]f32
+2020-11-09 15:29:16: Saved: /g/data/e14/as3189/OFAM/data/r_plx_rcp_220_v1r06.nc
+2020-11-09 16:10:17: plx_hist_220_v1r05: Particles: File=241132 New=147658 West=71376 I=76282 Total=317414
+2020-11-09 16:10:17: plx_hist_220_v1r05: Runtime=1200d: 1996-07-28 to 1993-04-15: Rep=6d (x199)
+2020-11-09 16:10:17: plx_hist_220_v1r05: Lon=220: Lat=[-2.6-2.6 x0.1]: Depth=[25-350m x25]f32
+2020-11-09 16:10:17: Saved: /g/data/e14/as3189/OFAM/data/r_plx_hist_220_v1r05.nc
+2020-11-09 16:10:18: plx_hist_165_v1r05: Particles: File=220929 New=147658 West=59539 I=88119 Total=309048
+2020-11-09 16:10:18: plx_hist_165_v1r05: Runtime=1200d: 1996-07-28 to 1993-04-15: Rep=6d (x199)
+2020-11-09 16:10:18: plx_hist_165_v1r05: Lon=165: Lat=[-2.6-2.6 x0.1]: Depth=[25-350m x25]f32
+2020-11-09 16:10:18: Saved: /g/data/e14/as3189/OFAM/data/r_plx_hist_165_v1r05.nc
+2020-11-09 16:13:47: plx_hist_250_v1r05: Particles: File=228009 New=147658 West=79697 I=67961 Total=295970
+2020-11-09 16:13:47: plx_hist_250_v1r05: Runtime=1200d: 1996-07-28 to 1993-04-15: Rep=6d (x199)
+2020-11-09 16:13:47: plx_hist_250_v1r05: Lon=250: Lat=[-2.6-2.6 x0.1]: Depth=[25-350m x25]f32
+2020-11-09 16:13:47: Saved: /g/data/e14/as3189/OFAM/data/r_plx_hist_250_v1r05.nc
+2020-11-09 21:29:30:Generating restart file from: plx_rcp_190_v1r06
+2020-11-09 21:29:30:Generating restart file from: plx_rcp_250_v1r06
+2020-11-09 21:29:30:Generating restart file from: plx_rcp_165_v1r06
+2020-11-09 21:30:14:Generating restart file from: plx_hist_190_v1r05
+2020-11-09 22:58:23:Generating restart file from: plx_rcp_220_v1r06
+2020-11-09 22:59:11:Generating restart file from: plx_hist_220_v1r05
+2020-11-09 22:59:11:Generating restart file from: plx_hist_165_v1r05
+2020-11-10 01:58:26: plx_rcp_190_v1r07: Particles: File=300993 New=147658 West=57135 I=90523 Total=391516
+2020-11-10 01:58:26: plx_rcp_190_v1r07: Runtime=1200d: 2078-12-31 to 2075-09-18: Rep=6d (x199)
+2020-11-10 01:58:26: plx_rcp_190_v1r07: Lon=190: Lat=[-2.6-2.6 x0.1]: Depth=[25-350m x25]f32
+2020-11-10 01:58:27: Saved: /g/data/e14/as3189/OFAM/data/r_plx_rcp_190_v1r07.nc
+2020-11-10 02:39:49: plx_hist_190_v1r06: Particles: File=280481 New=147658 West=65018 I=82640 Total=363121
+2020-11-10 02:39:49: plx_hist_190_v1r06: Runtime=1200d: 1993-04-15 to 1990-01-01: Rep=6d (x199)
+2020-11-10 02:39:49: plx_hist_190_v1r06: Lon=190: Lat=[-2.6-2.6 x0.1]: Depth=[25-350m x25]f32
+2020-11-10 02:39:49: Saved: /g/data/e14/as3189/OFAM/data/r_plx_hist_190_v1r06.nc
+2020-11-10 02:44:28: plx_rcp_165_v1r07: Particles: File=261850 New=147658 West=50109 I=97549 Total=359399
+2020-11-10 02:44:28: plx_rcp_165_v1r07: Runtime=1200d: 2078-12-31 to 2075-09-18: Rep=6d (x199)
+2020-11-10 02:44:28: plx_rcp_165_v1r07: Lon=165: Lat=[-2.6-2.6 x0.1]: Depth=[25-350m x25]f32
+2020-11-10 02:44:28: Saved: /g/data/e14/as3189/OFAM/data/r_plx_rcp_165_v1r07.nc
+2020-11-10 02:54:10: plx_rcp_250_v1r07: Particles: File=280023 New=147658 West=75489 I=72169 Total=352192
+2020-11-10 02:54:10: plx_rcp_250_v1r07: Runtime=1200d: 2078-12-31 to 2075-09-18: Rep=6d (x199)
+2020-11-10 02:54:10: plx_rcp_250_v1r07: Lon=250: Lat=[-2.6-2.6 x0.1]: Depth=[25-350m x25]f32
+2020-11-10 02:54:10: Saved: /g/data/e14/as3189/OFAM/data/r_plx_rcp_250_v1r07.nc
+2020-11-10 04:05:03: plx_rcp_220_v1r07: Particles: File=290197 New=147658 West=65262 I=82396 Total=372593
+2020-11-10 04:05:03: plx_rcp_220_v1r07: Runtime=1200d: 2078-12-31 to 2075-09-18: Rep=6d (x199)
+2020-11-10 04:05:03: plx_rcp_220_v1r07: Lon=220: Lat=[-2.6-2.6 x0.1]: Depth=[25-350m x25]f32
+2020-11-10 04:05:03: Saved: /g/data/e14/as3189/OFAM/data/r_plx_rcp_220_v1r07.nc
+2020-11-10 04:52:35: plx_hist_220_v1r06: Particles: File=270145 New=147658 West=72743 I=74915 Total=345060
+2020-11-10 04:52:36: plx_hist_220_v1r06: Runtime=1200d: 1993-04-15 to 1990-01-01: Rep=6d (x199)
+2020-11-10 04:52:36: plx_hist_220_v1r06: Lon=220: Lat=[-2.6-2.6 x0.1]: Depth=[25-350m x25]f32
+2020-11-10 04:52:36: Saved: /g/data/e14/as3189/OFAM/data/r_plx_hist_220_v1r06.nc
+2020-11-10 04:56:18: plx_hist_165_v1r06: Particles: File=242587 New=147658 West=57256 I=90402 Total=332989
+2020-11-10 04:56:18: plx_hist_165_v1r06: Runtime=1200d: 1993-04-15 to 1990-01-01: Rep=6d (x199)
+2020-11-10 04:56:18: plx_hist_165_v1r06: Lon=165: Lat=[-2.6-2.6 x0.1]: Depth=[25-350m x25]f32
+2020-11-10 04:56:18: Saved: /g/data/e14/as3189/OFAM/data/r_plx_hist_165_v1r06.nc

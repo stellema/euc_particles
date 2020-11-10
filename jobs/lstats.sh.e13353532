@@ -1,0 +1,216 @@
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+plx_hist_165_v1r03: File=177626 New=148400 W=57191(39%) N=268835 F=202767 del=66068(24.6%) uB=49092(18.3%) max=344 median=3 mean=6
+
+------------------------------------------------------------------------
+Job 13353532 has exceeded memory allocation on node gadi-cpu-clx-0104.gadi.nci.org.au
+Process "bash", pid 342594, rss 3399680, vmem 20779008
+Process "13353532.gadi-p", pid 342642, rss 3125248, vmem 227966976
+Process "python3", pid 342937, rss 16044351488, vmem 18383699968
+Process "orted", pid 343538, rss 15994880, vmem 315523072
+------------------------------------------------------------------------
+For more information visit https://opus.nci.org.au/x/SwGRAQ
+------------------------------------------------------------------------
+/local/spool/pbs/mom_priv/jobs/13353532.gadi-pbs.SC: line 13: 342937 Killed                  python3 /g/data/e14/as3189/OFAM/scripts/plx_info.py -f "plx_hist_165_v1r03.nc" -n 0
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+plx_hist_190_v1r03: File=188472 New=148400 W=63761(43%) N=273111 F=220745 del=52366(19.2%) uB=36064(13.2%) max=328 median=2 mean=6
+/local/spool/pbs/mom_priv/jobs/13353532.gadi-pbs.SC: line 14: 359896 Killed                  python3 /g/data/e14/as3189/OFAM/scripts/plx_info.py -f "plx_hist_190_v1r03.nc" -n 0
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+plx_hist_220_v1r03: File=178466 New=148400 W=72931(49%) N=253935 F=210139 del=43796(17.2%) uB=29386(11.6%) max=342 median=2 mean=5
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+plx_hist_250_v1r03: File=163677 New=148400 W=82396(56%) N=229681 F=192817 del=36864(16.1%) uB=29045(12.6%) max=335 median=2 mean=5
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+plx_rcp_165_v1r03: File=177443 New=148400 W=49868(34%) N=275975 F=204611 del=71364(25.9%) uB=51813(18.8%) max=500 median=3 mean=6
+/local/spool/pbs/mom_priv/jobs/13353532.gadi-pbs.SC: line 17: 442903 Killed                  python3 /g/data/e14/as3189/OFAM/scripts/plx_info.py -f "plx_rcp_165_v1r03.nc" -n 0
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+plx_rcp_190_v1r03: File=195630 New=148400 W=58333(39%) N=285697 F=228145 del=57552(20.1%) uB=38245(13.4%) max=530 median=2 mean=6
+/local/spool/pbs/mom_priv/jobs/13353532.gadi-pbs.SC: line 18: 448187 Killed                  python3 /g/data/e14/as3189/OFAM/scripts/plx_info.py -f "plx_rcp_190_v1r03.nc" -n 0
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+plx_rcp_220_v1r03: File=186542 New=148400 W=70566(48%) N=264376 F=217642 del=46734(17.7%) uB=28454(10.8%) max=544 median=3 mean=6
+/local/spool/pbs/mom_priv/jobs/13353532.gadi-pbs.SC: line 19: 456006 Killed                  python3 /g/data/e14/as3189/OFAM/scripts/plx_info.py -f "plx_rcp_220_v1r03.nc" -n 0
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+mbind: Invalid argument
+plx_rcp_250_v1r03: File=165085 New=148400 W=79625(54%) N=233860 F=196451 del=37409(16.0%) uB=24799(10.6%) max=522 median=2 mean=6
+=>> PBS: job killed: walltime 5408 exceeded limit 5400
