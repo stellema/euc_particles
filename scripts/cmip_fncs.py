@@ -67,10 +67,12 @@ def subset_cmip(mip, m, var, exp, depth, lat, lon):
         yf = slice(yi[0], yi[1] + 1)
         if yi[0] > yi[1]:
             yf = slice(yi[1], yi[0] + 1)
-    if np.array(lon).size > 1:
+    if np.array(lon).size == 2:
         xf = slice(xi[0], xi[1] + 1)
         if xi[0] > xi[1]:
             xf = np.append(np.arange(xi[0], dx.shape[-1]), np.arange(xi[1]+1))
+    else:
+        xf = xi
     if 'y' in dx.dims:
         dx = dx.isel(y=yf, x=xf)
     elif 'j' in dx.dims:

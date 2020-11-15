@@ -79,9 +79,10 @@ plx_rcp_190_v1r00: File=0 New=120204 W=43366(36%) N=76838 F=70448 del=6390(8.3%)
 ub_old-ub_new = 3700 - 3666 = 34
 del_old-del_new = 6421 - 6390 = 31
 """
-
+import math
 import numpy as np
 import xarray as xr
+from datetime import datetime, timedelta
 
 import cfg
 from plx_particleset import particle_info
@@ -116,14 +117,14 @@ from plx_particleset import particle_info
 # print(*[dx[var][-1].item() for var in ['lat', 'lon', 'z']])
 
 # Examining sim changes with new parcels version.
-xid = cfg.data/'plx_rcp_190_v0r00.nc'
-d0 = xr.open_dataset(str(xid), decode_cf=False)
-xid = cfg.data/'plx_rcp_190_v1r00.nc'
-d1 = xr.open_dataset(str(xid), decode_cf=False)
+# xid = cfg.data/'plx_rcp_190_v0r00.nc'
+# d0 = xr.open_dataset(str(xid), decode_cf=False)
+# xid = cfg.data/'plx_rcp_190_v1r00.nc'
+# d1 = xr.open_dataset(str(xid), decode_cf=False)
 
-ds = d1
-mint = ds['time'].min(dim='obs')
-print(np.unique(mint).size)  # End times
+# ds = d1
+# mint = ds['time'].min(dim='obs')
+# print(np.unique(mint).size)  # End times
 
 """
 #OLD
@@ -135,3 +136,25 @@ ub(old-new) = 3700 - 3666 = 34 # Old more unbeached
 del(old-new) = 6421 - 6390 = 31 # Old more deleted
 old less unique end times
 """
+
+# Spinup: historical
+spin_days = math.floor(10*365.25/6)*6+5  # Starting after release day.
+
+start = datetime(1981, 1, 1)
+end = datetime(2012, 12, 31)
+spin = end - timedelta(days=spin_days)  # datetime(2002, 12, 31)
+end_rel = int((end-start).total_seconds())  # Start time in relative seconds.
+spin_rel = int((end-spin).total_seconds())
+print('Hist spinup=', end, spin)
+print('Hist start [s]=', end_rel)
+print('Hist spinup [s]={}-{}={}'.format(end_rel, spin_rel, end_rel-spin_rel))
+
+# RCP8.5
+start = datetime(2070, 1, 1)
+end = datetime(2101, 12, 31)
+spin = end - timedelta(days=spin_days)  # datetime(2091, 12, 30) NB not 31st.
+end_rel = int((end-start).total_seconds())  # Start time in relative seconds.
+spin_rel = int((end-spin).total_seconds())
+print('RCP spinup=', end, spin)
+print('RCP start [s]=', end_rel)
+print('RCP spinup [s]={}-{}={}'.format(end_rel, spin_rel, end_rel-spin_rel))
