@@ -3417,3 +3417,405 @@
 2020-11-10 09:39:33:plx_hist_165_v1r06: Finished!: Timer=04:43:07
 2020-11-15 19:49:59: plx_rcp_190_v1r08: Run=1200d: 2075-09-18 to 2072-06-05: Particles=403952
 2020-11-15 19:49:59: plx_rcp_190_v1r08: Tmp=PSAKLLSA: Rep=6d: dt=60m: Out=2d: Land=0.975 Vmin=1e-07
+2020-11-15 20:11:24: plx_rcp_165_v1r08: Run=1200d: 2075-09-18 to 2072-06-05: Particles=368400
+2020-11-15 20:11:24: plx_rcp_165_v1r08: Tmp=TFTRQCWU: Rep=6d: dt=60m: Out=2d: Land=0.975 Vmin=1e-07
+2020-11-15 20:19:52: plx_rcp_220_v1r08: Run=1200d: 2075-09-18 to 2072-06-05: Particles=389013
+2020-11-15 20:19:52: plx_rcp_220_v1r08: Tmp=DPIQFJAG: Rep=6d: dt=60m: Out=2d: Land=0.975 Vmin=1e-07
+2020-11-15 20:21:29: plx_rcp_250_v1r08: Run=1200d: 2075-09-18 to 2072-06-05: Particles=372598
+2020-11-15 20:21:29: plx_rcp_250_v1r08: Tmp=WDWMGDUB: Rep=6d: dt=60m: Out=2d: Land=0.975 Vmin=1e-07
+2020-11-15 21:13:46: plx_hist_190_v1r07: Run=1200d: 1990-01-01 to 1986-09-19: Particles=390387
+2020-11-15 21:13:46: plx_hist_190_v1r07: Tmp=CTURFZCW: Rep=6d: dt=60m: Out=2d: Land=0.975 Vmin=1e-07
+2020-11-15 21:18:47: plx_hist_220_v1r07: Run=1200d: 1990-01-01 to 1986-09-19: Particles=373491
+2020-11-15 21:18:47: plx_hist_220_v1r07: Tmp=HNHDNYTY: Rep=6d: dt=60m: Out=2d: Land=0.975 Vmin=1e-07
+2020-11-15 21:38:03: plx_hist_165_v1r07: Run=1200d: 1990-01-01 to 1986-09-19: Particles=350466
+2020-11-15 21:38:03: plx_hist_165_v1r07: Tmp=QFJAEKOU: Rep=6d: dt=60m: Out=2d: Land=0.975 Vmin=1e-07
+2020-11-15 22:02:31: plx_hist_250_v1r06: Run=1200d: 1993-04-15 to 1990-01-01: Particles=327652
+2020-11-15 22:02:31: plx_hist_250_v1r06: Tmp=JGBZKHXH: Rep=6d: dt=60m: Out=2d: Land=0.975 Vmin=1e-07
+2020-11-15 22:29:28: plx_rcp_250_v1r08: Completed: 02:09:24: Rank=39: Particles: Start=2253 Del=1180 End=1073
+2020-11-15 22:29:28: plx_rcp_250_v1r08: Completed: 02:09:24: Rank=36: Particles: Start=2003 Del=475 End=1528
+2020-11-15 22:29:34: plx_rcp_250_v1r08: Completed: 02:09:29: Rank=18: Particles: Start=6401 Del=5328 End=1073
+2020-11-15 22:35:44: plx_rcp_250_v1r08: Completed: 02:15:39: Rank=46: Particles: Start=2241 Del=551 End=1690
+2020-11-15 22:40:22: plx_rcp_250_v1r08: Completed: 02:20:17: Rank=11: Particles: Start=3632 Del=2006 End=1626
+2020-11-15 22:41:40: plx_rcp_250_v1r08: Completed: 02:21:36: Rank= 3: Particles: Start=4860 Del=2567 End=2293
+2020-11-15 22:42:49: plx_rcp_250_v1r08: Completed: 02:22:45: Rank=47: Particles: Start=5782 Del=552 End=5230
+2020-11-15 22:45:38: plx_rcp_250_v1r08: Completed: 02:25:33: Rank=16: Particles: Start=5031 Del=575 End=4456
+2020-11-15 22:46:18: plx_rcp_250_v1r08: Completed: 02:26:13: Rank=14: Particles: Start=3956 Del=2307 End=1649
+2020-11-15 22:46:44: plx_rcp_165_v1r08: Completed: 02:36:39: Rank= 4: Particles: Start=2596 Del=1603 End=993
+2020-11-15 22:48:22: plx_rcp_165_v1r08: Completed: 02:38:17: Rank=17: Particles: Start=1739 Del=707 End=1032
+2020-11-15 22:49:38: plx_rcp_250_v1r08: Completed: 02:29:33: Rank= 7: Particles: Start=5944 Del=1751 End=4193
+2020-11-15 22:50:13: plx_rcp_165_v1r08: Completed: 02:40:08: Rank=36: Particles: Start=2146 Del=784 End=1362
+2020-11-15 22:50:51: plx_rcp_250_v1r08: Completed: 02:30:46: Rank=42: Particles: Start=6242 Del=739 End=5503
+2020-11-15 22:54:12: plx_rcp_250_v1r08: Completed: 02:34:08: Rank=32: Particles: Start=5171 Del=1628 End=3543
+2020-11-15 22:55:00: plx_rcp_250_v1r08: Completed: 02:34:55: Rank=35: Particles: Start=4771 Del=936 End=3835
+2020-11-15 22:55:24: plx_rcp_220_v1r08: Completed: 02:36:50: Rank=36: Particles: Start=5859 Del=652 End=5207
+2020-11-15 22:58:41: plx_rcp_190_v1r08: Completed: 03:14:27: Rank=11: Particles: Start=5206 Del=2682 End=2524
+2020-11-15 22:59:21: plx_rcp_250_v1r08: Completed: 02:39:16: Rank= 6: Particles: Start=5166 Del=678 End=4488
+2020-11-15 23:00:05: plx_rcp_250_v1r08: Completed: 02:40:00: Rank=22: Particles: Start=2053 Del=537 End=1516
+2020-11-15 23:01:03: plx_rcp_250_v1r08: Completed: 02:40:58: Rank=12: Particles: Start=5442 Del=1636 End=3806
+2020-11-15 23:03:06: plx_rcp_250_v1r08: Completed: 02:43:02: Rank=25: Particles: Start=1935 Del=581 End=1354
+2020-11-15 23:03:33: plx_rcp_250_v1r08: Completed: 02:43:28: Rank= 9: Particles: Start=5912 Del=1634 End=4278
+2020-11-15 23:04:19: plx_rcp_165_v1r08: Completed: 02:54:14: Rank=26: Particles: Start=7918 Del=2009 End=5909
+2020-11-15 23:04:19: plx_rcp_165_v1r08: Completed: 02:54:14: Rank=20: Particles: Start=5048 Del=2587 End=2461
+2020-11-15 23:06:34: plx_rcp_165_v1r08: Completed: 02:56:29: Rank=22: Particles: Start=1665 Del=791 End=874
+2020-11-15 23:06:55: plx_rcp_190_v1r08: Completed: 03:22:41: Rank=32: Particles: Start=6329 Del=2040 End=4289
+2020-11-15 23:09:25: plx_rcp_165_v1r08: Completed: 02:59:20: Rank=47: Particles: Start=6356 Del=982 End=5374
+2020-11-15 23:10:30: plx_rcp_165_v1r08: Completed: 03:00:25: Rank= 9: Particles: Start=6761 Del=3159 End=3602
+2020-11-15 23:13:43: plx_rcp_250_v1r08: Completed: 02:53:38: Rank= 1: Particles: Start=6044 Del=1460 End=4584
+2020-11-15 23:15:08: plx_rcp_165_v1r08: Completed: 03:05:03: Rank=35: Particles: Start=6859 Del=6229 End=630
+2020-11-15 23:18:56: plx_rcp_190_v1r08: Completed: 03:34:42: Rank=21: Particles: Start=10075 Del=2982 End=7093
+2020-11-15 23:19:09: plx_rcp_165_v1r08: Completed: 03:09:05: Rank=34: Particles: Start=5572 Del=2716 End=2856
+2020-11-15 23:19:33: plx_rcp_250_v1r08: Completed: 02:59:28: Rank=34: Particles: Start=1616 Del=356 End=1260
+2020-11-15 23:20:30: plx_rcp_165_v1r08: Completed: 03:10:25: Rank= 5: Particles: Start=6170 Del=3237 End=2933
+2020-11-15 23:27:14: plx_rcp_165_v1r08: Completed: 03:17:09: Rank=39: Particles: Start=8851 Del=3761 End=5090
+2020-11-15 23:29:20: plx_rcp_165_v1r08: Completed: 03:19:15: Rank=31: Particles: Start=6053 Del=917 End=5136
+2020-11-15 23:29:53: plx_rcp_190_v1r08: Completed: 03:45:39: Rank=10: Particles: Start=3213 Del=2000 End=1213
+2020-11-15 23:30:23: plx_rcp_250_v1r08: Completed: 03:10:18: Rank=27: Particles: Start=5684 Del=1221 End=4463
+2020-11-15 23:30:31: plx_rcp_165_v1r08: Completed: 03:20:26: Rank=32: Particles: Start=7687 Del=631 End=7056
+2020-11-15 23:33:23:plx_hist_220_v1r07: Completed: 02:15:49: Rank=47: Particles: Start=3486 Del=1968 End=1518
+2020-11-15 23:33:52: plx_rcp_250_v1r08: Completed: 03:13:47: Rank=21: Particles: Start=5101 Del=1279 End=3822
+2020-11-15 23:34:31: plx_rcp_165_v1r08: Completed: 03:24:26: Rank=29: Particles: Start=1761 Del=823 End=938
+2020-11-15 23:36:16: plx_rcp_190_v1r08: Completed: 03:52:02: Rank= 4: Particles: Start=2794 Del=936 End=1858
+2020-11-15 23:36:20: plx_rcp_165_v1r08: Completed: 03:26:16: Rank= 7: Particles: Start=7006 Del=472 End=6534
+2020-11-15 23:37:19: plx_rcp_165_v1r08: Completed: 03:27:14: Rank=43: Particles: Start=6665 Del=2199 End=4466
+2020-11-15 23:37:37: plx_rcp_165_v1r08: Completed: 03:27:33: Rank=30: Particles: Start=2827 Del=599 End=2228
+2020-11-15 23:38:06: plx_rcp_165_v1r08: Completed: 03:28:01: Rank=14: Particles: Start=7732 Del=1104 End=6628
+2020-11-15 23:38:38: plx_rcp_165_v1r08: Completed: 03:28:33: Rank=28: Particles: Start=6452 Del=2812 End=3640
+2020-11-15 23:39:12: plx_rcp_165_v1r08: Completed: 03:29:07: Rank=38: Particles: Start=5023 Del=471 End=4552
+2020-11-15 23:39:26: plx_rcp_165_v1r08: Completed: 03:29:21: Rank= 8: Particles: Start=7114 Del=404 End=6710
+2020-11-15 23:39:38: plx_rcp_250_v1r08: Completed: 03:19:33: Rank=41: Particles: Start=5649 Del=1107 End=4542
+2020-11-15 23:39:39: plx_rcp_165_v1r08: Completed: 03:29:34: Rank=45: Particles: Start=7271 Del=689 End=6582
+2020-11-15 23:39:40: plx_rcp_220_v1r08: Completed: 03:21:07: Rank=12: Particles: Start=5185 Del=698 End=4487
+2020-11-15 23:39:54: plx_rcp_190_v1r08: Completed: 03:55:41: Rank= 6: Particles: Start=6124 Del=2637 End=3487
+2020-11-15 23:40:10: plx_rcp_165_v1r08: Completed: 03:30:05: Rank= 3: Particles: Start=6965 Del=1250 End=5715
+2020-11-15 23:40:18:plx_hist_220_v1r07: Completed: 02:22:44: Rank=26: Particles: Start=2891 Del=1098 End=1793
+2020-11-15 23:44:10: plx_rcp_190_v1r08: Completed: 03:59:56: Rank=40: Particles: Start=3808 Del=245 End=3563
+2020-11-15 23:44:10: plx_rcp_190_v1r08: Completed: 03:59:56: Rank=44: Particles: Start=5826 Del=2926 End=2900
+2020-11-15 23:44:33: plx_rcp_250_v1r08: Completed: 03:24:28: Rank=44: Particles: Start=2774 Del=511 End=2263
+2020-11-15 23:44:43: plx_rcp_190_v1r08: Completed: 04:00:29: Rank=24: Particles: Start=2471 Del=1102 End=1369
+2020-11-15 23:45:08: plx_rcp_190_v1r08: Completed: 04:00:54: Rank= 2: Particles: Start=12411 Del=611 End=11800
+2020-11-15 23:45:26: plx_rcp_165_v1r08: Completed: 03:35:21: Rank=15: Particles: Start=6452 Del=506 End=5946
+2020-11-15 23:45:45: plx_rcp_220_v1r08: Completed: 03:27:12: Rank=13: Particles: Start=2649 Del=1014 End=1635
+2020-11-15 23:48:09: plx_rcp_250_v1r08: Completed: 03:28:05: Rank=37: Particles: Start=5558 Del=1818 End=3740
+2020-11-15 23:48:23: plx_rcp_250_v1r08: Completed: 03:28:18: Rank=28: Particles: Start=3125 Del=1208 End=1917
+2020-11-15 23:48:34: plx_rcp_165_v1r08: Completed: 03:38:29: Rank=11: Particles: Start=6658 Del=2929 End=3729
+2020-11-15 23:48:58: plx_rcp_165_v1r08: Completed: 03:38:54: Rank=13: Particles: Start=6494 Del=1763 End=4731
+2020-11-15 23:49:43: plx_rcp_165_v1r08: Completed: 03:39:38: Rank=41: Particles: Start=7591 Del=2382 End=5209
+2020-11-15 23:49:55: plx_rcp_165_v1r08: Completed: 03:39:50: Rank=19: Particles: Start=8671 Del=2663 End=6008
+2020-11-15 23:50:53: plx_rcp_250_v1r08: Completed: 03:30:48: Rank=17: Particles: Start=4731 Del=1987 End=2744
+2020-11-15 23:51:03: plx_rcp_250_v1r08: Completed: 03:30:58: Rank=43: Particles: Start=7406 Del=70 End=7336
+2020-11-15 23:51:21: plx_rcp_165_v1r08: Completed: 03:41:16: Rank=16: Particles: Start=7134 Del=419 End=6715
+2020-11-15 23:51:35: plx_rcp_190_v1r08: Completed: 04:07:21: Rank=19: Particles: Start=10604 Del=573 End=10031
+2020-11-15 23:51:39: plx_rcp_250_v1r08: Completed: 03:31:34: Rank=10: Particles: Start=5656 Del=769 End=4887
+2020-11-15 23:52:08: plx_rcp_165_v1r08: Completed: 03:42:03: Rank= 6: Particles: Start=5173 Del=445 End=4728
+2020-11-15 23:52:14: plx_rcp_165_v1r08: Completed: 03:42:09: Rank=10: Particles: Start=4531 Del=345 End=4186
+2020-11-15 23:52:46: plx_rcp_190_v1r08: Completed: 04:08:32: Rank=30: Particles: Start=3612 Del=649 End=2963
+2020-11-15 23:52:56: plx_rcp_250_v1r08: Completed: 03:32:51: Rank=38: Particles: Start=5593 Del=99 End=5494
+2020-11-15 23:53:28: plx_rcp_220_v1r08: Completed: 03:34:54: Rank=18: Particles: Start=2090 Del=661 End=1429
+2020-11-15 23:53:41: plx_rcp_165_v1r08: Completed: 03:43:36: Rank=33: Particles: Start=5032 Del=347 End=4685
+2020-11-15 23:54:00: plx_rcp_165_v1r08: Completed: 03:43:56: Rank= 2: Particles: Start=4976 Del=1935 End=3041
+2020-11-15 23:54:11:plx_hist_220_v1r07: Completed: 02:36:37: Rank=12: Particles: Start=2835 Del=978 End=1857
+2020-11-15 23:54:39:plx_hist_250_v1r06: Completed: 01:53:19: Rank=32: Particles: Start=4857 Del=4222 End=635
+2020-11-15 23:54:40:plx_hist_250_v1r06: Completed: 01:53:21: Rank=18: Particles: Start=2685 Del=1466 End=1219
+2020-11-15 23:55:05: plx_rcp_190_v1r08: Completed: 04:10:51: Rank= 5: Particles: Start=9446 Del=419 End=9027
+2020-11-15 23:55:36: plx_rcp_190_v1r08: Completed: 04:11:23: Rank=16: Particles: Start=9682 Del=440 End=9242
+2020-11-15 23:55:51: plx_rcp_250_v1r08: Completed: 03:35:47: Rank=40: Particles: Start=6899 Del=626 End=6273
+2020-11-15 23:55:54: plx_rcp_250_v1r08: Completed: 03:35:49: Rank=31: Particles: Start=4694 Del=2558 End=2136
+2020-11-15 23:56:37: plx_rcp_250_v1r08: Completed: 03:36:33: Rank=30: Particles: Start=4756 Del=2652 End=2104
+2020-11-15 23:56:53: plx_rcp_165_v1r08: Completed: 03:46:48: Rank=18: Particles: Start=6160 Del=431 End=5729
+2020-11-15 23:57:34: plx_rcp_165_v1r08: Completed: 03:47:29: Rank=40: Particles: Start=5778 Del=2787 End=2991
+2020-11-15 23:58:24:plx_hist_165_v1r07: Completed: 02:21:35: Rank=29: Particles: Start=6779 Del=6246 End=533
+2020-11-15 23:59:17: plx_rcp_220_v1r08: Completed: 03:40:44: Rank= 3: Particles: Start=7065 Del=3380 End=3685
+2020-11-15 23:59:50:plx_hist_165_v1r07: Completed: 02:23:01: Rank=18: Particles: Start=3013 Del=1772 End=1241
+2020-11-16 00:00:27: plx_rcp_250_v1r08: Completed: 03:40:22: Rank=23: Particles: Start=7278 Del=143 End=7135
+2020-11-16 00:00:47: plx_rcp_250_v1r08: Completed: 03:40:42: Rank=45: Particles: Start=22895 Del=324 End=22571
+2020-11-16 00:00:57: plx_rcp_165_v1r08: Completed: 03:50:52: Rank=46: Particles: Start=11698 Del=2763 End=8935
+2020-11-16 00:01:05: plx_rcp_165_v1r08: Completed: 03:51:01: Rank=25: Particles: Start=2413 Del=553 End=1860
+2020-11-16 00:01:22: plx_rcp_165_v1r08: Completed: 03:51:17: Rank=37: Particles: Start=3574 Del=348 End=3226
+2020-11-16 00:01:36: plx_rcp_250_v1r08: Completed: 03:41:31: Rank= 2: Particles: Start=5892 Del=680 End=5212
+2020-11-16 00:01:44: plx_rcp_250_v1r08: Completed: 03:41:40: Rank=15: Particles: Start=4791 Del=431 End=4360
+2020-11-16 00:01:49: plx_rcp_190_v1r08: Completed: 04:17:35: Rank=43: Particles: Start=2759 Del=556 End=2203
+2020-11-16 00:01:57: plx_rcp_250_v1r08: Completed: 03:41:52: Rank=20: Particles: Start=7662 Del=309 End=7353
+2020-11-16 00:01:59: plx_rcp_250_v1r08: Completed: 03:41:54: Rank= 5: Particles: Start=11294 Del=415 End=10879
+2020-11-16 00:02:16: plx_rcp_190_v1r08: Completed: 04:18:02: Rank=15: Particles: Start=6134 Del=2038 End=4096
+2020-11-16 00:02:34: plx_rcp_250_v1r08: Completed: 03:42:29: Rank= 8: Particles: Start=9868 Del=610 End=9258
+2020-11-16 00:02:37: plx_rcp_165_v1r08: Completed: 03:52:32: Rank=27: Particles: Start=53673 Del=6522 End=47151
+2020-11-16 00:02:37: plx_rcp_165_v1r08: Completed: 03:52:32: Rank=12: Particles: Start=2148 Del=247 End=1901
+2020-11-16 00:02:41:plx_hist_165_v1r07: Completed: 02:25:52: Rank= 0: Particles: Start=2271 Del=884 End=1387
+2020-11-16 00:03:53: plx_rcp_250_v1r08: Completed: 03:43:48: Rank=13: Particles: Start=12759 Del=444 End=12315
+2020-11-16 00:03:58: plx_rcp_250_v1r08: Completed: 03:43:53: Rank=19: Particles: Start=6672 Del=804 End=5868
+2020-11-16 00:04:27: plx_rcp_165_v1r08: Completed: 03:54:22: Rank=23: Particles: Start=4529 Del=428 End=4101
+2020-11-16 00:05:55: plx_rcp_190_v1r08: Completed: 04:21:41: Rank=42: Particles: Start=6219 Del=762 End=5457
+2020-11-16 00:06:34:plx_hist_165_v1r07: Completed: 02:29:44: Rank=40: Particles: Start=2614 Del=1028 End=1586
+2020-11-16 00:06:34: plx_rcp_165_v1r08: Completed: 03:56:29: Rank= 0: Particles: Start=58556 Del=11561 End=46995
+2020-11-16 00:06:54: plx_rcp_250_v1r08: Completed: 03:46:50: Rank= 0: Particles: Start=11225 Del=165 End=11060
+2020-11-16 00:08:10: plx_rcp_250_v1r08: Completed: 03:48:05: Rank=29: Particles: Start=11355 Del=603 End=10752
+2020-11-16 00:08:45: plx_rcp_190_v1r08: Completed: 04:24:31: Rank=47: Particles: Start=6156 Del=5416 End=740
+2020-11-16 00:09:07: plx_rcp_250_v1r08: Completed: 03:49:02: Rank=26: Particles: Start=11621 Del=436 End=11185
+2020-11-16 00:09:18:plx_hist_220_v1r07: Completed: 02:51:43: Rank=31: Particles: Start=3208 Del=1127 End=2081
+2020-11-16 00:09:52:plx_hist_220_v1r07: Completed: 02:52:18: Rank=29: Particles: Start=2752 Del=948 End=1804
+2020-11-16 00:10:05: plx_rcp_250_v1r08: Completed: 03:49:60: Rank=33: Particles: Start=21852 Del=318 End=21534
+2020-11-16 00:10:14:plx_hist_220_v1r07: Completed: 02:52:40: Rank=24: Particles: Start=6530 Del=326 End=6204
+2020-11-16 00:10:15:plx_hist_190_v1r07: Completed: 03:03:28: Rank= 4: Particles: Start=3636 Del=2020 End=1616
+2020-11-16 00:11:13: plx_rcp_250_v1r08: Completed: 03:51:09: Rank= 4: Particles: Start=56289 Del=3115 End=53174
+2020-11-16 00:11:29: plx_rcp_250_v1r08: Completed: 03:51:24: Rank=24: Particles: Start=17064 Del=493 End=16571
+2020-11-16 00:11:34: plx_rcp_165_v1r08: Completed: 04:01:29: Rank=24: Particles: Start=6100 Del=3284 End=2816
+2020-11-16 00:11:46:plx_hist_220_v1r07: Completed: 02:54:12: Rank=17: Particles: Start=5580 Del=112 End=5468
+2020-11-16 00:11:47: plx_rcp_190_v1r08: Completed: 04:27:33: Rank=31: Particles: Start=6059 Del=1747 End=4312
+2020-11-16 00:11:47: plx_rcp_190_v1r08: Completed: 04:27:33: Rank=33: Particles: Start=5395 Del=271 End=5124
+2020-11-16 00:12:37:plx_hist_250_v1r06: Completed: 02:11:18: Rank=20: Particles: Start=6339 Del=59 End=6280
+2020-11-16 00:12:37:plx_hist_250_v1r06: Completed: 02:11:18: Rank= 6: Particles: Start=2520 Del=1255 End=1265
+2020-11-16 00:13:14: plx_rcp_190_v1r08: Completed: 04:29:01: Rank=29: Particles: Start=9836 Del=311 End=9525
+2020-11-16 00:14:11: plx_rcp_220_v1r08: Completed: 03:55:37: Rank=42: Particles: Start=5225 Del=237 End=4988
+2020-11-16 00:14:52: plx_rcp_190_v1r08: Completed: 04:30:38: Rank= 7: Particles: Start=7949 Del=3425 End=4524
+2020-11-16 00:14:52: plx_rcp_190_v1r08: Completed: 04:30:38: Rank= 9: Particles: Start=11174 Del=1800 End=9374
+2020-11-16 00:15:31:plx_hist_250_v1r06: Completed: 02:14:12: Rank=43: Particles: Start=2298 Del=748 End=1550
+2020-11-16 00:15:49: plx_rcp_190_v1r08: Completed: 04:31:35: Rank=27: Particles: Start=58017 Del=6156 End=51861
+2020-11-16 00:16:03: plx_rcp_220_v1r08: Completed: 03:57:29: Rank=34: Particles: Start=11063 Del=849 End=10214
+2020-11-16 00:17:33:plx_hist_250_v1r06: Completed: 02:16:13: Rank=37: Particles: Start=3256 Del=1876 End=1380
+2020-11-16 00:18:04:plx_hist_220_v1r07: Completed: 03:00:29: Rank=23: Particles: Start=8505 Del=2257 End=6248
+2020-11-16 00:18:49: plx_rcp_220_v1r08: Completed: 04:00:15: Rank=14: Particles: Start=6810 Del=231 End=6579
+2020-11-16 00:19:26: plx_rcp_220_v1r08: Completed: 04:00:52: Rank=22: Particles: Start=8398 Del=379 End=8019
+2020-11-16 00:19:57: plx_rcp_165_v1r08: Completed: 04:09:52: Rank= 1: Particles: Start=5128 Del=407 End=4721
+2020-11-16 00:21:14:plx_hist_165_v1r07: Completed: 02:44:25: Rank=11: Particles: Start=2174 Del=714 End=1460
+2020-11-16 00:21:27:plx_hist_165_v1r07: Completed: 02:44:37: Rank=22: Particles: Start=8312 Del=4002 End=4310
+2020-11-16 00:21:58: plx_rcp_220_v1r08: Completed: 04:03:24: Rank=30: Particles: Start=5433 Del=4885 End=548
+2020-11-16 00:22:24:plx_hist_250_v1r06: Completed: 02:21:04: Rank=26: Particles: Start=5376 Del=42 End=5334
+2020-11-16 00:22:40:plx_hist_250_v1r06: Completed: 02:21:21: Rank=10: Particles: Start=2464 Del=722 End=1742
+2020-11-16 00:22:50: plx_rcp_165_v1r08: Completed: 04:12:45: Rank=21: Particles: Start=3629 Del=1301 End=2328
+2020-11-16 00:23:45: plx_rcp_220_v1r08: Completed: 04:05:12: Rank=41: Particles: Start=3269 Del=1684 End=1585
+2020-11-16 00:23:48: plx_rcp_190_v1r08: Completed: 04:39:35: Rank=20: Particles: Start=10157 Del=392 End=9765
+2020-11-16 00:25:07:plx_hist_165_v1r07: Completed: 02:48:17: Rank=34: Particles: Start=7453 Del=1508 End=5945
+2020-11-16 00:25:30:plx_hist_250_v1r06: Completed: 02:24:11: Rank=42: Particles: Start=4883 Del=61 End=4822
+2020-11-16 00:25:42: plx_rcp_165_v1r08: Completed: 04:15:37: Rank=42: Particles: Start=5119 Del=266 End=4853
+2020-11-16 00:26:31:plx_hist_165_v1r07: Completed: 02:49:41: Rank=13: Particles: Start=5450 Del=821 End=4629
+2020-11-16 00:29:07: plx_rcp_165_v1r08: Completed: 04:19:02: Rank=44: Particles: Start=2946 Del=393 End=2553
+2020-11-16 00:30:53:plx_hist_250_v1r06: Completed: 02:29:34: Rank=15: Particles: Start=5410 Del=3005 End=2405
+2020-11-16 00:30:54:plx_hist_250_v1r06: Completed: 02:29:34: Rank=13: Particles: Start=6316 Del=2166 End=4150
+2020-11-16 00:31:36:plx_hist_250_v1r06: Completed: 02:30:16: Rank= 0: Particles: Start=4438 Del=123 End=4315
+2020-11-16 00:32:40: plx_rcp_190_v1r08: Completed: 04:48:26: Rank=13: Particles: Start=5233 Del=2832 End=2401
+2020-11-16 00:32:43: plx_rcp_220_v1r08: Completed: 04:14:09: Rank=19: Particles: Start=6083 Del=3194 End=2889
+2020-11-16 00:33:55: plx_rcp_220_v1r08: Completed: 04:15:21: Rank=44: Particles: Start=8741 Del=1228 End=7513
+2020-11-16 00:34:10:plx_hist_250_v1r06: Completed: 02:32:51: Rank=14: Particles: Start=7232 Del=2461 End=4771
+2020-11-16 00:35:05:plx_hist_250_v1r06: Completed: 02:33:46: Rank=34: Particles: Start=7053 Del=442 End=6611
+2020-11-16 00:35:20: plx_rcp_190_v1r08: Completed: 04:51:06: Rank=25: Particles: Start=3425 Del=1452 End=1973
+2020-11-16 00:35:30: plx_rcp_190_v1r08: Completed: 04:51:17: Rank=22: Particles: Start=4716 Del=2598 End=2118
+2020-11-16 00:36:22:plx_hist_190_v1r07: Completed: 03:29:35: Rank=37: Particles: Start=7451 Del=428 End=7023
+2020-11-16 00:36:29: plx_rcp_190_v1r08: Completed: 04:52:15: Rank=46: Particles: Start=1660 Del=394 End=1266
+2020-11-16 00:36:44: plx_rcp_190_v1r08: Completed: 04:52:30: Rank=39: Particles: Start=7049 Del=319 End=6730
+2020-11-16 00:38:00:plx_hist_220_v1r07: Completed: 03:20:25: Rank=25: Particles: Start=4964 Del=114 End=4850
+2020-11-16 00:38:21:plx_hist_250_v1r06: Completed: 02:37:01: Rank=45: Particles: Start=2296 Del=599 End=1697
+2020-11-16 00:38:42:plx_hist_250_v1r06: Completed: 02:37:23: Rank= 2: Particles: Start=4920 Del=2584 End=2336
+2020-11-16 00:38:47: plx_rcp_220_v1r08: Completed: 04:20:13: Rank=16: Particles: Start=2946 Del=798 End=2148
+2020-11-16 00:39:31:plx_hist_165_v1r07: Completed: 03:02:42: Rank= 8: Particles: Start=5958 Del=2961 End=2997
+2020-11-16 00:39:56: plx_rcp_190_v1r08: Completed: 04:55:42: Rank=23: Particles: Start=14752 Del=1791 End=12961
+2020-11-16 00:40:03:plx_hist_220_v1r07: Completed: 03:22:28: Rank=34: Particles: Start=4544 Del=188 End=4356
+2020-11-16 00:40:34:plx_hist_250_v1r06: Completed: 02:39:15: Rank=47: Particles: Start=1979 Del=437 End=1542
+2020-11-16 00:41:04: plx_rcp_190_v1r08: Completed: 04:56:51: Rank=28: Particles: Start=5586 Del=797 End=4789
+2020-11-16 00:41:23: plx_rcp_190_v1r08: Completed: 04:57:10: Rank=41: Particles: Start=2531 Del=948 End=1583
+2020-11-16 00:42:12: plx_rcp_190_v1r08: Completed: 04:57:58: Rank=45: Particles: Start=5237 Del=1325 End=3912
+2020-11-16 00:42:14:plx_hist_190_v1r07: Completed: 03:35:27: Rank=10: Particles: Start=6898 Del=2740 End=4158
+2020-11-16 00:42:41: plx_rcp_220_v1r08: Completed: 04:24:07: Rank=35: Particles: Start=2857 Del=1028 End=1829
+2020-11-16 00:45:34:plx_hist_165_v1r07: Completed: 03:08:44: Rank=28: Particles: Start=4382 Del=2142 End=2240
+2020-11-16 00:45:53:plx_hist_220_v1r07: Completed: 03:28:19: Rank= 6: Particles: Start=8250 Del=3015 End=5235
+2020-11-16 00:46:07:plx_hist_220_v1r07: Completed: 03:28:33: Rank=13: Particles: Start=3758 Del=1397 End=2361
+2020-11-16 00:46:39: plx_rcp_220_v1r08: Completed: 04:28:05: Rank=38: Particles: Start=5252 Del=580 End=4672
+2020-11-16 00:48:26:plx_hist_190_v1r07: Completed: 03:41:39: Rank=12: Particles: Start=6230 Del=5550 End=680
+2020-11-16 00:49:58:plx_hist_250_v1r06: Completed: 02:48:38: Rank=35: Particles: Start=5764 Del=2838 End=2926
+2020-11-16 00:50:53:plx_hist_190_v1r07: Completed: 03:44:06: Rank=27: Particles: Start=2905 Del=1198 End=1707
+2020-11-16 00:51:11:plx_hist_250_v1r06: Completed: 02:49:52: Rank= 3: Particles: Start=6442 Del=1670 End=4772
+2020-11-16 00:51:13:plx_hist_220_v1r07: Completed: 03:33:38: Rank=35: Particles: Start=4622 Del=2043 End=2579
+2020-11-16 00:51:47:plx_hist_250_v1r06: Completed: 02:50:28: Rank=28: Particles: Start=6728 Del=1705 End=5023
+2020-11-16 00:51:48:plx_hist_220_v1r07: Completed: 03:34:13: Rank=40: Particles: Start=6661 Del=613 End=6048
+2020-11-16 00:51:49:plx_hist_220_v1r07: Completed: 03:34:15: Rank=46: Particles: Start=4795 Del=731 End=4064
+2020-11-16 00:51:59:plx_hist_220_v1r07: Completed: 03:34:25: Rank=22: Particles: Start=2605 Del=806 End=1799
+2020-11-16 00:52:01:plx_hist_220_v1r07: Completed: 03:34:26: Rank=27: Particles: Start=4875 Del=926 End=3949
+2020-11-16 00:52:15:plx_hist_165_v1r07: Completed: 03:15:26: Rank= 5: Particles: Start=6375 Del=3128 End=3247
+2020-11-16 00:52:19: plx_rcp_220_v1r08: Completed: 04:33:45: Rank=11: Particles: Start=8043 Del=2684 End=5359
+2020-11-16 00:52:48: plx_rcp_220_v1r08: Completed: 04:34:15: Rank=24: Particles: Start=8684 Del=402 End=8282
+2020-11-16 00:53:20: plx_rcp_220_v1r08: Completed: 04:34:46: Rank=27: Particles: Start=9999 Del=931 End=9068
+2020-11-16 00:55:23:plx_hist_250_v1r06: Completed: 02:54:03: Rank=40: Particles: Start=5792 Del=851 End=4941
+2020-11-16 00:57:28:plx_hist_220_v1r07: Completed: 03:39:53: Rank=21: Particles: Start=9254 Del=398 End=8856
+2020-11-16 00:57:30:plx_hist_165_v1r07: Completed: 03:20:40: Rank=31: Particles: Start=2132 Del=724 End=1408
+2020-11-16 00:57:45:plx_hist_220_v1r07: Completed: 03:40:11: Rank=44: Particles: Start=1304 Del=358 End=946
+2020-11-16 00:58:36:plx_hist_220_v1r07: Completed: 03:41:01: Rank=28: Particles: Start=7486 Del=1636 End=5850
+2020-11-16 00:59:00:plx_hist_220_v1r07: Completed: 03:41:26: Rank=18: Particles: Start=7174 Del=403 End=6771
+2020-11-16 00:59:36: plx_rcp_190_v1r08: Completed: 05:15:23: Rank=14: Particles: Start=48242 Del=2838 End=45404
+2020-11-16 01:00:45:plx_hist_220_v1r07: Completed: 03:43:11: Rank= 9: Particles: Start=6958 Del=1107 End=5851
+2020-11-16 01:01:09: plx_rcp_220_v1r08: Completed: 04:42:35: Rank=20: Particles: Start=5679 Del=1931 End=3748
+2020-11-16 01:01:56:plx_rcp_250_v1r08: Finished!: Timer=04:41:51
+2020-11-16 01:03:20:plx_hist_220_v1r07: Completed: 03:45:46: Rank=38: Particles: Start=8005 Del=506 End=7499
+2020-11-16 01:03:50:plx_hist_190_v1r07: Completed: 03:57:03: Rank=23: Particles: Start=8011 Del=1259 End=6752
+2020-11-16 01:04:07:plx_hist_165_v1r07: Completed: 03:27:17: Rank=21: Particles: Start=7141 Del=278 End=6863
+2020-11-16 01:04:16:plx_hist_220_v1r07: Completed: 03:46:41: Rank=36: Particles: Start=8193 Del=3909 End=4284
+2020-11-16 01:04:37:plx_hist_165_v1r07: Completed: 03:27:47: Rank=32: Particles: Start=7431 Del=3423 End=4008
+2020-11-16 01:05:54:plx_hist_165_v1r07: Completed: 03:29:04: Rank=15: Particles: Start=9396 Del=3594 End=5802
+2020-11-16 01:06:03:plx_hist_165_v1r07: Completed: 03:29:14: Rank=16: Particles: Start=6618 Del=386 End=6232
+2020-11-16 01:06:04:plx_hist_165_v1r07: Completed: 03:29:14: Rank=46: Particles: Start=7329 Del=236 End=7093
+2020-11-16 01:06:04: plx_rcp_190_v1r08: Completed: 05:21:51: Rank=36: Particles: Start=1971 Del=903 End=1068
+2020-11-16 01:06:50:plx_hist_220_v1r07: Completed: 03:49:15: Rank=43: Particles: Start=9401 Del=326 End=9075
+2020-11-16 01:07:57:plx_hist_165_v1r07: Completed: 03:31:07: Rank=45: Particles: Start=7106 Del=1240 End=5866
+2020-11-16 01:08:01:plx_hist_220_v1r07: Completed: 03:50:26: Rank= 5: Particles: Start=2992 Del=429 End=2563
+2020-11-16 01:08:40:plx_hist_220_v1r07: Completed: 03:51:05: Rank= 3: Particles: Start=6383 Del=659 End=5724
+2020-11-16 01:08:44:plx_hist_220_v1r07: Completed: 03:51:09: Rank=32: Particles: Start=7177 Del=6197 End=980
+2020-11-16 01:08:45: plx_rcp_190_v1r08: Completed: 05:24:31: Rank=17: Particles: Start=7550 Del=865 End=6685
+2020-11-16 01:08:53:plx_hist_165_v1r07: Completed: 03:32:03: Rank=20: Particles: Start=6813 Del=439 End=6374
+2020-11-16 01:09:08:plx_hist_220_v1r07: Completed: 03:51:34: Rank=30: Particles: Start=45896 Del=2005 End=43891
+2020-11-16 01:10:12:plx_hist_220_v1r07: Completed: 03:52:37: Rank= 7: Particles: Start=7680 Del=680 End=7000
+2020-11-16 01:10:49:plx_hist_190_v1r07: Completed: 04:04:02: Rank= 5: Particles: Start=9444 Del=1587 End=7857
+2020-11-16 01:10:55:plx_hist_190_v1r07: Completed: 04:04:08: Rank=21: Particles: Start=2079 Del=807 End=1272
+2020-11-16 01:11:01:plx_hist_190_v1r07: Completed: 04:04:14: Rank=22: Particles: Start=6725 Del=193 End=6532
+2020-11-16 01:11:22:plx_hist_190_v1r07: Completed: 04:04:35: Rank=32: Particles: Start=4773 Del=2395 End=2378
+2020-11-16 01:11:35:plx_hist_190_v1r07: Completed: 04:04:48: Rank=36: Particles: Start=9286 Del=4085 End=5201
+2020-11-16 01:11:42:plx_hist_165_v1r07: Completed: 03:34:53: Rank=17: Particles: Start=2123 Del=499 End=1624
+2020-11-16 01:11:50:plx_hist_250_v1r06: Completed: 03:10:30: Rank=46: Particles: Start=1757 Del=345 End=1412
+2020-11-16 01:12:47:plx_hist_165_v1r07: Completed: 03:35:57: Rank=24: Particles: Start=7183 Del=256 End=6927
+2020-11-16 01:12:50: plx_rcp_220_v1r08: Completed: 04:54:17: Rank=25: Particles: Start=4975 Del=204 End=4771
+2020-11-16 01:12:55: plx_rcp_220_v1r08: Completed: 04:54:21: Rank=28: Particles: Start=6041 Del=416 End=5625
+2020-11-16 01:14:02:plx_hist_220_v1r07: Completed: 03:56:27: Rank= 8: Particles: Start=6052 Del=295 End=5757
+2020-11-16 01:14:52:plx_hist_220_v1r07: Completed: 03:57:17: Rank=39: Particles: Start=6194 Del=703 End=5491
+2020-11-16 01:15:23: plx_rcp_220_v1r08: Completed: 04:56:49: Rank=43: Particles: Start=7433 Del=1767 End=5666
+2020-11-16 01:15:37:plx_hist_165_v1r07: Completed: 03:38:47: Rank=26: Particles: Start=8880 Del=1959 End=6921
+2020-11-16 01:15:50:plx_hist_165_v1r07: Completed: 03:39:01: Rank= 2: Particles: Start=7298 Del=357 End=6941
+2020-11-16 01:16:15:plx_hist_165_v1r07: Completed: 03:39:25: Rank=44: Particles: Start=9998 Del=2819 End=7179
+2020-11-16 01:16:57:plx_hist_165_v1r07: Completed: 03:40:07: Rank=33: Particles: Start=7721 Del=331 End=7390
+2020-11-16 01:16:57:plx_hist_220_v1r07: Completed: 03:59:22: Rank= 4: Particles: Start=5520 Del=2799 End=2721
+2020-11-16 01:17:40:plx_hist_250_v1r06: Completed: 03:16:21: Rank=27: Particles: Start=4174 Del=436 End=3738
+2020-11-16 01:18:00:plx_hist_165_v1r07: Completed: 03:41:11: Rank=30: Particles: Start=6555 Del=1345 End=5210
+2020-11-16 01:18:27:plx_rcp_165_v1r08: Finished!: Timer=05:08:22
+2020-11-16 01:19:14:plx_hist_250_v1r06: Completed: 03:17:54: Rank=30: Particles: Start=4371 Del=230 End=4141
+2020-11-16 01:19:20:plx_hist_190_v1r07: Completed: 04:12:33: Rank=39: Particles: Start=3147 Del=1245 End=1902
+2020-11-16 01:19:27:plx_hist_165_v1r07: Completed: 03:42:38: Rank= 1: Particles: Start=6132 Del=1408 End=4724
+2020-11-16 01:19:48: plx_rcp_220_v1r08: Completed: 05:01:14: Rank= 5: Particles: Start=5487 Del=2899 End=2588
+2020-11-16 01:19:58:plx_hist_165_v1r07: Completed: 03:43:09: Rank= 4: Particles: Start=46052 Del=5923 End=40129
+2020-11-16 01:20:05:plx_hist_165_v1r07: Completed: 03:43:15: Rank=14: Particles: Start=1447 Del=376 End=1071
+2020-11-16 01:20:05:plx_hist_220_v1r07: Completed: 04:02:31: Rank=41: Particles: Start=8877 Del=331 End=8546
+2020-11-16 01:20:10:plx_hist_165_v1r07: Completed: 03:43:20: Rank=35: Particles: Start=5264 Del=2302 End=2962
+2020-11-16 01:20:22:plx_hist_220_v1r07: Completed: 04:02:48: Rank= 1: Particles: Start=7148 Del=1129 End=6019
+2020-11-16 01:21:18: plx_rcp_220_v1r08: Completed: 05:02:44: Rank= 1: Particles: Start=49881 Del=2242 End=47639
+2020-11-16 01:21:26:plx_hist_190_v1r07: Completed: 04:14:39: Rank=17: Particles: Start=6341 Del=243 End=6098
+2020-11-16 01:21:55:plx_hist_165_v1r07: Completed: 03:45:06: Rank=19: Particles: Start=4259 Del=206 End=4053
+2020-11-16 01:21:59:plx_hist_165_v1r07: Completed: 03:45:10: Rank= 6: Particles: Start=4869 Del=1906 End=2963
+2020-11-16 01:22:23:plx_hist_220_v1r07: Completed: 04:04:48: Rank=19: Particles: Start=4314 Del=2209 End=2105
+2020-11-16 01:22:24: plx_rcp_190_v1r08: Completed: 05:38:11: Rank=35: Particles: Start=6843 Del=568 End=6275
+2020-11-16 01:22:25:plx_hist_165_v1r07: Completed: 03:45:35: Rank=10: Particles: Start=4881 Del=318 End=4563
+2020-11-16 01:22:32:plx_hist_190_v1r07: Completed: 04:15:46: Rank=16: Particles: Start=6662 Del=3124 End=3538
+2020-11-16 01:23:19: plx_rcp_190_v1r08: Completed: 05:39:05: Rank=18: Particles: Start=5451 Del=240 End=5211
+2020-11-16 01:23:25:plx_hist_250_v1r06: Completed: 03:22:06: Rank=29: Particles: Start=5303 Del=751 End=4552
+2020-11-16 01:23:36: plx_rcp_190_v1r08: Completed: 05:39:22: Rank=37: Particles: Start=10560 Del=2543 End=8017
+2020-11-16 01:24:11: plx_rcp_190_v1r08: Completed: 05:39:58: Rank= 3: Particles: Start=5984 Del=364 End=5620
+2020-11-16 01:24:29:plx_hist_250_v1r06: Completed: 03:23:10: Rank= 9: Particles: Start=5570 Del=792 End=4778
+2020-11-16 01:24:35:plx_hist_165_v1r07: Completed: 03:47:45: Rank=23: Particles: Start=4676 Del=257 End=4419
+2020-11-16 01:24:36:plx_hist_165_v1r07: Completed: 03:47:46: Rank=27: Particles: Start=54327 Del=8550 End=45777
+2020-11-16 01:25:07:plx_hist_250_v1r06: Completed: 03:23:48: Rank=39: Particles: Start=1918 Del=812 End=1106
+2020-11-16 01:25:11:plx_hist_165_v1r07: Completed: 03:48:21: Rank=25: Particles: Start=4448 Del=218 End=4230
+2020-11-16 01:25:17:plx_hist_220_v1r07: Completed: 04:07:43: Rank=16: Particles: Start=11686 Del=494 End=11192
+2020-11-16 01:25:25:plx_hist_165_v1r07: Completed: 03:48:35: Rank=47: Particles: Start=6645 Del=640 End=6005
+2020-11-16 01:25:36:plx_hist_190_v1r07: Completed: 04:18:50: Rank=44: Particles: Start=6490 Del=782 End=5708
+2020-11-16 01:25:57:plx_hist_165_v1r07: Completed: 03:49:07: Rank=12: Particles: Start=5841 Del=2546 End=3295
+2020-11-16 01:26:04:plx_hist_165_v1r07: Completed: 03:49:15: Rank= 3: Particles: Start=1846 Del=255 End=1591
+2020-11-16 01:26:07:plx_hist_190_v1r07: Completed: 04:19:20: Rank=24: Particles: Start=2711 Del=1113 End=1598
+2020-11-16 01:26:12:plx_hist_165_v1r07: Completed: 03:49:23: Rank= 9: Particles: Start=2493 Del=300 End=2193
+2020-11-16 01:26:26:plx_hist_250_v1r06: Completed: 03:25:07: Rank=12: Particles: Start=4465 Del=1510 End=2955
+2020-11-16 01:26:37:plx_hist_220_v1r07: Completed: 04:09:02: Rank= 2: Particles: Start=43880 Del=1954 End=41926
+2020-11-16 01:26:37:plx_hist_220_v1r07: Completed: 04:09:03: Rank=14: Particles: Start=6993 Del=2589 End=4404
+2020-11-16 01:27:00:plx_hist_165_v1r07: Completed: 03:50:10: Rank=41: Particles: Start=6082 Del=1831 End=4251
+2020-11-16 01:28:07:plx_hist_190_v1r07: Completed: 04:21:20: Rank=14: Particles: Start=7775 Del=268 End=7507
+2020-11-16 01:28:16:plx_hist_165_v1r07: Completed: 03:51:26: Rank=42: Particles: Start=3526 Del=1104 End=2422
+2020-11-16 01:28:22: plx_rcp_190_v1r08: Completed: 05:44:08: Rank= 8: Particles: Start=8694 Del=415 End=8279
+2020-11-16 01:28:37:plx_hist_220_v1r07: Completed: 04:11:03: Rank=10: Particles: Start=5533 Del=1895 End=3638
+2020-11-16 01:28:46: plx_rcp_190_v1r08: Completed: 05:44:32: Rank= 0: Particles: Start=10095 Del=2573 End=7522
+2020-11-16 01:29:44:plx_hist_190_v1r07: Completed: 04:22:57: Rank=31: Particles: Start=9200 Del=1179 End=8021
+2020-11-16 01:31:10:plx_hist_165_v1r07: Completed: 03:54:20: Rank= 7: Particles: Start=5360 Del=274 End=5086
+2020-11-16 01:31:36:plx_hist_190_v1r07: Completed: 04:24:49: Rank=38: Particles: Start=9476 Del=374 End=9102
+2020-11-16 01:32:52:plx_hist_165_v1r07: Completed: 03:56:03: Rank=43: Particles: Start=6550 Del=391 End=6159
+2020-11-16 01:33:44: plx_rcp_220_v1r08: Completed: 05:15:10: Rank=40: Particles: Start=2945 Del=935 End=2010
+2020-11-16 01:33:59:plx_hist_250_v1r06: Completed: 03:32:39: Rank=41: Particles: Start=5510 Del=437 End=5073
+2020-11-16 01:34:43:plx_hist_250_v1r06: Completed: 03:33:24: Rank=38: Particles: Start=4196 Del=218 End=3978
+2020-11-16 01:34:48:plx_hist_165_v1r07: Completed: 03:57:58: Rank=38: Particles: Start=4528 Del=311 End=4217
+2020-11-16 01:34:54: plx_rcp_220_v1r08: Completed: 05:16:20: Rank= 4: Particles: Start=5278 Del=1026 End=4252
+2020-11-16 01:34:59:plx_hist_165_v1r07: Completed: 03:58:09: Rank=36: Particles: Start=3967 Del=372 End=3595
+2020-11-16 01:35:09:plx_hist_190_v1r07: Completed: 04:28:22: Rank= 8: Particles: Start=2612 Del=810 End=1802
+2020-11-16 01:35:20:plx_hist_165_v1r07: Completed: 03:58:30: Rank=37: Particles: Start=6942 Del=950 End=5992
+2020-11-16 01:35:32: plx_rcp_220_v1r08: Completed: 05:16:58: Rank= 0: Particles: Start=8357 Del=1725 End=6632
+2020-11-16 01:35:34: plx_rcp_220_v1r08: Completed: 05:17:00: Rank=23: Particles: Start=6652 Del=2637 End=4015
+2020-11-16 01:35:42:plx_hist_165_v1r07: Completed: 03:58:52: Rank=39: Particles: Start=1826 Del=488 End=1338
+2020-11-16 01:35:56:plx_hist_190_v1r07: Completed: 04:29:09: Rank= 3: Particles: Start=8350 Del=319 End=8031
+2020-11-16 01:36:02:plx_hist_250_v1r06: Completed: 03:34:43: Rank=19: Particles: Start=4977 Del=204 End=4773
+2020-11-16 01:36:35:plx_hist_250_v1r06: Completed: 03:35:16: Rank=21: Particles: Start=5115 Del=370 End=4745
+2020-11-16 01:37:24:plx_hist_250_v1r06: Completed: 03:36:04: Rank= 4: Particles: Start=4162 Del=776 End=3386
+2020-11-16 01:38:07:plx_hist_250_v1r06: Completed: 03:36:47: Rank=33: Particles: Start=7433 Del=336 End=7097
+2020-11-16 01:40:04:plx_hist_190_v1r07: Completed: 04:33:17: Rank=40: Particles: Start=5741 Del=1267 End=4474
+2020-11-16 01:40:23: plx_rcp_190_v1r08: Completed: 05:56:10: Rank=12: Particles: Start=5646 Del=842 End=4804
+2020-11-16 01:41:07:plx_hist_250_v1r06: Completed: 03:39:48: Rank= 8: Particles: Start=5886 Del=354 End=5532
+2020-11-16 01:41:13:plx_hist_190_v1r07: Completed: 04:34:27: Rank=43: Particles: Start=10254 Del=2310 End=7944
+2020-11-16 01:41:20:plx_hist_190_v1r07: Completed: 04:34:33: Rank=28: Particles: Start=4146 Del=241 End=3905
+2020-11-16 01:41:28:plx_hist_220_v1r07: Completed: 04:23:54: Rank=11: Particles: Start=11026 Del=401 End=10625
+2020-11-16 01:42:18:plx_hist_250_v1r06: Completed: 03:40:59: Rank=24: Particles: Start=3497 Del=1451 End=2046
+2020-11-16 01:43:33:plx_hist_190_v1r07: Completed: 04:36:46: Rank=11: Particles: Start=9240 Del=717 End=8523
+2020-11-16 01:45:08:plx_hist_190_v1r07: Completed: 04:38:21: Rank= 9: Particles: Start=5506 Del=2217 End=3289
+2020-11-16 01:45:13:plx_hist_250_v1r06: Completed: 03:43:54: Rank=16: Particles: Start=5615 Del=701 End=4914
+2020-11-16 01:45:49: plx_rcp_190_v1r08: Completed: 06:01:35: Rank=38: Particles: Start=4166 Del=1973 End=2193
+2020-11-16 01:46:00:plx_hist_220_v1r07: Completed: 04:28:25: Rank=37: Particles: Start=5432 Del=1307 End=4125
+2020-11-16 01:46:39: plx_rcp_220_v1r08: Completed: 05:28:05: Rank=39: Particles: Start=6835 Del=1413 End=5422
+2020-11-16 01:47:02: plx_rcp_220_v1r08: Completed: 05:28:28: Rank=32: Particles: Start=5545 Del=1253 End=4292
+2020-11-16 01:47:10:plx_hist_190_v1r07: Completed: 04:40:23: Rank=18: Particles: Start=5370 Del=320 End=5050
+2020-11-16 01:47:36:plx_hist_250_v1r06: Completed: 03:46:17: Rank=31: Particles: Start=4216 Del=1683 End=2533
+2020-11-16 01:48:09: plx_rcp_220_v1r08: Completed: 05:29:35: Rank= 6: Particles: Start=4995 Del=2733 End=2262
+2020-11-16 01:48:41: plx_rcp_220_v1r08: Completed: 05:30:07: Rank=26: Particles: Start=5433 Del=2777 End=2656
+2020-11-16 01:48:57:plx_hist_190_v1r07: Completed: 04:42:10: Rank=41: Particles: Start=11112 Del=520 End=10592
+2020-11-16 01:50:34: plx_rcp_220_v1r08: Completed: 05:31:60: Rank=21: Particles: Start=7616 Del=2247 End=5369
+2020-11-16 01:51:41: plx_rcp_190_v1r08: Completed: 06:07:28: Rank= 1: Particles: Start=6525 Del=2742 End=3783
+2020-11-16 01:52:34:plx_hist_250_v1r06: Completed: 03:51:14: Rank= 7: Particles: Start=5127 Del=577 End=4550
+2020-11-16 01:53:26:plx_hist_250_v1r06: Completed: 03:52:06: Rank=25: Particles: Start=7218 Del=156 End=7062
+2020-11-16 01:53:49:plx_hist_250_v1r06: Completed: 03:52:30: Rank=44: Particles: Start=9890 Del=193 End=9697
+2020-11-16 01:53:58:plx_hist_250_v1r06: Completed: 03:52:39: Rank=36: Particles: Start=5952 Del=165 End=5787
+2020-11-16 01:54:19:plx_hist_190_v1r07: Completed: 04:47:32: Rank=13: Particles: Start=57746 Del=4296 End=53450
+2020-11-16 01:54:47: plx_rcp_220_v1r08: Completed: 05:36:14: Rank=37: Particles: Start=8490 Del=304 End=8186
+2020-11-16 01:55:36:plx_hist_250_v1r06: Completed: 03:54:16: Rank=23: Particles: Start=11090 Del=354 End=10736
+2020-11-16 01:56:39: plx_rcp_220_v1r08: Completed: 05:38:05: Rank= 7: Particles: Start=6336 Del=518 End=5818
+2020-11-16 01:56:59:plx_hist_250_v1r06: Completed: 03:55:40: Rank=17: Particles: Start=8638 Del=204 End=8434
+2020-11-16 01:57:51: plx_rcp_220_v1r08: Completed: 05:39:18: Rank=31: Particles: Start=8819 Del=613 End=8206
+2020-11-16 01:58:39: plx_rcp_220_v1r08: Completed: 05:40:05: Rank= 9: Particles: Start=6521 Del=285 End=6236
+2020-11-16 01:59:07: plx_rcp_220_v1r08: Completed: 05:40:33: Rank=33: Particles: Start=4442 Del=1758 End=2684
+2020-11-16 01:59:37:plx_hist_250_v1r06: Completed: 03:58:17: Rank=11: Particles: Start=8565 Del=149 End=8416
+2020-11-16 01:59:42:plx_hist_190_v1r07: Completed: 04:52:55: Rank=47: Particles: Start=6442 Del=236 End=6206
+2020-11-16 02:00:03:plx_hist_250_v1r06: Completed: 03:58:44: Rank= 5: Particles: Start=7661 Del=207 End=7454
+2020-11-16 02:00:04:plx_hist_190_v1r07: Completed: 04:53:17: Rank=20: Particles: Start=4749 Del=211 End=4538
+2020-11-16 02:00:21:plx_hist_190_v1r07: Completed: 04:53:34: Rank= 7: Particles: Start=8611 Del=428 End=8183
+2020-11-16 02:00:41:plx_hist_250_v1r06: Completed: 03:59:21: Rank=22: Particles: Start=40621 Del=1057 End=39564
+2020-11-16 02:01:43:plx_hist_190_v1r07: Completed: 04:54:56: Rank= 2: Particles: Start=8456 Del=2524 End=5932
+2020-11-16 02:02:20:plx_hist_190_v1r07: Completed: 04:55:33: Rank=26: Particles: Start=1992 Del=577 End=1415
+2020-11-16 02:03:31: plx_rcp_220_v1r08: Completed: 05:44:57: Rank=45: Particles: Start=7688 Del=282 End=7406
+2020-11-16 02:04:30:plx_hist_250_v1r06: Completed: 04:03:10: Rank= 1: Particles: Start=45677 Del=820 End=44857
+2020-11-16 02:04:32:plx_hist_190_v1r07: Completed: 04:57:46: Rank=30: Particles: Start=4783 Del=2280 End=2503
+2020-11-16 02:05:32:plx_hist_190_v1r07: Completed: 04:58:45: Rank=42: Particles: Start=2556 Del=331 End=2225
+2020-11-16 02:07:34:plx_hist_220_v1r07: Completed: 04:49:59: Rank=42: Particles: Start=4493 Del=356 End=4137
+2020-11-16 02:09:00: plx_rcp_190_v1r08: Completed: 06:24:47: Rank=26: Particles: Start=5541 Del=2654 End=2887
+2020-11-16 02:10:43: plx_rcp_220_v1r08: Completed: 05:52:09: Rank= 8: Particles: Start=8596 Del=420 End=8176
+2020-11-16 02:12:12:plx_hist_190_v1r07: Completed: 05:05:25: Rank=19: Particles: Start=8471 Del=246 End=8225
+2020-11-16 02:13:22:plx_hist_220_v1r07: Completed: 04:55:47: Rank=45: Particles: Start=2298 Del=611 End=1687
+2020-11-16 02:14:32:plx_hist_190_v1r07: Completed: 05:07:45: Rank=25: Particles: Start=6167 Del=2795 End=3372
+2020-11-16 02:15:58:plx_hist_190_v1r07: Completed: 05:09:11: Rank=15: Particles: Start=5976 Del=1078 End=4898
+2020-11-16 02:16:40: plx_rcp_190_v1r08: Completed: 06:32:26: Rank=34: Particles: Start=5039 Del=309 End=4730
+2020-11-16 02:17:37:plx_hist_220_v1r07: Completed: 05:00:03: Rank=33: Particles: Start=6636 Del=222 End=6414
+2020-11-16 02:18:19: plx_rcp_220_v1r08: Completed: 05:59:45: Rank=10: Particles: Start=2732 Del=716 End=2016
+2020-11-16 02:18:24:plx_hist_220_v1r07: Completed: 05:00:50: Rank=15: Particles: Start=7634 Del=537 End=7097
+2020-11-16 02:18:39: plx_rcp_220_v1r08: Completed: 06:00:05: Rank=29: Particles: Start=8336 Del=1487 End=6849
+2020-11-16 02:21:46:plx_hist_165_v1r07: Finished!: Timer=04:44:56
+2020-11-16 02:22:25:plx_hist_220_v1r07: Completed: 05:04:50: Rank=20: Particles: Start=8313 Del=560 End=7753
+2020-11-16 02:25:22:plx_hist_190_v1r07: Completed: 05:18:35: Rank=45: Particles: Start=4386 Del=216 End=4170
+2020-11-16 02:26:24:plx_hist_190_v1r07: Completed: 05:19:37: Rank=46: Particles: Start=4040 Del=243 End=3797
+2020-11-16 02:27:21:plx_hist_190_v1r07: Completed: 05:20:34: Rank=33: Particles: Start=10332 Del=716 End=9616
+2020-11-16 02:30:15:plx_hist_190_v1r07: Completed: 05:23:28: Rank= 0: Particles: Start=43961 Del=2112 End=41849
+2020-11-16 02:30:42:plx_hist_190_v1r07: Completed: 05:23:55: Rank=29: Particles: Start=5589 Del=1552 End=4037
+2020-11-16 02:34:52: plx_rcp_220_v1r08: Completed: 06:16:18: Rank=17: Particles: Start=5474 Del=2657 End=2817
+2020-11-16 02:36:29:plx_hist_220_v1r07: Completed: 05:18:55: Rank= 0: Particles: Start=12698 Del=431 End=12267
+2020-11-16 02:41:02:plx_hist_190_v1r07: Completed: 05:34:15: Rank= 6: Particles: Start=4173 Del=230 End=3943
+2020-11-16 02:41:16:plx_hist_190_v1r07: Completed: 05:34:29: Rank=35: Particles: Start=3722 Del=1622 End=2100
+2020-11-16 02:43:04:plx_hist_190_v1r07: Completed: 05:36:17: Rank= 1: Particles: Start=7455 Del=245 End=7210
+2020-11-16 02:46:41:plx_hist_250_v1r06: Finished!: Timer=04:45:22
+2020-11-16 02:48:43:plx_hist_190_v1r07: Completed: 05:41:56: Rank=34: Particles: Start=9209 Del=369 End=8840
+2020-11-16 02:52:34: plx_rcp_220_v1r08: Completed: 06:33:60: Rank=46: Particles: Start=7221 Del=321 End=6900
+2020-11-16 02:52:37: plx_rcp_220_v1r08: Completed: 06:34:03: Rank=47: Particles: Start=9231 Del=564 End=8667
+2020-11-16 02:55:51: plx_rcp_220_v1r08: Completed: 06:37:18: Rank=15: Particles: Start=48490 Del=2919 End=45571
+2020-11-16 02:58:10: plx_rcp_220_v1r08: Completed: 06:39:36: Rank= 2: Particles: Start=7834 Del=476 End=7358

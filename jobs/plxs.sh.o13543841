@@ -1,0 +1,14 @@
+Started plx spinup for exp hist at lon 165.
+
+======================================================================================
+                  Resource Usage on 2020-11-16 02:07:34:
+   Job Id:             13543841.gadi-pbs
+   Project:            e14
+   Exit Status:        271 (Linux Signal 15 SIGTERM Termination)
+   Service Units:      466.08
+   NCPUs Requested:    48                     NCPUs Used: 48              
+                                           CPU Time Used: 04:38:49                                   
+   Memory Requested:   192.0GB               Memory Used: 78.22GB         
+   Walltime requested: 48:00:00            Walltime Used: 04:51:18        
+   JobFS requested:    100.0MB                JobFS used: 253.26KB        
+======================================================================================

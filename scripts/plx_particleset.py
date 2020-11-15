@@ -96,7 +96,7 @@ def restart_EUC(dy=0.1, dz=25, lon=165, exp='hist', repeatdt_days=6,
     nextid = np.nanmax(pset.particle_data['id']) + 1
     # Start date to add new EUC particles.
     pset_start = np.nanmin(pset.time)
-    if final:
+    if final or xlog['r'] == 9:
         runtime = timedelta(seconds=pset_start)
         repeats = math.floor(runtime / repeatdt)
         endtime = 0
