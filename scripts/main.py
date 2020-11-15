@@ -271,7 +271,7 @@ def log_simulation(xlog, rank, logger):
 
 def pset_from_file(fieldset, pclass, filename, repeatdt=None,
                    restart=True, restarttime=np.nanmin, reduced=True,
-                   lonlatdepth_dtype=np.float32, xlog=None, **kwargs):
+                   lonlatdepth_dtype=np.float32, xlog=None, spinup=False, **kwargs):
     """Initialise the ParticleSet from a netcdf ParticleFile.
 
     This creates a new ParticleSet based on locations of all particles written
@@ -306,13 +306,17 @@ def pset_from_file(fieldset, pclass, filename, repeatdt=None,
                 kwargs[v] = vars[v]
     else:
         if restarttime is None:
-            restarttime = np.nanin(vars['time'])
+            restarttime = np.nanmin(vars['time'])
         if callable(restarttime):
             restarttime = restarttime(vars['time'])
         else:
             restarttime = restarttime
 
-        inds = np.where(vars['time'] == restarttime)
+        if spinup:
+            inds = np.where((vars['time'] == restarttime) & (vars['age'] != 0.))
+            vars['time'] = vars['time'] * 0 + int(fieldset.U.grid.time_full[-1])
+        else:
+            inds = np.where(vars['time'] == restarttime)
         for v in vars:
             if to_write[v] is True:
                 vars[v] = vars[v][inds]
@@ -320,6 +324,7 @@ def pset_from_file(fieldset, pclass, filename, repeatdt=None,
                 vars[v] = vars[v][inds[0]]
             if v not in ['lon', 'lat', 'depth', 'time', 'id']:
                 kwargs[v] = vars[v]
+
     if restart:
         pclass.setLastID(0)  # reset to zero offset
     else:

@@ -9,4 +9,6 @@
 /logs/archive
 /jobs/archive
 *.pyc
+*.stats
 .spyproject
+.pylint.d
