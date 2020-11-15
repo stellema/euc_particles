@@ -13,7 +13,7 @@ from argparse import ArgumentParser
 
 import cfg
 from tools import idx
-from vfncs import EUC_bnds_static, EUC_bnds_grenier, EUC_bnds_izumo
+from fncs import EUC_bnds_static, EUC_bnds_grenier, EUC_bnds_izumo
 
 
 """ Input at terminal """

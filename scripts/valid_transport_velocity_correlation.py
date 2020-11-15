@@ -19,7 +19,7 @@ import cfg
 from cfg import SV, width, height, tbnds_tao, tbnds_ofam
 from tools import (idx, legend_without_duplicate_labels, open_tao_data,
                    cor_scatter_plot, regress)
-from vfncs import EUC_vbounds, EUC_bnds_grenier, EUC_bnds_izumo, EUC_bnds_static
+from fncs import EUC_vbounds, EUC_bnds_grenier, EUC_bnds_izumo, EUC_bnds_static
 from valid_nino34 import nino_events
 warnings.filterwarnings('ignore')
 

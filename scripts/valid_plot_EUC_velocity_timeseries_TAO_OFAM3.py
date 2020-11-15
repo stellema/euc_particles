@@ -14,7 +14,7 @@ from scipy import interpolate
 
 import cfg
 from tools import open_tao_data
-from vfncs import EUC_vbounds
+from fncs import EUC_vbounds
 
 def plot_eq_velocity(fig, z, t, u, i, name,
                      max_depth=355, min_depth=10, rows=1):

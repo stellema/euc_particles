@@ -18,7 +18,7 @@ import cfg
 # import tools
 from cfg import SV, width, height
 from tools import idx, regress, correlation_str
-from vfncs import EUC_bnds_static, EUC_bnds_grenier, EUC_bnds_izumo
+from fncs import EUC_bnds_static, EUC_bnds_grenier, EUC_bnds_izumo
 
 warnings.filterwarnings('ignore')
 

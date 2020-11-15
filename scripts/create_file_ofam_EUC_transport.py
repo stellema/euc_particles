@@ -13,7 +13,7 @@ import xarray as xr
 from datetime import datetime
 
 import cfg
-from vfncs import EUC_bnds_static
+from fncs import EUC_bnds_static
 
 hfile = [cfg.ofam/'ocean_u_{}_{:02d}.nc'.format(y, m) for y in range(1981, 2013) for m in range(1, 13)]
 rfile = [cfg.ofam/'ocean_u_{}_{:02d}.nc'.format(y, m) for y in range(2070, 2102) for m in range(1, 13)]
