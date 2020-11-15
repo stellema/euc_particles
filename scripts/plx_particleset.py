@@ -49,16 +49,13 @@ def restart_EUC(dy=0.1, dz=25, lon=165, exp='hist', repeatdt_days=6,
     """
     xlog = {'file': 0, 'new': 0, 'y': '', 'x': '', 'z': '', 'v': v}
     # # Ensure run ends on a repeat day.
-    if not final:
-        while runtime_days % repeatdt_days != 0:
-            runtime_days += 1
+    while runtime_days % repeatdt_days != 0:
+        runtime_days += 1
     runtime = timedelta(days=int(runtime_days))
-
     repeatdt = timedelta(days=repeatdt_days)  # Repeat particle release time.
-    repeats = math.floor(runtime/repeatdt)
-
+    repeats = math.floor(runtime / repeatdt)
     # Don't add final repeat if run ends on a repeat day.
-    if not final and runtime_days % repeatdt_days == 0:
+    if runtime_days % repeatdt_days == 0:
         repeats -= 1
 
     # Create time bounds for fieldset based on experiment.
@@ -99,6 +96,13 @@ def restart_EUC(dy=0.1, dz=25, lon=165, exp='hist', repeatdt_days=6,
     nextid = np.nanmax(pset.particle_data['id']) + 1
     # Start date to add new EUC particles.
     pset_start = np.nanmin(pset.time)
+    if final:
+        runtime = timedelta(seconds=pset_start)
+        repeats = math.floor(runtime / repeatdt)
+        endtime = 0
+    else:
+        endtime = int(pset_start - runtime.total_seconds())
+
     psetx = pset_euc(fieldset, pclass, lon, dy, dz, repeatdt, pset_start,
                      repeats, xlog=xlog)
 
@@ -141,7 +145,7 @@ def restart_EUC(dy=0.1, dz=25, lon=165, exp='hist', repeatdt_days=6,
     df['nextid'] = nextid
     df['restarttime'] = pset_start
     df['runtime'] = runtime.total_seconds()
-    df['endtime'] = int(pset_start - runtime.total_seconds())
+    df['endtime'] = endtime
 
     # Save to netcdf.
     df.to_netcdf(cfg.data/('r_' + xid.name))

@@ -706,28 +706,16 @@ def zone_field(plot=False, savefile=True):
     return
 
 
-def get_spinup_start(exp="hist", years=10, repeatdt=6):
+def get_spinup_start(exp="hist", years=5):
     ix = 0 if exp == "hist" else 1
-    # Pick day that is also a release day (multiple of 6).
-    # dsecs = timedelta(days=1).total_seconds()
-    spin_days_floor = math.floor(years * 365.25 / repeatdt) * repeatdt
-    spin_days_ceil = math.ceil(years * 365.25 / repeatdt) * repeatdt
-    spin_days = spin_days_ceil  # Going for ceil (3654 days).
-    print("Number of spinup days={}({} year ceil) (floor={}days)"
-          .format(spin_days_ceil, years, spin_days_floor))
-
     # Fieldset start/end dates (to convert relative seconds).
     start = datetime(cfg.years[ix][0], 1, 1)
-    end = datetime(cfg.years[ix][1], 12, 31)
-
     # Date to start spinup particles.
-    spin = end - timedelta(days=spin_days)  # (2002, 12, 31)/(2091, 12, 30)
-
-    # Relative field end time.
-    end_rel = int((end - start).total_seconds())
+    spin = datetime(cfg.years[ix][0] + years, 1, 1)  # (2002, 12, 31)/(2091, 12, 30)
+    dspin = spin - start
     # Relative spinup particle start.
-    spin_rel = end_rel - timedelta(days=spin_days).total_seconds()
-    print('{} Spinup: {}y/{}d: {} to {}: Relative={} to {:.0f}'
-          .format(cfg.expx[ix], years, spin_days, end.strftime('%Y-%m-%d'),
-                  spin.strftime('%Y-%m-%d'), end_rel, spin_rel))
+    spin_rel = int(dspin.total_seconds())
+    print('{} Spinup: {}y/{}d/{}s: {} to {}'
+          .format(cfg.expx[ix], years, dspin.days, spin_rel, start.strftime('%Y-%m-%d'),
+                  spin.strftime('%Y-%m-%d')))
     return spin_rel

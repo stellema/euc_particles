@@ -78,21 +78,19 @@ def spinup_EUC(lon=165, exp='hist', dtm=60, outputdt=2,
 
     pclass = zParticle
     # Change pset file to last run.
-    xid = cfg.data/'s{}_plx_{}_{:0d}_v{}r{:02d}.nc'.format(nyears, exp, lon, v, r)
+    xid = cfg.data/'sp{}_plx_{}_{:0d}_v{}r{:02d}.nc'.format(nyears, exp, lon, v, r)
 
     if r == 0:
-        filename = cfg.data/'plx_{}_{:0d}_v{}r03.nc'.format(exp, lon, v)
-        restarttime = get_spinup_start(exp, years=nyears)
-        spinup = True
-        pset_start = fieldset.U.grid.time[-1]
+        filename = cfg.data/'plx_{}_{:0d}_v{}r09.nc'.format(exp, lon, v)
+        spinup = get_spinup_start(exp, years=nyears)
+        pset_start = spinup
     else:
-        filename = cfg.data/'s{}_plx_{}_{}_v{}r{:02d}.nc'.format(nyears, exp, lon, v, r-1)
-        restarttime = np.nanmin  # Find current time
-        spinup = False  # Don't find spinup particles again - just repeat whats there
+        filename = cfg.data/'sp{}_plx_{}_{}_v{}r{:02d}.nc'.format(nyears, exp, lon, v, r-1)
+        spinup = None  # Don't find spinup particles again - just repeat whats there
 
     # Create ParticleSet from the given ParticleFile.
     pset = pset_from_file(fieldset, pclass, filename, reduced=False, restart=True,
-                          restarttime=restarttime, xlog=xlog, spinup=spinup)
+                          restarttime=np.nanmin, xlog=xlog, spinup=spinup)
     if r > 0:  # ???
         pset_start = np.nanmin(pset.particle_data['time'])
     endtime = int(pset_start - runtime.total_seconds())
@@ -153,6 +151,6 @@ elif __name__ == "__main__":
     v, r = 1, 0
     lon = 250
     exp = 'hist'
-    nyears = 10
+    nyears = 5
     spinup_EUC(lon=lon, dtm=dtm, outputdt=outputdt, runtime=runtime,
                v=v, r=r, nyears=nyears)
