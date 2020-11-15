@@ -84,6 +84,7 @@ def restart_EUC(dy=0.1, dz=25, lon=165, exp='hist', repeatdt_days=6,
 
     # Increment run index for new output file name.
     xid = generate_xid(lon, v, exp, restart=True, xlog=xlog)
+    xlog['id'] = xid.stem
 
     # Change pset file to last run.
     file = cfg.data/'{}{:02d}.nc'.format(xid.stem[:-2], xlog['r'] - 1)
@@ -103,29 +104,24 @@ def restart_EUC(dy=0.1, dz=25, lon=165, exp='hist', repeatdt_days=6,
     else:
         endtime = int(pset_start - runtime.total_seconds())
 
+    # ParticleSet start time (for log).
+    start = (fieldset.time_origin.time_origin + timedelta(seconds=pset_start))
+    xlog['Ti'] = start.strftime('%Y-%m-%d')
+    xlog['Tf'] = (start - runtime).strftime('%Y-%m-%d')
+
+    logger.info(' {}: Runtime={}d: {} to {}: Rep={}d (x{})'.format(xlog['id'], runtime.days, xlog['Ti'], xlog['Tf'], repeatdt.days, repeats))
+
+    # Add new particles.
     psetx = pset_euc(fieldset, pclass, lon, dy, dz, repeatdt, pset_start,
                      repeats, xlog=xlog)
-
     xlog['new'] = psetx.size
     psetx = del_westward(psetx)
     xlog['start'] = psetx.size
     xlog['west'] = xlog['new'] - xlog['start']
-
     pset.add(psetx)
-
-    # ParticleSet start time (for log).
-    start = (fieldset.time_origin.time_origin + timedelta(seconds=pset_start))
-
-    xlog['Ti'] = start.strftime('%Y-%m-%d')
-    xlog['Tf'] = (start - runtime).strftime('%Y-%m-%d')
     xlog['N'] = xlog['new'] + xlog['file']
-    xlog['id'] = xid.stem
-    xlog['run'] = runtime.days
-    xlog['rdt'] = repeatdt.days
 
-    # Log experiment details.
     logger.info(' {}: Particles: File={} New={} West={} I={} Total={}'.format(xlog['id'], xlog['file'], xlog['new'], xlog['west'], xlog['start'], pset.size))
-    logger.info(' {}: Runtime={}d: {} to {}: Rep={}d (x{})'.format(xlog['id'], xlog['run'], xlog['Ti'], xlog['Tf'], xlog['rdt'], repeats))
     logger.info(' {}: Lon={}: Lat={}: Depth={}'.format(xlog['id'], xlog['x'], xlog['y'], xlog['z']))
 
     vars = {}
