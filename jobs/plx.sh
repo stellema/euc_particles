@@ -9,6 +9,10 @@
 #PBS -m ae
 #PBS -M astellemas@gmail.com
 #PBS -v LON,EXP
+ECHO=/bin/echo
+
+$ECHO "Started plx for exp $EXP at lon $LON."
+
 module use /g/data3/hh5/public/modules
 module load conda/analysis3-20.10
 mpirun -np 48 python3 /g/data/e14/as3189/OFAM/scripts/plx.py -e $EXP -x $LON -r 1200 -v 1 -f 1
