@@ -1,0 +1,14 @@
+Started plx for exp hist at lon 220.
+[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m
+======================================================================================
+                  Resource Usage on 2020-11-16 03:53:17:
+   Job Id:             13543859.gadi-pbs
+   Project:            e14
+   Exit Status:        0
+   Service Units:      633.39
+   NCPUs Requested:    48                     NCPUs Used: 48              
+                                           CPU Time Used: 289:05:20                                  
+   Memory Requested:   192.0GB               Memory Used: 167.74GB        
+   Walltime requested: 10:00:00            Walltime Used: 06:35:52        
+   JobFS requested:    100.0MB                JobFS used: 11.87MB         
+======================================================================================

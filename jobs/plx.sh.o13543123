@@ -1,0 +1,14 @@
+Started plx for exp rcp at lon 220.
+[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m
+======================================================================================
+                  Resource Usage on 2020-11-16 04:13:07:
+   Job Id:             13543123.gadi-pbs
+   Project:            e14
+   Exit Status:        0
+   Service Units:      759.47
+   NCPUs Requested:    48                     NCPUs Used: 48              
+                                           CPU Time Used: 353:31:13                                  
+   Memory Requested:   192.0GB               Memory Used: 157.76GB        
+   Walltime requested: 10:00:00            Walltime Used: 07:54:40        
+   JobFS requested:    100.0MB                JobFS used: 11.87MB         
+======================================================================================

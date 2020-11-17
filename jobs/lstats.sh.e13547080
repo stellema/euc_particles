@@ -1,0 +1,4 @@
+plx_hist_165_v1r07: File=262668 New=148400 W=60602(41%) N=350466 F=276448 del=74018(21.1%) uB=68206(19.5%) max=6467 median=3 mean=6
+plx_rcp_165_v1r08: File=270357 New=148400 W=50357(34%) N=368400 F=282439 del=85961(23.3%) uB=74901(20.3%) max=1258 median=3 mean=7
+plx_rcp_250_v1r08: File=297898 New=148400 W=73700(50%) N=372598 F=319926 del=52672(14.1%) uB=47569(12.8%) max=1293 median=2 mean=6
+=>> PBS: job killed: walltime 4250 exceeded limit 4200
