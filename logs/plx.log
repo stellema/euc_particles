@@ -325,3 +325,50 @@
 2020-11-15 22:18:45: s10_plx_rcp_220_v1r00: Tmp=FFZHQQJY: dt=60m: Out=2d: Land=0.975 Vmin=1e-07
 2020-11-15 22:18:45: s10_plx_rcp_220_v1r00: Rank= 0: Particles=187598
 2020-11-16 02:31:56:Generating restart file from: plx_rcp_165_v1r08
+2020-11-16 03:30:37:Generating restart file from: plx_hist_165_v1r07
+2020-11-16 03:33:57:Generating restart file from: plx_hist_250_v1r06
+2020-11-16 04:02:14:Generating restart file from: plx_hist_220_v1r07
+2020-11-16 04:11:30:Generating restart file from: plx_hist_190_v1r07
+2020-11-16 04:25:06:Generating restart file from: plx_rcp_190_v1r08
+2020-11-16 04:26:35: plx_rcp_190_v1r09: Runtime=886d: 2072-06-05 to 2070-01-01: Rep=6d (x147)
+2020-11-16 07:48:12: plx_rcp_165_v1r09: Particles: File=282439 New=109074 West=37859 I=71215 Total=353654
+2020-11-16 07:48:12: plx_rcp_165_v1r09: Runtime=886d: 2072-06-05 to 2070-01-01: Rep=6d (x147)
+2020-11-16 07:48:12: plx_rcp_165_v1r09: Lon=165: Lat=[-2.6-2.6 x0.1]: Depth=[25-350m x25]f32
+2020-11-16 07:48:12: Saved: /g/data/e14/as3189/OFAM/data/r_plx_rcp_165_v1r09.nc
+2020-11-16 07:53:37:Generating restart file from: plx_rcp_220_v1r08
+2020-11-16 07:53:50: plx_rcp_220_v1r09: Runtime=886d: 2072-06-05 to 2070-01-01: Rep=6d (x147)
+2020-11-16 07:54:38:Generating restart file from: plx_rcp_250_v1r08
+2020-11-16 07:54:58: plx_rcp_250_v1r09: Runtime=886d: 2072-06-05 to 2070-01-01: Rep=6d (x147)
+2020-11-16 09:14:37: plx_rcp_190_v1r09: Particles: File=328551 New=109074 West=43018 I=66056 Total=394607
+2020-11-16 09:14:37: plx_rcp_190_v1r09: Lon=190: Lat=[-2.6-2.6 x0.1]: Depth=[25-350m x25]f32
+2020-11-16 09:14:37: Saved: /g/data/e14/as3189/OFAM/data/r_plx_rcp_190_v1r09.nc
+2020-11-16 12:28:11: plx_hist_250_v1r07: Particles: File=283032 New=147658 West=79365 I=68293 Total=351325
+2020-11-16 12:28:11: plx_hist_250_v1r07: Runtime=1200d: 1990-01-01 to 1986-09-19: Rep=6d (x199)
+2020-11-16 12:28:11: plx_hist_250_v1r07: Lon=250: Lat=[-2.6-2.6 x0.1]: Depth=[25-350m x25]f32
+2020-11-16 12:28:11: Saved: /g/data/e14/as3189/OFAM/data/r_plx_hist_250_v1r07.nc
+2020-11-16 12:33:36: plx_hist_165_v1r08: Particles: File=276448 New=147658 West=58043 I=89615 Total=366063
+2020-11-16 12:33:36: plx_hist_165_v1r08: Runtime=1200d: 1986-09-19 to 1983-06-07: Rep=6d (x199)
+2020-11-16 12:33:36: plx_hist_165_v1r08: Lon=165: Lat=[-2.6-2.6 x0.1]: Depth=[25-350m x25]f32
+2020-11-16 12:33:36: Saved: /g/data/e14/as3189/OFAM/data/r_plx_hist_165_v1r08.nc
+2020-11-16 12:43:30: plx_hist_220_v1r08: Particles: File=317408 New=147658 West=67301 I=80357 Total=397765
+2020-11-16 12:43:30: plx_hist_220_v1r08: Runtime=1200d: 1986-09-19 to 1983-06-07: Rep=6d (x199)
+2020-11-16 12:43:30: plx_hist_220_v1r08: Lon=220: Lat=[-2.6-2.6 x0.1]: Depth=[25-350m x25]f32
+2020-11-16 12:43:30: Saved: /g/data/e14/as3189/OFAM/data/r_plx_hist_220_v1r08.nc
+2020-11-16 12:53:25: plx_hist_190_v1r08: Particles: File=328769 New=147658 West=62519 I=85139 Total=413908
+2020-11-16 12:53:25: plx_hist_190_v1r08: Runtime=1200d: 1986-09-19 to 1983-06-07: Rep=6d (x199)
+2020-11-16 12:53:25: plx_hist_190_v1r08: Lon=190: Lat=[-2.6-2.6 x0.1]: Depth=[25-350m x25]f32
+2020-11-16 12:53:25: Saved: /g/data/e14/as3189/OFAM/data/r_plx_hist_190_v1r08.nc
+2020-11-16 13:01:43: plx_rcp_220_v1r09: Particles: File=323973 New=109074 West=49430 I=59644 Total=383617
+2020-11-16 13:01:43: plx_rcp_220_v1r09: Lon=220: Lat=[-2.6-2.6 x0.1]: Depth=[25-350m x25]f32
+2020-11-16 13:01:43: Saved: /g/data/e14/as3189/OFAM/data/r_plx_rcp_220_v1r09.nc
+2020-11-16 13:04:31: plx_rcp_250_v1r09: Particles: File=319926 New=109074 West=58625 I=50449 Total=370375
+2020-11-16 13:04:31: plx_rcp_250_v1r09: Lon=250: Lat=[-2.6-2.6 x0.1]: Depth=[25-350m x25]f32
+2020-11-16 13:04:31: Saved: /g/data/e14/as3189/OFAM/data/r_plx_rcp_250_v1r09.nc
+2020-11-17 18:41:54:Generating restart file from: plx_hist_250_v1r07
+2020-11-17 18:41:54:Generating restart file from: plx_hist_190_v1r08
+2020-11-17 18:41:54:Generating restart file from: plx_hist_220_v1r08
+2020-11-17 18:41:54:Generating restart file from: plx_hist_165_v1r08
+2020-11-17 18:42:08: plx_hist_165_v1r09: Runtime=887d: 1983-06-07 to 1981-01-01: Rep=6d (x147)
+2020-11-17 18:42:10: plx_hist_250_v1r08: Runtime=1200d: 1986-09-19 to 1983-06-07: Rep=6d (x199)
+2020-11-17 18:42:12: plx_hist_220_v1r09: Runtime=887d: 1983-06-07 to 1981-01-01: Rep=6d (x147)
+2020-11-17 18:42:14: plx_hist_190_v1r09: Runtime=887d: 1983-06-07 to 1981-01-01: Rep=6d (x147)
