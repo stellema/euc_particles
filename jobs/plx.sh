@@ -1,7 +1,7 @@
 #!/bin/bash
 #PBS -P e14
 #PBS -q normal
-#PBS -l walltime=7:00:00
+#PBS -l walltime=14:00:00
 #PBS -l mem=192GB
 #PBS -l ncpus=48
 #PBS -l storage=gdata/hh5+gdata/e14
@@ -11,7 +11,7 @@
 #PBS -v LON,EXP
 ECHO=/bin/echo
 
-$ECHO "Started plx for exp $EXP at lon $LON."
+$ECHO "Continue plx exp $EXP at lon $LON."
 
 module use /g/data3/hh5/public/modules
 module load conda/analysis3-20.10

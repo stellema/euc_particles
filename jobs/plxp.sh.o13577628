@@ -1,0 +1,14 @@
+Started plx particleset for exp hist at lon 250.
+
+======================================================================================
+                  Resource Usage on 2020-11-18 04:07:25:
+   Job Id:             13577628.gadi-pbs
+   Project:            e14
+   Exit Status:        271 (Linux Signal 15 SIGTERM Termination)
+   Service Units:      46.32
+   NCPUs Requested:    1                      NCPUs Used: 1               
+                                           CPU Time Used: 09:23:26                                   
+   Memory Requested:   35.0GB                Memory Used: 28.63GB         
+   Walltime requested: 09:30:00            Walltime Used: 09:31:41        
+   JobFS requested:    100.0MB                JobFS used: 0B              
+======================================================================================
