@@ -10,7 +10,8 @@ import numpy as np
 import xarray as xr
 
 import cfg
-from tools import idx, idx2d
+from tools import idx, idx2d, wind_stress_curl, coriolis
+from main import ec, mc, ng
 
 
 def subset_cmip(mip, m, var, exp, depth, lat, lon):
@@ -99,8 +100,8 @@ def CMIP_EUC(time, depth, lat, lon, mip, lx, mod):
     var = 'uvo'
     exp = lx['exp']
     model = np.array([mod[i]['id'] for i in range(len(mod))])
-    ec = np.zeros((len(exp), len(time), len(lon), len(mod)))
-    ds = xr.Dataset({'ec': (['exp', 'time', 'lon', 'model'], ec)},
+    de = np.zeros((len(exp), len(time), len(lon), len(mod)))
+    ds = xr.Dataset({'ec': (['exp', 'time', 'lon', 'model'], de)},
                     coords={'exp': exp, 'time': time, 'lon': lon, 'model': model})
     for m in mod:
         for s, ex in enumerate(exp):
@@ -119,6 +120,73 @@ def CMIP_EUC(time, depth, lat, lon, mip, lx, mod):
     return ds
 
 
+def bnds_wbc(mip, cc):
+    mod = cfg.mod6 if mip == 6 else cfg.mod5
+    contour = np.nanmin if cc.sign <= 0 else np.nanmax
+    x = np.zeros((len(mod), 2))
+    z = np.zeros((len(mod), 2))
+    for m in mod:
+        _z, _y, _x = cc.depth, cc.lat, cc.lon
+        # if cc.n == 'NGCU':
+        #     if mod[m]['id'] in []:  #cc.lat in [-4] and
+        if cc.n == 'MC':
+            if mod[m]['id'] in ['MPI-ESM1-2-HR']:
+                _x[-1] = 128.5
+            elif mod[m]['id'] in ['CanESM2', 'MIROC-ESM-CHEM', 'MIROC-ESM']:
+                _x[-1] = 133
+        dx = subset_cmip(mip, m, cc.vel, 'historical', _z, _y, _x)
+        dx = dx.squeeze()
+
+        # Depths
+        z[m, 0] = dx[mod[m]['cs'][0]].values[0]
+        z[m, 1] = dx[mod[m]['cs'][0]].values[-1]
+        dxx = dx.where(dx <= contour(dx) * 0.1, drop=True)
+
+        x[m, 0] = dxx[mod[m]['cs'][2]].values[0]  # LHS
+        if dxx[mod[m]['cs'][2]].size > 1:
+            x[m, 1] = dxx[mod[m]['cs'][2]].values[-1]
+        else:
+            x[m, 1] = x[m, 0]
+
+        # Make LHS point all NaN
+        try:
+            dxb1 = dx.where((dx[mod[m]['cs'][2]] <= x[m, 0]), drop=True)
+            x[m, 0] = dxb1.where(dxb1.count(dim=[mod[m]['cs'][0]]) == 0, drop=True)[mod[m]['cs'][2]].max().item()
+        except:
+            pass
+    return x, z
+
+def CMIP_WBC(mip, cc):
+    mod = cfg.mod6 if mip == 6 else cfg.mod5
+    lx = cfg.lx6 if mip == 6 else cfg.lx5
+    # Scenario, month, longitude, model.
+    var = 'vvo'
+    model = np.array([mod[i]['id'] for i in range(len(mod))])
+    dc = np.zeros((len(lx['exp']), len(cfg.mon), len(mod)))
+    ds = xr.Dataset({cc._n: (['exp', 'time', 'model'], dc)},
+                    coords={'exp': lx['exp'], 'time': cfg.mon, 'model': model})
+    x, z = bnds_wbc(mip, cc)
+    y = cc.lat
+    for m in mod:
+        for s, ex in enumerate(lx['exp']):
+            dx = subset_cmip(mip, m, var, lx['exp'][s], z[m], y, x[m])
+            dx = dx.squeeze()
+            # dx = dx.where(dx > 0)
+            if mod[m]['id'] in ['CMCC-CM2-SR5']:
+                lon_str = 'j'
+            else:
+                lon_str = [s for s in dx.dims if s in
+                           ['lon', 'i', 'x', 'rlon', 'nlon']][0]
+            dxx = dx.sum(dim=[mod[m]['cs'][0], lon_str])
+            ds[cc._n][s, :, m] = dxx.values
+            dx.close()
+    return ds
+
+
+##############################################################################
+# OFAM3 FUNCTIONS
+##############################################################################
+
 def OFAM_EUC(depth, lat, lon):
     fh = xr.open_dataset(cfg.ofam/'ocean_u_1981-2012_climo.nc')
     fr = xr.open_dataset(cfg.ofam/'ocean_u_2070-2101_climo.nc')
@@ -130,7 +198,7 @@ def OFAM_EUC(depth, lat, lon):
     zi = [idx(dz[1:], depth[0]), idx(dz[1:], depth[1], 'greater') + 1]
     zi1 = 5  # sw_ocean[4]=25, st_ocean[5]=28, sw_ocean[5]=31.2
     zi2 = 29  # st_ocean[29]=325.88, sw_ocean[29]=349.5
-    zi = [4, 30+1]
+    zi = [4, 30 + 1]
 
     # Slice lat, lon and depth.
     fh = fh.u.sel(yu_ocean=slice(lat[0], lat[1]), xu_ocean=lon).isel(st_ocean=slice(zi[0], zi[1]))
@@ -150,113 +218,7 @@ def OFAM_EUC(depth, lat, lon):
     fh = fh.sum(dim=['st_ocean', 'yu_ocean'])
     fr = fr.sum(dim=['st_ocean', 'yu_ocean'])
 
-    return fh, fr
-
-
-def bnds_mc(mip, contour=np.nanmin):
-    mod = cfg.mod6 if mip == 6 else cfg.mod5
-    var = 'vo'
-    exp = 'historical'
-    lat = 8
-    lon = [125, 130]
-    depth = [0, 550]
-    xint = 2
-    x = np.zeros((len(mod), 2))
-    z = np.zeros((len(mod), 2))
-    for m in mod:
-        lon_ = lon
-        if mip == 6 and mod[m]['id'] in ['MPI-ESM1-2-HR']:
-            lon_ = [lon[0], 128.5]
-        elif mip == 5 and mod[m]['id'] in ['CanESM2', 'MIROC-ESM-CHEM', 'MIROC-ESM']:
-            lon_ = [lon[0], 133]
-        dx = subset_cmip(mip, m, var, exp, depth, lat, lon_)
-        dx = dx.squeeze()
-
-        # Depths
-        z[m, 0] = dx[mod[m]['cs'][0]].values[0]
-        z[m, 1] = dx[mod[m]['cs'][0]].values[-1]
-        dxx = dx.where(dx <= contour(dx) * 0.1, drop=True)
-
-        x[m, 0] = dxx[mod[m]['cs'][xint]].values[0]  # LHS
-        if dxx[mod[m]['cs'][xint]].size > 1:
-            x[m, 1] = dxx[mod[m]['cs'][xint]].values[-1]
-        else:
-            x[m, 1] = x[m, 0]
-
-        # Make LHS point all NaN
-        try:
-            dxb1 = dx.where((dx[mod[m]['cs'][xint]] <= x[m, 0]), drop=True)
-            x[m, 0] = dxb1.where(dxb1.count(dim=[mod[m]['cs'][0]]) == 0, drop=True)[mod[m]['cs'][xint]].max().item()
-        except:
-            pass
-    return x, z
-
-
-def bnds_ngcu(mip, contour=np.nanmin):
-    mod = cfg.mod6 if mip == 6 else cfg.mod5
-    var = 'vo'
-    exp = 'historical'
-    lat = -4
-    lon = [145, 150]
-    depth = [0, 550]
-    xint = 2
-    x = np.zeros((len(mod), 2))
-    z = np.zeros((len(mod), 2))
-    for m in mod:
-        lon_ = lon
-        dx = subset_cmip(mip, m, var, exp, depth, lat, lon_)
-        dx = dx.squeeze()
-
-        # Depths
-        z[m, 0] = dx[mod[m]['cs'][0]].values[0]
-        z[m, 1] = dx[mod[m]['cs'][0]].values[-1]
-        dxx = dx.where(dx <= contour(dx) * 0.1, drop=True)
-
-        x[m, 0] = dxx[mod[m]['cs'][xint]].values[0]  # LHS
-        if dxx[mod[m]['cs'][xint]].size > 1:
-            x[m, 1] = dxx[mod[m]['cs'][xint]].values[-1]
-        else:
-            x[m, 1] = x[m, 0]
-
-        # Make LHS point all NaN
-        try:
-            dxb1 = dx.where((dx[mod[m]['cs'][xint]] <= x[m, 0]), drop=True)
-            x[m, 0] = dxb1.where(dxb1.count(dim=[mod[m]['cs'][0]]) == 0, drop=True)[mod[m]['cs'][xint]].max().item()
-        except:
-            pass
-    return x, z
-
-def CMIP_WBC(mip, current='mc'):
-    mod = cfg.mod6 if mip == 6 else cfg.mod5
-    lx = cfg.lx6 if mip == 6 else cfg.lx5
-    time = cfg.mon
-    # Scenario, month, longitude, model.
-    var = 'vvo'
-    exp = lx['exp']
-    model = np.array([mod[i]['id'] for i in range(len(mod))])
-    mc = np.zeros((len(exp), len(time), len(mod)))
-    ds = xr.Dataset({current: (['exp', 'time', 'model'], mc)},
-                    coords={'exp': exp, 'time': time, 'model': model})
-    if current == 'mc':
-        x, z = bnds_mc(mip, contour=np.nanmin)
-        lat = 8
-    else:
-        x, z = bnds_ngcu(mip, contour=np.nanmax)
-        lat = -4
-    for m in mod:
-        for s, ex in enumerate(exp):
-            dx = subset_cmip(mip, m, var, exp[s], z[m], lat, x[m])
-            dx = dx.squeeze()
-            # dx = dx.where(dx > 0)
-            if mod[m]['id'] in ['CMCC-CM2-SR5']:
-                lon_str = 'j'
-            else:
-                lon_str = [s for s in dx.dims if s in
-                           ['lon', 'i', 'x', 'rlon', 'nlon']][0]
-            dxx = dx.sum(dim=[mod[m]['cs'][0], lon_str])
-            ds[current][s, :, m] = dxx.values
-            dx.close()
-    return ds
+    return xr.concat((fh, fr), dim='exp')
 
 
 def OFAM_WBC(depth, lat, lon):
@@ -282,5 +244,30 @@ def OFAM_WBC(depth, lat, lon):
     fr = fr * dz * cfg.LON_DEG(lat) * 0.1
     fh = fh.sum(dim=['st_ocean', 'xu_ocean'])
     fr = fr.sum(dim=['st_ocean', 'xu_ocean'])
+    return xr.concat((fh, fr), dim='exp')
 
-    return fh, fr
+
+def cmip_wsc(mip, lats=[-25, 25], lons=[110, 300]):
+    lx = cfg.lx6 if mip == 6 else cfg.lx5
+    mod = cfg.mod6 if mip == 6 else cfg.mod5
+    exp = lx['exp'][0]
+    # File path.
+    cmip = cfg.home/'model_output/CMIP{}/CLIMOS/regrid'.format(mip)
+    tau = ['tauu', 'tauv'] if mip == 6 else ['tauuo', 'tauvo']
+    om = 'Amon' if mip == 6 else 'Omon'
+    for m in mod:
+        file = [cmip/'{}_{}_{}_{}_climo_regrid.nc'
+                .format(v, om, mod[m]['id'], exp) for v in tau]
+        ds = xr.open_mfdataset(file, combine='by_coords')
+        ds = ds.sel(lat=slice(*lats), lon=slice(*lons))
+        if m == 0:
+            wsc = np.zeros((len(mod), *list(ds[tau[0]].shape)))
+        wsc[m] = wind_stress_curl(du=ds[tau[0]], dv=ds[tau[1]])
+
+        ds.close()
+    coords = {'model': [mod[m]['id'] for m in mod], 'time': cfg.mon,
+              'lat': ds.lat.values, 'lon': ds.lon.values}
+    dims = tuple(coords.keys())
+    dc = xr.DataArray(wsc, dims=dims, coords=coords)
+    return dc
+

@@ -14,6 +14,7 @@ import numpy as np
 import xarray as xr
 from pathlib import Path
 import matplotlib.pyplot as plt
+from itertools import chain, repeat
 
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 
@@ -71,16 +72,17 @@ SV = 1e6
 EARTH_RADIUS = 6378137
 
 # Metres in 1 degree of latitude [m].
-LAT_DEG = (2 * np.pi/360) * EARTH_RADIUS
+LAT_DEG = (2 * np.pi / 360) * EARTH_RADIUS
 
 def LON_DEG(lat):
     return LAT_DEG * np.cos(np.radians(lat))
+
 
 # Ocean density [kg/m3].
 RHO = 1025
 
 # Rotation rate of the Earth [rad/s].
-OMEGA = 7.2921*10**(-5)
+OMEGA = 7.2921 * 10 ** (-5)
 
 # Figure extension type.
 im_ext = '.png'
@@ -122,17 +124,6 @@ zones = {'VS': [147.6, 149.6, j1, j1],
 zone_names = ['Vitiaz Strait', 'Solomon Strait', 'Mindanao Current',
               'EUC recirculation', 'South of EUC', 'North of EUC',
               'Indonesian Seas', 'North Interior', 'South Interior', 'OOB']
-# Suppress scientific notation when printing.
-np.set_printoptions(suppress=True)
-
-plt.rcParams['figure.facecolor'] = 'white'
-plt.rcParams.update({'font.size': 11})
-plt.rcParams['figure.dpi'] = 80
-plt.rcParams['savefig.dpi'] = 500
-plt.rcParams['legend.fontsize'] = 'large'
-plt.rcParams['figure.titlesize'] = 'medium'
-plt.rcParams['axes.titlesize'] = 'large'
-plt.rcParams['axes.labelsize'] = 'medium'
 
 
 def dz():
@@ -170,12 +161,12 @@ mod6 = {0:  {'id': 'ACCESS-CM2',    'nd': 2, 'z': 'lev', 'cs':  cs[1]}, ##
         17: {'id': 'MIROC-ES2L',    'nd': 2, 'z': 'sig', 'cs':  cs[1]},
         18: {'id': 'MIROC6',        'nd': 2, 'z': 'sig', 'cs':  cs[1]},
         19: {'id': 'MPI-ESM1-2-HR', 'nd': 2, 'z': 'lev', 'cs':  cs[1]}, ##
-        20: {'id': 'MPI-ESM1-2-LR', 'nd': 2, 'z': 'lev', 'cs':  cs[1]},  #
-        21: {'id': 'MRI-ESM2-0',    'nd': 2, 'z': 'lev', 'cs':  cs[1]},  #
-        22: {'id': 'NESM3',         'nd': 2, 'z': 'lev', 'cs':  cs[1]},
-        23: {'id': 'NorESM2-LM',    'nd': 2, 'z': 'lev', 'cs':  cs[1]},  #
-        24: {'id': 'NorESM2-MM',    'nd': 2, 'z': 'lev', 'cs':  cs[1]},  #
-        25: {'id': 'UKESM1-0-LL',   'nd': 2, 'z': 'lev', 'cs':  cs[1]}}
+        # 20: {'id': 'MPI-ESM1-2-LR', 'nd': 2, 'z': 'lev', 'cs':  cs[1]},  #
+        20: {'id': 'MRI-ESM2-0',    'nd': 2, 'z': 'lev', 'cs':  cs[1]},  #
+        21: {'id': 'NESM3',         'nd': 2, 'z': 'lev', 'cs':  cs[1]},
+        22: {'id': 'NorESM2-LM',    'nd': 2, 'z': 'lev', 'cs':  cs[1]},  #
+        23: {'id': 'NorESM2-MM',    'nd': 2, 'z': 'lev', 'cs':  cs[1]},  #
+        24: {'id': 'UKESM1-0-LL',   'nd': 2, 'z': 'lev', 'cs':  cs[1]}}
 
 
 mod5 = {0:  {'id': 'ACCESS1-0',        'nd': 2, 'z': 'lev', 'cs':  cs[0]},
@@ -200,19 +191,35 @@ mod5 = {0:  {'id': 'ACCESS1-0',        'nd': 2, 'z': 'lev', 'cs':  cs[0]},
         19: {'id': 'MIROC5',           'nd': 2, 'z': 'sig', 'cs':  cs[0]},
         20: {'id': 'MIROC-ESM-CHEM',   'nd': 1, 'z': 'sig', 'cs':  cs[0]},
         21: {'id': 'MIROC-ESM',        'nd': 1, 'z': 'sig', 'cs':  cs[0]},
-        22: {'id': 'MPI-ESM-LR',       'nd': 2, 'z': 'lev', 'cs':  cs[0]},
-        23: {'id': 'MPI-ESM-MR',       'nd': 2, 'z': 'lev', 'cs':  cs[0]},
-        24: {'id': 'MRI-CGCM3',        'nd': 2, 'z': 'lev', 'cs':  cs[0]},
-        25: {'id': 'MRI-ESM1',         'nd': 2, 'z': 'lev', 'cs':  cs[0]},
-        26: {'id': 'NorESM1-ME',       'nd': 2, 'z': 'lev', 'cs':  cs[0]},
-        27: {'id': 'NorESM1-M',        'nd': 2, 'z': 'lev', 'cs':  cs[0]}}
+        # 22: {'id': 'MPI-ESM-LR',       'nd': 2, 'z': 'lev', 'cs':  cs[0]},
+        22: {'id': 'MPI-ESM-MR',       'nd': 2, 'z': 'lev', 'cs':  cs[0]},
+        23: {'id': 'MRI-CGCM3',        'nd': 2, 'z': 'lev', 'cs':  cs[0]},
+        24: {'id': 'MRI-ESM1',         'nd': 2, 'z': 'lev', 'cs':  cs[0]},
+        25: {'id': 'NorESM1-ME',       'nd': 2, 'z': 'lev', 'cs':  cs[0]},
+        26: {'id': 'NorESM1-M',        'nd': 2, 'z': 'lev', 'cs':  cs[0]}}
+
+
+# sym_ = ['o', 's', 'd', '*', 'X', 'P', '^', 0]
+# symc_ = ['b', 'crimson', 'seagreen', 'k', 'darkorchid', 'palevioletred', 'y']
+# sym = list(chain.from_iterable(repeat(i, len(symc_)) for i in sym_))
+# symc = symc_ * len(sym_)
+
+sym_ = ['o', 's', 'd', '*', 'X', 'P', '^']
+symc_ = ['darkgreen', 'seagreen', 'limegreen', 'palegreen',
+         'b', 'cornflowerblue', 'deepskyblue', 'aqua']
+symc = list(chain.from_iterable(repeat(i, len(sym_)) for i in symc_))
+sym = sym_ * len(symc_)
 
 # Create dict of various items.
 lx5 = {'var': ['uo', 'vo'],
        'exp': ['historical', 'rcp85'],
-       'years': [[1901, 2000], [2050, 2099]]}
+       'years': [[1901, 2000], [2050, 2099]],
+       'sym': sym[:len(mod5)],
+       'symc': symc[:len(mod5)]}
 
 # Create dict of various items.
 lx6 = {'var': ['uo', 'vo'],
        'exp': ['historical', 'ssp585'],
-       'years': [[1901, 2000], [2050, 2099]]}
+       'years': [[1901, 2000], [2050, 2099]],
+       'sym': sym[len(mod5) + 1:len(mod6) + len(mod5)],
+       'symc': symc[len(mod5) + 1:len(mod6) + len(mod5)]}

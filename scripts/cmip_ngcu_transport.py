@@ -11,50 +11,36 @@ import warnings
 import numpy as np
 import xarray as xr
 import matplotlib.pyplot as plt
+from matplotlib.markers import MarkerStyle
 
 import cfg
 from cfg import mod6, mod5, lx5, lx6
 from tools import coord_formatter
-from cmip_fncs import OFAM_WBC, CMIP_WBC
+from cmip_fncs import OFAM_WBC, CMIP_WBC, scatter_markers
+from main import ec, mc, ng
+
 warnings.filterwarnings(action='ignore', message='Mean of empty slice')
 
-time = cfg.mon
-# lon = np.arange(165, 279)
-# lat, depth = [-2.6, 2.6], [25, 350]
-lat=-4
+
+cc = ng
+depth, lat, lon = cc.depth, cc.lat, cc.lon
 # OFAM
 fh = xr.open_dataset(cfg.ofam/'ocean_v_1981-2012_climo.nc')
-fh.mean('Time').v.sel(yu_ocean=lat, xu_ocean=slice(140, 145), st_ocean=slice(2.5, 550)).plot()
-# lon=[140.5, 144.5]
-lon = [145, 149]
+# fh.mean('Time').v.sel(yu_ocean=lat, xu_ocean=slice(140, 145), st_ocean=slice(2.5, 550)).plot()
 
-depth = [0, 550]
-dh, dr = OFAM_WBC(depth, lat, lon)
+dh, dr = OFAM_WBC(depth, lat, [lon[0], lon[1]-1])
 dh = dh.mean('Time')/1e6
 dr = dr.mean('Time')/1e6
 
 # CMIP6
-d6 = CMIP_WBC(mip=6, current='ngcu')
+d6 = CMIP_WBC(6, cc)
 dh6 = d6.ngcu.mean('time').isel(exp=0)/1e6
 dr6 = d6.ngcu.mean('time').isel(exp=1)/1e6
 
 # CMIP5
-d5 = CMIP_WBC(mip=5, current='ngcu')
+d5 = CMIP_WBC(5, cc)
 dh5 = d5.ngcu.mean('time').isel(exp=0)/1e6
 dr5 = d5.ngcu.mean('time').isel(exp=1)/1e6
 
-"""ngcu scatter plot: historical vs projected change."""
-cl = ['m', 'b', 'mediumseagreen']
-lbs = ['OFAM3', 'CMIP6', 'CMIP5']
-fig, ax = plt.subplots(1, 1, figsize=(6, 4))
-# ax = ax.flatten()
-i=0
-ax.set_title('{}NGCU at {}\u00b0S'.format(cfg.lt[1], -lat), loc='left')
-ax.scatter(dh, (dr - dh), color=cl[0], label=lbs[0])
-ax.scatter(dh6, (dr6 - dh6), color=cl[1], label=lbs[1])
-ax.scatter(dh5, (dr5 - dh5), color=cl[2], label=lbs[2])
-ax.set_xlabel('Historical transport [Sv]')
-ax.set_ylabel('Projected change [Sv]')
-ax.legend()
-plt.tight_layout()
-plt.savefig(cfg.fig/'cmip/NGCU_transport_scatter.png')
+
+

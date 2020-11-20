@@ -36,6 +36,65 @@ from datetime import datetime
 from parcels import (FieldSet, ParticleSet, VectorField)
 
 import cfg
+from tools import coord_formatter
+
+class Current:
+    """A class used to represent a Current."""
+    # Create instance of class.
+    _instances = []
+
+    def __init__(self, n, name, depth=None, lat=None,
+                 lon=None, vel='vo', sign=1, action=None):
+        self.n = n.upper()  # Acronym
+        self._n = n.lower()  # Acronym
+        self.name = name
+        self.depth = depth
+        self.lat = lat
+        self.lon = lon
+        self.vel = vel
+        self.sign = sign
+
+        # Create attributes.
+        self._depth = None
+        self._lat = None
+        self._lon = None
+        if depth is not None:
+            self._depth = coord_formatter(self.depth, 'depth')
+        if lat is not None:
+            self._lat = coord_formatter(self.lat, 'lat')
+        if lon is not None:
+            self._lon = coord_formatter(self.lon, 'lon')
+
+        # Create instance of class.
+        self.action = action
+        Current._instances.append(self)
+
+    # Returns a printable representation of the given object.
+    def __repr__(self):
+        return str(self.name)
+
+    @classmethod
+    def resolve_actions(cls):
+        for instance in cls._instances:
+            if instance.action == "create":
+                instance.__create()
+            elif instance.action == "remove":
+                instance.__remove()
+
+
+# Create Current instances.
+ec = Current('EUC', 'Equatorial Undercurrent', vel='uo', sign=1, depth=[25, 350], lat=[-2.6, 2.6], lon=cfg.lons)
+mc = Current('MC', 'Mindanao Current', vel='vo', sign=1, depth=[0, 550], lat=8, lon=[125, 130])
+ng = Current('NGCU', 'New Guinea Coastal Undercurrent', vel='vo', sign=-1, depth=[0, 550], lat=-3.5, lon=[142, 150])
+sv = Current('SV', 'Sverdrup transport')
+tauvo = Current('tauvo', 'Meridional Wind Stress')
+
+
+# Create list of all Current instances.
+Current.resolve_actions()
+current = []
+for obj in Current._instances:
+    current.append(obj)
 
 def from_ofam(filenames, variables, dimensions, indices=None, mesh='spherical',
               allow_time_extrapolation=None, field_chunksize='auto',

@@ -249,6 +249,10 @@ def EUC_vbounds(du, depths, i, v_bnd=0.3, index=False):
         return v_max, z1i, z2i
 
 
+
+
+
+
 def EUC_bnds_static(du, lon=None, z1=25, z2=350, lat=2.6,
                     resample=None, area=None):
     """Apply static EUC definition to zonal velocity at a longitude.

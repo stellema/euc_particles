@@ -14,7 +14,7 @@ import shapely.geometry as sgeom
 from cartopy.mpl.gridliner import LONGITUDE_FORMATTER, LATITUDE_FORMATTER
 
 import cfg
-from tools import wind_stress_curl, coord_formatter, coriolis
+from tools import wind_stress_curl, coord_formatter, zonal_sverdrup
 from airsea_conversion import prescribed_momentum, bulk_fluxes, flux_data, reduce
 
 
@@ -25,7 +25,7 @@ def get_wsc(data='jra55', flux='bulk', res=0.1, mean_t=True, interp='', mask=Non
         tau = bulk_fluxes(U_O, T_O, q_O, SLP, SST, SSU, z_U=10, z_T=2,
                           z_q=2, N=5, result='TAU')
         tx, ty = tau.real, tau.imag
-        phi = wind_stress_curl(tx, ty, w=res, wy=res).phi
+        phi = wind_stress_curl(tx, ty, w=res, wy=res)
         phi = reduce(phi, mean_t, res, interp='linear')
     elif flux == 'erai':
         ds = xr.open_dataset(cfg.data/'erai_iws_climo.nc').mean('time')
@@ -35,7 +35,7 @@ def get_wsc(data='jra55', flux='bulk', res=0.1, mean_t=True, interp='', mask=Non
                         for i in range(len(ds.lat) - 1)])
         w = np.median([(ds.lon[i + 1] - ds.lon[i]).item()
                        for i in range(len(ds.lon) - 1)])
-        phi = wind_stress_curl(ds.iews, ds.inss, w=w, wy=wy).phi
+        phi = wind_stress_curl(ds.iews, ds.inss, w=w, wy=wy)
         phi = reduce(phi, mean_t, res, interp=interp)
     else:
         u = xr.open_dataset(cfg.data/'{}_uas_climo.nc'.format(data)).mean('time')
@@ -46,64 +46,12 @@ def get_wsc(data='jra55', flux='bulk', res=0.1, mean_t=True, interp='', mask=Non
                        for i in range(len(u.lon) - 1)])
         tx, ty = prescribed_momentum(u.uas, v.vas, method=flux)
 
-        phi = reduce(wind_stress_curl(tx, ty, w=w, wy=wy).phi,
+        phi = reduce(wind_stress_curl(tx, ty, w=w, wy=wy),
                      mean_t, res, interp=interp)
         tx = reduce(tx, mean_t, res, interp=interp)
         ty = reduce(ty, mean_t, res, interp=interp)
 
     return tx, ty, phi
-
-
-def zonal_sverdrup(curl, lat, lon, SFinit=0):
-    """Zonal Sverdrup transport from wind stress curl.
-
-    Once you have calculated the stramfunction at all latitudes, you can calculate the
-    depth integrated zonal flow e.g. sverdrup at 2S,180E minus sverdrup at 2N,180E will
-    give the depth integrated zonal transport between +/-2o across the date line.
-
-    function sverdrup=sverdrup_from_curl(lat,lon,curl,SFinit);
-
-    % sverdrup=sverdrup_from_curl(lat,lon,curl,SFinit);
-    % only works for a single latitude across a basin
-    % SFinit Streamfunction value at easternmost point (normally 0)
-
-    dlon=diff(lon);dlon=dlon(1); %only for regular grid
-    curl=fliplr(curl);
-    dx=(dlon/360)*2*pi*6400000*cosd(lat);
-    [f,b]=coriolis(lat);
-    curl=(1/b)*nancumsum(curl)*dx; %cumsum from east to west
-    curl=fliplr(curl);
-    sverdrup=SFinit+curl/1e6/1027;
-
-    Args:
-        wsc (array-like: Wind stress curl.
-        lat (array-like): Latitude.
-        lon (array-like): Longitude.
-
-    Returns:
-        None.
-
-    """
-    # Distance between longitudes in degrees.
-    dlon = np.diff(lon)
-    dlon = dlon[0]
-
-    # Distance between longitudes in metres.
-    dx = (dlon/180)*np.pi*cfg.EARTH_RADIUS*np.cos(np.radians(lat))
-
-    beta = coriolis(lat)[1]  # Rossby parameter at each latitude.
-
-    curl = np.fliplr(curl)  # Reverse curl by longitude.
-    curl = np.nancumsum(curl, axis=1)  # Cumsum from east to west.
-    curl = np.fliplr(curl)  # Reverse curl back to original.
-    dxr = (dx/(beta*cfg.RHO)).values[:, np.newaxis]
-    curl = curl*dxr
-    sverdrup = -(SFinit + curl)
-
-    # Convert back to xr.DataArray.
-    sverdrup = xr.DataArray(sverdrup, coords={'lat': lat, 'lon': lon},
-                            dims=['lat', 'lon'])
-    return sverdrup
 
 
 def plot_winds(varz, title, units, vmax, save_name, plot_map):

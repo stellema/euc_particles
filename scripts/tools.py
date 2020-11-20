@@ -355,18 +355,22 @@ def correlation_str(cor):
 
 def coord_formatter(array, convert='lat'):
     """Convert coords to str with degrees N/S/E/W."""
-    array = np.array(array)
+    if np.size(array) == 1:
+        array = np.array([array])
+    else:
+        array = np.array(array)
+
     if convert == 'lon':
         west = np.where(array <= 180)
         east = np.where(array > 180)
         new = np.empty(np.shape(array), dtype=object)
-        est = (360-array[east]).astype(str)
+        est = (360 - array[east]).astype(str)
         est = [s.rstrip('0').rstrip('.') if '.' in s else s for s in est]
         wst = (array[west]).astype(str)
         wst = [s.rstrip('0').rstrip('.') if '.' in s else s for s in wst]
         new[west] = (pd.Series(wst) + '°E').to_numpy()
         new[east] = (pd.Series(est) + '°W').to_numpy()
-    else:
+    elif convert == 'lat':
         south = np.where(array < 0)
         north = np.where(array > 0)
         eq = np.where(array == 0)[0]
@@ -378,7 +382,8 @@ def coord_formatter(array, convert='lat'):
         new[south] = (pd.Series(sth) + '°S').to_numpy()
         new[north] = (pd.Series(nth) + '°N').to_numpy()
         new[eq] = '0°'
-
+    elif convert == 'depth':
+        new = ['{:.0f}m'.format(z) for z in array]
     return new
 
 
@@ -409,64 +414,138 @@ def regress(varx, vary):
     return cor_r, cor_p, slope, intercept, r_value, p_value, std_err
 
 
-def wind_stress_curl(du, dv, w=0.5, wy=None):
+def coriolis(lat):
+    """ Calculates the Coriolis and Rossby parameters.
+
+    Coriolis parameter (f): The angular velocity or frequency required
+    to maintain a body at a fixed circle of latitude or zonal region.
+
+    Rossby parameter (beta): The northward variation of the Coriolis
+    parameter, arising from the sphericity of the earth.
+
+    NOTE: lon is not actually used (it was in an old version but
+    some calls to this function still include lon).
+
+    Parameters
+    ----------
+    lat : number
+        The latitude at which to calculate the values.
+    OMEGA : number, optional
+        Rotation rate of the Earth [rad/s]
+
+    Returns
+    -------
+    f : float
+        Coriolis parameter
+    beta : float
+        Rossby parameter
+    """
+
+    # Coriolis parameter.
+    f = 2 * cfg.OMEGA * np.sin(np.radians(lat))  # [rad/s]
+
+    # Rossby parameter.
+    beta = 2 * cfg.OMEGA * np.cos(np.radians(lat)) / cfg.EARTH_RADIUS
+
+    return f, beta
+
+
+def wind_stress_curl(du, dv, lat=None, lon=None, w=0.5, wy=None):
     """Compute wind stress curl from wind stress.
 
     Args:
         du (DataArray): Zonal wind stess.
         dv (DataArray): Meridional wind stress.
 
+
     Returns:
-        phi_ds (Datadet): Wind stress curl dataset (variable phi).
+        curl (DataArray): Wind stress curl dataArray.
 
     """
     if wy is None:
         wy = w
-    # The distance between longitude points [m].
-    dx = [(w*((np.pi*cfg.EARTH_RADIUS)/180) *
-           math.cos(math.radians(du.lat[i].item())))
-          for i in range(len(du.lat))]
+    if lat is None:
+        lat = du.lat.values
+    if lon is None:
+        lon = du.lon.values
 
-    # Create array and change shape.
-    dx = np.array(dx)
-    dx = dx[:, None]
-    DX = dx
+    # The distance between longitude points [m].
+    arc = np.pi * cfg.EARTH_RADIUS / 180
+    dy = wy * arc
+    dx = w * arc * np.cos(np.radians(lat))
+
     # Create DY meshgrid.
     # Array of the distance between latitude and longitude points [m].
-    DY = np.full((len(du.lat), len(du.lon)), wy*((np.pi*cfg.EARTH_RADIUS)/180))
-
+    DY = np.full((len(lat), len(lon)), dy)
+    dx = np.array(dx)[:, None]
+    DX = dx
     # Create DX mesh grid.
-    for i in range(1, len(du.lon)):
+    for i in range(1, len(lon)):
         DX = np.hstack((DX, dx))
 
     # Calculate the wind stress curl for each month.
-    if du.ndim == 3:
-        phi = np.zeros((12, len(du.lat), len(du.lon)))
-        # The distance [m] between longitude grid points.
-        for t in range(12):
-            du_dx, du_dy = np.gradient(du[t].values)
-            dv_dx, dv_dy = np.gradient(dv[t].values)
+    if du.ndim == 2:
+        coords = {'lat': lat, 'lon': lon}
+    else:
+        coords = {'time': cfg.mon, 'lat': lat, 'lon': lon}
+    dims = tuple(coords.keys())
+    du_dx, du_dy = np.gradient(du.values, axis=(-2, -1))
+    dv_dx, dv_dy = np.gradient(dv.values, axis=(-2, -1))
+    curl = dv_dy / DX - du_dx / DY
+    curl = xr.DataArray(np.ma.masked_array(curl, np.isnan(curl)), dims=dims, coords=coords)
+    return curl
 
-            phi[t] = dv_dy/DX - du_dx/DY
 
-        phi_ds = xr.Dataset({'phi': (('time', 'lat', 'lon'),
-                                     np.ma.masked_array(phi, np.isnan(phi)))},
-                            coords={'time': np.arange(12),
-                                    'lat': du.lat, 'lon': du.lon})
+def zonal_sverdrup(curl, lat, lon, SFinit=0):
+    """Zonal Sverdrup transport from wind stress curl.
 
-    # Calculate the annual wind stress curl.
-    elif du.ndim == 2:
-        du = du
-        dv = dv
-        du_dx, du_dy = np.gradient(du.values)
-        dv_dx, dv_dy = np.gradient(dv.values)
-        phi = dv_dy/DX - du_dx/DY
+    Once you have calculated the stramfunction at all latitudes, you can calculate the
+    depth integrated zonal flow e.g. sverdrup at 2S,180E minus sverdrup at 2N,180E will
+    give the depth integrated zonal transport between +/-2o across the date line.
 
-        phi_ds = xr.Dataset({'phi': (('lat', 'lon'),
-                                     np.ma.masked_array(phi, np.isnan(phi)))},
-                            coords={'lat': du.lat, 'lon': du.lon})
+    function sverdrup=sverdrup_from_curl(lat,lon,curl,SFinit);
 
-    return phi_ds
+    % sverdrup=sverdrup_from_curl(lat,lon,curl,SFinit);
+    % only works for a single latitude across a basin
+    % SFinit Streamfunction value at easternmost point (normally 0)
+
+    dlon=diff(lon);dlon=dlon(1); %only for regular grid
+    curl=fliplr(curl);
+    dx=(dlon/360)*2*pi*6400000*cosd(lat);
+    [f,b]=coriolis(lat);
+    curl=(1/b)*nancumsum(curl)*dx; %cumsum from east to west
+    curl=fliplr(curl);
+    sverdrup=SFinit+curl/1e6/1027;
+
+    Args:
+        wsc (array-like: Wind stress curl.
+        lat (array-like): Latitude.
+        lon (array-like): Longitude.
+
+    Returns:
+        None.
+
+    """
+    # Distance between longitudes in degrees.
+    dlon = np.diff(lon)
+    dlon = dlon[0]
+
+    # Distance between longitudes in metres.
+    dx = (dlon / 180) * np.pi * cfg.EARTH_RADIUS * np.cos(np.radians(lat))
+
+    beta = coriolis(lat)[1]  # Rossby parameter at each latitude.
+
+    curl = np.fliplr(curl)  # Reverse curl by longitude.
+    curl = np.nancumsum(curl, axis=1)  # Cumsum from east to west.
+    curl = np.fliplr(curl)  # Reverse curl back to original.
+    dxr = (dx / (beta * cfg.RHO)).values[:, np.newaxis]
+    curl = curl * dxr
+    sverdrup = -(SFinit + curl)
+
+    # Convert back to xr.DataArray.
+    sverdrup = xr.DataArray(sverdrup, coords={'lat': lat, 'lon': lon},
+                            dims=['lat', 'lon'])
+    return sverdrup
 
 
 def cor_scatter_plot(fig, i, varx, vary,
@@ -554,32 +633,6 @@ def open_tao_data(frq='mon', dz=slice(10, 355), SI=True):
 
     # logger.debug('Opening TAO {} data. Depth={}. SI={}'.format(frq, dz, SI))
     return [du_165, du_190, du_220]
-
-
-def coriolis(lat):
-    """Calculate the Coriolis and Rossby parameters.
-
-    Coriolis parameter (f): The angular velocity or frequency required
-    to maintain a body at a fixed circle of latitude or zonal region.
-
-    Rossby parameter (beta): The northward variation of the Coriolis
-    parameter, arising from the sphericity of the earth.
-
-    Args:
-        lat (int or array-like): The latitude at which to calculate the values.
-
-    Returns:
-        f (float): Coriolis parameter.
-        beta (float): Rossby parameter.
-
-    """
-    # Coriolis parameter.
-    f = 2*cfg.OMEGA*np.sin(np.radians(lat))  # [rad/s]
-
-    # Rossby parameter.
-    beta = 2*cfg.OMEGA*np.cos(np.radians(lat))/cfg.EARTH_RADIUS
-
-    return f, beta
 
 
 def get_edge_depth(z, index=True, edge=True, greater=False):
