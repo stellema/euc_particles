@@ -405,3 +405,31 @@ def pset_from_file(fieldset, pclass, filename, repeatdt=None,
             if 'endtime' in pfile.variables:
                 xlog['endtime'] = pfile.variables['endtime'].item()
     return pset
+
+
+def get_plx_id(exp, lon, v, r):
+    xid = cfg.data/'plx_{}_{}_v{}r{:02d}.nc'.format(exp, lon, v, r)
+    return xid
+
+
+def open_plx_data(xid):
+    """Open plx dataset."""
+    ds = xr.open_dataset(str(xid), decode_cf=False)
+    if cfg.home == Path('E:/'):
+        ds = ds.isel(traj=np.linspace(0, 1234, 120, dtype=int))  # !!!xifd
+    ds.coords['traj'] = ds.trajectory.isel(obs=0)
+    ds.coords['obs'] = ds.obs + (601 * int(xid.stem[-2:]))
+    return ds
+
+
+def combine_plx_datasets(exp, lon, v, r_range=[0, 9]):
+    """Combine plx datasets."""
+    xids = [get_plx_id(exp, lon, v, r) for r in range(*r_range)]
+    dss = [open_plx_data(xid) for xid in xids]
+    ds = xr.combine_by_coords(dss, data_vars="minimal")
+    return xids, dss, ds
+
+
+def plx_snapshot(ds, var, value):
+    """Return traj, obs indices of variable matching value."""
+    return np.where(np.ma.filled(ds.variables[var], np.nan) == value)

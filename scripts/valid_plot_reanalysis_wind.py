@@ -28,7 +28,7 @@ def get_wsc(data='jra55', flux='bulk', res=0.1, mean_t=True, interp='', mask=Non
         phi = wind_stress_curl(tx, ty, w=res, wy=res)
         phi = reduce(phi, mean_t, res, interp='linear')
     elif flux == 'erai':
-        ds = xr.open_dataset(cfg.data/'erai_iws_climo.nc').mean('time')
+        ds = xr.open_dataset(cfg.data / 'erai_iws_climo.nc').mean('time')
         tx = reduce(ds.iews, mean_t, res, interp)
         ty = reduce(ds.inss, mean_t, res, interp)
         wy = np.median([(ds.lat[i + 1] - ds.lat[i]).item()
@@ -38,11 +38,11 @@ def get_wsc(data='jra55', flux='bulk', res=0.1, mean_t=True, interp='', mask=Non
         phi = wind_stress_curl(ds.iews, ds.inss, w=w, wy=wy)
         phi = reduce(phi, mean_t, res, interp=interp)
     else:
-        u = xr.open_dataset(cfg.data/'{}_uas_climo.nc'.format(data)).mean('time')
-        v = xr.open_dataset(cfg.data/'{}_vas_climo.nc'.format(data)).mean('time')
-        wy = np.median([(u.lat[i+1] - u.lat[i]).item()
+        u = xr.open_dataset(cfg.data / '{}_uas_climo.nc'.format(data)).mean('time')
+        v = xr.open_dataset(cfg.data / '{}_vas_climo.nc'.format(data)).mean('time')
+        wy = np.median([(u.lat[i + 1] - u.lat[i]).item()
                         for i in range(len(u.lat) - 1)])
-        w = np.median([(u.lon[i+1] - u.lon[i]).item()
+        w = np.median([(u.lon[i + 1] - u.lon[i]).item()
                        for i in range(len(u.lon) - 1)])
         tx, ty = prescribed_momentum(u.uas, v.vas, method=flux)
 
@@ -64,7 +64,7 @@ def plot_winds(varz, title, units, vmax, save_name, plot_map):
     rows = len(varz)
     lcolor = 'dimgrey'  # Grid line colour.
     c = 1.1 if rows == 4 else 0.8
-    fig = plt.figure(figsize=(14.1, 10*c))
+    fig = plt.figure(figsize=(14.1, 10 * c))
     for i, v in zip(range(rows), varz):
         if plot_map[i]:
             ax = fig.add_subplot(rows, 1, i + 1, projection=proj)  # [r, c].
@@ -91,13 +91,13 @@ def plot_winds(varz, title, units, vmax, save_name, plot_map):
             ax = fig.add_subplot(rows, 1, i + 1)
             box = ax.get_position()
             # [left, bottom, width, height].
-            ax.set_position([box.x0, box.y0+0.015, box.width*0.828,
-                             box.height*0.85])
-            ax.plot(v[0].lon, v[0], 'k',  label='JRA-55')
+            ax.set_position([box.x0, box.y0 + 0.015, box.width * 0.828,
+                             box.height * 0.85])
+            ax.plot(v[0].lon, v[0], 'k', label='JRA-55')
             ax.plot(v[1].lon, v[1].where(~np.isnan(v[0])), 'r',
                     label='ERA-Interim')
 
-            xticks = np.arange(x0, x1+10, 40)
+            xticks = np.arange(x0, x1 + 10, 40)
             ax.yaxis.tick_right()
             ax.yaxis.set_label_position("right")
             ax.set_xticks(xticks)
@@ -107,7 +107,7 @@ def plot_winds(varz, title, units, vmax, save_name, plot_map):
             ax.legend(fontsize=11, loc=4)
         ax.set_title('{}{}'.format(cfg.lt[i], title[i]),
                      loc='left', fontsize=12)
-    fig.savefig(cfg.fig/'valid/{}.png'.format(save_name),
+    fig.savefig(cfg.fig / 'valid/{}.png'.format(save_name),
                 bbox_inches='tight', pad_inches=0.2)
     plt.show()
     plt.clf()
@@ -116,7 +116,7 @@ def plot_winds(varz, title, units, vmax, save_name, plot_map):
     return
 
 
-u = xr.open_dataset(cfg.ofam/'ocean_u_1981-2012_climo.nc')
+u = xr.open_dataset(cfg.ofam / 'ocean_u_1981-2012_climo.nc')
 u = reduce(u.u, True, 0.1, interp='')
 u = u.where((u.lat <= 8.5) + (u.lon <= 276.1))
 mask = np.isnan(u).drop('st_ocean').values
@@ -132,8 +132,8 @@ wsc1 = wsc1.where(~mask)
 wsc2 = wsc2.where(~mask)
 
 # Calculate streamfunction.
-svu1 = zonal_sverdrup(curl=wsc1, lat=wsc1.lat, lon=wsc1.lon, SFinit=0).where(~mask)/1e6
-svu2 = zonal_sverdrup(wsc2, wsc2.lat, wsc2.lon, SFinit=0).where(~mask)/1e6
+svu1 = zonal_sverdrup(curl=wsc1, lat=wsc1.lat, lon=wsc1.lon, SFinit=0).where(~mask) / 1e6
+svu2 = zonal_sverdrup(wsc2, wsc2.lat, wsc2.lon, SFinit=0).where(~mask) / 1e6
 
 # Wind stress line graph in first subplot and SVERDRUP for next three.
 title = ['Equatorial zonal wind stress', 'JRA-55 barotropic streamfunction',
@@ -143,8 +143,8 @@ varz = [[tx1.sel(lat=slice(-2, 2)).mean('lat'),
          tx2.sel(lat=slice(-2, 2)).mean('lat')],
         svu1, svu2, (svu1 - svu2.values)]
 vmax = [0.07, 40, 40, 30]
-save_name = 'SVU_{}_{}_{:02.0f}'.format(flux[f1], flux[f2], res*10)
-plot_winds(varz, title, units, vmax, save_name, plot_map=[False, *[True]*3])
+save_name = 'SVU_{}_{}_{:02.0f}'.format(flux[f1], flux[f2], res * 10)
+plot_winds(varz, title, units, vmax, save_name, plot_map=[False, *[True] * 3])
 
 # # Wind stress line graph in first subplot and WSC for next three.
 # title = ['Equatorial zonal wind stress', 'JRA-55 wind stress curl',
@@ -174,9 +174,9 @@ c = 1
 y1, y2 = 1, -1
 fig = plt.figure(figsize=(10, 8))
 plt.plot(svu1.lon, (svu1.sel(lat=y2, method='nearest') -
-                    svu1.sel(lat=y1, method='nearest'))*c, color='black', label='JRA-55')
+                    svu1.sel(lat=y1, method='nearest'  ))*c, color='black', label='JRA-55')
 plt.plot(svu2.lon, (svu2.sel(lat=y2, method='nearest') -
-                    svu2.sel(lat=y1, method='nearest'))*c, color='red', label='ERA-Interim')
+                    svu2.sel(lat=y1, method='nearest'  ))*c, color='red', label='ERA-Interim')
 
 plt.xticks(svu1.lon.values[::400],
            labels=coord_formatter(np.round(svu1.lon[::400], 0), convert='lon'))

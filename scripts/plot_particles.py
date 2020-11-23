@@ -297,27 +297,16 @@ def plotfield(field, show_time=None, domain=None, depth_level=0, projection=None
     return fig, ax
 
 
-def create_parcelsfig_axis(spherical, land=True, projection=None, central_longitude=0):
-    try:
-        import matplotlib.pyplot as plt
-    except:
-        logger.info("Visualisation is not possible. Matplotlib not found.")
-        return None, None, None, None  # creating axes was not possible
-
-    if projection is not None and not spherical:
-        raise RuntimeError('projection not accepted when Field doesn''t have geographic coordinates')
-
+def create_parcelsfig_axis(spherical, land=True, projection=None, central_longitude=0, fig=None, ax=None, rows=1, cols=1, figsize=None):
     if spherical:
-        try:
-            import cartopy
-        except:
-            logger.info("Visualisation of field with geographic coordinates is not possible. Cartopy not found.")
-            return None, None, None, None  # creating axes was not possible
-
         projection = cartopy.crs.PlateCarree(central_longitude) if projection is None else projection
-        fig, ax = plt.subplots(1, 1, subplot_kw={'projection': projection})
+        if ax is None:
+            fig, ax = plt.subplots(rows, cols, subplot_kw={'projection': projection}, figsize=figsize)
+            if rows > 1 or cols > 1:
+                ax = ax.flatten()
+
         try:  # gridlines not supported for all projections
-            gl = ax.gridlines(crs=projection, draw_labels=True)
+            gl = ax.gridlines(crs=cartopy.crs.PlateCarree(), draw_labels=True)
             gl.xlabels_top, gl.ylabels_right = (False, False)
             gl.xformatter = cartopy.mpl.gridliner.LONGITUDE_FORMATTER
             gl.yformatter = cartopy.mpl.gridliner.LATITUDE_FORMATTER
@@ -327,7 +316,6 @@ def create_parcelsfig_axis(spherical, land=True, projection=None, central_longit
         if land:
             ax.coastlines()
     else:
-        cartopy = None
         fig, ax = plt.subplots(1, 1)
         ax.grid()
     return fig, ax
@@ -368,7 +356,6 @@ def cartopy_colorbar(cs, plt, fig, ax):
 
     fig.canvas.mpl_connect('resize_event', resize_colorbar)
     resize_colorbar(None)
-
 
 
 def particlesvid(particles, with_particles=True, show_time=None, field=None,

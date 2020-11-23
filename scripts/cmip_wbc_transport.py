@@ -52,7 +52,7 @@ def scatter_wbc_markers(df, d5, d6):
         ax[i].set_title('{}{} at {}'.format(cfg.lt[i], cc.name, *cc._lat), loc='left')
 
         # OFAM3
-        ax[i].scatter(dd.isel(exp=0), (dd.isel(exp=1) - dd.isel(exp=0)), color='m', label='OFAM3', s=mksize)
+        # ax[i].scatter(dd.isel(exp=0), (dd.isel(exp=1) - dd.isel(exp=0)), color='m', label='OFAM3', s=mksize)
 
         # CMIP6
         for m, sym, symc in zip(mod6, lx6['sym'], lx6['symc']):

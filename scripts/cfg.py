@@ -77,6 +77,7 @@ LAT_DEG = (2 * np.pi / 360) * EARTH_RADIUS
 def LON_DEG(lat):
     return LAT_DEG * np.cos(np.radians(lat))
 
+DXDY = 25 * 0.1 * LAT_DEG
 
 # Ocean density [kg/m3].
 RHO = 1025
@@ -205,8 +206,8 @@ mod5 = {0:  {'id': 'ACCESS1-0',        'nd': 2, 'z': 'lev', 'cs':  cs[0]},
 # symc = symc_ * len(sym_)
 
 sym_ = ['o', 's', 'd', '*', 'X', 'P', '^']
-symc_ = ['darkgreen', 'seagreen', 'limegreen', 'palegreen',
-         'b', 'cornflowerblue', 'deepskyblue', 'aqua']
+symc_ = ["darkgreen", "seagreen", "limegreen", "palegreen",
+         "b", "cornflowerblue", "deepskyblue", "aqua"]
 symc = list(chain.from_iterable(repeat(i, len(sym_)) for i in symc_))
 sym = sym_ * len(symc_)
 

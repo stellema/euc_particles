@@ -82,11 +82,27 @@ del_old-del_new = 6421 - 6390 = 31
 import math
 import numpy as np
 import xarray as xr
+import math
+import logging
+import calendar
+import numpy as np
+import xarray as xr
+import pandas as pd
+from scipy import stats
+from pathlib import Path
+from functools import wraps
 from datetime import datetime, timedelta
+import matplotlib.pyplot as plt
+import matplotlib.colors as colors
+from matplotlib.offsetbox import AnchoredText
+
 
 import cfg
-from plx_particleset import particle_info
-
+from main import (open_plx_data, get_plx_id, latlon_groupby, latlon_groupby_usum, plx_snapshot, combine_plx_datasets)
+import cartopy
+from tools import coord_formatter
+from plot_particles import create_parcelsfig_axis, cartopy_colorbar
+import shapely.geometry as sgeom
 
 # xid = cfg.data/'plx_rcp_165_v0r02.nc'
 # ds = xr.open_dataset(str(xid), decode_cf=True)
@@ -135,26 +151,234 @@ plx_rcp_190_v1r00: File=0 New=120204 W=43366(36%) N=76838 F=70448 del=6390(8.3%)
 ub(old-new) = 3700 - 3666 = 34 # Old more unbeached
 del(old-new) = 6421 - 6390 = 31 # Old more deleted
 old less unique end times
+plot particle density
+The role of Ekman currents, geostrophy and Stokes drift in the accumulation of floating microplastic
+https://github.com/OceanParcels/SKIM-garbagepatchlocations/blob/master/North%20Pacific/PacificTimestepDensities.py
+
+-plot idea: particle density map as function of age gif (time-normalised)
+# Index of first NEW traj
+# pni = ds.age.isel(obs=0).where(ds.age.isel(obs=0) != 0, drop=True).size
+# vars = {}
+# for v in ds.variables:
+#     if v in ['lat', 'lon']:
+#         vars[v] = np.ma.filled(ds[v], np.nan)
+
+# inds = plx_snapshot(ds, var="age", value=0)
+# lats = vars['lat'][inds]
+
+# ind_t, ind_o = plx_snapshot(ds, var="age", value=0)
+# dx = ds.isel(traj=ind_t, obs=ind_o)
+# ax = plt.subplot(projection=ccrs.PlateCarree())
+# for i in ds1.traj.values:
+#     if i in ds.traj.values:
+#         print(i)
 """
 
-# Spinup: historical
-spin_days = math.floor(10*365.25/6)*6+5  # Starting after release day.
+# # Sort by age: iterate over groups in (label, group) pairs
+# das = list(dm.groupby('age'))
+# _, da = das[-5]
+# plt.scatter(da.lon, da.lat)
 
-start = datetime(1981, 1, 1)
-end = datetime(2012, 12, 31)
-spin = end - timedelta(days=spin_days)  # datetime(2002, 12, 31)
-end_rel = int((end-start).total_seconds())  # Start time in relative seconds.
-spin_rel = int((end-spin).total_seconds())
-print('Hist spinup=', end, spin)
-print('Hist start [s]=', end_rel)
-print('Hist spinup [s]={}-{}={}'.format(end_rel, spin_rel, end_rel-spin_rel))
+def plot_transport_density(exp, lon, r_range, xids, u, x, y, ybins, xbins):
+    # Plot
+    box = sgeom.box(minx=120, maxx=xbins[-1], miny=-15, maxy=ybins[-1])
+    x0, y0, x1, y1 = box.bounds
+    proj = cartopy.crs.PlateCarree(central_longitude=180)
+    box_proj = cartopy.crs.PlateCarree(central_longitude=0)
 
-# RCP8.5
-start = datetime(2070, 1, 1)
-end = datetime(2101, 12, 31)
-spin = end - timedelta(days=spin_days)  # datetime(2091, 12, 30) NB not 31st.
-end_rel = int((end-start).total_seconds())  # Start time in relative seconds.
-spin_rel = int((end-spin).total_seconds())
-print('RCP spinup=', end, spin)
-print('RCP start [s]=', end_rel)
-print('RCP spinup [s]={}-{}={}'.format(end_rel, spin_rel, end_rel-spin_rel))
+    fig, ax = create_parcelsfig_axis(spherical=True, land=True, projection=proj, figsize=(12, 4))
+
+    cs = ax.scatter(x, y, s=10, c=u, cmap=plt.cm.viridis, vmax=1e3, edgecolors='face', linewidths=2.5, transform=box_proj)
+    cartopy_colorbar(cs, plt, fig, ax)
+    ax.set_extent([x0, x1, y0, y1], crs=box_proj)
+    ax.set_aspect('auto')
+    ax.add_feature(cartopy.feature.LAND, zorder=0, edgecolor='black', facecolor='grey')
+    ax.set_title('Equatorial Undercurrent {} transport pathways to {} (time-normalised)'.format(cfg.exp[iexp], *coord_formatter(lon, 'lon')))
+    plt.savefig(cfg.fig/'parcels/transport_density_map_{}_{}-{}.png'.format(xids[0].stem[:-2], *r_range), bbox_inches='tight', pad_inches=0.2)
+    plt.show()
+    plt.clf()
+    plt.close()
+
+
+# # Sort by location,
+# iexp = 0
+# lon = 250
+# r_range = [0, 2]
+# xids, dss, ds = combine_plx_datasets(cfg.exp_abr[iexp], lon, v=1, r_range=r_range)
+
+# xbins = np.arange(120.1, 290, 0.5)
+# ybins = np.arange(-14.9, 15, 0.5)
+
+# xy, du = zip(*list(latlon_groupby_usum(ds, levels=['lat', 'lon'], bins=[ybins, xbins])))
+
+# # Index key to sort latitude and longitude lists.
+# indices = sorted(range(len(list(xy))), key=lambda k: xy[k])
+# u = np.array(list(du))[indices] * cfg.DXDY/1e6
+# y, x = zip(*xy)
+# y, x = np.array(list(y))[indices], np.array(list(x))[indices]
+
+# # plot_transport_density(iexp, lon, r_range, xids, u, x, y, ybins, xbins)
+
+iexp = 0
+lon = 250
+r_range = [0, 2]
+xids, dss, ds = combine_plx_datasets(cfg.exp_abr[iexp], lon, v=1, r_range=r_range)
+
+""" IDK
+import math
+import numpy as np
+import xarray as xr
+import math
+import logging
+import calendar
+import numpy as np
+import xarray as xr
+import pandas as pd
+from scipy import stats
+from pathlib import Path
+from functools import wraps
+from datetime import datetime, timedelta
+import matplotlib.pyplot as plt
+import matplotlib.colors as colors
+from matplotlib.offsetbox import AnchoredText
+
+
+import cfg
+from main import (open_plx_data, get_plx_id, latlon_groupby, latlon_groupby_func, latlon_groupby_ifunc, plx_snapshot, combine_plx_datasets)
+import cartopy
+from tools import coord_formatter
+# from plot_particles import cartopy_colorbar
+import shapely.geometry as sgeom
+import matplotlib.ticker as mticker
+
+def create_fig_axis(land=True, projection=None, central_longitude=0, fig=None, ax=None, rows=1, cols=1, figsize=None):
+    projection = cartopy.crs.PlateCarree(central_longitude) if projection is None else projection
+    if ax is None:
+        fig, ax = plt.subplots(rows, cols, subplot_kw={'projection': projection}, figsize=figsize)
+        if rows > 1 or cols > 1:
+            ax = ax.flatten()
+
+        ax.gridlines(xlocs=[110, 120, 160, -160, -120, -80, -60],
+                     ylocs=[-20, -10, 0, 10, 20], color='grey')
+        gl = ax.gridlines(draw_labels=True, linewidth=0.001,
+                          xlocs=[120, 160, -160, -120, -80],
+                          ylocs=[-10, 0, 10], color='grey')
+        gl.bottom_labels = True
+        gl.top_labels = False
+        gl.right_labels = False
+        gl.xformatter = cartopy.mpl.gridliner.LONGITUDE_FORMATTER
+        gl.yformatter = cartopy.mpl.gridliner.LONGITUDE_FORMATTER
+    if land:
+        ax.coastlines()
+        ax.add_feature(cartopy.feature.LAND, zorder=0, edgecolor='black', facecolor='grey')
+
+    return fig, ax
+
+
+def plot_transport_density(exp, lon, r_range, xids, u, x, y, ybins, xbins):
+    """Plot time-normalised particle transport density."""
+    box = sgeom.box(minx=120, maxx=xbins[-1], miny=-15, maxy=ybins[-1])
+    x0, y0, x1, y1 = box.bounds
+    proj = cartopy.crs.PlateCarree(central_longitude=180)
+    box_proj = cartopy.crs.PlateCarree(central_longitude=0)
+
+    fig, ax = create_fig_axis(land=True, projection=proj, figsize=(12, 4))
+    cs = ax.scatter(x, y, s=10, c=u, cmap=plt.cm.viridis, vmax=1e3,
+                    edgecolors='face', linewidths=2.5, transform=box_proj)
+    cbar = fig.colorbar(cs, shrink=0.9, pad=0.02, extend='both')
+    cbar.set_label('ddesnity', size=10)
+    ax.set_extent([x0, x1, y0, y1], crs=box_proj)
+    ax.set_aspect('auto')
+    ax.set_title('Equatorial Undercurrent {} transport pathways to {} (time-normalised)'.format(cfg.exp[iexp], *coord_formatter(lon, 'lon')))
+    plt.savefig(cfg.fig/'parcels/transport_density_map_{}_{}-{}.png'
+                .format(xids[0].stem[:-2], *r_range),
+                bbox_inches='tight', pad_inches=0.2)
+    plt.show()
+    plt.clf()
+    plt.close()
+
+""" Sort by location."""
+iexp = 0
+lon = 250
+r_range = [0, 2]
+xids, dss, ds = combine_plx_datasets(cfg.exp_abr[iexp], lon, v=1, r_range=r_range)
+
+xbins = np.arange(120.1, 290, 0.5)
+ybins = np.arange(-14.9, 15, 0.5)
+for v in ['z', 'zone', 'distance', 'unbeached']:
+    ds = ds.drop(v)
+# xy, du = zip(*list(latlon_groupby_isum(ds.isel(obs=300), levels=['lat', 'lon'], bins=[ybins, xbins])))
+xy, du = zip(*list(latlon_groupby_func(ds, levels=['lat', 'lon'], bins=[ybins, xbins], var='u', func=sum)))
+
+# # Index key to sort latitude and longitude lists.
+# indices = sorted(range(len(list(xy))), key=lambda k: xy[k])
+# u = np.array(list(du))[indices] * cfg.DXDY/1e6
+# y, x = zip(*xy)
+# y, x = np.array(list(y))[indices], np.array(list(x))[indices]
+# plot_transport_density(iexp, lon, r_range, xids, u, x, y, ybins, xbins)
+
+""" Sort by location."""
+# iexp = 0
+# lon = 250
+# r_range = [0, 2]
+# xids, dss, ds = combine_plx_datasets(cfg.exp_abr[iexp], lon, v=1, r_range=r_range)
+# # Sort by age: iterate over groups in (label, group) pairs
+# das = list(ds.groupby('age'))
+# _, da = das[-5]
+# plt.scatter(da.lon, da.lat)
+
+# iexp = 0
+# lon = 250
+# r_range = [0, 2]
+# xids, dss, ds = combine_plx_datasets(cfg.exp_abr[iexp], lon, v=1, r_range=r_range)
+# xbins = np.arange(120.1, 290, 0.5)
+# ybins = np.arange(-14.9, 15, 0.5)
+# # Sort by age: iterate over groups in (label, group) pairs
+# # das = list(ds.groupby('age'))
+
+
+# # levels=['lat', 'lon']
+# # bins=[ybins, xbins]
+# # das = list(ds.groupby_bins(levels[0], bins[0], labels=bins[0][:-1], restore_coord_dims=True, squeeze=True))
+# # _, da = das[-5]
+# # print(da)
+# if __name__ == "__main__" and cfg.home.drive != 'E:':
+#     p = ArgumentParser(description="""Run EUC Lagrangian experiment.""")
+#     p.add_argument('-dy', '--dy', default=0.1, type=float, help='Particle latitude spacing [deg].')
+#     p.add_argument('-dz', '--dz', default=25, type=int, help='Particle depth spacing [m].')
+#     p.add_argument('-x', '--lon', default=165, type=int, help='Particle start longitude(s).')
+#     p.add_argument('-e', '--exp', default='hist', type=str, help='Scenario.')
+#     p.add_argument('-r', '--runtime', default=1200, type=int, help='Runtime days.')
+#     p.add_argument('-dt', '--dt', default=60, type=int, help='Advection timestep [min].')
+#     p.add_argument('-rdt', '--repeatdt', default=6, type=int, help='Release repeat [day].')
+#     p.add_argument('-out', '--outputdt', default=2, type=int, help='Advection write freq [day].')
+#     p.add_argument('-v', '--version', default=0, type=int, help='File Index.')
+#     p.add_argument('-f', '--restart', default=1, type=int, help='Particle file.')
+#     p.add_argument('-final', '--final', default=0, type=int, help='Final run.')
+#     args = p.parse_args()
+
+#     run_EUC(dy=args.dy, dz=args.dz, lon=args.lon, exp=args.exp,
+#             runtime_days=args.runtime, dt_mins=args.dt,
+#             repeatdt_days=args.repeatdt, outputdt_days=args.outputdt,
+#             v=args.version, restart=args.restart, final=args.final)
+
+# elif __name__ == "__main__":
+#     dy, dz, lon = 1, 150, 190
+#     dt_mins, repeatdt_days, outputdt_days, runtime_days = 60, 6, 2, 36
+#     restart = False
+#     v = 72
+#     exp = 'hist'
+#     final = False
+#     run_EUC(dy=dy, dz=dz, lon=lon, dt_mins=dt_mins,
+#             repeatdt_days=repeatdt_days, outputdt_days=outputdt_days,
+#             v=v, runtime_days=runtime_days, restart=restart, final=final)
+
+
+
+# xy, du = zip(*list(latlon_groupby(ds, levels=['lat', 'lon'], bins=[ybins, xbins])))
+# dx = du[-5]
+
+# levels=['lat', 'lon']
+# bins=[ybins, xbins]
+# das = list(ds.groupby_bins(levels[0], bins[0], labels=bins[0][:-1], restore_coord_dims=True, squeeze=False))
+"""
