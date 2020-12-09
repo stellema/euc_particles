@@ -370,6 +370,10 @@ def coord_formatter(array, convert='lat'):
         wst = [s.rstrip('0').rstrip('.') if '.' in s else s for s in wst]
         new[west] = (pd.Series(wst) + '°E').to_numpy()
         new[east] = (pd.Series(est) + '°W').to_numpy()
+    elif convert == 'lon_360':
+        new = np.empty(np.shape(array), dtype=object)
+        arr = [s.rstrip('0').rstrip('.') if '.' in s else s for s in array.astype(str)]
+        new = (pd.Series(arr) + '°E').to_numpy()
     elif convert == 'lat':
         south = np.where(array < 0)
         north = np.where(array > 0)

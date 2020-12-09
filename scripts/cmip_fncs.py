@@ -8,59 +8,80 @@ author: Annette Stellema (astellemas@gmail.com)
 """
 import numpy as np
 import xarray as xr
+import math
+from scipy import stats
 
 import cfg
 from tools import idx, idx2d, wind_stress_curl, coriolis
 from main import ec, mc, ng
 
 
-def subset_cmip(mip, m, var, exp, depth, lat, lon):
+def open_cmip(mip, m, var='uo', exp='historical'):
     mod = cfg.mod6 if mip == 6 else cfg.mod5
     # File path.
     cmip = cfg.home/'model_output/CMIP{}/CLIMOS/'.format(mip)
     if var in ['uvo', 'vvo']:
         cmip = cmip/'ocean_transport/'
     file = cmip/'{}_Omon_{}_{}_climo.nc'.format(var, mod[m]['id'], exp)
+    ds = xr.open_dataset(str(file))
+    # print(m, mod[m]['id'], *[v for v in ds.coords])
+    dims = [v for v in ds.coords]
+    if mod[m]['nd'] == 2:
+
+        # Rename 2d coord indexes to j,i.
+        j0 = [d for d in list(ds[var].dims) if d in ['y', 'nlat', 'rlat', 'lat']]
+        if any(j0):
+            i0 = [d for d in list(ds[var].dims) if d in ['x', 'nlon', 'rlon', 'lon']]
+            ds = ds.rename({j0[0]: 'j', i0[0]: 'i'})
+        # Rename 2d coord values to lat, lon.
+        if 'latitude' in dims:
+            ds = ds.rename({'latitude': 'lat', 'longitude': 'lon'})
+        elif 'nav_lat' in dims:
+            ds = ds.rename({'nav_lat': 'lat', 'nav_lon': 'lon'})
+        # Rename 'olevel' depth coords.
+        if 'olevel' in dims:
+            ds = ds.rename({'olevel': 'lev'})
+
+    # Fix odd error (j, i wrong labels).
+    if mod[m]['id'] in ['CMCC-CM2-SR5']:
+        ds = ds.rename({'j': 'i', 'i': 'j'})
+
+    # Convert longitudes to 0-360.
+    if (ds.lon < 0).any():
+        ds['lon'] = xr.where(ds.lon < 0, ds.lon + 360, ds.lon)
+
+    # Convert depths to centimetres to find levels.
+    if (mip == 6 and hasattr(ds.lev, 'units') and ds.lev.attrs['units'] != 'm'):
+        ds['lev'] = ds.lev / 100
+
+    return ds
+
+
+def subset_cmip(mip, m, var, exp, depth, lat, lon):
+    mod = cfg.mod6 if mip == 6 else cfg.mod5
 
     # Make sure single points are lists.
     lat = [lat] if np.array(lat).size == 1 else lat
     lon = [lon] if np.array(lon).size == 1 else lon
-    ds = xr.open_dataset(str(file))
-    # Fixes random error.
-    if mod[m]['id'] in ['GFDL-CM3', 'GFDL-ESM2G', 'GFDL-ESM2M']:
-        ds.coords['lon'] = xr.where(ds.lon < 0, ds.lon + 360, ds.lon)
-
+    ds = open_cmip(mip, m, var, exp)
     dx = ds[var]
     # Depth level indexes.
-    # Convert depths to centimetres to find levels.
-    if (mip == 6 and hasattr(dx[dx.dims[1]], 'units') and dx[dx.dims[1]].attrs['units'] != 'm'):
-        dx.coords[dx.dims[1]] = dx[dx.dims[1]]/100
-
-    zi = [idx(dx[mod[m]['cs'][0]], z) for z in depth]
+    zi = [idx(dx['lev'], z) for z in depth]
 
     if mod[m]['nd'] == 1:  # 1D coords.
-        yi = [idx(dx[mod[m]['cs'][1]], y) for y in lat]
-        xi = [idx(dx[mod[m]['cs'][2]], x) for x in lon]
+        yi = [idx(dx.lat, y) for y in lat]
+        xi = [idx(dx.lon, x) for x in lon]
 
     elif mod[m]['nd'] == 2:  # 2D coords.
-        yi = [idx2d(dx[mod[m]['cs'][1]], dx[mod[m]['cs'][2]], y, lon[0])[0] for y in lat]
-        # Longitude conversion check.
-        if dx[mod[m]['cs'][2]].max() >= 350:
-            xi = [idx2d(dx[mod[m]['cs'][1]], dx[mod[m]['cs'][2]], lat[0], x)[1] for x in lon]
-            if 'rlon' in dx.dims and 'lon' in ds.coords:  # Weird error fix.
-                xi = [idx2d(ds.lat, ds.lon, lat[0], x)[1] for x in lon]
+        if len(lat) == 2:
+            yi = [idx2d(dx.lat, dx.lon, y, lon[0], r)[0] for y, r in zip(lat, ['lower_lat', 'greater_lat'])]
         else:
-            lon_alt = [np.where(x > 180, -1 * (360 - x), x) for x in lon]
-            xi = [idx2d(dx[mod[m]['cs'][1]], dx[mod[m]['cs'][2]], lat[0], x)[1] for x in lon_alt]
+            yi = [idx2d(dx.lat, dx.lon, y, lon[0])[0] for y in lat]
+        xi = [idx2d(dx.lat, dx.lon, lat[0], x)[1] for x in lon]
 
     # Switch indexes if lat goes N->S.
     # Subset depths.
-    if 'lev' in dx.dims:
-        dx = dx.isel(lev=slice(zi[0], zi[1] + 1))
-    elif 'olevel' in dx.dims:
-        dx = dx.isel(olevel=slice(zi[0], zi[1] + 1))
-    else:
-        print('NI: Depth dim of {} dims={}'.format(mod[m]['id'], dx.dims))
+    dx = dx.isel(lev=slice(zi[0], zi[1] + 1))
 
     # Subset lats/lons (dx) and sum transport (dxx).
     yf, xf = yi, xi
@@ -71,20 +92,11 @@ def subset_cmip(mip, m, var, exp, depth, lat, lon):
     if np.array(lon).size == 2:
         xf = slice(xi[0], xi[1] + 1)
         if xi[0] > xi[1]:
-            xf = np.append(np.arange(xi[0], dx.shape[-1]), np.arange(xi[1]+1))
+            xf = np.append(np.arange(xi[0], dx.shape[-1]), np.arange(xi[1] + 1))
     else:
         xf = xi
-    if 'y' in dx.dims:
-        dx = dx.isel(y=yf, x=xf)
-    elif 'j' in dx.dims:
-        if mod[m]['id'] in ['CMCC-CM2-SR5']:
-            dx = dx.isel(i=yf, j=xf)
-        else:
-            dx = dx.isel(j=yf, i=xf)
-    elif 'nlat' in dx.dims:
-        dx = dx.isel(nlat=yf, nlon=xf)
-    elif 'rlat' in dx.dims:
-        dx = dx.isel(rlat=yf, rlon=xf)
+    if 'j' in dx.dims:
+        dx = dx.isel(j=yf, i=xf)
     elif 'lat' in dx.dims:
         dx = dx.isel(lat=yf, lon=xf)
     else:
@@ -92,6 +104,8 @@ def subset_cmip(mip, m, var, exp, depth, lat, lon):
 
     if mip == 6 and var in ['uvo', 'vvo'] and mod[m]['id'] in ['MIROC-ES2L', 'MIROC6']:
         dx = dx * -1
+    # if mod[m]['id'] in ['MPI-ESM-LR']:
+    #     dx.mean('time').isel(lon=-25, exp=0).plot()
     return dx
 
 
@@ -105,18 +119,19 @@ def CMIP_EUC(time, depth, lat, lon, mip, lx, mod):
                     coords={'exp': exp, 'time': time, 'lon': lon, 'model': model})
     for m in mod:
         for s, ex in enumerate(exp):
-            dx = subset_cmip(mip, m, var, exp[s], depth, lat, lon)
+            for ix, x in enumerate(lon):
+                # if mod[m]['id'] in ['MPI-ESM-LR', 'MPI-ESM1-2-LR']:
+                #     dx = subset_cmip(mip, m, var, exp[s], depth, [-3, 3], lon)
+                # else:
+                dx = subset_cmip(mip, m, var, exp[s], depth, lat, x)
 
-            # Removed westward transport.
-            dx = dx.where(dx > 0)
-            if mod[m]['id'] in ['CMCC-CM2-SR5']:
-                lat_str = 'i'
-            else:
-                lat_str = [s for s in dx.dims if s in
-                           ['lat', 'j', 'y', 'rlat', 'nlat']][0]
-            dxx = dx.sum(dim=[mod[m]['cs'][0], lat_str])
-            ds['ec'][s, :, :, m] = dxx.values
-            dx.close()
+                # Removed westward transport.
+                dx = dx.where(dx > 0)
+
+                lat_str = 'lat' if mod[m]['nd'] == 1 else 'j'
+                dxx = dx.sum(dim=['lev', lat_str])
+                ds['ec'][s, :, ix, m] = dxx.squeeze().values
+                dx.close()
     return ds
 
 
@@ -134,24 +149,27 @@ def bnds_wbc(mip, cc):
                 _x[-1] = 128.5
             elif mod[m]['id'] in ['CanESM2', 'MIROC-ESM-CHEM', 'MIROC-ESM']:
                 _x[-1] = 133
+        if cc.n == 'EUC':
+            if mod[m]['id'] in ['MPI-ESM-LR', 'MPI-ESM1-2-LR']:
+                _y[-1] = 3
         dx = subset_cmip(mip, m, cc.vel, 'historical', _z, _y, _x)
         dx = dx.squeeze()
 
         # Depths
-        z[m, 0] = dx[mod[m]['cs'][0]].values[0]
-        z[m, 1] = dx[mod[m]['cs'][0]].values[-1]
+        z[m, 0] = dx.lev.values[0]
+        z[m, 1] = dx.lev.values[-1]
         dxx = dx.where(dx <= contour(dx) * 0.1, drop=True)
 
-        x[m, 0] = dxx[mod[m]['cs'][2]].values[0]  # LHS
-        if dxx[mod[m]['cs'][2]].size > 1:
-            x[m, 1] = dxx[mod[m]['cs'][2]].values[-1]
+        x[m, 0] = dxx.lon.values[0]  # LHS
+        if dxx.lon.size > 1:
+            x[m, 1] = dxx.lon.values[-1]
         else:
             x[m, 1] = x[m, 0]
 
         # Make LHS point all NaN
         try:
-            dxb1 = dx.where((dx[mod[m]['cs'][2]] <= x[m, 0]), drop=True)
-            x[m, 0] = dxb1.where(dxb1.count(dim=[mod[m]['cs'][0]]) == 0, drop=True)[mod[m]['cs'][2]].max().item()
+            dxb1 = dx.where((dx.lon <= x[m, 0]), drop=True)
+            x[m, 0] = dxb1.where(dxb1.count(dim='lev') == 0, drop=True).lon.max().item()
         except:
             pass
     return x, z
@@ -250,7 +268,7 @@ def OFAM_WBC(depth, lat, lon):
 def cmip_wsc(mip, lats=[-25, 25], lons=[110, 300]):
     lx = cfg.lx6 if mip == 6 else cfg.lx5
     mod = cfg.mod6 if mip == 6 else cfg.mod5
-    exp = lx['exp'][0]
+    exp = lx['exp'][-1]
     # File path.
     cmip = cfg.home/'model_output/CMIP{}/CLIMOS/regrid'.format(mip)
     tau = ['tauu', 'tauv'] if mip == 6 else ['tauuo', 'tauvo']
@@ -271,3 +289,89 @@ def cmip_wsc(mip, lats=[-25, 25], lons=[110, 300]):
     dc = xr.DataArray(wsc, dims=dims, coords=coords)
     return dc
 
+
+def round_sig(x, n=2):
+    n = 3 if x < 0.05 else n
+    return 'p={:.{dp}f}'.format(x, dp=n) if x >= 0.001 else 'p<0.001'
+
+
+def cmip_cor(var, format_str=True):
+    """Spearmanr correlation coefficent and significance hist vs future."""
+    cor = stats.spearmanr(var.isel(exp=0), var.isel(exp=1) - var.isel(exp=0))
+    if format_str:
+        return 'diff: r={:.2f}'.format(cor[0]), round_sig(cor[1], n=2)
+    else:
+        return cor
+
+
+def cmipMMM(ct, dv, xdim=None, prec=None, const=1e6, avg=np.median,
+            annual=True, month=None, proj_cor=True):
+    """Print the multi-model median (or mean) and interquartile range
+    of a variable in the historical scenario and the projected change
+    (RCP8.5 minus historical). Also prints the percent change, the
+    statistical significance of the projected change (based on the Wilcoxon
+    signed rank test) and the correlation (and significance) between the
+    variable in the historical and RCP8.5 (optional).
+
+    Parameters
+    ----------
+    ct : cls
+        The circulation feature to print
+    dv : xarray DataArray (with only the scenario and time dimension)
+        The variable to print
+    xdim : str, optional
+        An extra dimension of the current (e.g. latitude or longitude;
+        default is None)
+    prec : list
+        The number of decimal places to print if different to the precision
+        determined by func precision (default is None)
+    avg : function, optional
+        Print the multi-model median (True) or mean (False) (default is True)
+    annual : bool, optional
+        Calculate and print the annual mean (default is True)
+    month : int, optional
+        Calculate and print a specific month (default is None)
+
+    """
+    def delta_exp(var):
+        return var.isel(exp=1) - var.isel(exp=0)
+
+    def percent(var1, var2):
+        return var1 / var2 * 100
+
+    # Divide by a constant.
+    dv = dv / const
+
+    dl = str(ct.n) + ' '
+    # Print the extra dimension (e.g. latitude).
+    if xdim is not None:
+        dl += str(xdim) + ' '
+
+    # Calculate the annual mean or select a specific month.
+    if annual:
+        dv = dv.mean('time')
+    elif month is not None:
+        dv = dv.isel(time=month)
+        dl += cfg.mon_abr[month] + ' '  # Print the month abbr.
+
+    dvm = dv.reduce(avg, dim='model')
+
+    # Model agreement on sign of the change relative to sign of average change.
+    # If positive change, count number of negative (or zero) model changes.
+    c = 1 if delta_exp(dvm) > 1 else -1
+    n = delta_exp(dv).where(delta_exp(dv) * c > 0).count().item()
+
+    # Significance of projected change
+    sig = round_sig(stats.wilcoxon(dv.isel(exp=0), dv.isel(exp=1))[1])
+
+    # Get historical and difference values (in SV) and interquartile range.
+    for i, v in enumerate([dv.isel(exp=0), delta_exp(dv)]):
+        dl += '{}: {:.{p}g} ({:.{p}g}-{:.{p}g}) '.format(
+            dv.isel(exp=i).exp.item()[0:4].upper(),
+            v.reduce(avg, dim='model').item(),
+            *sorted([np.percentile(v, j) for j in [75, 25]]), p=prec if prec is not None else 2)
+    # Get percent change and interquartile range.
+    cor = cmip_cor(dv)
+    dl += '{:>1.0f}% {} {}/{} {} {}'.format(percent(delta_exp(dvm), dvm.isel(exp=0)).item(), sig, n, len(dv.model), *cor)
+    print(dl)
+    return

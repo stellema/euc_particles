@@ -38,24 +38,26 @@ cmap = plt.cm.seismic
 cmap.set_bad('grey')
 vmax = 5e-7
 
-fig, ax = plt.subplots(1, 2, figsize=(13, 5), sharey=True)
+fig, ax = plt.subplots(1, 3, figsize=(14, 4), sharey=True)
 ax = ax.flatten()
-for i, mip, dc in zip(range(2), ['CMIP5', 'CMIP6'], [dc5.mean('model'), dc6.mean('model')]):
-    ax[i].set_title('{}{} multi-model mean wind stress curl'
+for i, mip, dc in zip(range(3), ['CMIP5', 'CMIP6', 'CMIP6-CMIP5'], [dc5.mean('model'), dc6.mean('model'), dc6.mean('model')-dc5.mean('model')]):
+    ax[i].set_title('{}{} MMM wind stress curl'
                     .format(cfg.lt[i], mip), loc='left')
+    # if i == 2:
+    #     vmax=vmax/2
     cs = ax[i].pcolormesh(dc.lon, dc.lat, dc.mean('time'),
                           cmap=cmap, vmax=vmax, vmin=-vmax)
     xlocs = ax[i].get_xticks()
     ylocs = ax[i].get_yticks()
     ax[i].set_xticklabels(coord_formatter(xlocs, 'lon'))
     ax[i].set_yticklabels(coord_formatter(ylocs, 'lat'))
-    if i == 1:
-        divider = make_axes_locatable(ax[i])
-        cax = divider.append_axes('right', size='5%', pad=0.05)
-        clb = fig.colorbar(cs, cax=cax, orientation='vertical', extend='both')
-        clb.set_label('N/m?')
+    # if i == 1:
+    divider = make_axes_locatable(ax[i])
+    cax = divider.append_axes('bottom', size='5%', pad=0.5)
+    clb = fig.colorbar(cs, cax=cax, orientation='horizontal', extend='both')
+    clb.set_label('N/m')
 plt.tight_layout()
-plt.savefig(cfg.fig/'cmip/wsc_mmm.png', format="png")
+plt.savefig(cfg.fig/'cmip/wsc_mmm_rcp.png', format="png")
 plt.show()
 
 # zs5 = dc5.mean('time').copy()

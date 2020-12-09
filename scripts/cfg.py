@@ -141,7 +141,7 @@ cs = [('lev', 'lat', 'lon'), ('lev', 'latitude', 'longitude'),
 mod6 = {0:  {'id': 'ACCESS-CM2',    'nd': 2, 'z': 'lev', 'cs':  cs[1]}, ##
         1:  {'id': 'ACCESS-ESM1-5', 'nd': 2, 'z': 'lev', 'cs':  cs[1]}, ##
         # 2:  {'id': 'AWI-CM-1-1-MR', 'nd': 2, 'z': 'lev', 'cs':  cs[0]},
-        2:  {'id': 'BCC-CSM2-MR',   'nd': 1, 'z': 'lev', 'cs':  cs[0]},
+        2:  {'id': 'BCC-CSM2-MR',   'nd': 2, 'z': 'lev', 'cs':  cs[0]},
         3:  {'id': 'CAMS-CSM1-0',   'nd': 2, 'z': 'lev', 'cs':  cs[1]},
         4:  {'id': 'CanESM5',       'nd': 2, 'z': 'lev', 'cs':  cs[1]},
         5:  {'id': 'CESM2',         'nd': 2, 'z': 'lev', 'cs':  cs[0]},
@@ -162,12 +162,12 @@ mod6 = {0:  {'id': 'ACCESS-CM2',    'nd': 2, 'z': 'lev', 'cs':  cs[1]}, ##
         17: {'id': 'MIROC-ES2L',    'nd': 2, 'z': 'sig', 'cs':  cs[1]},
         18: {'id': 'MIROC6',        'nd': 2, 'z': 'sig', 'cs':  cs[1]},
         19: {'id': 'MPI-ESM1-2-HR', 'nd': 2, 'z': 'lev', 'cs':  cs[1]}, ##
-        # 20: {'id': 'MPI-ESM1-2-LR', 'nd': 2, 'z': 'lev', 'cs':  cs[1]},  #
-        20: {'id': 'MRI-ESM2-0',    'nd': 2, 'z': 'lev', 'cs':  cs[1]},  #
-        21: {'id': 'NESM3',         'nd': 2, 'z': 'lev', 'cs':  cs[1]},
-        22: {'id': 'NorESM2-LM',    'nd': 2, 'z': 'lev', 'cs':  cs[1]},  #
-        23: {'id': 'NorESM2-MM',    'nd': 2, 'z': 'lev', 'cs':  cs[1]},  #
-        24: {'id': 'UKESM1-0-LL',   'nd': 2, 'z': 'lev', 'cs':  cs[1]}}
+        20: {'id': 'MPI-ESM1-2-LR', 'nd': 2, 'z': 'lev', 'cs':  cs[1]},  #
+        21: {'id': 'MRI-ESM2-0',    'nd': 2, 'z': 'lev', 'cs':  cs[1]},  #
+        22: {'id': 'NESM3',         'nd': 2, 'z': 'lev', 'cs':  cs[1]},
+        23: {'id': 'NorESM2-LM',    'nd': 2, 'z': 'lev', 'cs':  cs[1]},  #
+        24: {'id': 'NorESM2-MM',    'nd': 2, 'z': 'lev', 'cs':  cs[1]},  #
+        25: {'id': 'UKESM1-0-LL',   'nd': 2, 'z': 'lev', 'cs':  cs[1]}}
 
 
 mod5 = {0:  {'id': 'ACCESS1-0',        'nd': 2, 'z': 'lev', 'cs':  cs[0]},
@@ -192,12 +192,12 @@ mod5 = {0:  {'id': 'ACCESS1-0',        'nd': 2, 'z': 'lev', 'cs':  cs[0]},
         19: {'id': 'MIROC5',           'nd': 2, 'z': 'sig', 'cs':  cs[0]},
         20: {'id': 'MIROC-ESM-CHEM',   'nd': 1, 'z': 'sig', 'cs':  cs[0]},
         21: {'id': 'MIROC-ESM',        'nd': 1, 'z': 'sig', 'cs':  cs[0]},
-        # 22: {'id': 'MPI-ESM-LR',       'nd': 2, 'z': 'lev', 'cs':  cs[0]},
-        22: {'id': 'MPI-ESM-MR',       'nd': 2, 'z': 'lev', 'cs':  cs[0]},
-        23: {'id': 'MRI-CGCM3',        'nd': 2, 'z': 'lev', 'cs':  cs[0]},
-        24: {'id': 'MRI-ESM1',         'nd': 2, 'z': 'lev', 'cs':  cs[0]},
-        25: {'id': 'NorESM1-ME',       'nd': 2, 'z': 'lev', 'cs':  cs[0]},
-        26: {'id': 'NorESM1-M',        'nd': 2, 'z': 'lev', 'cs':  cs[0]}}
+        22: {'id': 'MPI-ESM-LR',       'nd': 2, 'z': 'lev', 'cs':  cs[0]},
+        23: {'id': 'MPI-ESM-MR',       'nd': 2, 'z': 'lev', 'cs':  cs[0]},
+        24: {'id': 'MRI-CGCM3',        'nd': 2, 'z': 'lev', 'cs':  cs[0]},
+        25: {'id': 'MRI-ESM1',         'nd': 2, 'z': 'lev', 'cs':  cs[0]},
+        26: {'id': 'NorESM1-ME',       'nd': 2, 'z': 'lev', 'cs':  cs[0]},
+        27: {'id': 'NorESM1-M',        'nd': 2, 'z': 'lev', 'cs':  cs[0]}}
 
 
 # sym_ = ['o', 's', 'd', '*', 'X', 'P', '^', 0]

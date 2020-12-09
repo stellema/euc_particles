@@ -98,7 +98,7 @@ from matplotlib.offsetbox import AnchoredText
 
 
 import cfg
-from main import (open_plx_data, get_plx_id, latlon_groupby, latlon_groupby_usum, plx_snapshot, combine_plx_datasets)
+# from main import (open_plx_data, get_plx_id, latlon_groupby, latlon_groupby_usum, plx_snapshot, combine_plx_datasets)
 import cartopy
 from tools import coord_formatter
 from plot_particles import create_parcelsfig_axis, cartopy_colorbar
@@ -179,25 +179,25 @@ https://github.com/OceanParcels/SKIM-garbagepatchlocations/blob/master/North%20P
 # _, da = das[-5]
 # plt.scatter(da.lon, da.lat)
 
-def plot_transport_density(exp, lon, r_range, xids, u, x, y, ybins, xbins):
-    # Plot
-    box = sgeom.box(minx=120, maxx=xbins[-1], miny=-15, maxy=ybins[-1])
-    x0, y0, x1, y1 = box.bounds
-    proj = cartopy.crs.PlateCarree(central_longitude=180)
-    box_proj = cartopy.crs.PlateCarree(central_longitude=0)
+# def plot_transport_density(exp, lon, r_range, xids, u, x, y, ybins, xbins):
+#     # Plot
+#     box = sgeom.box(minx=120, maxx=xbins[-1], miny=-15, maxy=ybins[-1])
+#     x0, y0, x1, y1 = box.bounds
+#     proj = cartopy.crs.PlateCarree(central_longitude=180)
+#     box_proj = cartopy.crs.PlateCarree(central_longitude=0)
 
-    fig, ax = create_parcelsfig_axis(spherical=True, land=True, projection=proj, figsize=(12, 4))
+#     fig, ax = create_parcelsfig_axis(spherical=True, land=True, projection=proj, figsize=(12, 4))
 
-    cs = ax.scatter(x, y, s=10, c=u, cmap=plt.cm.viridis, vmax=1e3, edgecolors='face', linewidths=2.5, transform=box_proj)
-    cartopy_colorbar(cs, plt, fig, ax)
-    ax.set_extent([x0, x1, y0, y1], crs=box_proj)
-    ax.set_aspect('auto')
-    ax.add_feature(cartopy.feature.LAND, zorder=0, edgecolor='black', facecolor='grey')
-    ax.set_title('Equatorial Undercurrent {} transport pathways to {} (time-normalised)'.format(cfg.exp[iexp], *coord_formatter(lon, 'lon')))
-    plt.savefig(cfg.fig/'parcels/transport_density_map_{}_{}-{}.png'.format(xids[0].stem[:-2], *r_range), bbox_inches='tight', pad_inches=0.2)
-    plt.show()
-    plt.clf()
-    plt.close()
+#     cs = ax.scatter(x, y, s=10, c=u, cmap=plt.cm.viridis, vmax=1e3, edgecolors='face', linewidths=2.5, transform=box_proj)
+#     cartopy_colorbar(cs, plt, fig, ax)
+#     ax.set_extent([x0, x1, y0, y1], crs=box_proj)
+#     ax.set_aspect('auto')
+#     ax.add_feature(cartopy.feature.LAND, zorder=0, edgecolor='black', facecolor='grey')
+#     ax.set_title('Equatorial Undercurrent {} transport pathways to {} (time-normalised)'.format(cfg.exp[iexp], *coord_formatter(lon, 'lon')))
+#     plt.savefig(cfg.fig/'parcels/transport_density_map_{}_{}-{}.png'.format(xids[0].stem[:-2], *r_range), bbox_inches='tight', pad_inches=0.2)
+#     plt.show()
+#     plt.clf()
+#     plt.close()
 
 
 # # Sort by location,
@@ -219,96 +219,96 @@ def plot_transport_density(exp, lon, r_range, xids, u, x, y, ybins, xbins):
 
 # # plot_transport_density(iexp, lon, r_range, xids, u, x, y, ybins, xbins)
 
-iexp = 0
-lon = 250
-r_range = [0, 2]
-xids, dss, ds = combine_plx_datasets(cfg.exp_abr[iexp], lon, v=1, r_range=r_range)
+# iexp = 0
+# lon = 250
+# r_range = [0, 2]
+# xids, dss, ds = combine_plx_datasets(cfg.exp_abr[iexp], lon, v=1, r_range=r_range)
 
-""" IDK
-import math
-import numpy as np
-import xarray as xr
-import math
-import logging
-import calendar
-import numpy as np
-import xarray as xr
-import pandas as pd
-from scipy import stats
-from pathlib import Path
-from functools import wraps
-from datetime import datetime, timedelta
-import matplotlib.pyplot as plt
-import matplotlib.colors as colors
-from matplotlib.offsetbox import AnchoredText
-
-
-import cfg
-from main import (open_plx_data, get_plx_id, latlon_groupby, latlon_groupby_func, latlon_groupby_ifunc, plx_snapshot, combine_plx_datasets)
-import cartopy
-from tools import coord_formatter
-# from plot_particles import cartopy_colorbar
-import shapely.geometry as sgeom
-import matplotlib.ticker as mticker
-
-def create_fig_axis(land=True, projection=None, central_longitude=0, fig=None, ax=None, rows=1, cols=1, figsize=None):
-    projection = cartopy.crs.PlateCarree(central_longitude) if projection is None else projection
-    if ax is None:
-        fig, ax = plt.subplots(rows, cols, subplot_kw={'projection': projection}, figsize=figsize)
-        if rows > 1 or cols > 1:
-            ax = ax.flatten()
-
-        ax.gridlines(xlocs=[110, 120, 160, -160, -120, -80, -60],
-                     ylocs=[-20, -10, 0, 10, 20], color='grey')
-        gl = ax.gridlines(draw_labels=True, linewidth=0.001,
-                          xlocs=[120, 160, -160, -120, -80],
-                          ylocs=[-10, 0, 10], color='grey')
-        gl.bottom_labels = True
-        gl.top_labels = False
-        gl.right_labels = False
-        gl.xformatter = cartopy.mpl.gridliner.LONGITUDE_FORMATTER
-        gl.yformatter = cartopy.mpl.gridliner.LONGITUDE_FORMATTER
-    if land:
-        ax.coastlines()
-        ax.add_feature(cartopy.feature.LAND, zorder=0, edgecolor='black', facecolor='grey')
-
-    return fig, ax
+# """ IDK
+# import math
+# import numpy as np
+# import xarray as xr
+# import math
+# import logging
+# import calendar
+# import numpy as np
+# import xarray as xr
+# import pandas as pd
+# from scipy import stats
+# from pathlib import Path
+# from functools import wraps
+# from datetime import datetime, timedelta
+# import matplotlib.pyplot as plt
+# import matplotlib.colors as colors
+# from matplotlib.offsetbox import AnchoredText
 
 
-def plot_transport_density(exp, lon, r_range, xids, u, x, y, ybins, xbins):
-    """Plot time-normalised particle transport density."""
-    box = sgeom.box(minx=120, maxx=xbins[-1], miny=-15, maxy=ybins[-1])
-    x0, y0, x1, y1 = box.bounds
-    proj = cartopy.crs.PlateCarree(central_longitude=180)
-    box_proj = cartopy.crs.PlateCarree(central_longitude=0)
+# import cfg
+# from main import (open_plx_data, get_plx_id, latlon_groupby, latlon_groupby_func, latlon_groupby_ifunc, plx_snapshot, combine_plx_datasets)
+# import cartopy
+# from tools import coord_formatter
+# # from plot_particles import cartopy_colorbar
+# import shapely.geometry as sgeom
+# import matplotlib.ticker as mticker
 
-    fig, ax = create_fig_axis(land=True, projection=proj, figsize=(12, 4))
-    cs = ax.scatter(x, y, s=10, c=u, cmap=plt.cm.viridis, vmax=1e3,
-                    edgecolors='face', linewidths=2.5, transform=box_proj)
-    cbar = fig.colorbar(cs, shrink=0.9, pad=0.02, extend='both')
-    cbar.set_label('ddesnity', size=10)
-    ax.set_extent([x0, x1, y0, y1], crs=box_proj)
-    ax.set_aspect('auto')
-    ax.set_title('Equatorial Undercurrent {} transport pathways to {} (time-normalised)'.format(cfg.exp[iexp], *coord_formatter(lon, 'lon')))
-    plt.savefig(cfg.fig/'parcels/transport_density_map_{}_{}-{}.png'
-                .format(xids[0].stem[:-2], *r_range),
-                bbox_inches='tight', pad_inches=0.2)
-    plt.show()
-    plt.clf()
-    plt.close()
+# def create_fig_axis(land=True, projection=None, central_longitude=0, fig=None, ax=None, rows=1, cols=1, figsize=None):
+#     projection = cartopy.crs.PlateCarree(central_longitude) if projection is None else projection
+#     if ax is None:
+#         fig, ax = plt.subplots(rows, cols, subplot_kw={'projection': projection}, figsize=figsize)
+#         if rows > 1 or cols > 1:
+#             ax = ax.flatten()
 
-""" Sort by location."""
-iexp = 0
-lon = 250
-r_range = [0, 2]
-xids, dss, ds = combine_plx_datasets(cfg.exp_abr[iexp], lon, v=1, r_range=r_range)
+#         ax.gridlines(xlocs=[110, 120, 160, -160, -120, -80, -60],
+#                      ylocs=[-20, -10, 0, 10, 20], color='grey')
+#         gl = ax.gridlines(draw_labels=True, linewidth=0.001,
+#                           xlocs=[120, 160, -160, -120, -80],
+#                           ylocs=[-10, 0, 10], color='grey')
+#         gl.bottom_labels = True
+#         gl.top_labels = False
+#         gl.right_labels = False
+#         gl.xformatter = cartopy.mpl.gridliner.LONGITUDE_FORMATTER
+#         gl.yformatter = cartopy.mpl.gridliner.LONGITUDE_FORMATTER
+#     if land:
+#         ax.coastlines()
+#         ax.add_feature(cartopy.feature.LAND, zorder=0, edgecolor='black', facecolor='grey')
 
-xbins = np.arange(120.1, 290, 0.5)
-ybins = np.arange(-14.9, 15, 0.5)
-for v in ['z', 'zone', 'distance', 'unbeached']:
-    ds = ds.drop(v)
-# xy, du = zip(*list(latlon_groupby_isum(ds.isel(obs=300), levels=['lat', 'lon'], bins=[ybins, xbins])))
-xy, du = zip(*list(latlon_groupby_func(ds, levels=['lat', 'lon'], bins=[ybins, xbins], var='u', func=sum)))
+#     return fig, ax
+
+
+# def plot_transport_density(exp, lon, r_range, xids, u, x, y, ybins, xbins):
+#     """Plot time-normalised particle transport density."""
+#     box = sgeom.box(minx=120, maxx=xbins[-1], miny=-15, maxy=ybins[-1])
+#     x0, y0, x1, y1 = box.bounds
+#     proj = cartopy.crs.PlateCarree(central_longitude=180)
+#     box_proj = cartopy.crs.PlateCarree(central_longitude=0)
+
+#     fig, ax = create_fig_axis(land=True, projection=proj, figsize=(12, 4))
+#     cs = ax.scatter(x, y, s=10, c=u, cmap=plt.cm.viridis, vmax=1e3,
+#                     edgecolors='face', linewidths=2.5, transform=box_proj)
+#     cbar = fig.colorbar(cs, shrink=0.9, pad=0.02, extend='both')
+#     cbar.set_label('ddesnity', size=10)
+#     ax.set_extent([x0, x1, y0, y1], crs=box_proj)
+#     ax.set_aspect('auto')
+#     ax.set_title('Equatorial Undercurrent {} transport pathways to {} (time-normalised)'.format(cfg.exp[iexp], *coord_formatter(lon, 'lon')))
+#     plt.savefig(cfg.fig/'parcels/transport_density_map_{}_{}-{}.png'
+#                 .format(xids[0].stem[:-2], *r_range),
+#                 bbox_inches='tight', pad_inches=0.2)
+#     plt.show()
+#     plt.clf()
+#     plt.close()
+
+# """ Sort by location."""
+# iexp = 0
+# lon = 250
+# r_range = [0, 2]
+# xids, dss, ds = combine_plx_datasets(cfg.exp_abr[iexp], lon, v=1, r_range=r_range)
+
+# xbins = np.arange(120.1, 290, 0.5)
+# ybins = np.arange(-14.9, 15, 0.5)
+# for v in ['z', 'zone', 'distance', 'unbeached']:
+#     ds = ds.drop(v)
+# # xy, du = zip(*list(latlon_groupby_isum(ds.isel(obs=300), levels=['lat', 'lon'], bins=[ybins, xbins])))
+# xy, du = zip(*list(latlon_groupby_func(ds, levels=['lat', 'lon'], bins=[ybins, xbins], var='u', func=sum)))
 
 # # Index key to sort latitude and longitude lists.
 # indices = sorted(range(len(list(xy))), key=lambda k: xy[k])
@@ -317,7 +317,7 @@ xy, du = zip(*list(latlon_groupby_func(ds, levels=['lat', 'lon'], bins=[ybins, x
 # y, x = np.array(list(y))[indices], np.array(list(x))[indices]
 # plot_transport_density(iexp, lon, r_range, xids, u, x, y, ybins, xbins)
 
-""" Sort by location."""
+# """ Sort by location."""
 # iexp = 0
 # lon = 250
 # r_range = [0, 2]
@@ -373,7 +373,7 @@ xy, du = zip(*list(latlon_groupby_func(ds, levels=['lat', 'lon'], bins=[ybins, x
 #             repeatdt_days=repeatdt_days, outputdt_days=outputdt_days,
 #             v=v, runtime_days=runtime_days, restart=restart, final=final)
 
-
+"""
 
 # xy, du = zip(*list(latlon_groupby(ds, levels=['lat', 'lon'], bins=[ybins, xbins])))
 # dx = du[-5]
@@ -382,3 +382,21 @@ xy, du = zip(*list(latlon_groupby_func(ds, levels=['lat', 'lon'], bins=[ybins, x
 # bins=[ybins, xbins]
 # das = list(ds.groupby_bins(levels[0], bins[0], labels=bins[0][:-1], restore_coord_dims=True, squeeze=False))
 """
+
+import copy
+import warnings
+import numpy as np
+import xarray as xr
+import matplotlib.pyplot as plt
+from mpl_toolkits.axes_grid1 import make_axes_locatable
+
+import cfg
+from tools import coord_formatter
+from cmip_fncs import subset_cmip, bnds_wbc
+from cfg import mod6, mod5, lx5, lx6
+from main import ec, mc, ng
+# for m in mod:
+#     dx = subset_cmip(mip, m, var, exp, z[m], cc.lat, x[m]).mean('time')
+# mod[m]['id'] in ['CMCC-CM2-SR5'] i, j switched
+
+
