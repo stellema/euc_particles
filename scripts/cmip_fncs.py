@@ -262,8 +262,8 @@ def ofam_euc_transport_sum(cc, depth, lat, lon, net=False):
 
     # Remove westward flow.
     if not net:
-        fh = fh.where(fh * cc.sign > 0)
-        fr = fr.where(fr * cc.sign > 0)
+        fh = fh.where(fh > 0)
+        fr = fr.where(fr > 0)
 
     # Multiply by depth and width.
     fh = fh * dz * cfg.LAT_DEG * 0.1
