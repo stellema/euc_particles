@@ -16,7 +16,7 @@ from matplotlib.markers import MarkerStyle
 import cfg
 from cfg import mod6, mod5, lx5, lx6
 from tools import coord_formatter
-from cmip_fncs import OFAM_WBC, CMIP_WBC
+from cmip_fncs import ofam_wbc_transport_sum, cmip_wbc_transport_sum, cmipMMM
 from main import ec, mc, ng
 
 warnings.filterwarnings(action='ignore', message='Mean of empty slice')
@@ -52,7 +52,7 @@ def scatter_wbc_markers(df, d5, d6):
         ax[i].set_title('{}{} at {}'.format(cfg.lt[i], cc.name, *cc._lat), loc='left')
 
         # OFAM3
-        # ax[i].scatter(dd.isel(exp=0), (dd.isel(exp=1) - dd.isel(exp=0)), color='m', label='OFAM3', s=mksize)
+        ax[i].scatter(dd.isel(exp=0), (dd.isel(exp=1) - dd.isel(exp=0)), color='m', label='OFAM3', s=mksize)
 
         # CMIP6
         for m, sym, symc in zip(mod6, lx6['sym'], lx6['symc']):
@@ -73,14 +73,21 @@ def scatter_wbc_markers(df, d5, d6):
 
 # OFAM
 df = xr.Dataset()
-df[ng._n] = OFAM_WBC(ng.depth, ng.lat, [ng.lon[0], ng.lon[1] - 1]).mean('Time') / 1e6
-df[mc._n] = OFAM_WBC(mc.depth, mc.lat, [mc.lon[0], mc.lon[1]]).mean('Time') / 1e6
+df[ng._n] = ofam_wbc_transport_sum(ng, ng.depth, ng.lat, [ng.lon[0], ng.lon[1] - 1]).mean('Time') / 1e6
+df[mc._n] = ofam_wbc_transport_sum(mc, mc.depth, mc.lat, [mc.lon[0], mc.lon[1]]).mean('Time') / 1e6
 # CMIP6
 d6 = xr.Dataset()
-d6[ng._n] = CMIP_WBC(6, ng).mean('time')[ng._n] / 1e6
-d6[mc._n] = CMIP_WBC(6, mc).mean('time')[mc._n] / 1e6
+d6[ng._n] = cmip_wbc_transport_sum(6, ng).mean('time')[ng._n] / 1e6
+d6[mc._n] = cmip_wbc_transport_sum(6, mc).mean('time')[mc._n] / 1e6
 # CMIP5
 d5 = xr.Dataset()
-d5[ng._n] = CMIP_WBC(5, ng).mean('time')[ng._n] / 1e6
-d5[mc._n] = CMIP_WBC(5, mc).mean('time')[mc._n] / 1e6
+d5[ng._n] = cmip_wbc_transport_sum(5, ng).mean('time')[ng._n] / 1e6
+d5[mc._n] = cmip_wbc_transport_sum(5, mc).mean('time')[mc._n] / 1e6
 scatter_wbc_markers(df, d5, d6)
+
+for dv, name in zip([d5, d6], ['CMIP5', 'CMIP6']):
+    cmipMMM(mc, dv.mc, xdim=name, prec=None, const=1, avg=np.median,
+            annual=False, month=None, proj_cor=True)
+for dv, name in zip([d5, d6], ['CMIP5', 'CMIP6']):
+    cmipMMM(ng, dv.ngcu, xdim=name, prec=None, const=1, avg=np.median,
+            annual=False, month=None, proj_cor=True)

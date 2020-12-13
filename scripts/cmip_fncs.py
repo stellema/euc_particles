@@ -104,30 +104,24 @@ def subset_cmip(mip, m, var, exp, depth, lat, lon):
 
     if mip == 6 and var in ['uvo', 'vvo'] and mod[m]['id'] in ['MIROC-ES2L', 'MIROC6']:
         dx = dx * -1
-    # if mod[m]['id'] in ['MPI-ESM-LR']:
-    #     dx.mean('time').isel(lon=-25, exp=0).plot()
     return dx
 
 
-def CMIP_EUC(time, depth, lat, lon, mip, lx, mod):
+def cmip_euc_transport_sum(depth, lat, lon, mip, lx, mod, net=False):
     # Scenario, month, longitude, model.
     var = 'uvo'
     exp = lx['exp']
     model = np.array([mod[i]['id'] for i in range(len(mod))])
-    de = np.zeros((len(exp), len(time), len(lon), len(mod)))
+    de = np.zeros((len(exp), 12, len(lon), len(mod)))
     ds = xr.Dataset({'ec': (['exp', 'time', 'lon', 'model'], de)},
-                    coords={'exp': exp, 'time': time, 'lon': lon, 'model': model})
+                    coords={'exp': exp, 'time': cfg.mon, 'lon': lon, 'model': model})
     for m in mod:
         for s, ex in enumerate(exp):
             for ix, x in enumerate(lon):
-                # if mod[m]['id'] in ['MPI-ESM-LR', 'MPI-ESM1-2-LR']:
-                #     dx = subset_cmip(mip, m, var, exp[s], depth, [-3, 3], lon)
-                # else:
                 dx = subset_cmip(mip, m, var, exp[s], depth, lat, x)
-
-                # Removed westward transport.
-                dx = dx.where(dx > 0)
-
+                # Remove westward transport.
+                if not net:
+                    dx = dx.where(dx > 0)
                 lat_str = 'lat' if mod[m]['nd'] == 1 else 'j'
                 dxx = dx.sum(dim=['lev', lat_str])
                 ds['ec'][s, :, ix, m] = dxx.squeeze().values
@@ -141,24 +135,37 @@ def bnds_wbc(mip, cc):
     x = np.zeros((len(mod), 2))
     z = np.zeros((len(mod), 2))
     for m in mod:
-        _z, _y, _x = cc.depth, cc.lat, cc.lon
-        # if cc.n == 'NGCU':
-        #     if mod[m]['id'] in []:  #cc.lat in [-4] and
-        if cc.n == 'MC':
+        z_, y_, x_ = cc.depth, cc.lat, cc.lon.copy()
+        if cc.n == 'NGCU' and cc.lat in [-2.5, -3, -3.5]:
+            if mod[m]['id'] in ['MPI-ESM-LR', 'MPI-ESM1-2-LR', 'MIROC-ESM-CHEM', 'MIROC-ESM']:
+                x_[0], x_[-1] = 142.5, 152
+            elif mod[m]['id'] in ['CanESM2']:
+                x_[0], x_[-1] = 147, 152
+            elif mod[m]['id'] in ['BCC-CSM2-MR']:
+                x_[-1] = 150
+            elif mod[m]['id'] in ['CESM2', 'CESM2-WACCM', 'CIESM', 'INM-CM5-0', 'NorESM2-LM', 'NorESM2-MM', 'CCSM4', 'CESM1-BGC', 'CESM1-CAM5-1-FV2', 'CESM1-CAM5', 'CMCC-CESM', 'CMCC-CM', 'FIO-ESM', 'IPSL-CM5A-LR', 'IPSL-CM5A-MR', 'IPSL-CM5B-LR', 'MPI-ESM-MR']:
+                x_[-1] = 148
+            elif mod[m]['id'] in ['NorESM1-ME', 'NorESM1-M']:
+                x_[-1] = 147
+        elif cc.n == 'MC':
+            # Increase slice before contouring.
             if mod[m]['id'] in ['MPI-ESM1-2-HR']:
-                _x[-1] = 128.5
+                x_[-1] = 128.5
             elif mod[m]['id'] in ['CanESM2', 'MIROC-ESM-CHEM', 'MIROC-ESM']:
-                _x[-1] = 133
-        if cc.n == 'EUC':
-            if mod[m]['id'] in ['MPI-ESM-LR', 'MPI-ESM1-2-LR']:
-                _y[-1] = 3
-        dx = subset_cmip(mip, m, cc.vel, 'historical', _z, _y, _x)
+                x_[-1] = 133
+        # elif cc.n == 'EUC':
+        #     if mod[m]['id'] in ['MPI-ESM-LR', 'MPI-ESM1-2-LR']:
+        #         y_[-1] = 3
+        dx = subset_cmip(mip, m, cc.vel, 'historical', z_, y_, x_)
         dx = dx.squeeze()
 
         # Depths
         z[m, 0] = dx.lev.values[0]
         z[m, 1] = dx.lev.values[-1]
-        dxx = dx.where(dx <= contour(dx) * 0.1, drop=True)
+        if contour == np.nanmin:
+            dxx = dx.where(dx <= contour(dx) * 0.25, drop=True)
+        else:
+            dxx = dx.where(dx >= contour(dx) * 0.2, drop=True)
 
         x[m, 0] = dxx.lon.values[0]  # LHS
         if dxx.lon.size > 1:
@@ -174,7 +181,8 @@ def bnds_wbc(mip, cc):
             pass
     return x, z
 
-def CMIP_WBC(mip, cc):
+
+def cmip_wbc_transport_sum(mip, cc, net=False):
     mod = cfg.mod6 if mip == 6 else cfg.mod5
     lx = cfg.lx6 if mip == 6 else cfg.lx5
     # Scenario, month, longitude, model.
@@ -189,23 +197,49 @@ def CMIP_WBC(mip, cc):
         for s, ex in enumerate(lx['exp']):
             dx = subset_cmip(mip, m, var, lx['exp'][s], z[m], y, x[m])
             dx = dx.squeeze()
-            # dx = dx.where(dx > 0)
-            if mod[m]['id'] in ['CMCC-CM2-SR5']:
-                lon_str = 'j'
-            else:
-                lon_str = [s for s in dx.dims if s in
-                           ['lon', 'i', 'x', 'rlon', 'nlon']][0]
-            dxx = dx.sum(dim=[mod[m]['cs'][0], lon_str])
+            dx = dx.where(dx * cc.sign > 0)
+            lon_str = 'lon' if mod[m]['nd'] == 1 else 'i'
+            dxx = dx.sum(dim=['lev', lon_str])
             ds[cc._n][s, :, m] = dxx.values
             dx.close()
     return ds
+
+
+def reanalysis_euc(var, lon, net=False):
+    ds = xr.open_dataset(cfg.data/'{}_1993_2018_climo.nc'.format(var))[var]
+    ds = ds.rename({'depth': 'lev', 'latitude': 'lat', 'longitude': 'lon'})
+    ds['lon'] = xr.where(ds.lon < 0, ds.lon + 360, ds.lon)
+    dz = ds.lev.diff(dim='lev')
+    dy = ds.lat.diff(dim='lat') * cfg.LAT_DEG
+    dt = ds * dy * dz
+
+    de = dt.sel(lev=slice(25, 350), lat=slice(-2.6, 2.6), lon=lon + 0.5)
+    if not net:
+        de = de.where(de > 0)
+    de = de.sum(dim=['lev', 'lat'])
+    lons = [165.5, 190.5, 220.5, 250.5]
+    print(var, np.around(de.sel(lon=lons).mean('time') / 1e6, 1))
+    return de
+
+
+def johnson_obs_euc():
+    ds = xr.open_dataset(cfg.data/'pac_mean_johnson_2002.cdf')
+    ds = ds.rename({'ZDEP1_50': 'lev', 'YLAT11_101': 'lat', 'XLON': 'lon'})
+    de = ds.sel(lat=slice(-2, 2))
+    de = de.where((de.SIGMAM > 23) & (de.SIGMAM < 26.5))
+    dz = de.lev.diff(dim='lev')
+    dy = de.lat.diff(dim='lat') * cfg.LAT_DEG
+    dt = de.UM * dy * dz   # Velocity in cm/s.
+    dt = dt.sum(['lev', 'lat'])
+    print(np.around(dt / 1e6, 1))
+    return dt
 
 
 ##############################################################################
 # OFAM3 FUNCTIONS
 ##############################################################################
 
-def OFAM_EUC(depth, lat, lon):
+def ofam_euc_transport_sum(cc, depth, lat, lon, net=False):
     fh = xr.open_dataset(cfg.ofam/'ocean_u_1981-2012_climo.nc')
     fr = xr.open_dataset(cfg.ofam/'ocean_u_2070-2101_climo.nc')
 
@@ -227,8 +261,9 @@ def OFAM_EUC(depth, lat, lon):
     dz.coords['st_ocean'] = fh['st_ocean']  # Copy st_ocean coords
 
     # Remove westward flow.
-    fh = fh.where(fh > 0)
-    fr = fr.where(fr > 0)
+    if not net:
+        fh = fh.where(fh * cc.sign > 0)
+        fr = fr.where(fr * cc.sign > 0)
 
     # Multiply by depth and width.
     fh = fh * dz * cfg.LAT_DEG * 0.1
@@ -236,10 +271,13 @@ def OFAM_EUC(depth, lat, lon):
     fh = fh.sum(dim=['st_ocean', 'yu_ocean'])
     fr = fr.sum(dim=['st_ocean', 'yu_ocean'])
 
-    return xr.concat((fh, fr), dim='exp')
+    df = xr.concat((fh, fr), dim='exp')
+    lons = [165, 190, 220, 250]
+    print('OFAM3 EUC:', np.around(df.sel(xu_ocean=lons).mean('Time') / 1e6, 1))
+    return df
 
 
-def OFAM_WBC(depth, lat, lon):
+def ofam_wbc_transport_sum(cc, depth, lat, lon, net=False):
     fh = xr.open_dataset(cfg.ofam/'ocean_v_1981-2012_climo.nc')
     fr = xr.open_dataset(cfg.ofam/'ocean_v_2070-2101_climo.nc')
 
@@ -248,7 +286,8 @@ def OFAM_WBC(depth, lat, lon):
 
     # EUC depth boundary indexes.
     zi = [idx(dz[1:], depth[0]), idx(dz[1:], depth[1], 'greater') + 1]
-
+    if cc.n == 'NGCU':
+        lon = [140.5, 145]
     # Slice lat, lon and depth.
     fh = fh.v.sel(xu_ocean=slice(lon[0], lon[1]), yu_ocean=lat).isel(st_ocean=slice(zi[0], zi[1]))
     fr = fr.v.sel(xu_ocean=slice(lon[0], lon[1]), yu_ocean=lat).isel(st_ocean=slice(zi[0], zi[1]))
@@ -256,7 +295,9 @@ def OFAM_WBC(depth, lat, lon):
     dz = dz.diff(dim='st_edges_ocean').rename({'st_edges_ocean': 'st_ocean'})
     dz = dz.isel(st_ocean=slice(zi[0], zi[1]))
     dz.coords['st_ocean'] = fh['st_ocean']  # Copy st_ocean coords
-
+    if not net:
+        fh = fh.where(fh * cc.sign > 0)
+        fr = fr.where(fr * cc.sign > 0)
     # Multiply by depth and width.
     fh = fh * dz * cfg.LON_DEG(lat) * 0.1
     fr = fr * dz * cfg.LON_DEG(lat) * 0.1

@@ -25,7 +25,7 @@ warnings.filterwarnings("ignore")
 cmap = plt.cm.seismic
 cmap.set_bad('grey')
 
-def plot_cmip_xy(mip, exp, current, var, lat, lon, depth, vmax,
+def plot_cmip_xy(mip, exp, cc, var, lat, lon, depth, vmax,
                  integrate=None, avg=None):
     mod = mod6 if mip == 6 else mod5
     c = 1e6 if var in ['uvo', 'vvo'] else 1
@@ -45,7 +45,7 @@ def plot_cmip_xy(mip, exp, current, var, lat, lon, depth, vmax,
         X = dx.lon.values
         Y = dx.lat.values
 
-        ax[m].set_title('{}. {} {}'.format(m, mod[m]['id'], current),
+        ax[m].set_title('{}. {} {}'.format(m, mod[m]['id'], cc.n),
                         loc='left', fontsize=10)
 
         cs = ax[m].pcolormesh(X, Y, dx.values, vmax=vmax + 0.001, vmin=-vmax,
@@ -66,12 +66,12 @@ def plot_cmip_xy(mip, exp, current, var, lat, lon, depth, vmax,
 
     plt.tight_layout()
     plt.savefig(cfg.fig/'cmip/{}_{}_cmip{}_{}.png'
-                .format(current, var, mip, exp), format="png")
+                .format(cc.n, var, mip, exp), format="png")
     plt.show()
     return dx
 
 
-def plot_cmip_vdepth(mip, exp, current, var, lat, lon, depth, latb=None,
+def plot_cmip_vdepth(mip, exp, cc, var, lat, lon, depth, latb=None,
                      lonb=None, depthb=None, vmax=0.6, bounds=None,
                      contour=None, pos=None, ndec=2):
     mod = mod6 if mip == 6 else mod5
@@ -82,6 +82,8 @@ def plot_cmip_vdepth(mip, exp, current, var, lat, lon, depth, latb=None,
     ylim = depth
     cmap = plt.cm.seismic
     cmap.set_bad('grey')
+    if cc.n in ['NGCU', 'MC']:
+        bb, zz = bnds_wbc(mip, cc)
 
     # Number of rows, cols.
     if mip == 5:
@@ -93,9 +95,10 @@ def plot_cmip_vdepth(mip, exp, current, var, lat, lon, depth, latb=None,
                            squeeze=False)
     ax = ax.flatten()
     for m in mod:
-        if current == 'EUC' and mod[m]['id'] in ['MIROC5', 'MIROC-ESM-CHEM', 'MIROC-ESM', 'INM-CM4-8', 'INM-CM5-0', 'MPI-ESM-LR', 'MPI-ESM-2-LR']:
-
+        if cc.n == 'EUC' and mod[m]['id'] in ['MIROC5', 'MIROC-ESM-CHEM', 'MIROC-ESM', 'INM-CM4-8', 'INM-CM5-0', 'MPI-ESM-LR', 'MPI-ESM-2-LR']:
             dx = subset_cmip(mip, m, var, exp, depth, [-5, 5], lon).mean('time') / c
+        elif cc.n == 'NGCU' and mod[m]['id'] in ['MIROC5', 'MIROC-ESM-CHEM', 'MIROC-ESM', 'INM-CM4-8', 'INM-CM5-0', 'MPI-ESM-LR', 'MPI-ESM1-2-LR']:
+            dx = subset_cmip(mip, m, var, exp, depth, lat, [142, 155]).mean('time') / c
         else:
             dx = subset_cmip(mip, m, var, exp, depth, lat, lon).mean('time') / c
         # dx = dx.where(dx != 0.0, np.nan)
@@ -110,7 +113,7 @@ def plot_cmip_vdepth(mip, exp, current, var, lat, lon, depth, latb=None,
             lat_ = np.around(dx.lat.median().item(), ndec)  # Title.
             loc_ = coord_formatter([lat_], convert='lat')  # For title.
 
-        ax[m].set_title('{}. {} {} at {}'.format(m, mod[m]['id'], current, loc_.item()), loc='left', fontsize=10)
+        ax[m].set_title('{}. {} {} at {}'.format(m, mod[m]['id'], cc.n, loc_.item()), loc='left', fontsize=10)
         cs = ax[m].pcolormesh(X, Z, dx.values, vmin=-vmax, vmax=vmax + 0.001, cmap=cmap, shading='nearest')
         if contour:
             hatches = ['////', '\\\\', '////', '\\\\', '////']
@@ -121,30 +124,36 @@ def plot_cmip_vdepth(mip, exp, current, var, lat, lon, depth, latb=None,
 
         if bounds:
             # Method1
-            dxx = subset_cmip(mip, m, var, exp, [25, 350], [-2.6, 2.6], lon).mean('time') / c
-            dxx = dxx.squeeze()
-            z1, z2 = dxx.lev.values[0], dxx.lev.values[-1]
-
+            if cc.n == 'EUC':
+                dxx = subset_cmip(mip, m, var, exp, [25, 350], [-2.6, 2.6], lon).mean('time') / c
+                dxx = dxx.squeeze()
+                z1, z2 = dxx.lev.values[0], dxx.lev.values[-1]
+                # Indexes of x-axis edges
+                b1, b2 = dxx[xax_].values[0], dxx[xax_].values[-1]
+                z1, z2 = dxx.lev.values[0], dxx.lev.values[-1]
             # Method2
-            # db = subset_cmip(mip, m, var, exp, depthb, latb, lonb).mean('time') / c
-            # db = db.squeeze()
-            # z1, z2 = db.lev.values[0], db.lev.values[-1]
+            else:
+                b1, b2 = bb[m, 0], bb[m, 1]
+                z1, z2 = zz[m, 0], zz[m, 1]
+                # db = subset_cmip(mip, m, var, exp, depthb, latb, lonb).mean('time') / c
+                # db = db.squeeze()
+                # z1, z2 = db.lev.values[0], db.lev.values[-1]
 
-            # if contour == np.nanmin:
-            #     dxx = dx.where(dx <= contour(dx) * 0.1, drop=True)*0 + 1
-            # else:
-            #     dxx = dx.where(dx >= contour(dx) * 0.2, drop=True)*0 + 1
+                # if contour == np.nanmin:
+                #     dxx = dx.where(dx <= contour(dx) * 0.1, drop=True)*0 + 1
+                # else:
+                #     dxx = dx.where(dx >= contour(dx) * 0.2, drop=True)*0 + 1
 
-            # dxx = dx.where(dx <= contour(dx) * 0.1, drop=True)*0 + 1
-            # Indexes of x-axis edges
-            b1, b2 = dxx[xax_].values[0], dxx[xax_].values[-1]
-            z1, z2 = dxx.lev.values[0], dxx.lev.values[-1]
-            # Make LHS point all NaN
-            # try:
-            #     dxb1 = dx.where((dx[xax_] <= b1), drop=True)
-            #     b1 = dxb1.where(dxb1.count(dim='lev') == 0, drop=True)[xax_].max().item()
-            # except:
-            #     pass
+                # dxx = dx.where(dx <= contour(dx) * 0.1, drop=True)*0 + 1
+                # # Indexes of x-axis edges
+                # b1, b2 = dxx[xax_].values[0], dxx[xax_].values[-1]
+                # z1, z2 = dxx.lev.values[0], dxx.lev.values[-1]
+                # # Make LHS point all NaN.
+                # try:
+                #     dxb1 = dx.where((dx[xax_] <= b1), drop=True)
+                #     b1 = dxb1.where(dxb1.count(dim='lev') == 0, drop=True)[xax_].max().item()
+                # except:
+                #     pass
 
             # Plot integration boundaries
             ax[m].axvline(b1, ymax=1 - (z1 / ylim[1]), ymin=1 - (z2 / ylim[1]), color='k')
@@ -163,14 +172,14 @@ def plot_cmip_vdepth(mip, exp, current, var, lat, lon, depth, latb=None,
             clb = fig.colorbar(cs, cax=cax, orientation='vertical', extend='both')
             units = 'Transport [Sv]' if var in ['uvo', 'vvo'] else 'm/s'
             clb.set_label(units)
-        ax[m].set_xlim(xlim[0], xlim[1])
+        ax[m].set_xlim(xlim[0], xlim[1]+3)
         ax[m].set_ylim(ylim[1], ylim[0])
         # xticks = ax[m].get_xticks()
         # ax[m].set_xticklabels(coord_formatter(xticks, xax_))
 
     plt.tight_layout()
     plt.savefig(cfg.fig/'cmip/{}/{}_{}_cmip{}_{}_{}_contour.png'
-                .format(current, current, var, mip, exp, pos), format="png")
+                .format(cc.n, cc.n, var, mip, exp, pos), format="png")
     plt.show()
     return dx
 
@@ -217,7 +226,6 @@ def plot_cmip_xz_wbc(mip, exp, cc, vmax=0.6):
         xlocs = ax[m].get_xticks()
         ax[m].set_xticklabels(coord_formatter(xlocs, 'lon'))
 
-
     plt.tight_layout()
     plt.savefig(cfg.fig/'cmip/{}/{}_{}_cmip{}_{}_{}.png'
                 .format(cc.n, cc.n, var, mip, exp, pos), format="png")
@@ -226,47 +234,48 @@ def plot_cmip_xz_wbc(mip, exp, cc, vmax=0.6):
 
 
 """ Equatorial Undercurrent """
-current = 'EUC'
-var = 'uo'
-exp = 'rcp85'
-for lon in [165, 170, 180, 190, 220, 250]:
-    lat, depth, lon = [-3.5, 3.5], [0, 400], lon
-    latb, depthb, lonb = [-3, 3], [0, 350], lon
-    for mip in [5]:
-        plot_cmip_vdepth(mip, exp, current, var, lat, lon, depth,
-                         latb, lonb, depthb, vmax=0.8, pos=str(lon), ndec=0, contour=np.nanmax, bounds=True)
+# cc = ec
+# var = 'uo'
+# exp = 'historical'
+# for lon in [165, 170, 180, 190, 220, 250]:
+#     lat, depth, lon = [-3.5, 3.5], [0, 400], lon
+#     latb, depthb, lonb = [-2.6, 2.6], [25, 350], lon
+#     for mip in [5, 6]:
+#         plot_cmip_vdepth(mip, exp, cc, var, lat, lon, depth,
+#                          latb, lonb, depthb, vmax=0.8, pos=str(lon),
+#                          ndec=0, contour=np.nanmax, bounds=True)
 
 """ New Guinea Coastal Undercurrent """
-# current = 'NGCU'
-# var = 'vo'
-# exp = 'historical'
-# # for lat in np.arange(-4.5, -1, 0.5):
-# #     # Plot top view.
-# #     # lat, lon, depth = [-10, 4], [120, 170], [50, 450]
-# #     # for mip in [5, 6]:
-# #     #     plot_cmip_xy(mip, exp, current, var, lat, lon, depth,
-# #     #                  vmax=0.6, integrate=True)
-# #     # Plot longitude cross section.
-# #     # lat, lon, depth = -2, [135, 155], [0, 1000]
-# #     lat, lon, depth = lat, [134, 150], [0, 1000]
-# #     latb, lonb, depthb = lat, lon, [0, 550]
-# #     for mip in [5, 6]:
-# #         contour = np.nanmax if var in ['vo', 'vvo'] else np.nanmin
-# #         plot_cmip_vdepth(mip, exp, current, var, lat, lon, depth, latb,
-# #                          lonb, depthb, vmax=0.5, bounds=True, contour=contour,
-# #                          pos=str(lat))
-# #     # MIROC fix: western lon not land at 131???
-# #     # cmip6 m=20 eastern lon needs inc - 155???
+cc = ng
+var = 'vo'
+exp = 'historical'
+for lat in [-3.5]:  #np.arange(-4.5, -1, 0.5):
+    # Plot top view.
+    # lat, lon, depth = [-10, 4], [120, 170], [50, 450]
+    # for mip in [5, 6]:
+    #     plot_cmip_xy(mip, exp, cc, var, lat, lon, depth,
+    #                  vmax=0.6, integrate=True)
+    # Plot longitude cross section.
+    # lat, lon, depth = -2, [135, 155], [0, 1000]
+    lat, lon, depth = lat, [142, 150], [0, 1000]
+    latb, lonb, depthb = lat, lon, [0, 550]
+    for mip in [5, 6]:
+        contour = np.nanmax if var in ['vo', 'vvo'] else np.nanmin
+        plot_cmip_vdepth(mip, exp, cc, var, lat, lon, depth, latb,
+                         lonb, depthb, vmax=0.5, bounds=True, contour=contour,
+                         pos=str(lat))
+    # MIROC fix: western lon not land at 131???
+    # cmip6 m=20 eastern lon needs inc - 155???
 # plot_cmip_xz_wbc(5, 'historical', ng, vmax=0.6)
 
 """ Mindano Undercurrent """
-# current = 'MC'
+# cc = mc
 # var = 'vo'
 # exp = 'historical'
 # # # Plot top view.
 # # lat, depth, lon = [4, 12], [50, 450], [122, 136]
 # # for mip in [5, 6]:
-# #     plot_cmip_xy(mip, exp, current, var, lat, lon, depth,
+# #     plot_cmip_xy(mip, exp, cc, 'vo', lat, lon, depth,
 # #                   vmax=0.6, integrate=True)
 
 # # Plot longitude cross section.
@@ -275,7 +284,7 @@ for lon in [165, 170, 180, 190, 220, 250]:
 # for lat in [8]:
 #     pos = str(lat) if type(lat) == int else str(int(10 * lat))
 #     for mip in [5, 6]:
-#         plot_cmip_vdepth(mip, exp, current, var, lat, lon, depth, lat, lonb,
+#         plot_cmip_vdepth(mip, exp, cc, var, lat, lon, depth, lat, lonb,
 #                          depthb, vmax=0.6, bounds=True, contour=np.nanmin, pos=pos)
-# plot_cmip_mc(5, exp, current, var, lat=8, vmax=0.6,
-#              contour=np.nanmin, pos=None)
+# # plot_cmip_mc(5, exp, cc, var, lat=8, vmax=0.6,
+# #               contour=np.nanmin, pos=None)

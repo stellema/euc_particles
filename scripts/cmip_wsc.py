@@ -21,7 +21,7 @@ from mpl_toolkits.axes_grid1 import make_axes_locatable
 import cfg
 from cfg import mod6, mod5, lx5, lx6
 from tools import coord_formatter, zonal_sverdrup
-from cmip_fncs import OFAM_EUC, CMIP_EUC, cmip_wsc
+from cmip_fncs import ofam_euc_transport_sum, cmip_euc_transport_sum, cmip_wsc
 
 lats = [-30, 30]
 lons = [120, 290]
