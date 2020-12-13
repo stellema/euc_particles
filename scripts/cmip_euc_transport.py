@@ -37,13 +37,14 @@ from cmip_fncs import ofam_euc_transport_sum, cmip_euc_transport_sum, cmipMMM, r
 warnings.filterwarnings(action='ignore', message='Mean of empty slice')
 
 obs = johnson_obs_euc()
-obs, obsx = obs.values, obs.lon.values
+obs, obsx = obs.values / 1e6, obs.lon.values
 obs = np.append(obs, [16.6, 26.2, 15.3, 32.2, 30])
 obsx = np.append(obsx, [149, 153, 165, 206, 220])
 cl = ['k', 'b', 'mediumseagreen']
 lbs = ['OFAM3', 'CMIP6 MMM', 'CMIP5 MMM']
 net = False
 lon = np.arange(165, 271)
+xstr = 'N25-350' if net else 'E25-350'
 de_oras = reanalysis_euc('uo_oras', lon, net=net).mean('time') / 1e6
 de_cglo = reanalysis_euc('uo_cglo', lon, net=net).mean('time') / 1e6
 
@@ -102,7 +103,7 @@ def plot_cmip_euc_transport(de, de6, de5, lon):
     ax.set_xlim(lon[0], lon[-1])
     ax.legend()
     plt.tight_layout()
-    plt.savefig(cfg.fig/'cmip/EUC_transport_E25-350.png')
+    plt.savefig(cfg.fig/'cmip/EUC_transport_{}.png'.format(xstr))
     plt.show()
     plt.clf()
     plt.close()
@@ -129,7 +130,7 @@ def plot_cmip_euc_scatter(de, de6, de5, lon):
         if i % 2 != 0:
             ax[i].legend()
     plt.tight_layout()
-    plt.savefig(cfg.fig/'cmip/EUC_transport_scatter_E25-350.png')
+    plt.savefig(cfg.fig/'cmip/EUC_transport_scatter_{}.png'.format(xstr))
 
 
 def plot_cmip_euc_scatter_markers(de, de6, de5, lon):
@@ -152,9 +153,7 @@ def plot_cmip_euc_scatter_markers(de, de6, de5, lon):
         ax[i].set_ylabel('Projected change [Sv]')
         if i >= 2:
             ax[i].set_xlabel('Historical transport [Sv]')
-    plt.savefig(cfg.fig/'cmip/EUC_transport_scatter_markers_E25-350.png', bbox_inches='tight')
-
-
+    plt.savefig(cfg.fig/'cmip/EUC_transport_scatter_markers_{}.png'.format(xstr), bbox_inches='tight')
 
 
 lat, depth = [-2.6, 2.6], [25, 350]
