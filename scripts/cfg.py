@@ -214,6 +214,7 @@ sym = sym_ * len(symc_)
 # Create dict of various items.
 lx5 = {'var': ['uo', 'vo'],
        'exp': ['historical', 'rcp85'],
+       'exps': ['historical', 'rcp85', 'diff'],
        'years': [[1901, 2000], [2050, 2099]],
        'sym': sym[:len(mod5)],
        'symc': symc[:len(mod5)]}
@@ -221,6 +222,7 @@ lx5 = {'var': ['uo', 'vo'],
 # Create dict of various items.
 lx6 = {'var': ['uo', 'vo'],
        'exp': ['historical', 'ssp585'],
+       'exps': ['historical', 'ssp585', 'diff'],
        'years': [[1901, 2000], [2050, 2099]],
        'sym': sym[len(mod5) + 1:len(mod6) + len(mod5)],
        'symc': symc[len(mod5) + 1:len(mod6) + len(mod5)]}

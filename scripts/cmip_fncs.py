@@ -14,9 +14,10 @@ from scipy import stats
 import cfg
 from tools import idx, idx2d, wind_stress_curl, coriolis
 from main import ec, mc, ng
+ue = 0.00
+print(ue)
 
-
-def open_cmip(mip, m, var='uo', exp='historical'):
+def open_cmip(mip, m, var='uo', exp='historical', bounds=False):
     mod = cfg.mod6 if mip == 6 else cfg.mod5
     # File path.
     cmip = cfg.home/'model_output/CMIP{}/CLIMOS/'.format(mip)
@@ -41,7 +42,11 @@ def open_cmip(mip, m, var='uo', exp='historical'):
         # Rename 'olevel' depth coords.
         if 'olevel' in dims:
             ds = ds.rename({'olevel': 'lev'})
-
+    if bounds:
+        if 'latitude_bnds' in ds:
+            ds = ds.rename({'latitude_bnds': 'lat_bnds', 'longitude_bnds': 'lon_bnds'})
+        elif 'nav_lat_bnds' in ds:
+            ds = ds.rename({'nav_lat_bnds': 'lat_bnds', 'nav_lon_bnds': 'lon_bnds'})
     # Fix odd error (j, i wrong labels).
     if mod[m]['id'] in ['CMCC-CM2-SR5']:
         ds = ds.rename({'j': 'i', 'i': 'j'})
@@ -110,22 +115,24 @@ def subset_cmip(mip, m, var, exp, depth, lat, lon):
 def cmip_euc_transport_sum(depth, lat, lon, mip, lx, mod, net=False):
     # Scenario, month, longitude, model.
     var = 'uvo'
-    exp = lx['exp']
+    exp = lx['exps']
     model = np.array([mod[i]['id'] for i in range(len(mod))])
     de = np.zeros((len(exp), 12, len(lon), len(mod)))
     ds = xr.Dataset({'ec': (['exp', 'time', 'lon', 'model'], de)},
                     coords={'exp': exp, 'time': cfg.mon, 'lon': lon, 'model': model})
     for m in mod:
-        for s, ex in enumerate(exp):
+        lat_str = 'lat' if mod[m]['nd'] == 1 else 'j'
+        for s, ex in enumerate(lx['exp']):
             for ix, x in enumerate(lon):
                 dx = subset_cmip(mip, m, var, exp[s], depth, lat, x)
+                du = subset_cmip(mip, m, 'uo', exp[s], depth, lat, x)
                 # Remove westward transport.
                 if not net:
-                    dx = dx.where(dx > 0)
-                lat_str = 'lat' if mod[m]['nd'] == 1 else 'j'
+                    dx = dx.where(du.values > ue)
                 dxx = dx.sum(dim=['lev', lat_str])
                 ds['ec'][s, :, ix, m] = dxx.squeeze().values
                 dx.close()
+    ds['ec'][2] = ds['ec'][1] - ds['ec'][0]
     return ds
 
 
@@ -188,9 +195,9 @@ def cmip_wbc_transport_sum(mip, cc, net=False):
     # Scenario, month, longitude, model.
     var = 'vvo'
     model = np.array([mod[i]['id'] for i in range(len(mod))])
-    dc = np.zeros((len(lx['exp']), len(cfg.mon), len(mod)))
+    dc = np.zeros((len(lx['exps']), len(cfg.mon), len(mod)))
     ds = xr.Dataset({cc._n: (['exp', 'time', 'model'], dc)},
-                    coords={'exp': lx['exp'], 'time': cfg.mon, 'model': model})
+                    coords={'exp': lx['exps'], 'time': cfg.mon, 'model': model})
     x, z = bnds_wbc(mip, cc)
     y = cc.lat
     for m in mod:
@@ -202,37 +209,56 @@ def cmip_wbc_transport_sum(mip, cc, net=False):
             dxx = dx.sum(dim=['lev', lon_str])
             ds[cc._n][s, :, m] = dxx.values
             dx.close()
+    ds[cc._n][2] = ds[cc._n][1] - ds[cc._n][0]
     return ds
 
 
-def reanalysis_euc(var, lon, net=False):
-    ds = xr.open_dataset(cfg.data/'{}_1993_2018_climo.nc'.format(var))[var]
-    ds = ds.rename({'depth': 'lev', 'latitude': 'lat', 'longitude': 'lon'})
-    ds['lon'] = xr.where(ds.lon < 0, ds.lon + 360, ds.lon)
-    dz = ds.lev.diff(dim='lev')
-    dy = ds.lat.diff(dim='lat') * cfg.LAT_DEG
-    dt = ds * dy * dz
-
-    de = dt.sel(lev=slice(25, 350), lat=slice(-2.6, 2.6), lon=lon + 0.5)
+def euc_observations(lat, lon, depth, net=False, sigma=False):
+    # Johnson et al. (2002).
+    # Velocity not in cm/s like file says.
+    dsj = xr.open_dataset(cfg.data/'pac_mean_johnson_2002.cdf')
+    dsj = dsj.rename({'ZDEP1_50': 'lev', 'YLAT11_101': 'lat', 'XLON': 'lon'})
+    if sigma:
+        dj = dsj.sel(lat=slice(-2, 2))
+        dj = dj.where((dj.SIGMAM > 23) & (dj.SIGMAM < 26.5))
+    else:
+        dj = dsj.sel(lev=slice(depth[0], depth[1]), lat=slice(lat[0], lat[1]))
     if not net:
-        de = de.where(de > 0)
-    de = de.sum(dim=['lev', 'lat'])
-    lons = [165.5, 190.5, 220.5, 250.5]
-    print(var, np.around(de.sel(lon=lons).mean('time') / 1e6, 1))
-    return de
+        dj = dj.where(dj.UM > ue)
+    dj = dj.UM * dj.lev.diff(dim='lev') * dj.lat.diff(dim='lat') * cfg.LAT_DEG
+    dj = dj.sum(['lev', 'lat']) / 1e6
 
+    # Gouriou & Toole (1993): EUC 15.3 Sv at 165E.
+    db = xr.Dataset()
+    db['go'] = dj.copy() * np.nan
+    db['go'][2] = 15.3
+    db['go'].attrs['ref'] = 'Gouriou & Toole (1993)'
+    db['jo'] = dj
+    db['jo'].attrs['ref'] = 'Johnson et al. (2002)'
+    for r in ['jo', 'go']:
+        print(db[r].attrs['ref'], np.around(db[r], 1))
 
-def johnson_obs_euc():
-    ds = xr.open_dataset(cfg.data/'pac_mean_johnson_2002.cdf')
-    ds = ds.rename({'ZDEP1_50': 'lev', 'YLAT11_101': 'lat', 'XLON': 'lon'})
-    de = ds.sel(lat=slice(-2, 2))
-    de = de.where((de.SIGMAM > 23) & (de.SIGMAM < 26.5))
-    dz = de.lev.diff(dim='lev')
-    dy = de.lat.diff(dim='lat') * cfg.LAT_DEG
-    dt = de.UM * dy * dz   # Velocity in cm/s.
-    dt = dt.sum(['lev', 'lat'])
-    print(np.around(dt / 1e6, 1))
-    return dt
+    # Reanalysis products.
+    robs = ['oras', 'cglo']
+    for i, r in enumerate(robs):
+        ds = xr.open_dataset(cfg.data/'uo_{}_1993_2018_climo.nc'.format(r))['uo_' + r]
+        ds = ds.rename({'depth': 'lev', 'latitude': 'lat', 'longitude': 'lon'})
+        ds['lon'] = xr.where(ds.lon < 0, ds.lon + 360, ds.lon)
+        de = ds * ds.lev.diff(dim='lev') * ds.lat.diff(dim='lat') * cfg.LAT_DEG
+
+        de = de.sel(lev=slice(depth[0], depth[1]), lat=slice(lat[0], lat[1]), lon=lon + 0.5)
+        if not net:
+            de = de.where(de > ue)
+        de = de.sum(dim=['lev', 'lat']) / 1e6
+        if i == 0:
+            dr = de.to_dataset(name=r)
+        else:
+            dr[r] = de
+        dr[r].attrs['ref'] = r.upper()
+        print(r, np.around(dr[r].sel(lon=[165.5, 190.5, 220.5, 250.5]).mean('time'), 1))
+
+    return db, dr
+
 
 
 ##############################################################################
@@ -248,9 +274,11 @@ def ofam_euc_transport_sum(cc, depth, lat, lon, net=False):
 
     # EUC depth boundary indexes.
     zi = [idx(dz[1:], depth[0]), idx(dz[1:], depth[1], 'greater') + 1]
-    zi1 = 5  # sw_ocean[4]=25, st_ocean[5]=28, sw_ocean[5]=31.2
-    zi2 = 29  # st_ocean[29]=325.88, sw_ocean[29]=349.5
-    zi = [4, 30 + 1]
+    # zi1 = 5  # sw_ocean[4]=25, st_ocean[5]=28, sw_ocean[5]=31.2
+    # zi2 = 29  # st_ocean[29]=325.88, sw_ocean[29]=349.5
+    # zi = [5, 29 + 1]
+    # zi = [4, 30 + 1]
+    print(net, zi)
 
     # Slice lat, lon and depth.
     fh = fh.u.sel(yu_ocean=slice(lat[0], lat[1]), xu_ocean=lon).isel(st_ocean=slice(zi[0], zi[1]))
@@ -262,8 +290,8 @@ def ofam_euc_transport_sum(cc, depth, lat, lon, net=False):
 
     # Remove westward flow.
     if not net:
-        fh = fh.where(fh > 0)
-        fr = fr.where(fr > 0)
+        fh = fh.where(fh > ue)
+        fr = fr.where(fr > ue)
 
     # Multiply by depth and width.
     fh = fh * dz * cfg.LAT_DEG * 0.1
@@ -271,7 +299,7 @@ def ofam_euc_transport_sum(cc, depth, lat, lon, net=False):
     fh = fh.sum(dim=['st_ocean', 'yu_ocean'])
     fr = fr.sum(dim=['st_ocean', 'yu_ocean'])
 
-    df = xr.concat((fh, fr), dim='exp')
+    df = xr.concat((fh, fr, fr - fh), dim='exp')
     lons = [165, 190, 220, 250]
     print('OFAM3 EUC:', np.around(df.sel(xu_ocean=lons).mean('Time') / 1e6, 1))
     return df
@@ -303,7 +331,7 @@ def ofam_wbc_transport_sum(cc, depth, lat, lon, net=False):
     fr = fr * dz * cfg.LON_DEG(lat) * 0.1
     fh = fh.sum(dim=['st_ocean', 'xu_ocean'])
     fr = fr.sum(dim=['st_ocean', 'xu_ocean'])
-    return xr.concat((fh, fr), dim='exp')
+    return xr.concat((fh, fr, fr - fh), dim='exp')
 
 
 def cmip_wsc(mip, lats=[-25, 25], lons=[110, 300]):
@@ -329,6 +357,20 @@ def cmip_wsc(mip, lats=[-25, 25], lons=[110, 300]):
     dims = tuple(coords.keys())
     dc = xr.DataArray(wsc, dims=dims, coords=coords)
     return dc
+
+
+def sig_line(ds, ydim, ALPHA=0.05):
+    # Statistical significance. This will be multiplied by transport for
+    # each plot. A value of one means the change is significant (and a solid
+    # line should be plotted), while a NaN value means not significant and
+    # as dashed line will be placed instead (only for RCP8.5). Historical
+    # values should always be multiplied by one.
+    from scipy import stats
+    sig = np.ones((2, len(ydim)))
+    for i in range(len(ydim)):
+        tmp = stats.wilcoxon(ds.isel(exp=0)[i], ds.isel(exp=1)[i])[1]
+        sig[1, i] = (1 if tmp < ALPHA else np.nan)
+    return sig
 
 
 def round_sig(x, n=2):
@@ -374,8 +416,6 @@ def cmipMMM(ct, dv, xdim=None, prec=None, const=1e6, avg=np.median,
         Calculate and print a specific month (default is None)
 
     """
-    def delta_exp(var):
-        return var.isel(exp=1) - var.isel(exp=0)
 
     def percent(var1, var2):
         return var1 / var2 * 100
@@ -399,20 +439,20 @@ def cmipMMM(ct, dv, xdim=None, prec=None, const=1e6, avg=np.median,
 
     # Model agreement on sign of the change relative to sign of average change.
     # If positive change, count number of negative (or zero) model changes.
-    c = 1 if delta_exp(dvm) > 1 else -1
-    n = delta_exp(dv).where(delta_exp(dv) * c > 0).count().item()
+    c = 1 if dvm.isel(exp=2) > 1 else -1
+    n = dv.isel(exp=2).where(dv.isel(exp=2) * c > 0).count().item()
 
     # Significance of projected change
     sig = round_sig(stats.wilcoxon(dv.isel(exp=0), dv.isel(exp=1))[1])
 
     # Get historical and difference values (in SV) and interquartile range.
-    for i, v in enumerate([dv.isel(exp=0), delta_exp(dv)]):
+    for i, v in zip([0, 2], [dv.isel(exp=0), dv.isel(exp=2)]):
         dl += '{}: {:.{p}g} ({:.{p}g}-{:.{p}g}) '.format(
             dv.isel(exp=i).exp.item()[0:4].upper(),
             v.reduce(avg, dim='model').item(),
             *sorted([np.percentile(v, j) for j in [75, 25]]), p=prec if prec is not None else 2)
     # Get percent change and interquartile range.
     cor = cmip_cor(dv)
-    dl += '{:>1.0f}% {} {}/{} {} {}'.format(percent(delta_exp(dvm), dvm.isel(exp=0)).item(), sig, n, len(dv.model), *cor)
+    dl += '{:>1.0f}% {} {}/{} {} {}'.format(percent(dvm.isel(exp=2), dvm.isel(exp=0)).item(), sig, n, len(dv.model), *cor)
     print(dl)
     return
