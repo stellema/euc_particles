@@ -162,16 +162,18 @@ def idx(array, value, method='closest'):
     Returns:
         (int): The index of the closest element to value in array.
     """
-
+    try:
+        array = array.values
+    except:
+        pass
     ind = int(np.abs(array - value).argmin())
 
-    if method == 'greater':
+    if method == 'greater':  # If less than value, increase index.
         if array[ind] < value and len(array) >= ind + 1:
-
             ind = ind + 1
     elif method == 'lower':
-        ind = ind if array[ind] < value or ind == 0 else ind - 1
-
+        # Leave if less than value, otherwise decrease index.
+        ind = ind if np.around(array[ind], 2) <= value or ind == 0 else ind - 1
     return ind
 
 
@@ -195,6 +197,11 @@ def idx2d(lat, lon, lat2f, lon2f, method='closest'):
     i : int
         Index of closest longitude
     """
+    try:
+        lat = lat.values
+        lon = lon.values
+    except:
+        pass
 
     a = np.abs(lat - lat2f) + np.abs(lon - lon2f)
     j, i = np.unravel_index(a.argmin(), a.shape)

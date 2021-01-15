@@ -56,6 +56,7 @@ deg = '\u00b0'  # Degree symbol.
 frq = ['day', 'mon']
 frq_short = ['dy', 'mon']
 frq_long = ['daily', 'monthly']
+tdim = np.arange('2001-01', '2002-01', dtype='datetime64[M]')
 mon = [i for i in calendar.month_abbr[1:]]  # Month abbreviations.
 mon_name = [i for i in calendar.month_name[1:]]
 mon_letter = [i[0] for i in calendar.month_abbr[1:]]
@@ -204,10 +205,13 @@ mod5 = {0:  {'id': 'ACCESS1-0',        'nd': 2, 'z': 'lev', 'cs':  cs[0]},
 # symc_ = ['b', 'crimson', 'seagreen', 'k', 'darkorchid', 'palevioletred', 'y']
 # sym = list(chain.from_iterable(repeat(i, len(symc_)) for i in sym_))
 # symc = symc_ * len(sym_)
-
 sym_ = ['o', 's', 'd', '*', 'X', 'P', '^']
-symc_ = ["darkgreen", "seagreen", "limegreen", "palegreen",
-         "b", "cornflowerblue", "deepskyblue", "aqua"]
+# symc_ = ["darkgreen", "seagreen", "limegreen", "palegreen",
+#          "b", "cornflowerblue", "deepskyblue", "aqua"]
+# symc_ = ["darkslategrey", "teal", "mediumseagreen", "lightgreen",
+#          "indigo", "blueviolet", "mediumslateblue", "mediumorchid"]
+symc_ = ["darkslategrey", "teal", "mediumseagreen", "aquamarine",
+         "indigo", "blueviolet", "mediumslateblue", "mediumorchid"]
 symc = list(chain.from_iterable(repeat(i, len(sym_)) for i in symc_))
 sym = sym_ * len(symc_)
 

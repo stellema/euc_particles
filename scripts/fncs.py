@@ -420,7 +420,7 @@ def image2video(files, output, frames=10):
     import subprocess
     if Path(files).parent.exists() and not Path(output).exists():
         cmd = ['ffmpeg', '-framerate', str(int(frames)), '-i', str(files),
-               '-c:v', 'libx264', '-pix_fmt', 'yuv420p', str(output)]
+                '-c:v', 'libx264', '-pix_fmt', 'yuv420p', str(output)]
         retcode = subprocess.call(cmd)
         if not retcode == 0:
             raise ValueError('Error {} executing command: {}'.format(retcode, ' '.join(cmd)))

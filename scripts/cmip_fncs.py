@@ -14,8 +14,7 @@ from scipy import stats
 import cfg
 from tools import idx, idx2d, wind_stress_curl, coriolis
 from main import ec, mc, ng
-ue = 0.00
-print(ue)
+
 
 def open_cmip(mip, m, var='uo', exp='historical', bounds=False):
     mod = cfg.mod6 if mip == 6 else cfg.mod5
@@ -62,27 +61,34 @@ def open_cmip(mip, m, var='uo', exp='historical', bounds=False):
     return ds
 
 
-def subset_cmip(mip, m, var, exp, depth, lat, lon):
+def subset_cmip(mip, m, var, exp, depth, lat, lon, lat_mid=False, lon_mid=None):
     mod = cfg.mod6 if mip == 6 else cfg.mod5
 
     # Make sure single points are lists.
     lat = [lat] if np.array(lat).size == 1 else lat
     lon = [lon] if np.array(lon).size == 1 else lon
+
+    # Open dataset and select variable.
     ds = open_cmip(mip, m, var, exp)
     dx = ds[var]
-    # Depth level indexes.
-    zi = [idx(dx['lev'], z) for z in depth]
 
+    # Depth level indexes.
+    zi = [idx(dx['lev'], z, method='greater') for z in depth]
+
+    # Latitude and longitude indexes.
     if mod[m]['nd'] == 1:  # 1D coords.
         yi = [idx(dx.lat, y) for y in lat]
         xi = [idx(dx.lon, x) for x in lon]
 
     elif mod[m]['nd'] == 2:  # 2D coords.
-        if len(lat) == 2:
-            yi = [idx2d(dx.lat, dx.lon, y, lon[0], r)[0] for y, r in zip(lat, ['lower_lat', 'greater_lat'])]
-        else:
+        # Indexes of longitude(s).
+        xi = [idx2d(dx.lat, dx.lon, np.mean(lat), x)[1] for x in lon]
+        # Indexes of latitudes(s).
+        if len(lat) != 2:
             yi = [idx2d(dx.lat, dx.lon, y, lon[0])[0] for y in lat]
-        xi = [idx2d(dx.lat, dx.lon, lat[0], x)[1] for x in lon]
+
+        else:
+            yi = [idx2d(dx.lat, dx.lon, y, lon[0], r)[0] for y, r in zip(lat, ['lower_lat', 'greater_lat'])]
 
     # Switch indexes if lat goes N->S.
     # Subset depths.
@@ -91,9 +97,13 @@ def subset_cmip(mip, m, var, exp, depth, lat, lon):
     # Subset lats/lons (dx) and sum transport (dxx).
     yf, xf = yi, xi
     if np.array(lat).size > 1:
-        yf = slice(yi[0], yi[1] + 1)
-        if yi[0] > yi[1]:
-            yf = slice(yi[1], yi[0] + 1)
+        if np.array(yi).size == 2:
+            yf = slice(yi[0], yi[1] + 1)
+            if yi[0] > yi[1]:
+                yf = slice(yi[1], yi[0] + 1)
+        else:
+            yf = yi
+
     if np.array(lon).size == 2:
         xf = slice(xi[0], xi[1] + 1)
         if xi[0] > xi[1]:
@@ -112,28 +122,159 @@ def subset_cmip(mip, m, var, exp, depth, lat, lon):
     return dx
 
 
-def cmip_euc_transport_sum(depth, lat, lon, mip, lx, mod, net=False):
+##############################################################################
+#                         Equatorial Undercurrent                            #
+##############################################################################
+
+def euc_observations(lat, lon, depth, method='max', vmin=0.7, sigma=False):
+    """ EUC transport from observations or reanalysis products.
+
+
+    Args:
+        lat (TYPE): DESCRIPTION.
+        lon (TYPE): DESCRIPTION.
+        depth (TYPE): DESCRIPTION.
+        method (TYPE, optional): DESCRIPTION. Defaults to velocity_min=None.
+        sigma (TYPE, optional): DESCRIPTION. Defaults to False.
+
+    Returns:
+        db (TYPE): DESCRIPTION.
+        dr (TYPE): DESCRIPTION.
+
+    """
+    # Johnson et al. (2002).
+    # Velocity not in cm/s like file says.
+    dsj = xr.open_dataset(cfg.data/'pac_mean_johnson_2002.cdf')
+    dsj = dsj.rename({'ZDEP1_50': 'lev', 'YLAT11_101': 'lat', 'XLON': 'lon'})
+    if sigma:
+        dj = dsj.sel(lat=slice(-2, 2))
+        dj = dj.where((dj.SIGMAM > 23) & (dj.SIGMAM < 26.5))
+    else:
+        yi = [idx(dsj.lat, y, r) for y, r in zip(lat, ['lower', 'greater'])]
+        zi = [idx(dsj.lev, z, r) for z, r in zip(depth, ['closest', 'greater'])]
+        dj = dsj.isel(lev=slice(zi[0], zi[1] + 1), lat=slice(yi[0], yi[1] + 1))
+
+    if method == 'static':
+        dj = dj.where(dj.UM > vmin)
+    elif method == 'max':
+        dj = dj.where(dj.UM > dsj.UM.max(dim=['lev', 'lat']) * (1 - vmin))
+
+    dj = dj.UM * dj.lev.diff(dim='lev') * dj.lat.diff(dim='lat') * cfg.LAT_DEG
+    dj = dj.sum(['lev', 'lat']) / 1e6
+
+    # Gouriou & Toole (1993): EUC 15.3 Sv at 165E.
+    db = xr.Dataset()
+    db['go'] = dj.copy() * np.nan
+    db['go'][2] = 15.3
+    db['go'].attrs['ref'] = 'Gouriou & Toole (1993)'
+    db['jo'] = dj
+    db['jo'].attrs['ref'] = 'Johnson et al. (2002)'
+    # for r in ['jo', 'go']:
+    #     print(db[r].attrs['ref'], np.around(db[r], 1))
+
+    # Reanalysis products.
+    robs = ['oras', 'cglo']
+    for i, r in enumerate(robs):
+        ds = xr.open_dataset(cfg.data/'uo_{}_1993_2018_climo.nc'.format(r))['uo_' + r]
+        ds = ds.rename({'depth': 'lev', 'latitude': 'lat', 'longitude': 'lon'})
+        ds['lon'] = xr.where(ds.lon < 0, ds.lon + 360, ds.lon)
+
+        de = ds.sel(lev=slice(depth[0], depth[1]), lat=slice(lat[0], lat[1]), lon=lon + 0.5)
+        if method == 'static':
+            de = de.where(de > vmin)
+        elif method == 'max':
+            de = de.where(de > de.max(dim=['lev', 'lat']) * (1 - vmin))
+
+        de = de * de.lev.diff(dim='lev') * de.lat.diff(dim='lat') * cfg.LAT_DEG
+        de = de.sum(dim=['lev', 'lat']) / 1e6
+        if i == 0:
+            dr = de.to_dataset(name=r)
+        else:
+            dr[r] = de
+        dr[r].attrs['ref'] = r.upper()
+        # print(r, np.around(dr[r].sel(lon=[165.5, 190.5, 220.5, 250.5]).mean('time'), 1))
+
+    return db, dr
+
+
+def cmip_euc_transport_sum(depth, lat, lon, mip, method='max', vmin=0.7):
     # Scenario, month, longitude, model.
+    mod = cfg.mod6 if mip == 6 else cfg.mod5
+    lx = cfg.lx6 if mip == 6 else cfg.lx5
     var = 'uvo'
     exp = lx['exps']
     model = np.array([mod[i]['id'] for i in range(len(mod))])
-    de = np.zeros((len(exp), 12, len(lon), len(mod)))
+    de = np.zeros((len(exp), len(cfg.tdim), len(lon), len(mod)))
     ds = xr.Dataset({'ec': (['exp', 'time', 'lon', 'model'], de)},
-                    coords={'exp': exp, 'time': cfg.mon, 'lon': lon, 'model': model})
+                    coords={'exp': exp, 'time': cfg.tdim, 'lon': lon, 'model': model})
     for m in mod:
         lat_str = 'lat' if mod[m]['nd'] == 1 else 'j'
-        for s, ex in enumerate(lx['exp']):
-            for ix, x in enumerate(lon):
-                dx = subset_cmip(mip, m, var, exp[s], depth, lat, x)
-                du = subset_cmip(mip, m, 'uo', exp[s], depth, lat, x)
+        for ix, x in enumerate(lon):
+            for s, ex in enumerate(lx['exp']):
+                dx = subset_cmip(mip, m, var, exp[s], depth, lat, x).load()
+                du = subset_cmip(mip, m, 'uo', exp[s], depth, lat, x).load()
+
                 # Remove westward transport.
-                if not net:
-                    dx = dx.where(du.values > ue)
+                if method == 'static':
+                    dx = dx.where(du.values > vmin)
+                elif method == 'max':
+                    umax = du.max(dim=['lev', lat_str]).load() * (1 - vmin)
+                    for t in range(12):
+                        dx[t] = dx[t].where(du[t] >= umax[t])
                 dxx = dx.sum(dim=['lev', lat_str])
                 ds['ec'][s, :, ix, m] = dxx.squeeze().values
                 dx.close()
+                du.close()
     ds['ec'][2] = ds['ec'][1] - ds['ec'][0]
     return ds
+
+
+
+def ofam_euc_transport_sum(cc, depth, lat, lon, method='max', vmin=0.7,
+                           velocity=False):
+    fh = xr.open_dataset(cfg.ofam/'ocean_u_1981-2012_climo.nc')
+    fr = xr.open_dataset(cfg.ofam/'ocean_u_2070-2101_climo.nc')
+    fr['Time'] = fh['Time']
+    # Length of grid cells [m].
+    dz = xr.open_dataset(cfg.ofam/'ocean_u_2012_06.nc').st_edges_ocean
+
+    # EUC depth boundary indexes.
+    zi = [idx(fh.st_ocean.values, depth[0]), idx(fh.st_ocean.values, depth[1], 'greater') + 1]
+
+    # Slice lat, lon and depth.
+    fh = fh.u.sel(yu_ocean=slice(lat[0], lat[1]), xu_ocean=lon).isel(st_ocean=slice(zi[0], zi[1]))
+    fr = fr.u.sel(yu_ocean=slice(lat[0], lat[1]), xu_ocean=lon).isel(st_ocean=slice(zi[0], zi[1]))
+    if velocity:
+        df = xr.concat((fh, fr, fr - fh), dim='exp')
+        return df
+    else:
+        dz = dz.diff(dim='st_edges_ocean').rename({'st_edges_ocean': 'st_ocean'})
+        dz = dz.isel(st_ocean=slice(zi[0], zi[1]))
+        dz.coords['st_ocean'] = fh['st_ocean']  # Copy st_ocean coords
+
+        # Remove westward flow.
+        # Remove westward transport.
+        if method == 'static':
+            fh = fh.where(fh > vmin)
+            fr = fr.where(fr > vmin)
+        elif method == 'max':
+            fh = fh.where(fh > fh.max(dim=['st_ocean', 'yu_ocean']) * (1 - vmin))
+            fr = fr.where(fr > fr.max(dim=['st_ocean', 'yu_ocean']) * (1 - vmin))
+        else:
+            fh = fh
+            fr = fr
+
+        # Multiply by depth and width.
+        fh = fh * dz * cfg.LAT_DEG * 0.1
+        fr = fr * dz * cfg.LAT_DEG * 0.1
+        fh = fh.sum(dim=['st_ocean', 'yu_ocean'])
+        fr = fr.sum(dim=['st_ocean', 'yu_ocean'])
+
+        df = xr.concat((fh, fr, fr - fh), dim='exp')
+        # lons = [165, 190, 220, 250]
+        # print('OFAM3 EUC:', np.around(df.sel(xu_ocean=lons).mean('Time') / 1e6, 1))
+
+        return df
 
 
 def bnds_wbc(mip, cc):
@@ -195,9 +336,9 @@ def cmip_wbc_transport_sum(mip, cc, net=False):
     # Scenario, month, longitude, model.
     var = 'vvo'
     model = np.array([mod[i]['id'] for i in range(len(mod))])
-    dc = np.zeros((len(lx['exps']), len(cfg.mon), len(mod)))
+    dc = np.zeros((len(lx['exps']), len(cfg.tdim), len(mod)))
     ds = xr.Dataset({cc._n: (['exp', 'time', 'model'], dc)},
-                    coords={'exp': lx['exps'], 'time': cfg.mon, 'model': model})
+                    coords={'exp': lx['exps'], 'time': cfg.tdim, 'model': model})
     x, z = bnds_wbc(mip, cc)
     y = cc.lat
     for m in mod:
@@ -211,98 +352,6 @@ def cmip_wbc_transport_sum(mip, cc, net=False):
             dx.close()
     ds[cc._n][2] = ds[cc._n][1] - ds[cc._n][0]
     return ds
-
-
-def euc_observations(lat, lon, depth, net=False, sigma=False):
-    # Johnson et al. (2002).
-    # Velocity not in cm/s like file says.
-    dsj = xr.open_dataset(cfg.data/'pac_mean_johnson_2002.cdf')
-    dsj = dsj.rename({'ZDEP1_50': 'lev', 'YLAT11_101': 'lat', 'XLON': 'lon'})
-    if sigma:
-        dj = dsj.sel(lat=slice(-2, 2))
-        dj = dj.where((dj.SIGMAM > 23) & (dj.SIGMAM < 26.5))
-    else:
-        dj = dsj.sel(lev=slice(depth[0], depth[1]), lat=slice(lat[0], lat[1]))
-    if not net:
-        dj = dj.where(dj.UM > ue)
-    dj = dj.UM * dj.lev.diff(dim='lev') * dj.lat.diff(dim='lat') * cfg.LAT_DEG
-    dj = dj.sum(['lev', 'lat']) / 1e6
-
-    # Gouriou & Toole (1993): EUC 15.3 Sv at 165E.
-    db = xr.Dataset()
-    db['go'] = dj.copy() * np.nan
-    db['go'][2] = 15.3
-    db['go'].attrs['ref'] = 'Gouriou & Toole (1993)'
-    db['jo'] = dj
-    db['jo'].attrs['ref'] = 'Johnson et al. (2002)'
-    for r in ['jo', 'go']:
-        print(db[r].attrs['ref'], np.around(db[r], 1))
-
-    # Reanalysis products.
-    robs = ['oras', 'cglo']
-    for i, r in enumerate(robs):
-        ds = xr.open_dataset(cfg.data/'uo_{}_1993_2018_climo.nc'.format(r))['uo_' + r]
-        ds = ds.rename({'depth': 'lev', 'latitude': 'lat', 'longitude': 'lon'})
-        ds['lon'] = xr.where(ds.lon < 0, ds.lon + 360, ds.lon)
-        de = ds * ds.lev.diff(dim='lev') * ds.lat.diff(dim='lat') * cfg.LAT_DEG
-
-        de = de.sel(lev=slice(depth[0], depth[1]), lat=slice(lat[0], lat[1]), lon=lon + 0.5)
-        if not net:
-            de = de.where(de > ue)
-        de = de.sum(dim=['lev', 'lat']) / 1e6
-        if i == 0:
-            dr = de.to_dataset(name=r)
-        else:
-            dr[r] = de
-        dr[r].attrs['ref'] = r.upper()
-        print(r, np.around(dr[r].sel(lon=[165.5, 190.5, 220.5, 250.5]).mean('time'), 1))
-
-    return db, dr
-
-
-
-##############################################################################
-# OFAM3 FUNCTIONS
-##############################################################################
-
-def ofam_euc_transport_sum(cc, depth, lat, lon, net=False):
-    fh = xr.open_dataset(cfg.ofam/'ocean_u_1981-2012_climo.nc')
-    fr = xr.open_dataset(cfg.ofam/'ocean_u_2070-2101_climo.nc')
-
-    # Length of grid cells [m].
-    dz = xr.open_dataset(cfg.ofam/'ocean_u_2012_06.nc').st_edges_ocean
-
-    # EUC depth boundary indexes.
-    zi = [idx(dz[1:], depth[0]), idx(dz[1:], depth[1], 'greater') + 1]
-    # zi1 = 5  # sw_ocean[4]=25, st_ocean[5]=28, sw_ocean[5]=31.2
-    # zi2 = 29  # st_ocean[29]=325.88, sw_ocean[29]=349.5
-    # zi = [5, 29 + 1]
-    # zi = [4, 30 + 1]
-    print(net, zi)
-
-    # Slice lat, lon and depth.
-    fh = fh.u.sel(yu_ocean=slice(lat[0], lat[1]), xu_ocean=lon).isel(st_ocean=slice(zi[0], zi[1]))
-    fr = fr.u.sel(yu_ocean=slice(lat[0], lat[1]), xu_ocean=lon).isel(st_ocean=slice(zi[0], zi[1]))
-
-    dz = dz.diff(dim='st_edges_ocean').rename({'st_edges_ocean': 'st_ocean'})
-    dz = dz.isel(st_ocean=slice(zi[0], zi[1]))
-    dz.coords['st_ocean'] = fh['st_ocean']  # Copy st_ocean coords
-
-    # Remove westward flow.
-    if not net:
-        fh = fh.where(fh > ue)
-        fr = fr.where(fr > ue)
-
-    # Multiply by depth and width.
-    fh = fh * dz * cfg.LAT_DEG * 0.1
-    fr = fr * dz * cfg.LAT_DEG * 0.1
-    fh = fh.sum(dim=['st_ocean', 'yu_ocean'])
-    fr = fr.sum(dim=['st_ocean', 'yu_ocean'])
-
-    df = xr.concat((fh, fr, fr - fh), dim='exp')
-    lons = [165, 190, 220, 250]
-    print('OFAM3 EUC:', np.around(df.sel(xu_ocean=lons).mean('Time') / 1e6, 1))
-    return df
 
 
 def ofam_wbc_transport_sum(cc, depth, lat, lon, net=False):
@@ -331,6 +380,7 @@ def ofam_wbc_transport_sum(cc, depth, lat, lon, net=False):
     fr = fr * dz * cfg.LON_DEG(lat) * 0.1
     fh = fh.sum(dim=['st_ocean', 'xu_ocean'])
     fr = fr.sum(dim=['st_ocean', 'xu_ocean'])
+    fr['Time'] = fh['Time']
     return xr.concat((fh, fr, fr - fh), dim='exp')
 
 
@@ -352,7 +402,7 @@ def cmip_wsc(mip, lats=[-25, 25], lons=[110, 300]):
         wsc[m] = wind_stress_curl(du=ds[tau[0]], dv=ds[tau[1]])
 
         ds.close()
-    coords = {'model': [mod[m]['id'] for m in mod], 'time': cfg.mon,
+    coords = {'model': [mod[m]['id'] for m in mod], 'time': cfg.tdim,
               'lat': ds.lat.values, 'lon': ds.lon.values}
     dims = tuple(coords.keys())
     dc = xr.DataArray(wsc, dims=dims, coords=coords)
