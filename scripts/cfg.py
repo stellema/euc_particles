@@ -17,6 +17,8 @@ import matplotlib.pyplot as plt
 from itertools import chain, repeat
 
 warnings.filterwarnings("ignore", category=DeprecationWarning)
+warnings.filterwarnings(action='ignore', message='SerializationWarning')
+warnings.filterwarnings("ignore")
 
 home = Path.home()
 if home.drive == 'C:':
@@ -201,20 +203,11 @@ mod5 = {0:  {'id': 'ACCESS1-0',        'nd': 2, 'z': 'lev', 'cs':  cs[0]},
         27: {'id': 'NorESM1-M',        'nd': 2, 'z': 'lev', 'cs':  cs[0]}}
 
 
-# sym_ = ['o', 's', 'd', '*', 'X', 'P', '^', 0]
-# symc_ = ['b', 'crimson', 'seagreen', 'k', 'darkorchid', 'palevioletred', 'y']
-# sym = list(chain.from_iterable(repeat(i, len(symc_)) for i in sym_))
-# symc = symc_ * len(sym_)
 sym_ = ['o', 's', 'd', '*', 'X', 'P', '^']
-# symc_ = ["darkgreen", "seagreen", "limegreen", "palegreen",
-#          "b", "cornflowerblue", "deepskyblue", "aqua"]
-# symc_ = ["darkslategrey", "teal", "mediumseagreen", "lightgreen",
-#          "indigo", "blueviolet", "mediumslateblue", "mediumorchid"]
 symc_ = ["darkslategrey", "teal", "mediumseagreen", "aquamarine",
          "indigo", "blueviolet", "mediumslateblue", "mediumorchid"]
 symc = list(chain.from_iterable(repeat(i, len(sym_)) for i in symc_))
 sym = sym_ * len(symc_)
-
 # Create dict of various items.
 lx5 = {'var': ['uo', 'vo'],
        'exp': ['historical', 'rcp85'],
@@ -230,3 +223,56 @@ lx6 = {'var': ['uo', 'vo'],
        'years': [[1901, 2000], [2050, 2099]],
        'sym': sym[len(mod5) + 1:len(mod6) + len(mod5)],
        'symc': symc[len(mod5) + 1:len(mod6) + len(mod5)]}
+
+class Cmip:
+    """A class used to represent a CMIP."""
+
+    # Create instance of class.
+    _instances = []
+
+    def __init__(self, p, action=None):
+        self.name = 'CMIP{}'.format(p)
+        self.mmm = 'CMIP{} MMM'.format(p)
+        self.p = p
+        if p == 5:
+            self.mod = mod5
+
+            self.future = 'rcp85'
+            self.sym = sym[:len(self.mod)]
+            self.symc = symc[:len(self.mod)]
+            self.tau = ['tauuo', 'tauvo']
+            self.omon = 'Omon'
+            self.colour = 'teal'
+        else:
+            self.mod = mod6
+            self.future = 'ssp585'
+            self.sym = sym[len(mod5) + 1:len(mod6) + len(mod5)]
+            self.symc = sym[len(mod5) + 1:len(mod6) + len(mod5)]
+            self.tau = ['tauu', 'tauv']
+            self.omon = 'Amon'
+            self.colour = 'blueviolet'
+
+        self.years = [[1901, 2000], [2050, 2099]]
+        self.exp = ['historical', self.future]
+        self.exps = ['historical', self.future, 'diff']
+        self.models = [self.mod[m]['id'] for m in self.mod]
+        self.dir_tau = home / 'model_output/CMIP{}/CLIMOS/regrid'.format(self.p)
+
+        # Create instance of class.
+        self.action = action
+        Cmip._instances.append(self)
+
+    # Returns a printable representation of the given object.
+    def __repr__(self):
+        return str(self.name)
+
+    @classmethod
+    def resolve_actions(cls):
+        for instance in cls._instances:
+            if instance.action == "create":
+                instance.__create()
+            elif instance.action == "remove":
+                instance.__remove()
+
+mip6 = Cmip(6)
+mip5 = Cmip(5)

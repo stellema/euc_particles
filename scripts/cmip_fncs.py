@@ -12,6 +12,7 @@ import math
 from scipy import stats
 
 import cfg
+from cfg import mip5, mip6
 from tools import idx, idx2d, wind_stress_curl, coriolis
 from main import ec, mc, ng
 
@@ -126,7 +127,7 @@ def subset_cmip(mip, m, var, exp, depth, lat, lon, lat_mid=False, lon_mid=None):
 #                         Equatorial Undercurrent                            #
 ##############################################################################
 
-def euc_observations(lat, lon, depth, method='max', vmin=0.7, sigma=False):
+def euc_observations(lat, lon, depth, method='static', vmin=0, sigma=False):
     """ EUC transport from observations or reanalysis products.
 
 
@@ -153,24 +154,25 @@ def euc_observations(lat, lon, depth, method='max', vmin=0.7, sigma=False):
         yi = [idx(dsj.lat, y, r) for y, r in zip(lat, ['lower', 'greater'])]
         zi = [idx(dsj.lev, z, r) for z, r in zip(depth, ['closest', 'greater'])]
         dj = dsj.isel(lev=slice(zi[0], zi[1] + 1), lat=slice(yi[0], yi[1] + 1))
+    dj = dj.UM.to_dataset()
+    # Maximum velocity at each longitude.
+    dj['umax'] = dj.UM.max(dim=['lev', 'lat'])
 
+    # Depth of maximum velocity at each longitude.
+    dj['z_umax'] = dj.lev[dj.UM.argmax(['lev', 'lat'])['lev']]
+    dj['ec'] = dj.UM
     if method == 'static':
-        dj = dj.where(dj.UM > vmin)
+        dj['ec'] = dj['ec'].where(dj['ec'] > vmin)
     elif method == 'max':
-        dj = dj.where(dj.UM > dsj.UM.max(dim=['lev', 'lat']) * (1 - vmin))
+        dj['ec'] = dj['ec'].where(dj['ec'] > dj['ec'].max(dim=['lev', 'lat']) * (1 - vmin))
 
-    dj = dj.UM * dj.lev.diff(dim='lev') * dj.lat.diff(dim='lat') * cfg.LAT_DEG
-    dj = dj.sum(['lev', 'lat']) / 1e6
+    dj['ec'] = dj['ec'] * dj.lev.diff(dim='lev') * dj.lat.diff(dim='lat') * cfg.LAT_DEG
+    dj['ec'] = dj['ec'].sum(['lev', 'lat']) / 1e6
+    dj = dj.drop('UM')
 
-    # Gouriou & Toole (1993): EUC 15.3 Sv at 165E.
-    db = xr.Dataset()
-    db['go'] = dj.copy() * np.nan
-    db['go'][2] = 15.3
-    db['go'].attrs['ref'] = 'Gouriou & Toole (1993)'
-    db['jo'] = dj
-    db['jo'].attrs['ref'] = 'Johnson et al. (2002)'
-    # for r in ['jo', 'go']:
-    #     print(db[r].attrs['ref'], np.around(db[r], 1))
+    db = xr.concat([dj, dj.copy() * np.nan], dim='obs')
+    db['ec'][1, 2] = 15.3  # Gouriou & Toole (1993): EUC 15.3 Sv at 165E.
+    db.coords['obs'] = ['Johnson et al. (2002)', 'Gouriou & Toole (1993)']
 
     # Reanalysis products.
     robs = ['oras', 'cglo']
@@ -180,101 +182,110 @@ def euc_observations(lat, lon, depth, method='max', vmin=0.7, sigma=False):
         ds['lon'] = xr.where(ds.lon < 0, ds.lon + 360, ds.lon)
 
         de = ds.sel(lev=slice(depth[0], depth[1]), lat=slice(lat[0], lat[1]), lon=lon + 0.5)
-        if method == 'static':
-            de = de.where(de > vmin)
-        elif method == 'max':
-            de = de.where(de > de.max(dim=['lev', 'lat']) * (1 - vmin))
+        de = de.to_dataset(name='ec')
+        # Maximum velocity at each longitude.
+        de['umax'] = de.ec.max(dim=['lev', 'lat'])
 
-        de = de * de.lev.diff(dim='lev') * de.lat.diff(dim='lat') * cfg.LAT_DEG
-        de = de.sum(dim=['lev', 'lat']) / 1e6
+        # Depth of maximum velocity at each longitude.
+        de['z_umax'] = de.lev[de.ec.argmax(['lev', 'lat'])['lev']]
+        if method == 'static':
+            de['ec'] = de.ec.where(de.ec > vmin)
+        elif method == 'max':
+            de['ec'] = de.ec.where(de.ec > de.ec.max(dim=['lev', 'lat']) * (1 - vmin))
+
+        de['ec'] = de['ec'] * de.lev.diff(dim='lev') * de.lat.diff(dim='lat') * cfg.LAT_DEG
+        de['ec'] = de['ec'].sum(dim=['lev', 'lat']) / 1e6
         if i == 0:
-            dr = de.to_dataset(name=r)
+            dr = de.copy()
         else:
-            dr[r] = de
-        dr[r].attrs['ref'] = r.upper()
+            dr = xr.concat([dr, de], dim='robs')
+            dr.coords['robs'] = robs
         # print(r, np.around(dr[r].sel(lon=[165.5, 190.5, 220.5, 250.5]).mean('time'), 1))
 
     return db, dr
 
 
-def cmip_euc_transport_sum(depth, lat, lon, mip, method='max', vmin=0.7):
+def cmip_euc_transport_sum(depth, lat, lon, mip, method='static', vmin=0):
     # Scenario, month, longitude, model.
-    mod = cfg.mod6 if mip == 6 else cfg.mod5
-    lx = cfg.lx6 if mip == 6 else cfg.lx5
-    var = 'uvo'
-    exp = lx['exps']
-    model = np.array([mod[i]['id'] for i in range(len(mod))])
-    de = np.zeros((len(exp), len(cfg.tdim), len(lon), len(mod)))
+    de = np.zeros((len(mip.exps), len(cfg.tdim), len(lon), len(mip.mod)))
     ds = xr.Dataset({'ec': (['exp', 'time', 'lon', 'model'], de)},
-                    coords={'exp': exp, 'time': cfg.tdim, 'lon': lon, 'model': model})
-    for m in mod:
-        lat_str = 'lat' if mod[m]['nd'] == 1 else 'j'
-        for ix, x in enumerate(lon):
-            for s, ex in enumerate(lx['exp']):
-                dx = subset_cmip(mip, m, var, exp[s], depth, lat, x).load()
-                du = subset_cmip(mip, m, 'uo', exp[s], depth, lat, x).load()
+                    coords={'exp': mip.exps, 'time': cfg.tdim, 'lon': lon, 'model': mip.models})
+    ds['umax'] = ds['ec'].copy()
+    ds['z_umax'] = ds['ec'].copy()
+    for m in mip.mod:
+        lat_str = 'lat' if mip.mod[m]['nd'] == 1 else 'j'
+        for x in range(len(lon)):
+            for s in range(len(mip.exp)):
+                dx = subset_cmip(mip.p, m, 'uvo', mip.exps[s], depth, lat, lon[x]).load().squeeze()
+                du = subset_cmip(mip.p, m, 'uo', mip.exps[s], depth, lat, lon[x]).load().squeeze()
+                # Maximum velocity at each longitude.
+                ds['umax'][s, :, x, m] = du.max(dim=['lev', lat_str]).values
+
+                # Depth of maximum velocity at each longitude.
+                ds['z_umax'][s, :, x, m] = du.lev[du.argmax(['lev', lat_str])['lev']].values
 
                 # Remove westward transport.
                 if method == 'static':
                     dx = dx.where(du.values > vmin)
                 elif method == 'max':
-                    umax = du.max(dim=['lev', lat_str]).load() * (1 - vmin)
                     for t in range(12):
-                        dx[t] = dx[t].where(du[t] >= umax[t])
+                        dx[t] = dx[t].where(du[t] >= (ds['umax'][s, :, x, m] * (1 - vmin))[t])
                 dxx = dx.sum(dim=['lev', lat_str])
-                ds['ec'][s, :, ix, m] = dxx.squeeze().values
+                ds['ec'][s, :, x, m] = dxx.values / 1e6
                 dx.close()
                 du.close()
-    ds['ec'][2] = ds['ec'][1] - ds['ec'][0]
+    for var in ['ec', 'umax', 'z_umax']:
+        ds[var][2] = ds[var][1] - ds[var][0]
     return ds
 
 
-
-def ofam_euc_transport_sum(cc, depth, lat, lon, method='max', vmin=0.7,
-                           velocity=False):
-    fh = xr.open_dataset(cfg.ofam/'ocean_u_1981-2012_climo.nc')
-    fr = xr.open_dataset(cfg.ofam/'ocean_u_2070-2101_climo.nc')
+def ofam_euc_transport_sum(cc, depth, lat, lon, method='static', vmin=0):
+    fh = xr.open_dataset(cfg.ofam / 'ocean_u_1981-2012_climo.nc')
+    fr = xr.open_dataset(cfg.ofam / 'ocean_u_2070-2101_climo.nc')
     fr['Time'] = fh['Time']
     # Length of grid cells [m].
-    dz = xr.open_dataset(cfg.ofam/'ocean_u_2012_06.nc').st_edges_ocean
+    dz = xr.open_dataset(cfg.ofam / 'ocean_u_2012_06.nc').st_edges_ocean
 
     # EUC depth boundary indexes.
     zi = [idx(fh.st_ocean.values, depth[0]), idx(fh.st_ocean.values, depth[1], 'greater') + 1]
 
-    # Slice lat, lon and depth.
-    fh = fh.u.sel(yu_ocean=slice(lat[0], lat[1]), xu_ocean=lon).isel(st_ocean=slice(zi[0], zi[1]))
-    fr = fr.u.sel(yu_ocean=slice(lat[0], lat[1]), xu_ocean=lon).isel(st_ocean=slice(zi[0], zi[1]))
-    if velocity:
-        df = xr.concat((fh, fr, fr - fh), dim='exp')
-        return df
-    else:
-        dz = dz.diff(dim='st_edges_ocean').rename({'st_edges_ocean': 'st_ocean'})
-        dz = dz.isel(st_ocean=slice(zi[0], zi[1]))
-        dz.coords['st_ocean'] = fh['st_ocean']  # Copy st_ocean coords
+    # # Slice lat, lon and depth.
+    df = xr.concat((fh, fr), dim='exp')
+    df = df.u.sel(yu_ocean=slice(lat[0], lat[1]), xu_ocean=lon).isel(st_ocean=slice(zi[0], zi[1]))
+    df = df.to_dataset()
 
-        # Remove westward flow.
-        # Remove westward transport.
-        if method == 'static':
-            fh = fh.where(fh > vmin)
-            fr = fr.where(fr > vmin)
-        elif method == 'max':
-            fh = fh.where(fh > fh.max(dim=['st_ocean', 'yu_ocean']) * (1 - vmin))
-            fr = fr.where(fr > fr.max(dim=['st_ocean', 'yu_ocean']) * (1 - vmin))
-        else:
-            fh = fh
-            fr = fr
+    # Depth [m] between each depth level.
+    dz = dz.diff(dim='st_edges_ocean').rename({'st_edges_ocean': 'st_ocean'})
+    dz = dz.isel(st_ocean=slice(zi[0], zi[1]))
+    dz.coords['st_ocean'] = df['st_ocean']  # Rename to st_ocean (easier to multiply).
 
-        # Multiply by depth and width.
-        fh = fh * dz * cfg.LAT_DEG * 0.1
-        fr = fr * dz * cfg.LAT_DEG * 0.1
-        fh = fh.sum(dim=['st_ocean', 'yu_ocean'])
-        fr = fr.sum(dim=['st_ocean', 'yu_ocean'])
+    # Calculate EUC transport.
+    df['ec'] = df.u
+    # Select velocities greater than vmin e.g. eastward flow only.
+    if method == 'static':
+        df['ec'] = df['ec'].where(df['ec'] > vmin)
+    # Select velocities greater than vmin% of maximum velocity.
+    elif method == 'max':  #
+        df['ec'] = df['ec'].where(df['ec'] > df['ec'].max(dim=['st_ocean', 'yu_ocean']) * (1 - vmin))
 
-        df = xr.concat((fh, fr, fr - fh), dim='exp')
-        # lons = [165, 190, 220, 250]
-        # print('OFAM3 EUC:', np.around(df.sel(xu_ocean=lons).mean('Time') / 1e6, 1))
+    # Multiply u by depth and width and sum at each longitude.
+    df['ec'] = df['ec'] * dz * cfg.LAT_DEG * 0.1
+    df['ec'] = df['ec'].sum(dim=['st_ocean', 'yu_ocean']) / 1e6
 
-        return df
+    # Depth of maximum velocity at each longitude.
+    df['z_umax'] = df.u.st_ocean[df.u.argmax(['st_ocean', 'yu_ocean'])['st_ocean']]
+    # Maximum velocity at each longitude.
+    df['umax'] = df.u.max(['st_ocean', 'yu_ocean'])
+    df = df.drop('u')
+    # Concat projected change.
+    df = xr.concat((df, df.isel(exp=1) - df.isel(exp=0)), dim='exp')
+    # df = df.rename({'Time': 'time', 'st_ocean': 'lev', 'yu_ocean': 'lat', 'xu_ocean': 'lon'})
+    # lons = [165, 190, 220, 250]
+    # print('OFAM3 EUC:', np.around(df.ec.sel(lon=lons).mean('time') / 1e6, 1))
+    dz.close()
+    fh.close()
+    fr.close()
+    return df
 
 
 def bnds_wbc(mip, cc):
@@ -384,32 +395,57 @@ def ofam_wbc_transport_sum(cc, depth, lat, lon, net=False):
     return xr.concat((fh, fr, fr - fh), dim='exp')
 
 
-def cmip_wsc(mip, lats=[-25, 25], lons=[110, 300]):
-    lx = cfg.lx6 if mip == 6 else cfg.lx5
-    mod = cfg.mod6 if mip == 6 else cfg.mod5
-    exp = lx['exp'][-1]
-    # File path.
-    cmip = cfg.home/'model_output/CMIP{}/CLIMOS/regrid'.format(mip)
-    tau = ['tauu', 'tauv'] if mip == 6 else ['tauuo', 'tauvo']
-    om = 'Amon' if mip == 6 else 'Omon'
-    for m in mod:
-        file = [cmip/'{}_{}_{}_{}_climo_regrid.nc'
-                .format(v, om, mod[m]['id'], exp) for v in tau]
-        ds = xr.open_mfdataset(file, combine='by_coords')
-        ds = ds.sel(lat=slice(*lats), lon=slice(*lons))
-        if m == 0:
-            wsc = np.zeros((len(mod), *list(ds[tau[0]].shape)))
-        wsc[m] = wind_stress_curl(du=ds[tau[0]], dv=ds[tau[1]])
 
-        ds.close()
-    coords = {'model': [mod[m]['id'] for m in mod], 'time': cfg.tdim,
-              'lat': ds.lat.values, 'lon': ds.lon.values}
+def open_cmip_tau(mip, m, exp):
+    # MIP needs to be a Class
+    # File path.
+    file = [mip.dir_tau / '{}_{}_{}_{}_climo_regrid.nc'
+            .format(v, mip.omon, mip.models[m], exp) for v in mip.tau]
+    try:
+        ds = xr.open_mfdataset(file, combine='by_coords')
+    except RecursionError:
+        # Merge into dataset with earliest times (tauv for ssp IPSL-CM6A-LR).
+        # IPSL-CM6A-LR
+        ds = xr.open_dataset(file[-1], use_cftime=True)
+        ds_ = xr.open_dataset(file[0], use_cftime=True)
+        ds_['time'] = ds['time']
+        ds = xr.merge([ds, ds_], combine_attrs='override')
+        ds_.close()
+
+    return ds
+
+
+def cmip_wsc(mip, lats=[-25, 25], lons=[110, 300], landmask=False):
+    # MIP needs to be a Class
+    for s, exp in enumerate(mip.exp):
+        for m in mip.mod:
+            ds = open_cmip_tau(mip, m, exp)
+            ds = ds.sel(lat=slice(lats[0], lats[-1]), lon=slice(lons[0], lons[-1]))
+            # remove ocean values in north east corner
+            # ds = ds.where((ds.lat < 10) | (ds.lon < 275) & (ds.lat < 16) | (ds.lon < 263))
+            if s == 0 and m == 0:
+                wsc = np.zeros((3, len(mip.mod), *list(ds[mip.tau[0]].shape)))
+                ws = np.zeros((3, len(mip.mod), *list(ds[mip.tau[0]].shape)))
+            ws[s, m] = ds[mip.tau[0]]
+            wsc[s, m] = wind_stress_curl(du=ds[mip.tau[0]], dv=ds[mip.tau[1]])
+            ds.close()
+    wsc[2] = wsc[1] - wsc[0]
+    ws[2] = ws[1] - ws[0]
+    coords = {'exp': mip6.exps, 'model': [mip.mod[m]['id'] for m in mip.mod], 'time': cfg.tdim, 'lat': ds.lat.values, 'lon': ds.lon.values}
     dims = tuple(coords.keys())
-    dc = xr.DataArray(wsc, dims=dims, coords=coords)
+    dc = xr.DataArray(wsc, name='wsc', dims=dims, coords=coords)
+    dc = dc.to_dataset()
+    dc['ws'] = xr.DataArray(ws, dims=dims, coords=coords)
+
+    # Mask points with values from less than 50% of models.
+    if landmask:
+        mask = dc.wsc.where(~np.isnan(dc.wsc)).count(dim='model') > dc.model.size / 2
+        dc['wsc'] = dc.wsc.where(mask)
+        dc['wc'] = dc.ws.where(mask)
     return dc
 
 
-def sig_line(ds, ydim, ALPHA=0.05):
+def sig_line(ds, ydim, ALPHA=0.05, nydim=None):
     # Statistical significance. This will be multiplied by transport for
     # each plot. A value of one means the change is significant (and a solid
     # line should be plotted), while a NaN value means not significant and
@@ -418,7 +454,10 @@ def sig_line(ds, ydim, ALPHA=0.05):
     from scipy import stats
     sig = np.ones((2, len(ydim)))
     for i in range(len(ydim)):
-        tmp = stats.wilcoxon(ds.isel(exp=0)[i], ds.isel(exp=1)[i])[1]
+        if nydim is not None:
+            tmp = stats.wilcoxon(ds.isel(exp=0).isel({nydim: i}), ds.isel(exp=1).isel({nydim: i}))[1]
+        else:
+            tmp = stats.wilcoxon(ds.isel(exp=0)[i], ds.isel(exp=1)[i])[1]
         sig[1, i] = (1 if tmp < ALPHA else np.nan)
     return sig
 

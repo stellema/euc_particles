@@ -498,7 +498,7 @@ def wind_stress_curl(du, dv, lat=None, lon=None, w=0.5, wy=None):
     if du.ndim == 2:
         coords = {'lat': lat, 'lon': lon}
     else:
-        coords = {'time': cfg.mon, 'lat': lat, 'lon': lon}
+        coords = {'time': cfg.tdim, 'lat': lat, 'lon': lon}
     dims = tuple(coords.keys())
     du_dx, du_dy = np.gradient(du.values, axis=(-2, -1))
     dv_dx, dv_dy = np.gradient(dv.values, axis=(-2, -1))
