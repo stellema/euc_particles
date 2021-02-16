@@ -13,7 +13,7 @@ from scipy import stats
 
 import cfg
 from cfg import mip5, mip6
-from tools import idx, idx2d, wind_stress_curl, coriolis
+from tools import idx, idx2d, wind_stress_curl, coriolis, open_tao_data
 from main import ec, mc, ng
 
 
@@ -145,8 +145,8 @@ def euc_observations(lat, lon, depth, method='static', vmin=0, sigma=False):
     """
     # Johnson et al. (2002).
     # Velocity not in cm/s like file says.
-    dsj = xr.open_dataset(cfg.data/'pac_mean_johnson_2002.cdf')
-    dsj = dsj.rename({'ZDEP1_50': 'lev', 'YLAT11_101': 'lat', 'XLON': 'lon'})
+    dsj = xr.open_dataset(cfg.obs/'pac_mean_johnson_2002.cdf')
+    dsj = dsj.rename({'UM': 'uo', 'ZDEP1_50': 'lev', 'YLAT11_101': 'lat', 'XLON': 'lon'})
     if sigma:
         dj = dsj.sel(lat=slice(-2, 2))
         dj = dj.where((dj.SIGMAM > 23) & (dj.SIGMAM < 26.5))
@@ -154,13 +154,13 @@ def euc_observations(lat, lon, depth, method='static', vmin=0, sigma=False):
         yi = [idx(dsj.lat, y, r) for y, r in zip(lat, ['lower', 'greater'])]
         zi = [idx(dsj.lev, z, r) for z, r in zip(depth, ['closest', 'greater'])]
         dj = dsj.isel(lev=slice(zi[0], zi[1] + 1), lat=slice(yi[0], yi[1] + 1))
-    dj = dj.UM.to_dataset()
+    dj = dj.uo.to_dataset()
     # Maximum velocity at each longitude.
-    dj['umax'] = dj.UM.max(dim=['lev', 'lat'])
+    dj['umax'] = dj.uo.max(dim=['lev', 'lat'])
 
     # Depth of maximum velocity at each longitude.
-    dj['z_umax'] = dj.lev[dj.UM.argmax(['lev', 'lat'])['lev']]
-    dj['ec'] = dj.UM
+    dj['z_umax'] = dj.lev[dj.uo.argmax(['lev', 'lat'])['lev']]
+    dj['ec'] = dj.uo
     if method == 'static':
         dj['ec'] = dj['ec'].where(dj['ec'] > vmin)
     elif method == 'max':
@@ -168,20 +168,48 @@ def euc_observations(lat, lon, depth, method='static', vmin=0, sigma=False):
 
     dj['ec'] = dj['ec'] * dj.lev.diff(dim='lev') * dj.lat.diff(dim='lat') * cfg.LAT_DEG
     dj['ec'] = dj['ec'].sum(['lev', 'lat']) / 1e6
-    dj = dj.drop('UM')
+    dj = dj.drop('uo')
 
-    db = xr.concat([dj, dj.copy() * np.nan], dim='obs')
+    db = xr.concat([dj, dj.copy() * np.nan, dj.copy() * np.nan], dim='obs')
     db['ec'][1, 2] = 15.3  # Gouriou & Toole (1993): EUC 15.3 Sv at 165E.
-    db.coords['obs'] = ['Johnson et al. (2002)', 'Gouriou & Toole (1993)']
+    # db.coords['obs'] = ['Johnson et al. (2002)', 'Gouriou & Toole (1993)']
+
+    # TAO/TRITION (0 for daily 1 for monthly)
+    dtt = open_tao_data(frq=cfg.frq_short[1], dz=slice(depth[0], depth[1]))
+    dtt = [dtt[i].groupby('time.month').mean('time').mean('month') for i in range(len(dtt))]
+    for i, a in enumerate([165, 190, 220]):
+        ii = idx(db.lon, a)
+        db['umax'][2, ii] = dtt[i].u_1205.max().item()
+        db['z_umax'][2, ii] = dtt[i].depth[dtt[i].u_1205.argmax()]
+
+    db.coords['obs'] = ['CTD/ADCP', 'Gouriou & Toole (1993)', 'TAO/TRITION']
 
     # Reanalysis products.
-    robs = ['oras', 'cglo']
+    robs = ['cglo', 'godas', 'oras', 'soda3.12.2']
+    robs_full = ['C-GLORS', 'GODAS', 'ORAS5', 'SODA3']
+    dr = []
     for i, r in enumerate(robs):
-        ds = xr.open_dataset(cfg.data/'uo_{}_1993_2018_climo.nc'.format(r))['uo_' + r]
-        ds = ds.rename({'depth': 'lev', 'latitude': 'lat', 'longitude': 'lon'})
-        ds['lon'] = xr.where(ds.lon < 0, ds.lon + 360, ds.lon)
+        yrs = [1993, 2018]
+        if r in ['oras', 'cglo']:
+            var = 'uo_' + r
+            new_var_dict = {'depth': 'lev', 'latitude': 'lat', 'longitude': 'lon'}
+        elif r in ['godas']:
+            var = 'ucur'
+            new_var_dict = {'level': 'lev'}
+        elif r in ['soda3.12.2']:
+            var = 'u'
+            yrs = [1980, 2017]
+            new_var_dict = {'st_ocean': 'lev', 'yu_ocean': 'lat', 'xu_ocean': 'lon'}
+        ds = xr.open_dataset(cfg.reanalysis/'uo_{}_{}_{}_climo.nc'.format(r, *yrs))[var]
+        ds = ds.rename(new_var_dict)
 
-        de = ds.sel(lev=slice(depth[0], depth[1]), lat=slice(lat[0], lat[1]), lon=lon + 0.5)
+        if ds['lon'].max() < 300:
+            ds['lon'] = xr.where(ds.lon < 0, ds.lon + 360, ds.lon)
+        try:
+            de = ds.sel(lev=slice(depth[0], depth[1]), lat=slice(lat[0], lat[1]), lon=lon)
+        except:
+            de = ds.sel(lev=slice(depth[0], depth[1]), lat=slice(lat[0], lat[1]), lon=lon + 0.5)
+            de['lon'] = lon
         de = de.to_dataset(name='ec')
         # Maximum velocity at each longitude.
         de['umax'] = de.ec.max(dim=['lev', 'lat'])
@@ -195,12 +223,13 @@ def euc_observations(lat, lon, depth, method='static', vmin=0, sigma=False):
 
         de['ec'] = de['ec'] * de.lev.diff(dim='lev') * de.lat.diff(dim='lat') * cfg.LAT_DEG
         de['ec'] = de['ec'].sum(dim=['lev', 'lat']) / 1e6
-        if i == 0:
-            dr = de.copy()
-        else:
-            dr = xr.concat([dr, de], dim='robs')
-            dr.coords['robs'] = robs
-        # print(r, np.around(dr[r].sel(lon=[165.5, 190.5, 220.5, 250.5]).mean('time'), 1))
+        if i >= 1:
+            de['time'] = dr[0]['time']
+
+        dr.append(de)
+    dr = xr.concat(dr, dim='robs')
+    dr.coords['robs'] = robs_full
+    # print(r, np.around(dr[r].sel(lon=[165.5, 190.5, 220.5, 250.5]).mean('time'), 1))
 
     return db, dr
 
@@ -302,10 +331,16 @@ def bnds_wbc(mip, cc):
                 x_[0], x_[-1] = 147, 152
             elif mod[m]['id'] in ['BCC-CSM2-MR']:
                 x_[-1] = 150
-            elif mod[m]['id'] in ['CESM2', 'CESM2-WACCM', 'CIESM', 'INM-CM5-0', 'NorESM2-LM', 'NorESM2-MM', 'CCSM4', 'CESM1-BGC', 'CESM1-CAM5-1-FV2', 'CESM1-CAM5', 'CMCC-CESM', 'CMCC-CM', 'FIO-ESM', 'IPSL-CM5A-LR', 'IPSL-CM5A-MR', 'IPSL-CM5B-LR', 'MPI-ESM-MR']:
-                x_[-1] = 148
-            elif mod[m]['id'] in ['NorESM1-ME', 'NorESM1-M']:
-                x_[-1] = 147
+            elif mod[m]['id'] in ['CMSM4', 'CESM2', 'CESM2-WACCM', 'CIESM', 'INM-CM5-0', 'NorESM2-LM', 'NorESM2-MM', 'CCSM4', 'CESM1-BGC', 'CESM1-CAM5-1-FV2', 'CESM1-CAM5', 'CMCC-CESM', 'CMCC-CM', 'FIO-ESM', 'IPSL-CM5A-LR', 'IPSL-CM5A-MR', 'IPSL-CM5B-LR', 'MPI-ESM-MR']:
+                x_[-1] = 156
+            # if mod[m]['id'] in ['CAMS-CSM1-0', 'BCC-CSM2-MR', 'CMCC-CESM', 'CMCC-CM', 'CMCC-CMS', 'IPSL-CM5A-LR', 'IPSL-CM5A-MR', 'IPSL-CM5B-LR', 'NorESM1-ME', 'NorESM1-M']:
+            #     # x_[-1] = 147
+            #     # y_ = -2
+            #     x_[-1] = 156
+
+            # if mod[m]['id'] in ['CMCC-CESM', 'CMCC-CM', 'NorESM1-ME', 'NorESM1-M']:
+            #     # x_[-1] = 147
+            #     y_ = -2
         elif cc.n == 'MC':
             # Increase slice before contouring.
             if mod[m]['id'] in ['MPI-ESM1-2-HR']:
@@ -357,6 +392,7 @@ def cmip_wbc_transport_sum(mip, cc, net=False):
             dx = subset_cmip(mip, m, var, lx['exp'][s], z[m], y, x[m])
             dx = dx.squeeze()
             dx = dx.where(dx * cc.sign > 0)
+            print(mod[m]['id'])
             lon_str = 'lon' if mod[m]['nd'] == 1 else 'i'
             dxx = dx.sum(dim=['lev', lon_str])
             ds[cc._n][s, :, m] = dxx.values
@@ -375,7 +411,10 @@ def ofam_wbc_transport_sum(cc, depth, lat, lon, net=False):
     # EUC depth boundary indexes.
     zi = [idx(dz[1:], depth[0]), idx(dz[1:], depth[1], 'greater') + 1]
     if cc.n == 'NGCU':
-        lon = [140.5, 145]
+        if lat <= -5:
+            lon = [145, 156]
+        else:
+            lon = [140.5, 145]
     # Slice lat, lon and depth.
     fh = fh.v.sel(xu_ocean=slice(lon[0], lon[1]), yu_ocean=lat).isel(st_ocean=slice(zi[0], zi[1]))
     fr = fr.v.sel(xu_ocean=slice(lon[0], lon[1]), yu_ocean=lat).isel(st_ocean=slice(zi[0], zi[1]))

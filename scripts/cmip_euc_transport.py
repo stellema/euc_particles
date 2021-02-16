@@ -83,15 +83,17 @@ def plot_cmip_euc_transport(de, de6, de5, lat, lon, depth, method='static', vmin
     fig = plt.figure(figsize=figsize)
     ax = [fig.add_subplot(211), fig.add_subplot(212)]
     # Historical transport.
-    ax[0].set_title('{}Equatorial Undercurrent {}'.format(cfg.lt[letter], nvar), loc='left')
+    # ax[0].set_title('{}Equatorial Undercurrent {}'.format(cfg.lt[letter], nvar), loc='left')
     # CMIP6 and CMIP5 MMM and shaded interquartile range.
     # Line labels added in first plot. Model marker labels in next.
     for de_, mip in zip([de6[var].mean('time'), de5[var].mean('time')], [mip6, mip5]):
         for i, x in enumerate([0, 2]):  # Scenarios.
             if i == 0:
+                ax[0].set_title('Equatorial Undercurrent historical {}'.format(nvar), loc='left')
                 ax[i].plot(lon, de_.isel(exp=x).median('model'), color=mip.colour, label=mip.mmm)
             else:
                 # Plot dashed line, overlay solid line if change is significant.
+                ax[1].set_title('Equatorial Undercurrent {} projected change'.format(nvar), loc='left')
                 for s, ls in zip(range(2), ['--', '-']):
                     ax[i].plot(lon, de_.isel(exp=x).median('model') * sig_line(de_, lon)[s],
                                mip.colour, linestyle=ls)
@@ -117,11 +119,11 @@ def plot_cmip_euc_transport(de, de6, de5, lat, lon, depth, method='static', vmin
     if show_obs:
         db, dr = euc_observations(lat, lon, depth, method=method, vmin=vmin)
         # Reanalysis products.
-        for v, c, m in zip(dr.robs.values, ['grey', 'k'], ['--', 'dashdot']):
+        for v, c, m in zip(dr.robs.values, ['grey', 'k', 'k', 'grey'], ['--', '-.', ':', ':']):
             ax[0].plot(lon, dr[var].mean('time').sel(robs=v), color=c, label=str(v.item()).upper(), linestyle=m)
         # Observations.
         ax[0].scatter(db.lon, db[var].isel(obs=0), color='k', label=db.obs[0].item(), marker='o')
-        # ax[0].scatter(db.lon, db[var].isel(obs=1), color='grey', label=db.obs[1].item(), marker='X')
+        ax[0].scatter(db.lon, db[var].isel(obs=-1), color='grey', label=db.obs[-1].item(), marker='X')
 
     ax[1].axhline(y=0, color='grey', linewidth=0.6)  # Zero-line.
     if nvar == 'transport':
@@ -130,14 +132,16 @@ def plot_cmip_euc_transport(de, de6, de5, lat, lon, depth, method='static', vmin
         ax[0].set_ylim(ymax=50, ymin=200)
     ax[0].set_xlim(lon[0], lon[-1])
     ax[1].set_xlim(lon[0], lon[-1])
-    ax[1].set_xticks(lon[::15])
-    ax[1].set_xticklabels(coord_formatter(lon[::15], convert='lon_360'))
-    ax[0].set_ylabel('Historical {} [{}]'.format(nvar, units))
-    ax[1].set_ylabel('{} projected change [{}]'.format(nvar.capitalize(), units))
+    for ff in [0,1]:
+        ax[ff].set_xticks(lon[::15])
+        ax[ff].set_xticklabels(coord_formatter(lon[::15], convert='lon_360'))
+        ax[ff].set_ylabel('{} [{}]'.format(nvar.capitalize(), units))
+    # ax[0].set_ylabel('Historical {} [{}]'.format(nvar, units))
+    # ax[1].set_ylabel('{} projected change [{}]'.format(nvar.capitalize(), units))
 
     # Line legend of first plot put on other subplot.
     h0, l0 = ax[0].get_legend_handles_labels()
-    lgd = ax[1].legend(h0, l0, bbox_to_anchor=(1, 1), loc='upper right', prop={'size': 9})
+    lgd = ax[0].legend(h0, l0, bbox_to_anchor=(1, 1), loc='upper left', prop={'size': 9})
 
     if show_markers:  # CMIP model legend.
         h1, l1 = ax[1].get_legend_handles_labels()
@@ -147,7 +151,7 @@ def plot_cmip_euc_transport(de, de6, de5, lat, lon, depth, method='static', vmin
         lgd = (lgd,)
         plt.tight_layout()
 
-    plt.subplots_adjust(hspace=0)  # Remove space between rows.
+    # plt.subplots_adjust(hspace=0)  # Remove space between rows.
     plt.savefig(cfg.fig / 'cmip/EUC_def_{}_{}_{}_j{}_z{}-{}{}.png'
                 .format(nvar, method, vmin, lat[1], *depth, '_mrk' if show_markers else ''),
                 bbox_extra_artists=lgd, bbox_inches='tight')
@@ -198,8 +202,8 @@ def plot_cmip_euc_month(de, de6, de5, lat, lon, depth, method='max', vmin=0.8,
     if show_obs:
         db, dr = euc_observations(lat, lon, depth, method=method, vmin=vmin)
         # Reanalysis products.
-        for v, c, m in zip(dr.data_vars, ['grey', 'k'], ['--', 'dashdot']):
-            ax[0].plot(xdim, dr[v], color=c, label=v.upper(), linestyle=m)
+        for v, c, m in zip(dr.robs.values, ['grey', 'k', 'k', 'grey'], ['--', '-.', ':', ':']):
+            ax[0].plot(xdim, dr.ec.sel(robs=v), color=c, label=v.upper(), linestyle=m)
         # TODO: Remove single obs value?
         # ax[0].scatter(db.lon, db['jo'], color='k', label=db[v].attrs['ref'], marker='o')
 
@@ -233,32 +237,35 @@ cl = ['dodgerblue', 'blueviolet', 'teal']
 lbs = ['OFAM3', 'CMIP6 MMM', 'CMIP5 MMM']
 mips = ['CMIP6 ', 'CMIP5 ']
 
-lat, lon, depth = [-2.6, 2.6], np.arange(165, 271, 1), [0, 350]
+lat, lon, depth = [-2.6, 2.6], np.arange(165, 265 + 1, 1), [0, 350]
 method = 'static'
 net = True if method == 'net' else False
 vmin = 0
 print('EUC defined between: lat={} to {}, depth={} to {}m (method={}, minv={})'
       .format(*lat, *depth, method, vmin))
-de = ofam_euc_transport_sum(ec, depth, lat, lon, method=method, vmin=vmin)
-de6 = cmip_euc_transport_sum(depth, lat, lon, mip=mip6, method=method, vmin=vmin)
-de5 = cmip_euc_transport_sum(depth, lat, lon, mip=mip5, method=method, vmin=vmin)
-de.to_netcdf(cfg.data / 'euc_ofam_{}_{}_j{}_z{}-{}.nc'.format(method, vmin, lat[1], *depth))
-de5.to_netcdf(cfg.data / 'euc_cmip5_{}_{}_j{}_z{}-{}.nc'.format(method, vmin, lat[1], *depth))
-de6.to_netcdf(cfg.data / 'euc_cmip6_{}_{}_j{}_z{}-{}.nc'.format(method, vmin, lat[1], *depth))
-de = xr.open_dataset(cfg.data / 'euc_ofam_{}_{}_j{}_z{}-{}.nc'.format(method, vmin, lat[1], *depth))
-de5 = xr.open_dataset(cfg.data / 'euc_cmip5_{}_{}_j{}_z{}-{}.nc'.format(method, vmin, lat[1], *depth))
-de6 = xr.open_dataset(cfg.data / 'euc_cmip6_{}_{}_j{}_z{}-{}.nc'.format(method, vmin, lat[1], *depth))
+try:
+    de = xr.open_dataset(cfg.data / 'euc_ofam_{}_{}_j{}_z{}-{}.nc'.format(method, vmin, lat[1], *depth))
+    de5 = xr.open_dataset(cfg.data / 'euc_cmip5_{}_{}_j{}_z{}-{}.nc'.format(method, vmin, lat[1], *depth))
+    de6 = xr.open_dataset(cfg.data / 'euc_cmip6_{}_{}_j{}_z{}-{}.nc'.format(method, vmin, lat[1], *depth))
+except:
+    de = ofam_euc_transport_sum(ec, depth, lat, lon, method=method, vmin=vmin)
+    de6 = cmip_euc_transport_sum(depth, lat, lon, mip=mip6, method=method, vmin=vmin)
+    de5 = cmip_euc_transport_sum(depth, lat, lon, mip=mip5, method=method, vmin=vmin)
+    de.to_netcdf(cfg.data / 'euc_ofam_{}_{}_j{}_z{}-{}.nc'.format(method, vmin, lat[1], *depth))
+    de5.to_netcdf(cfg.data / 'euc_cmip5_{}_{}_j{}_z{}-{}.nc'.format(method, vmin, lat[1], *depth))
+    de6.to_netcdf(cfg.data / 'euc_cmip6_{}_{}_j{}_z{}-{}.nc'.format(method, vmin, lat[1], *depth))
 
-# for ltr, var, nvar, units in zip([0, 1, 3], ['ec', 'umax', 'z_umax'],
-#                                  ['transport', 'max velocity', 'depth of max velocity'],
-#                                  ['Sv', 'm/s', 'm']):
-#     plot_cmip_euc_transport(de, de6, de5, lat, lon, depth, method=method,
-#                             vmin=vmin, show_markers=False, show_obs=True,
-#                             var=var, nvar=nvar, units=units, letter=ltr)
 
-# for x in [165, 170, 190, 200, 220, 250]:
-#     plot_cmip_euc_month(de.ec, de6.ec, de5.ec, lat, x, depth, method=method, vmin=vmin, show_markers=False)
-# plot_cmip_euc_scatter_markers(de.ec, de6.ec, de5.ec, lon)
+for ltr, var, nvar, units in zip([0, 1, 3], ['ec', 'umax', 'z_umax'],
+                                  ['transport', 'max velocity', 'depth of max velocity'],
+                                  ['Sv', 'm/s', 'm']):
+    plot_cmip_euc_transport(de, de6, de5, lat, lon, depth, method=method,
+                            vmin=vmin, show_markers=False, show_obs=True,
+                            var=var, nvar=nvar, units=units, letter=ltr)
+
+for x in [165, 170, 190, 200, 220, 250]:
+    plot_cmip_euc_month(de.ec, de6.ec, de5.ec, lat, x, depth, method=method, vmin=vmin, show_markers=False)
+plot_cmip_euc_scatter_markers(de.ec.mean('Time'), de6.ec.mean('time'), de5.ec.mean('time'), lon)
 
 
 # for x in np.arange(165, 200, 220):

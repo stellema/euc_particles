@@ -46,9 +46,9 @@ def scatter_wbc_markers(df, d5, d6):
     fig, ax = plt.subplots(1, 2, figsize=(11, 5))
     ax = ax.flatten()
     for i, cc in enumerate([mc, ng]):
-        dd = df[cc._n]
-        dd6 = d6[cc._n]
-        dd5 = d5[cc._n]
+        dd = df[cc._n].mean('Time')
+        dd6 = d6[cc._n].mean('time')
+        dd5 = d5[cc._n].mean('time')
         ax[i].set_title('{}{} at {}'.format(cfg.lt[i], cc.name, *cc._lat), loc='left')
 
         # OFAM3
@@ -73,21 +73,18 @@ def scatter_wbc_markers(df, d5, d6):
 
 # OFAM
 df = xr.Dataset()
-df[ng._n] = ofam_wbc_transport_sum(ng, ng.depth, ng.lat, [ng.lon[0], ng.lon[1] - 1]).mean('Time') / 1e6
-df[mc._n] = ofam_wbc_transport_sum(mc, mc.depth, mc.lat, [mc.lon[0], mc.lon[1]]).mean('Time') / 1e6
+df[ng._n] = ofam_wbc_transport_sum(ng, ng.depth, ng.lat, [ng.lon[0], ng.lon[1] - 1]) / 1e6
+df[mc._n] = ofam_wbc_transport_sum(mc, mc.depth, mc.lat, [mc.lon[0], mc.lon[1]]) / 1e6
 # CMIP6
 d6 = xr.Dataset()
-d6[ng._n] = cmip_wbc_transport_sum(6, ng).mean('time')[ng._n] / 1e6
-d6[mc._n] = cmip_wbc_transport_sum(6, mc).mean('time')[mc._n] / 1e6
+d6[ng._n] = cmip_wbc_transport_sum(6, ng)[ng._n] / 1e6
+d6[mc._n] = cmip_wbc_transport_sum(6, mc)[mc._n] / 1e6
 # CMIP5
 d5 = xr.Dataset()
-d5[ng._n] = cmip_wbc_transport_sum(5, ng).mean('time')[ng._n] / 1e6
-d5[mc._n] = cmip_wbc_transport_sum(5, mc).mean('time')[mc._n] / 1e6
+d5[ng._n] = cmip_wbc_transport_sum(5, ng)[ng._n] / 1e6
+d5[mc._n] = cmip_wbc_transport_sum(5, mc)[mc._n] / 1e6
 scatter_wbc_markers(df, d5, d6)
-
-for dv, name in zip([d5, d6], ['CMIP5', 'CMIP6']):
-    cmipMMM(mc, dv.mc, xdim=name, prec=None, const=1, avg=np.median,
-            annual=False, month=None, proj_cor=True)
-for dv, name in zip([d5, d6], ['CMIP5', 'CMIP6']):
-    cmipMMM(ng, dv.ngcu, xdim=name, prec=None, const=1, avg=np.median,
-            annual=False, month=None, proj_cor=True)
+for var in [mc, ng]:
+    for dv, name in zip([d5.mean('time'), d6.mean('time')], ['CMIP5', 'CMIP6']):
+        cmipMMM(var, dv[var.n.lower()], xdim=name, prec=None, const=1, avg=np.median,
+                annual=False, month=None, proj_cor=True)

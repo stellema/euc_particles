@@ -127,28 +127,28 @@ def specific_humidity_from_p(Td, p):
 def flux_data(dat='jra55', res=0.1, mean_t=True, interp=''):
 
     # Observed vector wind at height z_U, in m/s.
-    u_O = xr.open_dataset(cfg.data/'{}_uas_climo.nc'.format(dat))
-    v_O = xr.open_dataset(cfg.data/'{}_vas_climo.nc'.format(dat))
+    u_O = xr.open_dataset(cfg.reanalysis/'{}_uas_climo.nc'.format(dat))
+    v_O = xr.open_dataset(cfg.reanalysis/'{}_vas_climo.nc'.format(dat))
     U_O = (reduce(u_O.uas, mean_t, res, interp) +
            1j * reduce(v_O.vas, mean_t, res, interp))
 
     # Observed temperature at height z_T, in degrees Celsius
-    T_O = xr.open_dataset(cfg.data/'{}_tas_climo.nc'.format(dat))
+    T_O = xr.open_dataset(cfg.reanalysis/'{}_tas_climo.nc'.format(dat))
     T_O = reduce(T_O.tas, mean_t, res, interp)
 
     # Observed specific humidity at height z_q, in kg/kg.
     if dat == 'jra55':
-        q_ = xr.open_dataset(cfg.data/'{}_huss_climo.nc'.format(dat))
+        q_ = xr.open_dataset(cfg.reanalysis/'{}_huss_climo.nc'.format(dat))
         q_O = reduce(q_.huss, mean_t, res, interp)
     else:
-        ps = xr.open_dataset(cfg.data/'{}_ps_climo.nc'.format(dat))
+        ps = xr.open_dataset(cfg.reanalysis/'{}_ps_climo.nc'.format(dat))
         ps = reduce(ps.ps, mean_t, res, interp)
-        td = xr.open_dataset(cfg.data/'{}_ta2d_climo.nc'.format(dat))
+        td = xr.open_dataset(cfg.reanalysis/'{}_ta2d_climo.nc'.format(dat))
         td = reduce(td.ta2d, mean_t, res, interp)
         q_O = specific_humidity_from_p(td, ps)
 
     # Sea level pressure, in hectopascal (hPa). [Original units Pa]
-    SLP = xr.open_dataset(cfg.data/'{}_psl_climo.nc'.format(dat))
+    SLP = xr.open_dataset(cfg.reanalysis/'{}_psl_climo.nc'.format(dat))
     SLP = reduce(SLP.psl, mean_t, res, interp)
 
     # Convert from Kelvin to Celsius.

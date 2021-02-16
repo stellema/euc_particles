@@ -86,7 +86,7 @@ class Current:
 ec = Current('EUC', 'Equatorial Undercurrent', vel='uo', sign=1, depth=[25, 350], lat=[-2.6, 2.6], lon=cfg.lons)
 mc = Current('MC', 'Mindanao Current', vel='vo', sign=-1, depth=[0, 550], lat=8, lon=[125, 130])
 # ng = Current('NGCU', 'New Guinea Coastal Undercurrent', vel='vo', sign=1, depth=[0, 550], lat=-3.5, lon=[142, 149])
-ng = Current('NGCU', 'New Guinea Coastal Undercurrent', vel='vo', sign=1, depth=[0, 550], lat=-2.5, lon=[142, 149])
+ng = Current('NGCU', 'New Guinea Coastal Undercurrent', vel='vo', sign=1, depth=[0, 800], lat=-4.5, lon=[146, 156])
 sv = Current('SV', 'Sverdrup transport')
 tauvo = Current('tauvo', 'Meridional Wind Stress')
 

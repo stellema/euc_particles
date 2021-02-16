@@ -191,9 +191,9 @@ def plot_eq_velocity_timeseries_tao_ofam(ds, d3, v_bnd='half_max',
 T = 1
 
 # Open dataset of TAO data at the frequency.
-ds = open_tao_data(frq=cfg.frq_short[T], dz=slice(10, 360))
-d3 = xr.open_dataset(cfg.data.joinpath('ofam_EUC_int_transport.nc'))
+ds = open_tao_data(frq=cfg.frq_short[T], dz=slice(0, 360))
+# d3 = xr.open_dataset(cfg.data.joinpath('ofam_EUC_int_transport.nc'))
 
-# plot_tao_velocity_timeseries()
-plot_eq_velocity_timeseries_tao_ofam(ds, d3, v_bnd='half_max', add_bounds=True)
-plot_eq_velocity_timeseries_tao_ofam(ds, d3, v_bnd=0.1, add_bounds=True)
+# # plot_tao_velocity_timeseries()
+# plot_eq_velocity_timeseries_tao_ofam(ds, d3, v_bnd='half_max', add_bounds=True)
+# plot_eq_velocity_timeseries_tao_ofam(ds, d3, v_bnd=0.1, add_bounds=True)

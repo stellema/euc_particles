@@ -269,7 +269,7 @@ colors = [[norm(-1.0), "darkblue"],
           [norm(1.0), "darkred"]]
 cmap = matplotlib.colors.LinearSegmentedColormap.from_list("", colors)
 
-
+cmap = plt.cm.seismic
 # plot_ofam_EUC_profile(duh.u, exp=0, vmax=1.15, dt=dth, ds=dsh,
 #                       isopycnals=True, freq='annual', add_bounds=False,
 #                       cmap=cmap, off=3)
@@ -291,7 +291,7 @@ dj = dj.rename({'YLAT11_101': 'yu_ocean', 'XLON': 'xu_ocean',
 # Convert depth to pressure [dbar].
 Yi, Zi = np.meshgrid(dt.yt_ocean.values, -dt.st_ocean.values)
 p = gsw.conversions.p_from_z(Zi, Yi)
-vmax = 1.2
+vmax = 1
 # Colorbar extra axis:[left, bottom, width, height].
 caxes = [0.925, 0.11, 0.02, 0.77]  # Three columns.
 # cmap = plt.cm.RdBu_r#seismic
@@ -300,50 +300,51 @@ fig, ax = plt.subplots(2, 3, figsize=(width*1.4, height*1.5), sharey=True)
 ax = ax.flatten()
 i = 0
 for j, du, label in zip(range(2), [dj.UM, dh.u], ['Observed', 'OFAM3']):
-    for ix, x in enumerate(cfg.lons):
-        ax[i].set_title('{}{} EUC at {}'
-                        .format(cfg.lt[i], label, cfg.lonstr[ix]),
+    for ix, x in enumerate([180, 220, 265]):
+        ax[i].set_title('{} EUC at {}°E'
+                        .format(label, x),
                         loc='left', fontsize=12)
 
         # Plot zonal velocity.
         cs = ax[i].pcolormesh(du.yu_ocean, du.st_ocean, du.sel(xu_ocean=x),
                               vmin=-vmax, vmax=vmax + 0.01, cmap=cmap)
 
-        # Contour where velocity is 50% of maximum EUC velocity.
-        half_max = np.max(du.sel(xu_ocean=x, method='nearest')).item()/2
-        ax[i].contour(du.yu_ocean, du.st_ocean,
-                      du.sel(xu_ocean=x, method='nearest'),
-                      [half_max], colors='k', linewidths=1)
+        # # Contour where velocity is 50% of maximum EUC velocity.
+        # half_max = np.max(du.sel(xu_ocean=x, method='nearest')).item()/2
+        # ax[i].contour(du.yu_ocean, du.st_ocean,
+        #               du.sel(xu_ocean=x, method='nearest'),
+        #               [half_max], colors='k', linewidths=1)
 
-        # Calculate potential density and plot isopycnals.
-        if j == 0:
-            rho = dj.SIGMAM.sel(xu_ocean=x)
-            y, z = dj.yu_ocean, dj.st_ocean
-        else:
-            y, z = dt.yt_ocean, dt.st_ocean
-            SA = ds.sel(xt_ocean=x + 0.05, method='nearest')
-            t = dt.sel(xt_ocean=x + 0.05, method='nearest')
-            rho = gsw.pot_rho_t_exact(SA, t, p, p_ref=0) - 1000
-        clevs = np.arange(22, 26.8, 0.4)
-        # colors = 'k' if freq == 'mon' else 'darkred'
-        cx = ax[i].contour(y, z, rho, clevs, colors='darkred', linewidths=1)
-        plt.clabel(cx, cx.levels[::5], inline=True, fontsize=13,
-                   fmt='%1.0f', colors='k')
+        # # Calculate potential density and plot isopycnals.
+        # if j == 0:
+        #     rho = dj.SIGMAM.sel(xu_ocean=x)
+        #     y, z = dj.yu_ocean, dj.st_ocean
+        # else:
+        #     y, z = dt.yt_ocean, dt.st_ocean
+        #     SA = ds.sel(xt_ocean=x + 0.05, method='nearest')
+        #     t = dt.sel(xt_ocean=x + 0.05, method='nearest')
+        #     rho = gsw.pot_rho_t_exact(SA, t, p, p_ref=0) - 1000
+        # clevs = np.arange(22, 26.8, 0.4)
+        # # colors = 'k' if freq == 'mon' else 'darkred'
+        # cx = ax[i].contour(y, z, rho, clevs, colors='darkred', linewidths=1)
+        # plt.clabel(cx, cx.levels[::5], inline=True, fontsize=13,
+        #            fmt='%1.0f', colors='k')
 
         # Plot ascending depths with ticks every 100 m.
-        ax[i].set_ylim(350, 2.5)
-        ax[i].set_xlim(-5, 5)
+        ax[i].set_ylim(370, 0)
+        ax[i].set_xlim(-3.4, 3.4)
         # ax.set_yticks([100, 200, 300])
 
         # Define latitude tick labels that are either North or South.
-        xticks = np.arange(-4, 5, 2)
+        xticks = np.array([-2, 0, 2])  # np.arange(-4, 5, 2)
         xtickl = coord_formatter(xticks, convert='lat')
 
         ax[i].set_xticks(xticks)
-        if j == 1:
-            ax[i].set_xticklabels(xtickl)
-        else:
-            ax[i].set_xticklabels([])
+        ax[i].set_xticklabels(xtickl)
+        # if j == 1:
+        #     ax[i].set_xticklabels(xtickl)
+        # else:
+        #     ax[i].set_xticklabels([])
         if ix == 0:
             ax[i].set_ylabel('Depth [m]')
         i += 1

@@ -31,7 +31,9 @@ if home.drive == 'C:':
     log = home/'GitHub/OFAM/logs'
     job = home/'GitHub/OFAM/jobs'
     ofam = home/'model_output/OFAM/trop_pac'
-    tao = home/'model_output/OFAM/TAO'
+    tao = home/'model_output/obs/TAO'
+    obs = home/'model_output/obs'
+    reanalysis = home/'model_output/reanalysis'
 
 # Raijin Paths.
 else:
@@ -43,6 +45,8 @@ else:
     job = home/'jobs'
     ofam = home/'trop_pac'
     tao = home/'TAO'
+    obs = data
+    reanalysis = data
 
 sys.path.append(scripts)
 
@@ -247,7 +251,7 @@ class Cmip:
             self.mod = mod6
             self.future = 'ssp585'
             self.sym = sym[len(mod5) + 1:len(mod6) + len(mod5)]
-            self.symc = sym[len(mod5) + 1:len(mod6) + len(mod5)]
+            self.symc = symc[len(mod5) + 1:len(mod6) + len(mod5)]
             self.tau = ['tauu', 'tauv']
             self.omon = 'Amon'
             self.colour = 'blueviolet'
