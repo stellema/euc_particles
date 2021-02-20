@@ -165,7 +165,7 @@ if __name__ == "__main__" and cfg.home.drive != 'E:':
     p.add_argument('-x', '--lon', default=165, type=int, help='Particle start longitude(s).')
     p.add_argument('-e', '--exp', default=0, type=int, help='Scenario.')
     p.add_argument('-r', '--rr', default=5, type=int, help='Scenario.')
-    p.add_argument('-t', '--time', default=-1, help='Scenario.')
+    p.add_argument('-t', '--time', default=-1, type=int, help='Scenario.')
     p.add_argument('-m', '--method', default='sum', type=str, help='Scenario.')
     args = p.parse_args()
     particle_density(iexp=args.exp, lon=args.lon, r=args.rr, t=args.time, how=args.method)

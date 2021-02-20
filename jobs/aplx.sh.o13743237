@@ -1,0 +1,14 @@
+plx fig 0 at lon 190.
+
+======================================================================================
+                  Resource Usage on 2020-11-24 05:15:44:
+   Job Id:             13743237.gadi-pbs
+   Project:            e14
+   Exit Status:        1
+   Service Units:      0.38
+   NCPUs Requested:    1                      NCPUs Used: 1               
+                                           CPU Time Used: 00:00:10                                   
+   Memory Requested:   128.0GB               Memory Used: 1.12GB          
+   Walltime requested: 06:00:00            Walltime Used: 00:01:17        
+   JobFS requested:    100.0MB                JobFS used: 0B              
+======================================================================================

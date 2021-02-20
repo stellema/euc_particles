@@ -1,0 +1,2 @@
+usage: plx_analysis.py [-h] [-x LON] [-e EXP] [-r RR] [-t TIME] [-m METHOD]
+plx_analysis.py: error: argument -e/--exp: invalid int value: 'hist'

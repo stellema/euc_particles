@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/plx_analysis.py", line 171, in <module>
+    particle_density(iexp=args.exp, lon=args.lon, r=args.rr, t=args.time, how=args.method)
+  File "/g/data/e14/as3189/OFAM/scripts/plx_analysis.py", line 126, in particle_density
+    t = None if t < 0 else t
+TypeError: '<' not supported between instances of 'str' and 'int'

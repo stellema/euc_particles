@@ -1,0 +1,11 @@
+
+------------------------------------------------------------------------
+Job 13740991 has exceeded memory allocation on node gadi-cpu-bdw-0073.gadi.nci.org.au
+Process "bash", pid 3119376, rss 3321856, vmem 20779008
+Process "13740991.gadi-p", pid 3119424, rss 3162112, vmem 227966976
+Process "python3", pid 3119720, rss 42897895424, vmem 45313236992
+Process "orted", pid 3119724, rss 19066880, vmem 315617280
+------------------------------------------------------------------------
+For more information visit https://opus.nci.org.au/x/SwGRAQ
+------------------------------------------------------------------------
+/local/spool/pbs/mom_priv/jobs/13740991.gadi-pbs.SC: line 18: 3119720 Killed                  python3 /g/data/e14/as3189/OFAM/scripts/plx_analysis.py -e $EXP -x $LON -r 5
