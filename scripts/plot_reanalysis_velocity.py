@@ -14,7 +14,7 @@ import matplotlib.pyplot as plt
 from mpl_toolkits.axes_grid1 import make_axes_locatable
 
 import cfg
-from tools import coord_formatter, idx
+from tools import coord_formatter, idx, idx2d
 from cmip_fncs import subset_cmip, bnds_wbc
 from cfg import mod6, mod5, lx5, lx6
 from main import ec, mc, ng
@@ -22,6 +22,7 @@ from fncs import image2video
 
 warnings.filterwarnings(action='ignore', message='Mean of empty slice')
 warnings.filterwarnings("ignore")
+
 
 def plot_reanalysis_vdepth(cc, var, lat, lon, depth, vmax=1,
                            pos=None, ndec=2, time='annual'):
@@ -42,17 +43,22 @@ def plot_reanalysis_vdepth(cc, var, lat, lon, depth, vmax=1,
     for i, r in enumerate(robs):
         yrs = [1993, 2018]
         if r in ['oras', 'cglo']:
-            var_ = '{}o_{}'.format(var, r)
-            new_var_dict = {'depth': 'lev', 'latitude': 'lat', 'longitude': 'lon'}
+            _var = '{}o_{}'.format(var, r)
+            nvar_dict = {'depth': 'lev', 'latitude': 'lat', 'longitude': 'lon'}
         elif r in ['godas']:
-            var_ = '{}cur'.format(var)
-            new_var_dict = {'level': 'lev'}
+            _var = '{}cur'.format(var)
+            nvar_dict = {'level': 'lev'}
         elif r in ['soda3.12.2']:
-            var_ = var
+            _var = var
             yrs = [1980, 2017]
-            new_var_dict = {'st_ocean': 'lev', 'yu_ocean': 'lat', 'xu_ocean': 'lon'}
-        ds = xr.open_dataset(cfg.reanalysis/'{}o_{}_{}_{}_climo.nc'.format(var, r, *yrs))[var_]
-        ds = ds.rename(new_var_dict)
+            nvar_dict = {'st_ocean': 'lev', 'yu_ocean': 'lat', 'xu_ocean': 'lon'}
+        elif r in ['cglorsv7']:  # BUG: still on 2D grid.
+            yrs = [1990, 2016]
+            _var = 'vomecrty' if var == 'v' else 'vozocrtx'
+            nvar_dict = {'time_centered': 'time', 'depth{}'.format(var): 'lev', 'nav_lat': 'lat', 'nav_lon': 'lon', 'y': 'j', 'x': 'i'}
+        ds = xr.open_dataset(cfg.reanalysis/'{}o_{}_{}_{}_climo.nc'.format(var, r, *yrs))[_var]
+
+        ds = ds.rename(nvar_dict)
         if ds['lon'].max() < 300:
             ds['lon'] = xr.where(ds.lon < 0, ds.lon + 360, ds.lon)
         try:

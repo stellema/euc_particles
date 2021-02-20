@@ -122,7 +122,19 @@ def subset_cmip(mip, m, var, exp, depth, lat, lon, lat_mid=False, lon_mid=None):
         dx = dx * -1
     return dx
 
+def open_reanalysis(var):
+    dr = []
+    for i, r in enumerate(cfg.Rdata._instances):
 
+        _var = r.uo if var == 'u' else r.vo
+        ds = xr.open_dataset(cfg.reanalysis/'{}o_{}_{}_{}_climo.nc'.format(var, r.alt_name, *r.period), decode_times=False)
+        print(ds)
+        ds = ds[_var].rename(r.cdict)
+        if ds['lon'].max() < 300:
+            ds['lon'] = xr.where(ds.lon < 0, ds.lon + 360, ds.lon)
+        dr.append(ds)
+        ds.close()
+    return dr
 ##############################################################################
 #                         Equatorial Undercurrent                            #
 ##############################################################################
@@ -185,11 +197,12 @@ def euc_observations(lat, lon, depth, method='static', vmin=0, sigma=False):
     db.coords['obs'] = ['CTD/ADCP', 'Gouriou & Toole (1993)', 'TAO/TRITION']
 
     # Reanalysis products.
-    robs = ['cglo', 'godas', 'oras', 'soda3.12.2']
-    robs_full = ['C-GLORS', 'GODAS', 'ORAS5', 'SODA3']
+    robs = ['cglo', 'gecco3-41', 'godas', 'oras', 'soda3.12.2']
+    robs_full = ['C-GLORS', 'GECCO3', 'GODAS', 'ORAS5', 'SODA3']
     dr = []
     for i, r in enumerate(robs):
         yrs = [1993, 2018]
+        var = 'u'
         if r in ['oras', 'cglo']:
             var = 'uo_' + r
             new_var_dict = {'depth': 'lev', 'latitude': 'lat', 'longitude': 'lon'}
@@ -197,10 +210,15 @@ def euc_observations(lat, lon, depth, method='static', vmin=0, sigma=False):
             var = 'ucur'
             new_var_dict = {'level': 'lev'}
         elif r in ['soda3.12.2']:
-            var = 'u'
             yrs = [1980, 2017]
             new_var_dict = {'st_ocean': 'lev', 'yu_ocean': 'lat', 'xu_ocean': 'lon'}
-        ds = xr.open_dataset(cfg.reanalysis/'uo_{}_{}_{}_climo.nc'.format(r, *yrs))[var]
+        elif r in ['soda3.12.2']:
+            yrs = [1980, 2017]
+            new_var_dict = {'st_ocean': 'lev', 'yu_ocean': 'lat', 'xu_ocean': 'lon'}
+        elif r in ['gecco3-41']:
+            yrs = [1980, 2018]
+            new_var_dict = {'Depth': 'lev'}
+        ds = xr.open_dataset(cfg.reanalysis/'uo_{}_{}_{}_climo.nc'.format(r, *yrs), decode_times=False)[var]
         ds = ds.rename(new_var_dict)
 
         if ds['lon'].max() < 300:

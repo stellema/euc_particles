@@ -119,7 +119,7 @@ def plot_cmip_euc_transport(de, de6, de5, lat, lon, depth, method='static', vmin
     if show_obs:
         db, dr = euc_observations(lat, lon, depth, method=method, vmin=vmin)
         # Reanalysis products.
-        for v, c, m in zip(dr.robs.values, ['grey', 'k', 'k', 'grey'], ['--', '-.', ':', ':']):
+        for v, c, m in zip(dr.robs.values, ['k', 'grey', 'k', 'grey', 'k'], ['--', '--', ':', ':', (0, (3, 5, 1, 5, 1, 5))]):
             ax[0].plot(lon, dr[var].mean('time').sel(robs=v), color=c, label=str(v.item()).upper(), linestyle=m)
         # Observations.
         ax[0].scatter(db.lon, db[var].isel(obs=0), color='k', label=db.obs[0].item(), marker='o')
@@ -202,7 +202,7 @@ def plot_cmip_euc_month(de, de6, de5, lat, lon, depth, method='max', vmin=0.8,
     if show_obs:
         db, dr = euc_observations(lat, lon, depth, method=method, vmin=vmin)
         # Reanalysis products.
-        for v, c, m in zip(dr.robs.values, ['grey', 'k', 'k', 'grey'], ['--', '-.', ':', ':']):
+        for v, c, m in zip(dr.robs.values, ['k', 'grey', 'k', 'grey', 'k'], ['--', '--', ':', ':', (0, (3, 5, 1, 5, 1, 5))]):
             ax[0].plot(xdim, dr.ec.sel(robs=v), color=c, label=v.upper(), linestyle=m)
         # TODO: Remove single obs value?
         # ax[0].scatter(db.lon, db['jo'], color='k', label=db[v].attrs['ref'], marker='o')

@@ -280,3 +280,40 @@ class Cmip:
 
 mip6 = Cmip(6)
 mip5 = Cmip(5)
+class Rdata:
+    _instances = []
+
+    def __init__(self, name, alt_name, uo, vo, period, cdict, action=None):
+        self.name = name
+        self.alt_name = alt_name
+        self.uo = uo
+        self.vo = vo
+        self.period = period
+        self.cdict = cdict
+        # Create instance of class.
+        self.action = action
+        Rdata._instances.append(self)
+
+    # Returns a printable representation of the given object.
+    def __repr__(self):
+        return str(self.name)
+
+    @classmethod
+    def resolve_actions(cls):
+        for instance in cls._instances:
+            if instance.action == "create":
+                instance.__create()
+            elif instance.action == "remove":
+                instance.__remove()
+Rdata('C-GLORS', 'cglo', 'uo_cglo', 'vo_cglo', [1993, 2018],
+      {'depth': 'lev', 'latitude': 'lat', 'longitude': 'lon'})
+Rdata('GECCO3', 'gecco3-41', 'u', 'v', [1980, 2018], {'Depth': 'lev'})
+Rdata('GODAS', 'godas', 'ucur', 'vcur', [1993, 2018], {'level': 'lev'})
+Rdata('ORAS5', 'oras', 'uo_oras', 'vo_oras', [1993, 2018],
+      {'depth': 'lev', 'latitude': 'lat', 'longitude': 'lon'})
+Rdata('SODA3', 'soda3.12.2', 'u', 'v', [1980, 2017],
+      {'st_ocean': 'lev', 'yu_ocean': 'lat', 'xu_ocean': 'lon'})
+# Rdata('C-GLORSv7', 'cglorsv7', 'vozocrtx', 'vomecrty', [1990, 2016],
+#       {'time_centered': 'time', 'depthu': 'lev', 'nav_lat': 'lat',
+#        'nav_lon': 'lon', 'y': 'j', 'x': 'i'})
+Rdata.resolve_actions()
