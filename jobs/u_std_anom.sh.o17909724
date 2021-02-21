@@ -1,0 +1,13 @@
+[0m[0m[0m[0m[0m[0m[0m[0m
+======================================================================================
+                  Resource Usage on 2021-02-21 07:03:51:
+   Job Id:             17909724.gadi-pbs
+   Project:            e14
+   Exit Status:        1
+   Service Units:      0.04
+   NCPUs Requested:    8                      NCPUs Used: 8               
+                                           CPU Time Used: 00:00:40                                   
+   Memory Requested:   68.0GB                Memory Used: 2.1GB           
+   Walltime requested: 00:30:00            Walltime Used: 00:00:14        
+   JobFS requested:    100.0MB                JobFS used: 0B              
+======================================================================================

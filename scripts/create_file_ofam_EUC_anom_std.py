@@ -34,7 +34,7 @@ new_file = 'ofam_u_month_anom_r{}.nc'.format(rank)
 def premeansnip(ds):
     ds = ds.drop(['Time_bounds', 'average_DT', 'nv', 'st_edges_ocean'])
     ds = ds.sel(xu_ocean=x, yu_ocean=y).isel(st_ocean=z).resample(Time='M').mean('Time', keep_attrs=True)
-    ds = ds.groupby('Time.month') - clim.groupby('Time.month').mean('Time', keep_attrs=True).compute()
+    ds = ds.groupby('Time.month') - clim.groupby('Time.month').mean('Time', keep_attrs=True)
     return ds.drop('month')
 
 logger.info("{}: Rank={}: Starting.".format(new_file, rank))
