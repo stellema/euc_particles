@@ -410,7 +410,6 @@ def cmip_wbc_transport_sum(mip, cc, net=False):
             dx = subset_cmip(mip, m, var, lx['exp'][s], z[m], y, x[m])
             dx = dx.squeeze()
             dx = dx.where(dx * cc.sign > 0)
-            print(mod[m]['id'])
             lon_str = 'lon' if mod[m]['nd'] == 1 else 'i'
             dxx = dx.sum(dim=['lev', lon_str])
             ds[cc._n][s, :, m] = dxx.values
@@ -519,14 +518,42 @@ def sig_line(ds, ydim, ALPHA=0.05, nydim=None):
     return sig
 
 
+def cmip_diff_sig_line(ds6, ds5, ydim, ALPHA=0.05, nydim=None):
+    # Statistical significance. This will be multiplied by transport for
+    # each plot. A value of one means the change is significant (and a solid
+    # line should be plotted), while a NaN value means not significant and
+    # as dashed line will be placed instead (only for RCP8.5). Historical
+    # values should always be multiplied by one.
+    # wilcoxon
+    # mannwhitneyu
+    # ttest_ind equal_var=False  (Welch’s t-test)
+    from scipy import stats
+    sig = np.ones((2, len(ydim)))
+    _sig = np.ones((2, len(ydim)))
+    for s, sx in zip(range(2), [0, 2]):
+        for i in range(len(ydim)):
+            if nydim is not None:
+                tmp = stats.ttest_ind(ds6.isel(exp=sx).isel({nydim: i}).values, ds5.isel(exp=sx).isel({nydim: i}).values, equal_var=False)[1]
+            else:
+                tmp = stats.ttest_ind(ds6.isel(exp=sx)[i].values, ds5.isel(exp=sx)[i].values, equal_var=False)[1]
+            # if nydim is not None:
+            #     tmp = stats.mannwhitneyu(ds6.isel(exp=sx).isel({nydim: i}).values, ds5.isel(exp=sx).isel({nydim: i}).values)[1]
+            # else:
+            #     tmp = stats.mannwhitneyu(ds6.isel(exp=sx)[i].values, ds5.isel(exp=sx)[i].values)[1]
+            sig[s, i] = (1 if tmp <= ALPHA else np.nan)
+            _sig[s, i] = tmp
+    print(_sig)
+    return sig
+
+
 def round_sig(x, n=2):
     n = 3 if x < 0.05 else n
     return 'p={:.{dp}f}'.format(x, dp=n) if x >= 0.001 else 'p<0.001'
 
 
-def cmip_cor(var, format_str=True):
+def cmip_cor(var1, var2, format_str=True):
     """Spearmanr correlation coefficent and significance hist vs future."""
-    cor = stats.spearmanr(var.isel(exp=0), var.isel(exp=1) - var.isel(exp=0))
+    cor = stats.spearmanr(var1, var2)
     if format_str:
         return 'diff: r={:.2f}'.format(cor[0]), round_sig(cor[1], n=2)
     else:
@@ -598,7 +625,7 @@ def cmipMMM(ct, dv, xdim=None, prec=None, const=1e6, avg=np.median,
             v.reduce(avg, dim='model').item(),
             *sorted([np.percentile(v, j) for j in [75, 25]]), p=prec if prec is not None else 2)
     # Get percent change and interquartile range.
-    cor = cmip_cor(dv)
+    cor = cmip_cor(dv.isel(exp=0), dv.isel(exp=2))
     dl += '{:>1.0f}% {} {}/{} {} {}'.format(percent(dvm.isel(exp=2), dvm.isel(exp=0)).item(), sig, n, len(dv.model), *cor)
     print(dl)
     return
