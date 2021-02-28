@@ -42,31 +42,19 @@ class Current:
     """A class used to represent a Current."""
     # Create instance of class.
     _instances = []
+    _COORD_KEYWORDS = {'depth', 'lat', 'lon'}
 
-    def __init__(self, n, name, depth=None, lat=None,
-                 lon=None, vel='vo', sign=1, action=None):
+    def __init__(self, n, name, **kwargs):
         self.n = n.upper()  # Acronym
         self._n = n.lower()  # Acronym
         self.name = name
-        self.depth = depth
-        self.lat = lat
-        self.lon = lon
-        self.vel = vel
-        self.sign = sign
+        for keyword, value in kwargs.items():
+            setattr(self, keyword, value)
 
-        # Create attributes.
-        self._depth = None
-        self._lat = None
-        self._lon = None
-        if depth is not None:
-            self._depth = coord_formatter(self.depth, 'depth')
-        if lat is not None:
-            self._lat = coord_formatter(self.lat, 'lat')
-        if lon is not None:
-            self._lon = coord_formatter(self.lon, 'lon')
-
+            if keyword in self._COORD_KEYWORDS:
+                setattr(self, '_' + keyword, coord_formatter(value, keyword))
         # Create instance of class.
-        self.action = action
+        self.action = kwargs.get('action', None)
         Current._instances.append(self)
 
     # Returns a printable representation of the given object.
@@ -84,8 +72,8 @@ class Current:
 
 # Create Current instances.
 ec = Current('EUC', 'Equatorial Undercurrent', vel='uo', sign=1, depth=[25, 350], lat=[-2.6, 2.6], lon=cfg.lons)
-mc = Current('MC', 'Mindanao Current', vel='vo', sign=-1, depth=[0, 550], lat=8, lon=[125, 130])
-ng = Current('NGCU', 'New Guinea Coastal Undercurrent', vel='vo', sign=1, depth=[0, 550], lat=-3.5, lon=[142, 149])
+mc = Current('MC', 'Mindanao Current', vel='vo', sign=-1, depth=[0, 1000], lat=8, lon=[124, 135], width=5)
+ng = Current('NGCU', 'New Guinea Coastal Undercurrent', vel='vo', sign=1, depth=[0, 1000], lat=-8, lon=[147, 160], width=7)
 # ng = Current('NGCU', 'New Guinea Coastal Undercurrent', vel='vo', sign=1, depth=[0, 800], lat=-6, lon=[146, 156])
 sv = Current('SV', 'Sverdrup transport')
 tauvo = Current('tauvo', 'Meridional Wind Stress')

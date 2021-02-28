@@ -63,6 +63,8 @@ def open_cmip(mip, m, var='uo', exp='historical', bounds=False):
 
 
 def subset_cmip(mip, m, var, exp, depth, lat, lon, lat_mid=False, lon_mid=None):
+    if type(mip) != int:
+        mip = mip.p
     mod = cfg.mod6 if mip == 6 else cfg.mod5
 
     # Make sure single points are lists.
@@ -118,14 +120,16 @@ def subset_cmip(mip, m, var, exp, depth, lat, lon, lat_mid=False, lon_mid=None):
     else:
         print('NI:Lat dim of {} dims={}'.format(mod[m]['id'], dx.dims))
 
-    if mip == 6 and var in ['uvo', 'vvo'] and mod[m]['id'] in ['MIROC-ES2L', 'MIROC6']:
+    if var in ['uvo', 'vvo'] and mod[m]['id'] in ['MIROC-ES2L', 'MIROC6']:
         dx = dx * -1
+    # Land points should be NaN not zero.
+    if mod[m]['id'] in ['MIROC5', 'MRI-CGCM3', 'MRI-ESM1']:
+        dx = dx.where(dx != 0., np.nan)
     return dx
 
 def open_reanalysis(var):
     dr = []
     for i, r in enumerate(cfg.Rdata._instances):
-
         _var = r.uo if var == 'u' else r.vo
         ds = xr.open_dataset(cfg.reanalysis/'{}o_{}_{}_{}_climo.nc'.format(var, r.alt_name, *r.period), decode_times=False)
         print(ds)
@@ -335,82 +339,116 @@ def ofam_euc_transport_sum(cc, depth, lat, lon, method='static', vmin=0):
     return df
 
 
-def bnds_wbc(mip, cc):
-    mod = cfg.mod6 if mip == 6 else cfg.mod5
-    contour = np.nanmin if cc.sign <= 0 else np.nanmax
-    x = np.zeros((len(mod), 2))
-    z = np.zeros((len(mod), 2))
-    for m in mod:
-        z_, y_, x_ = cc.depth, cc.lat, cc.lon.copy()
-        if cc.n == 'NGCU' and cc.lat in [-2.5, -3, -3.5]:
-            if mod[m]['id'] in ['MPI-ESM-LR', 'MPI-ESM1-2-LR', 'MIROC-ESM-CHEM', 'MIROC-ESM']:
-                x_[0], x_[-1] = 142.5, 152
-            elif mod[m]['id'] in ['CanESM2']:
-                x_[0], x_[-1] = 147, 152
-            elif mod[m]['id'] in ['BCC-CSM2-MR']:
-                x_[-1] = 150
-            elif mod[m]['id'] in ['CMSM4', 'CESM2', 'CESM2-WACCM', 'CIESM', 'INM-CM5-0', 'NorESM2-LM', 'NorESM2-MM', 'CCSM4', 'CESM1-BGC', 'CESM1-CAM5-1-FV2', 'CESM1-CAM5', 'CMCC-CESM', 'CMCC-CM', 'FIO-ESM', 'IPSL-CM5A-LR', 'IPSL-CM5A-MR', 'IPSL-CM5B-LR', 'MPI-ESM-MR']:
-                x_[-1] = 156
-            # if mod[m]['id'] in ['CAMS-CSM1-0', 'BCC-CSM2-MR', 'CMCC-CESM', 'CMCC-CM', 'CMCC-CMS', 'IPSL-CM5A-LR', 'IPSL-CM5A-MR', 'IPSL-CM5B-LR', 'NorESM1-ME', 'NorESM1-M']:
-            #     # x_[-1] = 147
-            #     # y_ = -2
-            #     x_[-1] = 156
+# def bnds_wbc(mip, cc):
+#     mod = cfg.mod6 if mip == 6 else cfg.mod5
+#     contour = np.nanmin if cc.sign <= 0 else np.nanmax
+#     x = np.zeros((len(mod), 2))
+#     z = np.zeros((len(mod), 2))
+#     for m in mod:
+#         z_, y_, x_ = cc.depth, cc.lat, cc.lon.copy()
+#         if cc.n == 'NGCU' and cc.lat in [-2.5, -3, -3.5]:
+#             if mod[m]['id'] in ['MPI-ESM-LR', 'MPI-ESM1-2-LR', 'MIROC-ESM-CHEM', 'MIROC-ESM']:
+#                 x_[0], x_[-1] = 142.5, 152
+#             elif mod[m]['id'] in ['CanESM2']:
+#                 x_[0], x_[-1] = 147, 152
+#             elif mod[m]['id'] in ['BCC-CSM2-MR']:
+#                 x_[-1] = 150
+#             elif mod[m]['id'] in ['CMSM4', 'CESM2', 'CESM2-WACCM', 'CIESM', 'INM-CM5-0', 'NorESM2-LM', 'NorESM2-MM', 'CCSM4', 'CESM1-BGC', 'CESM1-CAM5-1-FV2', 'CESM1-CAM5', 'CMCC-CESM', 'CMCC-CM', 'FIO-ESM', 'IPSL-CM5A-LR', 'IPSL-CM5A-MR', 'IPSL-CM5B-LR', 'MPI-ESM-MR']:
+#                 x_[-1] = 156
+#             # if mod[m]['id'] in ['CAMS-CSM1-0', 'BCC-CSM2-MR', 'CMCC-CESM', 'CMCC-CM', 'CMCC-CMS', 'IPSL-CM5A-LR', 'IPSL-CM5A-MR', 'IPSL-CM5B-LR', 'NorESM1-ME', 'NorESM1-M']:
+#             #     # x_[-1] = 147
+#             #     # y_ = -2
+#             #     x_[-1] = 156
 
-            # if mod[m]['id'] in ['CMCC-CESM', 'CMCC-CM', 'NorESM1-ME', 'NorESM1-M']:
-            #     # x_[-1] = 147
-            #     y_ = -2
-        elif cc.n == 'MC':
-            # Increase slice before contouring.
-            if mod[m]['id'] in ['MPI-ESM1-2-HR']:
-                x_[-1] = 128.5
-            elif mod[m]['id'] in ['CanESM2', 'MIROC-ESM-CHEM', 'MIROC-ESM']:
-                x_[-1] = 133
-        # elif cc.n == 'EUC':
-        #     if mod[m]['id'] in ['MPI-ESM-LR', 'MPI-ESM1-2-LR']:
-        #         y_[-1] = 3
-        dx = subset_cmip(mip, m, cc.vel, 'historical', z_, y_, x_)
+#             # if mod[m]['id'] in ['CMCC-CESM', 'CMCC-CM', 'NorESM1-ME', 'NorESM1-M']:
+#             #     # x_[-1] = 147
+#             #     y_ = -2
+#         elif cc.n == 'MC':
+#             # Increase slice before contouring.
+#             if mod[m]['id'] in ['MPI-ESM1-2-HR']:
+#                 x_[-1] = 128.5
+#             elif mod[m]['id'] in ['CanESM2', 'MIROC-ESM-CHEM', 'MIROC-ESM']:
+#                 x_[-1] = 133
+#         # elif cc.n == 'EUC':
+#         #     if mod[m]['id'] in ['MPI-ESM-LR', 'MPI-ESM1-2-LR']:
+#         #         y_[-1] = 3
+#         dx = subset_cmip(mip, m, cc.vel, 'historical', z_, y_, x_)
+#         dx = dx.squeeze()
+
+#         # Depths
+#         z[m, 0] = dx.lev.values[0]
+#         z[m, 1] = dx.lev.values[-1]
+
+#         if contour == np.nanmin:
+#             dxx = dx.where(dx <= contour(dx) * 0.25, drop=True)
+#         else:
+#             dxx = dx.where(dx >= contour(dx) * 0.2, drop=True)
+#         x[m, 0] = dxx.lon.values[0]  # LHS
+#         if dxx.lon.size > 1:
+#             x[m, 1] = dxx.lon.values[-1]
+#         else:
+#             x[m, 1] = x[m, 0]
+
+#         # # Make LHS point all NaN
+#         # try:
+#         #     dxb1 = dx.where((dx.lon <= x[m, 0]), drop=True)
+#         #     x[m, 0] = dxb1.where(dxb1.count(dim='lev') == 0, drop=True).lon.max().item()
+#         # except:
+#         #     pass
+#     return x, z
+
+
+
+def bnds_wbc(mip, cc):
+    x = np.zeros((len(mip.mod), 2))
+    z = np.zeros((len(mip.mod), 2))
+    for m in mip.mod:
+        z_, y_, x_ = cc.depth, cc.lat, cc.lon.copy()
+        # if cc.n in ['ngcu'] and cc.lat in [-8]:
+        #     if mip.mod[m]['id'] in ['CanESM5', 'CMCC-CM2-SR5', 'CMCC-CM6-1', 'CNRM-ESM2-1']:
+        #         x_[0] = 150
+        #     if mip.mod[m]['id'] in ['CESM2', 'CESM2-WACCM','EC-Earth3','EC-Earth3-Veg', 'NESM3']:
+        #         x_[0] = 146
+        dx = subset_cmip(mip.p, m, cc.vel, 'historical', z_, y_, x_)
         dx = dx.squeeze()
 
         # Depths
-        z[m, 0] = dx.lev.values[0]
-        z[m, 1] = dx.lev.values[-1]
-        if contour == np.nanmin:
-            dxx = dx.where(dx <= contour(dx) * 0.25, drop=True)
-        else:
-            dxx = dx.where(dx >= contour(dx) * 0.2, drop=True)
+        # z_tmp =
+        z[m] = [dx.lev.values[i] for i in [0, -1]]
+        # Trimming firts few levels off to avoid coastal shelves.
+        dx = dx.isel(lev=slice(idx(dx.lev, 50), len(dx.lev) + 1))
 
-        x[m, 0] = dxx.lon.values[0]  # LHS
-        if dxx.lon.size > 1:
-            x[m, 1] = dxx.lon.values[-1]
-        else:
-            x[m, 1] = x[m, 0]
+        # Western boundary: find western most non land longitude.
+        x[m, 0] = dx.where(~np.isnan(dx), drop=True).lon.min().item()
 
-        # Make LHS point all NaN
+        # Eastern boundary >= WB + current width.
         try:
-            dxb1 = dx.where((dx.lon <= x[m, 0]), drop=True)
-            x[m, 0] = dxb1.where(dxb1.count(dim='lev') == 0, drop=True).lon.max().item()
-        except:
-            pass
+            x[m, 1] = dx.lon.where(dx.lon >= x[m, 0] + cc.width, drop=True).min()
+        except ValueError:
+            print(mip.mod[m]['id'], x[m], cc.width)
+            # print(dx.lon.where(dx.lon >= x[m, 0] + cc.width))
+
+        dx.close()
     return x, z
 
 
+
 def cmip_wbc_transport_sum(mip, cc, net=False):
-    mod = cfg.mod6 if mip == 6 else cfg.mod5
-    lx = cfg.lx6 if mip == 6 else cfg.lx5
+    mod = cfg.mod6 if mip.p == 6 else cfg.mod5
+    lx = cfg.lx6 if mip.p == 6 else cfg.lx5
     # Scenario, month, longitude, model.
     var = 'vvo'
-    model = np.array([mod[i]['id'] for i in range(len(mod))])
-    dc = np.zeros((len(lx['exps']), len(cfg.tdim), len(mod)))
+    dc = np.zeros((len(mip.exps), len(cfg.tdim), len(mip.mod)))
     ds = xr.Dataset({cc._n: (['exp', 'time', 'model'], dc)},
-                    coords={'exp': lx['exps'], 'time': cfg.tdim, 'model': model})
+                    coords={'exp': mip.exps, 'time': cfg.tdim, 'model': mip.models})
     x, z = bnds_wbc(mip, cc)
     y = cc.lat
     for m in mod:
-        for s, ex in enumerate(lx['exp']):
-            dx = subset_cmip(mip, m, var, lx['exp'][s], z[m], y, x[m])
+        for s, ex in enumerate(mip.exp):
+            dx = subset_cmip(mip.p, m, var, mip.exp[s], z[m], y, x[m])
             dx = dx.squeeze()
-            dx = dx.where(dx * cc.sign > 0)
-            lon_str = 'lon' if mod[m]['nd'] == 1 else 'i'
+            # dx = dx.where(dx * cc.sign > 0)
+            lon_str = 'lon' if mip.mod[m]['nd'] == 1 else 'i'
             dxx = dx.sum(dim=['lev', lon_str])
             ds[cc._n][s, :, m] = dxx.values
             dx.close()
@@ -514,7 +552,7 @@ def sig_line(ds, ydim, ALPHA=0.05, nydim=None):
             tmp = stats.wilcoxon(ds.isel(exp=0).isel({nydim: i}), ds.isel(exp=1).isel({nydim: i}))[1]
         else:
             tmp = stats.wilcoxon(ds.isel(exp=0)[i], ds.isel(exp=1)[i])[1]
-        sig[1, i] = (1 if tmp < ALPHA else np.nan)
+        sig[1, i] = (1 if tmp <= ALPHA else np.nan)
     return sig
 
 
@@ -529,20 +567,20 @@ def cmip_diff_sig_line(ds6, ds5, ydim, ALPHA=0.05, nydim=None):
     # ttest_ind equal_var=False  (Welch’s t-test)
     from scipy import stats
     sig = np.ones((2, len(ydim)))
-    _sig = np.ones((2, len(ydim)))
+    # _sig = np.ones((2, len(ydim)))
     for s, sx in zip(range(2), [0, 2]):
         for i in range(len(ydim)):
-            if nydim is not None:
-                tmp = stats.ttest_ind(ds6.isel(exp=sx).isel({nydim: i}).values, ds5.isel(exp=sx).isel({nydim: i}).values, equal_var=False)[1]
-            else:
-                tmp = stats.ttest_ind(ds6.isel(exp=sx)[i].values, ds5.isel(exp=sx)[i].values, equal_var=False)[1]
             # if nydim is not None:
-            #     tmp = stats.mannwhitneyu(ds6.isel(exp=sx).isel({nydim: i}).values, ds5.isel(exp=sx).isel({nydim: i}).values)[1]
+            #     tmp = stats.ttest_ind(ds6.isel(exp=sx).isel({nydim: i}).values, ds5.isel(exp=sx).isel({nydim: i}).values, equal_var=False)[1]
             # else:
-            #     tmp = stats.mannwhitneyu(ds6.isel(exp=sx)[i].values, ds5.isel(exp=sx)[i].values)[1]
+            #     tmp = stats.ttest_ind(ds6.isel(exp=sx)[i].values, ds5.isel(exp=sx)[i].values, equal_var=False)[1]
+            if nydim is not None:
+                tmp = stats.mannwhitneyu(ds6.isel(exp=sx).isel({nydim: i}).values, ds5.isel(exp=sx).isel({nydim: i}).values)[1]
+            else:
+                tmp = stats.mannwhitneyu(ds6.isel(exp=sx)[i].values, ds5.isel(exp=sx)[i].values)[1]
             sig[s, i] = (1 if tmp <= ALPHA else np.nan)
-            _sig[s, i] = tmp
-    print(_sig)
+            # _sig[s, i] = tmp
+    # print(_sig)
     return sig
 
 
