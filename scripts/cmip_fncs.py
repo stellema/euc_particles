@@ -9,6 +9,7 @@ author: Annette Stellema (astellemas@gmail.com)
 import numpy as np
 import xarray as xr
 import math
+import scipy
 from scipy import stats
 
 import cfg
@@ -16,19 +17,48 @@ from cfg import mip5, mip6
 from tools import idx, idx2d, wind_stress_curl, coriolis, open_tao_data
 from main import ec, mc, ng
 
+def do_kdtree(ds, y, x):
+    ccords = np.dstack([ds.lat.values.ravel(), ds.lon.values.ravel()])[0]
+    mytree = scipy.spatial.cKDTree(ccords)
+    dist, index = mytree.query([y, x])
+    index = np.unravel_index(index, ds.lat.shape)
+    return index
+
+def nearest_2d(ds, y, x):
+    abslat = np.abs(ds.lat - y)
+    abslon = np.abs(ds.lon - x)
+    c = np.maximum(abslat, abslon)
+
+    ([yi], [xi]) = np.where(c == np.min(c))
+    ds.isel(i=xi, j=yi)
+    return yi, xi
+
+
 
 def open_cmip(mip, m, var='uo', exp='historical', bounds=False):
+    """Open CMIPx ocean variable dataset, fixing any issues and renaming coords.
+
+    Args:
+        mip (int): CMIP phase. Can be 5 or 6.
+        m (int): Integer for model in mip.
+        var (str, optional): Variable to open ('uo', 'vo', 'uvo', 'vvo'). Defaults to 'uo'.
+        exp (str, optional): Scenario. Defaults to 'historical'.
+        bounds (bool, optional): DESCRIPTION. Defaults to False.
+
+    Returns:
+        ds (dataset): CMIPx model m dataset..
+
+    """
     mod = cfg.mod6 if mip == 6 else cfg.mod5
     # File path.
-    cmip = cfg.home/'model_output/CMIP{}/CLIMOS/'.format(mip)
+    cmip = cfg.home / 'model_output/CMIP{}/CLIMOS/'.format(mip)
     if var in ['uvo', 'vvo']:
-        cmip = cmip/'ocean_transport/'
-    file = cmip/'{}_Omon_{}_{}_climo.nc'.format(var, mod[m]['id'], exp)
+        cmip = cmip / 'ocean_transport/'
+    file = cmip / '{}_Omon_{}_{}_climo.nc'.format(var, mod[m]['id'], exp)
     ds = xr.open_dataset(str(file))
-    # print(m, mod[m]['id'], *[v for v in ds.coords])
+
     dims = [v for v in ds.coords]
     if mod[m]['nd'] == 2:
-
         # Rename 2d coord indexes to j,i.
         j0 = [d for d in list(ds[var].dims) if d in ['y', 'nlat', 'rlat', 'lat']]
         if any(j0):
@@ -47,6 +77,7 @@ def open_cmip(mip, m, var='uo', exp='historical', bounds=False):
             ds = ds.rename({'latitude_bnds': 'lat_bnds', 'longitude_bnds': 'lon_bnds'})
         elif 'nav_lat_bnds' in ds:
             ds = ds.rename({'nav_lat_bnds': 'lat_bnds', 'nav_lon_bnds': 'lon_bnds'})
+
     # Fix odd error (j, i wrong labels).
     if mod[m]['id'] in ['CMCC-CM2-SR5']:
         ds = ds.rename({'j': 'i', 'i': 'j'})
@@ -59,10 +90,27 @@ def open_cmip(mip, m, var='uo', exp='historical', bounds=False):
     if (mip == 6 and hasattr(ds.lev, 'units') and ds.lev.attrs['units'] != 'm'):
         ds['lev'] = ds.lev / 100
 
+    if var in ['uvo', 'vvo'] and mod[m]['id'] in ['MIROC-ES2L', 'MIROC6']:
+        ds = ds * -1
+
+    # Land points should be NaN not zero.
+    if mod[m]['id'] in ['MIROC5', 'MRI-CGCM3', 'MRI-ESM1']:
+        ds = ds.where(ds != 0.0, np.nan)
     return ds
 
 
-def subset_cmip(mip, m, var, exp, depth, lat, lon, lat_mid=False, lon_mid=None):
+def subset_cmip(mip, m, var, exp, depth, lat, lon):
+    """Open and slice coordinates of CMIPx ocean variable dataset.
+
+    Args:
+        mip (int): CMIP phase. Can be 5 or 6.
+        m (int): Integer for model in mip.
+        var (str, optional): Variable to open ('uo', 'vo', 'uvo', 'vvo'). Defaults to 'uo'.
+        exp (str, optional): Scenario. Defaults to 'historical'.
+        depth (list): Depths to subset. Assumes list of endpoints.
+        lat (list or int): Latitude(s) to subset. Assumes list of endpoints.
+        lon (list or int): Longitude(s) to subset. Assumes list of endpoints.
+    """
     if type(mip) != int:
         mip = mip.p
     mod = cfg.mod6 if mip == 6 else cfg.mod5
@@ -76,7 +124,7 @@ def subset_cmip(mip, m, var, exp, depth, lat, lon, lat_mid=False, lon_mid=None):
     dx = ds[var]
 
     # Depth level indexes.
-    zi = [idx(dx['lev'], z, method='greater') for z in depth]
+    zi = [idx(dx['lev'], z) for z in depth]
 
     # Latitude and longitude indexes.
     if mod[m]['nd'] == 1:  # 1D coords.
@@ -87,51 +135,50 @@ def subset_cmip(mip, m, var, exp, depth, lat, lon, lat_mid=False, lon_mid=None):
         # Indexes of longitude(s).
         xi = [idx2d(dx.lat, dx.lon, np.mean(lat), x)[1] for x in lon]
         # Indexes of latitudes(s).
-        if len(lat) != 2:
-            yi = [idx2d(dx.lat, dx.lon, y, lon[0])[0] for y in lat]
+        yi = [idx2d(dx.lat, dx.lon, y, lon[0])[0] for y in lat]
 
-        else:
-            yi = [idx2d(dx.lat, dx.lon, y, lon[0], r)[0] for y, r in zip(lat, ['lower_lat', 'greater_lat'])]
+    # Latitude slice (creates slice if len(lat) == 2).
+    yf, xf = yi, xi  # Basically temp vars.
 
-    # Switch indexes if lat goes N->S.
-    # Subset depths.
-    dx = dx.isel(lev=slice(zi[0], zi[1] + 1))
+    if np.array(yi).size == 2:
+        yf = slice(yi[0], yi[-1] + 1)
+        if yi[0] > yi[-1]:  # Swap index order (i.e. if N->S).
+            yf = slice(yi[-1], yi[0] + 1)
 
-    # Subset lats/lons (dx) and sum transport (dxx).
-    yf, xf = yi, xi
-    if np.array(lat).size > 1:
-        if np.array(yi).size == 2:
-            yf = slice(yi[0], yi[1] + 1)
-            if yi[0] > yi[1]:
-                yf = slice(yi[1], yi[0] + 1)
-        else:
-            yf = yi
-
+    # Longitude slice.
     if np.array(lon).size == 2:
-        xf = slice(xi[0], xi[1] + 1)
-        if xi[0] > xi[1]:
-            xf = np.append(np.arange(xi[0], dx.shape[-1]), np.arange(xi[1] + 1))
-    else:
-        xf = xi
+        xf = slice(xi[0], xi[-1] + 1)
+        if xi[0] > xi[-1]:  # Longitude array spilt.
+            # Create list of indexes e.g. [360, 2] -> [359, 360, 0, 1, 2].
+            xf = np.append(np.arange(xi[0], dx.shape[-1]), np.arange(xi[-1] + 1))
+
+    # Subset depths.
+    dx = dx.isel(lev=slice(zi[0], zi[-1] + 1))
+    # Subset latitudes and longitudes (2D coords all renamed to 'i' and 'j').
     if 'j' in dx.dims:
         dx = dx.isel(j=yf, i=xf)
     elif 'lat' in dx.dims:
         dx = dx.isel(lat=yf, lon=xf)
     else:
         print('NI:Lat dim of {} dims={}'.format(mod[m]['id'], dx.dims))
-
-    if var in ['uvo', 'vvo'] and mod[m]['id'] in ['MIROC-ES2L', 'MIROC6']:
-        dx = dx * -1
-    # Land points should be NaN not zero.
-    if mod[m]['id'] in ['MIROC5', 'MRI-CGCM3', 'MRI-ESM1']:
-        dx = dx.where(dx != 0., np.nan)
     return dx
 
+
 def open_reanalysis(var):
+    """Open ocean reanalysis datasets.
+
+    Args:
+        var (str): Variable to open. Accepts 'v' or 'u'.
+
+    Returns:
+        dr (list): List of reanalysis DataArrays.
+
+    """
     dr = []
     for i, r in enumerate(cfg.Rdata._instances):
         _var = r.uo if var == 'u' else r.vo
-        ds = xr.open_dataset(cfg.reanalysis/'{}o_{}_{}_{}_climo.nc'.format(var, r.alt_name, *r.period), decode_times=False)
+        ds = xr.open_dataset(cfg.reanalysis / '{}o_{}_{}_{}_climo.nc'
+                             .format(var, r.alt_name, *r.period), decode_times=False)
         print(ds)
         ds = ds[_var].rename(r.cdict)
         if ds['lon'].max() < 300:
@@ -139,6 +186,8 @@ def open_reanalysis(var):
         dr.append(ds)
         ds.close()
     return dr
+
+
 ##############################################################################
 #                         Equatorial Undercurrent                            #
 ##############################################################################
@@ -167,8 +216,8 @@ def euc_observations(lat, lon, depth, method='static', vmin=0, sigma=False):
         dj = dsj.sel(lat=slice(-2, 2))
         dj = dj.where((dj.SIGMAM > 23) & (dj.SIGMAM < 26.5))
     else:
-        yi = [idx(dsj.lat, y, r) for y, r in zip(lat, ['lower', 'greater'])]
-        zi = [idx(dsj.lev, z, r) for z, r in zip(depth, ['closest', 'greater'])]
+        yi = [idx(dsj.lat, y) for y in lat]
+        zi = [idx(dsj.lev, z) for z in depth]
         dj = dsj.isel(lev=slice(zi[0], zi[1] + 1), lat=slice(yi[0], yi[1] + 1))
     dj = dj.uo.to_dataset()
     # Maximum velocity at each longitude.
@@ -298,7 +347,7 @@ def ofam_euc_transport_sum(cc, depth, lat, lon, method='static', vmin=0):
     dz = xr.open_dataset(cfg.ofam / 'ocean_u_2012_06.nc').st_edges_ocean
 
     # EUC depth boundary indexes.
-    zi = [idx(fh.st_ocean.values, depth[0]), idx(fh.st_ocean.values, depth[1], 'greater') + 1]
+    zi = [idx(fh.st_ocean.values, depth[0]), idx(fh.st_ocean.values, depth[1]) + 1]
 
     # # Slice lat, lon and depth.
     df = xr.concat((fh, fr), dim='exp')
@@ -339,82 +388,27 @@ def ofam_euc_transport_sum(cc, depth, lat, lon, method='static', vmin=0):
     return df
 
 
-# def bnds_wbc(mip, cc):
-#     mod = cfg.mod6 if mip == 6 else cfg.mod5
-#     contour = np.nanmin if cc.sign <= 0 else np.nanmax
-#     x = np.zeros((len(mod), 2))
-#     z = np.zeros((len(mod), 2))
-#     for m in mod:
-#         z_, y_, x_ = cc.depth, cc.lat, cc.lon.copy()
-#         if cc.n == 'NGCU' and cc.lat in [-2.5, -3, -3.5]:
-#             if mod[m]['id'] in ['MPI-ESM-LR', 'MPI-ESM1-2-LR', 'MIROC-ESM-CHEM', 'MIROC-ESM']:
-#                 x_[0], x_[-1] = 142.5, 152
-#             elif mod[m]['id'] in ['CanESM2']:
-#                 x_[0], x_[-1] = 147, 152
-#             elif mod[m]['id'] in ['BCC-CSM2-MR']:
-#                 x_[-1] = 150
-#             elif mod[m]['id'] in ['CMSM4', 'CESM2', 'CESM2-WACCM', 'CIESM', 'INM-CM5-0', 'NorESM2-LM', 'NorESM2-MM', 'CCSM4', 'CESM1-BGC', 'CESM1-CAM5-1-FV2', 'CESM1-CAM5', 'CMCC-CESM', 'CMCC-CM', 'FIO-ESM', 'IPSL-CM5A-LR', 'IPSL-CM5A-MR', 'IPSL-CM5B-LR', 'MPI-ESM-MR']:
-#                 x_[-1] = 156
-#             # if mod[m]['id'] in ['CAMS-CSM1-0', 'BCC-CSM2-MR', 'CMCC-CESM', 'CMCC-CM', 'CMCC-CMS', 'IPSL-CM5A-LR', 'IPSL-CM5A-MR', 'IPSL-CM5B-LR', 'NorESM1-ME', 'NorESM1-M']:
-#             #     # x_[-1] = 147
-#             #     # y_ = -2
-#             #     x_[-1] = 156
-
-#             # if mod[m]['id'] in ['CMCC-CESM', 'CMCC-CM', 'NorESM1-ME', 'NorESM1-M']:
-#             #     # x_[-1] = 147
-#             #     y_ = -2
-#         elif cc.n == 'MC':
-#             # Increase slice before contouring.
-#             if mod[m]['id'] in ['MPI-ESM1-2-HR']:
-#                 x_[-1] = 128.5
-#             elif mod[m]['id'] in ['CanESM2', 'MIROC-ESM-CHEM', 'MIROC-ESM']:
-#                 x_[-1] = 133
-#         # elif cc.n == 'EUC':
-#         #     if mod[m]['id'] in ['MPI-ESM-LR', 'MPI-ESM1-2-LR']:
-#         #         y_[-1] = 3
-#         dx = subset_cmip(mip, m, cc.vel, 'historical', z_, y_, x_)
-#         dx = dx.squeeze()
-
-#         # Depths
-#         z[m, 0] = dx.lev.values[0]
-#         z[m, 1] = dx.lev.values[-1]
-
-#         if contour == np.nanmin:
-#             dxx = dx.where(dx <= contour(dx) * 0.25, drop=True)
-#         else:
-#             dxx = dx.where(dx >= contour(dx) * 0.2, drop=True)
-#         x[m, 0] = dxx.lon.values[0]  # LHS
-#         if dxx.lon.size > 1:
-#             x[m, 1] = dxx.lon.values[-1]
-#         else:
-#             x[m, 1] = x[m, 0]
-
-#         # # Make LHS point all NaN
-#         # try:
-#         #     dxb1 = dx.where((dx.lon <= x[m, 0]), drop=True)
-#         #     x[m, 0] = dxb1.where(dxb1.count(dim='lev') == 0, drop=True).lon.max().item()
-#         # except:
-#         #     pass
-#     return x, z
-
-
-
 def bnds_wbc(mip, cc):
     x = np.zeros((len(mip.mod), 2))
     z = np.zeros((len(mip.mod), 2))
     for m in mip.mod:
         z_, y_, x_ = cc.depth, cc.lat, cc.lon.copy()
-        # if cc.n in ['ngcu'] and cc.lat in [-8]:
-        #     if mip.mod[m]['id'] in ['CanESM5', 'CMCC-CM2-SR5', 'CMCC-CM6-1', 'CNRM-ESM2-1']:
-        #         x_[0] = 150
-        #     if mip.mod[m]['id'] in ['CESM2', 'CESM2-WACCM','EC-Earth3','EC-Earth3-Veg', 'NESM3']:
-        #         x_[0] = 146
+        if cc.n in ['NGCU'] and cc.lat in [-8]:
+            if mip.mod[m]['id'] in ['CanESM5', 'CMCC-CM2-SR5', 'CMCC-CM6-1', 'CNRM-ESM2-1', 'NESM3']:
+                x_[0] = 150
+            if mip.mod[m]['id'] in ['CESM2', 'CESM2-WACCM']:
+                x_[0] = 146
+            if mip.mod[m]['id'] in ['EC-Earth3', 'EC-Earth3-Veg']:
+                x_[0] = 147
+        if cc.n in ['MC'] and cc.lat in [8]:
+            if mip.mod[m]['id'] in ['MIROC-ESM-CHEM', 'MIROC-ESM', 'EC-Earth3-Veg', 'EC-Earth3', 'GISS-E2-1-G']:
+                x_[0] = 126
         dx = subset_cmip(mip.p, m, cc.vel, 'historical', z_, y_, x_)
         dx = dx.squeeze()
 
         # Depths
-        # z_tmp =
         z[m] = [dx.lev.values[i] for i in [0, -1]]
+
         # Trimming firts few levels off to avoid coastal shelves.
         dx = dx.isel(lev=slice(idx(dx.lev, 50), len(dx.lev) + 1))
 
@@ -431,9 +425,34 @@ def bnds_wbc(mip, cc):
         dx.close()
     return x, z
 
+def bnds_wbc_reanalysis(cc):
+    dr = open_reanalysis('v')
+    x = np.zeros((len(dr), 2))
+    z = np.zeros((len(dr), 2))
+    for r, dx in enumerate(dr):
+        tmpx = 0.5 if r in [0, 1, 3, 4] else 0
+        tmpy = 0.5 if r in [0, 2, 3, 4] else 0
+        z_, y_, x_ = cc.depth, cc.lat + tmpy, [_ + tmpx for _ in cc.lon.copy()]
 
+        dx = dx.sel(lat=y_, method='nearest').sel(lon=slice(*x_), lev=slice(*z_))
 
-def cmip_wbc_transport_sum(mip, cc, net=False):
+        # Trimming firts few levels off to avoid coastal shelves.
+        dx = dx.isel(lev=slice(idx(dx.lev, 0), len(dx.lev) + 1))
+
+        # Western boundary: find western most non land longitude.
+        x[r, 0] = dx.where(~np.isnan(dx), drop=True).lon.min().item()
+
+        # Eastern boundary >= WB + current width.
+
+        x[r, 1] = dx.lon.where(dx.lon >= x[r, 0] + cc.width, drop=True).min()
+        dx = dx.sel(lon=slice(x[r, 0], x[r, 1]))
+        dx = dx * dx.lev.diff(dim='lev') * dx.lon.diff(dim='lon') * cfg.LON_DEG(cc.lat)
+        dx = dx.sum(dim=['lev', 'lon']) / 1e6
+        dr[r] = dx
+        dx.close()
+    return dr
+
+def cmip_wbc_transport_sum(mip, cc, net=True):
     mod = cfg.mod6 if mip.p == 6 else cfg.mod5
     lx = cfg.lx6 if mip.p == 6 else cfg.lx5
     # Scenario, month, longitude, model.
@@ -447,7 +466,8 @@ def cmip_wbc_transport_sum(mip, cc, net=False):
         for s, ex in enumerate(mip.exp):
             dx = subset_cmip(mip.p, m, var, mip.exp[s], z[m], y, x[m])
             dx = dx.squeeze()
-            # dx = dx.where(dx * cc.sign > 0)
+            if not net:
+                dx = dx.where(dx * cc.sign > 0)
             lon_str = 'lon' if mip.mod[m]['nd'] == 1 else 'i'
             dxx = dx.sum(dim=['lev', lon_str])
             ds[cc._n][s, :, m] = dxx.values
@@ -456,7 +476,8 @@ def cmip_wbc_transport_sum(mip, cc, net=False):
     return ds
 
 
-def ofam_wbc_transport_sum(cc, depth, lat, lon, net=False):
+
+def ofam_wbc_transport_sum(cc, depth, lat, lon, net=True, bnds=False):
     fh = xr.open_dataset(cfg.ofam/'ocean_v_1981-2012_climo.nc')
     fr = xr.open_dataset(cfg.ofam/'ocean_v_2070-2101_climo.nc')
 
@@ -464,30 +485,38 @@ def ofam_wbc_transport_sum(cc, depth, lat, lon, net=False):
     dz = xr.open_dataset(cfg.ofam/'ocean_u_2012_06.nc').st_edges_ocean
 
     # EUC depth boundary indexes.
-    zi = [idx(dz[1:], depth[0]), idx(dz[1:], depth[1], 'greater') + 1]
+    zi = [idx(dz[1:], z) for z in depth]
     if cc.n == 'NGCU':
         if lat <= -5:
-            lon = [145, 156]
+            lon = [146, 156]
         else:
             lon = [140.5, 145]
     # Slice lat, lon and depth.
-    fh = fh.v.sel(xu_ocean=slice(lon[0], lon[1]), yu_ocean=lat).isel(st_ocean=slice(zi[0], zi[1]))
-    fr = fr.v.sel(xu_ocean=slice(lon[0], lon[1]), yu_ocean=lat).isel(st_ocean=slice(zi[0], zi[1]))
+    fh = fh.v.sel(xu_ocean=slice(lon[0], lon[1] + 0.1), yu_ocean=lat).isel(st_ocean=slice(zi[0], zi[1] + 1))
+    fr = fr.v.sel(xu_ocean=slice(lon[0], lon[1] + 0.1), yu_ocean=lat).isel(st_ocean=slice(zi[0], zi[1] + 1))
 
-    dz = dz.diff(dim='st_edges_ocean').rename({'st_edges_ocean': 'st_ocean'})
-    dz = dz.isel(st_ocean=slice(zi[0], zi[1]))
-    dz.coords['st_ocean'] = fh['st_ocean']  # Copy st_ocean coords
-    if not net:
-        fh = fh.where(fh * cc.sign > 0)
-        fr = fr.where(fr * cc.sign > 0)
-    # Multiply by depth and width.
-    fh = fh * dz * cfg.LON_DEG(lat) * 0.1
-    fr = fr * dz * cfg.LON_DEG(lat) * 0.1
-    fh = fh.sum(dim=['st_ocean', 'xu_ocean'])
-    fr = fr.sum(dim=['st_ocean', 'xu_ocean'])
-    fr['Time'] = fh['Time']
-    return xr.concat((fh, fr, fr - fh), dim='exp')
+    lon[0] = fh.where(~np.isnan(fh), drop=True).xu_ocean.min().item()
+    lon[1] = lon[0] + cc.width
+    fh = fh.sel(xu_ocean=slice(lon[0], lon[1] + 0.1))
+    fr = fr.sel(xu_ocean=slice(lon[0], lon[1] + 0.1))
 
+    if bnds:
+        zz = [fh.st_ocean.isel(st_ocean=slice(zi[0], zi[1] + 1)).values[i] for i in [0, -1]]
+        return lon, zz
+    else:
+        dz = dz.diff(dim='st_edges_ocean').rename({'st_edges_ocean': 'st_ocean'})
+        dz = dz.isel(st_ocean=slice(zi[0], zi[1] + 1))
+        dz.coords['st_ocean'] = fh['st_ocean']  # Copy st_ocean coords
+        if not net:
+            fh = fh.where(fh * cc.sign > 0)
+            fr = fr.where(fr * cc.sign > 0)
+        # Multiply by depth and width.
+        fh = fh * dz * cfg.LON_DEG(lat) * 0.1
+        fr = fr * dz * cfg.LON_DEG(lat) * 0.1
+        fh = fh.sum(dim=['st_ocean', 'xu_ocean'])
+        fr = fr.sum(dim=['st_ocean', 'xu_ocean'])
+        fr['Time'] = fh['Time']
+        return xr.concat((fh, fr, fr - fh), dim='exp')
 
 
 def open_cmip_tau(mip, m, exp):
@@ -505,7 +534,10 @@ def open_cmip_tau(mip, m, exp):
         ds_['time'] = ds['time']
         ds = xr.merge([ds, ds_], combine_attrs='override')
         ds_.close()
-
+    # Model wind stress sign wrong.
+    if mip.mod[m]['id'] in ['CIESM', 'CMCC-CM2-SR5']:
+        for var in ['tauu', 'tauv']:
+            ds[var] = ds[var] * -1
     return ds
 
 
@@ -515,8 +547,10 @@ def cmip_wsc(mip, lats=[-25, 25], lons=[110, 300], landmask=False):
         for m in mip.mod:
             ds = open_cmip_tau(mip, m, exp)
             ds = ds.sel(lat=slice(lats[0], lats[-1]), lon=slice(lons[0], lons[-1]))
-            # remove ocean values in north east corner
-            # ds = ds.where((ds.lat < 10) | (ds.lon < 275) & (ds.lat < 16) | (ds.lon < 263))
+            # Mask ocean values in north east corner
+            ds = ds.where((ds.lat < 9) | (ds.lon < 275) & (ds.lat < 16) | (ds.lon < 263))
+            # Mask ocean values in south west corner
+            ds = ds.where((ds.lon > 142) | (ds.lat > -5))
             if s == 0 and m == 0:
                 wsc = np.zeros((3, len(mip.mod), *list(ds[mip.tau[0]].shape)))
                 ws = np.zeros((3, len(mip.mod), *list(ds[mip.tau[0]].shape)))
@@ -540,12 +574,25 @@ def cmip_wsc(mip, lats=[-25, 25], lons=[110, 300], landmask=False):
 
 
 def sig_line(ds, ydim, ALPHA=0.05, nydim=None):
-    # Statistical significance. This will be multiplied by transport for
-    # each plot. A value of one means the change is significant (and a solid
-    # line should be plotted), while a NaN value means not significant and
-    # as dashed line will be placed instead (only for RCP8.5). Historical
-    # values should always be multiplied by one.
-    from scipy import stats
+    """Statistical significance of CMIPx projected change (Wilcoxon Signed-Rank).
+
+    This will be multiplied by transport for each plot. A value of one means
+    the change is significant (and a solid line should be plotted), while a
+    NaN value means not significant and as dashed line will be placed instead
+    (only for RCP8.5). Historical values should always be multiplied by one.
+    Alternative tests:
+            stats.ttest_rel
+    Args:
+        ds (DataArray): CMIPx DataArray.
+        ydim (array): y-dimension to iterate over.
+        ALPHA (float, optional): Significance level. Defaults to 0.05.
+        nydim (str, optional): Name of y-dimension to iterate over.
+        Defaults to None (assumes ydim is axis after exp).
+
+    Returns:
+        sig (array): Null/future on first axis and ydim on second axis.
+
+    """
     sig = np.ones((2, len(ydim)))
     for i in range(len(ydim)):
         if nydim is not None:
@@ -557,34 +604,54 @@ def sig_line(ds, ydim, ALPHA=0.05, nydim=None):
 
 
 def cmip_diff_sig_line(ds6, ds5, ydim, ALPHA=0.05, nydim=None):
-    # Statistical significance. This will be multiplied by transport for
-    # each plot. A value of one means the change is significant (and a solid
-    # line should be plotted), while a NaN value means not significant and
-    # as dashed line will be placed instead (only for RCP8.5). Historical
-    # values should always be multiplied by one.
-    # wilcoxon
-    # mannwhitneyu
-    # ttest_ind equal_var=False  (Welch’s t-test)
-    from scipy import stats
+    """Statistical significance of CMIP6/CMIP5 differences (Mann Whitney U Test).
+
+    This will be multiplied by transport for each plot. A value of one means
+    the change is significant (and a solid line should be plotted), while a
+    NaN value means not significant and as dashed line will be placed instead
+    (only for RCP8.5). Historical values should always be multiplied by one.
+    Alternative tests:
+            stats.wilcoxon
+            stats.mannwhitneyu
+            stats.ttest_ind equal_var=False  (Welch’s t-test)
+    Args:
+        ds6 (DataArray): CMIP6 DataArray.
+        ds5 (DataArray): CMIP5 DataArray.
+        ydim (array): y-dimension to iterate over.
+        ALPHA (float, optional): Significance level. Defaults to 0.05.
+        nydim (str, optional): Name of y-dimension to iterate over.
+        Defaults to None (assumes ydim is axis after exp).
+
+    Returns:
+        sig (array): Hist/diff exp on first axis and ydim on second axis.
+
+    """
     sig = np.ones((2, len(ydim)))
-    # _sig = np.ones((2, len(ydim)))
+
     for s, sx in zip(range(2), [0, 2]):
         for i in range(len(ydim)):
-            # if nydim is not None:
-            #     tmp = stats.ttest_ind(ds6.isel(exp=sx).isel({nydim: i}).values, ds5.isel(exp=sx).isel({nydim: i}).values, equal_var=False)[1]
-            # else:
-            #     tmp = stats.ttest_ind(ds6.isel(exp=sx)[i].values, ds5.isel(exp=sx)[i].values, equal_var=False)[1]
             if nydim is not None:
-                tmp = stats.mannwhitneyu(ds6.isel(exp=sx).isel({nydim: i}).values, ds5.isel(exp=sx).isel({nydim: i}).values)[1]
+                tmp = stats.mannwhitneyu(ds6.isel(exp=sx).isel({nydim: i}).values,
+                                         ds5.isel(exp=sx).isel({nydim: i}).values)[1]
             else:
                 tmp = stats.mannwhitneyu(ds6.isel(exp=sx)[i].values, ds5.isel(exp=sx)[i].values)[1]
             sig[s, i] = (1 if tmp <= ALPHA else np.nan)
-            # _sig[s, i] = tmp
-    # print(_sig)
+
     return sig
 
 
 def round_sig(x, n=2):
+    """Round decimal places of p-value to print.
+
+    Overwrites given n decimal places if p-value less than 0.05.
+    Args:
+        x (float): p-value.
+        n (int, optional): Number of decimal places. Defaults to 2.
+
+    Returns:
+        str: p-value string.
+
+    """
     n = 3 if x < 0.05 else n
     return 'p={:.{dp}f}'.format(x, dp=n) if x >= 0.001 else 'p<0.001'
 
@@ -600,8 +667,9 @@ def cmip_cor(var1, var2, format_str=True):
 
 def cmipMMM(ct, dv, xdim=None, prec=None, const=1e6, avg=np.median,
             annual=True, month=None, proj_cor=True):
-    """Print the multi-model median (or mean) and interquartile range
-    of a variable in the historical scenario and the projected change
+    """Print the multi-model median (or mean) and interquartile range.
+
+    MMM of a variable in the historical scenario and the projected change
     (RCP8.5 minus historical). Also prints the percent change, the
     statistical significance of the projected change (based on the Wilcoxon
     signed rank test) and the correlation (and significance) between the
@@ -627,7 +695,6 @@ def cmipMMM(ct, dv, xdim=None, prec=None, const=1e6, avg=np.median,
         Calculate and print a specific month (default is None)
 
     """
-
     def percent(var1, var2):
         return var1 / var2 * 100
 

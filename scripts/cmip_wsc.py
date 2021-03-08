@@ -19,25 +19,55 @@ import matplotlib.pyplot as plt
 from mpl_toolkits.axes_grid1 import make_axes_locatable
 
 import cfg
-from cfg import  mip6, mip5
+from cfg import mip6, mip5
 from tools import coord_formatter, zonal_sverdrup, wind_stress_curl
 from cmip_fncs import cmip_wsc, sig_line, cmip_diff_sig_line
+from airsea_conversion import reduce
+from valid_plot_reanalysis_wind import get_wsc
 
-lats = [-30, 30]
+
+lats = [-25, 25]
 lons = [120, 290]
-dc5 = cmip_wsc(mip5, lats, lons, landmask=True)
-dc6 = cmip_wsc(mip6, lats, lons, landmask=True)
+dc5 = cmip_wsc(mip5, lats, lons, landmask=False)
+dc6 = cmip_wsc(mip6, lats, lons, landmask=False)
 dc5 = dc5.where(dc5 != 0)
+
+cmap = copy.copy(plt.cm.get_cmap("seismic"))
+cmap.set_bad('grey')
+
+"""Plot cmipx WSC"""  # Make sure all models haven't been subset.
+var = 'wsc'
+s = 0
+for mip, dc in zip([mip6, mip5], [dc6, dc5]):
+    fig, ax = plt.subplots(7, 4, figsize=(13, 17), sharey=True, constrained_layout=True)
+    ax = ax.flatten()
+    i = 0
+    for i in mip.mod:
+        if var == 'wsc':
+            vmax = 5
+            constant = 1e7
+        elif var == 'ws':
+            vmax = 0.2
+            constant = 1
+        ax[i].set_title('{}. {} {}'.format(i, mip.mod[i]['id'], var.upper()), loc='left', x=-0.05)
+        cs = ax[i].pcolormesh(dc.lon, dc.lat, dc[var].isel(exp=s, model=i).mean('time') * constant, cmap=cmap, vmax=vmax, vmin=-vmax, shading='auto')
+        xlocs = np.arange(lons[0], lons[1], 40)
+        ylocs = np.arange(lats[0], lats[1] + 1, 10)
+        ax[i].set_xticks(xlocs)
+        ax[i].set_yticks(ylocs)
+        ax[i].set_xticklabels(coord_formatter(xlocs, 'lon_360'))
+        ax[i].set_yticklabels(coord_formatter(ylocs, 'lat'))
+
+    # Add colourbar.
+    fig.colorbar(cs, ax=ax[3], extend='both', location='right', label='1e-7 N m-1')
+    plt.savefig(cfg.fig / 'cmip/wind/cmip{}_{}_models.png'.format(mip.p, var), format="png")
+    plt.show()
+
 
 # Filter out some models. Indexes of models to keep.
 mi = [i for i, q in enumerate(dc5.model) if q not in
       ['MIROC5', 'MIROC-ESM-CHEM', 'MIROC-ESM']]
 dc5 = dc5.isel(model=mi)
-
-
-cmap = copy.copy(plt.cm.get_cmap("seismic"))
-cmap.set_bad('grey')
-
 
 """Plot cmip6 and cmip5 MMM WSC differences."""
 # for var, var_name, var_max in zip(['wsc', 'ws'],
@@ -99,8 +129,7 @@ cmap.set_bad('grey')
 # plt.tight_layout()
 # plt.savefig(cfg.fig / 'cmip/zonal_sv_mmm.png', format="png")
 # plt.show()
-from airsea_conversion import reduce
-from valid_plot_reanalysis_wind import get_wsc
+
 tx, ty, wsc = get_wsc(data='jra55', flux='static', res=0.1, interp='cubic', mean_t=False)
 
 """Plot CMIP6 and CMIP5 MMM Zonal Wind Stress at the equator"""

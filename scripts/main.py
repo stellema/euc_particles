@@ -72,8 +72,11 @@ class Current:
 
 # Create Current instances.
 ec = Current('EUC', 'Equatorial Undercurrent', vel='uo', sign=1, depth=[25, 350], lat=[-2.6, 2.6], lon=cfg.lons)
-mc = Current('MC', 'Mindanao Current', vel='vo', sign=-1, depth=[0, 1000], lat=8, lon=[124, 135], width=5)
-ng = Current('NGCU', 'New Guinea Coastal Undercurrent', vel='vo', sign=1, depth=[0, 1000], lat=-8, lon=[147, 160], width=7)
+mc = Current('MC', 'Mindanao Current', vel='vo', sign=-1, depth=[0, 1000], lat=8, lon=[124, 137], width=7)
+ng = Current('NGCU', 'New Guinea Coastal Undercurrent', vel='vo', sign=1, depth=[0, 1000], lat=-8, lon=[147, 168], width=15)
+# 4.1*cfg.LON_DEG(8)/1000 = 452km
+# 7*cfg.LON_DEG(8)/1000 = 771km
+# 6.4*cfg.LON_DEG(8)/1000 = 705km
 # ng = Current('NGCU', 'New Guinea Coastal Undercurrent', vel='vo', sign=1, depth=[0, 800], lat=-6, lon=[146, 156])
 sv = Current('SV', 'Sverdrup transport')
 tauvo = Current('tauvo', 'Meridional Wind Stress')
@@ -84,6 +87,7 @@ Current.resolve_actions()
 current = []
 for obj in Current._instances:
     current.append(obj)
+
 
 def from_ofam(filenames, variables, dimensions, indices=None, mesh='spherical',
               allow_time_extrapolation=None, field_chunksize='auto',

@@ -278,8 +278,8 @@ class Cmip:
             elif instance.action == "remove":
                 instance.__remove()
 
-mip6 = Cmip(6)
-mip5 = Cmip(5)
+mip6 = Cmip(p=6)
+mip5 = Cmip(p=5)
 class Rdata:
     _instances = []
 

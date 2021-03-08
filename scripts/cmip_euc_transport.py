@@ -273,20 +273,20 @@ except:
     de6.to_netcdf(cfg.data / 'euc_cmip6_{}_{}_j{}_z{}-{}.nc'.format(method, vmin, lat[1], *depth))
 
 
-# for ltr, var, nvar, units in zip([1, 0, 1], ['ec', 'umax', 'z_umax'],
-#                                   ['transport', 'max velocity', 'depth of max velocity'],
-#                                   ['Sv', 'm/s', 'm']):
-#     plot_cmip_euc_transport(de, de6, de5, lat, lon, depth, method=method,
-#                             vmin=vmin, show_markers=True, show_obs=True,
-#                             var=var, nvar=nvar, units=units, letter=ltr)
+for ltr, var, nvar, units in zip([1, 0, 1], ['ec', 'umax', 'z_umax'],
+                                  ['transport', 'max velocity', 'depth of max velocity'],
+                                  ['Sv', 'm/s', 'm']):
+    plot_cmip_euc_transport(de, de6, de5, lat, lon, depth, method=method,
+                            vmin=vmin, show_markers=False, show_obs=True,
+                            var=var, nvar=nvar, units=units, letter=ltr)
 
 plot_cmip_euc_scatter_markers(de.ec.mean('Time'), de6.ec.mean('time'), de5.ec.mean('time'), lon, show_ofam=True)
 
-# for ix, x in enumerate([165, 205, 250]):
-#     plot_cmip_euc_month(de.ec, de6.ec, de5.ec, lat, x, depth, method=method, vmin=vmin, show_markers=False, letter=ix)
+for ix, x in enumerate([165, 205, 250]):
+    plot_cmip_euc_month(de.ec, de6.ec, de5.ec, lat, x, depth, method=method, vmin=vmin, show_markers=False, letter=ix)
 
-# for x in np.array([165, 200, 220, 230, 250]):
-#     for i, dv in enumerate([de6.umax, de5.umax]):
-#         cmipMMM(ec, dv.sel(lon=x), xdim=mips[i] + str(dv.sel(lon=x).lon.item()),
-#                 prec=None, const=1, avg=np.median, annual=True)
+for x in np.array([165, 200, 220, 230, 250]):
+    for i, dv in enumerate([de6.ec, de5.ec]):
+        cmipMMM(ec, dv.sel(lon=x), xdim=mips[i] + str(dv.sel(lon=x).lon.item()),
+                prec=None, const=1, avg=np.median, annual=True)
 
