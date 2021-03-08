@@ -18,7 +18,7 @@ from matplotlib.lines import Line2D
 import cfg
 from cfg import mod6, mod5, lx5, lx6, mip6, mip5
 from tools import coord_formatter, zonal_sverdrup, wind_stress_curl
-from cmip_fncs import (ofam_wbc_transport_sum, cmip_wbc_transport_sum, cmipMMM, cmip_wsc, sig_line, round_sig)
+from cmip_fncs import (ofam_wbc_transport_sum, cmip_wbc_transport_sum, cmipMMM, cmip_wsc, sig_line, round_sig, bnds_wbc_reanalysis)
 from main import ec, mc, ng
 
 
@@ -171,13 +171,13 @@ def plot_cmip_wbc_month(cc, ds, ds6, ds5, lat, depth, vmin=0.8, letter=0,
         ax[0].plot(xdim, (ds - ds.mean('Time')).isel(exp=0), color='dodgerblue', label='OFAM3')  # Historical
         ax[1].plot(xdim, (ds - ds.mean('Time')).isel(exp=2), color='dodgerblue')  # Projected change.
 
-    # if show_obs:
-    #     db, dr = euc_observations(lat, lon, depth, method=method, vmin=vmin)
-    #     # Reanalysis products.
-    #     for v, c, m in zip(dr.robs.values, ['k', 'grey', 'k', 'grey', 'k'], ['--', '--', ':', ':', (0, (3, 5, 1, 5, 1, 5))]):
-    #         ax[0].plot(xdim, dr.ec.sel(robs=v), color=c, label=v.upper(), linestyle=m)
-    #     # TODO: Remove single obs value?
-    #     # ax[0].scatter(db.lon, db['jo'], color='k', label=db[v].attrs['ref'], marker='o')
+    if show_obs:
+        drr = bnds_wbc_reanalysis(cc)
+        # Reanalysis products.
+        for dr, r, c, m in zip(drr, cfg.Rdata._instances, ['k', 'grey', 'k', 'grey', 'k'], ['--', '--', ':', ':', (0, (3, 5, 1, 5, 1, 5))]):
+            ax[0].plot(xdim, dr.mean('time'), color=c, label=r.cdict.upper(), linestyle=m)
+        # TODO: Remove single obs value?
+        # ax[0].scatter(db.lon, db['jo'], color='k', label=db[v].attrs['ref'], marker='o')
 
     ax[1].axhline(y=0, color='grey', linewidth=0.6)  # Zero-line.
     ax[1].set_xticks(xdim)
