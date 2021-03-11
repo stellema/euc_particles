@@ -22,7 +22,7 @@ from fncs import image2video
 
 warnings.filterwarnings(action='ignore', message='Mean of empty slice')
 warnings.filterwarnings("ignore")
-
+plt.rcParams['lines.linewidth'] = 1
 cmap = plt.cm.seismic
 cmap.set_bad('grey')
 
@@ -94,7 +94,7 @@ def plot_cmip_vdepth(mip, exp, cc, var, lat, lon, depth, latb=None,
 
     for m in mip.mod:
         if cc.n == 'EUC' and mip.mod[m]['id'] in ['MIROC5', 'MIROC-ESM-CHEM', 'MIROC-ESM', 'INM-CM4-8', 'INM-CM5-0', 'MPI-ESM-LR', 'MPI-ESM-2-LR']:
-            dx = subset_cmip(mip, m, var, exp, depth, [-5, 5], lon) / c
+            dx = subset_cmip(mip, m, var, exp, depth, [lat[0], lat[-1]], lon) / c
         else:
             dx = subset_cmip(mip, m, var, exp, depth, lat, lon) / c
         if time == 'annual':
@@ -116,7 +116,7 @@ def plot_cmip_vdepth(mip, exp, cc, var, lat, lon, depth, latb=None,
             loc_ = coord_formatter([lat_], convert='lat').item()  # For title.
 
         ax[m].set_title('{}. {} (CMIP{}#{:02d}){}'.format(m + 1, mip.mod[m]['id'], mip.p, m + 1, tstr), loc='left', fontsize=10)
-        cs = ax[m].pcolormesh(X, Z, dx.values, vmin=-vmax, vmax=vmax + 0.001, cmap=cmap, shading='flat')
+        cs = ax[m].pcolormesh(X, Z, dx.values, vmin=-vmax, vmax=vmax + 0.001, cmap=cmap, shading='nesrest')
         if contour:
             hatches = ['////', '\\\\', '////', '\\\\', '////']
             lvp = [np.around(1 - n, 2) for n in [0, 0.5, 0.70, 0.75, 0.80, 0.85]]
@@ -169,44 +169,56 @@ def plot_cmip_vdepth(mip, exp, cc, var, lat, lon, depth, latb=None,
                 ax[m].set_yticks(yticks)
                 ax[m].set_yticklabels(coord_formatter(yticks, 'depth'))
         if cc.n == 'EUC':
-            ticks = [-2, 0, 2]  # ax[m].get_xticks()
+            ticks = [-2, 0, 2]
             ax[m].set_xticks(ticks)
             ax[m].set_xticklabels(coord_formatter(ticks, xax_))
-
-        ax[m].text(0.0, 0.9, '{}'.format(loc_), horizontalalignment='left',
-                   transform=ax[m].transAxes, fontsize=11)
+        if cc.n == 'EUC':
+            ax[m].text(0.0, 0.01, '{}'.format(loc_), horizontalalignment='left',
+                       transform=ax[m].transAxes, fontsize=11)
+        else:
+            ax[m].text(0.0, 0.9, '{}'.format(loc_), horizontalalignment='left',
+                       transform=ax[m].transAxes, fontsize=11)
 
     # Add OFAM3.
     if mip.p == 6:
         m = m + 1
         sx = 0 if exp == 'historical' else 1
-        df = xr.open_dataset(cfg.ofam / 'ocean_v_{}-{}_climo.nc'.format(*cfg.years[sx]))
+        df = xr.open_dataset(cfg.ofam / 'ocean_{}_{}-{}_climo.nc'.format(var[0], *cfg.years[sx]))
+
+        if type(lon) == list:  #LLWBC
+            df = df[var[0]].sel(xu_ocean=slice(lon[0], lon[1] + 0.1), yu_ocean=lat)
+            XF = df.xu_ocean.values
+        else:  # EUC
+            df = df[var[0]].sel(yu_ocean=slice(lat[0], lat[1] + 0.1), xu_ocean=lon)
+            XF = df.yu_ocean.values
         zi = [idx(df.st_ocean, z) for z in depth]
-        df = df.v.sel(xu_ocean=slice(lon[0], lon[1] + 0.1), yu_ocean=lat)
         df = df.isel(st_ocean=slice(zi[0], zi[1] + 1))
         df = df.mean('Time') if time == 'annual' else df.isel(Time=time)
         # Plot.
         ax[m].set_title('{}. OFAM3{}'.format(m + 1, tstr), loc='left', fontsize=10)
-        ax[m].pcolormesh(df.xu_ocean.values, df.st_ocean.values, df.values,
-                         vmin=-vmax, vmax=vmax + 0.001, cmap=cmap, shading='flat')
-        if bounds and cc.n != "EUC":
+        ax[m].pcolormesh(XF, df.st_ocean.values, df.values,
+                         vmin=-vmax, vmax=vmax + 0.001, cmap=cmap, shading='nearest')
+        if bounds:
             # Current boundaries.
-            xx, zz = ofam_wbc_transport_sum(cc, cc.depth, cc.lat, cc.lon, bnds=True)
+            if cc.n != "EUC":
+                xx, zz = ofam_wbc_transport_sum(cc, cc.depth, cc.lat, cc.lon, bnds=True)
+            elif cc.n == "EUC":
+                xx, zz = latb, depthb
             ax[m].axvline(xx[0], ymax=1 - (zz[0] / ylim[1]), ymin=1 - (zz[1] / ylim[1]), color='k')
             ax[m].axvline(xx[1], ymax=1 - (zz[0] / ylim[1]), ymin=1 - (zz[1] / ylim[1]), color='k')
             # Depth
             ax[m].hlines(y=zz[1], xmax=xx[1], xmin=xx[0], color='k')
             ax[m].hlines(y=zz[0], xmax=xx[1], xmin=xx[0], color='k')
+
         if cc.n == 'EUC':
-            ticks = [-2, 0, 2]
             ax[m].set_xticks(ticks)
             ax[m].set_xticklabels(coord_formatter(ticks, xax_))
     # Colourbar.
-    clb = fig.colorbar(cs, ax=ax[-1], extend='both', location='right')
+    clb = fig.colorbar(cs, ax=ax[3], extend='both', location='right')
     units = 'Transport [Sv]' if var in ['uvo', 'vvo'] else 'm/s'
     clb.set_label(units)
     # plt.tight_layout()
-    xstr = 'contour' if contour or time == 'annual' else '{:02d}'.format(time + 1)
+    xstr = '' if time == 'annual' else '_{:02d}'.format(time + 1)
     folder = cfg.fig / 'cmip/{}'.format(cc.n)
     if var not in ['uo', 'vo']:
         folder = folder / var
@@ -268,45 +280,45 @@ def plot_cmip_xz_wbc(mip, exp, cc, vmax=0.6):
 
 
 """ Equatorial Undercurrent """
-# cc = ec
-# var = 'uo'
-# exp = 'historical'
+cc = ec
+var = 'uo'
+exp = 'historical'
 
-# for lon in [165, 170, 180, 190, 220, 250, 265]:
-#     lat, depth, lon = [-3.4, 3.4], [0, 370], lon
-#     latb, depthb, lonb = [-2.2, 2.2], [0, 300], lon
+for lon in [165, 170, 180, 190,220, 250, 265]: #
+    lat, depth, lon = [-3.4, 3.4], [0, 400], lon
+    latb, depthb, lonb = [-2.5, 2.5], [0, 350], lon
 
-#     for mip in [mip5, mip6]:
-#         # Annual profile.
-#         for s in [0, 1]:
-#             plot_cmip_vdepth(mip, mip.exp[s], cc, var, lat, lon, depth,
-#                              latb, lonb, depthb, vmax=1, pos=str(lon),
-#                              ndec=0, contour=False, bounds=False)
-#         # Monthly profiles.
-#         for t in np.arange(12):
-#             plot_cmip_vdepth(mip, mip.exp[s], cc, var, lat, lon, depth,
-#                              latb, lonb, depthb, vmax=0.6, pos=str(lon),
-#                              ndec=0, contour=False, bounds=False, time=t)
-#             # COnvert monthly images to video.
-#             folder = 'cmip/{}/month'.format(cc.n)
-#             files = '{}_{}_cmip{}_{}_{}_%02d.png'.format(cc.n, var, mip.p, lon, exp)
-#             output = '{}_{}_cmip{}_{}_{}_month.mp4'.format(cc.n, var, mip.p, lon, exp)
-#             image2video(str(folder / files), str(folder / output), frames=2)
+    for mip in [mip5, mip6]:
+        # Annual profile.mip5,
+        for s in [0, 1]:
+            plot_cmip_vdepth(mip, mip.exp[s], cc, var, lat, lon, depth,
+                              latb, lonb, depthb, vmax=0.8, pos=str(lon),
+                              ndec=0, contour=False, bounds=True)
+        # # Monthly profiles.
+        # for t in np.arange(12):
+        #     plot_cmip_vdepth(mip, mip.exp[s], cc, var, lat, lon, depth,
+        #                       latb, lonb, depthb, vmax=0.6, pos=str(lon),
+        #                       ndec=0, contour=False, bounds=False, time=t)
+            # COnvert monthly images to video.
+            # folder = 'cmip/{}/month'.format(cc.n)
+            # files = '{}_{}_cmip{}_{}_{}_%02d.png'.format(cc.n, var, mip.p, lon, exp)
+            # output = '{}_{}_cmip{}_{}_{}_month.mp4'.format(cc.n, var, mip.p, lon, exp)
+            # image2video(str(folder / files), str(folder / output), frames=2)
 
 
 """ New Guinea Coastal Undercurrent """
-cc = ng
-for lat in [cc.lat]:  #np.arange(-4.5, -1, 0.5):
-    # Plot longitude cross section.
-    lat, lon, depth = lat, [i + 2 * j for i, j in zip(cc.lon, [-1, 1])], [cc.depth[0], cc.depth[1] + 400]
-    for mip in [mip6, mip5]:
-        for exp in [mip.exp[0]]:
-            plot_cmip_vdepth(mip, exp, cc, cc.vel, lat, lon, depth,
-                              vmax=0.5, bounds=True, pos=str(lat))
-    # Plot top view.
-    # lat, lon, depth = [-10, 0], [135, 170], [0, 1000]
-    # for mip in [mip5, mip6]:
-    #     plot_cmip_xy(mip, mip.exp[0], cc, 'vo', lat, lon, depth, vmax=0.1, avg=True)
+# cc = ng
+# for lat in [cc.lat]:  #np.arange(-4.5, -1, 0.5):
+#     # Plot longitude cross section.
+#     lat, lon, depth = lat, [i + 2 * j for i, j in zip(cc.lon, [-1, 1])], [cc.depth[0], cc.depth[1] + 400]
+#     for mip in [mip6, mip5]:
+#         for exp in [mip.exp[0]]:
+#             plot_cmip_vdepth(mip, exp, cc, cc.vel, lat, lon, depth,
+#                               vmax=0.5, bounds=True, pos=str(lat))
+#     # Plot top view.
+#     # lat, lon, depth = [-10, 0], [135, 170], [0, 1000]
+#     # for mip in [mip5, mip6]:
+#     #     plot_cmip_xy(mip, mip.exp[0], cc, 'vo', lat, lon, depth, vmax=0.1, avg=True)
 
 """ Mindano Undercurrent """
 # cc = mc
@@ -318,10 +330,10 @@ for lat in [cc.lat]:  #np.arange(-4.5, -1, 0.5):
 #     pos = str(lat) if type(lat) == int else str(int(10 * lat))
 #     for mip in [mip5, mip6]:
 #         plot_cmip_vdepth(mip, exp, cc, var, lat, lon, depth,
-#                          vmax=0.6, bounds=True, contour=None, pos=pos)
-# # Plot top view.
-# lat, depth, lon = [4, 12], [50, 450], [122, 136]
-# for mip in [mip5, mip6]:
-#     plot_cmip_xy(mip, exp, cc, 'vo', lat, lon, depth, vmax=0.6, integrate=True)
+#                           vmax=0.6, bounds=True, contour=None, pos=pos)
+# # # Plot top view.
+# # lat, depth, lon = [4, 12], [50, 450], [122, 136]
+# # for mip in [mip5, mip6]:
+# #     plot_cmip_xy(mip, exp, cc, 'vo', lat, lon, depth, vmax=0.6, integrate=True)
 
-# plot_cmip_mc(mip5, exp, cc, var, lat=8, vmax=0.6, contour=np.nanmin, pos=None)
+# # plot_cmip_mc(mip5, exp, cc, var, lat=8, vmax=0.6, contour=np.nanmin, pos=None)

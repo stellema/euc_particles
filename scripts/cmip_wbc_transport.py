@@ -5,7 +5,53 @@ created: Tue Sep 15 09:56:01 2020
 author: Annette Stellema (astellemas@gmail.com)
 
 mean/change ITF vs MC
+def scatter_wbc_markers(df, d5, d6):
+    mksize = 40
+    cor_str = []
+    fig, ax = plt.subplots(1, 2, figsize=(11, 5))
+    ax = ax.flatten()
+    for i, cc in enumerate([mc, ng]):
+        ax[i].set_title('{}{} at {}'.format(cfg.lt[i], cc.name, *cc._lat), loc='left')
+        # OFAM3
+        dd = df[cc._n].mean('Time')
+        # scatter_scenario(ax, i, df, d5, d6)
+        ax[i].scatter(dd.isel(exp=0), (dd.isel(exp=1) - dd.isel(exp=0)),
+                      color='dodgerblue', label='OFAM3', s=mksize)
 
+        # CMIPx.
+        cor_str = []  # Correlation string (for each CMIP).
+        for p, mip, dd in zip(range(2), [mip6, mip5], [d6, d5]):
+            dd = dd[cc._n].mean('time')
+            for m, sym, symc in zip(mip.mod, mip.sym, mip.symc):
+                ax[i].scatter(dd.isel(exp=0, model=m), dd.isel(exp=2, model=m),
+                              color=symc, marker=MarkerStyle(sym, fillstyle='full'), label=mip.mod[m]['id'], s=mksize, linewidth=0.5)
+
+            # Regression correlation coefficent.
+            cor = stats.spearmanr(dd.isel(exp=0), dd.isel(exp=2))
+            cor_str.append('CMIP{} r={:.2f} {}'.format(mip.p, cor[0], round_sig(cor[1], n=2)))
+
+            # Line of best fit.
+            m, b = np.polyfit(dd.isel(exp=0), dd.isel(exp=2), 1)
+            ax[i].plot(dd.isel(exp=0), m * dd.isel(exp=0) + b, color=mip.colour, lw=1)
+
+        # Subplot extras.
+        # Legend: Correlation and line of best fit (inside subplot).
+        cor_legend = [Line2D([0], [0], color=mip6.colour, lw=2, label=cor_str[0]),
+                      Line2D([0], [0], color=mip5.colour, lw=2, label=cor_str[-1])]
+        _cor_legend = ax[i].legend(handles=cor_legend, loc='best')
+        ax[i].add_artist(_cor_legend)  # Add so wont overwrite 2nd legend.
+        # Zero-lines.
+
+        ax[i].axhline(y=0, color='grey', linewidth=0.6)
+        ax[i].set_xlabel('Historical transport [Sv]')
+        if i == 1:
+            ax[i].legend(bbox_to_anchor=(1, 1.125), loc="lower right", ncol=6, fontsize='small')
+        else:
+            ax[i].set_ylabel('Projected change [Sv]')
+
+    # Legend: CMIPx models (above plot).
+    ax[1].legend(bbox_to_anchor=(1, 1.125), loc="lower right", ncol=6, fontsize='small')
+    plt.savefig(cfg.fig/'cmip/{}_transport_{}_scatter_markers.png'.format(cc.n, *cc._lat), dpi=200, bbox_inches='tight')
 """
 import warnings
 import numpy as np
@@ -18,61 +64,22 @@ from matplotlib.lines import Line2D
 import cfg
 from cfg import mod6, mod5, lx5, lx6, mip6, mip5
 from tools import coord_formatter, zonal_sverdrup, wind_stress_curl
-from cmip_fncs import (ofam_wbc_transport_sum, cmip_wbc_transport_sum, cmipMMM, cmip_wsc, sig_line, round_sig, bnds_wbc_reanalysis)
+from cmip_fncs import (ofam_wbc_transport_sum, cmip_wbc_transport_sum, cmipMMM, cmip_wsc, sig_line, round_sig, bnds_wbc_reanalysis, scatter_scenario)
 from main import ec, mc, ng
 
 
 warnings.filterwarnings(action='ignore', message='Mean of empty slice')
 
 
-def scatter_no_markers(cc, dh, dr, dh5, dr5, dh6, dr6, i=0):
-    """Scatter plot: historical vs projected change with."""
-    cl = ['m', 'b', 'mediumseagreen']
-    lbs = ['OFAM3', 'CMIP6', 'CMIP5']
-    fig, ax = plt.subplots(1, 1, figsize=(6, 4))
-    # ax = ax.flatten()
-    ax.set_title('{}{} at {}'.format(cfg.lt[i], cc.name, *cc._lat), loc='left')
-    ax.scatter(dh, (dr - dh), color=cl[0], label=lbs[0])
-    ax.scatter(dh6, (dr6 - dh6), color=cl[1], label=lbs[1])
-    ax.scatter(dh5, (dr5 - dh5), color=cl[2], label=lbs[2])
-    ax.set_xlabel('Historical transport [Sv]')
-    ax.set_ylabel('Projected change [Sv]')
-    ax.legend()
-    plt.tight_layout()
-    plt.savefig(cfg.fig/'cmip/{}_transport_{}_scatter.png'.format(cc.n, *cc._lat), dpi=200)
-
-
 def scatter_wbc_markers(df, d5, d6):
     """Scatter plot: historical vs projected change with indiv markers."""
-    mksize = 40
-
     fig, ax = plt.subplots(1, 2, figsize=(11, 5))
     ax = ax.flatten()
     for i, cc in enumerate([mc, ng]):
-        dd = df[cc._n].mean('Time')
-        dd6 = d6[cc._n].mean('time')
-        dd5 = d5[cc._n].mean('time')
         ax[i].set_title('{}{} at {}'.format(cfg.lt[i], cc.name, *cc._lat), loc='left')
-
         # OFAM3
-        ax[i].scatter(dd.isel(exp=0), (dd.isel(exp=1) - dd.isel(exp=0)), color='m', label='OFAM3', s=mksize)
-
-        # CMIP6
-        for m, sym, symc in zip(mod6, lx6['sym'], lx6['symc']):
-            ax[i].scatter(dd6.isel(exp=0, model=m), (dd6.isel(exp=1) - dd6.isel(exp=0)).isel(model=m), color=symc,
-                          marker=MarkerStyle(sym, fillstyle='full'), label=mod6[m]['id'], s=mksize, linewidth=0.5)
-        # CMIP5
-        for m, sym, symc in zip(mod5, lx5['sym'], lx5['symc']):
-            ax[i].scatter(dd5.isel(exp=0, model=m), (dd5.isel(exp=1) - dd5.isel(exp=0)).isel(model=m), color=symc,
-                          marker=MarkerStyle(sym, fillstyle='none'), label=mod5[m]['id'], s=mksize, linewidth=0.5)
-
-            ax[i].set_xlabel('Historical transport [Sv]')
-            if i == 1:
-                ax[i].legend(bbox_to_anchor=(1, 1.125), loc="lower right", ncol=6, fontsize='small')
-            else:
-                ax[i].set_ylabel('Projected change [Sv]')
-    plt.savefig(cfg.fig/'cmip/{}_transport_{}_scatter_markers.png'.format(cc.n, *cc._lat),
-                dpi=200, bbox_inches='tight')
+        ax = scatter_scenario(ax, i, df[cc._n], d5[cc._n], d6[cc._n])
+    plt.savefig(cfg.fig/'cmip/scatter_wbc_transport_{}_{}.png'.format(cc.n, *cc._lat), dpi=200, bbox_inches='tight')
 
 
 def scatter_cmip_wbc_wsc(df, d6, d5):
@@ -218,14 +225,22 @@ d5 = xr.Dataset()
 d5[ng._n] = cmip_wbc_transport_sum(mip5, ng)[ng._n] / 1e6
 d5[mc._n] = cmip_wbc_transport_sum(mip5, mc)[mc._n] / 1e6
 
-for var in [mc, ng]:
+for cc in [mc, ng]:
     for dv, name in zip([d5.mean('time'), d6.mean('time')], ['CMIP5', 'CMIP6']):
-        cmipMMM(var, dv[var.n.lower()], xdim=name, prec=None, const=1, avg=np.median,
+        cmipMMM(cc, dv[cc.n.lower()], xdim=name, prec=None, const=1, avg=np.median,
                 annual=False, month=None, proj_cor=True)
+
+    _df = df[cc._n].mean('Time')
+    # OFAM3
+    print('OFAM3: HIST: {:.1f} DIFF: {:.1f} ({:.1f}%)'.format(_df.isel(exp=0).item(), _df.isel(exp=2).item(), _df.isel(exp=2).item() * 100 /_df.isel(exp=0).item()))
+    # Reanalysis
+    _dr = [r.mean('time').item() for r in bnds_wbc_reanalysis(cc)]
+    print('REANALYSIS: Mean(min-max)={:.2f}({:.1f}-{:.1f}) {}, {}, {}, {}, {}'.format( np.median(_dr), np.min(_dr), np.max(_dr), *['{}={:.1f}'.format(n, r) for n, r in zip(cfg.Rdata._instances, _dr)]))
+
 # cmipMMM(var, df[var.n.lower()], xdim='OFAM3', prec=None, const=1, avg=np.median,
 #         annual=False, month=None, proj_cor=False)
 scatter_wbc_markers(df, d5, d6)
-scatter_cmip_wbc_wsc(df, d6, d5)
+# scatter_cmip_wbc_wsc(df, d6, d5)
 # for cc in [ng, mc]:
 #     plot_cmip_wbc_month(cc, df[cc._n], d6[cc._n], d5[cc._n], cc.lat, cc.depth, vmin=0.8,
 #                         show_ofam=True, show_obs=True, show_markers=False)

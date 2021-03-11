@@ -13,13 +13,13 @@ import calendar
 import numpy as np
 import xarray as xr
 from pathlib import Path
-import matplotlib.pyplot as plt
+import matplotlib as mpl
 from itertools import chain, repeat
 
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 warnings.filterwarnings(action='ignore', message='SerializationWarning')
 warnings.filterwarnings("ignore")
-
+mpl.rcParams['lines.linewidth'] = 1.5
 home = Path.home()
 if home.drive == 'C:':
     # Change to E drive if at home.

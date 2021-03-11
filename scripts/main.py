@@ -37,6 +37,8 @@ from parcels import (FieldSet, ParticleSet, VectorField)
 
 import cfg
 from tools import coord_formatter
+np.set_printoptions(precision=None, suppress=True)
+
 
 class Current:
     """A class used to represent a Current."""
@@ -71,12 +73,13 @@ class Current:
 
 
 # Create Current instances.
-ec = Current('EUC', 'Equatorial Undercurrent', vel='uo', sign=1, depth=[25, 350], lat=[-2.6, 2.6], lon=cfg.lons)
-mc = Current('MC', 'Mindanao Current', vel='vo', sign=-1, depth=[0, 1000], lat=8, lon=[124, 137], width=7)
-ng = Current('NGCU', 'New Guinea Coastal Undercurrent', vel='vo', sign=1, depth=[0, 1000], lat=-8, lon=[147, 168], width=15)
+ec = Current('EUC', 'Equatorial Undercurrent', vel='uo', sign=1, depth=[0, 350], lat=[-2.5, 2.5], lon=cfg.lons)
+mc = Current('MC', 'Mindanao Current', vel='vo', sign=-1, depth=[0, 1000], lat=8, lon=[124, 137], width=4)
+ng = Current('NGCU', 'New Guinea Coastal Undercurrent', vel='vo', sign=1, depth=[0, 1000], lat=-8, lon=[147, 168], width=7)
 # 4.1*cfg.LON_DEG(8)/1000 = 452km
-# 7*cfg.LON_DEG(8)/1000 = 771km
+# 5*cfg.LON_DEG(8)/1000 = 551km
 # 6.4*cfg.LON_DEG(8)/1000 = 705km
+# 7*cfg.LON_DEG(8)/1000 = 771km
 # ng = Current('NGCU', 'New Guinea Coastal Undercurrent', vel='vo', sign=1, depth=[0, 800], lat=-6, lon=[146, 156])
 sv = Current('SV', 'Sverdrup transport')
 tauvo = Current('tauvo', 'Meridional Wind Stress')

@@ -15,13 +15,14 @@ from mpl_toolkits.axes_grid1 import make_axes_locatable
 
 import cfg
 from tools import coord_formatter, idx, idx2d
-from cmip_fncs import subset_cmip, bnds_wbc
+from cmip_fncs import subset_cmip, bnds_wbc, open_reanalysis, bnds_wbc_reanalysis
 from cfg import mod6, mod5, lx5, lx6
 from main import ec, mc, ng
 from fncs import image2video
 
 warnings.filterwarnings(action='ignore', message='Mean of empty slice')
 warnings.filterwarnings("ignore")
+plt.rcParams['lines.linewidth'] = 1
 
 
 def plot_reanalysis_vdepth(cc, var, lat, lon, depth, vmax=1,
@@ -31,44 +32,32 @@ def plot_reanalysis_vdepth(cc, var, lat, lon, depth, vmax=1,
     ylim = depth
     cmap = plt.cm.seismic
     cmap.set_bad('grey')
-
+    robs_full = cfg.Rdata._instances
+    dss = open_reanalysis(var)
     # Number of rows, cols.
-    nr, nc, figsize = 1, 4, (12, 3)
-
-    fig, ax = plt.subplots(nr, nc, figsize=figsize, sharey=True, #sharex='row',
+    nr, nc, figsize = 1, 5, (12, 3)
+    if cc.n in ['MC', 'NGCU']:
+        lat = [lat]
+    else:
+        lon = [lon]
+    fig, ax = plt.subplots(nr, nc, figsize=figsize, sharey=True,
                            squeeze=False)
     ax = ax.flatten()
-    robs = ['cglo', 'godas', 'oras', 'soda3.12.2']
-    robs_full = ['C-GLORS', 'GODAS', 'ORAS5', 'SODA3']
-    for i, r in enumerate(robs):
-        yrs = [1993, 2018]
-        if r in ['oras', 'cglo']:
-            _var = '{}o_{}'.format(var, r)
-            nvar_dict = {'depth': 'lev', 'latitude': 'lat', 'longitude': 'lon'}
-        elif r in ['godas']:
-            _var = '{}cur'.format(var)
-            nvar_dict = {'level': 'lev'}
-        elif r in ['soda3.12.2']:
-            _var = var
-            yrs = [1980, 2017]
-            nvar_dict = {'st_ocean': 'lev', 'yu_ocean': 'lat', 'xu_ocean': 'lon'}
-        elif r in ['cglorsv7']:  # BUG: still on 2D grid.
-            yrs = [1990, 2016]
-            _var = 'vomecrty' if var == 'v' else 'vozocrtx'
-            nvar_dict = {'time_centered': 'time', 'depth{}'.format(var): 'lev', 'nav_lat': 'lat', 'nav_lon': 'lon', 'y': 'j', 'x': 'i'}
-        ds = xr.open_dataset(cfg.reanalysis/'{}o_{}_{}_{}_climo.nc'.format(var, r, *yrs))[_var]
+    for i, ds in enumerate(dss):
+        iz = [idx(ds.lev, _i) for _i in depth]
+        iy = [idx(ds.lat, _i) for _i in lat]
+        ix = [idx(ds.lon, _i) for _i in lon]
 
-        ds = ds.rename(nvar_dict)
-        if ds['lon'].max() < 300:
-            ds['lon'] = xr.where(ds.lon < 0, ds.lon + 360, ds.lon)
-        try:
-            try:
-                dx = ds.sel(lev=slice(depth[0], depth[1]), lat=slice(lat[0], lat[1]), lon=lon)
-            except:
-                dx = ds.sel(lev=slice(depth[0], depth[1]), lat=slice(lat[0], lat[1]), lon=lon + 0.5)
-                dx['lon'] = lon
-        except:
-            dx = ds.sel(lev=slice(depth[0], depth[1]), lon=slice(lon[0]+0.5, lon[1]+0.5)).sel(lat=lat, method='nearest')
+        bsel = [None] * 3
+        for _, _i in enumerate([iz, iy, ix]):
+            if len(_i) >= 2:
+                # Increase boundary second/last index by one for slice.
+                _i[-1] += 1
+                bsel[_] = slice(*_i)
+            else:
+                bsel[_] = _i[0]
+
+        dx = ds.isel(lev=bsel[0], lat=bsel[1], lon=bsel[2])
         if time == 'annual':
             dx = dx.mean('time')
             tstr = ''
@@ -100,13 +89,20 @@ def plot_reanalysis_vdepth(cc, var, lat, lon, depth, vmax=1,
             clb = fig.colorbar(cs, cax=cax, orientation='vertical', extend='both')
             units = 'Transport [Sv]' if var in ['uvo', 'vvo'] else 'm/s'
             clb.set_label(units)
-        ax[i].set_xlim(xlim[0], xlim[1])  # NGCU +3?
+        # ax[i].set_xlim(xlim[0], xlim[1])  # NGCU +3?
         ax[i].set_ylim(ylim[1], ylim[0])
         if cc.n == 'EUC':
             xticks = [-2, 0, 2]  # ax[m].get_xticks()
             ax[i].set_xticks(xticks)
             ax[i].set_xticklabels(coord_formatter(xticks, xax_))
-
+        else:
+            xb, zb = bnds_wbc_reanalysis(cc, bnds_only=True)
+            # Plot integration boundaries
+            ax[i].axvline(xb[i, 0], ymax=1 - (zb[i, 0] / ylim[1]), ymin=1 - (zb[i, 1] / ylim[1]), color='k')
+            ax[i].axvline(xb[i, 1], ymax=1 - (zb[i, 0] / ylim[1]), ymin=1 - (zb[i, 1] / ylim[1]), color='k')
+            # Depth
+            ax[i].hlines(y=zb[i, 1], xmax=xb[i, 1], xmin=xb[i, 0], color='k')
+            ax[i].hlines(y=zb[i, 0], xmax=xb[i, 1], xmin=xb[i, 0], color='k')
     plt.tight_layout()
     xstr = 'annual'
     plt.savefig(cfg.fig / 'cmip/reanalysis/{}_{}_reanalysis{}_{}.png'.format(cc.n, var, pos, xstr), format="png")
@@ -120,17 +116,8 @@ def plot_reanalysis_vdepth(cc, var, lat, lon, depth, vmax=1,
 # for lon in [165, 170, 180, 190, 220, 235, 250, 265]:
 #     lat, depth, lon = [-3.4, 3.4], [0, 370], lon
 #     plot_reanalysis_vdepth(cc, var, lat, lon, depth, vmax=1, pos=str(lon), ndec=0)
-
-cc = mc
 var = 'v'
-lat, depth, lon = 10, [0, 700], [124, 133]
-for lat in [8.]:
-    pos = str(lat) if type(lat) == int else str(int(10 * lat))
-    plot_reanalysis_vdepth(cc, var, lat, lon, depth, vmax=0.6, pos=pos)
-
-cc = ng
-var = 'v'
-lat, depth, lon = -3.5, [0, 700], [142, 150]
-for lat in [-3.5]:
+for cc in [mc, ng]:
+    lat, depth, lon = cc.lat, [cc.depth[0], 1100], cc.lon
     pos = str(lat) if type(lat) == int else str(int(10 * lat))
     plot_reanalysis_vdepth(cc, var, lat, lon, depth, vmax=0.6, pos=pos)

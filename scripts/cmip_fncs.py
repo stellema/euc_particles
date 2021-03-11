@@ -11,6 +11,9 @@ import xarray as xr
 import math
 import scipy
 from scipy import stats
+import pandas as pd
+from matplotlib.markers import MarkerStyle
+from matplotlib.lines import Line2D
 
 import cfg
 from cfg import mip5, mip6
@@ -179,12 +182,12 @@ def open_reanalysis(var):
         _var = r.uo if var == 'u' else r.vo
         ds = xr.open_dataset(cfg.reanalysis / '{}o_{}_{}_{}_climo.nc'
                              .format(var, r.alt_name, *r.period), decode_times=False)
-        print(ds)
         ds = ds[_var].rename(r.cdict)
         if ds['lon'].max() < 300:
             ds['lon'] = xr.where(ds.lon < 0, ds.lon + 360, ds.lon)
+        ds['time'] = pd.date_range("2000-01-01", periods=12)
+        ds = ds.where(ds != 0.0)
         dr.append(ds)
-        ds.close()
     return dr
 
 
@@ -230,8 +233,13 @@ def euc_observations(lat, lon, depth, method='static', vmin=0, sigma=False):
         dj['ec'] = dj['ec'].where(dj['ec'] > vmin)
     elif method == 'max':
         dj['ec'] = dj['ec'].where(dj['ec'] > dj['ec'].max(dim=['lev', 'lat']) * (1 - vmin))
-
-    dj['ec'] = dj['ec'] * dj.lev.diff(dim='lev') * dj.lat.diff(dim='lat') * cfg.LAT_DEG
+    # BUG: assumes starting at zero depth
+    lev_nxt = dsj.lev.isel(lev=len(dj.lev))
+    DZ = xr.concat([dj.lev, lev_nxt], dim='lev').diff(dim='lev')
+    DZ.coords['lev'] = dj.lev
+    jj = [idx(dsj.lat, dj.lat.values[jj]) for jj in [0, -1]]
+    DY = dsj.lat.isel(lat=slice(jj[0] - 1, jj[-1] + 1)).diff('lat')
+    dj['ec'] = dj['ec'] * DZ * DY * cfg.LAT_DEG
     dj['ec'] = dj['ec'].sum(['lev', 'lat']) / 1e6
     dj = dj.drop('uo')
 
@@ -250,32 +258,9 @@ def euc_observations(lat, lon, depth, method='static', vmin=0, sigma=False):
     db.coords['obs'] = ['CTD/ADCP', 'Gouriou & Toole (1993)', 'TAO/TRITION']
 
     # Reanalysis products.
-    robs = ['cglo', 'gecco3-41', 'godas', 'oras', 'soda3.12.2']
-    robs_full = ['C-GLORS', 'GECCO3', 'GODAS', 'ORAS5', 'SODA3']
+    dss = open_reanalysis('u')
     dr = []
-    for i, r in enumerate(robs):
-        yrs = [1993, 2018]
-        var = 'u'
-        if r in ['oras', 'cglo']:
-            var = 'uo_' + r
-            new_var_dict = {'depth': 'lev', 'latitude': 'lat', 'longitude': 'lon'}
-        elif r in ['godas']:
-            var = 'ucur'
-            new_var_dict = {'level': 'lev'}
-        elif r in ['soda3.12.2']:
-            yrs = [1980, 2017]
-            new_var_dict = {'st_ocean': 'lev', 'yu_ocean': 'lat', 'xu_ocean': 'lon'}
-        elif r in ['soda3.12.2']:
-            yrs = [1980, 2017]
-            new_var_dict = {'st_ocean': 'lev', 'yu_ocean': 'lat', 'xu_ocean': 'lon'}
-        elif r in ['gecco3-41']:
-            yrs = [1980, 2018]
-            new_var_dict = {'Depth': 'lev'}
-        ds = xr.open_dataset(cfg.reanalysis/'uo_{}_{}_{}_climo.nc'.format(r, *yrs), decode_times=False)[var]
-        ds = ds.rename(new_var_dict)
-
-        if ds['lon'].max() < 300:
-            ds['lon'] = xr.where(ds.lon < 0, ds.lon + 360, ds.lon)
+    for i, ds in enumerate(dss):
         try:
             de = ds.sel(lev=slice(depth[0], depth[1]), lat=slice(lat[0], lat[1]), lon=lon)
         except:
@@ -292,14 +277,20 @@ def euc_observations(lat, lon, depth, method='static', vmin=0, sigma=False):
         elif method == 'max':
             de['ec'] = de.ec.where(de.ec > de.ec.max(dim=['lev', 'lat']) * (1 - vmin))
 
-        de['ec'] = de['ec'] * de.lev.diff(dim='lev') * de.lat.diff(dim='lat') * cfg.LAT_DEG
+        lev_nxt = ds.lev.isel(lev=len(de.lev))
+        DZ = xr.concat([de.lev, lev_nxt], dim='lev').diff(dim='lev')
+        DZ.coords['lev'] = de.lev
+        jj = [idx(ds.lat, de.lat.values[jj]) for jj in [0, -1]]
+        DY = ds.lat.isel(lat=slice(jj[0] - 1, jj[-1] + 1)).diff('lat')
+
+        de['ec'] = de['ec'] * DZ * DY * cfg.LAT_DEG
         de['ec'] = de['ec'].sum(dim=['lev', 'lat']) / 1e6
         if i >= 1:
             de['time'] = dr[0]['time']
 
         dr.append(de)
     dr = xr.concat(dr, dim='robs')
-    dr.coords['robs'] = robs_full
+    dr.coords['robs'] = [r.name for r in cfg.Rdata._instances]
     # print(r, np.around(dr[r].sel(lon=[165.5, 190.5, 220.5, 250.5]).mean('time'), 1))
 
     return db, dr
@@ -425,32 +416,66 @@ def bnds_wbc(mip, cc):
         dx.close()
     return x, z
 
-def bnds_wbc_reanalysis(cc):
+
+def bnds_wbc_reanalysis(cc, bnds_only=False):
     dr = open_reanalysis('v')
     x = np.zeros((len(dr), 2))
     z = np.zeros((len(dr), 2))
+    iz = np.zeros((len(dr), 2), dtype=int)
+    ix = np.zeros((len(dr), 2), dtype=int)
     for r, dx in enumerate(dr):
-        tmpx = 0.5 if r in [0, 1, 3, 4] else 0
-        tmpy = 0.5 if r in [0, 2, 3, 4] else 0
-        z_, y_, x_ = cc.depth, cc.lat + tmpy, [_ + tmpx for _ in cc.lon.copy()]
+        _z, _y, _x = cc.depth, cc.lat, cc.lon
+        if cc.n in ['MC']:
+            _x[0] = [126]  # Shifting starting subset lon east for MC.
+        iz[r] = [idx(dx.lev, i) for i in _z]
+        ix[r] = [idx(dx.lon, i) for i in _x]
+        iy = [idx(dx.lat, _y)]
 
-        dx = dx.sel(lat=y_, method='nearest').sel(lon=slice(*x_), lev=slice(*z_))
+        bsel = [None] * 3
+        for i, b in enumerate([iz[r], iy, ix[r]]):
+            if len(b) >= 2:
+                # Increase boundary second/last index by one for slice.
+                b[-1] += 1
+                bsel[i] = slice(*b)
+            else:
+                bsel[i] = b[0]
 
-        # Trimming firts few levels off to avoid coastal shelves.
-        dx = dx.isel(lev=slice(idx(dx.lev, 0), len(dx.lev) + 1))
+        dx = dx.isel(lev=bsel[0], lat=bsel[1], lon=bsel[2])
 
+        z[r] = [dx.lev[i].item() for i in [0, -1]]
         # Western boundary: find western most non land longitude.
         x[r, 0] = dx.where(~np.isnan(dx), drop=True).lon.min().item()
 
         # Eastern boundary >= WB + current width.
-
         x[r, 1] = dx.lon.where(dx.lon >= x[r, 0] + cc.width, drop=True).min()
+
+        # Update indexes of longitudes (in full dataSET)
+        ix[r] = [idx(dr[r].lon, i) for i in x[r]]
+
+        # Slice dataset.
         dx = dx.sel(lon=slice(x[r, 0], x[r, 1]))
-        dx = dx * dx.lev.diff(dim='lev') * dx.lon.diff(dim='lon') * cfg.LON_DEG(cc.lat)
+        try:
+            lev_nxt = dr[r].lev.isel(lev=len(dx.lev))
+            DZ = xr.concat([dx.lev, lev_nxt], dim='lev').diff(dim='lev')
+        except IndexError:
+            DZ = dx.lev.diff(dim='lev')
+            DZ = xr.concat([DZ, DZ[-1]], dim='lev')
+
+        DZ.coords['lev'] = dx.lev
+        DY = dr[r].lon.isel(lon=slice(ix[r, 0] - 1, ix[r, -1] + 1)).diff('lon')
+        dx = dx * DZ * DY * cfg.LON_DEG(cc.lat)
         dx = dx.sum(dim=['lev', 'lon']) / 1e6
-        dr[r] = dx
-        dx.close()
-    return dr
+
+        if bnds_only:
+            x[r, 1] = dr[r].lon.isel(lon=ix[r, 1] + 1).item()
+
+        dr[r] = dx.copy()
+
+    if bnds_only:
+        return x, z
+    else:
+        return dr
+
 
 def cmip_wbc_transport_sum(mip, cc, net=True):
     mod = cfg.mod6 if mip.p == 6 else cfg.mod5
@@ -734,3 +759,48 @@ def cmipMMM(ct, dv, xdim=None, prec=None, const=1e6, avg=np.median,
     dl += '{:>1.0f}% {} {}/{} {} {}'.format(percent(dvm.isel(exp=2), dvm.isel(exp=0)).item(), sig, n, len(dv.model), *cor)
     print(dl)
     return
+
+
+def scatter_scenario(ax, i, df, d5, d6, show_ofam=True):
+    """Scatter plot: historical vs projected change with indiv markers."""
+    mksize = 40
+    cor_str = []
+    # OFAM3
+    if show_ofam:
+        dd = df.mean('Time')
+        ax[i].scatter(dd.isel(exp=0), (dd.isel(exp=1) - dd.isel(exp=0)),
+                      color='dodgerblue', label='OFAM3', s=mksize)
+
+    # CMIPx.
+    cor_str = []  # Correlation string (for each CMIP).
+    for p, mip, dd in zip(range(2), [mip6, mip5], [d6, d5]):
+        dd = dd.mean('time')
+        for m, sym, symc in zip(mip.mod, mip.sym, mip.symc):
+            ax[i].scatter(dd.isel(exp=0, model=m), dd.isel(exp=2, model=m),
+                          color=symc, marker=MarkerStyle(sym, fillstyle='full'), label=mip.mod[m]['id'], s=mksize, linewidth=0.5)
+
+        # Regression correlation coefficent.
+        cor = stats.spearmanr(dd.isel(exp=0), dd.isel(exp=2))
+        cor_str.append('CMIP{} r={:.2f} {}'.format(mip.p, cor[0], round_sig(cor[1], n=2)))
+
+        # Line of best fit.
+        m, b = np.polyfit(dd.isel(exp=0), dd.isel(exp=2), 1)
+        ax[i].plot(dd.isel(exp=0), m * dd.isel(exp=0) + b, color=mip.colour, lw=1)
+
+    # Subplot extras.
+    # Legend: Correlation and line of best fit (inside subplot).
+    cor_legend = [Line2D([0], [0], color=mip6.colour, lw=2, label=cor_str[0]),
+                  Line2D([0], [0], color=mip5.colour, lw=2, label=cor_str[-1])]
+    _cor_legend = ax[i].legend(handles=cor_legend, loc='best')
+    ax[i].add_artist(_cor_legend)  # Add so wont overwrite 2nd legend.
+    # Zero-lines.
+
+    ax[i].axhline(y=0, color='grey', linewidth=0.6)
+    ax[i].set_xlabel('Historical transport [Sv]')
+    if i == 1:
+        # Legend: CMIPx models (above plot).
+        ax[1].legend(bbox_to_anchor=(1, 1.125), loc="lower right", ncol=6, fontsize='small')
+    else:
+        ax[i].set_ylabel('Projected change [Sv]')
+
+    return ax
