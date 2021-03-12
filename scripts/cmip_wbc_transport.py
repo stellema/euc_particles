@@ -148,7 +148,7 @@ def plot_cmip_wbc_month(cc, ds, ds6, ds5, lat, depth, vmin=0.8, letter=0,
     ax = ax.flatten()
     xdim = np.arange(12)
     # Hiswtorical transport.
-    ax[0].set_title('{}{} at {}°'.format(cfg.lt[letter], cc.name, *cc._lat), loc='left')
+    ax[0].set_title('{}{} at {}'.format(cfg.lt[letter], cc.name, *cc._lat), loc='left')
     # CMIP6 and CMIP5 MMM and shaded interquartile range.
     # Line labels added in first plot. Model marker labels in next.
     for ds_, mip in zip([ds6, ds5], [mip6, mip5]):
@@ -163,6 +163,8 @@ def plot_cmip_wbc_month(cc, ds, ds6, ds5, lat, depth, vmin=0.8, letter=0,
 
             iqr = [np.percentile(ds_.isel(exp=s), q, axis=1) for q in [25, 75]]
             ax[i].fill_between(xdim, iqr[0], iqr[1], color=mip.colour, alpha=0.2)
+            ax[i].set_xlim(0, 11)
+            ax[i].axhline(y=0, color='grey', linewidth=0.6)  # Zero-line.
             if show_markers:
                 for m, sym, symc in zip(mip.mod, mip.sym, mip.symc):
                     mlabel = mip.mod[m]['id'] if i == 1 else None
@@ -175,18 +177,17 @@ def plot_cmip_wbc_month(cc, ds, ds6, ds5, lat, depth, vmin=0.8, letter=0,
                         ax[i].scatter([0], [0], color="w", label=' ', alpha=0.)
 
     if show_ofam:
-        ax[0].plot(xdim, (ds - ds.mean('Time')).isel(exp=0), color='dodgerblue', label='OFAM3')  # Historical
-        ax[1].plot(xdim, (ds - ds.mean('Time')).isel(exp=2), color='dodgerblue')  # Projected change.
+        ax[0].plot(xdim, (ds - ds.mean('Time')).isel(exp=0), color='dodgerblue', label='OFAM3')
+        ax[1].plot(xdim, (ds - ds.mean('Time')).isel(exp=2), color='dodgerblue')
 
     if show_obs:
         drr = bnds_wbc_reanalysis(cc)
         # Reanalysis products.
-        for dr, r, c, m in zip(drr, cfg.Rdata._instances, ['k', 'grey', 'k', 'grey', 'k'], ['--', '--', ':', ':', (0, (3, 5, 1, 5, 1, 5))]):
-            ax[0].plot(xdim, dr.mean('time'), color=c, label=r.cdict.upper(), linestyle=m)
-        # TODO: Remove single obs value?
-        # ax[0].scatter(db.lon, db['jo'], color='k', label=db[v].attrs['ref'], marker='o')
+        for dr, r, c, m in zip(drr, cfg.Rdata._instances, ['k', 'grey', 'k', 'grey', 'k'],
+                               ['--', '--', ':', ':', (0, (3, 5, 1, 5, 1, 5))]):
+            ax[0].plot(xdim, dr - dr.mean('time'), color=c, label=r.name.upper(), linestyle=m)
 
-    ax[1].axhline(y=0, color='grey', linewidth=0.6)  # Zero-line.
+
     ax[1].set_xticks(xdim)
     ax[1].set_xticklabels(cfg.mon_letter)
     ax[0].set_ylabel('Historical transport [Sv]')
@@ -194,11 +195,15 @@ def plot_cmip_wbc_month(cc, ds, ds6, ds5, lat, depth, vmin=0.8, letter=0,
 
     # Line legend of first plot put on other subplot.
     h0, l0 = ax[0].get_legend_handles_labels()
-    lgd = ax[1].legend(h0, l0, bbox_to_anchor=(1, 1), loc='upper right', prop={'size': 9})
+    if cc.n == 'MC':
+        anchor, loc = (0, 0), 'lower left'
+    else:
+        anchor, loc = (1, 0), 'lower right'
+    lgd = ax[0].legend(h0, l0, bbox_to_anchor=anchor, loc=loc, prop={'size': 9})
 
     if show_markers:  # CMIP model legend.
         h1, l1 = ax[1].get_legend_handles_labels()
-        lgd0 = ax[0].legend(h1, l1, bbox_to_anchor=(1, 1), loc='upper left', prop={'size': 9}, ncol=2)
+        lgd0 = ax[0].legend(h1, l1, bbox_to_anchor=anchor, loc=loc, prop={'size': 9}, ncol=2)
         lgd = (lgd0, lgd)  # Add legend tuple when saving figure.
     else:
         lgd = (lgd,)
@@ -212,18 +217,13 @@ def plot_cmip_wbc_month(cc, ds, ds6, ds5, lat, depth, vmin=0.8, letter=0,
     plt.close()
 
 
-# OFAM
-df = xr.Dataset()
-df[ng._n] = ofam_wbc_transport_sum(ng, ng.depth, ng.lat, [ng.lon[0], ng.lon[1] - 1]) / 1e6
-df[mc._n] = ofam_wbc_transport_sum(mc, mc.depth, mc.lat, [mc.lon[0], mc.lon[1]]) / 1e6
-# CMIP6
-d6 = xr.Dataset()
-d6[ng._n] = cmip_wbc_transport_sum(mip6, ng)[ng._n] / 1e6
-d6[mc._n] = cmip_wbc_transport_sum(mip6, mc)[mc._n] / 1e6
-# CMIP5
-d5 = xr.Dataset()
-d5[ng._n] = cmip_wbc_transport_sum(mip5, ng)[ng._n] / 1e6
-d5[mc._n] = cmip_wbc_transport_sum(mip5, mc)[mc._n] / 1e6
+df = xr.Dataset()  # OFAM
+d6 = xr.Dataset()  # CMIP6
+d5 = xr.Dataset()  # CMIP5
+for cc in [mc, ng]:
+    df[cc._n] = ofam_wbc_transport_sum(cc) / 1e6
+    d6[cc._n] = cmip_wbc_transport_sum(mip6, cc)[cc._n] / 1e6
+    d5[cc._n] = cmip_wbc_transport_sum(mip5, cc)[cc._n] / 1e6
 
 for cc in [mc, ng]:
     for dv, name in zip([d5.mean('time'), d6.mean('time')], ['CMIP5', 'CMIP6']):
@@ -237,10 +237,8 @@ for cc in [mc, ng]:
     _dr = [r.mean('time').item() for r in bnds_wbc_reanalysis(cc)]
     print('REANALYSIS: Mean(min-max)={:.2f}({:.1f}-{:.1f}) {}, {}, {}, {}, {}'.format( np.median(_dr), np.min(_dr), np.max(_dr), *['{}={:.1f}'.format(n, r) for n, r in zip(cfg.Rdata._instances, _dr)]))
 
-# cmipMMM(var, df[var.n.lower()], xdim='OFAM3', prec=None, const=1, avg=np.median,
-#         annual=False, month=None, proj_cor=False)
 scatter_wbc_markers(df, d5, d6)
-# scatter_cmip_wbc_wsc(df, d6, d5)
-# for cc in [ng, mc]:
-#     plot_cmip_wbc_month(cc, df[cc._n], d6[cc._n], d5[cc._n], cc.lat, cc.depth, vmin=0.8,
-#                         show_ofam=True, show_obs=True, show_markers=False)
+scatter_cmip_wbc_wsc(df, d6, d5)
+for a, cc in enumerate([mc, ng]):
+    plot_cmip_wbc_month(cc, df[cc._n], d6[cc._n], d5[cc._n], cc.lat, cc.depth, vmin=0.8,
+                        show_ofam=True, show_obs=True, show_markers=False, letter=a)

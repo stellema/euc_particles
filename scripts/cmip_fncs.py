@@ -42,26 +42,25 @@ def open_cmip(mip, m, var='uo', exp='historical', bounds=False):
     """Open CMIPx ocean variable dataset, fixing any issues and renaming coords.
 
     Args:
-        mip (int): CMIP phase. Can be 5 or 6.
+        mip (class): CMIP phase.
         m (int): Integer for model in mip.
         var (str, optional): Variable to open ('uo', 'vo', 'uvo', 'vvo'). Defaults to 'uo'.
         exp (str, optional): Scenario. Defaults to 'historical'.
         bounds (bool, optional): DESCRIPTION. Defaults to False.
 
     Returns:
-        ds (dataset): CMIPx model m dataset..
+        ds (dataset): CMIPx model m dataset.
 
     """
-    mod = cfg.mod6 if mip == 6 else cfg.mod5
     # File path.
-    cmip = cfg.home / 'model_output/CMIP{}/CLIMOS/'.format(mip)
+    cmip = cfg.home / 'model_output/CMIP{}/CLIMOS/'.format(mip.p)
     if var in ['uvo', 'vvo']:
         cmip = cmip / 'ocean_transport/'
-    file = cmip / '{}_Omon_{}_{}_climo.nc'.format(var, mod[m]['id'], exp)
+    file = cmip / '{}_Omon_{}_{}_climo.nc'.format(var, mip.mod[m]['id'], exp)
     ds = xr.open_dataset(str(file))
 
     dims = [v for v in ds.coords]
-    if mod[m]['nd'] == 2:
+    if mip.mod[m]['nd'] == 2:
         # Rename 2d coord indexes to j,i.
         j0 = [d for d in list(ds[var].dims) if d in ['y', 'nlat', 'rlat', 'lat']]
         if any(j0):
@@ -82,7 +81,7 @@ def open_cmip(mip, m, var='uo', exp='historical', bounds=False):
             ds = ds.rename({'nav_lat_bnds': 'lat_bnds', 'nav_lon_bnds': 'lon_bnds'})
 
     # Fix odd error (j, i wrong labels).
-    if mod[m]['id'] in ['CMCC-CM2-SR5']:
+    if mip.mod[m]['id'] in ['CMCC-CM2-SR5']:
         ds = ds.rename({'j': 'i', 'i': 'j'})
 
     # Convert longitudes to 0-360.
@@ -90,14 +89,14 @@ def open_cmip(mip, m, var='uo', exp='historical', bounds=False):
         ds['lon'] = xr.where(ds.lon < 0, ds.lon + 360, ds.lon)
 
     # Convert depths to centimetres to find levels.
-    if (mip == 6 and hasattr(ds.lev, 'units') and ds.lev.attrs['units'] != 'm'):
+    if (mip.p == 6 and hasattr(ds.lev, 'units') and ds.lev.attrs['units'] != 'm'):
         ds['lev'] = ds.lev / 100
 
-    if var in ['uvo', 'vvo'] and mod[m]['id'] in ['MIROC-ES2L', 'MIROC6']:
+    if var in ['uvo', 'vvo'] and mip.mod[m]['id'] in ['MIROC-ES2L', 'MIROC6']:
         ds = ds * -1
 
     # Land points should be NaN not zero.
-    if mod[m]['id'] in ['MIROC5', 'MRI-CGCM3', 'MRI-ESM1']:
+    if mip.mod[m]['id'] in ['MIROC5', 'MRI-CGCM3', 'MRI-ESM1']:
         ds = ds.where(ds != 0.0, np.nan)
     return ds
 
@@ -106,7 +105,7 @@ def subset_cmip(mip, m, var, exp, depth, lat, lon):
     """Open and slice coordinates of CMIPx ocean variable dataset.
 
     Args:
-        mip (int): CMIP phase. Can be 5 or 6.
+        mip (class): CMIP phase. Can be 5 or 6.
         m (int): Integer for model in mip.
         var (str, optional): Variable to open ('uo', 'vo', 'uvo', 'vvo'). Defaults to 'uo'.
         exp (str, optional): Scenario. Defaults to 'historical'.
@@ -114,31 +113,27 @@ def subset_cmip(mip, m, var, exp, depth, lat, lon):
         lat (list or int): Latitude(s) to subset. Assumes list of endpoints.
         lon (list or int): Longitude(s) to subset. Assumes list of endpoints.
     """
-    if type(mip) != int:
-        mip = mip.p
-    mod = cfg.mod6 if mip == 6 else cfg.mod5
-
     # Make sure single points are lists.
-    lat = [lat] if np.array(lat).size == 1 else lat
-    lon = [lon] if np.array(lon).size == 1 else lon
+    Lat = [lat] if np.array(lat).size == 1 else lat
+    Lon = [lon] if np.array(lon).size == 1 else lon
 
     # Open dataset and select variable.
     ds = open_cmip(mip, m, var, exp)
     dx = ds[var]
 
     # Depth level indexes.
-    zi = [idx(dx['lev'], z) for z in depth]
+    zi = [idx(dx['lev'].values, z) for z in depth]
 
     # Latitude and longitude indexes.
-    if mod[m]['nd'] == 1:  # 1D coords.
-        yi = [idx(dx.lat, y) for y in lat]
-        xi = [idx(dx.lon, x) for x in lon]
+    if mip.mod[m]['nd'] == 1:  # 1D coords.
+        yi = [idx(dx.lat, y) for y in Lat]
+        xi = [idx(dx.lon, x) for x in Lon]
 
-    elif mod[m]['nd'] == 2:  # 2D coords.
+    elif mip.mod[m]['nd'] == 2:  # 2D coords.
         # Indexes of longitude(s).
-        xi = [idx2d(dx.lat, dx.lon, np.mean(lat), x)[1] for x in lon]
+        xi = [idx2d(dx.lat, dx.lon, np.mean(Lat), x)[1] for x in Lon]
         # Indexes of latitudes(s).
-        yi = [idx2d(dx.lat, dx.lon, y, lon[0])[0] for y in lat]
+        yi = [idx2d(dx.lat, dx.lon, y, Lon[0])[0] for y in Lat]
 
     # Latitude slice (creates slice if len(lat) == 2).
     yf, xf = yi, xi  # Basically temp vars.
@@ -163,7 +158,7 @@ def subset_cmip(mip, m, var, exp, depth, lat, lon):
     elif 'lat' in dx.dims:
         dx = dx.isel(lat=yf, lon=xf)
     else:
-        print('NI:Lat dim of {} dims={}'.format(mod[m]['id'], dx.dims))
+        print('NI:Lat dim of {} dims={}'.format(mip.mod[m]['id'], dx.dims))
     return dx
 
 
@@ -307,8 +302,8 @@ def cmip_euc_transport_sum(depth, lat, lon, mip, method='static', vmin=0):
         lat_str = 'lat' if mip.mod[m]['nd'] == 1 else 'j'
         for x in range(len(lon)):
             for s in range(len(mip.exp)):
-                dx = subset_cmip(mip.p, m, 'uvo', mip.exps[s], depth, lat, lon[x]).load().squeeze()
-                du = subset_cmip(mip.p, m, 'uo', mip.exps[s], depth, lat, lon[x]).load().squeeze()
+                dx = subset_cmip(mip, m, 'uvo', mip.exps[s], depth, lat, lon[x]).load().squeeze()
+                du = subset_cmip(mip, m, 'uo', mip.exps[s], depth, lat, lon[x]).load().squeeze()
                 # Maximum velocity at each longitude.
                 ds['umax'][s, :, x, m] = du.max(dim=['lev', lat_str]).values
 
@@ -393,8 +388,8 @@ def bnds_wbc(mip, cc):
                 x_[0] = 147
         if cc.n in ['MC'] and cc.lat in [8]:
             if mip.mod[m]['id'] in ['MIROC-ESM-CHEM', 'MIROC-ESM', 'EC-Earth3-Veg', 'EC-Earth3', 'GISS-E2-1-G']:
-                x_[0] = 126
-        dx = subset_cmip(mip.p, m, cc.vel, 'historical', z_, y_, x_)
+                x_[0] = 125
+        dx = subset_cmip(mip, m, cc.vel, 'historical', z_, y_, x_)
         dx = dx.squeeze()
 
         # Depths
@@ -410,9 +405,8 @@ def bnds_wbc(mip, cc):
         try:
             x[m, 1] = dx.lon.where(dx.lon >= x[m, 0] + cc.width, drop=True).min()
         except ValueError:
-            print(mip.mod[m]['id'], x[m], cc.width)
+            print('bnds_wbc() Error:', mip.mod[m]['id'], x[m], cc.width)
             # print(dx.lon.where(dx.lon >= x[m, 0] + cc.width))
-
         dx.close()
     return x, z
 
@@ -424,9 +418,9 @@ def bnds_wbc_reanalysis(cc, bnds_only=False):
     iz = np.zeros((len(dr), 2), dtype=int)
     ix = np.zeros((len(dr), 2), dtype=int)
     for r, dx in enumerate(dr):
-        _z, _y, _x = cc.depth, cc.lat, cc.lon
+        _z, _y, _x = cc.depth, cc.lat, cc.lon.copy()
         if cc.n in ['MC']:
-            _x[0] = [126]  # Shifting starting subset lon east for MC.
+            _x[0] = 126  # Shifting starting subset lon east for MC.
         iz[r] = [idx(dx.lev, i) for i in _z]
         ix[r] = [idx(dx.lon, i) for i in _x]
         iy = [idx(dx.lat, _y)]
@@ -466,8 +460,8 @@ def bnds_wbc_reanalysis(cc, bnds_only=False):
         dx = dx * DZ * DY * cfg.LON_DEG(cc.lat)
         dx = dx.sum(dim=['lev', 'lon']) / 1e6
 
-        if bnds_only:
-            x[r, 1] = dr[r].lon.isel(lon=ix[r, 1] + 1).item()
+        # if bnds_only:
+        #     x[r, 1] = dr[r].lon.isel(lon=ix[r, 1] + 1).item()
 
         dr[r] = dx.copy()
 
@@ -478,18 +472,16 @@ def bnds_wbc_reanalysis(cc, bnds_only=False):
 
 
 def cmip_wbc_transport_sum(mip, cc, net=True):
-    mod = cfg.mod6 if mip.p == 6 else cfg.mod5
-    lx = cfg.lx6 if mip.p == 6 else cfg.lx5
     # Scenario, month, longitude, model.
     var = 'vvo'
     dc = np.zeros((len(mip.exps), len(cfg.tdim), len(mip.mod)))
     ds = xr.Dataset({cc._n: (['exp', 'time', 'model'], dc)},
                     coords={'exp': mip.exps, 'time': cfg.tdim, 'model': mip.models})
     x, z = bnds_wbc(mip, cc)
-    y = cc.lat
-    for m in mod:
+    y = cc.lat.copy()
+    for m in mip.mod:
         for s, ex in enumerate(mip.exp):
-            dx = subset_cmip(mip.p, m, var, mip.exp[s], z[m], y, x[m])
+            dx = subset_cmip(mip, m, var, mip.exp[s], z[m], y, x[m])
             dx = dx.squeeze()
             if not net:
                 dx = dx.where(dx * cc.sign > 0)
@@ -502,7 +494,7 @@ def cmip_wbc_transport_sum(mip, cc, net=True):
 
 
 
-def ofam_wbc_transport_sum(cc, depth, lat, lon, net=True, bnds=False):
+def ofam_wbc_transport_sum(cc, net=True, bnds=False):
     fh = xr.open_dataset(cfg.ofam/'ocean_v_1981-2012_climo.nc')
     fr = xr.open_dataset(cfg.ofam/'ocean_v_2070-2101_climo.nc')
 
@@ -510,24 +502,26 @@ def ofam_wbc_transport_sum(cc, depth, lat, lon, net=True, bnds=False):
     dz = xr.open_dataset(cfg.ofam/'ocean_u_2012_06.nc').st_edges_ocean
 
     # EUC depth boundary indexes.
-    zi = [idx(dz[1:], z) for z in depth]
+    zi = [idx(dz[1:], z) for z in cc.depth]
     if cc.n == 'NGCU':
-        if lat <= -5:
-            lon = [146, 156]
+        if cc.lat <= -5:
+            nlon = [146, 156]
         else:
-            lon = [140.5, 145]
+            nlon = [140.5, 145]
+    else:
+        nlon = cc.lon
     # Slice lat, lon and depth.
-    fh = fh.v.sel(xu_ocean=slice(lon[0], lon[1] + 0.1), yu_ocean=lat).isel(st_ocean=slice(zi[0], zi[1] + 1))
-    fr = fr.v.sel(xu_ocean=slice(lon[0], lon[1] + 0.1), yu_ocean=lat).isel(st_ocean=slice(zi[0], zi[1] + 1))
+    fh = fh.v.sel(xu_ocean=slice(nlon[0], nlon[1] + 0.1), yu_ocean=cc.lat).isel(st_ocean=slice(zi[0], zi[1] + 1))
+    fr = fr.v.sel(xu_ocean=slice(nlon[0], nlon[1] + 0.1), yu_ocean=cc.lat).isel(st_ocean=slice(zi[0], zi[1] + 1))
 
-    lon[0] = fh.where(~np.isnan(fh), drop=True).xu_ocean.min().item()
-    lon[1] = lon[0] + cc.width
-    fh = fh.sel(xu_ocean=slice(lon[0], lon[1] + 0.1))
-    fr = fr.sel(xu_ocean=slice(lon[0], lon[1] + 0.1))
+    nlon[0] = fh.where(~np.isnan(fh), drop=True).xu_ocean.min().item()
+    nlon[1] = nlon[0] + cc.width
+    fh = fh.sel(xu_ocean=slice(nlon[0], nlon[1] + 0.1))
+    fr = fr.sel(xu_ocean=slice(nlon[0], nlon[1] + 0.1))
 
     if bnds:
         zz = [fh.st_ocean.isel(st_ocean=slice(zi[0], zi[1] + 1)).values[i] for i in [0, -1]]
-        return lon, zz
+        return nlon, zz
     else:
         dz = dz.diff(dim='st_edges_ocean').rename({'st_edges_ocean': 'st_ocean'})
         dz = dz.isel(st_ocean=slice(zi[0], zi[1] + 1))
@@ -536,8 +530,8 @@ def ofam_wbc_transport_sum(cc, depth, lat, lon, net=True, bnds=False):
             fh = fh.where(fh * cc.sign > 0)
             fr = fr.where(fr * cc.sign > 0)
         # Multiply by depth and width.
-        fh = fh * dz * cfg.LON_DEG(lat) * 0.1
-        fr = fr * dz * cfg.LON_DEG(lat) * 0.1
+        fh = fh * dz * cfg.LON_DEG(cc.lat) * 0.1
+        fr = fr * dz * cfg.LON_DEG(cc.lat) * 0.1
         fh = fh.sum(dim=['st_ocean', 'xu_ocean'])
         fr = fr.sum(dim=['st_ocean', 'xu_ocean'])
         fr['Time'] = fh['Time']
@@ -761,7 +755,7 @@ def cmipMMM(ct, dv, xdim=None, prec=None, const=1e6, avg=np.median,
     return
 
 
-def scatter_scenario(ax, i, df, d5, d6, show_ofam=True):
+def scatter_scenario(ax, i, df, d5, d6, show_ofam=True, rows=2, cols=2):
     """Scatter plot: historical vs projected change with indiv markers."""
     mksize = 40
     cor_str = []

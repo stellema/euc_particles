@@ -49,7 +49,7 @@ def plot_ofam_euc_transport_def(de, lon):
 
 def scatter_cmip_euc(de, de6, de5, lon, show_ofam=False):
     """EUC scatter plot: historical vs projected change."""
-    fig, ax = plt.subplots(2, 2, figsize=(12, 8))
+    fig, ax = plt.subplots(2, 2, figsize=(12, 9), squeeze=False)
     ax = ax.flatten()
     for i, X in enumerate([165, 190, 220, 250]):
         ax[i].set_title('{}Equatorial Undercurrent at {}\u00b0E'.format(cfg.lt[i], X), loc='left')
@@ -162,7 +162,7 @@ def plot_cmip_euc_month(de, de6, de5, lat, lon, depth, method='max', vmin=0.8,
     """EUC Median transport (all longitudes) historical and projected change."""
     mksize = 30
     figsize = (6, 7) if not show_markers else (10, 11)
-    fig, ax = plt.subplots(2, 1, figsize=figsize)
+    fig, ax = plt.subplots(2, 1, figsize=figsize, squeeze=False)
     ax = ax.flatten()
     x = lon
     xdim = np.arange(12)
@@ -172,6 +172,7 @@ def plot_cmip_euc_month(de, de6, de5, lat, lon, depth, method='max', vmin=0.8,
     # Line labels added in first plot. Model marker labels in next.
     for de_, c, lb, mod, lx in zip([de6.sel(lon=x), de5.sel(lon=x)],
                                    cl[1:], lbs[1:], [mod6, mod5], [lx6, lx5]):
+        de_ = de_ - de_.mean('time')
         for i, s in enumerate([0, 2]):  # Scenarios.
             if i == 0:
                 ax[i].plot(xdim, de_.isel(exp=s).median('model'), color=c, label=lb)
@@ -182,6 +183,7 @@ def plot_cmip_euc_month(de, de6, de5, lat, lon, depth, method='max', vmin=0.8,
 
             iqr = [np.percentile(de_.isel(exp=s), q, axis=1) for q in [25, 75]]
             ax[i].fill_between(xdim, iqr[0], iqr[1], color=c, alpha=0.2)
+            ax[i].axhline(y=0, color='grey', linewidth=0.6)  # Zero-line.
             if show_markers:
                 for m, sym, symc in zip(mod, lx['sym'], lx['symc']):
                     mlabel = mod[m]['id'] if i == 1 else None
@@ -201,18 +203,19 @@ def plot_cmip_euc_month(de, de6, de5, lat, lon, depth, method='max', vmin=0.8,
         ax[s].plot(xdim, yy * diff_sig[s], 'r', marker='x', alpha=0.5)
         ax[s].set_xlim(xmax=11, xmin=0)
     if show_ofam:
-        ax[0].plot(xdim, de.isel(exp=0).sel(xu_ocean=x), color=cl[0], label=lbs[0])  # Historical
-        ax[1].plot(xdim, de.isel(exp=2).sel(xu_ocean=x), color=cl[0])  # Projected change.
+        ax[0].plot(xdim, (de - de.mean('Time')).isel(exp=0).sel(xu_ocean=x), color=cl[0], label=lbs[0])  # Historical
+        ax[1].plot(xdim, (de - de.mean('Time')).isel(exp=2).sel(xu_ocean=x), color=cl[0])  # Projected change.
 
     if show_obs:
         db, dr = euc_observations(lat, lon, depth, method=method, vmin=vmin)
+        dr = dr - dr.mean('time')
         # Reanalysis products.
         for v, c, m in zip(dr.robs.values, ['k', 'grey', 'k', 'grey', 'k'], ['--', '--', ':', ':', (0, (3, 5, 1, 5, 1, 5))]):
             ax[0].plot(xdim, dr.ec.sel(robs=v), color=c, label=v.upper(), linestyle=m)
         # TODO: Remove single obs value?
         # ax[0].scatter(db.lon, db['jo'], color='k', label=db[v].attrs['ref'], marker='o')
 
-    ax[1].axhline(y=0, color='grey', linewidth=0.6)  # Zero-line.
+
     ax[1].set_xticks(xdim)
     ax[1].set_xticklabels(cfg.mon_letter)
     ax[0].set_ylabel('Historical transport [Sv]')
@@ -220,8 +223,12 @@ def plot_cmip_euc_month(de, de6, de5, lat, lon, depth, method='max', vmin=0.8,
 
     # Line legend of first plot put on other subplot.
     h0, l0 = ax[0].get_legend_handles_labels()
-    lgd = ax[0].legend(h0, l0, bbox_to_anchor=(1, 1), loc='upper right', prop={'size': 9})
-
+    # lgd = ax[0].legend(h0, l0, bbox_to_anchor=(1, 1), loc='upper right', prop={'size': 9})
+    if x in [250]: # shift to lower right for 250E
+        anchor, loc = (1, 0), 'lower right'
+    else:
+        anchor, loc = (1, 1), 'upper right'
+    lgd = ax[0].legend(h0, l0, bbox_to_anchor=anchor, loc=loc, prop={'size': 9})
     if show_markers:  # CMIP model legend.
         h1, l1 = ax[1].get_legend_handles_labels()
         lgd0 = ax[0].legend(h1, l1, bbox_to_anchor=(1, 1), loc='upper left', prop={'size': 9}, ncol=2)
@@ -260,32 +267,32 @@ except:
     de5.to_netcdf(cfg.data / 'euc_cmip5_{}_{}_j{}_z{}-{}.nc'.format(method, vmin, lat[1], *depth))
     de6.to_netcdf(cfg.data / 'euc_cmip6_{}_{}_j{}_z{}-{}.nc'.format(method, vmin, lat[1], *depth))
 
-db, dr = euc_observations(lat, lon, depth, method=method, vmin=vmin)
-for ltr, var, nvar, units in zip([1, 0, 1], ['ec', 'umax', 'z_umax'],
-                                  ['transport', 'max velocity', 'depth of max velocity'],
-                                  ['Sv', 'm/s', 'm']):
-    plot_cmip_euc_transport(de, de6, de5, lat, lon, depth, method=method,
-                            vmin=vmin, show_markers=False, show_obs=True,
-                            var=var, nvar=nvar, units=units, letter=ltr)
+# db, dr = euc_observations(lat, lon, depth, method=method, vmin=vmin)
+# for ltr, var, nvar, units in zip([1, 0, 1], ['ec', 'umax', 'z_umax'],
+#                                   ['transport', 'max velocity', 'depth of max velocity'],
+#                                   ['Sv', 'm/s', 'm']):
+#     plot_cmip_euc_transport(de, de6, de5, lat, lon, depth, method=method,
+#                             vmin=vmin, show_markers=False, show_obs=True,
+#                             var=var, nvar=nvar, units=units, letter=ltr)
 
 scatter_cmip_euc(de.ec, de6.ec, de5.ec, lon, show_ofam=True)
 
 for ix, x in enumerate([165, 205, 250]):
     plot_cmip_euc_month(de.ec, de6.ec, de5.ec, lat, x, depth, method=method, vmin=vmin, show_markers=False, letter=ix)
 
-for x in np.array([165, 200, 250]):
-    for i, dv in enumerate([de6.ec, de5.ec]):
-        cmipMMM(ec, dv.sel(lon=x), xdim=mips[i] + str(dv.sel(lon=x).lon.item()),
-                prec=None, const=1, avg=np.median, annual=True)
-    df = de.ec.mean('Time').sel(xu_ocean=x)
-    # OFAM3
-    xdim = str(np.around(df.xu_ocean.item(), 0))
-    print('OFAM3 {}: HIST: {:.1f} DIFF: {:.1f} ({:.1f}%)'.format(xdim, df.isel(exp=0).item(), df.isel(exp=2).item(), df.isel(exp=2).item() * 100 /df.isel(exp=0).item()))
-    # Reanalysis
-    df = dr.ec.sel(lon=x).mean('time')
-    print('REANALYSIS: Mean(min-max)={:.2f}({:.1f}-{:.1f}) {}, {}, {}, {}, {}'.format( df.median().item(), df.min().item(), df.max().item(), *['{}={:.1f}'.format(r.robs.item(), r.item()) for r in df]))
-    for xplus in [0, 5]:
-        try:
-            print('OBS {}: {}={:.1f}'.format(x + xplus, db.isel(obs=0).obs.item(), db.ec.isel(obs=0).sel(lon=x + xplus).item()))
-        except KeyError:
-            pass
+# for x in np.array([165, 200, 250]):
+#     for i, dv in enumerate([de6.ec, de5.ec]):
+#         cmipMMM(ec, dv.sel(lon=x), xdim=mips[i] + str(dv.sel(lon=x).lon.item()),
+#                 prec=None, const=1, avg=np.median, annual=True)
+#     df = de.ec.mean('Time').sel(xu_ocean=x)
+#     # OFAM3
+#     xdim = str(np.around(df.xu_ocean.item(), 0))
+#     print('OFAM3 {}: HIST: {:.1f} DIFF: {:.1f} ({:.1f}%)'.format(xdim, df.isel(exp=0).item(), df.isel(exp=2).item(), df.isel(exp=2).item() * 100 /df.isel(exp=0).item()))
+#     # Reanalysis
+#     df = dr.ec.sel(lon=x).mean('time')
+#     print('REANALYSIS: Mean(min-max)={:.2f}({:.1f}-{:.1f}) {}, {}, {}, {}, {}'.format( df.median().item(), df.min().item(), df.max().item(), *['{}={:.1f}'.format(r.robs.item(), r.item()) for r in df]))
+#     for xplus in [0, 5]:
+#         try:
+#             print('OBS {}: {}={:.1f}'.format(x + xplus, db.isel(obs=0).obs.item(), db.ec.isel(obs=0).sel(lon=x + xplus).item()))
+#         except KeyError:
+#             pass

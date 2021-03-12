@@ -393,10 +393,9 @@ from mpl_toolkits.axes_grid1 import make_axes_locatable
 import cfg
 from tools import coord_formatter
 from cmip_fncs import subset_cmip, bnds_wbc
-from cfg import mod6, mod5, lx5, lx6
 from main import ec, mc, ng
-# for m in mod:
-#     dx = subset_cmip(mip, m, var, exp, z[m], cc.lat, x[m]).mean('time')
+# for m in cfg.mip6.mod:
+#     dx = subset_cmip(cfg.mip6, m, var, exp, z[m], cc.lat, x[m]).mean('time')
 # mod[m]['id'] in ['CMCC-CM2-SR5'] i, j switched
 
 

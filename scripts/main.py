@@ -74,8 +74,8 @@ class Current:
 
 # Create Current instances.
 ec = Current('EUC', 'Equatorial Undercurrent', vel='uo', sign=1, depth=[0, 350], lat=[-2.5, 2.5], lon=cfg.lons)
-mc = Current('MC', 'Mindanao Current', vel='vo', sign=-1, depth=[0, 1000], lat=8, lon=[124, 137], width=4)
-ng = Current('NGCU', 'New Guinea Coastal Undercurrent', vel='vo', sign=1, depth=[0, 1000], lat=-8, lon=[147, 168], width=7)
+mc = Current('MC', 'Mindanao Current', vel='vo', sign=-1, depth=[0, 1000], lat=8, lon=[124, 136], width=3)
+ng = Current('NGCU', 'New Guinea Coastal Undercurrent', vel='vo', sign=1, depth=[0, 1000], lat=-8, lon=[147, 168], width=5)
 # 4.1*cfg.LON_DEG(8)/1000 = 452km
 # 5*cfg.LON_DEG(8)/1000 = 551km
 # 6.4*cfg.LON_DEG(8)/1000 = 705km

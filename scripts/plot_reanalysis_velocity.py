@@ -104,18 +104,19 @@ def plot_reanalysis_vdepth(cc, var, lat, lon, depth, vmax=1,
             ax[i].hlines(y=zb[i, 1], xmax=xb[i, 1], xmin=xb[i, 0], color='k')
             ax[i].hlines(y=zb[i, 0], xmax=xb[i, 1], xmin=xb[i, 0], color='k')
     plt.tight_layout()
-    xstr = 'annual'
-    plt.savefig(cfg.fig / 'cmip/reanalysis/{}_{}_reanalysis{}_{}.png'.format(cc.n, var, pos, xstr), format="png")
+    xstr = '' if time == 'annual' else '_{:02d}'.format(time)
+    plt.savefig(cfg.fig / 'cmip/reanalysis/{}_reanalysis_{}{}.png'.format(cc.n, pos, xstr), format="png")
 
     plt.show()
     return dx
 
 
-# cc = ec
-# var = 'u'
-# for lon in [165, 170, 180, 190, 220, 235, 250, 265]:
-#     lat, depth, lon = [-3.4, 3.4], [0, 370], lon
-#     plot_reanalysis_vdepth(cc, var, lat, lon, depth, vmax=1, pos=str(lon), ndec=0)
+
+cc = ec
+var = 'u'
+for lon in [165, 170, 180, 190, 220, 235, 250, 265]:
+    lat, depth, lon = [-3.4, 3.4], [0, 370], lon
+    plot_reanalysis_vdepth(cc, var, lat, lon, depth, vmax=0.8, pos=str(lon), ndec=0)
 var = 'v'
 for cc in [mc, ng]:
     lat, depth, lon = cc.lat, [cc.depth[0], 1100], cc.lon
