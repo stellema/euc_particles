@@ -62,7 +62,7 @@ from matplotlib.markers import MarkerStyle
 from matplotlib.lines import Line2D
 
 import cfg
-from cfg import mod6, mod5, lx5, lx6, mip6, mip5
+from cfg import mip6, mip5
 from tools import coord_formatter, zonal_sverdrup, wind_stress_curl
 from cmip_fncs import (ofam_wbc_transport_sum, cmip_wbc_transport_sum, cmipMMM, cmip_wsc, sig_line, round_sig, bnds_wbc_reanalysis, scatter_scenario)
 from main import ec, mc, ng
@@ -178,7 +178,7 @@ def plot_cmip_wbc_month(cc, ds, ds6, ds5, lat, depth, vmin=0.8, letter=0,
 
     if show_ofam:
         ax[0].plot(xdim, (ds - ds.mean('Time')).isel(exp=0), color='dodgerblue', label='OFAM3')
-        ax[1].plot(xdim, (ds - ds.mean('Time')).isel(exp=2), color='dodgerblue')
+        # ax[1].plot(xdim, (ds - ds.mean('Time')).isel(exp=2), color='dodgerblue')
 
     if show_obs:
         drr = bnds_wbc_reanalysis(cc)
@@ -186,7 +186,6 @@ def plot_cmip_wbc_month(cc, ds, ds6, ds5, lat, depth, vmin=0.8, letter=0,
         for dr, r, c, m in zip(drr, cfg.Rdata._instances, ['k', 'grey', 'k', 'grey', 'k'],
                                ['--', '--', ':', ':', (0, (3, 5, 1, 5, 1, 5))]):
             ax[0].plot(xdim, dr - dr.mean('time'), color=c, label=r.name.upper(), linestyle=m)
-
 
     ax[1].set_xticks(xdim)
     ax[1].set_xticklabels(cfg.mon_letter)
@@ -220,7 +219,7 @@ def plot_cmip_wbc_month(cc, ds, ds6, ds5, lat, depth, vmin=0.8, letter=0,
 df = xr.Dataset()  # OFAM
 d6 = xr.Dataset()  # CMIP6
 d5 = xr.Dataset()  # CMIP5
-for cc in [mc, ng]:
+for cc in [ng, mc]:
     df[cc._n] = ofam_wbc_transport_sum(cc) / 1e6
     d6[cc._n] = cmip_wbc_transport_sum(mip6, cc)[cc._n] / 1e6
     d5[cc._n] = cmip_wbc_transport_sum(mip5, cc)[cc._n] / 1e6

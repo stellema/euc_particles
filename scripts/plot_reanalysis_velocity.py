@@ -119,6 +119,6 @@ for lon in [165, 170, 180, 190, 220, 235, 250, 265]:
     plot_reanalysis_vdepth(cc, var, lat, lon, depth, vmax=0.8, pos=str(lon), ndec=0)
 var = 'v'
 for cc in [mc, ng]:
-    lat, depth, lon = cc.lat, [cc.depth[0], 1100], cc.lon
+    lat, depth, lon = cc.lat, [cc.depth[0], 1100], cc.lon.copy()
     pos = str(lat) if type(lat) == int else str(int(10 * lat))
     plot_reanalysis_vdepth(cc, var, lat, lon, depth, vmax=0.6, pos=pos)

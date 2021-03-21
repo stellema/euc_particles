@@ -96,8 +96,12 @@ def open_cmip(mip, m, var='uo', exp='historical', bounds=False):
         ds = ds * -1
 
     # Land points should be NaN not zero.
-    if mip.mod[m]['id'] in ['MIROC5', 'MRI-CGCM3', 'MRI-ESM1']:
-        ds = ds.where(ds != 0.0, np.nan)
+    if mip.mod[m]['id'] in ['MIROC5', 'MRI-CGCM3', 'MRI-ESM1', 'MPI-ESM1-2-LR', 'MIROC6', 'MIROC-ES2L']:
+        ds = ds.where(ds[var].sum('time') != 0., np.nan)
+
+    # Reverse latitude dimension (these are both 2D).
+    if mip.mod[m]['id'] in ['MPI-ESM1-2-HR', 'MPI-ESM1-2-LR']:
+        ds = ds.reindex(j=list(reversed(ds.j)))
     return ds
 
 
@@ -378,7 +382,7 @@ def bnds_wbc(mip, cc):
     x = np.zeros((len(mip.mod), 2))
     z = np.zeros((len(mip.mod), 2))
     for m in mip.mod:
-        z_, y_, x_ = cc.depth, cc.lat, cc.lon.copy()
+        z_, y_, x_ = cc.depth.copy(), cc.lat, cc.lon.copy()
         if cc.n in ['NGCU'] and cc.lat in [-8]:
             if mip.mod[m]['id'] in ['CanESM5', 'CMCC-CM2-SR5', 'CMCC-CM6-1', 'CNRM-ESM2-1', 'NESM3']:
                 x_[0] = 150
@@ -388,7 +392,7 @@ def bnds_wbc(mip, cc):
                 x_[0] = 147
         if cc.n in ['MC'] and cc.lat in [8]:
             if mip.mod[m]['id'] in ['MIROC-ESM-CHEM', 'MIROC-ESM', 'EC-Earth3-Veg', 'EC-Earth3', 'GISS-E2-1-G']:
-                x_[0] = 125
+                x_[0] = 126
         dx = subset_cmip(mip, m, cc.vel, 'historical', z_, y_, x_)
         dx = dx.squeeze()
 
@@ -402,13 +406,168 @@ def bnds_wbc(mip, cc):
         x[m, 0] = dx.where(~np.isnan(dx), drop=True).lon.min().item()
 
         # Eastern boundary >= WB + current width.
+        width = cc.width
+        # if cc.n in ['MC'] and cc.lat in [-8]:
+        #     if mip.mod[m]['id'] in ['CanESM5', 'CAMS-CSM1-0', 'CESM2', 'CESM-WACCM', 'CIESM', 'CMCC-CM6-1', 'CNRM-ESM2-1', 'CMCC-CM2-SR5','EC-Earth3', 'EC-Earth3-Veg', 'INM-CM4-8', 'IPSL-CM6A-LR', 'MIROC']:
+        #         width = 4
+        #     if mip.mod[m]['id'] in []:
+        #         width = 2
+        #     if mip.mod[m]['id'] in ['GISS-E2-1-G']:
+        #         width = 5
         try:
-            x[m, 1] = dx.lon.where(dx.lon >= x[m, 0] + cc.width, drop=True).min()
+            x[m, 1] = dx.lon.where(dx.lon >= x[m, 0] + width, drop=True).min()
         except ValueError:
             print('bnds_wbc() Error:', mip.mod[m]['id'], x[m], cc.width)
-            # print(dx.lon.where(dx.lon >= x[m, 0] + cc.width))
+            # print(dx.lon.where(dx.lon >= x[m, 0] + width))
         dx.close()
     return x, z
+
+
+
+def bnds_itf_cmip(mip):
+    def update_indexes(ds, m, bnds, ibnds):
+        if ds.lat.ndim == 1:
+            for c, coord in zip([1, 2], ['lat', 'lon']):  # Lat/lon indexes.
+                for a in range(2):  # Southern/Northern indexes.
+                    ibnds[m, c, a] = idx(ds[coord].values, bnds[m, c, a])
+        else:
+            # Southern indexes.
+            ibnds[m, 1, 0], ibnds[m, 2, 0] = idx2d(ds.lat, ds.lon, bnds[m, 1, 0], bnds[m, 2, 0])
+            ibnds[m, 1, 1], ibnds[m, 2, 1] = idx2d(ds.lat, ds.lon, bnds[m, 1, 1], bnds[m, 2, 1])
+        return bnds, ibnds
+
+    def update_bnds(ds, m, bnds, ibnds):
+        for a in [0, -1]:  # Southern/Northern indexes.
+            if ds.lat.ndim == 1:
+
+                tmp = ds.isel(lat=slice(*ibnds[m, 1] + [0, 1]), lon=ibnds[m, 2, 0])
+                bnds[m, 1, a] = tmp.lat.values[a]
+                bnds[m, 2, a] = tmp.lon.item()
+            else:
+                tmp = ds.isel(j=slice(*ibnds[m, 1] + [0, 1]), i=ibnds[m, 2, 0])
+                try:
+                    bnds[m, 1, a] = tmp.lat.values[a]
+                except:
+                    print(mip.mod[m]['id'], 'lat')
+                try:
+                    bnds[m, 2, a] = tmp.lon.values[a]
+                except:
+                    print(mip.mod[m]['id'], 'lon')
+            tmp.close()
+        return bnds, ibnds
+
+    ytop = [-13, 8]  # Northern most latitude to look./
+    xmax = 125
+    bnds = np.zeros((len(mip.mod), 3, 2))
+    ibnds = np.zeros((len(mip.mod), 3, 2), dtype=int)
+    for m in mip.mod:
+        z_, y_, x_ = [0, 1000], [-29, -18], [106, 118]
+
+        dx = subset_cmip(mip, m, 'uo', 'historical', z_, y_, x_)
+        dx = dx.mean('time').squeeze()
+        dx = dx.where(dx != 0.0)
+        ds = open_cmip(mip, m, 'uo', 'historical')['uo'].mean('time').squeeze()
+        # Slice latitudes between ytop boundaries.
+        dy = ds.isel(lev=0).where((ds.lat >= ytop[0]) & (ds.lat <= ytop[1]), drop=True)
+        # Depths
+        bnds[m, 0] = [dx.lev.values[i] for i in [0, -1]]
+        dx = dx.isel(lev=0)
+        ibnds[m, 0] = [idx(ds.lev.values, bnds[m, 0, i]) for i in [0, 1]]
+
+        # Western most land point of WA.
+        bnds[m, 2, 0] = dx.where(np.isnan(dx), drop=True).lon.min().item()
+
+        # Southern Latitude (point on land; minus to move north onto sea)
+        if mip.mod[m]['nd'] == 2:
+            # Index of i (in dx) corresponding to WA longitude.
+            # tmp_i_index = dx.where(np.isnan(dx), drop=True).i.min().item()
+            _, tmp_i_index = idx2d(dx.lat.values, dx.lon.values, bnds[m, 1, 0], bnds[m, 2, 0])
+            # Latitude (northern most) at that longitude.
+            bnds[m, 1, 0] = dx.isel(i=tmp_i_index).where(np.isnan(dx.isel(i=tmp_i_index)), drop=True).lat.max()
+            ibnds[m, 1, 0], ibnds[m, 2, 0] = idx2d(ds.lat.values, ds.lon.values, bnds[m, 1, 0], bnds[m, 2, 0])
+            _, i_xmax = idx2d(ds.lat.values, ds.lon.values, ytop[1], xmax)
+            dy = dy.isel(i=slice(ibnds[m, 2, 0], i_xmax))
+        else:
+            bnds[m, 1, 0] = dx.sel(lon=bnds[m, 2, 0]).where(np.isnan(dx.sel(lon=bnds[m, 2, 0])), drop=True).lat.max()
+            ibnds[m, 1, 0] = idx(dx.lat.values, bnds[m, 1, 0])
+            ibnds[m, 2, 0] = idx(dx.lon.values, bnds[m, 2, 0])
+            i_xmax = idx(dy.lon.values, xmax)
+            dy = dy.isel(lon=slice(ibnds[m, 2, 0], i_xmax))
+
+        found = False
+        if mip.mod[m]['id'] in ['CESM2', 'CESM2-WACCM', 'CIESM', 'GISS-E2-1-G', 'INM-CM4-8', 'INM-CM5-0']:
+            if mip.mod[m]['nd'] == 2:
+                bnds[m, 1, 1] = dy.isel(i=0).where(np.isnan(dy.isel(i=0)), drop=True).lat.min()
+            else:
+                bnds[m, 1, 1] = dy.isel(lon=0).where(np.isnan(dy.isel(lon=0)), drop=True).lat.min()
+            # bnds[m, 2, 0] = dy.isel(lon=i).lon.min().item()
+            found = True
+         # Look for min NaN lat between ytop boundaries. If none, move east.
+        i = 0
+        while not found and i < dy.shape[-1]:
+            try:
+                # Search NaNs along this lat line (min lat should be land).
+                if mip.mod[m]['nd'] == 2:
+                    bnds[m, 1, 1] = dy.isel(i=i).where(np.isnan(dy.isel(i=i)), drop=True).lat.min()
+                    bnds[m, 2, 0] = dy.isel(i=i).lon.min().item()
+                else:
+                    bnds[m, 1, 1] = dy.isel(lon=i).where(np.isnan(dy.isel(lon=i)), drop=True).lat.min()
+                    bnds[m, 2, 0] = dy.isel(lon=i).lon.min().item()
+
+                found = True
+            except ValueError:
+                i += 1
+        bnds[m, 2, 1] = bnds[m, 2, 0].copy()
+        bnds, ibnds = update_indexes(ds, m, bnds, ibnds)
+        # Move North if northern lat is on ocean point.
+        if ds.lat.ndim == 2:
+            for ii in range(5):
+                if ~np.isnan(ds.isel(lev=0, j=ibnds[m, 1, 1], i=ibnds[m, 2, 0])):
+                    ibnds[m, 1, 1] += 1
+                    bnds, ibnds = update_bnds(ds, m, bnds, ibnds)
+                else:
+                    break
+
+        # Manual model fixes.
+        if mip.mod[m]['id'] in ['CanESM2']:  # FROM CMIP5#2.
+            ibnds[m, 2] = [80] * 2
+            ibnds[m, 1] = [72, 91]
+        elif mip.mod[m]['id'] in ['HadGEM2-AO']:  # FROM CMIP5#15.
+            ibnds[m, 2] = [113] * 2
+            ibnds[m, 1] = [68, 85]
+        elif mip.mod[m]['id'] in ['MIROC5']:  # FROM CMIP5#19.
+            ibnds[m, 2] = [240] * 2
+            ibnds[m, 1] = [89, 99]
+        elif mip.mod[m]['id'] in ['MIROC-ESM', 'MIROC-ESM-CHEM']:  # FROM CMIP5#20/21.
+            ibnds[m, 2] = [81] * 2
+            ibnds[m, 1] = [63, 79]
+        elif mip.mod[m]['id'] in ['MPI-ESM-LR']:  # FROM CMIP5#22.
+            ibnds[m, 2] = [225] * 2
+            ibnds[m, 1] = [69, 80]
+        elif mip.mod[m]['id'] in ['MRI-CGCM3', 'MRI-ESM1']:  # FROM CMIP5#24/25.
+            ibnds[m, 2] = [33] * 2
+            ibnds[m, 1] = [109, 139]
+        elif mip.p == 5 and m in [3, 4, 5, 6, 11]:
+            ibnds[m, 2] = [135] * 2
+            ibnds[m, 1] = [105, 154]
+
+        elif mip.mod[m]['id'] in ['GISS-E2-1-G']:  # FROM CMIP6#13.
+            ibnds[m, 1, 1] = idx(ds.lat, -2)  # Top lat too high?
+        elif mip.mod[m]['id'] in ['INM-CM4-8', 'INM-CM5-0']:  # FROM CMIP6#14+15.
+            ibnds[m, 1, 1] = idx(ds.lat, -9)  # Top lat too high?
+        # elif mip.mod[m]['id'] in ['MPI-ESM1-2-LR']:  # FROM CMIP6#20
+        #     print(bnds[m])
+            # bnds[m, 1, 1] = [25]
+        # elif mip.mod[m]['id'] in ['MRI-ESM2-0']:  # FROM CMIP6#21
+        #     ibnds[m, 1] = [, ]
+        if mip.mod[m]['id'] in ['CESM2', 'CESM2-WACCM', 'CIESM', 'EC-Earth3',
+                                'EC-Earth3-Veg', 'GISS-E2-1-G', 'INM-CM4-8', 'MPI-ESM1-2-LR']:  # FROM CMIP6#5+6+7.
+            ibnds[m, 2] = ibnds[m, 2] + 1
+
+
+        bnds, ibnds = update_bnds(ds, m, bnds, ibnds)
+
+    return bnds, ibnds
 
 
 def bnds_wbc_reanalysis(cc, bnds_only=False):
@@ -418,7 +577,7 @@ def bnds_wbc_reanalysis(cc, bnds_only=False):
     iz = np.zeros((len(dr), 2), dtype=int)
     ix = np.zeros((len(dr), 2), dtype=int)
     for r, dx in enumerate(dr):
-        _z, _y, _x = cc.depth, cc.lat, cc.lon.copy()
+        _z, _y, _x = cc.depth.copy(), cc.lat, cc.lon.copy()
         if cc.n in ['MC']:
             _x[0] = 126  # Shifting starting subset lon east for MC.
         iz[r] = [idx(dx.lev, i) for i in _z]
@@ -441,7 +600,8 @@ def bnds_wbc_reanalysis(cc, bnds_only=False):
         x[r, 0] = dx.where(~np.isnan(dx), drop=True).lon.min().item()
 
         # Eastern boundary >= WB + current width.
-        x[r, 1] = dx.lon.where(dx.lon >= x[r, 0] + cc.width, drop=True).min()
+        width = cc.width
+        x[r, 1] = dx.lon.where(dx.lon >= x[r, 0] + width, drop=True).min()
 
         # Update indexes of longitudes (in full dataSET)
         ix[r] = [idx(dr[r].lon, i) for i in x[r]]
@@ -478,7 +638,7 @@ def cmip_wbc_transport_sum(mip, cc, net=True):
     ds = xr.Dataset({cc._n: (['exp', 'time', 'model'], dc)},
                     coords={'exp': mip.exps, 'time': cfg.tdim, 'model': mip.models})
     x, z = bnds_wbc(mip, cc)
-    y = cc.lat.copy()
+    y = cc.lat
     for m in mip.mod:
         for s, ex in enumerate(mip.exp):
             dx = subset_cmip(mip, m, var, mip.exp[s], z[m], y, x[m])
@@ -509,7 +669,7 @@ def ofam_wbc_transport_sum(cc, net=True, bnds=False):
         else:
             nlon = [140.5, 145]
     else:
-        nlon = cc.lon
+        nlon = cc.lon.copy()
     # Slice lat, lon and depth.
     fh = fh.v.sel(xu_ocean=slice(nlon[0], nlon[1] + 0.1), yu_ocean=cc.lat).isel(st_ocean=slice(zi[0], zi[1] + 1))
     fr = fr.v.sel(xu_ocean=slice(nlon[0], nlon[1] + 0.1), yu_ocean=cc.lat).isel(st_ocean=slice(zi[0], zi[1] + 1))
@@ -796,5 +956,91 @@ def scatter_scenario(ax, i, df, d5, d6, show_ofam=True, rows=2, cols=2):
         ax[1].legend(bbox_to_anchor=(1, 1.125), loc="lower right", ncol=6, fontsize='small')
     else:
         ax[i].set_ylabel('Projected change [Sv]')
+
+    return ax
+
+
+def scatter_scenario(ax, i, df, d5, d6, show_ofam=True, rows=2, cols=2):
+    """Scatter plot: historical vs projected change with indiv markers."""
+    mksize = 40
+    cor_str = []
+    # OFAM3
+    if show_ofam:
+        dd = df.mean('Time')
+        ax[i].scatter(dd.isel(exp=0), (dd.isel(exp=1) - dd.isel(exp=0)),
+                      color='dodgerblue', label='OFAM3', s=mksize)
+
+    # CMIPx.
+    cor_str = []  # Correlation string (for each CMIP).
+    for p, mip, dd in zip(range(2), [mip6, mip5], [d6, d5]):
+        dd = dd.mean('time')
+        for m, sym, symc in zip(mip.mod, mip.sym, mip.symc):
+            ax[i].scatter(dd.isel(exp=0, model=m), dd.isel(exp=2, model=m),
+                          color=symc, marker=MarkerStyle(sym, fillstyle='full'), label=mip.mod[m]['id'], s=mksize, linewidth=0.5)
+
+        # Regression correlation coefficent.
+        cor = stats.spearmanr(dd.isel(exp=0), dd.isel(exp=2))
+        cor_str.append('CMIP{} r={:.2f} {}'.format(mip.p, cor[0], round_sig(cor[1], n=2)))
+
+        # Line of best fit.
+        m, b = np.polyfit(dd.isel(exp=0), dd.isel(exp=2), 1)
+        ax[i].plot(dd.isel(exp=0), m * dd.isel(exp=0) + b, color=mip.colour, lw=1)
+
+    # Subplot extras.
+    # Legend: Correlation and line of best fit (inside subplot).
+    cor_legend = [Line2D([0], [0], color=mip6.colour, lw=2, label=cor_str[0]),
+                  Line2D([0], [0], color=mip5.colour, lw=2, label=cor_str[-1])]
+    _cor_legend = ax[i].legend(handles=cor_legend, loc='best')
+    ax[i].add_artist(_cor_legend)  # Add so wont overwrite 2nd legend.
+    # Zero-lines.
+
+    ax[i].axhline(y=0, color='grey', linewidth=0.6)
+    ax[i].set_xlabel('Historical transport [Sv]')
+    if i == 1:
+        # Legend: CMIPx models (above plot).
+        ax[1].legend(bbox_to_anchor=(1, 1.125), loc="lower right", ncol=6, fontsize='small')
+    else:
+        ax[i].set_ylabel('Projected change [Sv]')
+
+    return ax
+
+
+def scatter_cmip_var(ax, i, dx, dy, exp=0, rows=2, cols=2, xlabel='', ylabel='', zero_line=True):
+    """Scatter plot: variable 1 vs variable 2 with indiv markers."""
+    mksize = 40
+    cor_str = []
+
+    # CMIPx.
+    cor_str = []  # Correlation string (for each CMIP).
+    for p, mip, dxx, dyy in zip(range(2), [mip6, mip5], dx, dy):
+        dxx = dxx.mean('time')
+        dyy = dyy.mean('time')
+        for m, sym, symc in zip(mip.mod, mip.sym, mip.symc):
+            ax[i].scatter(dxx.isel(exp=exp, model=m), dyy.isel(exp=exp, model=m),
+                          color=symc, marker=MarkerStyle(sym, fillstyle='full'), label=mip.mod[m]['id'], s=mksize, linewidth=0.5)
+
+        # Regression correlation coefficent.
+        cor = stats.spearmanr(dxx.isel(exp=exp), dyy.isel(exp=exp))
+        cor_str.append('CMIP{} r={:.2f} {}'.format(mip.p, cor[0], round_sig(cor[1], n=2)))
+
+        # Line of best fit.
+        m, b = np.polyfit(dxx.isel(exp=exp), dyy.isel(exp=exp), 1)
+        ax[i].plot(dxx.isel(exp=exp), m * dxx.isel(exp=exp) + b, color=mip.colour, lw=1)
+
+    # Subplot extras.
+    # Legend: Correlation and line of best fit (inside subplot).
+    cor_legend = [Line2D([0], [0], color=mip6.colour, lw=2, label=cor_str[0]),
+                  Line2D([0], [0], color=mip5.colour, lw=2, label=cor_str[-1])]
+    _cor_legend = ax[i].legend(handles=cor_legend, loc='best')
+    ax[i].add_artist(_cor_legend)  # Add so wont overwrite 2nd legend.
+    # Zero-lines.
+    if zero_line:
+        ax[i].axhline(y=0, color='grey', linewidth=0.6)
+    ax[i].set_xlabel(xlabel)
+    if i == 1:
+        # Legend: CMIPx models (above plot).
+        ax[1].legend(bbox_to_anchor=(1, 1.125), loc="lower right", ncol=6, fontsize='small')
+    else:
+        ax[i].set_ylabel(ylabel)
 
     return ax

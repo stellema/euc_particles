@@ -15,13 +15,21 @@ import numpy as np
 import xarray as xr
 import matplotlib.pyplot as plt
 from matplotlib.markers import MarkerStyle
-
+from scipy import stats
+from matplotlib.lines import Line2D
 import cfg
-from cfg import mod6, mod5, lx5, lx6, mip6, mip5
-from tools import coord_formatter
-from main import ec, mc, ng
+from cfg import mip6, mip5
+from tools import coord_formatter, zonal_sverdrup, wind_stress_curl
+from main import ec, mc, ng, itf
 from cmip_fncs import (ofam_euc_transport_sum, cmip_euc_transport_sum,
-                       cmipMMM, euc_observations, sig_line, cmip_cor, cmip_diff_sig_line, scatter_scenario)
+                       cmipMMM, euc_observations, sig_line, cmip_cor, cmip_diff_sig_line, cmip_wsc, scatter_scenario, round_sig, scatter_cmip_var)
+
+# from tools import coord_formatter
+# from cmip_fncs import cmip_wsc, sig_line, cmip_diff_sig_line
+# from airsea_conversion import reduce
+from valid_plot_reanalysis_wind import get_wsc
+
+
 
 for msg in ['Mean of empty', 'C', 'SerializationWarning', 'Unable to decode']:
     warnings.filterwarnings(action='ignore', message=msg)
@@ -90,7 +98,7 @@ def plot_cmip_euc_transport(de, de6, de5, lat, lon, depth, method='static', vmin
             ax[i].fill_between(lon, iqr[0], iqr[1], color=mip.colour, alpha=0.2)
             if show_markers:
                 for m, sym, symc in zip(mip.mod, mip.sym, mip.symc):
-                    shift = 0 if mip.mod == mod6 else 0.5  # Shift markers.
+                    shift = 0 if mip.p == 6 else 0.5  # Shift markers.
                     mlabel = mip.mod[m]['id'] if i == 1 else None
                     ax[i].scatter(lon[::5] + shift, de_.isel(exp=x, model=m)[::5],
                                   label=mlabel, linewidth=0.5, s=mksize, color=symc,
@@ -170,28 +178,27 @@ def plot_cmip_euc_month(de, de6, de5, lat, lon, depth, method='max', vmin=0.8,
     ax[0].set_title('{}Equatorial Undercurrent Transport at {}°E'.format(cfg.lt[letter], x), loc='left')
     # CMIP6 and CMIP5 MMM and shaded interquartile range.
     # Line labels added in first plot. Model marker labels in next.
-    for de_, c, lb, mod, lx in zip([de6.sel(lon=x), de5.sel(lon=x)],
-                                   cl[1:], lbs[1:], [mod6, mod5], [lx6, lx5]):
+    for de_, mip in zip([de6.sel(lon=x), de5.sel(lon=x)], [mip6, mip5]):
         de_ = de_ - de_.mean('time')
         for i, s in enumerate([0, 2]):  # Scenarios.
             if i == 0:
-                ax[i].plot(xdim, de_.isel(exp=s).median('model'), color=c, label=lb)
+                ax[i].plot(xdim, de_.isel(exp=s).median('model'), color=mip.colour, label=mip.mmm)
             else:
                 # Plot dashed line, overlay solid line if change is significant.
                 for ss, ls in zip(range(2), ['--', '-']):
-                    ax[i].plot(xdim, de_.isel(exp=s).median('model') * sig_line(de_, xdim)[ss], c, linestyle=ls)
+                    ax[i].plot(xdim, de_.isel(exp=s).median('model') * sig_line(de_, xdim)[ss], mip.colour, linestyle=ls)
 
             iqr = [np.percentile(de_.isel(exp=s), q, axis=1) for q in [25, 75]]
-            ax[i].fill_between(xdim, iqr[0], iqr[1], color=c, alpha=0.2)
+            ax[i].fill_between(xdim, iqr[0], iqr[1], color=mip.colour, alpha=0.2)
             ax[i].axhline(y=0, color='grey', linewidth=0.6)  # Zero-line.
             if show_markers:
-                for m, sym, symc in zip(mod, lx['sym'], lx['symc']):
-                    mlabel = mod[m]['id'] if i == 1 else None
+                for m, sym, symc in zip(mip.mod, mip.sym, mip.symc):
+                    mlabel = mip.mod[m]['id'] if i == 1 else None
                     ax[i].scatter(xdim, de_.isel(exp=s, model=m),
                                   label=mlabel, linewidth=0.5, s=mksize, color=symc,
                                   marker=MarkerStyle(sym, fillstyle='full'))
                 # Adds placeholder legend labels (seperate CMIP6 and CMIP5 cols).
-                if i == 1 and mod == mod6:
+                if i == 1 and mip.p == 6:
                     for q in range(3):
                         ax[i].scatter([0], [0], color="w", label=' ', alpha=0.)
     # Plot line if CMIP difference is significant.
@@ -204,7 +211,7 @@ def plot_cmip_euc_month(de, de6, de5, lat, lon, depth, method='max', vmin=0.8,
         ax[s].set_xlim(xmax=11, xmin=0)
     if show_ofam:
         ax[0].plot(xdim, (de - de.mean('Time')).isel(exp=0).sel(xu_ocean=x), color=cl[0], label=lbs[0])  # Historical
-        ax[1].plot(xdim, (de - de.mean('Time')).isel(exp=2).sel(xu_ocean=x), color=cl[0])  # Projected change.
+        # ax[1].plot(xdim, (de - de.mean('Time')).isel(exp=2).sel(xu_ocean=x), color=cl[0])  # Projected change.
 
     if show_obs:
         db, dr = euc_observations(lat, lon, depth, method=method, vmin=vmin)
@@ -214,7 +221,6 @@ def plot_cmip_euc_month(de, de6, de5, lat, lon, depth, method='max', vmin=0.8,
             ax[0].plot(xdim, dr.ec.sel(robs=v), color=c, label=v.upper(), linestyle=m)
         # TODO: Remove single obs value?
         # ax[0].scatter(db.lon, db['jo'], color='k', label=db[v].attrs['ref'], marker='o')
-
 
     ax[1].set_xticks(xdim)
     ax[1].set_xticklabels(cfg.mon_letter)
@@ -245,11 +251,36 @@ def plot_cmip_euc_month(de, de6, de5, lat, lon, depth, method='max', vmin=0.8,
     plt.close()
 
 
+
+def scatter_euc_ws(de, de6, de5, exp=0):
+    """Plot WS and EUC scatter"""
+    lats = [-25, 25]
+    lons = [145, 290]
+    dw5 = cmip_wsc(mip5, lats, lons, landmask=False)
+    dw6 = cmip_wsc(mip6, lats, lons, landmask=False)
+    # dw5 = dw5.where(dw5 != 0)
+    fig, ax = plt.subplots(2, 2, figsize=(12, 9), squeeze=False)
+    ax = ax.flatten()
+    for i, X in enumerate([165, 190, 220, 250]):
+        ax[i].set_title('{}{} Equatorial Undercurrent at {}\u00b0E'.format(cfg.lt[i], cfg.exps[exp], X), loc='left')
+        dx = [de.ec.sel(lon=X) for de in [de6, de5]]
+        dy = [dw.ws.sel(lat=slice(-2.0, 2.0+0.1)).mean(['lat', 'lon']) for dw in [dw6, dw5]]
+        ax = scatter_cmip_var(ax, i, dx, dy, exp=exp, rows=2, cols=2, xlabel='', ylabel='', zero_line=False)
+        if i == 1:  # Model marker legend.
+            lgd = ax[i].legend(bbox_to_anchor=(1, 1.125), loc="lower right", ncol=6, fontsize='small')
+
+        if i >= 2:
+            ax[i].set_xlabel('EUC transport [Sv]')
+        if i in [0, 2]:
+            ax[i].set_ylabel('Zonal wind stress [N m-2]')
+    plt.savefig(cfg.fig/'cmip/EUC_transport_ws_{}.png'.format(cfg.exp_abr[exp]), bbox_extra_artists=(lgd,), bbox_inches='tight')
+
+
 cl = ['dodgerblue', 'blueviolet', 'teal']
 lbs = ['OFAM3', 'CMIP6 MMM', 'CMIP5 MMM']
 mips = ['CMIP6 ', 'CMIP5 ']
 
-lat, lon, depth = [-2.5, 2.5], np.arange(165, 265 + 1, 1), [0, 350]
+lat, lon, depth = [-2.5, 2.5], np.arange(145, 275 + 1, 1), [0, 350]
 method = 'static'
 net = True if method == 'net' else False
 vmin = 0
@@ -267,7 +298,7 @@ except:
     de5.to_netcdf(cfg.data / 'euc_cmip5_{}_{}_j{}_z{}-{}.nc'.format(method, vmin, lat[1], *depth))
     de6.to_netcdf(cfg.data / 'euc_cmip6_{}_{}_j{}_z{}-{}.nc'.format(method, vmin, lat[1], *depth))
 
-# db, dr = euc_observations(lat, lon, depth, method=method, vmin=vmin)
+db, dr = euc_observations(lat, lon, depth, method=method, vmin=vmin)
 # for ltr, var, nvar, units in zip([1, 0, 1], ['ec', 'umax', 'z_umax'],
 #                                   ['transport', 'max velocity', 'depth of max velocity'],
 #                                   ['Sv', 'm/s', 'm']):
@@ -275,10 +306,10 @@ except:
 #                             vmin=vmin, show_markers=False, show_obs=True,
 #                             var=var, nvar=nvar, units=units, letter=ltr)
 
-scatter_cmip_euc(de.ec, de6.ec, de5.ec, lon, show_ofam=True)
+# scatter_cmip_euc(de.ec, de6.ec, de5.ec, lon, show_ofam=True)
 
 for ix, x in enumerate([165, 205, 250]):
-    plot_cmip_euc_month(de.ec, de6.ec, de5.ec, lat, x, depth, method=method, vmin=vmin, show_markers=False, letter=ix)
+    plot_cmip_euc_month(de.ec, de6.ec, de5.ec, lat, x, depth, method=method, vmin=vmin, show_ofam=True, show_markers=False, letter=ix)
 
 # for x in np.array([165, 200, 250]):
 #     for i, dv in enumerate([de6.ec, de5.ec]):
@@ -296,3 +327,7 @@ for ix, x in enumerate([165, 205, 250]):
 #             print('OBS {}: {}={:.1f}'.format(x + xplus, db.isel(obs=0).obs.item(), db.ec.isel(obs=0).sel(lon=x + xplus).item()))
 #         except KeyError:
 #             pass
+
+
+scatter_euc_ws(de, de6, de5, exp=0)
+scatter_euc_ws(de, de6, de5, exp=2)

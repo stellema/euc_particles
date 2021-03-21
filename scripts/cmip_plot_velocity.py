@@ -15,9 +15,9 @@ from mpl_toolkits.axes_grid1 import make_axes_locatable
 import cfg
 from tools import coord_formatter, idx
 from cmip_fncs import (subset_cmip, bnds_wbc, ofam_wbc_transport_sum,
-                       open_reanalysis, bnds_wbc_reanalysis)
+                       open_reanalysis, bnds_wbc_reanalysis, bnds_itf_cmip)
 from cfg import mip6, mip5
-from main import ec, mc, ng
+from main import ec, mc, ng, itf
 from fncs import image2video
 
 warnings.filterwarnings(action='ignore', message='Mean of empty slice')
@@ -27,9 +27,14 @@ cmap = plt.cm.seismic
 cmap.set_bad('grey')
 
 
-def plot_cmip_xy(mip, exp, cc, var, lat, lon, depth, vmax,
-                 integrate=None, avg=None):
+def plot_cmip_xy(mip, exp, name, var, lat, lon, depth, vmax,
+                 integrate=None, avg=None, top=None):
+    cmap = plt.cm.viridis
+    cmap.set_bad('grey')
     c = 1e6 if var in ['uvo', 'vvo'] else 1
+    xstr = 'int' if integrate else 'avg'
+    if name == 'ITF':
+        bnds, _ = bnds_itf_cmip(mip)
     nr, nc = 7, 4
     fig, ax = plt.subplots(nr, nc, sharey=True, sharex=True, figsize=(14, 16),
                            squeeze=False)
@@ -41,15 +46,16 @@ def plot_cmip_xy(mip, exp, cc, var, lat, lon, depth, vmax,
             dx = dx.mean('lev')
         elif integrate:
             dx = dx.sum('lev')
-        dx = dx.where(dx != 0, np.nan)
+        elif top:
+            dx = dx.isel(lev=0)
+        # dx = dx.where(dx != 0, np.nan)
         X = dx.lon.values
         Y = dx.lat.values
 
-        ax[m].set_title('{}. {} {}'.format(m, mip.mod[m]['id'], cc.n),
-                        loc='left', fontsize=10)
+        ax[m].set_title('{}. {} {} ({} {}-{}m)'.format(m, mip.mod[m]['id'], name, xstr, *depth), loc='left', fontsize=10)
 
         cs = ax[m].pcolormesh(X, Y, dx.values, vmax=vmax + 0.001, vmin=-vmax,
-                              cmap=plt.cm.seismic, shading='flat')
+                              cmap=plt.cm.seismic, shading='nearest')
         # Add colourbar at end of rows.
         if m % 4 == 3:
             divider = make_axes_locatable(ax[m])
@@ -58,6 +64,8 @@ def plot_cmip_xy(mip, exp, cc, var, lat, lon, depth, vmax,
             units = 'Transport [Sv]' if var in ['uvo', 'vvo'] else 'm/s'
             clb.set_label(units)
 
+        if name == 'ITF':
+            ax[m].vlines(x=bnds[m, 2, 0], ymin=bnds[m, 1, 0], ymax=bnds[m, 1, 1], color='m', linewidth=2)
         ax[m].set_xlim(lon[0], lon[1])
         if lat[0] < lat[1]:
             ax[m].set_ylim(ymax=lat[1], ymin=lat[0])
@@ -65,15 +73,35 @@ def plot_cmip_xy(mip, exp, cc, var, lat, lon, depth, vmax,
             ax[m].set_ylim(ymax=lat[0], ymin=lat[1])
 
     plt.tight_layout()
-    plt.savefig(cfg.fig/'cmip/{}_{}_cmip{}_{}.png'
-                .format(cc.n, var, mip.p, exp), format="png")
+    plt.savefig(cfg.fig/'cmip/{}_{}_{}_{}-{}_cmip{}_{}.png'
+                .format(name, var, xstr, *depth, mip.p, exp), format="png")
     plt.show()
-    return dx
+
 
 
 def plot_cmip_vdepth(mip, exp, cc, var, lat, lon, depth, latb=None,
                      lonb=None, depthb=None, vmax=0.6, bounds=False,
                      contour=None, pos=None, ndec=1, time='annual'):
+    """Plot CMIPx model velocity at a lat/lon as a function of depth.
+
+    Args:
+        mip (class): CMIP phase.
+        exp (str): Experiment scenario to plot.
+        cc (class): Current to plot.
+        var (str): Variable to plot.
+        lat (int or list): Lat to subset.
+        lon (int or list): Lon to subset.
+        depth (list): Depth to subset.
+        latb (int or list, optional): Integration boundary lat. Defaults to None.
+        lonb (int or list, optional): Integration boundary lon. Defaults to None.
+        depthb (list, optional): Integration boundary depth. Defaults to None.
+        vmax (float, optional): contour max/min. Defaults to 0.6.
+        bounds (bool, optional): Plot integration boundaries. Defaults to False.
+        contour (bool, optional): Add countour hatches. Defaults to None.
+        pos (str, optional): Location str. Defaults to None.
+        ndec (int, optional): lat/lon decimal palces. Defaults to 1.
+        time (str or int, optional): Time mean or select time index. Defaults to 'annual'.
+    """
     c = 1e6 if var in ['uvo', 'vvo'] else 1
     xax_ = 'lat' if np.array(lat).size > 1 else 'lon'
     ylim = depth
@@ -87,6 +115,7 @@ def plot_cmip_vdepth(mip, exp, cc, var, lat, lon, depth, latb=None,
     tstr = '' if time == 'annual' else cfg.mon[time]
 
     def add_extras(ax, i, loc):
+        """Add location text inside subplot, format xticks and ylabels."""
         if var == 'uo':
             ax[i].text(0.0, 0.015, '{}'.format(loc), horizontalalignment='left',
                        transform=ax[i].transAxes, fontsize=11)
@@ -103,12 +132,13 @@ def plot_cmip_vdepth(mip, exp, cc, var, lat, lon, depth, latb=None,
             if cc.n == 'EUC':
                 ax[i].set_ylabel('Depth [m]')
             else:
-                yticks = np.arange(0, 1500, 250)  #ax[m].get_yticks()
+                yticks = np.arange(0, 1500, 250)
                 ax[i].set_yticks(yticks)
                 ax[i].set_yticklabels(coord_formatter(yticks, 'depth'))
         return ax
 
     def plot_reanalysis(ax, i, cc, var, lat, lon, depth):
+        """Plot reanalysis product velocity."""
         robs_full = cfg.Rdata._instances
         dss = open_reanalysis(var)
         lats, lons = lat, lon
@@ -157,6 +187,7 @@ def plot_cmip_vdepth(mip, exp, cc, var, lat, lon, depth, latb=None,
         return ax, i
 
     def plot_ofam(ax, i, cc, var, lat, lon, depth):
+        """Plot OFAM3 velocity."""
         sx = 0 if exp == 'historical' else 1
         df = xr.open_dataset(cfg.ofam / 'ocean_{}_{}-{}_climo.nc'.format(var, *cfg.years[sx]))
         if xax_ == 'lon':  #LLWBC
@@ -271,104 +302,53 @@ def plot_cmip_vdepth(mip, exp, cc, var, lat, lon, depth, latb=None,
     return dx
 
 
-def plot_cmip_xz_wbc(mip, exp, cc, vmax=0.6):
-    var = cc.vel
-    pos = str(cc.lat)
-    x, z = bnds_wbc(mip, cc)
-    if mip.p == 6:
-        nr, nc, fs = 5, 5, (14, 14)
-    else:
-        nr, nc, fs = 7, 4, (12, 16)
-    fig, ax = plt.subplots(nr, nc, figsize=fs, sharey=True, squeeze=False)
-    ax = ax.flatten()
-    for m in mip.mod:
-        dx = subset_cmip(mip, m, var, exp, z[m], cc.lat, x[m]).mean('time')
-        # dx = dx.where(dx != 0.0, np.nan)
-        dx = dx.squeeze()
-
-        Z = dx.lev.values  # Y-axis values
-        XY = dx.lon.values  # X-axis values
-        lat_ = np.around(dx.lat.median().item(), 2)  # Title.
-        loc_ = coord_formatter([lat_], convert='lat')  # For title.
-
-        ax[m].set_title('{}. {} {} at {}'.format(m, mip.mod[m]['id'], cc.n, loc_.item()),
-                        loc='left', fontsize=10, x=-0.1)
-
-        cs = ax[m].pcolormesh(XY, Z, dx.values, vmin=-vmax, vmax=vmax + 0.001,
-                              cmap=cmap, shading='nearest')
-        # Add colourbar at end of rows.
-        if m % nc == 0:
-            ylocs = np.arange(0, 600, 100)
-            ax[m].set_yticks(ylocs)
-            ax[m].set_yticklabels(coord_formatter(ylocs, 'depth'))
-        elif m % nc == nc - 1:
-            divider = make_axes_locatable(ax[m])
-            cax = divider.append_axes('right', size='5%', pad=0.05)
-            clb = fig.colorbar(cs, cax=cax, orientation='vertical')
-            units = 'Transport [Sv]' if var in ['uvo', 'vvo'] else 'm/s'
-            clb.set_label(units)
-
-        ax[m].set_ylim(z[m, 1], z[m, 0])
-        xlocs = ax[m].get_xticks()
-        ax[m].set_xticklabels(coord_formatter(xlocs, 'lon'))
-
-    plt.tight_layout()
-    plt.savefig(cfg.fig/'cmip/{}/{}_{}_cmip{}_{}{}.png'
-                .format(cc.n, cc.n, var, mip.p, exp, pos), format="png")
-    plt.show()
-    return
-
-
-""" Equatorial Undercurrent """
+"""Plot depth-integrated velocity as a function of depth"""
+# #  Equatorial Pacific.
+# lat, lon = [-15, 15], [120, 290]
+# for depth in [[0, 50], [50, 1000], [0, 300], [0, 1000]]:
+#     for mip in [mip5, mip6]:
+#         plot_cmip_xy(mip, mip.exp[0], 'U', 'uvo', lat, lon, depth, vmax=5, integrate=True)
+#         plot_cmip_xy(mip, mip.exp[0], 'V', 'vvo', lat, lon, depth, vmax=1, integrate=True)
+# # New Guinea Coastal Undercurrent
+# for mip in [mip5, mip6]:
+#     plot_cmip_xy(mip, mip.exp[0], ng.n, 'vo', [-10, 0], [135, 170], ng.depth, vmax=0.1, integrate=True)
+# # Mindano Current
+# for mip in [mip5, mip6]:
+#     plot_cmip_xy(mip, mip.exp[0], mc.n, 'vo', [4, 12], [122, 136], mc.depth, vmax=0.6, integrate=True)
+# ITF
+for mip in [mip5]:
+    plot_cmip_xy(mip, mip.exp[0], itf.n, var='uo', lat=[-27, 8], lon=[105, 125], depth=itf.depth, vmax=0.6, top=True)  # integrate=True
+"""Equatorial Undercurrent: Plot velocity as a function of depth"""
 # cc = ec
+# lat, depth = [-3.4, 3.4], [0, 400]w
 # for lon in [150, 165, 170, 180, 190, 220, 250, 265]: #
-#     lat, depth, lon = [-3.4, 3.4], [0, 400], lon
-#     latb, depthb, lonb = [-2.5, 2.5], [0, 350], lon
-
 #     for mip in [mip6, mip5]:
-#         # Annual profile.mip5,
+#         # Annual profile.
 #         for s in [0, 1]:
 #             plot_cmip_vdepth(mip, mip.exp[s], cc, 'uo', lat, lon, depth,
-#                              latb, lonb, depthb, vmax=0.8, pos=str(lon),
-#                              ndec=0, contour=False, bounds=False)
-#         # # Monthly profiles.
-#         # for t in np.arange(12):
-#         #     plot_cmip_vdepth(mip, mip.exp[0], cc, 'uo', lat, lon, depth,
-#         #                       latb, lonb, depthb, vmax=0.6, pos=str(lon),
-#         #                       ndec=0, contour=False, bounds=False, time=t)
-#         # # COnvert monthly images to video.
-#         # folder = cfg.fig / 'cmip/{}/month'.format(cc.n)
-#         # files = '{}_{}_cmip{}_{}_{}_%02d.png'.format(cc.n, 'uo', mip.p, lon, mip.exp[0])
-#         # output = '{}_{}_cmip{}_{}_{}_month.mp4'.format(cc.n, 'uo', mip.p, lon, mip.exp[0])
-#         # image2video(str(folder / files), str(folder / output), frames=2)
+#                              cc.lat.copy(), lon, cc.depth.copy(), vmax=0.8, pos=str(lon), ndec=0, contour=False, bounds=False)
+#         # Monthly profiles.
+#         for t in np.arange(12):
+#             plot_cmip_vdepth(mip, mip.exp[0], cc, 'uo', lat, lon, depth,
+#                              cc.lat.copy(), lon, cc.depth.copy(), vmax=0.6, pos=str(lon), ndec=0, contour=False, bounds=False, time=t)
+#         # Convert monthly images to video.
+#         folder = cfg.fig / 'cmip/{}/month'.format(cc.n)
+#         files = '{}_{}_cmip{}_{}_{}_%02d.png'.format(cc.n, 'uo', mip.p, lon, mip.exp[0])
+#         output = '{}_{}_cmip{}_{}_{}_month.mp4'.format(cc.n, 'uo', mip.p, lon, mip.exp[0])
+#         image2video(str(folder / files), str(folder / output), frames=2)
 
-
-""" New Guinea Coastal Undercurrent """
+"""New Guinea Coastal Undercurrent: plot velocity as a function of depth"""
 # cc = ng
-# for lat in [cc.lat]:  #np.arange(-4.5, -1, 0.5):
-#     # Plot longitude cross section.
-#     lat, lon, depth = lat, [i + 1 * j for i, j in zip(cc.lon, [-1, 1])], [cc.depth[0], cc.depth[1] + 400]
-#     for mip in [mip6, mip5]:
-#         for exp in [mip.exp[0]]:
-#             plot_cmip_vdepth(mip, exp, cc, cc.vel, lat, lon, depth,
-#                              vmax=0.5, bounds=True, pos=str(lat))
-#     # # Plot top view.
-#     # lat, lon, depth = [-10, 0], [135, 170], [0, 1000]
-#     # for mip in [mip5, mip6]:
-#     #     plot_cmip_xy(mip, mip.exp[0], cc, 'vo', lat, lon, depth, vmax=0.1, avg=True)
+# lat, lon, depth = cc.lat, [i + 1 * j for i, j in zip(cc.lon.copy(), [-1, 1])], [cc.depth.copy()[0], cc.depth.copy()[1] + 400]
+# for mip in [mip6, mip5]:
+#     for exp in [mip.exp[0]]:
+#         plot_cmip_vdepth(mip, exp, cc, cc.vel, lat, lon, depth,
+#                          vmax=0.5, bounds=True, pos=str(lat))
 
-""" Mindano Undercurrent """
-exp = 'historical'
-# Plot longitude cross section.
+"""Mindano Current: plot velocity as a function of depth"""
+# for mip in [mip6, mip5]:
+#     cc = mc
+#     lat, depth, lon = cc.lat, [cc.depth.copy()[0], cc.depth.copy()[-1] + 250], cc.lon.copy()
+#     plot_cmip_vdepth(mip, mip.exp[0], cc, 'vo', lat, lon, depth,
+#                      vmax=0.6, bounds=True, contour=None, pos=str(lat))
 
-for mip in [mip6]:
-    cc = mc
-    lat, depth, lon = cc.lat, [cc.depth[0], cc.depth[-1] + 250], cc.lon.copy()
-    pos = str(lat) if type(lat) == int else str(int(10 * lat))
-
-    plot_cmip_vdepth(mip, exp, cc, 'vo', lat, lon, depth,
-                      vmax=0.6, bounds=True, contour=None, pos=pos)
-# # Plot top view.
-# lat, depth, lon = [4, 12], [50, 450], [122, 136]
-# for mip in [mip5, mip6]:
-#     plot_cmip_xy(mip, exp, cc, 'vo', lat, lon, depth, vmax=0.6, integrate=True)
