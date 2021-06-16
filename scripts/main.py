@@ -428,7 +428,7 @@ def combine_plx_datasets(exp, lon, v, r_range=[0, 9]):
     xids = [get_plx_id(exp, lon, v, r) for r in range(*r_range)]
     dss = [open_plx_data(xid) for xid in xids]
     ds = xr.combine_by_coords(dss, data_vars="minimal")
-    return xids, dss, ds
+    return xids, ds
 
 
 def plx_snapshot(ds, var, value):

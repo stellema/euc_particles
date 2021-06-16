@@ -84,7 +84,7 @@ LAT_DEG = (2 * np.pi / 360) * EARTH_RADIUS
 def LON_DEG(lat):
     return LAT_DEG * np.cos(np.radians(lat))
 
-DXDY = 25 * 0.1 * LAT_DEG
+DXDY = 25 * 0.1 * LAT_DEG / 1e6
 
 # Ocean density [kg/m3].
 RHO = 1025
