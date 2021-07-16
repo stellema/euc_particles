@@ -13,8 +13,6 @@ import calendar
 import numpy as np
 import xarray as xr
 from pathlib import Path
-import matplotlib.pyplot as plt
-from itertools import chain, repeat
 
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 warnings.filterwarnings(action='ignore', message='SerializationWarning')
@@ -25,28 +23,22 @@ if home.drive == 'C:':
     # Change to E drive if at home.
     if not home.joinpath('GitHub', 'OFAM').exists():
         home = Path('E:/')
-    scripts = home/'OFAM/scripts'
-    fig = home/'GitHub/OFAM/figures'
-    data = home/'GitHub/OFAM/data'
-    log = home/'GitHub/OFAM/logs'
-    job = home/'GitHub/OFAM/jobs'
-    ofam = home/'model_output/OFAM/trop_pac'
-    tao = home/'model_output/obs/TAO'
-    obs = home/'model_output/obs'
-    reanalysis = home/'model_output/reanalysis'
+    scripts = home / 'OFAM/scripts'
+    fig = home / 'GitHub/OFAM/figures'
+    data = home / 'GitHub/OFAM/data'
+    log = home / 'GitHub/OFAM/logs'
+    job = home / 'GitHub/OFAM/jobs'
+    ofam = home / 'model_output/OFAM/trop_pac'
 
-# Raijin Paths.
+# Gadi Paths.
 else:
-    home = Path('/g/data/e14/as3189/OFAM')
-    scripts = home/'scripts/'
-    fig = home/'figures'
-    data = home/'data'
-    log = home/'logs'
-    job = home/'jobs'
-    ofam = home/'trop_pac'
-    tao = home/'TAO'
-    obs = data
-    reanalysis = data
+    home = Path('/g/data/e14/as3189')
+    scripts = home / 'OFAM/scripts/'
+    fig = home / 'OFAM/figures'
+    data = home / 'OFAM/data'
+    log = home / 'OFAM/logs'
+    job = home / 'OFAM/jobs'
+    ofam = home / 'OFAM/trop_pac'
 
 sys.path.append(scripts)
 
@@ -81,8 +73,11 @@ EARTH_RADIUS = 6378137
 # Metres in 1 degree of latitude [m].
 LAT_DEG = (2 * np.pi / 360) * EARTH_RADIUS
 
+
 def LON_DEG(lat):
+    """Metres in 1 degree of latitude [m]."""
     return LAT_DEG * np.cos(np.radians(lat))
+
 
 DXDY = 25 * 0.1 * LAT_DEG / 1e6
 
@@ -98,10 +93,6 @@ im_ext = '.png'
 # Width and height of figures.
 width = 7.20472
 height = width / 1.718
-
-# Time index bounds where OFAM and TAO are available.
-tbnds_ofam = [[10*12+3, 27*12+1], [7*12+4, 384], [9*12+4, 384]]
-tbnds_tao = [[0, -1], [0, 24*12+8], [0, 22*12+8]]
 
 dx = 0.1
 e1, e2, e3, e4 = 165 - dx, 190 - dx, 220 - dx, 250 - dx
@@ -136,8 +127,8 @@ zone_names = ['Vitiaz Strait', 'Solomon Strait', 'Mindanao Current',
 
 def dz():
     """Width of OFAM3 depth levels."""
-    ds = xr.open_dataset(ofam/'ocean_u_1981_01.nc')
-    z = np.array([(ds.st_edges_ocean[i+1] - ds.st_edges_ocean[i]).item()
-                  for i in range(len(ds.st_edges_ocean)-1)])
+    ds = xr.open_dataset(ofam / 'ocean_u_1981_01.nc')
+    z = np.array([(ds.st_edges_ocean[i + 1] - ds.st_edges_ocean[i]).item()
+                  for i in range(len(ds.st_edges_ocean) - 1)])
     ds.close()
     return z
