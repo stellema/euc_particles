@@ -724,14 +724,14 @@ def zone_field(plot=False, savefile=True):
     d = dr.u.where(np.isnan(dr.u), 0)
     d = d.rename({'st_ocean': 'sw_ocean'})
     d.coords['sw_ocean'] = np.array([5.0], dtype=np.float32)
-    for n, zone in enumerate(cfg.zones):
-        coords = cfg.zones[zone]
+    for zone in cfg.zones.zones:
+        coords = zone.loc
         coords = [coords] if type(coords[0]) != list else coords
         for c in coords:
             xx = [d.xu_ocean[idx(d.xu_ocean, i)].item() for i in c[0:2]]
             yy = [d.yu_ocean[idx(d.yu_ocean, i)].item() for i in c[2:4]]
             d = xr.where((d.xu_ocean >= xx[0]) & (d.xu_ocean <= xx[1]) &
-                         (d.yu_ocean >= yy[0]) & (d.yu_ocean <= yy[1]), n+1, d)
+                         (d.yu_ocean >= yy[0]) & (d.yu_ocean <= yy[1]), zone.id, d)
     # Correctly order array dimensions.
     d = d.transpose('Time', 'sw_ocean', 'yu_ocean', 'xu_ocean')
     # Create dataset.

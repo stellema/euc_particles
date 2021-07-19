@@ -13,6 +13,8 @@ import calendar
 import numpy as np
 import xarray as xr
 from pathlib import Path
+from dataclasses import dataclass
+from collections import namedtuple
 
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 warnings.filterwarnings(action='ignore', message='SerializationWarning')
@@ -97,32 +99,56 @@ height = width / 1.718
 dx = 0.1
 e1, e2, e3, e4 = 165 - dx, 190 - dx, 220 - dx, 250 - dx
 j1, j2 = -6.1, 8
-zones = {'VS': [147.6, 149.6, j1, j1],
-         'SS': [151.6, 154.6, -5, -5],  # Includes SGC.
-         'MC': [126.0, 128.5, j2, j2],
-         'EUC': [[e1, e1, -2.6, 2.6],
-                 [e2, e2, -2.6, 2.6],
-                 [e3, e3, -2.6, 2.6],
-                 [e4, e4, -2.6, 2.6]],
-         'EUCS': [[e1, e1, j1, -2.6 - dx],
-                  [e2, e2, j1, -2.6 - dx],
-                  [e3, e3, j1, -2.6 - dx],
-                  [e4, e4, j1, -2.6 - dx]],
-         'EUCN': [[e1, e1, 2.6 + dx, j2],
-                  [e2, e2, 2.6 + dx, j2],
-                  [e3, e3, 2.6 + dx, j2],
-                  [e4, e4, 2.6 + dx, j2]],
-         'IS': [[122.8, 140.4, j1, j1],
-                [122.8, 122.8, j1, j2]],
-         'NI': [128.5 + dx, e4 + dx, j2, j2],
-         'SI': [155, e4 + dx, j1, j1],
-         'OOB': [[120, 294.9, -15, -15],
-                 [120, 294.9, 14.9, 14.9],
-                 [120, 120, -15, 14.9],
-                 [294.9, 294.9, -15, 14.9]]}
-zone_names = ['Vitiaz Strait', 'Solomon Strait', 'Mindanao Current',
-              'EUC recirculation', 'South of EUC', 'North of EUC',
-              'Indonesian Seas', 'North Interior', 'South Interior', 'OOB']
+
+
+@dataclass
+class Zones:
+    """Pacific Ocean Zones."""
+
+    Zone = namedtuple("Zone", "name order id name_full loc")
+    vs = Zone('vs', 0, 1, 'Vitiaz Strait', [147.6, 149.6, j1, j1])
+    ss = Zone('ss', 1, 2,  'Solomon Strait', [151.6, 154.6, -5, -5])
+    mc = Zone('mc', 2, 3, 'Mindanao Current', [126.0, 128.5, j2, j2])
+    idn = Zone('idn', 3, 7, 'Indonesian Seas', [[122.8, 140.4, j1, j1],
+                                                [122.8, 122.8, j1, j2]])
+    nth = Zone('nth', 4, 8, 'North Interior', [128.5 + dx, e4 + dx, j2, j2])
+    sth = Zone('sth', 5, 9, 'South Interior', [155, e4 + dx, j1, j1])
+    ecs = Zone('ecs', 6, 5, 'South of EUC', [[e1, e1, j1, -2.6 - dx],
+                                              [e2, e2, j1, -2.6 - dx],
+                                              [e3, e3, j1, -2.6 - dx],
+                                              [e4, e4, j1, -2.6 - dx]])
+    ecn = Zone('ecn', 7, 6, 'North of EUC', [[e1, e1, 2.6 + dx, j2],
+                                              [e2, e2, 2.6 + dx, j2],
+                                              [e3, e3, 2.6 + dx, j2],
+                                              [e4, e4, 2.6 + dx, j2]])
+    ecr = Zone('ecr', 8, 4, 'EUC recirculation', [[e1, e1, -2.6, 2.6],
+                                                  [e2, e2, -2.6, 2.6],
+                                                  [e3, e3, -2.6, 2.6],
+                                                  [e4, e4, -2.6, 2.6]])
+    oob = Zone('oob', 9, 10, 'Out of Bounds', [[120, 294.9, -15, -15],
+                                                [120, 294.9, 14.9, 14.9],
+                                                [120, 120, -15, 14.9],
+                                                [294.9, 294.9, -15, 14.9]])
+    zones = [vs, ss, mc, idn, nth, sth, ecs, ecn, ecr, oob]
+
+zones = Zones()
+# @dataclass
+# class Zone:
+#     """Pacific Ocean Zones."""
+#     instances = []
+
+#     def __init__(self, name, order, n, name_full, loc):
+#         self.name = name
+#         self.order = order
+#         self.id = n
+#         self.name_full = name_full
+#         self.loc = loc
+#         Zone.instances.append(self)
+
+#     @classmethod
+#     def get_instances(cls):
+#         """Returns list of all current instances."""
+#         return list(Zone.instances)
 
 
 def dz():

@@ -40,7 +40,7 @@ import xarray as xr
 import cfg
 from plot_particles import plot_traj
 
-xid = cfg.data/'plx_hist_190_v0r4.nc'
+xid = cfg.data/'plx_hist_165_v1r01.nc'
 ds = xr.open_dataset(xid, decode_cf=False)
 ds = ds.isel(traj=slice(0, 400))
 ds = ds.where(ds.u > 0, drop=True)
@@ -48,30 +48,19 @@ ds = ds.where(ds.u > 0, drop=True)
 z = xr.open_dataset(str(cfg.data/'OFAM3_ucell_zones.nc'))
 z1 = z.where(z.zone == 4, drop=True).zone
 
-
-# jj = dx.isel(traj=0).lat
-# ii = dx.isel(traj=0).lon
-# dxc=dx.copy()
-# # mp = [z1.sel(yu_ocean=j, xu_ocean=i, method='nearest').item() for j, i in zip(jj, ii)
-# #       if ~np.isnan(z1.sel(yu_ocean=j, xu_ocean=i, method='nearest').item())]
-# mp = [(j, i) for j, i in zip(jj, ii)
-#       if ~np.isnan(z1.sel(yu_ocean=j, xu_ocean=i, method='nearest', tolerence=1).item())]
-
-
 d = ds.zone.where(ds.zone > 0).copy()
 
-for n, zone in enumerate(cfg.zones):
-    if type(cfg.zones[zone][0]) == list:
-        coords = cfg.zones[zone]
-    else:
-        coords = [cfg.zones[zone]]
+for zone in cfg.zones.zones:
+    coords = zone.loc
+    if not isinstance(coords[0], list):
+        coords = [coords]
 
     for c in coords:
         eps = 0.5 if zone != 'OOB' else 0.1
         xx = [i+ep for i, ep in zip(c[0:2], [-eps, eps])]
         yy = [i+ep for i, ep in zip(c[2:4], [-eps, eps])]
         d = xr.where((ds.lon >= xx[0]) & (ds.lon <= xx[1]) &
-                     (ds.lat >= yy[0]) & (ds.lat <= yy[1]) & (ds.zone == 0), n + 1, d)
+                     (ds.lat >= yy[0]) & (ds.lat <= yy[1]) & (ds.zone == 0), zone.id, d)
 d[:, 0] = ds.zone.isel(obs=0)
 d = d.ffill('obs')
 ds['zone'] = d
