@@ -33,30 +33,22 @@ def plx_source_transit(lon, exp, v=1, r_range=[0, 9]):
     ds['u'] *= cfg.DXDY
 
     df = xr.Dataset()
-    df.coords['time'] = np.arange(ds['time.year'].min(),
-                                  ds['time.year'].max() + 1, dtype=int)
     df.coords['traj'] = ds.traj
     df.coords['zone'] = [z.name for z in cfg.zones.list_all]
-    df['u_total'] = ('time', np.zeros(df.time.size))
-    df['u'] = (['time', 'zone'], np.full((df.time.size, df.zone.size), np.nan))
-    df['age'] = (['time', 'traj', 'zone'],
-                 np.full((df.time.size, df.traj.size, df.zone.size), np.nan))
+    df['u'] = ('zone', np.full((df.zone.size), np.nan))
+    df['age'] = (['traj', 'zone'],
+                 np.full((df.traj.size, df.zone.size), np.nan))
 
-    for i, t in enumerate(df.time.values):
-        logger.info('{}: calculating year {}...({}/{})'
-                    .format(name, t, i, df.time.size - 1))
-        dx = filter_by_year(ds, t)
-
-        # Total transport at zones.
-        logger.debug('{}: {}: Adding up total transport.'.format(name, t))
-        df['u_total'][dict(time=i)] = dx.u.sum().values
-        for z in cfg.zones.list_all:
-            traj, age = get_zone_info(dx, z.id)
-            logger.debug('{}: {}: {}.'.format(name, t, z.name_full))
-            df['u'][dict(time=i, zone=z.order)] = dx.sel(traj=traj).u.sum().values
-            if age.size >= 1:
-                df['age'][dict(time=i, zone=z.order, traj=slice(0, age.size))] = age.values
-            dx = drop_particles(dx, traj)
+    # Total transport at zones.
+    logger.debug('{}: Adding up total transport.'.format(name))
+    df['u_total'] = ds.u.sum().values
+    for z in cfg.zones.list_all:
+        traj, age = get_zone_info(ds, z.id)
+        logger.debug('{}: {}.'.format(name, z.name_full))
+        df['u'][dict(zone=z.order)] = ds.sel(traj=traj).u.sum().values
+        if age.size >= 1:
+            df['age'][dict(zone=z.order, traj=slice(0, age.size))] = age.values
+        ds = drop_particles(ds, traj)
 
     logger.info('Saving {}_transit.nc ...'.format(name))
     df.to_netcdf(cfg.data / (xids[0].stem[:-3] + '_transit.nc'))
