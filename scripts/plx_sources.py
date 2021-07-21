@@ -33,11 +33,10 @@ def plx_source_transit(lon, exp, v=1, r_range=[0, 9]):
     ds['u'] *= cfg.DXDY
 
     df = xr.Dataset()
-    df.coords['traj'] = ds.traj
+    df.coords['pctl'] = np.array([1, 5, 10, 25, 50, 75, 90, 95, 99]) / 100
     df.coords['zone'] = [z.name for z in cfg.zones.list_all]
     df['u'] = ('zone', np.full((df.zone.size), np.nan))
-    df['age'] = (['traj', 'zone'],
-                 np.full((df.traj.size, df.zone.size), np.nan))
+    df['age'] = (['zone', 'pctl'], np.full((df.zone.size, df.pctl.size), np.nan))
 
     # Total transport at zones.
     logger.debug('{}: Adding up total transport.'.format(name))
@@ -47,7 +46,7 @@ def plx_source_transit(lon, exp, v=1, r_range=[0, 9]):
         logger.debug('{}: {}.'.format(name, z.name_full))
         df['u'][dict(zone=z.order)] = ds.sel(traj=traj).u.sum().values
         if age.size >= 1:
-            df['age'][dict(zone=z.order, traj=slice(0, age.size))] = age.values
+            df['age'][dict(zone=z.order)] = age.quantile(df.pctl.values)
         ds = drop_particles(ds, traj)
 
     logger.info('Saving {}_transit.nc ...'.format(name))
