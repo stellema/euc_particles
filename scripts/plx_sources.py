@@ -13,6 +13,7 @@ author: Annette Stellema (astellemas@gmail.com)
 import numpy as np
 import xarray as xr
 import matplotlib.pyplot as plt
+from argparse import ArgumentParser
 import cfg
 from main import combine_plx_datasets, plx_snapshot
 
@@ -29,10 +30,11 @@ def plot_simple_zone_traj_scatter(ds, lon):
     fig, ax = plt.subplots(1, figsize=(10, 10))
     for z in cfg.zones.list_all:
         traj = get_zone_info(ds, z.id)[0]
-        ax = plot_simple_traj_scatter(ax, ds, traj, color=cfg.zones.colors[z.id - 1], name=z.name_full)
+        ax = plot_simple_traj_scatter(ax, ds, traj, name=z.name_full,
+                                      color=cfg.zones.colors[z.id - 1])
         ds = drop_particles(ds, traj)
     ax.legend(loc=(1.04, 0.5), markerscale=12)
-    plt.savefig(cfg.fig/'particles_{}.png'.format(lon))
+    plt.savefig(cfg.fig / 'particles_{}.png'.format(lon))
 
 
 def get_zone_info(ds, zone):
@@ -51,7 +53,6 @@ def drop_particles(ds, traj):
     return ds.where(~ds.traj.isin(traj), drop=True)
 
 
-
 def filter_by_year(ds, year):
     """Select trajectories based on release (sink) year."""
     # Indexes where particles are released (age=0).
@@ -62,24 +63,27 @@ def filter_by_year(ds, year):
 
 
 def plx_source_transit(lon, exp, v=1, r_range=[0, 9]):
-
+    """Analyse source zones and age based on release (sink) year."""
     xids, ds = combine_plx_datasets(cfg.exp_abr[exp], lon, v=v,
                                     r_range=r_range, decode_cf=True)
     # Convert velocity to transport (depth x width).
     ds['u'] *= cfg.DXDY
 
-
     df = xr.Dataset()
-    df.coords['time'] = np.arange(ds['time.year'].min(), ds['time.year'].max() + 1, dtype=int)
+    df.coords['time'] = np.arange(ds['time.year'].min(),
+                                  ds['time.year'].max() + 1, dtype=int)
     df.coords['traj'] = ds.traj
     df.coords['zone'] = [z.name for z in cfg.zones.list_all]
     df['u_total'] = ('time', np.zeros(df.time.size))
-    df['age'] = (['time', 'traj', 'zone'], np.zeros((df.time.size, df.traj.size, df.zone.size)) * np.nan)
-    df['u'] = (['time', 'zone'], np.zeros((df.time.size, df.zone.size)) * np.nan)
+    df['u'] = (['time', 'zone'], np.full((df.time.size, df.zone.size), np.nan))
+    df['age'] = (['time', 'traj', 'zone'],
+                 np.full((df.time.size, df.traj.size, df.zone.size), np.nan))
 
     for i, t in enumerate(df.time.values):
         dx = filter_by_year(ds, t)
-        df['u_total'][dict(time=i)] = dx.u.sum().values  # Total transport at zones
+
+        # Total transport at zones.
+        df['u_total'][dict(time=i)] = dx.u.sum().values
         for z in cfg.zones.list_all:
             traj, age = get_zone_info(dx, z.id)
             df['u'][dict(time=i, zone=z.order)] = dx.sel(traj=traj).u.sum().values
@@ -92,12 +96,9 @@ def plx_source_transit(lon, exp, v=1, r_range=[0, 9]):
 
 if __name__ == "__main__":
     p = ArgumentParser(description="""Get plx sources and transit times.""")
-    p.add_argument('-x', '--longitude', default=165, type=int,
+    p.add_argument('-x', '--lon', default=165, type=int,
                    help='Longitude of particle release.')
-    p.add_argument('-e', '--scenario', default=0, type=int,
+    p.add_argument('-e', '--exp', default=0, type=int,
                    help='Historical=0 or RCP8.5=1.')
     args = p.parse_args()
-    file = args.file
-
-    particle_info(xid, latest=args.latest)
-    plx_source_transit(lon, exp, v=1, r_range=[0, 9])
+    plx_source_transit(args.lon, args.exp, v=1, r_range=[0, 9])
