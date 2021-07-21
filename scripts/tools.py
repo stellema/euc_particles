@@ -724,7 +724,7 @@ def zone_field(plot=False, savefile=True):
     d = dr.u.where(np.isnan(dr.u), 0)
     d = d.rename({'st_ocean': 'sw_ocean'})
     d.coords['sw_ocean'] = np.array([5.0], dtype=np.float32)
-    for zone in cfg.zones.zones:
+    for zone in cfg.zones.list_all:
         coords = zone.loc
         coords = [coords] if type(coords[0]) != list else coords
         for c in coords:

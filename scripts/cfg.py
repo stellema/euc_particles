@@ -102,7 +102,7 @@ j1, j2 = -6.1, 8
 
 
 @dataclass
-class Zones:
+class ZoneData:
     """Pacific Ocean Zones."""
 
     Zone = namedtuple("Zone", "name order id name_full loc")
@@ -129,27 +129,12 @@ class Zones:
                                                 [120, 294.9, 14.9, 14.9],
                                                 [120, 120, -15, 14.9],
                                                 [294.9, 294.9, -15, 14.9]])
-    zones = [vs, ss, mc, idn, nth, sth, ecs, ecn, ecr, oob]
+    list_all = [vs, ss, mc, idn, nth, sth, ecs, ecn, ecr, oob]
+    colors = ['darkorange', 'deeppink', 'mediumspringgreen', 'deepskyblue',
+              'seagreen', 'blue', 'red', 'darkviolet', 'k', 'y']
 
-zones = Zones()
-# @dataclass
-# class Zone:
-#     """Pacific Ocean Zones."""
-#     instances = []
 
-#     def __init__(self, name, order, n, name_full, loc):
-#         self.name = name
-#         self.order = order
-#         self.id = n
-#         self.name_full = name_full
-#         self.loc = loc
-#         Zone.instances.append(self)
-
-#     @classmethod
-#     def get_instances(cls):
-#         """Returns list of all current instances."""
-#         return list(Zone.instances)
-
+zones = ZoneData()
 
 def dz():
     """Width of OFAM3 depth levels."""

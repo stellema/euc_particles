@@ -11,4 +11,4 @@
 
 module use /g/data3/hh5/public/modules
 module load conda/analysis3
-python3 /g/data/e14/as3189/OFAM/scripts/plx_sources.py -e $EXP -x $LON
+python3 /g/data/e14/as3189/OFAM/scripts/plx_sources.py -e 0 -x 165

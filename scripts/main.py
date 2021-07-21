@@ -357,21 +357,25 @@ def get_plx_id(exp, lon, v, r):
     return xid
 
 
-def open_plx_data(xid):
+def open_plx_data(xid, decode_cf=False):
     """Open plx dataset."""
-    ds = xr.open_dataset(str(xid), decode_cf=False)
+    ds = xr.open_dataset(str(xid), decode_cf=decode_cf)
     if cfg.home == Path('E:/'):
-        ds = ds.isel(traj=np.linspace(0, 1234, 120, dtype=int))  # !!!xifd
+        ds = ds.isel(traj=np.linspace(0, 1234, 360, dtype=int))  # HACK
     ds.coords['traj'] = ds.trajectory.isel(obs=0)
     ds.coords['obs'] = ds.obs + (601 * int(xid.stem[-2:]))
     return ds
 
 
-def combine_plx_datasets(exp, lon, v, r_range=[0, 9]):
+def combine_plx_datasets(exp, lon, v, r_range=[0, 9], decode_cf=False):
     """Combine plx datasets."""
+
     xids = [get_plx_id(exp, lon, v, r) for r in range(*r_range)]
-    dss = [open_plx_data(xid) for xid in xids]
-    ds = xr.combine_by_coords(dss, data_vars="minimal")
+    dss = [open_plx_data(xid, decode_cf=decode_cf) for xid in xids]
+    ds = xr.combine_nested(dss, 'obs', data_vars="minimal")
+    # ds = dss[0]
+    # for r in range(r_range[0] + 1, r_range[1]):
+    #     ds = ds.combine_first(dss[r]) # Doesnt work, just duplicates traj
     return xids, ds
 
 

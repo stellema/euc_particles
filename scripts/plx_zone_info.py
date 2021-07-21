@@ -50,7 +50,7 @@ z1 = z.where(z.zone == 4, drop=True).zone
 
 d = ds.zone.where(ds.zone > 0).copy()
 
-for zone in cfg.zones.zones:
+for zone in cfg.zones.list_all:
     coords = zone.loc
     if not isinstance(coords[0], list):
         coords = [coords]
