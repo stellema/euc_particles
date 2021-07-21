@@ -12,58 +12,21 @@ author: Annette Stellema (astellemas@gmail.com)
 """
 import numpy as np
 import xarray as xr
-import matplotlib.pyplot as plt
 from argparse import ArgumentParser
 import cfg
-from main import combine_plx_datasets, plx_snapshot
+from tools import mlogger
+from main import (combine_plx_datasets, drop_particles,
+                  filter_by_year, get_zone_info)
 
 
-def plot_simple_traj_scatter(ax, ds, traj, color='k', name=None):
-    """Plot simple path scatterplot."""
-    ax.scatter(ds.sel(traj=traj).lon, ds.sel(traj=traj).lat, s=2,
-               color=color, label=name, alpha=0.2)
-    return ax
-
-
-def plot_simple_zone_traj_scatter(ds, lon):
-    """Plot simple path scatterplot at each zone."""
-    fig, ax = plt.subplots(1, figsize=(10, 10))
-    for z in cfg.zones.list_all:
-        traj = get_zone_info(ds, z.id)[0]
-        ax = plot_simple_traj_scatter(ax, ds, traj, name=z.name_full,
-                                      color=cfg.zones.colors[z.id - 1])
-        ds = drop_particles(ds, traj)
-    ax.legend(loc=(1.04, 0.5), markerscale=12)
-    plt.savefig(cfg.fig / 'particles_{}.png'.format(lon))
-
-
-def get_zone_info(ds, zone):
-    """Get trajectories of particles that enter a zone."""
-    ds_z = ds.where(ds.zone == zone, drop=True)
-    traj = ds_z.traj   # Trajectories that reach zone.
-    if traj.size > 0:
-        age = ds_z.age.min('obs')  # Age when first reaches zone.
-    else:
-        age = ds_z.age * np.nan  # BUG?
-    return traj, age
-
-
-def drop_particles(ds, traj):
-    """Drop trajectoroies from dataset."""
-    return ds.where(~ds.traj.isin(traj), drop=True)
-
-
-def filter_by_year(ds, year):
-    """Select trajectories based on release (sink) year."""
-    # Indexes where particles are released (age=0).
-    ind_t, ind_o = plx_snapshot(ds, "age", 0)
-    dx = ds.isel(traj=ind_t, obs=ind_o)
-    traj = dx.where(dx['time.year'].max(dim='obs') == year, drop=True).traj
-    return ds.sel(traj=traj)
+logger = mlogger('plx_sources', parcels=False, misc=False)
 
 
 def plx_source_transit(lon, exp, v=1, r_range=[0, 9]):
     """Analyse source zones and age based on release (sink) year."""
+    name = 'plx_{}_{}_v{}'.format(cfg.exp_abr[exp], lon, v)
+    logger.info('Starting {}'.format(name))
+
     xids, ds = combine_plx_datasets(cfg.exp_abr[exp], lon, v=v,
                                     r_range=r_range, decode_cf=True)
     # Convert velocity to transport (depth x width).
@@ -80,6 +43,8 @@ def plx_source_transit(lon, exp, v=1, r_range=[0, 9]):
                  np.full((df.time.size, df.traj.size, df.zone.size), np.nan))
 
     for i, t in enumerate(df.time.values):
+        logger.info('{}: calculating year {}...({}/{})'
+                    .format(name, t, i, df.time.size - 1))
         dx = filter_by_year(ds, t)
 
         # Total transport at zones.
@@ -91,7 +56,9 @@ def plx_source_transit(lon, exp, v=1, r_range=[0, 9]):
                 df['age'][dict(time=i, zone=z.order, traj=slice(0, age.size))] = age.values
             dx = drop_particles(dx, traj)
 
+    logger.info('Saving {}_transit.nc ...'.format(name))
     df.to_netcdf(cfg.data / (xids[0].stem[:-3] + '_transit.nc'))
+    logger.info('Finished {}_transit.nc!'.format(name))
 
 
 if __name__ == "__main__":

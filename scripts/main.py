@@ -369,16 +369,37 @@ def open_plx_data(xid, decode_cf=False):
 
 def combine_plx_datasets(exp, lon, v, r_range=[0, 9], decode_cf=False):
     """Combine plx datasets."""
-
     xids = [get_plx_id(exp, lon, v, r) for r in range(*r_range)]
     dss = [open_plx_data(xid, decode_cf=decode_cf) for xid in xids]
     ds = xr.combine_nested(dss, 'obs', data_vars="minimal")
-    # ds = dss[0]
-    # for r in range(r_range[0] + 1, r_range[1]):
-    #     ds = ds.combine_first(dss[r]) # Doesnt work, just duplicates traj
     return xids, ds
 
 
 def plx_snapshot(ds, var, value):
     """Return traj, obs indices of variable matching value."""
     return np.where(np.ma.filled(ds.variables[var], np.nan) == value)
+
+
+def drop_particles(ds, traj):
+    """Drop trajectoroies from dataset."""
+    return ds.where(~ds.traj.isin(traj), drop=True)
+
+
+def filter_by_year(ds, year):
+    """Select trajectories based on release (sink) year."""
+    # Indexes where particles are released (age=0).
+    ind_t, ind_o = plx_snapshot(ds, "age", 0)
+    dx = ds.isel(traj=ind_t, obs=ind_o)
+    traj = dx.where(dx['time.year'].max(dim='obs') == year, drop=True).traj
+    return ds.sel(traj=traj)
+
+
+def get_zone_info(ds, zone):
+    """Get trajectories of particles that enter a zone."""
+    ds_z = ds.where(ds.zone == zone, drop=True)
+    traj = ds_z.traj   # Trajectories that reach zone.
+    if traj.size > 0:
+        age = ds_z.age.min('obs')  # Age when first reaches zone.
+    else:
+        age = ds_z.age * np.nan  # BUG?
+    return traj, age
