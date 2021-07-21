@@ -25,7 +25,7 @@ logger = mlogger('plx_sources', parcels=False, misc=False)
 def plx_source_transit(lon, exp, v=1, r_range=[0, 9]):
     """Analyse source zones and age based on release (sink) year."""
     name = 'plx_{}_{}_v{}'.format(cfg.exp_abr[exp], lon, v)
-    logger.info('Starting {}'.format(name))
+    logger.info('Starting {}.'.format(name))
 
     xids, ds = combine_plx_datasets(cfg.exp_abr[exp], lon, v=v,
                                     r_range=r_range, decode_cf=True)
@@ -48,9 +48,11 @@ def plx_source_transit(lon, exp, v=1, r_range=[0, 9]):
         dx = filter_by_year(ds, t)
 
         # Total transport at zones.
+        logger.debug('{}: {}: Adding up total transport.'.format(name, t))
         df['u_total'][dict(time=i)] = dx.u.sum().values
         for z in cfg.zones.list_all:
             traj, age = get_zone_info(dx, z.id)
+            logger.debug('{}: {}: {}.'.format(name, t, z.name_full))
             df['u'][dict(time=i, zone=z.order)] = dx.sel(traj=traj).u.sum().values
             if age.size >= 1:
                 df['age'][dict(time=i, zone=z.order, traj=slice(0, age.size))] = age.values
@@ -68,4 +70,4 @@ if __name__ == "__main__":
     p.add_argument('-e', '--exp', default=0, type=int,
                    help='Historical=0 or RCP8.5=1.')
     args = p.parse_args()
-    plx_source_transit(args.lon, args.exp, v=1, r_range=[0, 9])
+    plx_source_transit(args.lon, args.exp, v=1, r_range=[0, 2])
