@@ -46,7 +46,7 @@ def search_combine_plx_datasets(xids, traj):
         except KeyError:
             pass
     ds = xr.combine_nested(dss, 'obs', data_vars="minimal", combine_attrs='override')
-    return xids, ds
+    return ds
 
 
 def save_particle_data_by_year(lon, exp, v=1, r_range=[0, 9]):
@@ -68,9 +68,6 @@ def save_particle_data_by_year(lon, exp, v=1, r_range=[0, 9]):
     dx = dx.where(dx.age == 0, drop=True)
     logger.debug('{}: Filter new particles: traj size={}: Success!'.format(name, dx.traj.size))
 
-    # # Full merged data set.
-    # logger.debug('{}: Open full dataset: ...'.format(name))
-
     for i, y in enumerate(y_range):
         logger.info('{}: {}: Filter by year: ...'.format(name, xids_new[i].stem))
         traj = dx.where(dx['time.year'].max(dim='obs') == y, drop=True).traj
@@ -86,11 +83,11 @@ def save_particle_data_by_year(lon, exp, v=1, r_range=[0, 9]):
         ds.close()
 
 
-# if __name__ == "__main__":
-#     p = ArgumentParser(description="""Get plx sources and transit times.""")
-#     p.add_argument('-x', '--lon', default=165, type=int,
-#                     help='Longitude of particle release.')
-#     p.add_argument('-e', '--exp', default=0, type=int,
-#                     help='Historical=0 or RCP8.5=1.')
-#     args = p.parse_args()
-#     save_particle_data_by_year(args.lon, args.exp, v=1, r_range=[0, 9])
+if __name__ == "__main__":
+    p = ArgumentParser(description="""Get plx sources and transit times.""")
+    p.add_argument('-x', '--lon', default=165, type=int,
+                    help='Longitude of particle release.')
+    p.add_argument('-e', '--exp', default=0, type=int,
+                    help='Historical=0 or RCP8.5=1.')
+    args = p.parse_args()
+    save_particle_data_by_year(args.lon, args.exp, v=1, r_range=[0, 9])
