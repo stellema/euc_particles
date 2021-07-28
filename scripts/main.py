@@ -353,7 +353,12 @@ def pset_from_file(fieldset, pclass, filename, repeatdt=None,
 
 
 def get_plx_id(exp, lon, v, r):
-    xid = cfg.data / 'plx_{}_{}_v{}r{:02d}.nc'.format(exp, lon, v, r)
+    xid = cfg.data / 'v{}/plx_{}_{}_v{}r{:02d}.nc'.format(v, exp, lon, v, r)
+    return xid
+
+
+def get_plx_id_year(exp, lon, v, y):
+    xid = cfg.data / 'v{}y/plx_{}_{}_v{}_{}.nc'.format(v, exp, lon, v, y)
     return xid
 
 
@@ -361,7 +366,9 @@ def open_plx_data(xid, decode_cf=False):
     """Open plx dataset."""
     ds = xr.open_dataset(str(xid), decode_cf=decode_cf)
     if cfg.home == Path('E:/'):
-        ds = ds.isel(traj=np.linspace(0, 1234, 360, dtype=int))  # HACK
+        # Subset to N trajectories.
+        N = 720
+        ds = ds.isel(traj=np.linspace(0, ds.traj.size - 1, N, dtype=int)) # !!!
     ds.coords['traj'] = ds.trajectory.isel(obs=0)
     ds.coords['obs'] = ds.obs + (601 * int(xid.stem[-2:]))
     return ds
@@ -371,7 +378,7 @@ def combine_plx_datasets(exp, lon, v, r_range=[0, 9], decode_cf=False):
     """Combine plx datasets."""
     xids = [get_plx_id(exp, lon, v, r) for r in range(*r_range)]
     dss = [open_plx_data(xid, decode_cf=decode_cf) for xid in xids]
-    ds = xr.combine_nested(dss, 'obs', data_vars="minimal")
+    ds = xr.combine_nested(dss, 'obs', data_vars="minimal", combine_attrs='override')
     return xids, ds
 
 
