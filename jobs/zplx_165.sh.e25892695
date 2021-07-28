@@ -1,0 +1,20 @@
+sh: None: command not found
+sh: None: command not found
+INFO: Compiled ParcelsRandom ==> /jobfs/25892695.gadi-pbs/parcels-12904/libparcels_random_0b92c390-8747-40f8-b0e5-ee60733fd2aa.so
+INFO: Compiled ParcelsRandom ==> /jobfs/25892695.gadi-pbs/parcels-12904/libparcels_random_82caafb9-2e66-4732-979a-7ad8420a5409.so
+Starting plx_rcp_165_v1.
+Starting plx_hist_165_v1.
+
+------------------------------------------------------------------------
+Job 25892695 has exceeded memory allocation on node gadi-cpu-bdw-0002.gadi.nci.org.au
+Process "bash", pid 1362967, rss 2822144, vmem 21667840
+Process "25892695.gadi-p", pid 1363023, rss 2564096, vmem 227995648
+Process "python3", pid 1363313, rss 27772219392, vmem 33335816192
+Process "python3", pid 1363314, rss 33002913792, vmem 36145987584
+Process "orted", pid 1363321, rss 2252800, vmem 172470272
+Process "orted", pid 1363322, rss 2072576, vmem 172470272
+------------------------------------------------------------------------
+For more information visit https://opus.nci.org.au/x/SwGRAQ
+------------------------------------------------------------------------
+/local/spool/pbs/mom_priv/jobs/25892695.gadi-pbs.SC: line 18: 1363313 Killed                  python3 /g/data/e14/as3189/OFAM/scripts/plx_sources.py -e $exp -x 165
+/local/spool/pbs/mom_priv/jobs/25892695.gadi-pbs.SC: line 18: 1363314 Killed                  python3 /g/data/e14/as3189/OFAM/scripts/plx_sources.py -e $exp -x 165
