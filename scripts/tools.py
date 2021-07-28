@@ -758,13 +758,13 @@ def zone_field(plot=False, savefile=True):
 
         fig = plt.figure(figsize=(16, 9))
         cs = plt.pcolormesh(lon, lat, dz.values, cmap=cmap, edgecolors='face',
-                            shading='flat', linewidth=6, vmin=0.5)
+                            shading='flat', linewidth=30, vmin=0.5)
 
         plt.xticks(lon[::100], coord_formatter(lon[::100], 'lon'))
         plt.yticks(lat[::25], coord_formatter(lat[::25], 'lat'))
         cbar = fig.colorbar(cs, ticks=range(1, 10), orientation='horizontal',
                             boundaries=np.arange(0.5, 9.6), pad=0.075)
-        znm = ['{}:{}'.format(i+1, z) for i, z in enumerate(cfg.zone_names)]
+        znm = ['{}:{}'.format(i+1, z) for i, z in enumerate([z.name_full for z in cfg.zones.list_all])]
         cbar.ax.set_xticklabels(znm[:-1], fontsize=10)
         plt.savefig(cfg.fig/'particle_boundaries.png')
     return
