@@ -41,15 +41,16 @@ def search_combine_plx_datasets(xids, traj):
     """Combine plx datasets."""
     dss = []
     for xid in xids:
-        try:
-            dss.append(open_plx_data(xid, decode_cf=True).sel(traj=traj))
-        except KeyError:
-            pass
+        dn = open_plx_data(xid, decode_cf=True)
+        dn = dn.where(dn.traj.isin(traj), drop=True)
+        if dn.traj.size >= 1:
+            dss.append(dn)
+
     ds = xr.combine_nested(dss, 'obs', data_vars="minimal", combine_attrs='override')
     return ds
 
 
-def save_particle_data_by_year(lon, exp, v=1, r_range=[0, 9]):
+def save_particle_data_by_year(lon, exp, v=1, r_range=[0, 10]):
     """Split and save particle data by release year."""
     name = 'plx_{}_{}_v{}'.format(cfg.exp_abr[exp], lon, v)
     logger.info('Subsetting by year {}.'.format(name))
@@ -90,4 +91,4 @@ if __name__ == "__main__":
     p.add_argument('-e', '--exp', default=0, type=int,
                     help='Historical=0 or RCP8.5=1.')
     args = p.parse_args()
-    save_particle_data_by_year(args.lon, args.exp, v=1, r_range=[0, 9])
+    save_particle_data_by_year(args.lon, args.exp, v=1, r_range=[0, 10])
