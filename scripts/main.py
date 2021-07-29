@@ -204,7 +204,7 @@ def generate_xid(lon, v=0, exp='hist', randomise=False,
     # Increment run index for new output file name.
     else:
         r = 0
-        xid = cfg.data / 'plx_{}_{}_v{}r00.nc'.format(exp, int(lon), v)
+        xid = cfg.data / 'v{}/plx_{}_{}_v{}r00.nc'.format(v, exp, int(lon), v)
         files = [s for s in xid.parent.glob(str(xid.stem[:-2]) + '*.nc')]
         r = max([int(f.stem[-2:]) for f in files]) + 1
         xid = cfg.data / '{}{:02d}.nc'.format(xid.stem[:-2], r)
@@ -395,8 +395,7 @@ def drop_particles(ds, traj):
 def filter_by_year(ds, year):
     """Select trajectories based on release (sink) year."""
     # Indexes where particles are released (age=0).
-    ind_t, ind_o = plx_snapshot(ds, "age", 0)
-    dx = ds.isel(traj=ind_t, obs=ind_o)
+    dx = ds.where(ds.age == 0, drop=True)
     traj = dx.where(dx['time.year'].max(dim='obs') == year, drop=True).traj
     return ds.sel(traj=traj)
 
