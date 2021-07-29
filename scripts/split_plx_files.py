@@ -7,7 +7,7 @@ author: Annette Stellema (astellemas@gmail.com)
 exp=0
 v=1
 lon=165
-r_range=[0, 2]
+r_range=[0, 4]
 """
 import numpy as np
 import xarray as xr
@@ -27,24 +27,36 @@ def open_plx_data_subset(xid):
     # Vars to drop to reduce memory when finding trajectories.
     drop_vars = ['lat', 'lon', 'z', 'zone', 'distance', 'unbeached', 'u']
     ds = xr.open_dataset(str(xid), decode_cf=True)
+
+    # !!! Not on Gadi: subset to N trajectories.
     if cfg.home == Path('E:/'):
-        # Subset to N trajectories.
         N = 720
-        ds = ds.isel(traj=np.linspace(0, ds.traj.size - 1, N, dtype=int)) # !!!
+        ds = ds.isel(traj=np.linspace(0, ds.traj.size - 1, N, dtype=int))
+
     ds.coords['traj'] = ds.trajectory.isel(obs=0)
     ds.coords['obs'] = ds.obs + (601 * int(xid.stem[-2:]))
+
     ds = ds.drop_vars(drop_vars).isel(obs=0)
     return ds
 
 
 def search_combine_plx_datasets(xids, traj):
-    """Combine plx datasets."""
+    """Search plx datasets containing specific particles then combine."""
     dss = []
     for xid in xids:
-        dn = open_plx_data(xid, decode_cf=True)
-        dn = dn.where(dn.traj.isin(traj), drop=True)
-        if dn.traj.size >= 1:
-            dss.append(dn)
+        dx = open_plx_data(xid, decode_cf=True)
+
+        try:
+            # Subset dataset with particles.
+            dx = dx.where(dx.traj.isin(traj), drop=True)
+
+            # Add list of datasets to be combined.
+            if dx.traj.size >= 1:
+                dss.append(dx)
+
+        except IndexError:
+            # Pass on datasets that don't contain any of the trajectories.
+            pass
 
     ds = xr.combine_nested(dss, 'obs', data_vars="minimal", combine_attrs='override')
     return ds
@@ -55,7 +67,6 @@ def save_particle_data_by_year(lon, exp, v=1, r_range=[0, 10]):
     name = 'plx_{}_{}_v{}'.format(cfg.exp_abr[exp], lon, v)
     logger.info('Subsetting by year {}.'.format(name))
 
-
     y_range = np.arange(cfg.years[exp][-1], cfg.years[exp][0] -1, -1, dtype=int)
 
     xids = [get_plx_id(cfg.exp_abr[exp], lon, v, r) for r in range(*r_range)]
@@ -65,23 +76,29 @@ def save_particle_data_by_year(lon, exp, v=1, r_range=[0, 10]):
     logger.debug('{}: Opening subset of data.'.format(name))
     dx = xr.combine_nested([open_plx_data_subset(xid) for xid in xids],
                            'obs', data_vars="minimal", combine_attrs='override')
+
     logger.debug('{}: Filter new particles: traj size={}: ...'.format(name, dx.traj.size))
     dx = dx.where(dx.age == 0, drop=True)
     logger.debug('{}: Filter new particles: traj size={}: Success!'.format(name, dx.traj.size))
 
     for i, y in enumerate(y_range):
-        logger.info('{}: {}: Filter by year: ...'.format(name, xids_new[i].stem))
-        traj = dx.where(dx['time.year'].max(dim='obs') == y, drop=True).traj
-        logger.info('{}: {}: Filter by year: Success!.'.format(name, xids_new[i].stem))
+        if not xids_new[i].exists():
+            logger.debug('{}: {}: Filter by year: ...'.format(name, xids_new[i].stem))
+            traj = dx.where(dx['time.year'].max(dim='obs') == y, drop=True).traj
+            logger.debug('{}: {}: Filter by year: Success! #traj={}'
+                         .format(name, xids_new[i].stem, traj.size))
 
-        logger.info('{}: {}: Search & combine full data: ...'.format(name, xids_new[i].stem))
-        ds = search_combine_plx_datasets(xids, traj)
-        logger.info('{}: {}: Search & combine full data: Success!'.format(name, xids_new[i].stem))
+            logger.debug('{}: {}: Search & combine full data: ...'.format(name, xids_new[i].stem))
+            ds = search_combine_plx_datasets(xids, traj)
+            logger.debug('{}: {}: Search & combine full data: Success!'
+                         .format(name, xids_new[i].stem))
 
-        logger.info('{}: {}: Save: ...'.format(name, xids_new[i].stem))
-        ds.to_netcdf(xids_new[i])
-        logger.info('{}: {}: Save: Success!.'.format(name, xids_new[i].stem))
-        ds.close()
+            logger.debug('{}: {}: Save: ...'.format(name, xids_new[i].stem))
+            ds.to_netcdf(xids_new[i])
+            logger.debug('{}: {}: Save: Success!'.format(name, xids_new[i].stem))
+            ds.close()
+        else:
+            logger.debug('{}: {}: File already exists.'.format(name, xids_new[i].stem))
 
 
 if __name__ == "__main__":
