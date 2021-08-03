@@ -1,0 +1,14 @@
+sh: None: command not found
+INFO: Compiled ParcelsRandom ==> /jobfs/26265783.gadi-pbs/parcels-12904/libparcels_random_1ef5be81-7730-4cca-93d4-c4f3ef3619b4.so
+Subsetting by year plx_hist_165_v1.
+
+------------------------------------------------------------------------
+Job 26265783 has exceeded memory allocation on node gadi-cpu-bdw-0006.gadi.nci.org.au
+Process "bash", pid 1326967, rss 3424256, vmem 21667840
+Process "26265783.gadi-p", pid 1327024, rss 3096576, vmem 227995648
+Process "python3", pid 1327314, rss 21416116224, vmem 25018908672
+Process "orted", pid 1327318, rss 4632576, vmem 172466176
+------------------------------------------------------------------------
+For more information visit https://opus.nci.org.au/x/SwGRAQ
+------------------------------------------------------------------------
+/local/spool/pbs/mom_priv/jobs/26265783.gadi-pbs.SC: line 14: 1327314 Killed                  python3 /g/data/e14/as3189/OFAM/scripts/split_plx_files.py -e 0 -x 165

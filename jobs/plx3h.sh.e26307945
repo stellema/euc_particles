@@ -1,0 +1,24 @@
+[31m--------------------------------------------------------------------------------[0m
+[37;41mWARNING[0m: This Conda environment (analysis3-21.01) is no longer supported and is
+         scheduled for removal after the next NCI quarterly maintenance. 
+         Please use module 'conda/analysis3' to get the most recent stable 
+         environment
+[31m--------------------------------------------------------------------------------[0m
+sh: None: command not found
+INFO: Compiled ParcelsRandom ==> /jobfs/26307945.gadi-pbs/parcels-12904/libparcels_random_30e877e8-bd04-46d6-8313-ce7678191e41.so
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/plx_particleset.py", line 164, in <module>
+    restart_EUC(dy=args.dy, dz=args.dz, lon=args.lon, exp=args.exp,
+  File "/g/data/e14/as3189/OFAM/scripts/plx_particleset.py", line 68, in restart_EUC
+    fieldset = ofam_fieldset(time_bnds, exp)
+  File "/g/data/e14/as3189/OFAM/scripts/main.py", line 134, in ofam_fieldset
+    fieldset = from_ofam(files, variables, dims,
+  File "/g/data/e14/as3189/OFAM/scripts/main.py", line 61, in from_ofam
+    fieldset = FieldSet.from_netcdf(filenames, variables, dimensions, mesh=mesh,
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-21.01/lib/python3.8/site-packages/parcels/fieldset.py", line 409, in from_netcdf
+    fields[var] = Field.from_netcdf(paths, (var, name), dims, inds, grid=grid, mesh=mesh, timestamps=timestamps,
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-21.01/lib/python3.8/site-packages/parcels/field.py", line 451, in from_netcdf
+    return cls(variable, data, grid=grid, timestamps=timestamps,
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-21.01/lib/python3.8/site-packages/parcels/field.py", line 205, in __init__
+    raise SyntaxError('Field received an unexpected keyword argument "%s"' % list(kwargs.keys())[0])
+SyntaxError: Field received an unexpected keyword argument "field_chunksize"

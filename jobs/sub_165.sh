@@ -2,7 +2,7 @@
 #PBS -P e14
 #PBS -q normalbw
 #PBS -l walltime=3:00:00
-#PBS -l mem=20GB
+#PBS -l mem=36GB
 #PBS -l ncpus=1
 #PBS -l storage=gdata/hh5+gdata/e14
 #PBS -l wd

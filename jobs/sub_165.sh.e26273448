@@ -1,0 +1,93 @@
+sh: None: command not found
+INFO: Compiled ParcelsRandom ==> /jobfs/26273448.gadi-pbs/parcels-12904/libparcels_random_edf64253-a52d-4766-a005-7b4d68b2f4a9.so
+Subsetting by year plx_hist_165_v1.
+plx_hist_165_v1: Opening subset of data.
+plx_hist_165_v1: Filter new particles: traj size=882054: ...
+plx_hist_165_v1: Filter new particles: traj size=882054: Success!
+plx_hist_165_v1: plx_hist_165_v1_2012: Filter by year: ...
+plx_hist_165_v1: plx_hist_165_v1_2012: Filter by year: Success!.
+plx_hist_165_v1: plx_hist_165_v1_2012: Search & combine full data: ...
+plx_hist_165_v1: plx_hist_165_v1_2012: Search & combine full data: Success!
+plx_hist_165_v1: plx_hist_165_v1_2012: Save: ...
+plx_hist_165_v1: plx_hist_165_v1_2012: Save: Success!.
+plx_hist_165_v1: plx_hist_165_v1_2011: Filter by year: ...
+plx_hist_165_v1: plx_hist_165_v1_2011: Filter by year: Success!.
+plx_hist_165_v1: plx_hist_165_v1_2011: Search & combine full data: ...
+plx_hist_165_v1: plx_hist_165_v1_2011: Search & combine full data: Success!
+plx_hist_165_v1: plx_hist_165_v1_2011: Save: ...
+plx_hist_165_v1: plx_hist_165_v1_2011: Save: Success!.
+plx_hist_165_v1: plx_hist_165_v1_2010: Filter by year: ...
+plx_hist_165_v1: plx_hist_165_v1_2010: Filter by year: Success!.
+plx_hist_165_v1: plx_hist_165_v1_2010: Search & combine full data: ...
+plx_hist_165_v1: plx_hist_165_v1_2010: Search & combine full data: Success!
+plx_hist_165_v1: plx_hist_165_v1_2010: Save: ...
+plx_hist_165_v1: plx_hist_165_v1_2010: Save: Success!.
+plx_hist_165_v1: plx_hist_165_v1_2009: Filter by year: ...
+plx_hist_165_v1: plx_hist_165_v1_2009: Filter by year: Success!.
+plx_hist_165_v1: plx_hist_165_v1_2009: Search & combine full data: ...
+plx_hist_165_v1: plx_hist_165_v1_2009: Search & combine full data: Success!
+plx_hist_165_v1: plx_hist_165_v1_2009: Save: ...
+plx_hist_165_v1: plx_hist_165_v1_2009: Save: Success!.
+plx_hist_165_v1: plx_hist_165_v1_2008: Filter by year: ...
+plx_hist_165_v1: plx_hist_165_v1_2008: Filter by year: Success!.
+plx_hist_165_v1: plx_hist_165_v1_2008: Search & combine full data: ...
+Traceback (most recent call last):
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-21.04/lib/python3.8/site-packages/xarray/backends/netCDF4_.py", line 104, in _getitem
+    array = getitem(original_array, key)
+  File "src/netCDF4/_netCDF4.pyx", line 4397, in netCDF4._netCDF4.Variable.__getitem__
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-21.04/lib/python3.8/site-packages/netCDF4/utils.py", line 467, in _out_array_shape
+    c = count[..., i].ravel()[0] # All elements should be identical.
+IndexError: index 0 is out of bounds for axis 0 with size 0
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/split_plx_files.py", line 94, in <module>
+    save_particle_data_by_year(args.lon, args.exp, v=1, r_range=[0, 10])
+  File "/g/data/e14/as3189/OFAM/scripts/split_plx_files.py", line 78, in save_particle_data_by_year
+    ds = search_combine_plx_datasets(xids, traj)
+  File "/g/data/e14/as3189/OFAM/scripts/split_plx_files.py", line 45, in search_combine_plx_datasets
+    dn = dn.where(dn.traj.isin(traj), drop=True)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-21.04/lib/python3.8/site-packages/xarray/core/common.py", line 1291, in where
+    return ops.where_method(self, cond, other)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-21.04/lib/python3.8/site-packages/xarray/core/ops.py", line 176, in where_method
+    return apply_ufunc(
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-21.04/lib/python3.8/site-packages/xarray/core/computation.py", line 1159, in apply_ufunc
+    return apply_dataset_vfunc(
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-21.04/lib/python3.8/site-packages/xarray/core/computation.py", line 445, in apply_dataset_vfunc
+    result_vars = apply_dict_of_variables_vfunc(
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-21.04/lib/python3.8/site-packages/xarray/core/computation.py", line 389, in apply_dict_of_variables_vfunc
+    result_vars[name] = func(*variable_args)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-21.04/lib/python3.8/site-packages/xarray/core/computation.py", line 643, in apply_variable_ufunc
+    input_data = [
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-21.04/lib/python3.8/site-packages/xarray/core/computation.py", line 644, in <listcomp>
+    broadcast_compat_data(arg, broadcast_dims, core_dims)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-21.04/lib/python3.8/site-packages/xarray/core/computation.py", line 559, in broadcast_compat_data
+    data = variable.data
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-21.04/lib/python3.8/site-packages/xarray/core/variable.py", line 347, in data
+    return self.values
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-21.04/lib/python3.8/site-packages/xarray/core/variable.py", line 520, in values
+    return _as_array_or_item(self._data)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-21.04/lib/python3.8/site-packages/xarray/core/variable.py", line 262, in _as_array_or_item
+    data = data.get() if isinstance(data, cupy_array_type) else np.asarray(data)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-21.04/lib/python3.8/site-packages/xarray/core/indexing.py", line 701, in __array__
+    self._ensure_cached()
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-21.04/lib/python3.8/site-packages/xarray/core/indexing.py", line 698, in _ensure_cached
+    self.array = NumpyIndexingAdapter(np.asarray(self.array))
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-21.04/lib/python3.8/site-packages/xarray/core/indexing.py", line 671, in __array__
+    return np.asarray(self.array, dtype=dtype)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-21.04/lib/python3.8/site-packages/xarray/core/indexing.py", line 572, in __array__
+    return np.asarray(array[self.key], dtype=None)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-21.04/lib/python3.8/site-packages/xarray/coding/variables.py", line 70, in __array__
+    return self.func(self.array)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-21.04/lib/python3.8/site-packages/xarray/coding/variables.py", line 137, in _apply_mask
+    data = np.asarray(data, dtype=dtype)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-21.04/lib/python3.8/site-packages/xarray/core/indexing.py", line 572, in __array__
+    return np.asarray(array[self.key], dtype=None)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-21.04/lib/python3.8/site-packages/xarray/backends/netCDF4_.py", line 91, in __getitem__
+    return indexing.explicit_indexing_adapter(
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-21.04/lib/python3.8/site-packages/xarray/core/indexing.py", line 863, in explicit_indexing_adapter
+    result = raw_indexing_method(raw_key.tuple)
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-21.04/lib/python3.8/site-packages/xarray/backends/netCDF4_.py", line 114, in _getitem
+    raise IndexError(msg)
+IndexError: The indexing operation you are attempting to perform is not valid on netCDF4.Variable object. Try loading your data into memory first by calling .load().
