@@ -22,29 +22,12 @@ from main import (get_plx_id, get_plx_id_year, open_plx_data, combine_plx_datase
 
 logger = mlogger('misc', parcels=False, misc=True)
 
-def open_plx_data_subset(xid):
-    """Open plx dataset."""
-    # Vars to drop to reduce memory when finding trajectories.
-    drop_vars = ['lat', 'lon', 'z', 'zone', 'distance', 'unbeached', 'u']
-    ds = xr.open_dataset(str(xid), decode_cf=True)
-
-    # !!! Not on Gadi: subset to N trajectories.
-    if cfg.home == Path('E:/'):
-        N = 720
-        ds = ds.isel(traj=np.linspace(0, ds.traj.size - 1, N, dtype=int))
-
-    ds.coords['traj'] = ds.trajectory.isel(obs=0)
-    ds.coords['obs'] = ds.obs + (601 * int(xid.stem[-2:]))
-
-    ds = ds.drop_vars(drop_vars).isel(obs=0)
-    return ds
-
 
 def search_combine_plx_datasets(xids, traj):
     """Search plx datasets containing specific particles then combine."""
     dss = []
     for xid in xids:
-        dx = open_plx_data(xid, decode_cf=True)
+        dx = open_plx_data(xid)
 
         try:
             # Subset dataset with particles.
@@ -74,9 +57,10 @@ def save_particle_data_by_year(lon, exp, v=1, r_range=[0, 10]):
 
     # Subset of merged dataset.
     logger.debug('{}: Opening subset of data.'.format(name))
-    dx = xr.combine_nested([open_plx_data_subset(xid) for xid in xids],
-                           'obs', data_vars="minimal", combine_attrs='override')
 
+    drop_vars = ['lat', 'lon', 'z', 'zone', 'distance', 'unbeached', 'u']
+    dx = xr.combine_nested([open_plx_data(xid, drop_variables=drop_vars) for xid in xids],
+                            'obs', data_vars="minimal", combine_attrs='override')
     logger.debug('{}: Filter new particles: traj size={}: ...'.format(name, dx.traj.size))
     dx = dx.where(dx.age == 0, drop=True)
     logger.debug('{}: Filter new particles: traj size={}: Success!'.format(name, dx.traj.size))
@@ -94,7 +78,9 @@ def save_particle_data_by_year(lon, exp, v=1, r_range=[0, 10]):
                          .format(name, xids_new[i].stem))
 
             logger.debug('{}: {}: Save: ...'.format(name, xids_new[i].stem))
-            ds.to_netcdf(xids_new[i])
+            comp = dict(zlib=True, complevel=5)
+            encoding = {var: comp for var in ds.data_vars}
+            ds.to_netcdf(xids_new[i], encoding=encoding)
             logger.debug('{}: {}: Save: Success!'.format(name, xids_new[i].stem))
             ds.close()
         else:

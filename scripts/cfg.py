@@ -19,6 +19,7 @@ from collections import namedtuple
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 warnings.filterwarnings(action='ignore', message='SerializationWarning')
 warnings.filterwarnings("ignore")
+np.set_printoptions(suppress=True)
 
 home = Path.home()
 if home.drive == 'C:':

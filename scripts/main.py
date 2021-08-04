@@ -40,7 +40,7 @@ from tools import coord_formatter
 
 
 def from_ofam(filenames, variables, dimensions, indices=None, mesh='spherical',
-              allow_time_extrapolation=None, field_chunksize='auto',
+              allow_time_extrapolation=None, chunksize='auto',
               interp_method=None, tracer_interp_method='bgrid_tracer',
               time_periodic=False, **kwargs):
     if interp_method is None:
@@ -61,7 +61,7 @@ def from_ofam(filenames, variables, dimensions, indices=None, mesh='spherical',
     fieldset = FieldSet.from_netcdf(filenames, variables, dimensions, mesh=mesh,
                                     indices=indices, time_periodic=time_periodic,
                                     allow_time_extrapolation=allow_time_extrapolation,
-                                    field_chunksize=field_chunksize,
+                                    chunksize=chunksize,
                                     interp_method=interp_method,
                                     gridindexingtype='mom5', **kwargs)
 
@@ -125,10 +125,10 @@ def ofam_fieldset(time_bnds='full', exp='hist', chunks=300, add_xfields=True):
                 "lat": ["yu_ocean", "yt_ocean"],
                 "depth": ["st_ocean", "sw_ocean"]}
         # field_chunksize.
-        chunks = {'Time': 1,
-                  'sw_ocean': 1, 'st_ocean': 1,
-                  'yt_ocean': cs, 'yu_ocean': cs,
-                  'xt_ocean': cs, 'xu_ocean': cs}
+        # chunks = {'Time': {'time', 1,
+        #           'sw_ocean': 1, 'st_ocean': 1,
+        #           'yt_ocean': cs, 'yu_ocean': cs,
+        #           'xt_ocean': cs, 'xu_ocean': cs}
 
     # indices = None
     fieldset = from_ofam(files, variables, dims,
@@ -150,15 +150,12 @@ def ofam_fieldset(time_bnds='full', exp='hist', chunks=300, add_xfields=True):
                   'Land': xf,
                   'zone': zf}
         if chunks not in ['auto', False]:
-            nmap = {"time": ["Time"], "depth": ["sw_ocean"],
-                    "lat": ["yu_ocean"], "lon": ["xu_ocean"]}
             chunks = (1, 1, cs, cs)
 
         fieldsetUB = from_ofam(xfiles, xvars, dims,
                                tracer_interp_method='bgrid_velocity',
                                allow_time_extrapolation=True,
-                               field_chunksize=chunks,
-                               chunkdims_name_map=nmap)
+                               chunksize=chunks)
 
         # Field time origins and calander (probs unnecessary).
         fieldsetUB.time_origin = fieldset.time_origin
@@ -362,22 +359,24 @@ def get_plx_id_year(exp, lon, v, y):
     return xid
 
 
-def open_plx_data(xid, decode_cf=False):
+def open_plx_data(xid, **kwargs):
     """Open plx dataset."""
-    ds = xr.open_dataset(str(xid), decode_cf=decode_cf)
+    ds = xr.open_dataset(str(xid), mask_and_scale=True, **kwargs)
+    # engine='h5netcdf', chunks=None
     if cfg.home == Path('E:/'):
         # Subset to N trajectories.
         N = 720
         ds = ds.isel(traj=np.linspace(0, ds.traj.size - 1, N, dtype=int)) # !!!
-    ds.coords['traj'] = ds.trajectory.isel(obs=0)
-    ds.coords['obs'] = ds.obs + (601 * int(xid.stem[-2:]))
+    ds['trajectory'] = ds.trajectory.astype(np.float32, copy=False)
+    ds.coords['traj'] = ds.trajectory.astype(np.int32, copy=False).isel(obs=0)
+    ds.coords['obs'] = ds.obs.astype(np.int32, copy=False) + (601 * int(xid.stem[-2:]))
     return ds
 
 
-def combine_plx_datasets(exp, lon, v, r_range=[0, 9], decode_cf=False):
+def combine_plx_datasets(exp, lon, v, r_range=[0, 10], **kwargs):
     """Combine plx datasets."""
     xids = [get_plx_id(exp, lon, v, r) for r in range(*r_range)]
-    dss = [open_plx_data(xid, decode_cf=decode_cf) for xid in xids]
+    dss = [open_plx_data(xid, **kwargs) for xid in xids]
     ds = xr.combine_nested(dss, 'obs', data_vars="minimal", combine_attrs='override')
     return xids, ds
 

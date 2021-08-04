@@ -121,7 +121,8 @@ def particle_density(iexp, lon, r, t=None, how='mean'):
     """ Sort by location."""
     t = None if t < 0 else t
     r_range = [0, r]
-    xids, ds = combine_plx_datasets(cfg.exp_abr[iexp], lon, v=1, r_range=r_range)
+    xids, ds = combine_plx_datasets(cfg.exp_abr[iexp], lon, v=1,
+                                    r_range=r_range, decode_cf=False)
 
     xbins = np.arange(120.1, 290, 0.5)
     ybins = np.arange(-14.9, 15, 0.5)
