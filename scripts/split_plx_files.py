@@ -59,7 +59,7 @@ def save_particle_data_by_year(lon, exp, v=1, r_range=[0, 10]):
     logger.debug('{}: Opening subset of data.'.format(name))
 
     drop_vars = ['lat', 'lon', 'z', 'zone', 'distance', 'unbeached', 'u']
-    dx = xr.combine_nested([open_plx_data(xid, drop_variables=drop_vars) for xid in xids],
+    dx = xr.combine_nested([open_plx_data(xid, drop_variables=drop_vars).isel(obs=0) for xid in xids],
                             'obs', data_vars="minimal", combine_attrs='override')
     logger.debug('{}: Filter new particles: traj size={}: ...'.format(name, dx.traj.size))
     dx = dx.where(dx.age == 0, drop=True)
