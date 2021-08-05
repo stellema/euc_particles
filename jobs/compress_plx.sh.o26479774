@@ -1,0 +1,115 @@
+nccopy -d 5 -s -m 2000000000 ./plx_hist_165_v1_1981.nc ./tmp/plx_hist_165_v1_1981.nc
+nccopy -d 5 -s -m 2000000000 ./plx_hist_165_v1_1982.nc ./tmp/plx_hist_165_v1_1982.nc
+nccopy -d 5 -s -m 2000000000 ./plx_hist_165_v1_1983.nc ./tmp/plx_hist_165_v1_1983.nc
+nccopy -d 5 -s -m 2000000000 ./plx_hist_165_v1_1984.nc ./tmp/plx_hist_165_v1_1984.nc
+nccopy -d 5 -s -m 2000000000 ./plx_hist_165_v1_1985.nc ./tmp/plx_hist_165_v1_1985.nc
+nccopy -d 5 -s -m 2000000000 ./plx_hist_165_v1_1986.nc ./tmp/plx_hist_165_v1_1986.nc
+nccopy -d 5 -s -m 2000000000 ./plx_hist_165_v1_1987.nc ./tmp/plx_hist_165_v1_1987.nc
+nccopy -d 5 -s -m 2000000000 ./plx_hist_165_v1_1988.nc ./tmp/plx_hist_165_v1_1988.nc
+nccopy -d 5 -s -m 2000000000 ./plx_hist_165_v1_1989.nc ./tmp/plx_hist_165_v1_1989.nc
+nccopy -d 5 -s -m 2000000000 ./plx_hist_165_v1_1990.nc ./tmp/plx_hist_165_v1_1990.nc
+nccopy -d 5 -s -m 2000000000 ./plx_hist_165_v1_1991.nc ./tmp/plx_hist_165_v1_1991.nc
+nccopy -d 5 -s -m 2000000000 ./plx_hist_165_v1_1992.nc ./tmp/plx_hist_165_v1_1992.nc
+nccopy -d 5 -s -m 2000000000 ./plx_hist_165_v1_1993.nc ./tmp/plx_hist_165_v1_1993.nc
+nccopy -d 5 -s -m 2000000000 ./plx_hist_165_v1_1994.nc ./tmp/plx_hist_165_v1_1994.nc
+nccopy -d 5 -s -m 2000000000 ./plx_hist_165_v1_1995.nc ./tmp/plx_hist_165_v1_1995.nc
+nccopy -d 5 -s -m 2000000000 ./plx_hist_165_v1_1996.nc ./tmp/plx_hist_165_v1_1996.nc
+nccopy -d 5 -s -m 2000000000 ./plx_hist_165_v1_1997.nc ./tmp/plx_hist_165_v1_1997.nc
+nccopy -d 5 -s -m 2000000000 ./plx_hist_165_v1_1998.nc ./tmp/plx_hist_165_v1_1998.nc
+nccopy -d 5 -s -m 2000000000 ./plx_hist_165_v1_1999.nc ./tmp/plx_hist_165_v1_1999.nc
+nccopy -d 5 -s -m 2000000000 ./plx_hist_165_v1_2000.nc ./tmp/plx_hist_165_v1_2000.nc
+nccopy -d 5 -s -m 2000000000 ./plx_hist_165_v1_2001.nc ./tmp/plx_hist_165_v1_2001.nc
+nccopy -d 5 -s -m 2000000000 ./plx_hist_165_v1_2002.nc ./tmp/plx_hist_165_v1_2002.nc
+nccopy -d 5 -s -m 2000000000 ./plx_hist_165_v1_2003.nc ./tmp/plx_hist_165_v1_2003.nc
+nccopy -d 5 -s -m 2000000000 ./plx_hist_165_v1_2004.nc ./tmp/plx_hist_165_v1_2004.nc
+nccopy -d 5 -s -m 2000000000 ./plx_hist_165_v1_2005.nc ./tmp/plx_hist_165_v1_2005.nc
+nccopy -d 5 -s -m 2000000000 ./plx_hist_165_v1_2006.nc ./tmp/plx_hist_165_v1_2006.nc
+nccopy -d 5 -s -m 2000000000 ./plx_hist_165_v1_2007.nc ./tmp/plx_hist_165_v1_2007.nc
+nccopy -d 5 -s -m 2000000000 ./plx_hist_165_v1_2008.nc ./tmp/plx_hist_165_v1_2008.nc
+nccopy -d 5 -s -m 2000000000 ./plx_hist_165_v1_2009.nc ./tmp/plx_hist_165_v1_2009.nc
+nccopy -d 5 -s -m 2000000000 ./plx_hist_165_v1_2010.nc ./tmp/plx_hist_165_v1_2010.nc
+nccopy -d 5 -s -m 2000000000 ./plx_hist_165_v1_2011.nc ./tmp/plx_hist_165_v1_2011.nc
+nccopy -d 5 -s -m 2000000000 ./plx_hist_165_v1_2012.nc ./tmp/plx_hist_165_v1_2012.nc
+Compressing ./plx_hist_165_v1_1981.nc, deflate level = 5, shuffle is on: True
+Compressing ./plx_hist_165_v1_1982.nc, deflate level = 5, shuffle is on: True
+Compressing ./plx_hist_165_v1_1983.nc, deflate level = 5, shuffle is on: True
+Compressing ./plx_hist_165_v1_1984.nc, deflate level = 5, shuffle is on: True
+Compressing ./plx_hist_165_v1_1985.nc, deflate level = 5, shuffle is on: True
+Compressing ./plx_hist_165_v1_1986.nc, deflate level = 5, shuffle is on: True
+Compressing ./plx_hist_165_v1_1987.nc, deflate level = 5, shuffle is on: True
+Compressing ./plx_hist_165_v1_1988.nc, deflate level = 5, shuffle is on: True
+Compressing ./plx_hist_165_v1_1989.nc, deflate level = 5, shuffle is on: True
+Compressing ./plx_hist_165_v1_1990.nc, deflate level = 5, shuffle is on: True
+Compressing ./plx_hist_165_v1_1991.nc, deflate level = 5, shuffle is on: True
+Compressing ./plx_hist_165_v1_1992.nc, deflate level = 5, shuffle is on: True
+Compressing ./plx_hist_165_v1_1993.nc, deflate level = 5, shuffle is on: True
+Compressing ./plx_hist_165_v1_1994.nc, deflate level = 5, shuffle is on: True
+Compressing ./plx_hist_165_v1_1995.nc, deflate level = 5, shuffle is on: True
+Compressing ./plx_hist_165_v1_1996.nc, deflate level = 5, shuffle is on: True
+Compressing ./plx_hist_165_v1_1997.nc, deflate level = 5, shuffle is on: True
+Compressing ./plx_hist_165_v1_1998.nc, deflate level = 5, shuffle is on: True
+Compressing ./plx_hist_165_v1_1999.nc, deflate level = 5, shuffle is on: True
+Compressing ./plx_hist_165_v1_2000.nc, deflate level = 5, shuffle is on: True
+Compressing ./plx_hist_165_v1_2001.nc, deflate level = 5, shuffle is on: True
+Compressing ./plx_hist_165_v1_2002.nc, deflate level = 5, shuffle is on: True
+Compressing ./plx_hist_165_v1_2003.nc, deflate level = 5, shuffle is on: True
+Compressing ./plx_hist_165_v1_2004.nc, deflate level = 5, shuffle is on: True
+Compressing ./plx_hist_165_v1_2005.nc, deflate level = 5, shuffle is on: True
+Compressing ./plx_hist_165_v1_2006.nc, deflate level = 5, shuffle is on: True
+Compressing ./plx_hist_165_v1_2007.nc, deflate level = 5, shuffle is on: True
+Compressing ./plx_hist_165_v1_2008.nc, deflate level = 5, shuffle is on: True
+Compressing ./plx_hist_165_v1_2009.nc, deflate level = 5, shuffle is on: True
+Compressing ./plx_hist_165_v1_2010.nc, deflate level = 5, shuffle is on: True
+Compressing ./plx_hist_165_v1_2011.nc, deflate level = 5, shuffle is on: True
+Compressing ./plx_hist_165_v1_2012.nc, deflate level = 5, shuffle is on: True
+plx_hist_165_v1_2012.nc d = 5 Shuffle: 1 30998924 B 17.21
+plx_hist_165_v1_2012.nc d = 5 Shuffle: 1 84418329 B 6.466
+plx_hist_165_v1_2012.nc d = 5 Shuffle: 1 123207305 B 10.32
+plx_hist_165_v1_2012.nc d = 5 Shuffle: 1 155963576 B 8.052
+plx_hist_165_v1_2012.nc d = 5 Shuffle: 1 180089629 B 6.51
+plx_hist_165_v1_2012.nc d = 5 Shuffle: 1 232250679 B 8.512
+plx_hist_165_v1_2012.nc d = 5 Shuffle: 1 265077893 B 7.895
+plx_hist_165_v1_2012.nc d = 5 Shuffle: 1 283465579 B 7.418
+plx_hist_165_v1_2012.nc d = 5 Shuffle: 1 261339265 B 6.704
+plx_hist_165_v1_2012.nc d = 5 Shuffle: 1 311171287 B 8.426
+plx_hist_165_v1_2012.nc d = 5 Shuffle: 1 344206162 B 7.872
+plx_hist_165_v1_2012.nc d = 5 Shuffle: 1 378228431 B 7.65
+plx_hist_165_v1_2012.nc d = 5 Shuffle: 1 361534603 B 9.513
+plx_hist_165_v1_2012.nc d = 5 Shuffle: 1 354892008 B 9.014
+plx_hist_165_v1_2012.nc d = 5 Shuffle: 1 378761741 B 8.581
+plx_hist_165_v1_2012.nc d = 5 Shuffle: 1 400853379 B 9.731
+plx_hist_165_v1_2012.nc d = 5 Shuffle: 1 434171350 B 9.346
+plx_hist_165_v1_2012.nc d = 5 Shuffle: 1 449690898 B 10.16
+plx_hist_165_v1_2012.nc d = 5 Shuffle: 1 455713504 B 10.94
+plx_hist_165_v1_2012.nc d = 5 Shuffle: 1 486883321 B 10.26
+plx_hist_165_v1_2012.nc d = 5 Shuffle: 1 499274128 B 10.49
+plx_hist_165_v1_2012.nc d = 5 Shuffle: 1 483059395 B 10.01
+plx_hist_165_v1_2012.nc d = 5 Shuffle: 1 536611192 B 10.87
+plx_hist_165_v1_2012.nc d = 5 Shuffle: 1 506339302 B 11.07
+plx_hist_165_v1_2012.nc d = 5 Shuffle: 1 526415814 B 10.86
+Error with ./plx_hist_165_v1_2006.nc :: Compression failed: Command '['nccopy', '-d', '5', '-s', '-m', '2000000000', './plx_hist_165_v1_2006.nc', './tmp/plx_hist_165_v1_2006.nc']' died with <Signals.SIGKILL: 9>. 
+Error with ./plx_hist_165_v1_2007.nc :: Compression failed: Command '['nccopy', '-d', '5', '-s', '-m', '2000000000', './plx_hist_165_v1_2007.nc', './tmp/plx_hist_165_v1_2007.nc']' died with <Signals.SIGKILL: 9>. 
+Error with ./plx_hist_165_v1_2008.nc :: Compression failed: Command '['nccopy', '-d', '5', '-s', '-m', '2000000000', './plx_hist_165_v1_2008.nc', './tmp/plx_hist_165_v1_2008.nc']' died with <Signals.SIGKILL: 9>. 
+Error with ./plx_hist_165_v1_2009.nc :: Compression failed: Command '['nccopy', '-d', '5', '-s', '-m', '2000000000', './plx_hist_165_v1_2009.nc', './tmp/plx_hist_165_v1_2009.nc']' died with <Signals.SIGKILL: 9>. 
+Error with ./plx_hist_165_v1_2010.nc :: Compression failed: Command '['nccopy', '-d', '5', '-s', '-m', '2000000000', './plx_hist_165_v1_2010.nc', './tmp/plx_hist_165_v1_2010.nc']' died with <Signals.SIGKILL: 9>. 
+Error with ./plx_hist_165_v1_2011.nc :: Compression failed: Command '['nccopy', '-d', '5', '-s', '-m', '2000000000', './plx_hist_165_v1_2011.nc', './tmp/plx_hist_165_v1_2011.nc']' died with <Signals.SIGKILL: 9>. 
+Error with ./plx_hist_165_v1_2012.nc :: Compression failed: Command '['nccopy', '-d', '5', '-s', '-m', '2000000000', './plx_hist_165_v1_2012.nc', './tmp/plx_hist_165_v1_2012.nc']' died with <Signals.SIGKILL: 9>. 
+Directory: ./
+    Number files compressed: 25
+    Total space saved: 0.07 TB
+    Average compression ratio: 9.45
+    Following files not properly compressed or suspiciously high compression ratio:
+./plx_hist_165_v1_2006.nc, ./plx_hist_165_v1_2007.nc, ./plx_hist_165_v1_2008.nc, ./plx_hist_165_v1_2009.nc, ./plx_hist_165_v1_2010.nc, ./plx_hist_165_v1_2011.nc, ./plx_hist_165_v1_2012.nc
+
+======================================================================================
+                  Resource Usage on 2021-08-04 18:38:30:
+   Job Id:             26479774.gadi-pbs
+   Project:            e14
+   Exit Status:        0
+   Service Units:      0.59
+   NCPUs Requested:    1                      NCPUs Used: 1               
+                                           CPU Time Used: 00:15:37                                   
+   Memory Requested:   4.0GB                 Memory Used: 4.0GB           
+   Walltime requested: 03:00:00            Walltime Used: 00:17:40        
+   JobFS requested:    100.0MB                JobFS used: 0B              
+======================================================================================

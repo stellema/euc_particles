@@ -1,0 +1,12 @@
+
+------------------------------------------------------------------------
+Job 26479774 has exceeded memory allocation on node gadi-dm-01.nci.org.au
+Process "bash", pid 3958126, rss 3416064, vmem 21663744
+Process "26479774.gadi-p", pid 3958187, rss 3022848, vmem 227995648
+Process "nccompress", pid 3958544, rss 22237184, vmem 526147584
+Process "nccompress", pid 3958555, rss 18796544, vmem 318517248
+Process "nccopy", pid 4001543, rss 4182716416, vmem 4320677888
+------------------------------------------------------------------------
+For more information visit https://opus.nci.org.au/x/SwGRAQ
+------------------------------------------------------------------------
+Cannot compress ./plx_hist_165_v1_1981.nc with nc2nc as it is NETCDF4 format, switching to nccopy
