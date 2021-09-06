@@ -40,7 +40,7 @@ from tools import coord_formatter
 
 
 def from_ofam(filenames, variables, dimensions, indices=None, mesh='spherical',
-              allow_time_extrapolation=None, chunksize='auto',
+              allow_time_extrapolation=None, field_chunksize='auto',
               interp_method=None, tracer_interp_method='bgrid_tracer',
               time_periodic=False, **kwargs):
     if interp_method is None:
@@ -61,7 +61,7 @@ def from_ofam(filenames, variables, dimensions, indices=None, mesh='spherical',
     fieldset = FieldSet.from_netcdf(filenames, variables, dimensions, mesh=mesh,
                                     indices=indices, time_periodic=time_periodic,
                                     allow_time_extrapolation=allow_time_extrapolation,
-                                    chunksize=chunksize,
+                                    field_chunksize=field_chunksize,
                                     interp_method=interp_method,
                                     gridindexingtype='mom5', **kwargs)
 
@@ -125,10 +125,10 @@ def ofam_fieldset(time_bnds='full', exp='hist', chunks=300, add_xfields=True):
                 "lat": ["yu_ocean", "yt_ocean"],
                 "depth": ["st_ocean", "sw_ocean"]}
         # field_chunksize.
-        # chunks = {'Time': {'time', 1,
-        #           'sw_ocean': 1, 'st_ocean': 1,
-        #           'yt_ocean': cs, 'yu_ocean': cs,
-        #           'xt_ocean': cs, 'xu_ocean': cs}
+        chunks = {'Time': 1,
+                  'sw_ocean': 1, 'st_ocean': 1,
+                  'yt_ocean': cs, 'yu_ocean': cs,
+                  'xt_ocean': cs, 'xu_ocean': cs}
 
     # indices = None
     fieldset = from_ofam(files, variables, dims,
@@ -150,12 +150,15 @@ def ofam_fieldset(time_bnds='full', exp='hist', chunks=300, add_xfields=True):
                   'Land': xf,
                   'zone': zf}
         if chunks not in ['auto', False]:
+            nmap = {"time": ["Time"], "depth": ["sw_ocean"],
+                    "lat": ["yu_ocean"], "lon": ["xu_ocean"]}
             chunks = (1, 1, cs, cs)
 
         fieldsetUB = from_ofam(xfiles, xvars, dims,
                                tracer_interp_method='bgrid_velocity',
                                allow_time_extrapolation=True,
-                               chunksize=chunks)
+                               field_chunksize=chunks,
+                               chunkdims_name_map=nmap)
 
         # Field time origins and calander (probs unnecessary).
         fieldsetUB.time_origin = fieldset.time_origin
@@ -204,7 +207,7 @@ def generate_xid(lon, v=0, exp='hist', randomise=False,
         xid = cfg.data / 'v{}/plx_{}_{}_v{}r00.nc'.format(v, exp, int(lon), v)
         files = [s for s in xid.parent.glob(str(xid.stem[:-2]) + '*.nc')]
         r = max([int(f.stem[-2:]) for f in files]) + 1
-        xid = cfg.data / '{}{:02d}.nc'.format(xid.stem[:-2], r)
+        xid = cfg.data / 'v{}/{}{:02d}.nc'.format(v, xid.stem[:-2], r)
         if xlog:
             xlog['v'], xlog['r'] = v, r
 

@@ -8,6 +8,7 @@ author: Annette Stellema (astellemas@gmail.com)
 import math
 import numpy as np
 import xarray as xr
+import pandas as pd
 from pathlib import Path
 from datetime import datetime, timedelta
 from argparse import ArgumentParser
@@ -87,7 +88,8 @@ def restart_EUC(dy=0.1, dz=25, lon=165, exp='hist', repeatdt_days=6,
     xlog['id'] = xid.stem
 
     # Change pset file to last run.
-    file = cfg.data/'{}{:02d}.nc'.format(xid.stem[:-2], xlog['r'] - 1)
+    file = cfg.data / 'v{}/{}{:02d}.nc'.format(xlog['v'], xid.stem[:-2], xlog['r'] - 1)
+    save_file = cfg.data / 'v{}/r_{}'.format(xlog['v'], xid.name)
     logger.info('Generating restart file from: {}'.format(file.stem))
 
     # Create ParticleSet from the given ParticleFile.
@@ -105,7 +107,10 @@ def restart_EUC(dy=0.1, dz=25, lon=165, exp='hist', repeatdt_days=6,
         endtime = int(pset_start - runtime.total_seconds())
 
     # ParticleSet start time (for log).
-    start = (fieldset.time_origin.time_origin + timedelta(seconds=pset_start))
+    try:
+        start = (fieldset.time_origin.time_origin + timedelta(seconds=pset_start))
+    except:
+        start = (pd.Timestamp(fieldset.time_origin.time_origin) + timedelta(seconds=pset_start))
     xlog['Ti'] = start.strftime('%Y-%m-%d')
     xlog['Tf'] = (start - runtime).strftime('%Y-%m-%d')
 
@@ -144,8 +149,8 @@ def restart_EUC(dy=0.1, dz=25, lon=165, exp='hist', repeatdt_days=6,
     df['endtime'] = endtime
 
     # Save to netcdf.
-    df.to_netcdf(cfg.data/('r_' + xid.name))
-    logger.info(' Saved: {}'.format(str(cfg.data/('r_' + xid.name))))
+    df.to_netcdf(save_file)
+    logger.info(' Saved: {}'.format(str(save_file)))
     return
 
 
@@ -166,9 +171,9 @@ if __name__ == "__main__" and cfg.home != Path('E:/'):
                 v=args.version, final=args.final)
 
 elif __name__ == "__main__":
-    dy, dz, lon = 1, 150, 165
+    dy, dz, lon = 1, 150, 190
     repeatdt_days, runtime_days = 6, 36
-    v = 72
+    v = 28
     exp = 'hist'
     final = False
     restart_EUC(dy=dy, dz=dz, lon=lon, repeatdt_days=repeatdt_days,

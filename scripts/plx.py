@@ -7,6 +7,7 @@ author: Annette Stellema (astellemas@gmail.com)
 
 import math
 import numpy as np
+import pandas as pd
 from pathlib import Path
 from operator import attrgetter
 from datetime import datetime, timedelta
@@ -62,8 +63,9 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
     if not final:
         while runtime_days % repeatdt_days != 0:
             runtime_days += 1
+
     runtime = timedelta(days=int(runtime_days))
-    repeats = math.floor(runtime/repeatdt)
+    repeats = math.floor(runtime / repeatdt)
 
     # Don't add final repeat if run ends on a repeat day.
     if not final and runtime_days % repeatdt_days == 0:
@@ -118,7 +120,7 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
         xid = generate_xid(lon, v, exp, restart=True, xlog=xlog)
 
         # Change pset file to last run.
-        filename = cfg.data/'r_{}.nc'.format(xid.stem)
+        filename = cfg.data / 'v{}/r_{}.nc'.format(xlog['v'], xid.stem)
 
         # Create ParticleSet from the given ParticleFile.
         pset = pset_from_file(fieldset, pclass, filename, reduced=True,
@@ -132,10 +134,14 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
         xlog['start_r'] = pset.size
 
     # Create output ParticleFile p_name and time steps to write output.
-    output_file = pset.ParticleFile(cfg.data/xid.stem, outputdt=outputdt)
+    output_file = pset.ParticleFile(cfg.data / 'v{}/{}'.format(xlog['v'], xid.stem), outputdt=outputdt)
 
     # ParticleSet start time (for log).
-    start = (fieldset.time_origin.time_origin + timedelta(seconds=pset_start))
+    try:
+        start = (fieldset.time_origin.time_origin + timedelta(seconds=pset_start))
+    except:
+        start = (pd.Timestamp(fieldset.time_origin.time_origin) + timedelta(seconds=pset_start))
+
     xlog['id'] = xid.stem
     xlog['Ti'] = start.strftime('%Y-%m-%d')
     xlog['Tf'] = (start - runtime).strftime('%Y-%m-%d')
