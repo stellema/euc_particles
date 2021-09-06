@@ -1,4 +1,6 @@
 #!/bin/bash
+#
+## Sort particle files by sources.
 #PBS -P e14
 #PBS -q normal
 #PBS -l walltime=4:00:00
@@ -9,7 +11,6 @@
 #PBS -m ae
 #PBS -M astellemas@gmail.com
 #PBS -v LON,EXP
-ECHO=/bin/echo
 
 # How to submit: qsub -v LON=250,EXP=1 srcplx.sh
 module use /g/data3/hh5/public/modules
