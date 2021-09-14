@@ -1,0 +1,119 @@
+"""
+created: Fri Jun 12 18:45:35 2020.
+
+author: Annette Stellema (astellemas@gmail.com)
+
+"""
+
+import math
+import numpy as np
+import xarray as xr
+import pandas as pd
+from pathlib import Path
+from datetime import datetime, timedelta
+from argparse import ArgumentParser
+from parcels import (Variable, JITParticle)
+
+import cfg
+from tools import mlogger
+from main import (ofam_fieldset, pset_euc, del_westward, generate_xid,
+                  pset_from_file)
+
+
+try:
+    from mpi4py import MPI
+except ImportError:
+    MPI = None
+
+logger = mlogger('plx', parcels=True, misc=False)
+
+
+def spinup_particleset(lon=165, exp='hist', v=1):
+    """Run Lagrangian EUC particle experiment."""
+    xlog = {'file': 0, 'v': v}
+
+    # Create time bounds for fieldset based on experiment.
+    if exp == 'hist':
+        y1 = 1981 if cfg.home != Path('E:/') else 2012
+        time_bnds = [datetime(y1, 1, 1), datetime(2012, 12, 31)]
+    elif exp == 'rcp':
+        time_bnds = [datetime(2070, 1, 1), datetime(2080, 12, 31)]
+
+    fieldset = ofam_fieldset(time_bnds, exp)
+
+    class zParticle(JITParticle):
+        """Particle class that saves particle age and zonal velocity."""
+        age = Variable('age', initial=0., dtype=np.float32)
+        u = Variable('u', initial=fieldset.U, to_write='once', dtype=np.float32)
+        zone = Variable('zone', initial=0., dtype=np.float32)
+        distance = Variable('distance', initial=0., dtype=np.float32)
+        unbeached = Variable('unbeached', initial=0., dtype=np.float32)
+
+    pclass = zParticle
+
+    # Increment run index for new output file name.
+    xid = generate_xid(lon, v, exp, restart=True, xlog=xlog)
+    xlog['id'] = xid.stem
+
+    # Change pset file to last run.
+    file = cfg.data / 'v{}/{}{:02d}.nc'.format(xlog['v'], xid.stem[:-2], xlog['r'] - 1)
+    save_file = cfg.data / 'v{}/r_{}'.format(xlog['v'], xid.name)
+    logger.info('Generating restart file from: {}'.format(file.stem))
+
+    # Create ParticleSet from the given ParticleFile.
+    pset = pset_from_file(fieldset, pclass=pclass, filename=file, restart=True,
+                          reduced=False, restarttime=np.nanmin, xlog=xlog)
+    xlog['file'] = pset.size
+
+    # Start date.
+    pset_start = np.nanmin(pset.time)
+
+
+    # ParticleSet start time (for log).
+    try:
+        start = (fieldset.time_origin.time_origin + timedelta(seconds=pset_start))
+    except:
+        start = (pd.Timestamp(fieldset.time_origin.time_origin) + timedelta(seconds=pset_start))
+    xlog['Ti'] = start.strftime('%Y-%m-%d')
+
+    logger.info(' {}: {}'.format(xlog['id'], xlog['Ti']))
+    logger.info(' {}: Particles: File={}'.format(xlog['id'], xlog['file']))
+
+    vars = {}
+    for v in pclass.getPType().variables:
+        if v.name in pset.particle_data and v.to_write in [True, 'once']:
+            vars[v.name] = np.ma.filled(pset.particle_data[v.name], np.nan)
+
+    df = xr.Dataset()
+    df.coords['traj'] = np.arange(len(vars['lon']))
+    for v in vars:
+        if v == 'depth':
+            df['z'] = (['traj'], vars[v])
+        elif v == 'id':
+            df['trajectory'] = (['traj'], vars[v])
+        else:
+            df[v] = (['traj'], vars[v])
+
+    df['restarttime'] = pset_start
+
+    # Save to netcdf.
+    df.to_netcdf(save_file)
+    logger.info(' Saved: {}'.format(str(save_file)))
+    return
+
+
+if __name__ == "__main__" and cfg.home != Path('E:/'):
+    p = ArgumentParser(description="""Run EUC Lagrangian experiment.""")
+    p.add_argument('-x', '--lon', default=165, type=int, help='Particle start longitude(s).')
+    p.add_argument('-e', '--exp', default='hist', type=str, help='Scenario.')
+    p.add_argument('-v', '--version', default=0, type=int, help='File Index.')
+
+    args = p.parse_args()
+
+    spinup_particleset(dy=args.dy, dz=args.dz, lon=args.lon, exp=args.exp)
+
+elif __name__ == "__main__":
+    lon = 165
+    v = 70
+    exp = 'hist'
+    spinup_particleset(lon, exp, v)
