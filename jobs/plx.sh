@@ -1,22 +1,25 @@
 #!/bin/bash
 ###############################################################################
 #                                                                             #
-#                   Split particle files by release year.                     #
+#          Run Particle Lagrangian Experiment at release longitude.           #
 #                                                                             #
 ###############################################################################
 #PBS -P e14
 #PBS -q normal
-#PBS -l walltime=4:00:00
-#PBS -l mem=26GB
-#PBS -l ncpus=1
+#PBS -l walltime=22:00:00
+#PBS -l mem=192GB
+#PBS -l ncpus=48
 #PBS -l storage=gdata/hh5+gdata/e14
 #PBS -l wd
 #PBS -m ae
 #PBS -M astellemas@gmail.com
 #PBS -v LON,EXP
-ECHO=/bin/echo
 
-# Submit job: qsub -v LON=250,EXP=0 subset_plx.sh
+# To run: qsub -v LON=250,EXP="hist" plx.sh
 module use /g/data3/hh5/public/modules
-module load conda/analysis3
-python3 /g/data/e14/as3189/OFAM/scripts/split_plx_files.py -e $EXP -x $LON
+module load conda
+source /g/data/e14/as3189/conda/envs/analysis3-20.01/bin/activate
+
+ECHO=/bin/echo
+$ECHO "Run plx for $EXP at lon $LON."
+mpirun -np 48 python3 /g/data/e14/as3189/OFAM/scripts/plx.py -e $EXP -x $LON -r 1200 -v 1 -f 1
