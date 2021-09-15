@@ -33,7 +33,7 @@ import numpy as np
 import xarray as xr
 from pathlib import Path
 from datetime import datetime
-from parcels import (FieldSet, ParticleSet, VectorField)
+from parcels import (FieldSet, ParticleSet, VectorField, Variable, JITParticle)
 
 import cfg
 from tools import coord_formatter
@@ -273,9 +273,35 @@ def log_simulation(xlog, rank, logger):
                          xlog['new_r'], xlog['west_r'], xlog['start_r']))
 
 
-def pset_from_file(fieldset, pclass, filename, repeatdt=None,
-                   restart=True, restarttime=np.nanmin, reduced=True,
-                   lonlatdepth_dtype=np.float32, xlog=None, spinup=None, **kwargs):
+def zparticle(fieldset, reduced=False, dtype=np.float32, **kwargs):
+    """Particle class."""
+
+    class zParticle(JITParticle):
+        """Particle class that saves particle age and zonal velocity."""
+
+        age = Variable('age', initial=0., dtype=dtype)
+        u = Variable('u', initial=fieldset.U, to_write='once', dtype=dtype)
+        zone = Variable('zone', initial=0., dtype=dtype)
+        distance = Variable('distance', initial=0., dtype=dtype)
+        unbeached = Variable('unbeached', initial=0., dtype=dtype)
+
+        if not reduced:
+            prev_lon = Variable('prev_lon', initial=kwargs['lon'],
+                                to_write=False, dtype=dtype)
+            prev_lat = Variable('prev_lat', initial=kwargs['lat'],
+                                to_write=False, dtype=dtype)
+            prev_depth = Variable('prev_depth', initial=kwargs['depth'],
+                                  to_write=False, dtype=dtype)
+            beached = Variable('beached', initial=0., to_write=False,
+                               dtype=dtype)
+            land = Variable('land', initial=0., to_write=False, dtype=dtype)
+
+    return zParticle
+
+
+def pset_from_file(fieldset, pclass, filename, repeatdt=None, restart=True,
+                   restarttime=np.nanmin, reduced=True, xlog=None,
+                   lonlatdepth_dtype=np.float32, **kwargs):
     """Initialise the ParticleSet from a netcdf ParticleFile.
 
     This creates a new ParticleSet based on locations of all particles written
@@ -324,8 +350,7 @@ def pset_from_file(fieldset, pclass, filename, repeatdt=None,
                 vars[v] = vars[v][inds[0]]
             if v not in ['lon', 'lat', 'depth', 'time', 'id']:
                 kwargs[v] = vars[v]
-    if spinup:
-        vars['time'] = vars['time'] * 0 + spinup
+
     if restart:
         pclass.setLastID(0)  # reset to zero offset
     else:
@@ -335,6 +360,7 @@ def pset_from_file(fieldset, pclass, filename, repeatdt=None,
                        lat=vars['lat'], depth=vars['depth'], time=vars['time'],
                        pid_orig=vars['id'], repeatdt=repeatdt,
                        lonlatdepth_dtype=lonlatdepth_dtype, **kwargs)
+
     if reduced and 'nextid' in pfile.variables:
         pclass.setLastID(pfile.variables['nextid'].item())
     else:
