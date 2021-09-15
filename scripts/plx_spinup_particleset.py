@@ -17,7 +17,7 @@ from parcels import (Variable, JITParticle)
 import cfg
 from tools import mlogger
 from main import (ofam_fieldset, pset_euc, del_westward, generate_xid,
-                  pset_from_file)
+                  pset_from_file, zparticle)
 
 
 try:
@@ -33,23 +33,14 @@ def spinup_particleset(lon=165, exp='hist', v=1):
     xlog = {'file': 0, 'v': v}
 
     # Create time bounds for fieldset based on experiment.
-    if exp == 'hist':
-        y1 = 1981 if cfg.home != Path('E:/') else 2012
-        time_bnds = [datetime(y1, 1, 1), datetime(2012, 12, 31)]
-    elif exp == 'rcp':
-        time_bnds = [datetime(2070, 1, 1), datetime(2080, 12, 31)]
+    i = 0 if exp == 'hist' else -1
+    y1, y2 = cfg.years[i]
+    y1 = 2012 if cfg.home == Path('E:/') and exp == 'hist' else y1
+    time_bnds = [datetime(y1, 1, 1), datetime(y2, 12, 31)]
 
     fieldset = ofam_fieldset(time_bnds, exp)
 
-    class zParticle(JITParticle):
-        """Particle class that saves particle age and zonal velocity."""
-        age = Variable('age', initial=0., dtype=np.float32)
-        u = Variable('u', initial=fieldset.U, to_write='once', dtype=np.float32)
-        zone = Variable('zone', initial=0., dtype=np.float32)
-        distance = Variable('distance', initial=0., dtype=np.float32)
-        unbeached = Variable('unbeached', initial=0., dtype=np.float32)
-
-    pclass = zParticle
+    pclass = zparticle(fieldset, reduced=True)
 
     # Increment run index for new output file name.
     xid = generate_xid(lon, v, exp, restart=True, xlog=xlog)
@@ -68,12 +59,9 @@ def spinup_particleset(lon=165, exp='hist', v=1):
     # Start date.
     pset_start = np.nanmin(pset.time)
 
-
     # ParticleSet start time (for log).
-    try:
-        start = (fieldset.time_origin.time_origin + timedelta(seconds=pset_start))
-    except:
-        start = (pd.Timestamp(fieldset.time_origin.time_origin) + timedelta(seconds=pset_start))
+    start = (pd.Timestamp(fieldset.time_origin.time_origin) + timedelta(seconds=pset_start))
+
     xlog['Ti'] = start.strftime('%Y-%m-%d')
 
     logger.info(' {}: {}'.format(xlog['id'], xlog['Ti']))
@@ -97,7 +85,7 @@ def spinup_particleset(lon=165, exp='hist', v=1):
     df['restarttime'] = pset_start
 
     # Save to netcdf.
-    df.to_netcdf(save_file)
+    df.to_netcdf(save_file, engine='netcdf4')
     logger.info(' Saved: {}'.format(str(save_file)))
     return
 
@@ -109,11 +97,10 @@ if __name__ == "__main__" and cfg.home != Path('E:/'):
     p.add_argument('-v', '--version', default=0, type=int, help='File Index.')
 
     args = p.parse_args()
-
     spinup_particleset(dy=args.dy, dz=args.dz, lon=args.lon, exp=args.exp)
 
 elif __name__ == "__main__":
     lon = 165
-    v = 70
+    v = 71
     exp = 'hist'
     spinup_particleset(lon, exp, v)
