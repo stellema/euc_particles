@@ -49,7 +49,7 @@ def spinup_particleset(lon=165, exp='hist', v=1):
     # Change pset file to last run.
     file = cfg.data / 'v{}/{}{:02d}.nc'.format(xlog['v'], xid.stem[:-2], xlog['r'] - 1)
     save_file = cfg.data / 'v{}/r_{}'.format(xlog['v'], xid.name)
-    logger.info('Generating restart file from: {}'.format(file.stem))
+    logger.info('Generating spinup restart file from: {}'.format(file.stem))
 
     # Create ParticleSet from the given ParticleFile.
     pset = pset_from_file(fieldset, pclass=pclass, filename=file, restart=True,
@@ -60,7 +60,11 @@ def spinup_particleset(lon=165, exp='hist', v=1):
     pset_start = np.nanmin(pset.time)
 
     # ParticleSet start time (for log).
-    start = (pd.Timestamp(fieldset.time_origin.time_origin) + timedelta(seconds=pset_start))
+    # ParticleSet start time (for log).
+    try:
+        start = (fieldset.time_origin.time_origin + timedelta(seconds=pset_start))
+    except:
+        start = (pd.Timestamp(fieldset.time_origin.time_origin) + timedelta(seconds=pset_start))
 
     xlog['Ti'] = start.strftime('%Y-%m-%d')
 
@@ -94,10 +98,10 @@ if __name__ == "__main__" and cfg.home != Path('E:/'):
     p = ArgumentParser(description="""Run EUC Lagrangian experiment.""")
     p.add_argument('-x', '--lon', default=165, type=int, help='Particle start longitude(s).')
     p.add_argument('-e', '--exp', default='hist', type=str, help='Scenario.')
-    p.add_argument('-v', '--version', default=0, type=int, help='File Index.')
+    p.add_argument('-v', '--version', default=1, type=int, help='File Index.')
 
     args = p.parse_args()
-    spinup_particleset(dy=args.dy, dz=args.dz, lon=args.lon, exp=args.exp)
+    spinup_particleset(lon=args.lon, exp=args.exp, v=args.version)
 
 elif __name__ == "__main__":
     lon = 165
