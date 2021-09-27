@@ -239,18 +239,10 @@ def EUC_vbounds(du, depths, i, v_bnd=0.3, index=False):
         else:
             empty += 1
 
-    # data_name = 'OFAM3' if hasattr(du, 'st_ocean') else 'TAO/TRITION'
-    # logger.debug('{} {}: v_bnd={} tot={} count={} null={} skip={}(T={},L={}).'
-    #              .format(data_name, cfg.lons[i], v_bnd, u.shape[0], count,
-    #                      empty, skip_t + skip_l, skip_t, skip_l))
     if not index:
         return v_max, z1, z2
     else:
         return v_max, z1i, z2i
-
-
-
-
 
 
 def EUC_bnds_static(du, lon=None, z1=25, z2=350, lat=2.6,

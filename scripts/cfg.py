@@ -21,51 +21,29 @@ warnings.filterwarnings(action='ignore', message='SerializationWarning')
 warnings.filterwarnings("ignore")
 np.set_printoptions(suppress=True)
 
-home = Path.home()
-if home.drive == 'C:':
-    # Change to E drive if at home.
-    if not home.joinpath('GitHub', 'OFAM').exists():
-        home = Path('E:/')
-    scripts = home / 'OFAM/scripts'
-    fig = home / 'GitHub/OFAM/figures'
-    data = home / 'GitHub/OFAM/data'
-    log = home / 'GitHub/OFAM/logs'
-    job = home / 'GitHub/OFAM/jobs'
+# Setup directories.
+if Path.home().drive == 'C:':
+    home = Path('E:/')
+    repo = home / 'GitHub/plx/'
     ofam = home / 'model_output/OFAM/trop_pac'
-
-# Gadi Paths.
 else:
     home = Path('/g/data/e14/as3189')
-    scripts = home / 'OFAM/scripts/'
-    fig = home / 'OFAM/figures'
-    data = home / 'OFAM/data'
-    log = home / 'OFAM/logs'
-    job = home / 'OFAM/jobs'
+    repo = home / 'stellema/plx'
     ofam = home / 'OFAM/trop_pac'
 
-sys.path.append(scripts)
+data, fig, log = [repo / s for s in ['data', 'figures', 'logs']]
+sys.path.append(repo / 'scripts')
 
+loggers = {}
+
+# Definitions & constants.
 exp = ['historical', 'rcp85', 'rcp85_minus_historial']
 exps = ['Historical', 'RCP8.5', 'Projected change']
-expx = ['Historical', 'RCP8.5', 'Change']
 exp_abr = ['hist', 'rcp', 'diff']
 years = [[1981, 2012], [2070, 2101]]
 var = ['u', 'v', 'w', 'salt', 'temp']
-lons = [165, 190, 220, 250]
-lonstr = ['165\u00b0E', '170\u00b0W', '140\u00b0W', '110\u00b0W']
 deg = '\u00b0'  # Degree symbol.
-frq = ['day', 'mon']
-frq_short = ['dy', 'mon']
-frq_long = ['daily', 'monthly']
 tdim = np.arange('2001-01', '2002-01', dtype='datetime64[M]')
-mon = [i for i in calendar.month_abbr[1:]]  # Month abbreviations.
-mon_name = [i for i in calendar.month_name[1:]]
-mon_letter = [i[0] for i in calendar.month_abbr[1:]]
-# Elements of the alphabet with left bracket and space for fig captions.
-lt = [i + ') ' for i in list(string.ascii_lowercase)]
-lb = [r"$\bf{{{}}}$".format(i) for i in list(string.ascii_lowercase)]
-
-loggers = {}
 
 # Sverdrup.
 SV = 1e6
@@ -136,12 +114,3 @@ class ZoneData:
 
 
 zones = ZoneData()
-
-
-def dz():
-    """Width of OFAM3 depth levels."""
-    ds = xr.open_dataset(ofam / 'ocean_u_1981_01.nc')
-    z = np.array([(ds.st_edges_ocean[i + 1] - ds.st_edges_ocean[i]).item()
-                  for i in range(len(ds.st_edges_ocean) - 1)])
-    ds.close()
-    return z

@@ -16,8 +16,8 @@ from parcels import (Variable, JITParticle)
 
 import cfg
 from tools import mlogger, timer
-from main import (ofam_fieldset, pset_euc, del_westward, generate_xid,
-                  pset_from_file, log_simulation, zparticle)
+from plx_fncs import (ofam_fieldset, pset_euc, del_westward, get_new_xid,
+                      get_next_xid, pset_from_file, log_simulation, zparticle)
 from kernels import (AdvectionRK4_Land, BeachTest, UnBeachR,
                      AgeZone, Distance, recovery_kernels)
 
@@ -86,7 +86,7 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
     if not restart:
         # Generate file name for experiment (random number if not using MPI).
         rdm = False if MPI else True
-        xid = generate_xid(lon, v, exp, restart=False, randomise=rdm, xlog=xlog)
+        xid = get_new_xid(lon, v, exp, randomise=rdm, xlog=xlog)
 
         # Set ParticleSet start as last fieldset time.
         pset_start = fieldset.U.grid.time[-1]
@@ -103,10 +103,10 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
     # Create particle set from particlefile and add new repeats.
     else:
         # Increment run index for new output file name.
-        xid = generate_xid(lon, v, exp, restart=True, xlog=xlog)
+        xid = get_next_xid(lon, v, exp, xlog=xlog)
 
         # Change pset file to last run.
-        filename = cfg.data / 'v{}/r_{}.nc'.format(xlog['v'], xid.stem)
+        filename = xid.parent / 'r_{}.nc'.format(xid.stem)
 
         # Create ParticleSet from the given ParticleFile.
         pset = pset_from_file(fieldset, pclass, filename, reduced=True,
@@ -120,7 +120,7 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
         xlog['start_r'] = pset.size
 
     # Create output ParticleFile p_name and time steps to write output.
-    output_file = pset.ParticleFile(cfg.data / 'v{}/{}'.format(xlog['v'], xid.stem), outputdt=outputdt)
+    output_file = pset.ParticleFile(xid, outputdt=outputdt)
 
     # ParticleSet start time (for log).
     try:

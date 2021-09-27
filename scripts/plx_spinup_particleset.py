@@ -16,8 +16,8 @@ from parcels import (Variable, JITParticle)
 
 import cfg
 from tools import mlogger
-from main import (ofam_fieldset, pset_euc, del_westward, generate_xid,
-                  pset_from_file, zparticle)
+from plx_fncs import (ofam_fieldset, pset_from_file, zparticle, get_next_xid,
+                      get_spinup_year)
 
 
 try:
@@ -28,12 +28,15 @@ except ImportError:
 logger = mlogger('plx', parcels=True, misc=False)
 
 
-def spinup_particleset(lon=165, exp='hist', v=1):
+def spinup_particleset(lon=165, exp='hist', v=1, spinup_year_offset=0):
     """Run Lagrangian EUC particle experiment."""
     xlog = {'file': 0, 'v': v}
 
+
     # Create time bounds for fieldset based on experiment.
     i = 0 if exp == 'hist' else -1
+    spinup = get_spinup_year(i, spinup_year_offset)
+
     y1, y2 = cfg.years[i]
     y1 = 2012 if cfg.home == Path('E:/') and exp == 'hist' else y1
     time_bnds = [datetime(y1, 1, 1), datetime(y2, 12, 31)]
@@ -43,12 +46,13 @@ def spinup_particleset(lon=165, exp='hist', v=1):
     pclass = zparticle(fieldset, reduced=True)
 
     # Increment run index for new output file name.
-    xid = generate_xid(lon, v, exp, restart=True, xlog=xlog)
+    xid = get_next_xid(lon, v, exp, xlog=xlog)
     xlog['id'] = xid.stem
 
     # Change pset file to last run.
-    file = cfg.data / 'v{}/{}{:02d}.nc'.format(xlog['v'], xid.stem[:-2], xlog['r'] - 1)
-    save_file = cfg.data / 'v{}/r_{}'.format(xlog['v'], xid.name)
+    file = xid.parent / '{}{:02d}.nc'.format(xid.stem[:-2], xlog['r'] - 1)
+    # subfolder = 'spinup_{}'.format(spinup) if xlog['r'] >= 6 else None
+    save_file = xid.parent / 'r_{}'.format(xid.name)
     logger.info('Generating spinup restart file from: {}'.format(file.stem))
 
     # Create ParticleSet from the given ParticleFile.
@@ -59,7 +63,6 @@ def spinup_particleset(lon=165, exp='hist', v=1):
     # Start date.
     pset_start = np.nanmin(pset.time)
 
-    # ParticleSet start time (for log).
     # ParticleSet start time (for log).
     try:
         start = (fieldset.time_origin.time_origin + timedelta(seconds=pset_start))

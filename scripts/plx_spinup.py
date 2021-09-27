@@ -5,19 +5,17 @@ author: Annette Stellema (astellemas@gmail.com)
 
 """
 
-import math
 import numpy as np
 import pandas as pd
 from pathlib import Path
 from operator import attrgetter
 from datetime import datetime, timedelta
 from argparse import ArgumentParser
-from parcels import (Variable, JITParticle)
 
 import cfg
 from tools import mlogger, timer
-from main import (ofam_fieldset, pset_euc, del_westward, generate_xid,
-                  pset_from_file, log_simulation, zparticle)
+from plx_fncs import (ofam_fieldset, pset_from_file, zparticle,
+                      get_next_xid, get_spinup_year)
 from kernels import (AdvectionRK4_Land, BeachTest, UnBeachR,
                      AgeZone, Distance, recovery_kernels)
 
@@ -26,14 +24,15 @@ try:
 except ImportError:
     MPI = None
 
-logger = mlogger('plx', parcels=True, misc=False)
+logger = mlogger('plx')
 
 
-def spinup(lon=165, exp='hist', v=1, runtime_years=10, test=False):
+def spinup(lon=165, exp='hist', v=1, runtime_years=4, spinup_year_offset=0):
     """Spinup Lagrangian EUC particle experiment."""
     ts = datetime.now()
     xlog = {'file': 0, 'new': 0, 'west_r': 0, 'new_r': 0, 'final_r': 0,
             'file_r': 0, 'y': '', 'x': '', 'z': '', 'v': v}
+
     test = True if cfg.home == Path('E:/') else False
 
     # Get MPI rank or set to zero.
@@ -45,13 +44,14 @@ def spinup(lon=165, exp='hist', v=1, runtime_years=10, test=False):
 
     # Create time bounds for fieldset based on experiment.
     i = 0 if exp == 'hist' else -1
-    y1, y2 = [cfg.years[i][0] + t for t in [0, runtime_years]]
 
+    # y1, y2 = [cfg.years[i][0] + t for t in [0, runtime_years]]
+    y1 = get_spinup_year(i, spinup_year_offset)
     if test:
         y1, y2 = [cfg.years[i][1] + t for t in [0, 0]]
 
-    time_bnds = [datetime(y1, 1, 1), datetime(y2, 12, 31)]
-    runtime = timedelta(days=(time_bnds[-1] - time_bnds[0]).days + 1)
+    time_bnds = [datetime(y1, 1, 1), datetime(y1, 12, 31)]
+    runtime = timedelta(days=((time_bnds[-1] - time_bnds[0]).days + 1) * runtime_years)
     if test:
         runtime = timedelta(days=50)
 
@@ -65,7 +65,8 @@ def spinup(lon=165, exp='hist', v=1, runtime_years=10, test=False):
 
     # Start from end of Fieldset time or restart from ParticleFile.
     # Increment run index for new output file name.
-    xid = generate_xid(lon, v, exp, restart=True, xlog=xlog)
+    # subfolder = 'spinup_{}'.format(spinup)
+    xid = get_next_xid(lon, v, exp, xlog=xlog)
 
     # Change pset file to last run.
     filename = xid.parent / 'r_{}.nc'.format(xid.stem)
@@ -150,5 +151,4 @@ elif __name__ == "__main__":
     v = 71
     exp = 'hist'
     runtime_years = 1
-    test = True
     spinup(lon=lon, exp=exp, v=v, runtime_years=runtime_years)

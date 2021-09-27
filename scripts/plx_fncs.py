@@ -110,9 +110,9 @@ def ofam_fieldset(time_bnds='full', exp='hist', chunks=300, add_xfields=True):
     mesh = [str(cfg.data / 'ofam_mesh_grid_part.nc')]
 
     variables = {'U': 'u', 'V': 'v', 'W': 'w'}
-    dim = {'lon': 'xu_ocean', 'lat': 'yu_ocean',
+    dims = {'lon': 'xu_ocean', 'lat': 'yu_ocean',
             'depth': 'sw_ocean', 'time': 'Time'}
-    dims = {'U': dim, 'V': dim, 'W': dim}
+    # dims = {'U': dim, 'V': dim, 'W': dim}
     files = {'U': {'depth': mesh, 'lat': mesh, 'lon': mesh, 'data': u},
              'V': {'depth': mesh, 'lat': mesh, 'lon': mesh, 'data': v},
              'W': {'depth': mesh, 'lat': mesh, 'lon': mesh, 'data': w}}
@@ -184,35 +184,6 @@ def ofam_fieldset(time_bnds='full', exp='hist', chunks=300, add_xfields=True):
     fieldset.add_constant('UB_min', 0.25)
     fieldset.add_constant('UBw', 1e-4)
     return fieldset
-
-
-def generate_xid(lon, v=0, exp='hist', randomise=False,
-                 restart=True, xlog=None):
-    """Create name to save particle file (looks for unsaved filename)."""
-    if not restart:
-        head = 'plx_{}_{}_v'.format(exp, int(lon))  # Start of filename.
-        # Copy given index or find a random number.
-        i = random.randint(0, 100) if randomise else v
-
-        # Increment index or find new random number if the file already exists.
-        while (cfg.data / '{}{}r00.nc'.format(head, i)).exists():
-            i = random.randint(0, 100) if randomise else i + 1
-
-        xid = cfg.data / '{}{}r00.nc'.format(head, i)
-        if xlog:
-            xlog['v'], xlog['r'] = i, 0
-
-    # Increment run index for new output file name.
-    else:
-        r = 0
-        xid = cfg.data / 'v{}/plx_{}_{}_v{}r00.nc'.format(v, exp, int(lon), v)
-        files = [s for s in xid.parent.glob(str(xid.stem[:-2]) + '*.nc')]
-        r = max([int(f.stem[-2:]) for f in files]) + 1
-        xid = cfg.data / 'v{}/{}{:02d}.nc'.format(v, xid.stem[:-2], r)
-        if xlog:
-            xlog['v'], xlog['r'] = v, r
-
-    return xid
 
 
 def pset_euc(fieldset, pclass, lon, dy, dz, repeatdt, pset_start, repeats,
@@ -383,6 +354,43 @@ def get_plx_id(exp, lon, v, r):
     xid = cfg.data / 'v{}/plx_{}_{}_v{}r{:02d}.nc'.format(v, exp, lon, v, r)
     return xid
 
+
+def get_new_xid(lon, v=0, exp='hist', randomise=False, xlog=None):
+    """Create name to save particle file (looks for unsaved filename)."""
+    head = 'plx_{}_{}'.format(exp, int(lon))  # Start of filename.
+    # Copy given index or find a random number.
+    v = random.randint(0, 100) if randomise else v
+
+    # Increment index or find new random number if the file already exists.
+    while (cfg.data / 'v{}/{}_v{}r00.nc'.format(v, head, v)).exists():
+        v = random.randint(0, 100) if randomise else v + 1
+
+    xid = cfg.data / 'v{}/{}_v{}r00.nc'.format(v, head, v)
+    if xlog:
+        xlog['v'], xlog['r'] = v, 0
+
+    return xid
+
+
+def get_next_xid(lon, v=0, exp='hist', subfolder=None, xlog=None):
+    """Increment particle file r#."""
+    r = 0
+    parent = cfg.data / 'v{}'.format(v)
+    if subfolder:
+        parent = parent / subfolder
+    xid = parent / 'plx_{}_{}_v{}r00.nc'.format(exp, int(lon), v)
+
+    files = [s for s in xid.parent.glob(str(xid.stem[:-2]) + '*.nc')]
+    r = max([int(f.stem[-2:]) for f in files]) + 1
+    xid = parent / '{}{:02d}.nc'.format(xid.stem[:-2], r)
+    if xlog:
+        xlog['v'], xlog['r'] = v, r
+
+    return xid
+
+
+def get_spinup_year(exp=0, i=0):
+    return cfg.years[exp][0] + i
 
 def get_plx_id_year(exp, lon, v, y):
     xid = cfg.data / 'v{}y/plx_{}_{}_v{}_{}.nc'.format(v, exp, lon, v, y)

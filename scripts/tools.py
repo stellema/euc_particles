@@ -157,11 +157,12 @@ def idx(array, value, method='closest'):
     """Find index to closet given value in 1D array.
 
     Args:
-        array (1D array): The array to search for the closest index of value.
-        value (int): The value to find the closest index of.
+        array (array): The array to search for the closest index of value.
+        value (float): The value to find the closest index of.
+        method (str, optional): Closest/greater/lower. Defaults to 'closest'.
 
     Returns:
-        (int): The index of the closest element to value in array.
+        ind (int): The index of the closest element to value in array.
     """
     try:
         array = array.values
@@ -183,21 +184,14 @@ def idx2d(lat, lon, lat2f, lon2f, method='closest'):
     """Find closet lat/lon indexes in a 2D array.
 
     Args:
-    lat : array (ndim = 2)
-        Latitude array
-    lon : array (ndim = 2)
-        Longitude array
-    lat2f
-        Latitude to find
-    lon2f
-        Longitude to find
+        lat (array): Latitudes.
+        lon (array): Longitudes.
+        lat2f (float): Latitude to find.
+        lon2f (float): Longitude to find.
+        method (str, optional): closest/greater/lower. Defaults to 'closest'.
 
-    Returns
-    -------
-    j : int
-        Index of closest latitude
-    i : int
-        Index of closest longitude
+    Returns:
+        j, i (int): Index of closest latitude and longitude.
     """
     try:
         lat = lat.values
@@ -239,19 +233,6 @@ def get_date(year, month, day='max'):
         return datetime(year, month, calendar.monthrange(year, month)[1])
     else:
         return datetime(year, month, day)
-
-
-def legend_without_duplicate_labels(ax, loc=False, fontsize=11):
-    """Add legend without duplicate labels."""
-    handles, labels = ax.get_legend_handles_labels()
-    unique = [(h, l) for i, (h, l) in enumerate(zip(handles, labels))
-              if l not in labels[:i]]
-    if loc:
-        ax.legend(*zip(*unique), loc=loc, fontsize=fontsize)
-    else:
-        ax.legend(*zip(*unique), fontsize=fontsize)
-
-    return
 
 
 def roundup(x):
@@ -304,64 +285,38 @@ def deg2m(lat1, lon1, lat2, lon2):
     return arc * cfg.EARTH_RADIUS
 
 
-def precision(var):
-    """Determine the precision to print based on the number of digits.
+def get_edge_depth(z, index=True, edge=True, greater=False):
+    """Integration OFAM3 depth levels."""
+    dg = xr.open_mfdataset([cfg.ofam / 'ocean_{}_2012_01.nc'.format(v)
+                            for v in ['u', 'w']])
+    zi = idx(dg.st_ocean, z)
+    zi = zi + 1 if dg.st_ocean[zi] < z and greater else zi
+    z_new = dg.sw_ocean[zi].item() if edge else dg.st_ocean[zi].item()
+    dg.close()
 
-    Values greater than ten: the precision will be zero decimal places.
-    Values less than ten but greater than one: print one decimal place.
-    Values less than one: print two decimal places.
-
-    Parameters
-    ----------
-    var : xarray DataArray
-        Transport dataset
-
-    Returns
-    -------
-    p : list
-        The number of decimal places to print for historical and change
-    """
-    # List for the number of digits (n) and decimal place (p).
-    n, p = 1, 1
-
-    tmp = abs(var.item())
-    n = int(math.log10(tmp)) + 1
-    if n == 1:
-
-        p = 1 if tmp >= 1 else 2
-    elif n == 0:
-        p = 2
-    elif n == -1:
-        p = 3
-    return p
-
-
-def correlation_str(cor):
-    """Create correlation significance string to correct decimal places.
-
-    p values greater than 0.01 rounded to two decimal places.
-    p values between 0.01 and 0.001 rounded to three decimal places.
-    p values less than 0.001 are just given as 'p>0.001'
-    Note that 'p=' will also be included in the string.
-
-    Args:
-        cor (list): The correlation coefficient (cor[0]) and associated
-            significance (cor[1])
-
-    Returns:
-        sig_str (str): The rounded significance in a string.
-    """
-    if cor[1] <= 0.001:
-        sig_str = 'p<0.001'
-    elif cor[1] <= 0.01 and cor[1] >= 0.001:
-        sig_str = 'p=' + str(np.around(cor[1], 3))
+    if index:
+        return zi
     else:
-        if cor[1] < 0.05:
-            sig_str = 'p<' + str(np.around(cor[1], 2))
-        else:
-            sig_str = 'p=' + str(np.around(cor[1], 2))
+        return z_new
 
-    return sig_str
+
+def get_depth_width():
+    """OFAM3 vertical coordinate cell depth."""
+    dz = xr.open_dataset(cfg.data / 'ofam_mesh_grid.nc')
+    st_ocean = dz['st_ocean']  # Copy st_ocean coords
+    dz = dz.st_edges_ocean.diff(dim='st_edges_ocean')
+    dz = dz.rename({'st_edges_ocean': 'st_ocean'})
+    dz.coords['st_ocean'] = st_ocean
+    return dz
+
+
+def dz():
+    """Width of OFAM3 depth levels."""
+    ds = xr.open_dataset(cfg.ofam / 'ocean_u_1981_01.nc')
+    z = np.array([(ds.st_edges_ocean[i + 1] - ds.st_edges_ocean[i]).item()
+                  for i in range(len(ds.st_edges_ocean) - 1)])
+    ds.close()
+    return z
 
 
 def coord_formatter(array, convert='lat'):
@@ -403,292 +358,6 @@ def coord_formatter(array, convert='lat'):
     return new
 
 
-def regress(varx, vary):
-    """Return Spearman R and linregress results.
-
-    Args:
-        varx (array): The x variable.
-        vary (array): The y variable.
-
-    Returns:
-        cor_r (float): Spearman r-value.
-        cor_p (float): Spearman p-value.
-        slope (float): Linear regression gradient.
-        intercept (float): Linear regression y intercept.
-        r_value (float): Linear regression r-value.
-        p_value (float): Linear regression p-value.
-        std_err (float): Linear regression standard error.
-
-    """
-    mask = ~np.isnan(varx) & ~np.isnan(vary)
-
-    cor_r, cor_p = stats.spearmanr(varx[mask], vary[mask])
-
-    slope, intercept, r_value, p_value, std_err = stats.linregress(
-        varx[mask], vary[mask])
-
-    return cor_r, cor_p, slope, intercept, r_value, p_value, std_err
-
-
-def coriolis(lat):
-    """ Calculates the Coriolis and Rossby parameters.
-
-    Coriolis parameter (f): The angular velocity or frequency required
-    to maintain a body at a fixed circle of latitude or zonal region.
-
-    Rossby parameter (beta): The northward variation of the Coriolis
-    parameter, arising from the sphericity of the earth.
-
-    NOTE: lon is not actually used (it was in an old version but
-    some calls to this function still include lon).
-
-    Parameters
-    ----------
-    lat : number
-        The latitude at which to calculate the values.
-    OMEGA : number, optional
-        Rotation rate of the Earth [rad/s]
-
-    Returns
-    -------
-    f : float
-        Coriolis parameter
-    beta : float
-        Rossby parameter
-    """
-    # Coriolis parameter.
-    f = 2 * cfg.OMEGA * np.sin(np.radians(lat))  # [rad/s]
-
-    # Rossby parameter.
-    beta = 2 * cfg.OMEGA * np.cos(np.radians(lat)) / cfg.EARTH_RADIUS
-
-    return f, beta
-
-
-def wind_stress_curl(du, dv, lat=None, lon=None, w=0.5, wy=None):
-    """Compute wind stress curl from wind stress.
-
-    Args:
-        du (DataArray): Zonal wind stess.
-        dv (DataArray): Meridional wind stress.
-
-
-    Returns:
-        curl (DataArray): Wind stress curl dataArray.
-
-    """
-    if wy is None:
-        wy = w
-    if lat is None:
-        lat = du.lat.values
-    if lon is None:
-        lon = du.lon.values
-
-    # The distance between longitude points [m].
-    arc = np.pi * cfg.EARTH_RADIUS / 180
-    dy = wy * arc
-    dx = w * arc * np.cos(np.radians(lat))
-
-    # Create DY meshgrid.
-    # Array of the distance between latitude and longitude points [m].
-    DY = np.full((len(lat), len(lon)), dy)
-    dx = np.array(dx)[:, None]
-    DX = dx
-    # Create DX mesh grid.
-    for i in range(1, len(lon)):
-        DX = np.hstack((DX, dx))
-
-    # Calculate the wind stress curl for each month.
-    if du.ndim == 2:
-        coords = {'lat': lat, 'lon': lon}
-    else:
-        coords = {'time': cfg.tdim, 'lat': lat, 'lon': lon}
-    dims = tuple(coords.keys())
-    du_dx, du_dy = np.gradient(du.values, axis=(-2, -1))
-    dv_dx, dv_dy = np.gradient(dv.values, axis=(-2, -1))
-    curl = dv_dy / DX - du_dx / DY
-    curl = xr.DataArray(np.ma.masked_array(curl, np.isnan(curl)),
-                        dims=dims, coords=coords)
-    return curl
-
-
-def zonal_sverdrup(curl, lat, lon, SFinit=0):
-    """Zonal Sverdrup transport from wind stress curl.
-
-    Once you have calculated the stramfunction at all latitudes, you can
-    calculate the depth integrated zonal flow e.g. sverdrup at 2S,180E minus
-    sverdrup at 2N,180E will give the depth integrated zonal transport between
-    +/-2o across the date line.
-
-    function sverdrup=sverdrup_from_curl(lat,lon,curl,SFinit);
-
-    % sverdrup=sverdrup_from_curl(lat,lon,curl,SFinit);
-    % only works for a single latitude across a basin
-    % SFinit Streamfunction value at easternmost point (normally 0)
-
-    dlon=diff(lon);dlon=dlon(1); %only for regular grid
-    curl=fliplr(curl);
-    dx=(dlon/360)*2*pi*6400000*cosd(lat);
-    [f,b]=coriolis(lat);
-    curl=(1/b)*nancumsum(curl)*dx; %cumsum from east to west
-    curl=fliplr(curl);
-    sverdrup=SFinit+curl/1e6/1027;
-
-    Args:
-        wsc (array-like: Wind stress curl.
-        lat (array-like): Latitude.
-        lon (array-like): Longitude.
-
-    Returns:
-        None.
-
-    """
-    # Distance between longitudes in degrees.
-    dlon = np.diff(lon)
-    dlon = dlon[0]
-
-    # Distance between longitudes in metres.
-    dx = (dlon / 180) * np.pi * cfg.EARTH_RADIUS * np.cos(np.radians(lat))
-
-    beta = coriolis(lat)[1]  # Rossby parameter at each latitude.
-
-    curl = np.fliplr(curl)  # Reverse curl by longitude.
-    curl = np.nancumsum(curl, axis=1)  # Cumsum from east to west.
-    curl = np.fliplr(curl)  # Reverse curl back to original.
-    dxr = (dx / (beta * cfg.RHO)).values[:, np.newaxis]
-    curl = curl * dxr
-    sverdrup = -(SFinit + curl)
-
-    # Convert back to xr.DataArray.
-    sverdrup = xr.DataArray(sverdrup, coords={'lat': lat, 'lon': lon},
-                            dims=['lat', 'lon'])
-    return sverdrup
-
-
-def cor_scatter_plot(fig, i, varx, vary,
-                     name=None, xlabel=None, ylabel=None, cor_loc=3):
-    """Scatter plot with linear regression and correlation.
-
-    Args:
-        fig (plt.figure: Matplotlib figure.
-        i (int): Figure subplot position (i>0).
-        varx (array): The x variable.
-        vary (array): The y variable.
-        name (str, optional): Subplot title. Defaults to None.
-        xlabel (str, optional): The x axis label. Defaults to None.
-        ylabel (str, optional): The y axis label. Defaults to None.
-        cor_loc (int, optional): The r/p-value position on fig. Defaults to 3.
-
-    Returns:
-        slope (float): Linear regression gradient.
-        intercept (float): Linear regression y intercept.
-
-    """
-    cor_r, cor_p, slope, intercept, r_val, p_val, std_err = regress(varx, vary)
-    mask = ~np.isnan(varx) & ~np.isnan(vary)
-    varx = varx[mask]
-    vary = vary[mask]
-
-    ax = fig.add_subplot(1, 3, i)
-    ax.set_title(name, loc='left')
-    ax.scatter(varx, vary, color='b', s=8)
-
-    sig_str = correlation_str([cor_r, cor_p])
-    atext = AnchoredText('$\mathregular{r_s}$' + '={}, {}'
-                         .format(np.around(cor_r, 2), sig_str), loc=cor_loc)
-    ax.add_artist(atext)
-    ax.plot(np.unique(varx),
-            np.poly1d(np.polyfit(varx, vary, 1))(np.unique(varx)), 'k')
-
-    # Alternative line of best fit.
-    plt.plot(varx, slope * varx + intercept, 'k',
-             label='y={:.2f}x+{:.2f}'.format(slope, intercept))
-    if xlabel is None:
-        xlabel = 'Maximum velocity [m/s]'
-    if ylabel is None:
-        ylabel = 'Depth [m]'
-    ax.set_xlabel(xlabel)
-    ax.set_ylabel(ylabel)
-    ax.legend(fontsize=9)
-
-    return slope, intercept
-
-
-def open_tao_data(frq='mon', dz=slice(10, 355), SI=True):
-    """Return TAO/TRITION ADCP xarray dataset at: 165°E, 190°E and 220°E.
-
-    Args:
-        frq (str, optional): DESCRIPTION. Defaults to 'mon'.
-        dz (int or slice, optional): Depth levels. Defaults to slice(10, 355).
-        SI (bool, optional): Convert velocity to SI units. Defaults to True.
-
-    Returns:
-        list: List of of three xarray datasets.
-
-    """
-    # Open data sets at each longitude.
-    dU_165 = xr.open_dataset(cfg.tao / 'adcp0n165e_{}.cdf'.format(frq))
-    dU_190 = xr.open_dataset(cfg.tao / 'adcp0n170w_{}.cdf'.format(frq))
-    dU_220 = xr.open_dataset(cfg.tao / 'adcp0n140w_{}.cdf'.format(frq))
-
-    # Select depth levels. Note that files only contain data at one location.
-    dU_165 = dU_165.sel(lat=0, lon=165, depth=dz)
-    dU_190 = dU_190.sel(lat=0, lon=190, depth=dz)
-    dU_220 = dU_220.sel(lat=0, lon=220, depth=dz)
-
-    # Velocity saved as cm/s. Divide by 100 to convert to m/s.
-    div_unit = 100 if SI else 1
-
-    # Remove missing values and convert to SI units if requested.
-    du_165 = dU_165.where(dU_165['u_1205'] != dU_165.missing_value) / div_unit
-    du_190 = dU_190.where(dU_190['u_1205'] != dU_165.missing_value) / div_unit
-    du_220 = dU_220.where(dU_220['u_1205'] != dU_165.missing_value) / div_unit
-
-    # logger.debug('Opening TAO {} data. Depth={}. SI={}'.format(frq, dz, SI))
-    return [du_165, du_190, du_220]
-
-
-def get_edge_depth(z, index=True, edge=True, greater=False):
-    """Integration OFAM3 depth levels."""
-    dg = xr.open_mfdataset([cfg.ofam / 'ocean_{}_2012_01.nc'.format(v)
-                            for v in ['u', 'w']])
-    zi = idx(dg.st_ocean, z)
-    zi = zi + 1 if dg.st_ocean[zi] < z and greater else zi
-    z_new = dg.sw_ocean[zi].item() if edge else dg.st_ocean[zi].item()
-    dg.close()
-
-    if index:
-        return zi
-    else:
-        return z_new
-
-
-def get_depth_width():
-    """OFAM3 vertical coordinate cell depth."""
-    dz = xr.open_dataset(cfg.data / 'ofam_mesh_grid.nc')
-    st_ocean = dz['st_ocean']  # Copy st_ocean coords
-    dz = dz.st_edges_ocean.diff(dim='st_edges_ocean')
-    dz = dz.rename({'st_edges_ocean': 'st_ocean'})
-    dz.coords['st_ocean'] = st_ocean
-    return dz
-
-
-def tidy_files(logs=True, jobs=True):
-    """Delete empty logs and job result files."""
-    # logger.handlers.clear()
-    if logs:
-        for f in cfg.log.glob('*.log'):
-            if f.stat().st_size == 0:
-                os.remove(f)
-                print('Deleted:', f)
-    if jobs:
-        for f in cfg.job.glob('*.sh.*'):
-            if f.stat().st_size == 0:
-                os.remove(f)
-                print('Deleted:', f)
-    return
-
-
 def create_mesh_grid():
     """Create OFAM3 mesh mask."""
     f = [cfg.ofam / 'ocean_{}_1981_01.nc'.format(var) for var in ['u', 'w']]
@@ -712,6 +381,7 @@ def create_mesh_grid():
 
 
 def zone_cmap():
+    """Get zone colormap."""
     zcolor = ['darkorange', 'deeppink', 'mediumspringgreen', 'deepskyblue',
               'seagreen', 'blue', 'red', 'darkviolet', 'k', 'm', 'y']
     zmap = colors.ListedColormap(zcolor)
@@ -790,6 +460,6 @@ def get_spinup_start(exp="hist", years=5):
     # Relative spinup particle start.
     spin_rel = int(dspin.total_seconds())
     print('{} Spinup: {}y/{}d/{}s: {} to {}'
-          .format(cfg.expx[ix], years, dspin.days, spin_rel,
+          .format(cfg.exps[ix], years, dspin.days, spin_rel,
                   start.strftime('%Y-%m-%d'), spin.strftime('%Y-%m-%d')))
     return spin_rel

@@ -16,8 +16,8 @@ from parcels import (Variable, JITParticle)
 
 import cfg
 from tools import mlogger
-from main import (ofam_fieldset, pset_euc, del_westward, generate_xid,
-                  pset_from_file, zparticle)
+from plx_fncs import (ofam_fieldset, pset_euc, del_westward, get_next_xid,
+                      pset_from_file, zparticle)
 
 
 try:
@@ -43,10 +43,6 @@ def restart_EUC(dy=0.1, dz=25, lon=165, exp='hist', repeatdt_days=6,
         runtime_days (int, optional): Execution runtime. Defaults to 186.
         v (int, optional): Version number to save file. Defaults to 1.
         pfile (str, optional): Restart ParticleFile. Defaults to 'None'.
-
-    Returns:
-        None.
-
     """
     xlog = {'file': 0, 'new': 0, 'y': '', 'x': '', 'z': '', 'v': v}
     # # Ensure run ends on a repeat day.
@@ -71,12 +67,12 @@ def restart_EUC(dy=0.1, dz=25, lon=165, exp='hist', repeatdt_days=6,
     pclass = zparticle(fieldset, reduced=True)
 
     # Increment run index for new output file name.
-    xid = generate_xid(lon, v, exp, restart=True, xlog=xlog)
+    xid = get_next_xid(lon, v, exp, xlog=xlog)
     xlog['id'] = xid.stem
 
     # Change pset file to last run.
-    file = cfg.data / 'v{}/{}{:02d}.nc'.format(xlog['v'], xid.stem[:-2], xlog['r'] - 1)
-    save_file = cfg.data / 'v{}/r_{}'.format(xlog['v'], xid.name)
+    file = xid.parent / '{}{:02d}.nc'.format(xid.stem[:-2], xlog['r'] - 1)
+    save_file = xid.parent / 'r_{}'.format(xid.name)
     logger.info('Generating restart file from: {}'.format(file.stem))
 
     # Create ParticleSet from the given ParticleFile.
