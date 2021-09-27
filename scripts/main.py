@@ -110,8 +110,9 @@ def ofam_fieldset(time_bnds='full', exp='hist', chunks=300, add_xfields=True):
     mesh = [str(cfg.data / 'ofam_mesh_grid_part.nc')]
 
     variables = {'U': 'u', 'V': 'v', 'W': 'w'}
-    dims = {'lat': 'yu_ocean',
-            'lon': 'xu_ocean', 'depth': 'sw_ocean', 'time': 'Time'}
+    dim = {'lon': 'xu_ocean', 'lat': 'yu_ocean',
+            'depth': 'sw_ocean', 'time': 'Time'}
+    dims = {'U': dim, 'V': dim, 'W': dim}
     files = {'U': {'depth': mesh, 'lat': mesh, 'lon': mesh, 'data': u},
              'V': {'depth': mesh, 'lat': mesh, 'lon': mesh, 'data': v},
              'W': {'depth': mesh, 'lat': mesh, 'lon': mesh, 'data': w}}
