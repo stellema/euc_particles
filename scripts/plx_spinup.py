@@ -45,7 +45,7 @@ def spinup(lon=165, exp='hist', v=1, runtime_years=10, test=False):
 
     # Create time bounds for fieldset based on experiment.
     i = 0 if exp == 'hist' else -1
-    y1, y2 = [cfg.years[i][0] - t for t in [0, runtime_years]]
+    y1, y2 = [cfg.years[i][0] + t for t in [0, runtime_years]]
 
     if test:
         y1, y2 = [cfg.years[i][1] + t for t in [0, 0]]
@@ -86,7 +86,10 @@ def spinup(lon=165, exp='hist', v=1, runtime_years=10, test=False):
     output_file = pset.ParticleFile(xid, outputdt=outputdt)
 
     # ParticleSet start time (for log).
-    start = (pd.Timestamp(fieldset.time_origin.time_origin) + timedelta(seconds=pset_start))
+    try:
+        start = (fieldset.time_origin.time_origin + timedelta(seconds=pset_start))
+    except:
+    	start = (pd.Timestamp(fieldset.time_origin.time_origin) + timedelta(seconds=pset_start))
 
     xlog['id'] = xid.stem
     xlog['Ti'] = start.strftime('%Y-%m-%d')
