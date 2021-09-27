@@ -1,0 +1,14 @@
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/stellema/plx/scripts/plx_spinup_particleset.py", line 107, in <module>
+    spinup_particleset(lon=args.lon, exp=args.exp, v=args.version)
+  File "/g/data/e14/as3189/stellema/plx/scripts/plx_spinup_particleset.py", line 44, in spinup_particleset
+    fieldset = ofam_fieldset(time_bnds, exp)
+  File "/g/data/e14/as3189/stellema/plx/scripts/plx_fncs.py", line 135, in ofam_fieldset
+    fieldset = from_ofam(files, variables, dims,
+  File "/g/data/e14/as3189/stellema/plx/scripts/plx_fncs.py", line 61, in from_ofam
+    fieldset = FieldSet.from_netcdf(filenames, variables, dimensions, mesh=mesh,
+  File "/g/data/e14/as3189/conda/envs/analysis3-20.01/lib/python3.8/site-packages/parcels/fieldset.py", line 416, in from_netcdf
+    paths[dim] = cls.parse_wildcards(p, filenames, var)
+  File "/g/data/e14/as3189/conda/envs/analysis3-20.01/lib/python3.8/site-packages/parcels/fieldset.py", line 334, in parse_wildcards
+    raise IOError("FieldSet file not found: %s" % str(fp))
+OSError: FieldSet file not found: /g/data/e14/as3189/OFAM/trop_pac/ocean_u_2070_01.nc

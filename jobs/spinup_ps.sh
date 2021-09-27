@@ -22,4 +22,4 @@ source /g/data/e14/as3189/conda/envs/analysis3-20.01/bin/activate
 
 ECHO=/bin/echo
 $ECHO "Create spinup particleset for plx $EXP & $LON."
-python3 /g/data/e14/as3189/OFAM/scripts/plx_spinup_particleset.py -e $EXP -x $LON -v 1
+python3 /g/data/e14/as3189/stellema/plx/scripts/plx_spinup_particleset.py -e $EXP -x $LON -v 1
