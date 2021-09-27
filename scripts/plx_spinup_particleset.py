@@ -39,7 +39,7 @@ def spinup_particleset(lon=165, exp='hist', v=1, spinup_year_offset=0):
 
     y1, y2 = cfg.years[i]
     y1 = 2012 if cfg.home == Path('E:/') and exp == 'hist' else y1
-    time_bnds = [datetime(y1, 1, 1), datetime(y2, 12, 31)]
+    time_bnds = [datetime(y1, 1, 1), datetime(y1, 12, 31)]
 
     fieldset = ofam_fieldset(time_bnds, exp)
 
