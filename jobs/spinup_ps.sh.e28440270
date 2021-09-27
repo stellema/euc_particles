@@ -1,9 +1,0 @@
-Generating spinup restart file from: plx_hist_250_v1r09
-Traceback (most recent call last):
-  File "/g/data/e14/as3189/OFAM/scripts/plx_spinup_particleset.py", line 100, in <module>
-    spinup_particleset(lon=args.lon, exp=args.exp, v=args.version)
-  File "/g/data/e14/as3189/OFAM/scripts/plx_spinup_particleset.py", line 63, in spinup_particleset
-    start = (pd.Timestamp(fieldset.time_origin.time_origin) + timedelta(seconds=pset_start))
-  File "pandas/_libs/tslibs/timestamps.pyx", line 1074, in pandas._libs.tslibs.timestamps.Timestamp.__new__
-  File "pandas/_libs/tslibs/conversion.pyx", line 436, in pandas._libs.tslibs.conversion.convert_to_tsobject
-TypeError: Cannot convert input [1981-01-01 12:00:00] of type <class 'cftime._cftime.DatetimeGregorian'> to Timestamp

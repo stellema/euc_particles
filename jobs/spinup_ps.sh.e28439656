@@ -1,4 +1,0 @@
-Traceback (most recent call last):
-  File "/g/data/e14/as3189/OFAM/scripts/plx_spinup_particleset.py", line 100, in <module>
-    spinup_particleset(dy=args.dy, dz=args.dz, lon=args.lon, exp=args.exp)
-AttributeError: 'Namespace' object has no attribute 'dy'
