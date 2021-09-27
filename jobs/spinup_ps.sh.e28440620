@@ -1,0 +1,4 @@
+  File "/g/data/e14/as3189/OFAM/scripts/plx_spinup_particleset.py", line 69
+    xlog['Ti'] = start.strftime('%Y-%m-%d')
+    ^
+SyntaxError: invalid syntax
