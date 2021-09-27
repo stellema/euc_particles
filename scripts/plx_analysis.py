@@ -7,10 +7,8 @@ author: Annette Stellema (astellemas@gmail.com)
 
 """
 import math
-import numpy as np
-import xarray as xr
-import math
 import logging
+import cartopy
 import calendar
 import numpy as np
 import xarray as xr
@@ -18,19 +16,17 @@ import pandas as pd
 from scipy import stats
 from pathlib import Path
 from functools import wraps
+import shapely.geometry as sgeom
+from argparse import ArgumentParser
 from datetime import datetime, timedelta
 import matplotlib.pyplot as plt
 import matplotlib.colors as colors
+import matplotlib.ticker as mticker
 from matplotlib.offsetbox import AnchoredText
-from argparse import ArgumentParser
 
 import cfg
-from main import (open_plx_data, get_plx_id, plx_snapshot, combine_plx_datasets)
-import cartopy
 from tools import coord_formatter
-# from plot_particles import cartopy_colorbar
-import shapely.geometry as sgeom
-import matplotlib.ticker as mticker
+from main import (open_plx_data, get_plx_id, plx_snapshot, combine_plx_datasets)
 
 
 def create_fig_axis(land=True, projection=None, central_longitude=0, fig=None, ax=None, rows=1, cols=1, figsize=None):
@@ -125,7 +121,8 @@ def particle_density(iexp, lon, r, t=None, how='mean'):
     """ Sort by location."""
     t = None if t < 0 else t
     r_range = [0, r]
-    xids, dss, ds = combine_plx_datasets(cfg.exp_abr[iexp], lon, v=1, r_range=r_range)
+    xids, ds = combine_plx_datasets(cfg.exp_abr[iexp], lon, v=1,
+                                    r_range=r_range, decode_cf=False)
 
     xbins = np.arange(120.1, 290, 0.5)
     ybins = np.arange(-14.9, 15, 0.5)

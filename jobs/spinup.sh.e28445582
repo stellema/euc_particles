@@ -1,0 +1,406 @@
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/plx_spinup.py", line 143, in <module>
+    spinup(lon=args.lon, exp=args.exp, v=args.version, runtime_years=args.run)
+  File "/g/data/e14/as3189/OFAM/scripts/plx_spinup.py", line 89, in spinup
+    start = (pd.Timestamp(fieldset.time_origin.time_origin) + timedelta(seconds=pset_start))
+  File "pandas/_libs/tslibs/timestamps.pyx", line 1074, in pandas._libs.tslibs.timestamps.Timestamp.__new__
+  File "pandas/_libs/tslibs/conversion.pyx", line 436, in pandas._libs.tslibs.conversion.convert_to_tsobject
+TypeError: Cannot convert input [1981-01-01 12:00:00] of type <class 'cftime._cftime.DatetimeGregorian'> to Timestamp
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/plx_spinup.py", line 143, in <module>
+    spinup(lon=args.lon, exp=args.exp, v=args.version, runtime_years=args.run)
+  File "/g/data/e14/as3189/OFAM/scripts/plx_spinup.py", line 89, in spinup
+    start = (pd.Timestamp(fieldset.time_origin.time_origin) + timedelta(seconds=pset_start))
+  File "pandas/_libs/tslibs/timestamps.pyx", line 1074, in pandas._libs.tslibs.timestamps.Timestamp.__new__
+  File "pandas/_libs/tslibs/conversion.pyx", line 436, in pandas._libs.tslibs.conversion.convert_to_tsobject
+TypeError: Cannot convert input [1981-01-01 12:00:00] of type <class 'cftime._cftime.DatetimeGregorian'> to Timestamp
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/plx_spinup.py", line 143, in <module>
+    spinup(lon=args.lon, exp=args.exp, v=args.version, runtime_years=args.run)
+  File "/g/data/e14/as3189/OFAM/scripts/plx_spinup.py", line 89, in spinup
+    start = (pd.Timestamp(fieldset.time_origin.time_origin) + timedelta(seconds=pset_start))
+  File "pandas/_libs/tslibs/timestamps.pyx", line 1074, in pandas._libs.tslibs.timestamps.Timestamp.__new__
+  File "pandas/_libs/tslibs/conversion.pyx", line 436, in pandas._libs.tslibs.conversion.convert_to_tsobject
+TypeError: Cannot convert input [1981-01-01 12:00:00] of type <class 'cftime._cftime.DatetimeGregorian'> to Timestamp
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/plx_spinup.py", line 143, in <module>
+    spinup(lon=args.lon, exp=args.exp, v=args.version, runtime_years=args.run)
+  File "/g/data/e14/as3189/OFAM/scripts/plx_spinup.py", line 89, in spinup
+    start = (pd.Timestamp(fieldset.time_origin.time_origin) + timedelta(seconds=pset_start))
+  File "pandas/_libs/tslibs/timestamps.pyx", line 1074, in pandas._libs.tslibs.timestamps.Timestamp.__new__
+  File "pandas/_libs/tslibs/conversion.pyx", line 436, in pandas._libs.tslibs.conversion.convert_to_tsobject
+TypeError: Cannot convert input [1981-01-01 12:00:00] of type <class 'cftime._cftime.DatetimeGregorian'> to Timestamp
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/plx_spinup.py", line 143, in <module>
+    spinup(lon=args.lon, exp=args.exp, v=args.version, runtime_years=args.run)
+  File "/g/data/e14/as3189/OFAM/scripts/plx_spinup.py", line 89, in spinup
+    start = (pd.Timestamp(fieldset.time_origin.time_origin) + timedelta(seconds=pset_start))
+  File "pandas/_libs/tslibs/timestamps.pyx", line 1074, in pandas._libs.tslibs.timestamps.Timestamp.__new__
+  File "pandas/_libs/tslibs/conversion.pyx", line 436, in pandas._libs.tslibs.conversion.convert_to_tsobject
+TypeError: Cannot convert input [1981-01-01 12:00:00] of type <class 'cftime._cftime.DatetimeGregorian'> to Timestamp
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/plx_spinup.py", line 143, in <module>
+    spinup(lon=args.lon, exp=args.exp, v=args.version, runtime_years=args.run)
+  File "/g/data/e14/as3189/OFAM/scripts/plx_spinup.py", line 89, in spinup
+    start = (pd.Timestamp(fieldset.time_origin.time_origin) + timedelta(seconds=pset_start))
+  File "pandas/_libs/tslibs/timestamps.pyx", line 1074, in pandas._libs.tslibs.timestamps.Timestamp.__new__
+  File "pandas/_libs/tslibs/conversion.pyx", line 436, in pandas._libs.tslibs.conversion.convert_to_tsobject
+TypeError: Cannot convert input [1981-01-01 12:00:00] of type <class 'cftime._cftime.DatetimeGregorian'> to Timestamp
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/plx_spinup.py", line 143, in <module>
+    spinup(lon=args.lon, exp=args.exp, v=args.version, runtime_years=args.run)
+  File "/g/data/e14/as3189/OFAM/scripts/plx_spinup.py", line 89, in spinup
+    start = (pd.Timestamp(fieldset.time_origin.time_origin) + timedelta(seconds=pset_start))
+  File "pandas/_libs/tslibs/timestamps.pyx", line 1074, in pandas._libs.tslibs.timestamps.Timestamp.__new__
+  File "pandas/_libs/tslibs/conversion.pyx", line 436, in pandas._libs.tslibs.conversion.convert_to_tsobject
+TypeError: Cannot convert input [1981-01-01 12:00:00] of type <class 'cftime._cftime.DatetimeGregorian'> to Timestamp
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/plx_spinup.py", line 143, in <module>
+    spinup(lon=args.lon, exp=args.exp, v=args.version, runtime_years=args.run)
+  File "/g/data/e14/as3189/OFAM/scripts/plx_spinup.py", line 89, in spinup
+    start = (pd.Timestamp(fieldset.time_origin.time_origin) + timedelta(seconds=pset_start))
+  File "pandas/_libs/tslibs/timestamps.pyx", line 1074, in pandas._libs.tslibs.timestamps.Timestamp.__new__
+  File "pandas/_libs/tslibs/conversion.pyx", line 436, in pandas._libs.tslibs.conversion.convert_to_tsobject
+TypeError: Cannot convert input [1981-01-01 12:00:00] of type <class 'cftime._cftime.DatetimeGregorian'> to Timestamp
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/plx_spinup.py", line 143, in <module>
+    spinup(lon=args.lon, exp=args.exp, v=args.version, runtime_years=args.run)
+  File "/g/data/e14/as3189/OFAM/scripts/plx_spinup.py", line 89, in spinup
+    start = (pd.Timestamp(fieldset.time_origin.time_origin) + timedelta(seconds=pset_start))
+  File "pandas/_libs/tslibs/timestamps.pyx", line 1074, in pandas._libs.tslibs.timestamps.Timestamp.__new__
+  File "pandas/_libs/tslibs/conversion.pyx", line 436, in pandas._libs.tslibs.conversion.convert_to_tsobject
+TypeError: Cannot convert input [1981-01-01 12:00:00] of type <class 'cftime._cftime.DatetimeGregorian'> to Timestamp
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/plx_spinup.py", line 143, in <module>
+    spinup(lon=args.lon, exp=args.exp, v=args.version, runtime_years=args.run)
+  File "/g/data/e14/as3189/OFAM/scripts/plx_spinup.py", line 89, in spinup
+    start = (pd.Timestamp(fieldset.time_origin.time_origin) + timedelta(seconds=pset_start))
+  File "pandas/_libs/tslibs/timestamps.pyx", line 1074, in pandas._libs.tslibs.timestamps.Timestamp.__new__
+  File "pandas/_libs/tslibs/conversion.pyx", line 436, in pandas._libs.tslibs.conversion.convert_to_tsobject
+TypeError: Cannot convert input [1981-01-01 12:00:00] of type <class 'cftime._cftime.DatetimeGregorian'> to Timestamp
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/plx_spinup.py", line 143, in <module>
+    spinup(lon=args.lon, exp=args.exp, v=args.version, runtime_years=args.run)
+  File "/g/data/e14/as3189/OFAM/scripts/plx_spinup.py", line 89, in spinup
+    start = (pd.Timestamp(fieldset.time_origin.time_origin) + timedelta(seconds=pset_start))
+  File "pandas/_libs/tslibs/timestamps.pyx", line 1074, in pandas._libs.tslibs.timestamps.Timestamp.__new__
+  File "pandas/_libs/tslibs/conversion.pyx", line 436, in pandas._libs.tslibs.conversion.convert_to_tsobject
+TypeError: Cannot convert input [1981-01-01 12:00:00] of type <class 'cftime._cftime.DatetimeGregorian'> to Timestamp
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/plx_spinup.py", line 143, in <module>
+    spinup(lon=args.lon, exp=args.exp, v=args.version, runtime_years=args.run)
+  File "/g/data/e14/as3189/OFAM/scripts/plx_spinup.py", line 89, in spinup
+    start = (pd.Timestamp(fieldset.time_origin.time_origin) + timedelta(seconds=pset_start))
+  File "pandas/_libs/tslibs/timestamps.pyx", line 1074, in pandas._libs.tslibs.timestamps.Timestamp.__new__
+  File "pandas/_libs/tslibs/conversion.pyx", line 436, in pandas._libs.tslibs.conversion.convert_to_tsobject
+TypeError: Cannot convert input [1981-01-01 12:00:00] of type <class 'cftime._cftime.DatetimeGregorian'> to Timestamp
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/plx_spinup.py", line 143, in <module>
+    spinup(lon=args.lon, exp=args.exp, v=args.version, runtime_years=args.run)
+  File "/g/data/e14/as3189/OFAM/scripts/plx_spinup.py", line 89, in spinup
+    start = (pd.Timestamp(fieldset.time_origin.time_origin) + timedelta(seconds=pset_start))
+  File "pandas/_libs/tslibs/timestamps.pyx", line 1074, in pandas._libs.tslibs.timestamps.Timestamp.__new__
+  File "pandas/_libs/tslibs/conversion.pyx", line 436, in pandas._libs.tslibs.conversion.convert_to_tsobject
+TypeError: Cannot convert input [1981-01-01 12:00:00] of type <class 'cftime._cftime.DatetimeGregorian'> to Timestamp
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/plx_spinup.py", line 143, in <module>
+    spinup(lon=args.lon, exp=args.exp, v=args.version, runtime_years=args.run)
+  File "/g/data/e14/as3189/OFAM/scripts/plx_spinup.py", line 89, in spinup
+    start = (pd.Timestamp(fieldset.time_origin.time_origin) + timedelta(seconds=pset_start))
+  File "pandas/_libs/tslibs/timestamps.pyx", line 1074, in pandas._libs.tslibs.timestamps.Timestamp.__new__
+  File "pandas/_libs/tslibs/conversion.pyx", line 436, in pandas._libs.tslibs.conversion.convert_to_tsobject
+TypeError: Cannot convert input [1981-01-01 12:00:00] of type <class 'cftime._cftime.DatetimeGregorian'> to Timestamp
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/plx_spinup.py", line 143, in <module>
+    spinup(lon=args.lon, exp=args.exp, v=args.version, runtime_years=args.run)
+  File "/g/data/e14/as3189/OFAM/scripts/plx_spinup.py", line 89, in spinup
+    start = (pd.Timestamp(fieldset.time_origin.time_origin) + timedelta(seconds=pset_start))
+  File "pandas/_libs/tslibs/timestamps.pyx", line 1074, in pandas._libs.tslibs.timestamps.Timestamp.__new__
+  File "pandas/_libs/tslibs/conversion.pyx", line 436, in pandas._libs.tslibs.conversion.convert_to_tsobject
+TypeError: Cannot convert input [1981-01-01 12:00:00] of type <class 'cftime._cftime.DatetimeGregorian'> to Timestamp
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/plx_spinup.py", line 143, in <module>
+    spinup(lon=args.lon, exp=args.exp, v=args.version, runtime_years=args.run)
+  File "/g/data/e14/as3189/OFAM/scripts/plx_spinup.py", line 89, in spinup
+    start = (pd.Timestamp(fieldset.time_origin.time_origin) + timedelta(seconds=pset_start))
+  File "pandas/_libs/tslibs/timestamps.pyx", line 1074, in pandas._libs.tslibs.timestamps.Timestamp.__new__
+  File "pandas/_libs/tslibs/conversion.pyx", line 436, in pandas._libs.tslibs.conversion.convert_to_tsobject
+TypeError: Cannot convert input [1981-01-01 12:00:00] of type <class 'cftime._cftime.DatetimeGregorian'> to Timestamp
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/plx_spinup.py", line 143, in <module>
+    spinup(lon=args.lon, exp=args.exp, v=args.version, runtime_years=args.run)
+  File "/g/data/e14/as3189/OFAM/scripts/plx_spinup.py", line 89, in spinup
+    start = (pd.Timestamp(fieldset.time_origin.time_origin) + timedelta(seconds=pset_start))
+  File "pandas/_libs/tslibs/timestamps.pyx", line 1074, in pandas._libs.tslibs.timestamps.Timestamp.__new__
+  File "pandas/_libs/tslibs/conversion.pyx", line 436, in pandas._libs.tslibs.conversion.convert_to_tsobject
+TypeError: Cannot convert input [1981-01-01 12:00:00] of type <class 'cftime._cftime.DatetimeGregorian'> to Timestamp
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/plx_spinup.py", line 143, in <module>
+    spinup(lon=args.lon, exp=args.exp, v=args.version, runtime_years=args.run)
+  File "/g/data/e14/as3189/OFAM/scripts/plx_spinup.py", line 89, in spinup
+    start = (pd.Timestamp(fieldset.time_origin.time_origin) + timedelta(seconds=pset_start))
+  File "pandas/_libs/tslibs/timestamps.pyx", line 1074, in pandas._libs.tslibs.timestamps.Timestamp.__new__
+  File "pandas/_libs/tslibs/conversion.pyx", line 436, in pandas._libs.tslibs.conversion.convert_to_tsobject
+TypeError: Cannot convert input [1981-01-01 12:00:00] of type <class 'cftime._cftime.DatetimeGregorian'> to Timestamp
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/plx_spinup.py", line 143, in <module>
+    spinup(lon=args.lon, exp=args.exp, v=args.version, runtime_years=args.run)
+  File "/g/data/e14/as3189/OFAM/scripts/plx_spinup.py", line 89, in spinup
+    start = (pd.Timestamp(fieldset.time_origin.time_origin) + timedelta(seconds=pset_start))
+  File "pandas/_libs/tslibs/timestamps.pyx", line 1074, in pandas._libs.tslibs.timestamps.Timestamp.__new__
+  File "pandas/_libs/tslibs/conversion.pyx", line 436, in pandas._libs.tslibs.conversion.convert_to_tsobject
+TypeError: Cannot convert input [1981-01-01 12:00:00] of type <class 'cftime._cftime.DatetimeGregorian'> to Timestamp
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/plx_spinup.py", line 143, in <module>
+    spinup(lon=args.lon, exp=args.exp, v=args.version, runtime_years=args.run)
+  File "/g/data/e14/as3189/OFAM/scripts/plx_spinup.py", line 89, in spinup
+    start = (pd.Timestamp(fieldset.time_origin.time_origin) + timedelta(seconds=pset_start))
+  File "pandas/_libs/tslibs/timestamps.pyx", line 1074, in pandas._libs.tslibs.timestamps.Timestamp.__new__
+  File "pandas/_libs/tslibs/conversion.pyx", line 436, in pandas._libs.tslibs.conversion.convert_to_tsobject
+TypeError: Cannot convert input [1981-01-01 12:00:00] of type <class 'cftime._cftime.DatetimeGregorian'> to Timestamp
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/plx_spinup.py", line 143, in <module>
+    spinup(lon=args.lon, exp=args.exp, v=args.version, runtime_years=args.run)
+  File "/g/data/e14/as3189/OFAM/scripts/plx_spinup.py", line 89, in spinup
+    start = (pd.Timestamp(fieldset.time_origin.time_origin) + timedelta(seconds=pset_start))
+  File "pandas/_libs/tslibs/timestamps.pyx", line 1074, in pandas._libs.tslibs.timestamps.Timestamp.__new__
+  File "pandas/_libs/tslibs/conversion.pyx", line 436, in pandas._libs.tslibs.conversion.convert_to_tsobject
+TypeError: Cannot convert input [1981-01-01 12:00:00] of type <class 'cftime._cftime.DatetimeGregorian'> to Timestamp
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/plx_spinup.py", line 143, in <module>
+    spinup(lon=args.lon, exp=args.exp, v=args.version, runtime_years=args.run)
+  File "/g/data/e14/as3189/OFAM/scripts/plx_spinup.py", line 89, in spinup
+    start = (pd.Timestamp(fieldset.time_origin.time_origin) + timedelta(seconds=pset_start))
+  File "pandas/_libs/tslibs/timestamps.pyx", line 1074, in pandas._libs.tslibs.timestamps.Timestamp.__new__
+  File "pandas/_libs/tslibs/conversion.pyx", line 436, in pandas._libs.tslibs.conversion.convert_to_tsobject
+TypeError: Cannot convert input [1981-01-01 12:00:00] of type <class 'cftime._cftime.DatetimeGregorian'> to Timestamp
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/plx_spinup.py", line 143, in <module>
+    spinup(lon=args.lon, exp=args.exp, v=args.version, runtime_years=args.run)
+  File "/g/data/e14/as3189/OFAM/scripts/plx_spinup.py", line 89, in spinup
+    start = (pd.Timestamp(fieldset.time_origin.time_origin) + timedelta(seconds=pset_start))
+  File "pandas/_libs/tslibs/timestamps.pyx", line 1074, in pandas._libs.tslibs.timestamps.Timestamp.__new__
+  File "pandas/_libs/tslibs/conversion.pyx", line 436, in pandas._libs.tslibs.conversion.convert_to_tsobject
+TypeError: Cannot convert input [1981-01-01 12:00:00] of type <class 'cftime._cftime.DatetimeGregorian'> to Timestamp
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/plx_spinup.py", line 143, in <module>
+    spinup(lon=args.lon, exp=args.exp, v=args.version, runtime_years=args.run)
+  File "/g/data/e14/as3189/OFAM/scripts/plx_spinup.py", line 89, in spinup
+    start = (pd.Timestamp(fieldset.time_origin.time_origin) + timedelta(seconds=pset_start))
+  File "pandas/_libs/tslibs/timestamps.pyx", line 1074, in pandas._libs.tslibs.timestamps.Timestamp.__new__
+  File "pandas/_libs/tslibs/conversion.pyx", line 436, in pandas._libs.tslibs.conversion.convert_to_tsobject
+TypeError: Cannot convert input [1981-01-01 12:00:00] of type <class 'cftime._cftime.DatetimeGregorian'> to Timestamp
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/plx_spinup.py", line 143, in <module>
+    spinup(lon=args.lon, exp=args.exp, v=args.version, runtime_years=args.run)
+  File "/g/data/e14/as3189/OFAM/scripts/plx_spinup.py", line 89, in spinup
+    start = (pd.Timestamp(fieldset.time_origin.time_origin) + timedelta(seconds=pset_start))
+  File "pandas/_libs/tslibs/timestamps.pyx", line 1074, in pandas._libs.tslibs.timestamps.Timestamp.__new__
+  File "pandas/_libs/tslibs/conversion.pyx", line 436, in pandas._libs.tslibs.conversion.convert_to_tsobject
+TypeError: Cannot convert input [1981-01-01 12:00:00] of type <class 'cftime._cftime.DatetimeGregorian'> to Timestamp
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/plx_spinup.py", line 143, in <module>
+    spinup(lon=args.lon, exp=args.exp, v=args.version, runtime_years=args.run)
+  File "/g/data/e14/as3189/OFAM/scripts/plx_spinup.py", line 89, in spinup
+    start = (pd.Timestamp(fieldset.time_origin.time_origin) + timedelta(seconds=pset_start))
+  File "pandas/_libs/tslibs/timestamps.pyx", line 1074, in pandas._libs.tslibs.timestamps.Timestamp.__new__
+  File "pandas/_libs/tslibs/conversion.pyx", line 436, in pandas._libs.tslibs.conversion.convert_to_tsobject
+TypeError: Cannot convert input [1981-01-01 12:00:00] of type <class 'cftime._cftime.DatetimeGregorian'> to Timestamp
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/plx_spinup.py", line 143, in <module>
+    spinup(lon=args.lon, exp=args.exp, v=args.version, runtime_years=args.run)
+  File "/g/data/e14/as3189/OFAM/scripts/plx_spinup.py", line 89, in spinup
+    start = (pd.Timestamp(fieldset.time_origin.time_origin) + timedelta(seconds=pset_start))
+  File "pandas/_libs/tslibs/timestamps.pyx", line 1074, in pandas._libs.tslibs.timestamps.Timestamp.__new__
+  File "pandas/_libs/tslibs/conversion.pyx", line 436, in pandas._libs.tslibs.conversion.convert_to_tsobject
+TypeError: Cannot convert input [1981-01-01 12:00:00] of type <class 'cftime._cftime.DatetimeGregorian'> to Timestamp
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/plx_spinup.py", line 143, in <module>
+    spinup(lon=args.lon, exp=args.exp, v=args.version, runtime_years=args.run)
+  File "/g/data/e14/as3189/OFAM/scripts/plx_spinup.py", line 89, in spinup
+    start = (pd.Timestamp(fieldset.time_origin.time_origin) + timedelta(seconds=pset_start))
+  File "pandas/_libs/tslibs/timestamps.pyx", line 1074, in pandas._libs.tslibs.timestamps.Timestamp.__new__
+  File "pandas/_libs/tslibs/conversion.pyx", line 436, in pandas._libs.tslibs.conversion.convert_to_tsobject
+TypeError: Cannot convert input [1981-01-01 12:00:00] of type <class 'cftime._cftime.DatetimeGregorian'> to Timestamp
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/plx_spinup.py", line 143, in <module>
+    spinup(lon=args.lon, exp=args.exp, v=args.version, runtime_years=args.run)
+  File "/g/data/e14/as3189/OFAM/scripts/plx_spinup.py", line 89, in spinup
+    start = (pd.Timestamp(fieldset.time_origin.time_origin) + timedelta(seconds=pset_start))
+  File "pandas/_libs/tslibs/timestamps.pyx", line 1074, in pandas._libs.tslibs.timestamps.Timestamp.__new__
+  File "pandas/_libs/tslibs/conversion.pyx", line 436, in pandas._libs.tslibs.conversion.convert_to_tsobject
+TypeError: Cannot convert input [1981-01-01 12:00:00] of type <class 'cftime._cftime.DatetimeGregorian'> to Timestamp
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/plx_spinup.py", line 143, in <module>
+    spinup(lon=args.lon, exp=args.exp, v=args.version, runtime_years=args.run)
+  File "/g/data/e14/as3189/OFAM/scripts/plx_spinup.py", line 89, in spinup
+    start = (pd.Timestamp(fieldset.time_origin.time_origin) + timedelta(seconds=pset_start))
+  File "pandas/_libs/tslibs/timestamps.pyx", line 1074, in pandas._libs.tslibs.timestamps.Timestamp.__new__
+  File "pandas/_libs/tslibs/conversion.pyx", line 436, in pandas._libs.tslibs.conversion.convert_to_tsobject
+TypeError: Cannot convert input [1981-01-01 12:00:00] of type <class 'cftime._cftime.DatetimeGregorian'> to Timestamp
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/plx_spinup.py", line 143, in <module>
+    spinup(lon=args.lon, exp=args.exp, v=args.version, runtime_years=args.run)
+  File "/g/data/e14/as3189/OFAM/scripts/plx_spinup.py", line 89, in spinup
+    start = (pd.Timestamp(fieldset.time_origin.time_origin) + timedelta(seconds=pset_start))
+  File "pandas/_libs/tslibs/timestamps.pyx", line 1074, in pandas._libs.tslibs.timestamps.Timestamp.__new__
+  File "pandas/_libs/tslibs/conversion.pyx", line 436, in pandas._libs.tslibs.conversion.convert_to_tsobject
+TypeError: Cannot convert input [1981-01-01 12:00:00] of type <class 'cftime._cftime.DatetimeGregorian'> to Timestamp
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/plx_spinup.py", line 143, in <module>
+    spinup(lon=args.lon, exp=args.exp, v=args.version, runtime_years=args.run)
+  File "/g/data/e14/as3189/OFAM/scripts/plx_spinup.py", line 89, in spinup
+    start = (pd.Timestamp(fieldset.time_origin.time_origin) + timedelta(seconds=pset_start))
+  File "pandas/_libs/tslibs/timestamps.pyx", line 1074, in pandas._libs.tslibs.timestamps.Timestamp.__new__
+  File "pandas/_libs/tslibs/conversion.pyx", line 436, in pandas._libs.tslibs.conversion.convert_to_tsobject
+TypeError: Cannot convert input [1981-01-01 12:00:00] of type <class 'cftime._cftime.DatetimeGregorian'> to Timestamp
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/plx_spinup.py", line 143, in <module>
+    spinup(lon=args.lon, exp=args.exp, v=args.version, runtime_years=args.run)
+  File "/g/data/e14/as3189/OFAM/scripts/plx_spinup.py", line 89, in spinup
+    start = (pd.Timestamp(fieldset.time_origin.time_origin) + timedelta(seconds=pset_start))
+  File "pandas/_libs/tslibs/timestamps.pyx", line 1074, in pandas._libs.tslibs.timestamps.Timestamp.__new__
+  File "pandas/_libs/tslibs/conversion.pyx", line 436, in pandas._libs.tslibs.conversion.convert_to_tsobject
+TypeError: Cannot convert input [1981-01-01 12:00:00] of type <class 'cftime._cftime.DatetimeGregorian'> to Timestamp
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/plx_spinup.py", line 143, in <module>
+    spinup(lon=args.lon, exp=args.exp, v=args.version, runtime_years=args.run)
+  File "/g/data/e14/as3189/OFAM/scripts/plx_spinup.py", line 89, in spinup
+    start = (pd.Timestamp(fieldset.time_origin.time_origin) + timedelta(seconds=pset_start))
+  File "pandas/_libs/tslibs/timestamps.pyx", line 1074, in pandas._libs.tslibs.timestamps.Timestamp.__new__
+  File "pandas/_libs/tslibs/conversion.pyx", line 436, in pandas._libs.tslibs.conversion.convert_to_tsobject
+TypeError: Cannot convert input [1981-01-01 12:00:00] of type <class 'cftime._cftime.DatetimeGregorian'> to Timestamp
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/plx_spinup.py", line 143, in <module>
+    spinup(lon=args.lon, exp=args.exp, v=args.version, runtime_years=args.run)
+  File "/g/data/e14/as3189/OFAM/scripts/plx_spinup.py", line 89, in spinup
+    start = (pd.Timestamp(fieldset.time_origin.time_origin) + timedelta(seconds=pset_start))
+  File "pandas/_libs/tslibs/timestamps.pyx", line 1074, in pandas._libs.tslibs.timestamps.Timestamp.__new__
+  File "pandas/_libs/tslibs/conversion.pyx", line 436, in pandas._libs.tslibs.conversion.convert_to_tsobject
+TypeError: Cannot convert input [1981-01-01 12:00:00] of type <class 'cftime._cftime.DatetimeGregorian'> to Timestamp
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/plx_spinup.py", line 143, in <module>
+    spinup(lon=args.lon, exp=args.exp, v=args.version, runtime_years=args.run)
+  File "/g/data/e14/as3189/OFAM/scripts/plx_spinup.py", line 89, in spinup
+    start = (pd.Timestamp(fieldset.time_origin.time_origin) + timedelta(seconds=pset_start))
+  File "pandas/_libs/tslibs/timestamps.pyx", line 1074, in pandas._libs.tslibs.timestamps.Timestamp.__new__
+  File "pandas/_libs/tslibs/conversion.pyx", line 436, in pandas._libs.tslibs.conversion.convert_to_tsobject
+TypeError: Cannot convert input [1981-01-01 12:00:00] of type <class 'cftime._cftime.DatetimeGregorian'> to Timestamp
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/plx_spinup.py", line 143, in <module>
+    spinup(lon=args.lon, exp=args.exp, v=args.version, runtime_years=args.run)
+  File "/g/data/e14/as3189/OFAM/scripts/plx_spinup.py", line 89, in spinup
+    start = (pd.Timestamp(fieldset.time_origin.time_origin) + timedelta(seconds=pset_start))
+  File "pandas/_libs/tslibs/timestamps.pyx", line 1074, in pandas._libs.tslibs.timestamps.Timestamp.__new__
+  File "pandas/_libs/tslibs/conversion.pyx", line 436, in pandas._libs.tslibs.conversion.convert_to_tsobject
+TypeError: Cannot convert input [1981-01-01 12:00:00] of type <class 'cftime._cftime.DatetimeGregorian'> to Timestamp
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/plx_spinup.py", line 143, in <module>
+    spinup(lon=args.lon, exp=args.exp, v=args.version, runtime_years=args.run)
+  File "/g/data/e14/as3189/OFAM/scripts/plx_spinup.py", line 89, in spinup
+    start = (pd.Timestamp(fieldset.time_origin.time_origin) + timedelta(seconds=pset_start))
+  File "pandas/_libs/tslibs/timestamps.pyx", line 1074, in pandas._libs.tslibs.timestamps.Timestamp.__new__
+  File "pandas/_libs/tslibs/conversion.pyx", line 436, in pandas._libs.tslibs.conversion.convert_to_tsobject
+TypeError: Cannot convert input [1981-01-01 12:00:00] of type <class 'cftime._cftime.DatetimeGregorian'> to Timestamp
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/plx_spinup.py", line 143, in <module>
+    spinup(lon=args.lon, exp=args.exp, v=args.version, runtime_years=args.run)
+  File "/g/data/e14/as3189/OFAM/scripts/plx_spinup.py", line 89, in spinup
+    start = (pd.Timestamp(fieldset.time_origin.time_origin) + timedelta(seconds=pset_start))
+  File "pandas/_libs/tslibs/timestamps.pyx", line 1074, in pandas._libs.tslibs.timestamps.Timestamp.__new__
+  File "pandas/_libs/tslibs/conversion.pyx", line 436, in pandas._libs.tslibs.conversion.convert_to_tsobject
+TypeError: Cannot convert input [1981-01-01 12:00:00] of type <class 'cftime._cftime.DatetimeGregorian'> to Timestamp
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/plx_spinup.py", line 143, in <module>
+    spinup(lon=args.lon, exp=args.exp, v=args.version, runtime_years=args.run)
+  File "/g/data/e14/as3189/OFAM/scripts/plx_spinup.py", line 89, in spinup
+    start = (pd.Timestamp(fieldset.time_origin.time_origin) + timedelta(seconds=pset_start))
+  File "pandas/_libs/tslibs/timestamps.pyx", line 1074, in pandas._libs.tslibs.timestamps.Timestamp.__new__
+  File "pandas/_libs/tslibs/conversion.pyx", line 436, in pandas._libs.tslibs.conversion.convert_to_tsobject
+TypeError: Cannot convert input [1981-01-01 12:00:00] of type <class 'cftime._cftime.DatetimeGregorian'> to Timestamp
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/plx_spinup.py", line 143, in <module>
+    spinup(lon=args.lon, exp=args.exp, v=args.version, runtime_years=args.run)
+  File "/g/data/e14/as3189/OFAM/scripts/plx_spinup.py", line 89, in spinup
+    start = (pd.Timestamp(fieldset.time_origin.time_origin) + timedelta(seconds=pset_start))
+  File "pandas/_libs/tslibs/timestamps.pyx", line 1074, in pandas._libs.tslibs.timestamps.Timestamp.__new__
+  File "pandas/_libs/tslibs/conversion.pyx", line 436, in pandas._libs.tslibs.conversion.convert_to_tsobject
+TypeError: Cannot convert input [1981-01-01 12:00:00] of type <class 'cftime._cftime.DatetimeGregorian'> to Timestamp
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/plx_spinup.py", line 143, in <module>
+    spinup(lon=args.lon, exp=args.exp, v=args.version, runtime_years=args.run)
+  File "/g/data/e14/as3189/OFAM/scripts/plx_spinup.py", line 89, in spinup
+    start = (pd.Timestamp(fieldset.time_origin.time_origin) + timedelta(seconds=pset_start))
+  File "pandas/_libs/tslibs/timestamps.pyx", line 1074, in pandas._libs.tslibs.timestamps.Timestamp.__new__
+  File "pandas/_libs/tslibs/conversion.pyx", line 436, in pandas._libs.tslibs.conversion.convert_to_tsobject
+TypeError: Cannot convert input [1981-01-01 12:00:00] of type <class 'cftime._cftime.DatetimeGregorian'> to Timestamp
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/plx_spinup.py", line 143, in <module>
+    spinup(lon=args.lon, exp=args.exp, v=args.version, runtime_years=args.run)
+  File "/g/data/e14/as3189/OFAM/scripts/plx_spinup.py", line 89, in spinup
+    start = (pd.Timestamp(fieldset.time_origin.time_origin) + timedelta(seconds=pset_start))
+  File "pandas/_libs/tslibs/timestamps.pyx", line 1074, in pandas._libs.tslibs.timestamps.Timestamp.__new__
+  File "pandas/_libs/tslibs/conversion.pyx", line 436, in pandas._libs.tslibs.conversion.convert_to_tsobject
+TypeError: Cannot convert input [1981-01-01 12:00:00] of type <class 'cftime._cftime.DatetimeGregorian'> to Timestamp
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/plx_spinup.py", line 143, in <module>
+    spinup(lon=args.lon, exp=args.exp, v=args.version, runtime_years=args.run)
+  File "/g/data/e14/as3189/OFAM/scripts/plx_spinup.py", line 89, in spinup
+    start = (pd.Timestamp(fieldset.time_origin.time_origin) + timedelta(seconds=pset_start))
+  File "pandas/_libs/tslibs/timestamps.pyx", line 1074, in pandas._libs.tslibs.timestamps.Timestamp.__new__
+  File "pandas/_libs/tslibs/conversion.pyx", line 436, in pandas._libs.tslibs.conversion.convert_to_tsobject
+TypeError: Cannot convert input [1981-01-01 12:00:00] of type <class 'cftime._cftime.DatetimeGregorian'> to Timestamp
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/plx_spinup.py", line 143, in <module>
+    spinup(lon=args.lon, exp=args.exp, v=args.version, runtime_years=args.run)
+  File "/g/data/e14/as3189/OFAM/scripts/plx_spinup.py", line 89, in spinup
+    start = (pd.Timestamp(fieldset.time_origin.time_origin) + timedelta(seconds=pset_start))
+  File "pandas/_libs/tslibs/timestamps.pyx", line 1074, in pandas._libs.tslibs.timestamps.Timestamp.__new__
+  File "pandas/_libs/tslibs/conversion.pyx", line 436, in pandas._libs.tslibs.conversion.convert_to_tsobject
+TypeError: Cannot convert input [1981-01-01 12:00:00] of type <class 'cftime._cftime.DatetimeGregorian'> to Timestamp
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/plx_spinup.py", line 143, in <module>
+    spinup(lon=args.lon, exp=args.exp, v=args.version, runtime_years=args.run)
+  File "/g/data/e14/as3189/OFAM/scripts/plx_spinup.py", line 89, in spinup
+    start = (pd.Timestamp(fieldset.time_origin.time_origin) + timedelta(seconds=pset_start))
+  File "pandas/_libs/tslibs/timestamps.pyx", line 1074, in pandas._libs.tslibs.timestamps.Timestamp.__new__
+  File "pandas/_libs/tslibs/conversion.pyx", line 436, in pandas._libs.tslibs.conversion.convert_to_tsobject
+TypeError: Cannot convert input [1981-01-01 12:00:00] of type <class 'cftime._cftime.DatetimeGregorian'> to Timestamp
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/plx_spinup.py", line 143, in <module>
+    spinup(lon=args.lon, exp=args.exp, v=args.version, runtime_years=args.run)
+  File "/g/data/e14/as3189/OFAM/scripts/plx_spinup.py", line 89, in spinup
+    start = (pd.Timestamp(fieldset.time_origin.time_origin) + timedelta(seconds=pset_start))
+  File "pandas/_libs/tslibs/timestamps.pyx", line 1074, in pandas._libs.tslibs.timestamps.Timestamp.__new__
+  File "pandas/_libs/tslibs/conversion.pyx", line 436, in pandas._libs.tslibs.conversion.convert_to_tsobject
+TypeError: Cannot convert input [1981-01-01 12:00:00] of type <class 'cftime._cftime.DatetimeGregorian'> to Timestamp
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/plx_spinup.py", line 143, in <module>
+    spinup(lon=args.lon, exp=args.exp, v=args.version, runtime_years=args.run)
+  File "/g/data/e14/as3189/OFAM/scripts/plx_spinup.py", line 89, in spinup
+    start = (pd.Timestamp(fieldset.time_origin.time_origin) + timedelta(seconds=pset_start))
+  File "pandas/_libs/tslibs/timestamps.pyx", line 1074, in pandas._libs.tslibs.timestamps.Timestamp.__new__
+  File "pandas/_libs/tslibs/conversion.pyx", line 436, in pandas._libs.tslibs.conversion.convert_to_tsobject
+TypeError: Cannot convert input [1981-01-01 12:00:00] of type <class 'cftime._cftime.DatetimeGregorian'> to Timestamp
+Exception ignored in: <function ParticleFile.__del__ at 0x154eb3e5fc10>
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/conda/envs/analysis3-20.01/lib/python3.8/site-packages/parcels/particlefile.py", line 189, in __del__
+    self.close()
+  File "/g/data/e14/as3189/conda/envs/analysis3-20.01/lib/python3.8/site-packages/parcels/particlefile.py", line 194, in close
+    self.export()
+  File "/g/data/e14/as3189/conda/envs/analysis3-20.01/lib/python3.8/site-packages/parcels/particlefile.py", line 306, in export
+    pset_info_local = np.load(os.path.join(tempwritedir, 'pset_info.npy'), allow_pickle=True).item()
+  File "/g/data/e14/as3189/conda/envs/analysis3-20.01/lib/python3.8/site-packages/numpy/lib/npyio.py", line 416, in load
+    fid = stack.enter_context(open(os_fspath(file), "rb"))
+FileNotFoundError: [Errno 2] No such file or directory: '/g/data/e14/as3189/OFAM/data/v1/out-BNRBRHDO/0/pset_info.npy'
+--------------------------------------------------------------------------
+Primary job  terminated normally, but 1 process returned
+a non-zero exit code. Per user-direction, the job has been aborted.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+mpirun detected that one or more processes exited with non-zero status, thus causing
+the job to be terminated. The first process to do so was:
+
+  Process name: [[16615,1],23]
+  Exit code:    1
+--------------------------------------------------------------------------

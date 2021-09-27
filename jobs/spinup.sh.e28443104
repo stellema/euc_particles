@@ -1,0 +1,39 @@
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/plx_spinup.py", line 143, in <module>
+    spinup(lon=args.lon, exp=args.exp, v=args.version, runtime_years=args.run)
+  File "/g/data/e14/as3189/OFAM/scripts/plx_spinup.py", line 58, in spinup
+    fieldset = ofam_fieldset(time_bnds, exp)
+  File "/g/data/e14/as3189/OFAM/scripts/main.py", line 134, in ofam_fieldset
+    fieldset = from_ofam(files, variables, dims,
+  File "/g/data/e14/as3189/OFAM/scripts/main.py", line 61, in from_ofam
+    fieldset = FieldSet.from_netcdf(filenames, variables, dimensions, mesh=mesh,
+  File "/g/data/e14/as3189/conda/envs/analysis3-20.01/lib/python3.8/site-packages/parcels/fieldset.py", line 416, in from_netcdf
+    paths[dim] = cls.parse_wildcards(p, filenames, var)
+  File "/g/data/e14/as3189/conda/envs/analysis3-20.01/lib/python3.8/site-packages/parcels/fieldset.py", line 331, in parse_wildcards
+    raise IOError("FieldSet files not found: %s" % str(notfound_paths))
+OSError: FieldSet files not found: {'depth': ['/g/data/e14/as3189/OFAM/data/ofam_mesh_grid_part.nc'], 'lat': ['/g/data/e14/as3189/OFAM/data/ofam_mesh_grid_part.nc'], 'lon': ['/g/data/e14/as3189/OFAM/data/ofam_mesh_grid_part.nc'], 'data': []}
+Traceback (most recent call last):
+  File "/g/data/e14/as3189/OFAM/scripts/plx_spinup.py", line 143, in <module>
+    spinup(lon=args.lon, exp=args.exp, v=args.version, runtime_years=args.run)
+  File "/g/data/e14/as3189/OFAM/scripts/plx_spinup.py", line 58, in spinup
+    fieldset = ofam_fieldset(time_bnds, exp)
+  File "/g/data/e14/as3189/OFAM/scripts/main.py", line 134, in ofam_fieldset
+    fieldset = from_ofam(files, variables, dims,
+  File "/g/data/e14/as3189/OFAM/scripts/main.py", line 61, in from_ofam
+    fieldset = FieldSet.from_netcdf(filenames, variables, dimensions, mesh=mesh,
+  File "/g/data/e14/as3189/conda/envs/analysis3-20.01/lib/python3.8/site-packages/parcels/fieldset.py", line 416, in from_netcdf
+    paths[dim] = cls.parse_wildcards(p, filenames, var)
+  File "/g/data/e14/as3189/conda/envs/analysis3-20.01/lib/python3.8/site-packages/parcels/fieldset.py", line 331, in parse_wildcards
+    raise IOError("FieldSet files not found: %s" % str(notfound_paths))
+OSError: FieldSet files not found: {'depth': ['/g/data/e14/as3189/OFAM/data/ofam_mesh_grid_part.nc'], 'lat': ['/g/data/e14/as3189/OFAM/data/ofam_mesh_grid_part.nc'], 'lon': ['/g/data/e14/as3189/OFAM/data/ofam_mesh_grid_part.nc'], 'data': []}
+--------------------------------------------------------------------------
+Primary job  terminated normally, but 1 process returned
+a non-zero exit code. Per user-direction, the job has been aborted.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+mpirun detected that one or more processes exited with non-zero status, thus causing
+the job to be terminated. The first process to do so was:
+
+  Process name: [[43168,1],1]
+  Exit code:    1
+--------------------------------------------------------------------------

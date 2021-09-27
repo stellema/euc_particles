@@ -33,69 +33,11 @@ import numpy as np
 import xarray as xr
 from pathlib import Path
 from datetime import datetime
-from parcels import (FieldSet, ParticleSet, VectorField)
+from parcels import (FieldSet, ParticleSet, VectorField, Variable, JITParticle)
 
 import cfg
 from tools import coord_formatter
 
-class Current:
-    """A class used to represent a Current."""
-    # Create instance of class.
-    _instances = []
-
-    def __init__(self, n, name, depth=None, lat=None,
-                 lon=None, vel='vo', sign=1, action=None):
-        self.n = n.upper()  # Acronym
-        self._n = n.lower()  # Acronym
-        self.name = name
-        self.depth = depth
-        self.lat = lat
-        self.lon = lon
-        self.vel = vel
-        self.sign = sign
-
-        # Create attributes.
-        self._depth = None
-        self._lat = None
-        self._lon = None
-        if depth is not None:
-            self._depth = coord_formatter(self.depth, 'depth')
-        if lat is not None:
-            self._lat = coord_formatter(self.lat, 'lat')
-        if lon is not None:
-            self._lon = coord_formatter(self.lon, 'lon')
-
-        # Create instance of class.
-        self.action = action
-        Current._instances.append(self)
-
-    # Returns a printable representation of the given object.
-    def __repr__(self):
-        return str(self.name)
-
-    @classmethod
-    def resolve_actions(cls):
-        for instance in cls._instances:
-            if instance.action == "create":
-                instance.__create()
-            elif instance.action == "remove":
-                instance.__remove()
-
-
-# Create Current instances.
-ec = Current('EUC', 'Equatorial Undercurrent', vel='uo', sign=1, depth=[25, 350], lat=[-2.6, 2.6], lon=cfg.lons)
-mc = Current('MC', 'Mindanao Current', vel='vo', sign=-1, depth=[0, 550], lat=8, lon=[125, 130])
-# ng = Current('NGCU', 'New Guinea Coastal Undercurrent', vel='vo', sign=1, depth=[0, 550], lat=-3.5, lon=[142, 149])
-ng = Current('NGCU', 'New Guinea Coastal Undercurrent', vel='vo', sign=1, depth=[0, 800], lat=-4.5, lon=[146, 156])
-sv = Current('SV', 'Sverdrup transport')
-tauvo = Current('tauvo', 'Meridional Wind Stress')
-
-
-# Create list of all Current instances.
-Current.resolve_actions()
-current = []
-for obj in Current._instances:
-    current.append(obj)
 
 def from_ofam(filenames, variables, dimensions, indices=None, mesh='spherical',
               allow_time_extrapolation=None, field_chunksize='auto',
@@ -119,7 +61,8 @@ def from_ofam(filenames, variables, dimensions, indices=None, mesh='spherical',
     fieldset = FieldSet.from_netcdf(filenames, variables, dimensions, mesh=mesh,
                                     indices=indices, time_periodic=time_periodic,
                                     allow_time_extrapolation=allow_time_extrapolation,
-                                    field_chunksize=field_chunksize, interp_method=interp_method,
+                                    field_chunksize=field_chunksize,
+                                    interp_method=interp_method,
                                     gridindexingtype='mom5', **kwargs)
 
     if hasattr(fieldset, 'W'):
@@ -159,16 +102,17 @@ def ofam_fieldset(time_bnds='full', exp='hist', chunks=300, add_xfields=True):
     u, v, w = [], [], []
     for y in range(time_bnds[0].year, time_bnds[1].year + 1):
         for m in range(time_bnds[0].month, time_bnds[1].month + 1):
-            u.append(str(cfg.ofam/('ocean_u_{}_{:02d}.nc'.format(y, m))))
-            v.append(str(cfg.ofam/('ocean_v_{}_{:02d}.nc'.format(y, m))))
-            w.append(str(cfg.ofam/('ocean_w_{}_{:02d}.nc'.format(y, m))))
+            u.append(str(cfg.ofam / 'ocean_u_{}_{:02d}.nc'.format(y, m)))
+            v.append(str(cfg.ofam / 'ocean_v_{}_{:02d}.nc'.format(y, m)))
+            w.append(str(cfg.ofam / 'ocean_w_{}_{:02d}.nc'.format(y, m)))
 
     # Mesh contains all OFAM3 coords.
-    mesh = [str(cfg.data/'ofam_mesh_grid_part.nc')]
+    mesh = [str(cfg.data / 'ofam_mesh_grid_part.nc')]
 
     variables = {'U': 'u', 'V': 'v', 'W': 'w'}
-    dims = {'lat': 'yu_ocean',
-            'lon': 'xu_ocean', 'depth': 'sw_ocean', 'time': 'Time'}
+    dim = {'lon': 'xu_ocean', 'lat': 'yu_ocean',
+            'depth': 'sw_ocean', 'time': 'Time'}
+    dims = {'U': dim, 'V': dim, 'W': dim}
     files = {'U': {'depth': mesh, 'lat': mesh, 'lon': mesh, 'data': u},
              'V': {'depth': mesh, 'lat': mesh, 'lon': mesh, 'data': v},
              'W': {'depth': mesh, 'lat': mesh, 'lon': mesh, 'data': w}}
@@ -192,8 +136,8 @@ def ofam_fieldset(time_bnds='full', exp='hist', chunks=300, add_xfields=True):
                          field_chunksize=chunks, chunkdims_name_map=nmap)
     # Add Unbeach velocity vectorfield to fieldset.
     if add_xfields:
-        xf = [str(cfg.data/'ofam_field_beachx.nc')]
-        zf = [str(cfg.data/'ofam_field_zone.nc')]
+        xf = [str(cfg.data / 'ofam_field_beachx.nc')]
+        zf = [str(cfg.data / 'ofam_field_zone.nc')]
 
         xvars = {'Ub': 'Ub',
                  'Vb': 'Vb',
@@ -233,7 +177,7 @@ def ofam_fieldset(time_bnds='full', exp='hist', chunks=300, add_xfields=True):
     # Constants.
     # Convert geometric to geographic coordinates (m to degree).
     # Nautical mile = 1852 (1 min of arc at equator)
-    fieldset.add_constant('NM', 1/(1852*60))
+    fieldset.add_constant('NM', 1 / (1852*60))
     fieldset.add_constant('onland', 0.975)
     fieldset.add_constant('byland', 0.5)
     fieldset.add_constant('UV_min', 1e-7)
@@ -251,20 +195,20 @@ def generate_xid(lon, v=0, exp='hist', randomise=False,
         i = random.randint(0, 100) if randomise else v
 
         # Increment index or find new random number if the file already exists.
-        while (cfg.data/'{}{}r00.nc'.format(head, i)).exists():
+        while (cfg.data / '{}{}r00.nc'.format(head, i)).exists():
             i = random.randint(0, 100) if randomise else i + 1
 
-        xid = cfg.data/'{}{}r00.nc'.format(head, i)
+        xid = cfg.data / '{}{}r00.nc'.format(head, i)
         if xlog:
             xlog['v'], xlog['r'] = i, 0
 
     # Increment run index for new output file name.
     else:
         r = 0
-        xid = cfg.data/'plx_{}_{}_v{}r00.nc'.format(exp, int(lon), v)
+        xid = cfg.data / 'v{}/plx_{}_{}_v{}r00.nc'.format(v, exp, int(lon), v)
         files = [s for s in xid.parent.glob(str(xid.stem[:-2]) + '*.nc')]
         r = max([int(f.stem[-2:]) for f in files]) + 1
-        xid = cfg.data/'{}{:02d}.nc'.format(xid.stem[:-2], r)
+        xid = cfg.data / 'v{}/{}{:02d}.nc'.format(v, xid.stem[:-2], r)
         if xlog:
             xlog['v'], xlog['r'] = v, r
 
@@ -281,9 +225,9 @@ def pset_euc(fieldset, pclass, lon, dy, dz, repeatdt, pset_start, repeats,
     px = np.array([lon])
 
     # Each repeat.
-    lats = np.repeat(py, pz.size*px.size)
+    lats = np.repeat(py, pz.size * px.size)
     depths = np.repeat(np.tile(pz, py.size), px.size)
-    lons = np.repeat(px, pz.size*py.size)
+    lons = np.repeat(px, pz.size * py.size)
 
     if xlog:
         xlog['new'] = pz.size * py.size * px.size * repeats
@@ -308,7 +252,8 @@ def del_westward(pset):
     inds, = np.where((pset.particle_data['u'] <= 0.) & (pset.particle_data['age'] == 0.))
     for d in pset.particle_data:
         pset.particle_data[d] = np.delete(pset.particle_data[d], inds, axis=0)
-    pset.particle_data['u'] = (np.cos(pset.particle_data['lat'] * math.pi/180, dtype=np.float32) * 1852 * 60 * pset.particle_data['u'])
+    pset.particle_data['u'] = (np.cos(pset.particle_data['lat'] * math.pi / 180,
+                                      dtype=np.float32) * 1852 * 60 * pset.particle_data['u'])
     return pset
 
 
@@ -329,9 +274,35 @@ def log_simulation(xlog, rank, logger):
                          xlog['new_r'], xlog['west_r'], xlog['start_r']))
 
 
-def pset_from_file(fieldset, pclass, filename, repeatdt=None,
-                   restart=True, restarttime=np.nanmin, reduced=True,
-                   lonlatdepth_dtype=np.float32, xlog=None, spinup=None, **kwargs):
+def zparticle(fieldset, reduced=False, dtype=np.float32, **kwargs):
+    """Particle class."""
+
+    class zParticle(JITParticle):
+        """Particle class that saves particle age and zonal velocity."""
+
+        age = Variable('age', initial=0., dtype=dtype)
+        u = Variable('u', initial=fieldset.U, to_write='once', dtype=dtype)
+        zone = Variable('zone', initial=0., dtype=dtype)
+        distance = Variable('distance', initial=0., dtype=dtype)
+        unbeached = Variable('unbeached', initial=0., dtype=dtype)
+
+        if not reduced:
+            prev_lon = Variable('prev_lon', initial=kwargs['lon'],
+                                to_write=False, dtype=dtype)
+            prev_lat = Variable('prev_lat', initial=kwargs['lat'],
+                                to_write=False, dtype=dtype)
+            prev_depth = Variable('prev_depth', initial=kwargs['depth'],
+                                  to_write=False, dtype=dtype)
+            beached = Variable('beached', initial=0., to_write=False,
+                               dtype=dtype)
+            land = Variable('land', initial=0., to_write=False, dtype=dtype)
+
+    return zParticle
+
+
+def pset_from_file(fieldset, pclass, filename, repeatdt=None, restart=True,
+                   restarttime=np.nanmin, reduced=True, xlog=None,
+                   lonlatdepth_dtype=np.float32, **kwargs):
     """Initialise the ParticleSet from a netcdf ParticleFile.
 
     This creates a new ParticleSet based on locations of all particles written
@@ -356,9 +327,9 @@ def pset_from_file(fieldset, pclass, filename, repeatdt=None,
     vars['id'] = np.ma.filled(pfile.variables['trajectory'], np.nan)
 
     if reduced and isinstance(vars['time'][0], np.timedelta64):
-        vars['time'] = np.array([t/np.timedelta64(1, 's') for t in vars['time']])
+        vars['time'] = np.array([t / np.timedelta64(1, 's') for t in vars['time']])
     elif not reduced and isinstance(vars['time'][0, 0], np.timedelta64):
-        vars['time'] = np.array([t/np.timedelta64(1, 's') for t in vars['time']])
+        vars['time'] = np.array([t / np.timedelta64(1, 's') for t in vars['time']])
 
     if reduced:
         for v in vars:
@@ -380,8 +351,7 @@ def pset_from_file(fieldset, pclass, filename, repeatdt=None,
                 vars[v] = vars[v][inds[0]]
             if v not in ['lon', 'lat', 'depth', 'time', 'id']:
                 kwargs[v] = vars[v]
-    if spinup:
-        vars['time'] = vars['time'] * 0 + spinup
+
     if restart:
         pclass.setLastID(0)  # reset to zero offset
     else:
@@ -391,6 +361,7 @@ def pset_from_file(fieldset, pclass, filename, repeatdt=None,
                        lat=vars['lat'], depth=vars['depth'], time=vars['time'],
                        pid_orig=vars['id'], repeatdt=repeatdt,
                        lonlatdepth_dtype=lonlatdepth_dtype, **kwargs)
+
     if reduced and 'nextid' in pfile.variables:
         pclass.setLastID(pfile.variables['nextid'].item())
     else:
@@ -409,28 +380,61 @@ def pset_from_file(fieldset, pclass, filename, repeatdt=None,
 
 
 def get_plx_id(exp, lon, v, r):
-    xid = cfg.data/'plx_{}_{}_v{}r{:02d}.nc'.format(exp, lon, v, r)
+    xid = cfg.data / 'v{}/plx_{}_{}_v{}r{:02d}.nc'.format(v, exp, lon, v, r)
     return xid
 
 
-def open_plx_data(xid):
+def get_plx_id_year(exp, lon, v, y):
+    xid = cfg.data / 'v{}y/plx_{}_{}_v{}_{}.nc'.format(v, exp, lon, v, y)
+    return xid
+
+
+def open_plx_data(xid, **kwargs):
     """Open plx dataset."""
-    ds = xr.open_dataset(str(xid), decode_cf=False)
+    ds = xr.open_dataset(str(xid), mask_and_scale=True, **kwargs)
+    # engine='h5netcdf', chunks=None
     if cfg.home == Path('E:/'):
-        ds = ds.isel(traj=np.linspace(0, 1234, 120, dtype=int))  # !!!xifd
-    ds.coords['traj'] = ds.trajectory.isel(obs=0)
-    ds.coords['obs'] = ds.obs + (601 * int(xid.stem[-2:]))
+        # Subset to N trajectories.
+        N = 720
+        ds = ds.isel(traj=np.linspace(0, ds.traj.size - 1, N, dtype=int)) # !!!
+    ds['trajectory'] = ds.trajectory.astype(np.float32, copy=False)
+    ds.coords['traj'] = ds.trajectory.astype(np.int32, copy=False).isel(obs=0)
+    ds.coords['obs'] = ds.obs.astype(np.int32, copy=False) + (601 * int(xid.stem[-2:]))
     return ds
 
 
-def combine_plx_datasets(exp, lon, v, r_range=[0, 9]):
+def combine_plx_datasets(exp, lon, v, r_range=[0, 10], **kwargs):
     """Combine plx datasets."""
     xids = [get_plx_id(exp, lon, v, r) for r in range(*r_range)]
-    dss = [open_plx_data(xid) for xid in xids]
-    ds = xr.combine_by_coords(dss, data_vars="minimal")
-    return xids, dss, ds
+    dss = [open_plx_data(xid, **kwargs) for xid in xids]
+    ds = xr.combine_nested(dss, 'obs', data_vars="minimal", combine_attrs='override')
+    return xids, ds
 
 
 def plx_snapshot(ds, var, value):
     """Return traj, obs indices of variable matching value."""
     return np.where(np.ma.filled(ds.variables[var], np.nan) == value)
+
+
+def drop_particles(ds, traj):
+    """Drop trajectoroies from dataset."""
+    return ds.where(~ds.traj.isin(traj), drop=True)
+
+
+def filter_by_year(ds, year):
+    """Select trajectories based on release (sink) year."""
+    # Indexes where particles are released (age=0).
+    dx = ds.where(ds.age == 0, drop=True)
+    traj = dx.where(dx['time.year'].max(dim='obs') == year, drop=True).traj
+    return ds.sel(traj=traj)
+
+
+def get_zone_info(ds, zone):
+    """Get trajectories of particles that enter a zone."""
+    ds_z = ds.where(ds.zone == zone, drop=True)
+    traj = ds_z.traj   # Trajectories that reach zone.
+    if traj.size > 0:
+        age = ds_z.age.min('obs')  # Age when first reaches zone.
+    else:
+        age = ds_z.age * np.nan  # BUG?
+    return traj, age

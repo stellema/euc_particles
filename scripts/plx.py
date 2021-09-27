@@ -7,6 +7,7 @@ author: Annette Stellema (astellemas@gmail.com)
 
 import math
 import numpy as np
+import pandas as pd
 from pathlib import Path
 from operator import attrgetter
 from datetime import datetime, timedelta
@@ -16,7 +17,7 @@ from parcels import (Variable, JITParticle)
 import cfg
 from tools import mlogger, timer
 from main import (ofam_fieldset, pset_euc, del_westward, generate_xid,
-                  pset_from_file, log_simulation)
+                  pset_from_file, log_simulation, zparticle)
 from kernels import (AdvectionRK4_Land, BeachTest, UnBeachR,
                      AgeZone, Distance, recovery_kernels)
 
@@ -44,9 +45,6 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
         v (int, optional): Version number to save file. Defaults to 1.
         pfile (str, optional): Restart ParticleFile. Defaults to 'None'.
 
-    Returns:
-        None.
-
     """
     ts = datetime.now()
     xlog = {'file': 0, 'new': 0, 'west_r': 0, 'new_r': 0, 'final_r': 0,
@@ -62,37 +60,27 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
     if not final:
         while runtime_days % repeatdt_days != 0:
             runtime_days += 1
+
     runtime = timedelta(days=int(runtime_days))
-    repeats = math.floor(runtime/repeatdt)
+    repeats = math.floor(runtime / repeatdt)
 
     # Don't add final repeat if run ends on a repeat day.
     if not final and runtime_days % repeatdt_days == 0:
         repeats -= 1
 
     # Create time bounds for fieldset based on experiment.
-    if exp == 'hist':
-        y1 = 1981 if cfg.home != Path('E:/') else 2012
-        time_bnds = [datetime(y1, 1, 1), datetime(2012, 12, 31)]
-    elif exp == 'rcp':
-        time_bnds = [datetime(2070, 1, 1), datetime(2101, 12, 31)]
+    i = 0 if exp == 'hist' else -1
+    y1, y2 = cfg.years[i]
+    time_bnds = [datetime(y1, 1, 1), datetime(y2, 12, 31)]
+
+    if cfg.home == Path('E:/'):
+        y1 = 2012
+        time_bnds = [datetime(y1, 1, 1), datetime(y2, 1, 31)]  #!!!
 
     fieldset = ofam_fieldset(time_bnds, exp)
 
-    class zParticle(JITParticle):
-        """Particle class that saves particle age and zonal velocity."""
-
-        age = Variable('age', initial=0., dtype=np.float32)
-        u = Variable('u', initial=fieldset.U, to_write='once', dtype=np.float32)
-        zone = Variable('zone', initial=0., dtype=np.float32)
-        distance = Variable('distance', initial=0., dtype=np.float32)
-        prev_lon = Variable('prev_lon', initial=attrgetter('lon'), to_write=False, dtype=np.float32)
-        prev_lat = Variable('prev_lat', initial=attrgetter('lat'), to_write=False, dtype=np.float32)
-        prev_depth = Variable('prev_depth', initial=attrgetter('depth'), to_write=False, dtype=np.float32)
-        beached = Variable('beached', initial=0., to_write=False, dtype=np.float32)
-        unbeached = Variable('unbeached', initial=0., dtype=np.float32)
-        land = Variable('land', initial=0., to_write=False, dtype=np.float32)
-
-    pclass = zParticle
+    pclass = zparticle(fieldset, reduced=False, lon=attrgetter('lon'),
+                       lat=attrgetter('lat'), depth=attrgetter('depth'))
 
     # Start from end of Fieldset time or restart from ParticleFile.
     if not restart:
@@ -118,7 +106,7 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
         xid = generate_xid(lon, v, exp, restart=True, xlog=xlog)
 
         # Change pset file to last run.
-        filename = cfg.data/'r_{}.nc'.format(xid.stem)
+        filename = cfg.data / 'v{}/r_{}.nc'.format(xlog['v'], xid.stem)
 
         # Create ParticleSet from the given ParticleFile.
         pset = pset_from_file(fieldset, pclass, filename, reduced=True,
@@ -132,10 +120,14 @@ def run_EUC(dy=0.1, dz=25, lon=165, exp='hist', dt_mins=60, repeatdt_days=6,
         xlog['start_r'] = pset.size
 
     # Create output ParticleFile p_name and time steps to write output.
-    output_file = pset.ParticleFile(cfg.data/xid.stem, outputdt=outputdt)
+    output_file = pset.ParticleFile(cfg.data / 'v{}/{}'.format(xlog['v'], xid.stem), outputdt=outputdt)
 
     # ParticleSet start time (for log).
-    start = (fieldset.time_origin.time_origin + timedelta(seconds=pset_start))
+    try:
+        start = (fieldset.time_origin.time_origin + timedelta(seconds=pset_start))
+    except:
+        start = (pd.Timestamp(fieldset.time_origin.time_origin) + timedelta(seconds=pset_start))
+
     xlog['id'] = xid.stem
     xlog['Ti'] = start.strftime('%Y-%m-%d')
     xlog['Tf'] = (start - runtime).strftime('%Y-%m-%d')
@@ -189,7 +181,7 @@ if __name__ == "__main__" and cfg.home.drive != 'E:':
     p.add_argument('-dt', '--dt', default=60, type=int, help='Advection timestep [min].')
     p.add_argument('-rdt', '--repeatdt', default=6, type=int, help='Release repeat [day].')
     p.add_argument('-out', '--outputdt', default=2, type=int, help='Advection write freq [day].')
-    p.add_argument('-v', '--version', default=0, type=int, help='File Index.')
+    p.add_argument('-v', '--version', default=1, type=int, help='File Index.')
     p.add_argument('-f', '--restart', default=1, type=int, help='Particle file.')
     p.add_argument('-final', '--final', default=0, type=int, help='Final run.')
     args = p.parse_args()
@@ -200,12 +192,14 @@ if __name__ == "__main__" and cfg.home.drive != 'E:':
             v=args.version, restart=args.restart, final=args.final)
 
 elif __name__ == "__main__":
-    dy, dz, lon = 1, 150, 190
-    dt_mins, repeatdt_days, outputdt_days, runtime_days = 60, 6, 2, 36
-    restart = False
     v = 72
+    lon = 165
     exp = 'hist'
+    runtime_days = 30
+    restart = False
     final = False
-    run_EUC(dy=dy, dz=dz, lon=lon, dt_mins=dt_mins,
-            repeatdt_days=repeatdt_days, outputdt_days=outputdt_days,
-            v=v, runtime_days=runtime_days, restart=restart, final=final)
+    dy, dz = 2, 200
+    dt_mins, repeatdt_days, outputdt_days = 120, 6, 2
+    run_EUC(dy, dz=dz, lon=lon, dt_mins=dt_mins, repeatdt_days=repeatdt_days,
+            outputdt_days=outputdt_days, v=v, runtime_days=runtime_days,
+            restart=restart, final=final)

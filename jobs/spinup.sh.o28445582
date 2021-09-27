@@ -1,0 +1,14 @@
+Run plx spinup for hist at lon 250.
+[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m
+======================================================================================
+                  Resource Usage on 2021-09-15 20:16:35:
+   Job Id:             28445582.gadi-pbs
+   Project:            e14
+   Exit Status:        1
+   Service Units:      4.59
+   NCPUs Requested:    48                     NCPUs Used: 48              
+                                           CPU Time Used: 00:28:18                                   
+   Memory Requested:   192.0GB               Memory Used: 18.94GB         
+   Walltime requested: 16:00:00            Walltime Used: 00:02:52        
+   JobFS requested:    100.0MB                JobFS used: 8.16MB          
+======================================================================================

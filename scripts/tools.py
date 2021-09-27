@@ -20,7 +20,7 @@ import pandas as pd
 from scipy import stats
 from pathlib import Path
 from functools import wraps
-from datetime import datetime, timedelta
+from datetime import datetime
 import matplotlib.pyplot as plt
 import matplotlib.colors as colors
 from matplotlib.offsetbox import AnchoredText
@@ -44,7 +44,7 @@ def mlogger(name, parcels=False, misc=True):
     loggers = cfg.loggers
     name = 'misc' if misc else name
     if Path(sys.argv[0]).stem in ['plx', 'plx_test']:
-        name = 'sim' if cfg.home != Path('E:/') else 'test_sim'
+        name = 'plx' if cfg.home != Path('E:/') else 'plx_test'
         parcels = True
         misc = False
 
@@ -67,7 +67,7 @@ def mlogger(name, parcels=False, misc=True):
             logger = logging.getLogger(name)
         # Create handlers
         c_handler = logging.StreamHandler()
-        f_handler = logging.FileHandler(cfg.log/'{}.log'.format(name))
+        f_handler = logging.FileHandler(cfg.log / '{}.log'.format(name))
         c_handler.setLevel(logging.DEBUG)
         f_handler.setLevel(logging.DEBUG)
 
@@ -144,8 +144,9 @@ def timeit(method):
         h, rem = divmod((te - ts).total_seconds(), 3600)
         m, s = divmod(rem, 60)
 
-        logger.info('{}: {:}:{:}:{:05.2f} total: {:.2f} seconds.'.format(
-                method.__name__, int(h), int(m), s, (te - ts).total_seconds()))
+        logger.info('{}: {:}:{:}:{:05.2f} total: {:.2f} seconds.'
+                    .format(method.__name__, int(h), int(m), s,
+                            (te - ts).total_seconds()))
 
         return result
 
@@ -166,6 +167,7 @@ def idx(array, value, method='closest'):
         array = array.values
     except:
         pass
+
     ind = int(np.abs(array - value).argmin())
 
     if method == 'greater':  # If less than value, increase index.
@@ -208,16 +210,17 @@ def idx2d(lat, lon, lat2f, lon2f, method='closest'):
     if method == 'greater_lat':
         if lat[j, i] < lat2f:
             try:
-                if lat[j+1, i] >= lat[j, i]:
+                if lat[j + 1, i] >= lat[j, i]:
                     j = j + 1
                 else:
                     j = j - 1
             except:
                 pass
+
     elif method == 'lower_lat':
         if lat[j, i] > lat2f:
             try:
-                if lat[j-1, i] <= lat[j, i]:
+                if lat[j - 1, i] <= lat[j, i]:
                     j = j - 1
                 else:
                     j = j + 1
@@ -252,21 +255,23 @@ def legend_without_duplicate_labels(ax, loc=False, fontsize=11):
 
 
 def roundup(x):
+    """Round up."""
     return int(math.ceil(x / 10.0)) * 10
 
 
 def rounddown(x):
+    """Round down."""
     return int(math.floor(x / 10.0)) * 10
 
 
 def deg_m(lat, lon, deg=0.1):
     """Convert latitude and longitude values or arrays to metres."""
-    arc = ((np.pi*cfg.EARTH_RADIUS)/180)
+    arc = (np.pi * cfg.EARTH_RADIUS) / 180
 
-    dy = deg*arc
-    dx = deg*arc * np.cos(np.radians(lat))
+    dy = deg * arc
+    dx = deg * arc * np.cos(np.radians(lat))
     if type(lon) != (int or float):
-        dy = np.array([deg*arc for i in lon])
+        dy = np.array([deg * arc for i in lon])
 
     return dx, dy
 
@@ -274,28 +279,29 @@ def deg_m(lat, lon, deg=0.1):
 def deg2m(lat1, lon1, lat2, lon2):
     """Find distance in metres between two lat/lon points."""
     # Convert latitude and longitude to spherical coordinates in radians.
-    degrees_to_radians = math.pi/180.0
+    degrees_to_radians = math.pi / 180.0
 
     # phi = 90 - latitude
-    phi1 = (90.0 - lat1)*degrees_to_radians
-    phi2 = (90.0 - lat2)*degrees_to_radians
+    phi1 = (90.0 - lat1) * degrees_to_radians
+    phi2 = (90.0 - lat2) * degrees_to_radians
 
     # theta = longitude
-    theta1 = lon1*degrees_to_radians
-    theta2 = lon2*degrees_to_radians
+    theta1 = lon1 * degrees_to_radians
+    theta2 = lon2 * degrees_to_radians
 
     # Compute spherical dst from spherical coordinates.
-    cos = (math.sin(phi1)*math.sin(phi2)*math.cos(theta1 - theta2) +
-           math.cos(phi1)*math.cos(phi2))
+    sph = (math.sin(phi1) * math.sin(phi2) * math.cos(theta1 - theta2)
+           + math.cos(phi1) * math.cos(phi2))
 
     # Cheap way to avoid acos math domain error.
-    if cos > 1:
-        cos = math.floor(cos)
-    elif cos < -1:
-        cos = math.ceil(cos)
-    arc = math.acos(cos)
+    if sph > 1:
+        sph = math.floor(sph)
+    elif sph < -1:
+        sph = math.ceil(sph)
 
-    return arc*cfg.EARTH_RADIUS
+    arc = math.acos(sph)
+
+    return arc * cfg.EARTH_RADIUS
 
 
 def precision(var):
@@ -344,12 +350,10 @@ def correlation_str(cor):
 
     Returns:
         sig_str (str): The rounded significance in a string.
-
     """
     if cor[1] <= 0.001:
         sig_str = 'p<0.001'
     elif cor[1] <= 0.01 and cor[1] >= 0.001:
-
         sig_str = 'p=' + str(np.around(cor[1], 3))
     else:
         if cor[1] < 0.05:
@@ -379,7 +383,8 @@ def coord_formatter(array, convert='lat'):
         new[east] = (pd.Series(est) + '°W').to_numpy()
     elif convert == 'lon_360':
         new = np.empty(np.shape(array), dtype=object)
-        arr = [s.rstrip('0').rstrip('.') if '.' in s else s for s in array.astype(str)]
+        arr = [s.rstrip('0').rstrip('.') if '.' in s else s
+               for s in array.astype(str)]
         new = (pd.Series(arr) + '°E').to_numpy()
     elif convert == 'lat':
         south = np.where(array < 0)
@@ -451,7 +456,6 @@ def coriolis(lat):
     beta : float
         Rossby parameter
     """
-
     # Coriolis parameter.
     f = 2 * cfg.OMEGA * np.sin(np.radians(lat))  # [rad/s]
 
@@ -503,16 +507,18 @@ def wind_stress_curl(du, dv, lat=None, lon=None, w=0.5, wy=None):
     du_dx, du_dy = np.gradient(du.values, axis=(-2, -1))
     dv_dx, dv_dy = np.gradient(dv.values, axis=(-2, -1))
     curl = dv_dy / DX - du_dx / DY
-    curl = xr.DataArray(np.ma.masked_array(curl, np.isnan(curl)), dims=dims, coords=coords)
+    curl = xr.DataArray(np.ma.masked_array(curl, np.isnan(curl)),
+                        dims=dims, coords=coords)
     return curl
 
 
 def zonal_sverdrup(curl, lat, lon, SFinit=0):
     """Zonal Sverdrup transport from wind stress curl.
 
-    Once you have calculated the stramfunction at all latitudes, you can calculate the
-    depth integrated zonal flow e.g. sverdrup at 2S,180E minus sverdrup at 2N,180E will
-    give the depth integrated zonal transport between +/-2o across the date line.
+    Once you have calculated the stramfunction at all latitudes, you can
+    calculate the depth integrated zonal flow e.g. sverdrup at 2S,180E minus
+    sverdrup at 2N,180E will give the depth integrated zonal transport between
+    +/-2o across the date line.
 
     function sverdrup=sverdrup_from_curl(lat,lon,curl,SFinit);
 
@@ -583,23 +589,19 @@ def cor_scatter_plot(fig, i, varx, vary,
     varx = varx[mask]
     vary = vary[mask]
 
-    # logger.debug('R={:.2f}, p={:.3f} (stats.spearmanr)'.format(cor_r, cor_p))
-    # logger.debug('Slope={:.2f} Intercept={:.2f} R={:.2f} P={:.3f} stder={:.2f}'
-    #              .format(slope, intercept, r_val, p_val, std_err))
-
     ax = fig.add_subplot(1, 3, i)
     ax.set_title(name, loc='left')
     ax.scatter(varx, vary, color='b', s=8)
 
     sig_str = correlation_str([cor_r, cor_p])
-    atext = AnchoredText('$\mathregular{r_s}$' + '={}, {}'.format(
-        np.around(cor_r, 2), sig_str), loc=cor_loc)
+    atext = AnchoredText('$\mathregular{r_s}$' + '={}, {}'
+                         .format(np.around(cor_r, 2), sig_str), loc=cor_loc)
     ax.add_artist(atext)
     ax.plot(np.unique(varx),
             np.poly1d(np.polyfit(varx, vary, 1))(np.unique(varx)), 'k')
 
     # Alternative line of best fit.
-    plt.plot(varx, slope*varx + intercept, 'k',
+    plt.plot(varx, slope * varx + intercept, 'k',
              label='y={:.2f}x+{:.2f}'.format(slope, intercept))
     if xlabel is None:
         xlabel = 'Maximum velocity [m/s]'
@@ -625,9 +627,9 @@ def open_tao_data(frq='mon', dz=slice(10, 355), SI=True):
 
     """
     # Open data sets at each longitude.
-    dU_165 = xr.open_dataset(cfg.tao/'adcp0n165e_{}.cdf'.format(frq))
-    dU_190 = xr.open_dataset(cfg.tao/'adcp0n170w_{}.cdf'.format(frq))
-    dU_220 = xr.open_dataset(cfg.tao/'adcp0n140w_{}.cdf'.format(frq))
+    dU_165 = xr.open_dataset(cfg.tao / 'adcp0n165e_{}.cdf'.format(frq))
+    dU_190 = xr.open_dataset(cfg.tao / 'adcp0n170w_{}.cdf'.format(frq))
+    dU_220 = xr.open_dataset(cfg.tao / 'adcp0n140w_{}.cdf'.format(frq))
 
     # Select depth levels. Note that files only contain data at one location.
     dU_165 = dU_165.sel(lat=0, lon=165, depth=dz)
@@ -638,9 +640,9 @@ def open_tao_data(frq='mon', dz=slice(10, 355), SI=True):
     div_unit = 100 if SI else 1
 
     # Remove missing values and convert to SI units if requested.
-    du_165 = dU_165.where(dU_165['u_1205'] != dU_165.missing_value)/div_unit
-    du_190 = dU_190.where(dU_190['u_1205'] != dU_165.missing_value)/div_unit
-    du_220 = dU_220.where(dU_220['u_1205'] != dU_165.missing_value)/div_unit
+    du_165 = dU_165.where(dU_165['u_1205'] != dU_165.missing_value) / div_unit
+    du_190 = dU_190.where(dU_190['u_1205'] != dU_165.missing_value) / div_unit
+    du_220 = dU_220.where(dU_220['u_1205'] != dU_165.missing_value) / div_unit
 
     # logger.debug('Opening TAO {} data. Depth={}. SI={}'.format(frq, dz, SI))
     return [du_165, du_190, du_220]
@@ -648,7 +650,7 @@ def open_tao_data(frq='mon', dz=slice(10, 355), SI=True):
 
 def get_edge_depth(z, index=True, edge=True, greater=False):
     """Integration OFAM3 depth levels."""
-    dg = xr.open_mfdataset([cfg.ofam/'ocean_{}_2012_01.nc'.format(v)
+    dg = xr.open_mfdataset([cfg.ofam / 'ocean_{}_2012_01.nc'.format(v)
                             for v in ['u', 'w']])
     zi = idx(dg.st_ocean, z)
     zi = zi + 1 if dg.st_ocean[zi] < z and greater else zi
@@ -662,7 +664,8 @@ def get_edge_depth(z, index=True, edge=True, greater=False):
 
 
 def get_depth_width():
-    dz = xr.open_dataset(cfg.data/'ofam_mesh_grid.nc')
+    """OFAM3 vertical coordinate cell depth."""
+    dz = xr.open_dataset(cfg.data / 'ofam_mesh_grid.nc')
     st_ocean = dz['st_ocean']  # Copy st_ocean coords
     dz = dz.st_edges_ocean.diff(dim='st_edges_ocean')
     dz = dz.rename({'st_edges_ocean': 'st_ocean'})
@@ -688,7 +691,7 @@ def tidy_files(logs=True, jobs=True):
 
 def create_mesh_grid():
     """Create OFAM3 mesh mask."""
-    f = [cfg.ofam/'ocean_{}_1981_01.nc'.format(var) for var in ['u', 'w']]
+    f = [cfg.ofam / 'ocean_{}_1981_01.nc'.format(var) for var in ['u', 'w']]
     ds = xr.open_mfdataset(f, combine='by_coords')
     mesh = xr.Dataset(coords=ds.coords)
     mesh = mesh.drop(['nv', 'Time'])
@@ -697,11 +700,11 @@ def create_mesh_grid():
         mesh.coords[c] = mesh.coords[c].astype(dtype=np.float32)
         mesh.coords[c].encoding['dtype'] = np.dtype('float32')
 
-    mesh.to_netcdf(cfg.data/'ofam_mesh_grid.nc')
+    mesh.to_netcdf(cfg.data / 'ofam_mesh_grid.nc')
     for c in mesh.coords.variables:
         if c in ['st_edges_ocean', 'sw_edges_ocean']:
             mesh = mesh.drop(c)
-    mesh.to_netcdf(cfg.data/'ofam_mesh_grid_part.nc')
+    mesh.to_netcdf(cfg.data / 'ofam_mesh_grid_part.nc')
 
     ds.close()
     mesh.close()
@@ -718,22 +721,24 @@ def zone_cmap():
 
 def zone_field(plot=False, savefile=True):
     """Create fieldset or plot zone definitions."""
-    file = [str(cfg.ofam/'ocean_{}_1981_01.nc'.format(v)) for v in ['u', 'w']]
+    file = [str(cfg.ofam / 'ocean_{}_1981_01.nc'.format(v)) for v in ['u', 'w']]
     dr = xr.open_mfdataset(file, combine='by_coords')
     dr = dr.isel(st_ocean=slice(0, 1), Time=slice(0, 1))
     d = dr.u.where(np.isnan(dr.u), 0)
     d = d.rename({'st_ocean': 'sw_ocean'})
     d.coords['sw_ocean'] = np.array([5.0], dtype=np.float32)
-    for n, zone in enumerate(cfg.zones):
-        coords = cfg.zones[zone]
+    for zone in cfg.zones.list_all:
+        coords = zone.loc
         coords = [coords] if type(coords[0]) != list else coords
         for c in coords:
             xx = [d.xu_ocean[idx(d.xu_ocean, i)].item() for i in c[0:2]]
             yy = [d.yu_ocean[idx(d.yu_ocean, i)].item() for i in c[2:4]]
             d = xr.where((d.xu_ocean >= xx[0]) & (d.xu_ocean <= xx[1]) &
-                         (d.yu_ocean >= yy[0]) & (d.yu_ocean <= yy[1]), n+1, d)
+                         (d.yu_ocean >= yy[0]) & (d.yu_ocean <= yy[1]), zone.id, d)
+
     # Correctly order array dimensions.
     d = d.transpose('Time', 'sw_ocean', 'yu_ocean', 'xu_ocean')
+
     # Create dataset.
     if savefile:
         ds = d.to_dataset(name='zone')
@@ -743,12 +748,13 @@ def zone_field(plot=False, savefile=True):
 
         ds.attrs['history'] = 'Created {}.'.format(datetime.now().strftime("%Y-%m-%d"))
         ds = ds.chunk()
-        ds.to_netcdf(cfg.data/'ofam_field_zone.nc')
+        ds.to_netcdf(cfg.data / 'ofam_field_zone.nc')
         ds.close()
     if plot:
         dz = d[0, 0].sel(yu_ocean=slice(-10, 10.11), xu_ocean=slice(120.1, 255))
         lon = np.append([120], np.around(dz.xu_ocean.values, 1))
         lat = np.append([-10.1], np.around(dz.yu_ocean.values, 2))
+
         # Colour map.
         zcl = ['darkorange', 'deeppink', 'mediumspringgreen', 'deepskyblue',
                'seagreen', 'blue', 'red', 'darkviolet', 'k', 'm']
@@ -758,28 +764,32 @@ def zone_field(plot=False, savefile=True):
 
         fig = plt.figure(figsize=(16, 9))
         cs = plt.pcolormesh(lon, lat, dz.values, cmap=cmap, edgecolors='face',
-                            shading='flat', linewidth=6, vmin=0.5)
+                            shading='flat', linewidth=30, vmin=0.5)
 
         plt.xticks(lon[::100], coord_formatter(lon[::100], 'lon'))
         plt.yticks(lat[::25], coord_formatter(lat[::25], 'lat'))
         cbar = fig.colorbar(cs, ticks=range(1, 10), orientation='horizontal',
                             boundaries=np.arange(0.5, 9.6), pad=0.075)
-        znm = ['{}:{}'.format(i+1, z) for i, z in enumerate(cfg.zone_names)]
+        znm = ['{}:{}'.format(i + 1, z)
+               for i, z in enumerate([z.name_full for z in cfg.zones.list_all])]
         cbar.ax.set_xticklabels(znm[:-1], fontsize=10)
-        plt.savefig(cfg.fig/'particle_boundaries.png')
+        plt.savefig(cfg.fig / 'particle_boundaries.png')
     return
 
 
 def get_spinup_start(exp="hist", years=5):
     ix = 0 if exp == "hist" else 1
+
     # Fieldset start/end dates (to convert relative seconds).
     start = datetime(cfg.years[ix][0], 1, 1)
+
     # Date to start spinup particles.
-    spin = datetime(cfg.years[ix][0] + years, 1, 1)  # (2002, 12, 31)/(2091, 12, 30)
+    spin = datetime(cfg.years[ix][0] + years, 1, 1)
     dspin = spin - start
+
     # Relative spinup particle start.
     spin_rel = int(dspin.total_seconds())
     print('{} Spinup: {}y/{}d/{}s: {} to {}'
-          .format(cfg.expx[ix], years, dspin.days, spin_rel, start.strftime('%Y-%m-%d'),
-                  spin.strftime('%Y-%m-%d')))
+          .format(cfg.expx[ix], years, dspin.days, spin_rel,
+                  start.strftime('%Y-%m-%d'), spin.strftime('%Y-%m-%d')))
     return spin_rel
