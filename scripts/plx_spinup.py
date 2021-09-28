@@ -24,7 +24,7 @@ try:
 except ImportError:
     MPI = None
 
-logger = mlogger('plx')
+logger = mlogger('plx', parcels=True, misc=False)
 
 
 def spinup(lon=165, exp='hist', v=1, runtime_years=3, spinup_year_offset=0):
