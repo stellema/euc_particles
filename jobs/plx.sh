@@ -22,4 +22,4 @@ source /g/data/e14/as3189/conda/envs/analysis3-20.01/bin/activate
 
 ECHO=/bin/echo
 $ECHO "Run plx for $EXP at lon $LON."
-mpirun -np 48 python3 /g/data/e14/as3189/OFAM/scripts/plx.py -e $EXP -x $LON -r 1200 -v 1 -f 1
+mpirun -np 48 python3 /g/data/e14/as3189/stellema/plx/scripts/plx.py -e $EXP -x $LON -r 1200 -v 1 -f 1

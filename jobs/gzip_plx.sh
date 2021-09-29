@@ -9,7 +9,7 @@
 #PBS -m ae
 #PBS -M astellemas@gmail.com
 
-cd /g/data/e14/as3189/OFAM/data/v1
+cd /g/data/e14/as3189/stellema/plx/data/v1
 for file in plx*rcp*250*.nc; do
     gzip --best -kvc $file > /scratch/e14/as3189/plxv1/${file}.gz
 done

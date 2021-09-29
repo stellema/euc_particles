@@ -7,5 +7,5 @@
 #PBS -l storage=gdata/e14
 #PBS -l wd
 
-cd /g/data/e14/as3189/OFAM/data/v1
+cd /g/data/e14/as3189/stellema/plx/data/v1
 gunzip -v *v1r09*.gz

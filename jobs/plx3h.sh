@@ -14,4 +14,4 @@ module load conda
 source /g/data/e14/as3189/conda/envs/analysis3-20.01/bin/activate
 EXP="hist"
 LON=250
-python3 /g/data/e14/as3189/OFAM/scripts/plx_particleset.py -e $EXP -x $LON -r 1200 -v 1
+python3 /g/data/e14/as3189/stellema/plx/scripts/plx_particleset.py -e $EXP -x $LON -r 1200 -v 1
