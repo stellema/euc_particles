@@ -28,15 +28,12 @@ except ImportError:
 logger = mlogger('plx', parcels=True, misc=False)
 
 
-def spinup_particleset(lon=165, exp='hist', v=1, spinup_year_offset=0):
+def spinup_particleset(lon=165, exp='hist', v=1, year_offset=0):
     """Run Lagrangian EUC particle experiment."""
     xlog = {'file': 0, 'v': v}
 
-
     # Create time bounds for fieldset based on experiment.
     i = 0 if exp == 'hist' else -1
-    spinup = get_spinup_year(i, spinup_year_offset)
-
     y1, y2 = cfg.years[i]
     y1 = 2012 if cfg.home == Path('E:/') and exp == 'hist' else y1
     time_bnds = [datetime(y1, 1, 1), datetime(y1, 12, 31)]
@@ -50,9 +47,10 @@ def spinup_particleset(lon=165, exp='hist', v=1, spinup_year_offset=0):
     xlog['id'] = xid.stem
 
     # Change pset file to last run.
-    file = xid.parent / '{}{:02d}.nc'.format(xid.stem[:-2], xlog['r'] - 1)
-    # subfolder = 'spinup_{}'.format(spinup) if xlog['r'] >= 6 else None
-    save_file = xid.parent / 'r_{}'.format(xid.name)
+    subfolder = 'spinup_{}'.format(year_offset) if year_offset != 0 else None
+    file = xid.parent / '{}/{}{:02d}.nc'.format(subfolder, xid.stem[:-2], xlog['r'] - 1)
+
+    save_file = xid.parent / '{}/r_{}'.format(subfolder, xid.name)
     logger.info('Generating spinup restart file from: {}'.format(file.stem))
 
     # Create ParticleSet from the given ParticleFile.
@@ -64,10 +62,11 @@ def spinup_particleset(lon=165, exp='hist', v=1, spinup_year_offset=0):
     pset_start = np.nanmin(pset.time)
 
     # ParticleSet start time (for log).
+    start = fieldset.time_origin.time_origin
     try:
-        start = (fieldset.time_origin.time_origin + timedelta(seconds=pset_start))
+        start += timedelta(seconds=pset_start)
     except:
-        start = (pd.Timestamp(fieldset.time_origin.time_origin) + timedelta(seconds=pset_start))
+        start = pd.Timestamp(start) + timedelta(seconds=pset_start)
 
     xlog['Ti'] = start.strftime('%Y-%m-%d')
 
@@ -102,9 +101,10 @@ if __name__ == "__main__" and cfg.home != Path('E:/'):
     p.add_argument('-x', '--lon', default=165, type=int, help='Particle start longitude(s).')
     p.add_argument('-e', '--exp', default='hist', type=str, help='Scenario.')
     p.add_argument('-v', '--version', default=1, type=int, help='File Index.')
+    p.add_argument('-y', '--year', default=0, type=int, help='# offset years.')
 
     args = p.parse_args()
-    spinup_particleset(lon=args.lon, exp=args.exp, v=args.version)
+    spinup_particleset(lon=args.lon, exp=args.exp, v=args.version, year_offset=args.year)
 
 elif __name__ == "__main__":
     lon = 165
