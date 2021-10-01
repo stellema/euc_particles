@@ -23,7 +23,7 @@ def particle_info(xid, latest=True):
     if latest:
         r = int(xid.stem[-2:])
         r = np.max([int(f.stem[-2:]) for f in xid.parent.glob(str(xid.stem[:-2]) + '*.nc')])
-        xid = cfg.data/'{}{:02d}.nc'.format(xid.stem[:-2], r)
+        xid = xid.parent / '{}{:02d}.nc'.format(xid.stem[:-2], r)
         print(r, xid.name)
 
     ds = xr.open_dataset(str(xid), decode_cf=False)
@@ -72,14 +72,14 @@ def particle_info(xid, latest=True):
 
 if __name__ == "__main__" and cfg.home.drive != 'E:':
     p = ArgumentParser(description="""Run EUC Lagrangian experiment.""")
-    p.add_argument('-f', '--file', default='plx_hist_190_v13r00.nc', type=str,
+    p.add_argument('-f', '--file', default='plx_hist_190_v1r00.nc', type=str,
                    help='ParticleFile name.')
     p.add_argument('-n', '--latest', default=1, type=int,
                    help='Latest restart file.')
     args = p.parse_args()
     file = args.file
-    xid = cfg.data/file
+    xid = cfg.data / ('v1/' + file)
     particle_info(xid, latest=args.latest)
 elif __name__ == "__main__":
-    xid = cfg.data/'plx_hist_190_v48r00.nc'
+    xid = cfg.data / 'v{}/plx_hist_190_v{}r00.nc'.format(1)
     particle_info(xid)
