@@ -47,10 +47,9 @@ def spinup_particleset(lon=165, exp='hist', v=1, year_offset=0):
     xlog['id'] = xid.stem
 
     # Change pset file to last run.
-    subfolder = 'spinup_{}'.format(year_offset) if year_offset != 0 else None
-    file = xid.parent / '{}/{}{:02d}.nc'.format(subfolder, xid.stem[:-2], xlog['r'] - 1)
+    file = xid.parent / '{}{:02d}.nc'.format(xid.stem[:-2], xlog['r'] - 1)
 
-    save_file = xid.parent / '{}/r_{}'.format(subfolder, xid.name)
+    save_file = xid.parent / 'r_{}'.format(xid.name)
     logger.info('Generating spinup restart file from: {}'.format(file.stem))
 
     # Create ParticleSet from the given ParticleFile.
