@@ -466,17 +466,15 @@ def update_zone_recirculation(ds, lon):
     return ds
 
 
-def trim_data_at_zone(ds):
+def particle_source_subset(ds):
     """Subset particle obs to zone reached for each trajeectory."""
-    # BUG: only works if obs coord is same as position? fix: use ztime sel not isel
+    # Find obs when first non-NaN zone reached. Fill no zone found with last obs.
+    fill_value = ds.obs.max().item()
+    obs_max = ds.obs.where(ds.zone > 0.).idxmin('obs', skipna=True, 
+                                                fill_value=fill_value)
     
-    # Get index of first zone reached (non zero/NaN).
-    idx_zone = ds.zone.where(ds.zone > 0).idxmin('obs')
-    
-    # If no zones found (NaN), set to last obs.
-    idx_zone = idx_zone.fillna(ds.obs.size - 1).astype(int)
-    
-    ztime = ds.time.sel(obs=idx_zone)
-    ds = ds.where(ds.time >= ztime)
+    # Subset particle data upto reaching a boundary.
+    ds = ds.where(ds.obs <= obs_max.astype(int), drop=True)
     ds = ds.dropna('obs', 'all')
+    ds['u'] = ds.u.isel(obs=0, drop=True)  # Drop added dim.
     return ds
