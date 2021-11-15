@@ -26,38 +26,40 @@ logger = mlogger('plx_sources', parcels=False, misc=False)
 
 def plx_source_transit(lon, exp, v=1):
     file = cfg.data / 'plx_sources_{}_{}_v{}.nc'.format(cfg.exp_abr[exp], lon, v)
-    
-    logger.info('Starting {}...'.format(file.stem))
-    
-    time = np.arange(cfg.years[exp][1], cfg.years[exp][0] - 1, -1, dtype=int)
-    xids = [cfg.data / 'v{}y/plx_{}_{}_v{}_{}.nc'.format(v, cfg.exp_abr[exp], 
-                                                         lon, v, y) for y in time]
-    
-    ds = xr.open_mfdataset(xids)
 
-    for var in ['u', 'time', 'trajectory']:
+    logger.info('Starting {}...'.format(file.stem))
+
+    time = np.arange(cfg.years[exp][1], cfg.years[exp][0] - 1, -1, dtype=int)
+    xids = [cfg.data / 'v{}y/plx_{}_{}_v{}_{}.nc'.format(v, cfg.exp_abr[exp],
+                                                         lon, v, y) for y in time]
+
+    ds = xr.open_mfdataset(xids, concat_dim='traj', combine='nested')
+
+    for var in ['time', 'trajectory']:
         ds[var] = ds[var].isel(obs=0)
-        
+
     for var in ['zone', 'age', 'distance', 'unbeached']:
         ds[var] = ds[var].max('obs')
-    
+
     # Convert velocity to transport.
-    ds['u'] = ds['u'] * cfg.DXDY  
-    
+    ds['u'] = ds['u'] * cfg.DXDY
+
     # Drop extra coords and unused 'obs'.
     ds = ds.drop(['lat', 'lon', 'z', 'obs'])
-    
+
     # Stack & unstack dims: (traj) -> (time, zone, traj).
+    logger.info('Stack {}...'.format(file.stem))
     ds = ds.set_index(tzt=['time', 'zone', 'traj'])
+    logger.info('Unstack {}...'.format(file.stem))
     ds = ds.unstack('tzt')
-    
+
     # Drop traj duplicates due to unstack.
     ds = ds.dropna('traj', 'all')
 
     # Add compression encoding.
     comp = dict(zlib=True, complevel=5)
     encoding = {var: comp for var in ds.data_vars}
-    
+
     # Save dataset.
     logger.info('Saving {}...'.format(file.stem))
     ds.to_netcdf(file, encoding=encoding, compute=True)
