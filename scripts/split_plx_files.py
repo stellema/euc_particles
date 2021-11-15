@@ -11,17 +11,12 @@ r_range=[0, 4]
 """
 import numpy as np
 import xarray as xr
-from pathlib import Path
 from argparse import ArgumentParser
 
 import cfg
 from tools import mlogger
 from plx_fncs import (get_plx_id, get_plx_id_year, open_plx_data, 
-                      combine_plx_datasets, drop_particles, filter_by_year, 
-                      get_zone_info, plx_snapshot, filter_by_year, 
-                      update_zone_recirculation, 
-                      trim_data_at_zone)
-
+                      update_zone_recirculation, trim_data_at_zone)
 
 
 logger = mlogger('misc', parcels=False, misc=True)
@@ -81,7 +76,6 @@ def save_particle_data_by_year(lon, exp, v=1, r_range=[0, 10]):
             logger.debug('{}: {}: Search & combine full data: Success!'
                          .format(name, xids_new[i].stem))
             
-            
             ds = update_zone_recirculation(ds, lon)
             ds = trim_data_at_zone(ds)
             
@@ -102,4 +96,4 @@ if __name__ == "__main__":
     p.add_argument('-e', '--exp', default=0, type=int,
                     help='Historical=0 or RCP8.5=1.')
     args = p.parse_args()
-    save_particle_data_by_year(args.lon, args.exp, v=1, r_range=[0, 4])
+    save_particle_data_by_year(args.lon, args.exp, v=1, r_range=[0, 10])
