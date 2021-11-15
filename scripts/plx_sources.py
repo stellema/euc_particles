@@ -41,27 +41,32 @@ def plx_source_transit(lon, exp, v=1):
     for var in ['zone', 'age', 'distance', 'unbeached']:
         ds[var] = ds[var].max('obs')
 
-    # Convert velocity to transport.
-    ds['u'] = ds['u'] * cfg.DXDY
-
     # Drop extra coords and unused 'obs'.
     ds = ds.drop(['lat', 'lon', 'z', 'obs'])
 
+    logger.debug('Loading {}...'.format(file.stem))
+    ds = ds.load()
+
     # Stack & unstack dims: (traj) -> (time, zone, traj).
-    logger.info('Stack {}...'.format(file.stem))
+    logger.debug('Stack {}...'.format(file.stem))
     ds = ds.set_index(tzt=['time', 'zone', 'traj'])
-    logger.info('Unstack {}...'.format(file.stem))
-    ds = ds.unstack('tzt')
+
+    logger.debug('Unstack {}...'.format(file.stem))
+    ds = ds.unstack('tzt', sparse=True)
 
     # Drop traj duplicates due to unstack.
+    logger.debug('Drop duplicates {}...'.format(file.stem))
     ds = ds.dropna('traj', 'all')
 
+    # Convert velocity to transport.
+    ds['u'] = ds['u'] * cfg.DXDY
+
+    # Save dataset.
+    logger.debug('Saving {}...'.format(file.stem))
     # Add compression encoding.
     comp = dict(zlib=True, complevel=5)
     encoding = {var: comp for var in ds.data_vars}
 
-    # Save dataset.
-    logger.info('Saving {}...'.format(file.stem))
     ds.to_netcdf(file, encoding=encoding, compute=True)
     logger.info('Saved {}!'.format(file.stem))
 
