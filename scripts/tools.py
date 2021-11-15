@@ -391,7 +391,7 @@ def zone_cmap():
 
 def zone_field(plot=False, savefile=True):
     """Create fieldset or plot zone definitions."""
-    file = [str(cfg.ofam / 'ocean_{}_1981_01.nc'.format(v)) for v in ['u', 'w']]
+    file = [str(cfg.ofam / 'ocean_{}_2012_01.nc'.format(v)) for v in ['u', 'w']]
     dr = xr.open_mfdataset(file, combine='by_coords')
     dr = dr.isel(st_ocean=slice(0, 1), Time=slice(0, 1))
     d = dr.u.where(np.isnan(dr.u), 0)
@@ -420,24 +420,26 @@ def zone_field(plot=False, savefile=True):
         ds = ds.chunk()
         ds.to_netcdf(cfg.data / 'ofam_field_zone.nc')
         ds.close()
+        
     if plot:
-        dz = d[0, 0].sel(yu_ocean=slice(-10, 10.11), xu_ocean=slice(120.1, 255))
-        lon = np.append([120], np.around(dz.xu_ocean.values, 1))
-        lat = np.append([-10.1], np.around(dz.yu_ocean.values, 2))
+        dz = d[0, 0].sel(yu_ocean=slice(-10, 10), xu_ocean=slice(120.1, 255))
+        lon = dz.xu_ocean.values
+        lat = np.around(dz.yu_ocean.values, 2)
 
         # Colour map.
-        zcl = ['darkorange', 'deeppink', 'mediumspringgreen', 'deepskyblue',
-               'seagreen', 'blue', 'red', 'darkviolet', 'k', 'm']
+        zcl = cfg.ZoneData.colors
         cmap = colors.ListedColormap(zcl)
         cmap.set_bad('grey')
         cmap.set_under('white')
 
-        fig = plt.figure(figsize=(16, 9))
-        cs = plt.pcolormesh(lon, lat, dz.values, cmap=cmap, edgecolors='face',
+        fig, ax = plt.subplots(figsize=(16, 9))
+        cs = ax.pcolormesh(lon, lat, dz.values, cmap=cmap, edgecolors='face',
                             shading='flat', linewidth=30, vmin=0.5)
-
-        plt.xticks(lon[::100], coord_formatter(lon[::100], 'lon'))
-        plt.yticks(lat[::25], coord_formatter(lat[::25], 'lat'))
+        xticks = np.arange(130, 255, 10)
+        ax.set_xticks(xticks)
+        ax.set_xticklabels(coord_formatter(xticks, 'lon'))
+        ax.set_yticks(lat[::20])
+        ax.set_yticklabels(coord_formatter(lat[::20], 'lat'))
         cbar = fig.colorbar(cs, ticks=range(1, 10), orientation='horizontal',
                             boundaries=np.arange(0.5, 9.6), pad=0.075)
         znm = ['{}:{}'.format(i + 1, z)
