@@ -23,9 +23,9 @@ np.set_printoptions(suppress=True)
 
 # Setup directories.
 if Path.home().drive == 'C:':
-    home = Path('E:/')
-    repo = home / 'GitHub/plx/'
-    ofam = home / 'model_output/OFAM/trop_pac'
+    home = Path.home()
+    repo = home / 'Projects/plx/'
+    ofam = home / 'datasets/OFAM/trop_pac'
 else:
     home = Path('/g/data/e14/as3189')
     repo = home / 'stellema/plx'
@@ -108,7 +108,7 @@ class ZoneData:
                                                [120, 294.9, 14.9, 14.9],
                                                [120, 120, -15, 14.9],
                                                [294.9, 294.9, -15, 14.9]])
-    list_all = [vs, ss, mc, idn, nth, sth, ecs, ecn, ecr, oob]
+    list_all = [vs, ss, mc, ecr, ecs, ecn, idn, nth, sth, oob]
     colors = ['darkorange', 'deeppink', 'mediumspringgreen', 'deepskyblue',
               'seagreen', 'blue', 'red', 'darkviolet', 'k', 'y']
 
