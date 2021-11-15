@@ -36,7 +36,6 @@ from datetime import datetime
 from parcels import (FieldSet, ParticleSet, VectorField, Variable, JITParticle)
 
 import cfg
-from tools import coord_formatter
 
 
 def from_ofam(filenames, variables, dimensions, indices=None, mesh='spherical',
@@ -392,6 +391,7 @@ def get_next_xid(lon, v=0, exp='hist', subfolder=None, xlog=None):
 def get_spinup_year(exp=0, i=0):
     return cfg.years[exp][0] + i
 
+
 def get_plx_id_year(exp, lon, v, y):
     xid = cfg.data / 'v{}y/plx_{}_{}_v{}_{}.nc'.format(v, exp, lon, v, y)
     return xid
@@ -446,3 +446,37 @@ def get_zone_info(ds, zone):
     else:
         age = ds_z.age * np.nan  # BUG?
     return traj, age
+
+
+def update_zone_recirculation(ds, lon):
+    """Change particle trajectory "zone" of EUC recirculation.
+    
+    By default, most particles are set as EUC reciculation because they pass 
+    the recirculation interception point just to the west of their release. 
+    """
+    ds['zone'] = ds.zone.where(ds.zone != 4)
+    # Replace trajectory zone to recirculation if they are east of release lon.
+    # Between: (ds.lon > lon) & (ds.lon.round(1) <= lon + 0.1)
+    # Round: (ds.lon.round(1) == lon + 0.1)
+    ds['zone'] = (ds.zone.dims, np.where((ds.lon.round(1) == lon + 0.1) &
+                                         (ds.lat <= 2.6) & 
+                                         (ds.lat >= -2.6), 4, ds.zone.values))
+    # Fill forwards previously set NaN values.
+    ds['zone'] = ds.zone.ffill('obs')
+    return ds
+
+
+def trim_data_at_zone(ds):
+    """Subset particle obs to zone reached for each trajeectory."""
+    # BUG: only works if obs coord is same as position? fix: use ztime sel not isel
+    
+    # Get index of first zone reached (non zero/NaN).
+    idx_zone = ds.zone.where(ds.zone > 0).idxmin('obs')
+    
+    # If no zones found (NaN), set to last obs.
+    idx_zone = idx_zone.fillna(ds.obs.size - 1).astype(int)
+    
+    ztime = ds.time.sel(obs=idx_zone)
+    ds = ds.where(ds.time >= ztime)
+    ds = ds.dropna('obs', 'all')
+    return ds
