@@ -16,7 +16,11 @@ from argparse import ArgumentParser
 
 import cfg
 from tools import mlogger
-from main import (get_plx_id, get_plx_id_year, open_plx_data, combine_plx_datasets, drop_particles, filter_by_year, get_zone_info, plx_snapshot, filter_by_year)
+from plx_fncs import (get_plx_id, get_plx_id_year, open_plx_data, 
+                      combine_plx_datasets, drop_particles, filter_by_year, 
+                      get_zone_info, plx_snapshot, filter_by_year, 
+                      update_zone_recirculation, 
+                      trim_data_at_zone)
 
 
 
@@ -76,7 +80,11 @@ def save_particle_data_by_year(lon, exp, v=1, r_range=[0, 10]):
             ds = search_combine_plx_datasets(xids, traj)
             logger.debug('{}: {}: Search & combine full data: Success!'
                          .format(name, xids_new[i].stem))
-
+            
+            
+            ds = update_zone_recirculation(ds, lon)
+            ds = trim_data_at_zone(ds)
+            
             logger.debug('{}: {}: Save: ...'.format(name, xids_new[i].stem))
             comp = dict(zlib=True, complevel=5)
             encoding = {var: comp for var in ds.data_vars}
@@ -94,4 +102,4 @@ if __name__ == "__main__":
     p.add_argument('-e', '--exp', default=0, type=int,
                     help='Historical=0 or RCP8.5=1.')
     args = p.parse_args()
-    save_particle_data_by_year(args.lon, args.exp, v=1, r_range=[0, 10])
+    save_particle_data_by_year(args.lon, args.exp, v=1, r_range=[0, 4])
