@@ -44,22 +44,20 @@ def plx_source_transit(lon, exp, v=1):
     # Drop extra coords and unused 'obs'.
     ds = ds.drop(['lat', 'lon', 'z', 'obs'])
 
-    logger.debug('Loading {}...'.format(file.stem))
-    ds = ds.load()
+    # Convert velocity to transport.
+    ds['u'] = ds['u'] * cfg.DXDY
 
     # Stack & unstack dims: (traj) -> (time, zone, traj).
     logger.debug('Stack {}...'.format(file.stem))
-    ds = ds.set_index(tzt=['time', 'zone', 'traj'])
+    ds = ds.set_index(tzt=['time', 'traj'])
+    ds = ds.chunk('auto')
 
     logger.debug('Unstack {}...'.format(file.stem))
-    ds = ds.unstack('tzt', sparse=True)
+    ds = ds.unstack('tzt')
 
     # Drop traj duplicates due to unstack.
     logger.debug('Drop duplicates {}...'.format(file.stem))
     ds = ds.dropna('traj', 'all')
-
-    # Convert velocity to transport.
-    ds['u'] = ds['u'] * cfg.DXDY
 
     # Save dataset.
     logger.debug('Saving {}...'.format(file.stem))
@@ -79,3 +77,7 @@ if __name__ == "__main__":
                     help='Historical=0 or RCP8.5=1.')
     args = p.parse_args()
     plx_source_transit(args.lon, args.exp, v=1)
+
+# lon = 250
+# exp = 0
+# v = 1
