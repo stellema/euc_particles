@@ -24,59 +24,59 @@ from tools import mlogger
 logger = mlogger('plx_sources', parcels=False, misc=False)
 
 
-def plx_source_transit(lon, exp, v=1):
-    file = cfg.data / 'plx_sources_{}_{}_v{}.nc'.format(cfg.exp_abr[exp], lon, v)
-
-    logger.info('Starting {}...'.format(file.stem))
+def plx_source_subset(lon, exp, v=1):
 
     time = np.arange(cfg.years[exp][1], cfg.years[exp][0] - 1, -1, dtype=int)
-    xids = [cfg.data / 'v{}y/plx_{}_{}_v{}_{}.nc'.format(v, cfg.exp_abr[exp],
-                                                         lon, v, y) for y in time]
 
-    ds = xr.open_mfdataset(xids, concat_dim='traj', combine='nested')
+    for y in time:
+        file = cfg.data / 'source_subset/plx_sources_{}_{}_v{}_{}.nc'.format(cfg.exp_abr[exp], lon, v, y)
+        logger.info('Starting {}...'.format(file.stem))
 
-    for var in ['time', 'trajectory']:
-        ds[var] = ds[var].isel(obs=0)
+        xid = cfg.data / 'v{}y/plx_{}_{}_v{}_{}.nc'.format(v, cfg.exp_abr[exp], lon, v, y)
+        ds = xr.open_dataset(xid)
 
-    for var in ['zone', 'age', 'distance', 'unbeached']:
-        ds[var] = ds[var].max('obs')
+        for var in ['time', 'trajectory']:
+            ds[var] = ds[var].isel(obs=0)
 
-    # Drop extra coords and unused 'obs'.
-    ds = ds.drop(['lat', 'lon', 'z', 'obs'])
+        for var in ['zone', 'age', 'distance', 'unbeached']:
+            ds[var] = ds[var].max('obs')
 
-    # Convert velocity to transport.
-    ds['u'] = ds['u'] * cfg.DXDY
+        # Drop extra coords and unused 'obs'.
+        ds = ds.drop(['lat', 'lon', 'z', 'obs'])
 
-    # Stack & unstack dims: (traj) -> (time, zone, traj).
-    logger.debug('Stack {}...'.format(file.stem))
-    ds = ds.set_index(tzt=['time', 'traj'])
-    ds = ds.chunk('auto')
+        # Convert velocity to transport.
+        ds['u'] = ds['u'] * cfg.DXDY
 
-    logger.debug('Unstack {}...'.format(file.stem))
-    ds = ds.unstack('tzt')
+        # Stack & unstack dims: (traj) -> (time, zone, traj).
+        logger.debug('Stack {}...'.format(file.stem))
+        ds = ds.set_index(tzt=['time', 'traj'])
+        ds = ds.chunk('auto')
 
-    # Drop traj duplicates due to unstack.
-    logger.debug('Drop duplicates {}...'.format(file.stem))
-    ds = ds.dropna('traj', 'all')
+        logger.debug('Unstack {}...'.format(file.stem))
+        ds = ds.unstack('tzt')
 
-    # Save dataset.
-    logger.debug('Saving {}...'.format(file.stem))
-    # Add compression encoding.
-    comp = dict(zlib=True, complevel=5)
-    encoding = {var: comp for var in ds.data_vars}
+        # Drop traj duplicates due to unstack.
+        logger.debug('Drop duplicates {}...'.format(file.stem))
+        ds = ds.dropna('traj', 'all')
 
-    ds.to_netcdf(file, encoding=encoding, compute=True)
-    logger.info('Saved {}!'.format(file.stem))
+        # Save dataset.
+        logger.debug('Saving {}...'.format(file.stem))
+        # Add compression encoding.
+        comp = dict(zlib=True, complevel=5)
+        encoding = {var: comp for var in ds.data_vars}
+
+        ds.to_netcdf(file, encoding=encoding, compute=True)
+        logger.info('Saved {}!'.format(file.stem))
 
 
 if __name__ == "__main__":
     p = ArgumentParser(description="""Get plx sources and transit times.""")
-    p.add_argument('-x', '--lon', default=220, type=int,
+    p.add_argument('-x', '--lon', default=250, type=int,
                     help='Longitude of particle release.')
     p.add_argument('-e', '--exp', default=0, type=int,
                     help='Historical=0 or RCP8.5=1.')
     args = p.parse_args()
-    plx_source_transit(args.lon, args.exp, v=1)
+    plx_source_subset(args.lon, args.exp, v=1)
 
 # lon = 250
 # exp = 0
