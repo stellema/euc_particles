@@ -67,17 +67,25 @@ def plx_source_subset(lon, exp, v=1):
 
         ds.to_netcdf(file, encoding=encoding, compute=True)
         logger.info('Saved {}!'.format(file.stem))
+        ds.close()
+
+    # Merge
+    ds = xr.open_mfdataset(str(cfg.data / 'source_subset/plx_sources_{}_{}_v{}_*.nc'
+                               .format(cfg.exp_abr[1], lon, v)))
+    file = cfg.data / 'source_subset/plx_sources_{}_{}_v{}.nc'.format(cfg.exp_abr[exp], lon, v)
+    ds.to_netcdf(file, encoding=encoding, compute=True)
+    logger.info('Saved all {}!'.format(file.stem))
 
 
 if __name__ == "__main__":
     p = ArgumentParser(description="""Get plx sources and transit times.""")
     p.add_argument('-x', '--lon', default=250, type=int,
                     help='Longitude of particle release.')
-    p.add_argument('-e', '--exp', default=0, type=int,
+    p.add_argument('-e', '--exp', default=1, type=int,
                     help='Historical=0 or RCP8.5=1.')
     args = p.parse_args()
     plx_source_subset(args.lon, args.exp, v=1)
 
 # lon = 250
-# exp = 0
+# exp = 1
 # v = 1
