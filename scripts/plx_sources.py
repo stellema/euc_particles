@@ -75,7 +75,7 @@ def plx_source_subset(lon, exp, v=1):
 
     # Merge
     files = [cfg.data / 'source_subset/plx_sources_{}_{}_v{}_{}.nc'
-             .format(cfg.exp_abr[1], lon, v, y) for y in time]
+             .format(cfg.exp_abr[exp], lon, v, y) for y in time]
 
     ds = xr.open_mfdataset(files)
 
