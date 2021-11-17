@@ -74,13 +74,16 @@ def plx_source_subset(lon, exp, v=1):
             get_source_subset(lon, exp, v, y, file)
 
     # Merge
-    ds = xr.open_mfdataset(str(cfg.data / 'source_subset/plx_sources_{}_{}_v{}_*.nc'
-                               .format(cfg.exp_abr[1], lon, v)))
+    files = [cfg.data / 'source_subset/plx_sources_{}_{}_v{}_{}.nc'
+             .format(cfg.exp_abr[1], lon, v, y) for y in time]
+
+    ds = xr.open_mfdataset(files)
+
     file = cfg.data / 'source_subset/plx_sources_{}_{}_v{}.nc'.format(cfg.exp_abr[exp], lon, v)
+    logger.debug('Saving {}...'.format(file.stem))
+
     comp = dict(zlib=True, complevel=5)
     encoding = {var: comp for var in ds.data_vars}
-
-    logger.debug('Saving {}...'.format(file.stem))
     ds.to_netcdf(file, encoding=encoding, compute=True)
     logger.info('Saved all {}!'.format(file.stem))
 
