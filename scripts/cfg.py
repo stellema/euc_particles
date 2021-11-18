@@ -88,22 +88,22 @@ class ZoneData:
     vs = Zone('vs', 0, 1, 'Vitiaz Strait', [147.6, 149.6, j1, j1])
     ss = Zone('ss', 1, 2, 'Solomon Strait', [151.6, 154.6, -5, -5])
     mc = Zone('mc', 2, 3, 'Mindanao Current', [126.0, 128.5, j2, j2])
-    idn = Zone('idn', 3, 7, 'Indonesian Seas', [[122.8, 140.4, j1, j1],
-                                                [122.8, 122.8, j1, j2]])
-    nth = Zone('nth', 4, 8, 'North Interior', [128.5 + dx, e4 + dx, j2, j2])
-    sth = Zone('sth', 5, 9, 'South Interior', [155, e4 + dx, j1, j1])
-    ecs = Zone('ecs', 6, 5, 'South of EUC', [[e1, e1, j1, -2.6 - dx],
-                                             [e2, e2, j1, -2.6 - dx],
-                                             [e3, e3, j1, -2.6 - dx],
-                                             [e4, e4, j1, -2.6 - dx]])
-    ecn = Zone('ecn', 7, 6, 'North of EUC', [[e1, e1, 2.6 + dx, j2],
-                                             [e2, e2, 2.6 + dx, j2],
-                                             [e3, e3, 2.6 + dx, j2],
-                                             [e4, e4, 2.6 + dx, j2]])
-    ecr = Zone('ecr', 8, 4, 'EUC recirculation', [[e1, e1, -2.6, 2.6],
+    ecr = Zone('ecr', 3, 4, 'EUC recirculation', [[e1, e1, -2.6, 2.6],
                                                   [e2, e2, -2.6, 2.6],
                                                   [e3, e3, -2.6, 2.6],
                                                   [e4, e4, -2.6, 2.6]])
+    ecs = Zone('ecs', 4, 5, 'South of EUC', [[e1, e1, j1, -2.6 - dx],
+                                             [e2, e2, j1, -2.6 - dx],
+                                             [e3, e3, j1, -2.6 - dx],
+                                             [e4, e4, j1, -2.6 - dx]])
+    ecn = Zone('ecn', 5, 6, 'North of EUC', [[e1, e1, 2.6 + dx, j2],
+                                             [e2, e2, 2.6 + dx, j2],
+                                             [e3, e3, 2.6 + dx, j2],
+                                             [e4, e4, 2.6 + dx, j2]])
+    idn = Zone('idn', 6, 7, 'Indonesian Seas', [[122.8, 140.4, j1, j1],
+                                                [122.8, 122.8, j1, j2]])
+    nth = Zone('nth', 7, 8, 'North Interior', [128.5 + dx, e4 + dx, j2, j2])
+    sth = Zone('sth', 8, 9, 'South Interior', [155, e4 + dx, j1, j1])
     oob = Zone('oob', 9, 10, 'Out of Bounds', [[120, 294.9, -15, -15],
                                                [120, 294.9, 14.9, 14.9],
                                                [120, 120, -15, 14.9],
