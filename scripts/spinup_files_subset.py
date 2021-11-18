@@ -27,7 +27,7 @@ def subset_spinup_files(lon=165, exp=0, v=1, year=0):
     exp = cfg.exp_abr[exp]
 
     # Merged spinup file name.
-    file = cfg.data / 'source_subset/plx_{}_{}_v{}_spinup_{}'.format(exp, lon, v, year)
+    file = cfg.data / 'source_subset/plx_{}_{}_v{}_spinup_{}.nc'.format(exp, lon, v, year)
 
     logger.info('Create spinup merge & subset: {}'.format(file.stem))
 
@@ -41,7 +41,13 @@ def subset_spinup_files(lon=165, exp=0, v=1, year=0):
 
     # Open datasets & combine.
     logger.debug('{}: Open & combine datsets.'.format(file.stem))
-    dss = [open_plx_data(xid) for xid in xids]
+    dss = [open_plx_data(xid, chunks='auto') for xid in xids]
+
+    logger.debug('{}: Shift coords.'.format(file.stem))
+    # Shift obs value for second spinup (5 not 3 years in past file.)
+    dss[1].coords['obs'] = dss[1].obs.astype(np.int32, copy=False) + (914 - 601)
+
+    logger.debug('{}: Combine datasets.'.format(file.stem))
     ds = xr.combine_nested(dss, 'obs', data_vars="minimal", combine_attrs='override')
 
     # Fix EUC recirculation definition.
