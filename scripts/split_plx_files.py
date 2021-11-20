@@ -15,7 +15,7 @@ from argparse import ArgumentParser
 
 import cfg
 from tools import mlogger
-from plx_fncs import (get_plx_id, get_plx_id_year, open_plx_data, 
+from plx_fncs import (get_plx_id, get_plx_id_year, open_plx_data,
                       update_zone_recirculation, particle_source_subset)
 
 
@@ -46,6 +46,14 @@ def search_combine_plx_datasets(xids, traj):
 
 def save_particle_data_by_year(lon, exp, v=1, r_range=[0, 10]):
     """Split and save particle data by release year."""
+
+    def open_new_plx_particles(xid):
+        """Open dataset and return with only initial data."""
+        drop_vars = ['lat', 'lon', 'z', 'zone', 'distance', 'unbeached', 'u']
+        ds = open_plx_data(xid, drop_variables=drop_vars).isel(obs=0, drop=True)
+        ds = ds.where(ds.age == 0, drop=True)
+        return ds
+
     name = 'plx_{}_{}_v{}'.format(cfg.exp_abr[exp], lon, v)
     logger.info('Subsetting by year {}.'.format(name))
 
@@ -57,17 +65,14 @@ def save_particle_data_by_year(lon, exp, v=1, r_range=[0, 10]):
     # Subset of merged dataset.
     logger.debug('{}: Opening subset of data.'.format(name))
 
-    drop_vars = ['lat', 'lon', 'z', 'zone', 'distance', 'unbeached', 'u']
-    dx = xr.combine_nested([open_plx_data(xid, drop_variables=drop_vars).isel(obs=0) for xid in xids],
-                            'obs', data_vars="minimal", combine_attrs='override')
+    dx = xr.combine_nested([open_new_plx_particles(xid) for xid in xids],
+                           'traj', data_vars="minimal", combine_attrs='override')
     logger.debug('{}: Filter new particles: traj size={}: ...'.format(name, dx.traj.size))
-    dx = dx.where(dx.age == 0, drop=True)
-    logger.debug('{}: Filter new particles: traj size={}: Success!'.format(name, dx.traj.size))
 
     for i, y in enumerate(y_range):
         if not xids_new[i].exists():
             logger.debug('{}: {}: Filter by year: ...'.format(name, xids_new[i].stem))
-            traj = dx.where(dx['time.year'].max(dim='obs') == y, drop=True).traj
+            traj = dx.where(dx['time.year'] == y, drop=True).traj
             logger.debug('{}: {}: Filter by year: Success! #traj={}'
                          .format(name, xids_new[i].stem, traj.size))
 
@@ -75,10 +80,10 @@ def save_particle_data_by_year(lon, exp, v=1, r_range=[0, 10]):
             ds = search_combine_plx_datasets(xids, traj)
             logger.debug('{}: {}: Search & combine full data: Success!'
                          .format(name, xids_new[i].stem))
-            
+
             ds = update_zone_recirculation(ds, lon)
             ds = particle_source_subset(ds)
-            
+
             logger.debug('{}: {}: Save: ...'.format(name, xids_new[i].stem))
             comp = dict(zlib=True, complevel=5)
             encoding = {var: comp for var in ds.data_vars}
