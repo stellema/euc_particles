@@ -26,10 +26,10 @@ logger = mlogger('plx_sources', parcels=False, misc=False)
 
 def plx_source_subset(lon, exp, v=1):
 
-    def get_source_subset(lon, exp, v, y, file):
+    def get_source_subset(lon, exp, v, r, file):
 
         logger.info('Starting {}...'.format(file.stem))
-        xid = cfg.data / 'v{}y/plx_{}_{}_v{}_{}.nc'.format(v, cfg.exp_abr[exp], lon, v, y)
+        xid = cfg.data / 'v{}y/plx_{}_{}_v{}_{}.nc'.format(v, cfg.exp_abr[exp], lon, v, r)
         ds = xr.open_dataset(xid)
 
         for var in ['time', 'trajectory']:
@@ -67,15 +67,15 @@ def plx_source_subset(lon, exp, v=1):
         ds.close()
 
 
-    time = np.arange(cfg.years[exp][0], cfg.years[exp][1] + 1, dtype=int)
-    for y in time:
-        file = cfg.data / 'source_subset/plx_sources_{}_{}_v{}_{}.nc'.format(cfg.exp_abr[exp], lon, v, y)
+    rep = np.arange(10, dtype=int)
+    for r in rep:
+        file = cfg.data / 'source_subset/plx_sources_{}_{}_v{}_{}.nc'.format(cfg.exp_abr[exp], lon, v, r)
         if not file.exists():
-            get_source_subset(lon, exp, v, y, file)
+            get_source_subset(lon, exp, v, r, file)
 
     # Merge
     files = [cfg.data / 'source_subset/plx_sources_{}_{}_v{}_{}.nc'
-             .format(cfg.exp_abr[exp], lon, v, y) for y in time]
+             .format(cfg.exp_abr[exp], lon, v, r) for r in rep]
 
     ds = xr.open_mfdataset(files, chunks='auto')
 
