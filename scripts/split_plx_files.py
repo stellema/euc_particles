@@ -69,12 +69,12 @@ def save_particle_data_by_year(lon, exp, v=1, r_range=[0, 10]):
     logger.info('Subsetting by year {}.'.format(name))
 
     xids = [get_plx_id(cfg.exp_abr[exp], lon, v, r) for r in range(*r_range)]
-    xids_new = [get_plx_id_year(cfg.exp_abr[exp], lon, v, r) for r in r_range]
+    xids_new = [get_plx_id_year(cfg.exp_abr[exp], lon, v, r) for r in range(*r_range)]
 
     # Subset of merged dataset.
     logger.debug('{}: Opening subset of data.'.format(name))
 
-    for i, y in enumerate(r_range):
+    for i in range(*r_range):
         if not xids_new[i].exists():
 
             logger.debug('{}: {}: Filter by r: ...'.format(name, xids_new[i].stem))
