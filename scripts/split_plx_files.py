@@ -109,4 +109,4 @@ if __name__ == "__main__":
     p.add_argument('-e', '--exp', default=0, type=int,
                     help='Historical=0 or RCP8.5=1.')
     args = p.parse_args()
-    save_particle_data_by_year(args.lon, args.exp, v=1, r_range=[0, 3])
+    save_particle_data_by_year(args.lon, args.exp, v=1, r_range=[0, 10])
