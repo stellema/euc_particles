@@ -67,7 +67,7 @@ def plx_source_subset(lon, exp, v=1):
         ds.close()
 
 
-    time = np.arange(cfg.years[exp][1], cfg.years[exp][0] - 1, -1, dtype=int)
+    time = np.arange(cfg.years[exp][0], cfg.years[exp][1] + 1, dtype=int)
     for y in time:
         file = cfg.data / 'source_subset/plx_sources_{}_{}_v{}_{}.nc'.format(cfg.exp_abr[exp], lon, v, y)
         if not file.exists():
@@ -77,26 +77,23 @@ def plx_source_subset(lon, exp, v=1):
     files = [cfg.data / 'source_subset/plx_sources_{}_{}_v{}_{}.nc'
              .format(cfg.exp_abr[exp], lon, v, y) for y in time]
 
-    ds = xr.open_mfdataset(files)
+    ds = xr.open_mfdataset(files, chunks='auto')
 
     file = cfg.data / 'source_subset/plx_sources_{}_{}_v{}.nc'.format(cfg.exp_abr[exp], lon, v)
     logger.debug('Saving {}...'.format(file.stem))
-
-    comp = dict(zlib=True, complevel=5)
-    encoding = {var: comp for var in ds.data_vars}
-    ds.to_netcdf(file, encoding=encoding, compute=True)
+    ds.to_netcdf(file, compute=True)
     logger.info('Saved all {}!'.format(file.stem))
 
 
 if __name__ == "__main__":
     p = ArgumentParser(description="""Get plx sources and transit times.""")
-    p.add_argument('-x', '--lon', default=250, type=int,
+    p.add_argument('-x', '--lon', default=165, type=int,
                     help='Longitude of particle release.')
-    p.add_argument('-e', '--exp', default=1, type=int,
+    p.add_argument('-e', '--exp', default=0, type=int,
                     help='Historical=0 or RCP8.5=1.')
     args = p.parse_args()
     plx_source_subset(args.lon, args.exp, v=1)
 
-# lon = 250
-# exp = 1
+# lon = 165
+# exp = 0
 # v = 1
