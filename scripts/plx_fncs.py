@@ -31,7 +31,6 @@ import random
 import parcels
 import numpy as np
 import xarray as xr
-from pathlib import Path
 from datetime import datetime
 from parcels import (FieldSet, ParticleSet, VectorField, Variable, JITParticle)
 
@@ -89,7 +88,7 @@ def ofam_fieldset(time_bnds='full', exp='hist', chunks=300, add_xfields=True):
     """
     if time_bnds == 'full':
         if exp == 'hist':
-            if cfg.home != Path('E:/'):
+            if cfg.home.drive != 'C:':
                 time_bnds = [datetime(1981, 1, 1), datetime(2012, 12, 31)]
             else:
                 time_bnds = [datetime(2012, 1, 1), datetime(2012, 12, 31)]
@@ -401,9 +400,9 @@ def open_plx_data(xid, **kwargs):
     """Open plx dataset."""
     ds = xr.open_dataset(str(xid), mask_and_scale=True, **kwargs)
     # engine='h5netcdf', chunks=None
-    if cfg.home == Path('E:/'):
+    if cfg.home.drive == 'C:':
         # Subset to N trajectories.
-        N = 720
+        N = 1000
         ds = ds.isel(traj=np.linspace(0, ds.traj.size - 1, N, dtype=int)) # !!!
     ds['trajectory'] = ds.trajectory.astype(np.float32, copy=False)
     ds.coords['traj'] = ds.trajectory.astype(np.int32, copy=False).isel(obs=0)
@@ -450,16 +449,16 @@ def get_zone_info(ds, zone):
 
 def update_zone_recirculation(ds, lon):
     """Change particle trajectory "zone" of EUC recirculation.
-    
-    By default, most particles are set as EUC reciculation because they pass 
-    the recirculation interception point just to the west of their release. 
+
+    By default, most particles are set as EUC reciculation because they pass
+    the recirculation interception point just to the west of their release.
     """
     ds['zone'] = ds.zone.where(ds.zone != 4)
     # Replace trajectory zone to recirculation if they are east of release lon.
     # Between: (ds.lon > lon) & (ds.lon.round(1) <= lon + 0.1)
     # Round: (ds.lon.round(1) == lon + 0.1)
     ds['zone'] = (ds.zone.dims, np.where((ds.lon.round(1) == lon + 0.1) &
-                                         (ds.lat <= 2.6) & 
+                                         (ds.lat <= 2.6) &
                                          (ds.lat >= -2.6), 4, ds.zone.values))
     # Fill forwards previously set NaN values.
     ds['zone'] = ds.zone.ffill('obs')
@@ -470,11 +469,29 @@ def particle_source_subset(ds):
     """Subset particle obs to zone reached for each trajeectory."""
     # Find obs when first non-NaN zone reached. Fill no zone found with last obs.
     fill_value = ds.obs.max().item()
-    obs_max = ds.obs.where(ds.zone > 0.).idxmin('obs', skipna=True, 
+    obs_max = ds.obs.where(ds.zone > 0.).idxmin('obs', skipna=True,
                                                 fill_value=fill_value)
-    
+
     # Subset particle data upto reaching a boundary.
     ds = ds.where(ds.obs <= obs_max.astype(int), drop=True)
-    ds = ds.dropna('obs', 'all')
-    ds['u'] = ds.u.isel(obs=0, drop=True)  # Drop added dim.
+
+    if 'u' in ds.data_vars:
+        ds = ds.dropna('obs', 'all')
+        ds['u'] = ds.u.isel(obs=0, drop=True)  # Drop added dim.
+    return ds
+
+
+def open_plx_spinup(lon, exp, v=1, y=0):
+    """Open spinup file merged dataset."""
+    file = (cfg.data / 'source_subset/plx_{}_{}_v{}_spinup_{}.nc'
+            .format(cfg.exp_abr[exp], lon, v, y))
+    ds = xr.open_dataset(file)
+    return ds
+
+
+def open_plx_spinup_source(lon, exp, v=1, y=0):
+    """Open spinup file source datset."""
+    file = (cfg.data / 'source_subset/plx_sources_{}_{}_v{}_spinup_{}.nc'
+            .format(cfg.exp_abr[exp], lon, v, y))
+    ds = xr.open_dataset(file)
     return ds
