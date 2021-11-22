@@ -16,11 +16,10 @@ from argparse import ArgumentParser
 import cfg
 from tools import mlogger
 from plx_fncs import (get_plx_id, get_plx_id_year, open_plx_data,
-                      update_zone_recirculation, particle_source_subset)
-
+                      update_zone_recirculation, particle_source_subset,
+                     get_plx_id_year)
 
 logger = mlogger('misc', parcels=False, misc=True)
-
 
 
 def search_combine_plx_datasets(xids, traj):
@@ -45,10 +44,6 @@ def search_combine_plx_datasets(xids, traj):
         # Add list of datasets to be combined.
         if dx.traj.size >= 1:
             dss.append(dx)
-
-        # except IndexError:
-        #     # Pass on datasets that don't contain any of the trajectories.
-        #     pass
 
     ds = xr.combine_nested(dss, 'obs', data_vars="minimal", combine_attrs='override')
     return ds
@@ -109,4 +104,4 @@ if __name__ == "__main__":
     p.add_argument('-e', '--exp', default=0, type=int,
                     help='Historical=0 or RCP8.5=1.')
     args = p.parse_args()
-    save_particle_data_by_year(args.lon, args.exp, v=1, r_range=[0, 10])
+    save_particle_data_by_year(args.lon, args.exp, v=1, r_range=[0, 12])
