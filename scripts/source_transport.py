@@ -25,23 +25,23 @@ def source_percent(ds):
     """Get source transport and trajectories."""
     dz = xr.Dataset()
     dz = dz.assign_coords({'zone': np.arange(11, dtype=int),
-                           'traj': ds.traj.values.astype(int),
-                           'time': ds.time})
+                           'traj': ds.traj.values, 'time': ds.time})
 
     dz['u_total'] = ds.u.sum('traj')
 
     dz['u'] = (('zone', 'time'), np.empty((dz.zone.size, dz.time.size)))
     dz['age'] = dz['u'].copy()
     dz['distance'] = dz['u'].copy()
-    dz['t'] = (('zone', 'traj'), np.empty((dz.zone.size, dz.traj.size), dtype=int))  # Trajectories
+    dz['t'] = (('zone', 'traj'), np.empty((dz.zone.size, dz.traj.size)))  # Trajectories
 
-    for z in range(11):
-        dx = ds.u.where(ds.zone == z)
+    for z in range(dz.zone.size):
+        dx = ds.where(ds.zone == z)
         traj = dx.dropna('traj', 'all').traj
-        dz['t'][dict(zone=z)] = dz.traj.where(dz.traj.isin(traj))
-        dz['u'][dict(zone=z)] = dx.sum('traj')
+        dz['t'][dict(zone=z)] = ds.traj.where(ds.traj.isin(traj))
+        dz['u'][dict(zone=z)] = dx.u.sum('traj')
+
         for var in ['age', 'distance']:
-            dz[var][dict(zone=z)] = dx.median('traj')
+            dz[var][dict(zone=z)] = dx[var].median('traj')
 
     return dz
 
