@@ -70,7 +70,7 @@ def save_particle_data_by_year(lon, exp, v=1, r_range=[0, 10]):
     # Subset of merged dataset.
     logger.debug('{}: Opening subset of data.'.format(name))
 
-    for i in range(*r_range):
+    for i in range(10):
         if not xids_new[i].exists():
 
             logger.debug('{}: {}: Filter by r: ...'.format(name, xids_new[i].stem))
