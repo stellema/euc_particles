@@ -24,20 +24,21 @@ logger = mlogger('sources', parcels=False, misc=False)
 def source_percent(ds):
     """Get source transport and trajectories."""
     dz = xr.Dataset()
-    dz = dz.assign_coords({'zone': np.arange(11, dtype=int)})
+    dz = dz.assign_coords({'zone': np.arange(11, dtype=int),
+                           'traj': ds.traj.values.astype(int),
+                           'time': ds.time})
 
-    # dz['u_total'] = ds.u.sum('traj')
-    dz['u_total'] = ds.u.isel(traj=0, drop=True) # !!!
+    dz['u_total'] = ds.u.sum('traj')
 
     dz['u'] = (('zone', 'time'), np.empty((dz.zone.size, dz.time.size)))
     dz['age'] = dz['u'].copy()
     dz['distance'] = dz['u'].copy()
-    dz['t'] = (('zone'), np.empty(dz.zone.size, dtype=int))  # Trajectories
+    dz['t'] = (('zone', 'traj'), np.empty((dz.zone.size, dz.traj.size), dtype=int))  # Trajectories
 
-    dz = []
     for z in range(11):
-        dx = ds.u.where(ds.zone == z, drop=True)
-        dz['t'][dict(zone=z)] = dx.traj.values
+        dx = ds.u.where(ds.zone == z)
+        traj = dx.dropna('traj', 'all').traj
+        dz['t'][dict(zone=z)] = dz.traj.where(dz.traj.isin(traj))
         dz['u'][dict(zone=z)] = dx.sum('traj')
         for var in ['age', 'distance']:
             dz[var][dict(zone=z)] = dx.median('traj')
@@ -53,8 +54,8 @@ def save_source_transport(lon, exp, v):
 
     logger.debug('{}: Start source transport.'.format(file.stem))
     ds = xr.open_dataset(file)
-    if cfg.home.drive == 'C:':
-        ds = ds.isel(traj=np.linspace(0, ds.traj.size - 1, 1000, dtype=int)) # !!!
+    # if cfg.home.drive == 'C:':
+    #     ds = ds.isel(traj=np.linspace(0, ds.traj.size - 1, 100, dtype=int)) # !!!
 
     logger.debug('{}: Getting source transport.'.format(file.stem))
     dz = source_percent(ds)
