@@ -27,19 +27,27 @@ def source_percent(ds):
     dz = dz.assign_coords({'zone': np.arange(11, dtype=int),
                            'traj': ds.traj.values, 'time': ds.time})
 
+    logger.debug('Sum total transport...')
     dz['u_total'] = ds.u.sum('traj')
+    logger.debug('Sum total transport. Success!')
 
     dz['u'] = (('zone', 'time'), np.empty((dz.zone.size, dz.time.size)))
     dz['age'] = dz['u'].copy()
     dz['distance'] = dz['u'].copy()
     dz['t'] = (('zone', 'traj'), np.empty((dz.zone.size, dz.traj.size)))  # Trajectories
 
+
     for z in range(dz.zone.size):
-        dx = ds.where(ds.zone == z)
-        traj = dx.dropna('traj', 'all').traj
-        dz['t'][dict(zone=z)] = ds.traj.where(ds.traj.isin(traj))
+        logger.debug('{} Subset zone.'.format(z))
+        dx = ds.where(ds.zone == z, drop=True)
+
+
+        dz['t'][dict(zone=z)] = ds.traj.where(ds.traj.isin(dx.traj))
+
+        logger.debug('{} sum transport.'.format(z))
         dz['u'][dict(zone=z)] = dx.u.sum('traj')
 
+        logger.debug('{} Get age/distance.'.format(z))
         for var in ['age', 'distance']:
             dz[var][dict(zone=z)] = dx[var].median('traj')
 
