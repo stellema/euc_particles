@@ -21,7 +21,7 @@ from tools import mlogger
 logger = mlogger('sources', parcels=False, misc=False)
 
 
-def source_percent(ds):
+def source_percent(ds, file):
     """Get source transport and trajectories."""
     dz = xr.Dataset()
     dz = dz.assign_coords({'zone': np.arange(11, dtype=int),
@@ -30,6 +30,7 @@ def source_percent(ds):
     logger.debug('Sum total transport...')
     dz['u_total'] = ds.u.sum('traj')
     logger.debug('Sum total transport. Success!')
+    u_total = dz.u_total.mean('time').item()
 
     dz['u'] = (('zone', 'time'), np.empty((dz.zone.size, dz.time.size)))
     dz['age'] = dz['u'].copy()
@@ -38,19 +39,25 @@ def source_percent(ds):
 
 
     for z in range(dz.zone.size):
-        logger.debug('{} Subset zone.'.format(z))
+        logger.debug('{}:{} Subset zone.'.format(file.stem, z))
         dx = ds.where(ds.zone == z, drop=True)
 
+        # dz['t'][dict(zone=z)] = ds.traj.where(ds.traj.isin(dx.traj))
 
-        dz['t'][dict(zone=z)] = ds.traj.where(ds.traj.isin(dx.traj))
+        logger.debug('{}:{} sum u zone.'.format(file.stem, z))
 
-        logger.debug('{} sum transport.'.format(z))
         dz['u'][dict(zone=z)] = dx.u.sum('traj')
 
-        logger.debug('{} Get age/distance.'.format(z))
-        for var in ['age', 'distance']:
+        u = dz.u.isel(zone=z).mean('time').item()
+        logger.info('{}: {} u={:.1f} {:.1f}% total={:.1f}'
+                    .format(file.stem, z, u, (u / u_total) * 100, u_total))
+
+        logger.debug('{}:{} age.'.format(file.stem, z))
+        for var in ['age']:
             dz[var][dict(zone=z)] = dx[var].median('traj')
 
+        logger.info('{}: {} age={:.1f} {:.1f}% total={:.1f}'
+                    .format(file.stem, dz.age.isel(zone=z).mean('time').item()))
     return dz
 
 
@@ -66,7 +73,7 @@ def save_source_transport(lon, exp, v):
     #     ds = ds.isel(traj=np.linspace(0, ds.traj.size - 1, 100, dtype=int)) # !!!
 
     logger.debug('{}: Getting source transport.'.format(file.stem))
-    dz = source_percent(ds)
+    dz = source_percent(ds, file)
 
     # Log u and u%
     u_total = dz.u_total.mean('time').item()
