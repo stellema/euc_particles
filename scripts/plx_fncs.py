@@ -495,3 +495,13 @@ def open_plx_spinup_source(lon, exp, v=1, y=0):
             .format(cfg.exp_abr[exp], lon, v, y))
     ds = xr.open_dataset(file)
     return ds
+
+
+def open_plx_source(lon, exp, v=1, y=0):
+    """Open particle source dataset and update from spinup."""
+    file = (cfg.data / 'source_subset/plx_sources_{}_{}_v{}.nc'
+            .format(cfg.exp_abr[exp], lon, v))
+
+    ds = xr.open_dataset(file)
+
+    return ds
