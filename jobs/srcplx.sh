@@ -1,10 +1,13 @@
 #!/bin/bash
-#
-## Sort particle files by sources.
+###############################################################################
+#                                                                             #
+#                             Sort PLX by source.                             #
+#                                                                             #
+###############################################################################
 #PBS -P e14
 #PBS -q normal
-#PBS -l walltime=4:00:00
-#PBS -l mem=26GB
+#PBS -l walltime=3:30:00
+#PBS -l mem=12GB
 #PBS -l ncpus=1
 #PBS -l storage=gdata/hh5+gdata/e14
 #PBS -l wd
@@ -13,6 +16,10 @@
 #PBS -v LON,EXP
 
 # How to submit: qsub -v LON=250,EXP=1 srcplx.sh
+
+ECHO=/bin/echo
+$ECHO "Run plx sources for exp $EXP at lon $LON."
+
 module use /g/data3/hh5/public/modules
 module load conda/analysis3
 python3 /g/data/e14/as3189/stellema/plx/scripts/plx_sources.py -e $EXP -x $LON
