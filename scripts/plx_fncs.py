@@ -205,11 +205,11 @@ def pset_euc(fieldset, pclass, lon, dy, dz, repeatdt, pset_start, repeats,
         xlog['z'] = '[{}-{}m x{}]f32'.format(pz[0], pz[pz.size - 1], dz)
 
     # Duplicate for each repeat.
-    tr = pset_start - (np.arange(0, repeats) * repeatdt.total_seconds())
-    time = np.repeat(tr, lons.size)
-    depth = np.tile(depths, repeats)
-    lon = np.tile(lons, repeats)
-    lat = np.tile(lats, repeats)
+    times = pset_start - (np.arange(0, repeats + 1) * repeatdt.total_seconds())
+    time = np.repeat(times, lons.size)
+    depth = np.tile(depths, times.size)
+    lon = np.tile(lons, times.size)
+    lat = np.tile(lats, times.size)
 
     pset = ParticleSet.from_list(fieldset=fieldset, pclass=pclass,
                                  lon=lon, lat=lat, depth=depth, time=time,
