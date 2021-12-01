@@ -74,7 +74,7 @@ def get_missed_repeats(lon=165, exp=0):
     return repeat_days
 
 
-def run_EUC_skipped(lon=165, exp=0, v=1, dy=0.1, dz=25, runtime=360):
+def run_EUC_skipped(lon=165, exp=0, v=1, dy=0.1, dz=25):
     """Run Lagrangian EUC particle experiment."""
     test = True if cfg.home.drive == 'C:' else False
     ts = datetime.now()
@@ -93,17 +93,15 @@ def run_EUC_skipped(lon=165, exp=0, v=1, dy=0.1, dz=25, runtime=360):
 
     if test:
         time_bnds[0] = datetime(y2, 1, 31)
-        # time_bnds[-1] = datetime(y2, 12, 31)  # !!!
 
     fieldset = ofam_fieldset(time_bnds, exp)
 
     pclass = zparticle(fieldset, reduced=False, lon=attrgetter('lon'),
                        lat=attrgetter('lat'), depth=attrgetter('depth'))
 
-
     # Generate file name for experiment (random number if not using MPI).
     xid = get_plx_id(cfg.exp[exp], lon, v, 0)
-    xid = xid.parent / xid.name.replace('r0', 'n0')
+    xid = xid.parent / xid.name.replace('r0', 's0')
 
     # Set ParticleSet start as last fieldset time.
     days = get_missed_repeats(lon, exp).astype(dtype='datetime64[s]')
@@ -113,11 +111,13 @@ def run_EUC_skipped(lon=165, exp=0, v=1, dy=0.1, dz=25, runtime=360):
     times = (days - fset_start).astype(dtype=np.float32)
 
     if test:
+        for fld in [fieldset.U, fieldset.V, fieldset.W]:
+            fld.time_periodic = True
         # Create dummy repeats in first month of avail data for testing.
-        times = fieldset.U.grid.time[-1] - (np.floor(np.linspace(20, runtime, 10)) * 24 * 3600)
+        times = fieldset.U.grid.time_full[-1] - (np.arange(10) * 24 * 60 * 60)
 
     # Create ParticleSet.
-    pset = pset_euc_set_times(fieldset, pclass, lon, dy, dz, times, xlog=None)
+    pset = pset_euc_set_times(fieldset, pclass, lon, dy, dz, times, xlog=xlog)
     xlog['new_r'] = pset.size
 
     pset = del_westward(pset)
@@ -125,7 +125,7 @@ def run_EUC_skipped(lon=165, exp=0, v=1, dy=0.1, dz=25, runtime=360):
     xlog['west_r'] = xlog['new_r'] - xlog['start_r']
 
     # ParticleSet execution endtime.
-    endtime = int(fieldset.U.grid.time[0])
+    endtime = 0
 
     # Create output ParticleFile p_name and time steps to write output.
     output_file = pset.ParticleFile(xid, outputdt=outputdt)
@@ -154,7 +154,6 @@ def run_EUC_skipped(lon=165, exp=0, v=1, dy=0.1, dz=25, runtime=360):
     # Execute.
     pset.execute(kernels, endtime=endtime, dt=dt, output_file=output_file,
                  verbose_progress=True, recovery=recovery_kernels)
-
     # Log details.
     timed = timer(ts)
     xlog['end_r'] = pset.size
@@ -174,28 +173,11 @@ def run_EUC_skipped(lon=165, exp=0, v=1, dy=0.1, dz=25, runtime=360):
     return timed, xlog['start_r']
 
 
-# if __name__ == "__main__":
-#     p = ArgumentParser(description="""Run EUC Lagrangian experiment.""")
-#     p.add_argument('-x', '--lon', default=165, type=int, help='Start lon.')
-#     p.add_argument('-e', '--exp', default=0, type=int, help='Scenario.')
+if __name__ == "__main__":
+    p = ArgumentParser(description="""Run EUC Lagrangian experiment.""")
+    p.add_argument('-x', '--lon', default=165, type=int, help='Start lon.')
+    p.add_argument('-e', '--exp', default=0, type=int, help='Scenario.')
 
-#     args = p.parse_args()
-#     lon, exp = args.lon, args.exp
-#     t = run_EUC_skipped(lon, exp)
-
-# ys = np.arange(0.1, 1, 0.2)
-ys = np.arange(90, 365, 50)
-dy = 0.5
-dz = 100
-lon, exp =  165, 0
-
-p = np.zeros(ys.size)
-t = [None] * ys.size
-
-for i, y in enumerate(ys):
-    pz = np.arange(25, 350 + 20, dz)
-    py = np.round(np.arange(-2.6, 2.6 + 0.05, dy), 2)
-    psize = py.size*pz.size*10
-
-    t[i], p[i] = run_EUC_skipped(lon, exp, dy, dz, y)
-    print(psize, y, t[i], p[i])
+    args = p.parse_args()
+    lon, exp = args.lon, args.exp
+    t = run_EUC_skipped(lon, exp)
