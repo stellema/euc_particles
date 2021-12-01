@@ -146,6 +146,9 @@ def run_EUC_skipped(lon=165, exp=0, v=1, dy=0.1, dz=25):
         logvs = [xlog[v] for v in ['id', 'N', 'out', 'outdt', 'land', 'Vmin']]
         logger.info(' {}: P={}: Tmp={}: Out={:.0f}d: Land={} Vmin={}'.format(*logvs))
 
+    logger.info('{:>18}: Rank={:>2}: Particles={}'.format(xlog['id'], rank,
+                                                          xlog['start_r']))
+
     # Kernels.
     kernels = pset.Kernel(AdvectionRK4_Land)
     kernels += pset.Kernel(BeachTest) + pset.Kernel(UnBeachR)
