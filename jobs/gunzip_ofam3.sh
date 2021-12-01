@@ -17,21 +17,19 @@ cd /g/data/e14/as3189/OFAM/trop_pac
 
 # Historical 1981-2012
 for var in "u" "v" "w"; do
-  for year in {1..9}; do
-    gunzip -v ocean_"$var"_198"$year"*.nc.gz &
-  done
-  gunzip -v ocean_"$var"_199*.nc.gz &
-  gunzip -v ocean_"$var"_200*.nc.gz &
-  for year in {0..2}; do
-    gunzip -v ocean_"$var"_201"$year"*.nc.gz &
+  for y in {1981..2012}; do
+    for m in {01..12}; do
+      gunzip -v ocean_"$var"_"$y"_"$m".nc.gz &
+    done
   done
 done
 
 # RCP8.5 2070-2101
 for var in "u" "v" "w"; do
-  gunzip -v ocean_"$var"_21*.nc.gz &
-  for year in {7..9}; do
-    gunzip -v ocean_"$var"_20"$year"*.nc.gz &
+  for y in {2070..2101}; do
+    for m in {01..12}; do
+      gunzip -v ocean_"$var"_"$y"_"$m".nc.gz &
+    done
   done
 done
 wait
