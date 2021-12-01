@@ -37,9 +37,10 @@ sys.path.append(repo / 'scripts')
 loggers = {}
 
 # Definitions & constants.
-exp = ['historical', 'rcp85', 'rcp85_minus_historial']
+exp = ['hist', 'rcp', 'diff']
 exps = ['Historical', 'RCP8.5', 'Projected change']
 exp_abr = ['hist', 'rcp', 'diff']
+
 years = [[1981, 2012], [2070, 2101]]
 var = ['u', 'v', 'w', 'salt', 'temp']
 deg = '\u00b0'  # Degree symbol.
