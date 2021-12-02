@@ -107,7 +107,7 @@ def run_EUC_skipped(lon=165, exp=0, v=1, dy=0.1, dz=25):
     days = get_missed_repeats(lon, exp).astype(dtype='datetime64[s]')
 
     # Convert days to seconds since fset start.
-    fset_start = fieldset.time_origin.time_origin.astype(dtype=days.dtype)
+    fset_start = np.datetime64('{}-01-01'.format(y1), 's')
     times = (days - fset_start).astype(dtype=np.float32)
 
     if test:
@@ -173,7 +173,7 @@ def run_EUC_skipped(lon=165, exp=0, v=1, dy=0.1, dz=25):
         timed = timer(ts)
         logger.info('{}: Finished!: Timer={}'.format(xlog['id'], timed))
 
-    return timed, xlog['start_r']
+    return
 
 
 if __name__ == "__main__":
@@ -183,4 +183,4 @@ if __name__ == "__main__":
 
     args = p.parse_args()
     lon, exp = args.lon, args.exp
-    t = run_EUC_skipped(lon, exp)
+    run_EUC_skipped(lon, exp)
