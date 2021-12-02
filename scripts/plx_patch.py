@@ -6,21 +6,19 @@ parcels=2.2.1=py38h32f6830_0
 
 """
 
-import math
+import xarray as xr
 import numpy as np
 import pandas as pd
-from pathlib import Path
 from operator import attrgetter
 from datetime import datetime, timedelta
 from argparse import ArgumentParser
-from parcels import (Variable, JITParticle)
-import xarray as xr
+from parcels import ParticleSet
+
 import cfg
 from tools import mlogger, timer
-from plx_fncs import (ofam_fieldset, pset_euc_set_times, del_westward, get_plx_id,
-                      zparticle)
-from kernels import (AdvectionRK4_Land, BeachTest, UnBeachR,
-                     AgeZone, Distance, recovery_kernels)
+from plx_fncs import (ofam_fieldset, del_westward, zparticle, pset_from_file)
+from kernels import (AdvectionRK4_Land, BeachTest, UnBeachR, AgeZone, Distance,
+                     recovery_kernels)
 
 try:
     from mpi4py import MPI
@@ -71,83 +69,154 @@ def get_missed_repeats(lon=165, exp=0):
     else:
         logger.error('No file {}'.format(file.stem))
 
-    return repeat_days
+    # Convert days to seconds since fset start.
+    fset_start = np.datetime64('{}-01-01'.format(cfg.years[exp][0]), 's')
+    times = (repeat_days - fset_start).astype(dtype=np.float32)
+
+    return times
 
 
-def run_EUC_skipped(lon=165, exp=0, v=1, dy=0.1, dz=25):
+def create_euc_repeat_pset(fieldset, pclass, lon, dy, dz, times):
+    """Create a EUC ParticleSet for given release times."""
+    # Particle release latitudes, depths and longitudes.
+    py = np.round(np.arange(-2.6, 2.6 + 0.05, dy), 2)
+    pz = np.arange(25, 350 + 20, dz)
+    px = np.array([lon])
+
+    # Each repeat.
+    lats = np.repeat(py, pz.size * px.size)
+    depths = np.repeat(np.tile(pz, py.size), px.size)
+    lons = np.repeat(px, pz.size * py.size)
+
+    # Duplicate for each repeat.
+    time = np.repeat(times, lons.size)
+    depth = np.tile(depths, times.size)
+    lon = np.tile(lons, times.size)
+    lat = np.tile(lats, times.size)
+
+    pset = ParticleSet.from_list(fieldset=fieldset, pclass=pclass,
+                                 lon=lon, lat=lat, depth=depth, time=time,
+                                 lonlatdepth_dtype=np.float32)
+    return pset
+
+
+
+def run_EUC_skipped(lon=165, exp=0, v=1, dy=0.1, dz=25, runtime_days=1500):
     """Run Lagrangian EUC particle experiment."""
-    test = True if cfg.home.drive == 'C:' else False
     ts = datetime.now()
-    outputdt_days = 2
-    dt_mins = 60
-    xlog = {'file': 0, 'new': 0, 'west_r': 0, 'new_r': 0, 'final_r': 0,
-            'file_r': 0, 'y': '', 'x': '', 'z': '', 'v': v}
+
+    # Dict for logs.
+    xlog = {'file': 0, 'new': 0, 'final': 0, 'v': v}
+
+    # Run reduced version off NCI.
+    test = True if cfg.home.drive == 'C:' else False
 
     # Get MPI rank or set to zero.
     rank = MPI.COMM_WORLD.Get_rank() if MPI else 0
+
+    outputdt_days = 2  # Output save frequency.
+    dt_mins = 60  # Timestep.
     dt = -timedelta(minutes=dt_mins)  # Advection step (negative for backward).
     outputdt = timedelta(days=outputdt_days)  # Advection steps to write.
+    runtime = timedelta(days=int(runtime_days))
 
-    y1, y2 = cfg.years[exp]
-    time_bnds = [datetime(y1, 1, 1), datetime(y2, 12, 31)]
+    # Fieldset time boundaries.
+    time_bnds = [datetime(y + i, 1, 1) - timedelta(days=i)
+                 for i, y in enumerate(cfg.years[exp])]
 
     if test:
-        time_bnds[0] = datetime(y2, 1, 31)
+        # time_bnds[0] = time_bnds[-1] - timedelta(days=31)
+        time_bnds[1] = time_bnds[0] + timedelta(days=30)
 
     fieldset = ofam_fieldset(time_bnds, exp)
-
-    pclass = zparticle(fieldset, reduced=False, lon=attrgetter('lon'),
-                       lat=attrgetter('lat'), depth=attrgetter('depth'))
-
-    # Generate file name for experiment (random number if not using MPI).
-    xid = get_plx_id(cfg.exp[exp], lon, v, 0)
-    xid = xid.parent / xid.name.replace('r0', 's0')
-
-    # Set ParticleSet start as last fieldset time.
-    days = get_missed_repeats(lon, exp).astype(dtype='datetime64[s]')
-
-    # Convert days to seconds since fset start.
-    fset_start = np.datetime64('{}-01-01'.format(y1), 's')
-    times = (days - fset_start).astype(dtype=np.float32)
 
     if test:
         for fld in [fieldset.U, fieldset.V, fieldset.W]:
             fld.time_periodic = True
-        # Create dummy repeats in first month of avail data for testing.
-        times = fieldset.U.grid.time_full[-1] - (np.arange(10) * 24 * 60 * 60)
 
-    # Create ParticleSet.
-    pset = pset_euc_set_times(fieldset, pclass, lon, dy, dz, times, xlog=xlog)
-    xlog['new_r'] = pset.size
+    pclass = zparticle(fieldset, reduced=False, lon=attrgetter('lon'),
+                       lat=attrgetter('lat'), depth=attrgetter('depth'))
 
-    pset = del_westward(pset)
-    xlog['start_r'] = pset.size
-    xlog['west_r'] = xlog['new_r'] - xlog['start_r']
+    # Generate file name for experiment.
+    xid = 'v{}/plx_{}_{}_v{}a*'.format(v, cfg.exp[exp], lon, v)
+    r = len(sorted(cfg.data.glob(xid)))
+    xid = cfg.data / '{}{:02d}.nc'.format(xid[:-1], r)
 
-    # ParticleSet execution endtime.
-    endtime = 0
+    # Set ParticleSet start as last fieldset time.
+    times = get_missed_repeats(lon, exp)
+
+    # Create partcileset for first run.
+    if r == 0:
+        # Reduce particle times to those in avail runtime.
+        pset_start = times[0]
+        xlog['pset_start'] = pset_start
+        time_from_restart = pset_start - runtime.total_seconds()
+        inds = np.where(times >= time_from_restart)
+        times = times[inds]
+
+        pset = create_euc_repeat_pset(fieldset, pclass, lon, dy, dz, times)
+        xlog['new'] = pset.size
+        pset = del_westward(pset)
+        xlog['start'] = pset.size
+
+    else:
+        file = xid.parent / '{}{:02d}.nc'.format(xid.stem[:-2], r - 1)
+        pset = pset_from_file(fieldset, pclass, file, restart=True,
+                              restarttime=np.nanmin, reduced=0, xlog=xlog)
+        pset_start = xlog['pset_start']
+        xlog['file'] = pset.size
+
+        # Check unreleased particle ages need release times reset (defaults to min).
+        # Reduce particle times to those in avail runtime.
+        time_from_restart = pset_start - runtime.total_seconds()
+
+        # Add new particles.
+        inds = np.where(((times < pset_start) & (times >= time_from_restart)))
+        times = times[inds]
+
+        if test:
+            times = np.array([pset_start - timedelta(days=1).total_seconds()])
+
+        psetx = create_euc_repeat_pset(fieldset, pclass, lon, dy, dz, times)
+
+        xlog['new'] = psetx.size
+        psetx = del_westward(psetx)
+        xlog['start'] = psetx.size
+
+        pset.add(psetx)
+
+        # Reduce runtime is longer than remaining.
+        if time_from_restart < 0:
+            runtime = timedelta(seconds=pset_start)
 
     # Create output ParticleFile p_name and time steps to write output.
     output_file = pset.ParticleFile(xid, outputdt=outputdt)
 
     # Log details.
     xlog['id'] = xid.stem
-    xlog['N'] = xlog['new'] + xlog['file']
+    xlog['N'] = xlog['start'] + xlog['file']
     xlog['out'] = output_file.tempwritedir_base[-8:]
     xlog['dt'] = dt_mins
+    xlog['run'] = runtime_days
     xlog['outdt'] = outputdt.days
     xlog['land'] = fieldset.onland
     xlog['Vmin'] = fieldset.UV_min
-    xlog['UBmin'] = fieldset.UB_min
-    xlog['UBw'] = fieldset.UBw
 
+    # ParticleSet start time (for log).
+    start = time_bnds[0] + timedelta(seconds=int(pset_start))
+
+    xlog['id'] = xid.stem
+    xlog['Ti'] = start.strftime('%Y-%m-%d')
+    xlog['Tf'] = (start - runtime).strftime('%Y-%m-%d')
     # Log details.
     if rank == 0:
-        logvs = [xlog[v] for v in ['id', 'N', 'out', 'outdt', 'land', 'Vmin']]
-        logger.info(' {}: P={}: Tmp={}: Out={:.0f}d: Land={} Vmin={}'.format(*logvs))
+        logvs = [xlog[v] for v in ['id', 'out', 'outdt', 'land', 'Vmin']]
+        logger.info('{}: Tmp={}: Out={:.0f}d: Land={} Vmin={}'.format(*logvs))
+        logvs = [xlog[v] for v in ['id', 'run', 'Ti', 'Tf']]
+        logger.info('{}: Run={}d: {} to {}'.format(*logvs))
 
-    logger.info('{:>18}: Rank={:>2}: Particles={}'.format(xlog['id'], rank,
-                                                          xlog['start_r']))
+    logger.info('{:>18}: Rank={:>2}: Particles: File={} Added={} Total={}'
+                .format(xlog['id'], rank, xlog['file'], xlog['start'], xlog['N']))
 
     # Kernels.
     kernels = pset.Kernel(AdvectionRK4_Land)
@@ -155,15 +224,14 @@ def run_EUC_skipped(lon=165, exp=0, v=1, dy=0.1, dz=25):
     kernels += pset.Kernel(AgeZone) + pset.Kernel(Distance)
 
     # Execute.
-    pset.execute(kernels, endtime=endtime, dt=dt, output_file=output_file,
+    pset.execute(kernels, runtime=runtime, dt=dt, output_file=output_file,
                  verbose_progress=True, recovery=recovery_kernels)
     # Log details.
     timed = timer(ts)
-    xlog['end_r'] = pset.size
-    xlog['del_r'] = xlog['start_r'] + xlog['file_r'] - xlog['end_r']
+    xlog['end'] = pset.size
+    xlog['del'] = xlog['N'] - xlog['end']
     logger.info('{:>18}: Completed: {}: Rank={:>2}: Particles: Start={} Del={} End={}'
-                .format(xlog['id'], timed, rank, xlog['file_r'] + xlog['start_r'],
-                        xlog['del_r'], xlog['end_r']))
+                .format(xlog['id'], timed, rank, xlog['N'], xlog['del'], xlog['end']))
 
     # Save to netcdf.
     output_file.export()
@@ -180,7 +248,9 @@ if __name__ == "__main__":
     p = ArgumentParser(description="""Run EUC Lagrangian experiment.""")
     p.add_argument('-x', '--lon', default=165, type=int, help='Start lon.')
     p.add_argument('-e', '--exp', default=0, type=int, help='Scenario.')
+    p.add_argument('-t', '--runtime', default=1500, type=int, help='Run days.')
 
     args = p.parse_args()
-    lon, exp = args.lon, args.exp
-    run_EUC_skipped(lon, exp)
+    lon, exp, runtime_days = args.lon, args.exp, args.runtime
+    # v, dy, dz = 1, 1, 100
+    run_EUC_skipped(lon, exp, runtime_days=runtime_days)

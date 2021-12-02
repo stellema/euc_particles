@@ -217,36 +217,6 @@ def pset_euc(fieldset, pclass, lon, dy, dz, repeatdt, pset_start, repeats,
     return pset
 
 
-def pset_euc_set_times(fieldset, pclass, lon, dy, dz, times, xlog=None):
-    """Create a EUC ParticleSet for given release times."""
-    # Particle release latitudes, depths and longitudes.
-    py = np.round(np.arange(-2.6, 2.6 + 0.05, dy), 2)
-    pz = np.arange(25, 350 + 20, dz)
-    px = np.array([lon])
-
-    # Each repeat.
-    lats = np.repeat(py, pz.size * px.size)
-    depths = np.repeat(np.tile(pz, py.size), px.size)
-    lons = np.repeat(px, pz.size * py.size)
-
-    if xlog:
-        xlog['new'] = pz.size * py.size * px.size * times.size
-        xlog['y'] = '[{}-{} x{}]'.format(py[0], py[py.size - 1], dy)
-        xlog['x'] = '{}'.format(*px)
-        xlog['z'] = '[{}-{}m x{}]f32'.format(pz[0], pz[pz.size - 1], dz)
-
-    # Duplicate for each repeat.
-    time = np.repeat(times, lons.size)
-    depth = np.tile(depths, times.size)
-    lon = np.tile(lons, times.size)
-    lat = np.tile(lats, times.size)
-
-    pset = ParticleSet.from_list(fieldset=fieldset, pclass=pclass,
-                                 lon=lon, lat=lat, depth=depth, time=time,
-                                 lonlatdepth_dtype=np.float32)
-    return pset
-
-
 def del_westward(pset):
     inds, = np.where((pset.particle_data['u'] <= 0.) & (pset.particle_data['age'] == 0.))
     for d in pset.particle_data:
@@ -342,7 +312,7 @@ def pset_from_file(fieldset, pclass, filename, repeatdt=None, restart=True,
         else:
             restarttime = restarttime
 
-        inds = np.where(vars['time'] == restarttime)
+        inds = np.where(vars['time'] <= restarttime)
         for v in vars:
             if to_write[v] is True:
                 vars[v] = vars[v][inds]
@@ -368,6 +338,7 @@ def pset_from_file(fieldset, pclass, filename, repeatdt=None, restart=True,
 
     if xlog:
         xlog['file'] = vars['lon'].size
+        xlog['pset_start'] = restarttime
         if reduced:
             if 'restarttime' in pfile.variables:
                 xlog['pset_start'] = pfile.variables['restarttime'].item()
