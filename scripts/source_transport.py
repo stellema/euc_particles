@@ -28,36 +28,27 @@ def source_percent(ds, file):
                            'traj': ds.traj.values, 'time': ds.time})
 
     logger.debug('Sum total transport...')
-    dz['u_total'] = ds.u.sum('traj')
     logger.debug('Sum total transport. Success!')
-    u_total = dz.u_total.mean('time').item()
 
-    dz['u'] = (('zone', 'time'), np.empty((dz.zone.size, dz.time.size)))
     dz['age'] = dz['u'].copy()
-    dz['distance'] = dz['u'].copy()
-    dz['t'] = (('zone', 'traj'), np.empty((dz.zone.size, dz.traj.size)))  # Trajectories
 
-
+    # logger.info('{}: u total={:.1f}'.format(file.stem, u_total))
     for z in range(dz.zone.size):
-        logger.debug('{}:{} Subset zone.'.format(file.stem, z))
-        dx = ds.where(ds.zone == z, drop=True)
+        dx = ds.age.where(ds.zone == 1)
 
         # dz['t'][dict(zone=z)] = ds.traj.where(ds.traj.isin(dx.traj))
+        dz['age'][dict(zone=z)] = dx.max('traj')
 
-        logger.debug('{}:{} sum u zone.'.format(file.stem, z))
+        u = dz.age.isel(zone=z).mean('time').item()
+        logger.info('{}: {} u={:.1f} {:.1f}% '
+                    .format(file.stem, age))
 
-        dz['u'][dict(zone=z)] = dx.u.sum('traj')
+        # logger.debug('{}:{} age.'.format(file.stem, z))
+        # for var in ['age']:
+        #     dz[var][dict(zone=z)] = dx[var].median('traj')
 
-        u = dz.u.isel(zone=z).mean('time').item()
-        logger.info('{}: {} u={:.1f} {:.1f}% total={:.1f}'
-                    .format(file.stem, z, u, (u / u_total) * 100, u_total))
-
-        logger.debug('{}:{} age.'.format(file.stem, z))
-        for var in ['age']:
-            dz[var][dict(zone=z)] = dx[var].median('traj')
-
-        logger.info('{}: {} age={:.1f} {:.1f}% total={:.1f}'
-                    .format(file.stem, dz.age.isel(zone=z).mean('time').item()))
+        # logger.info('{}: {} age={:.1f} {:.1f}% total={:.1f}'
+        #             .format(file.stem, dz.age.isel(zone=z).mean('time').item()))
     return dz
 
 
@@ -65,7 +56,7 @@ def save_source_transport(lon, exp, v):
 
     file = (cfg.data / 'source_subset/plx_sources_{}_{}_v{}.nc'
             .format(cfg.exp_abr[exp], lon, v))
-    save = cfg.data / 'source_u_{}_{}_v{}.nc'.format(cfg.exp_abr[exp], lon, v)
+    save = cfg.data / 'source_age_{}_{}_v{}.nc'.format(cfg.exp_abr[exp], lon, v)
 
     logger.debug('{}: Start source transport.'.format(file.stem))
     ds = xr.open_dataset(file)
@@ -75,26 +66,27 @@ def save_source_transport(lon, exp, v):
     logger.debug('{}: Getting source transport.'.format(file.stem))
     dz = source_percent(ds, file)
 
-    # Log u and u%
-    u_total = dz.u_total.mean('time').item()
+    # # Log u and u%
+    # u_total = dz.u_total.mean('time').item()
 
-    for z in range(11):
-        name = cfg.zones.list_all[z-1].name_full if z > 0 else 'None'
-        u = dz.u.isel(zone=z).mean('time').item()
+    # for z in range(11):
+    #     name = cfg.zones.list_all[z-1].name_full if z > 0 else 'None'
+    #     u = dz.u.isel(zone=z).mean('time').item()
 
-        logger.info('{}: {} u={:.1f} {:.1f}% total={:.1f}'
-                    .format(file.stem, name, u, (u / u_total) * 100, u_total))
-    logger.debug('{}: Saving source transport.'.format(file.stem))
+    #     logger.info('{}: {} u={:.1f} {:.1f}% total={:.1f}'
+    #                 .format(file.stem, name, u, (u / u_total) * 100, u_total))
+    # logger.debug('{}: Saving source transport.'.format(file.stem))
     dz.to_netcdf(save, compute=True)
 
 
-if __name__ == "__main__":
-    p = ArgumentParser(description="""Get plx sources and transit times.""")
-    p.add_argument('-x', '--lon', default=250, type=int)
-    p.add_argument('-e', '--exp', default=0, type=int)
-    args = p.parse_args()
-    save_source_transport(args.lon, args.exp, v=1)
+# if __name__ == "__main__":
+#     p = ArgumentParser(description="""Get plx sources and transit times.""")
+#     p.add_argument('-x', '--lon', default=250, type=int)
+#     p.add_argument('-e', '--exp', default=0, type=int)
+#     args = p.parse_args()
+#     save_source_transport(args.lon, args.exp, v=1)
 
-# lon = 250
-# exp = 0
-# v = 1
+lon = 165
+exp = 0
+v = 1
+save_source_transport(lon, exp, v)
