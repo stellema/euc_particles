@@ -8,21 +8,23 @@
 #PBS -l wd
 #PBS -m ae
 #PBS -M astellemas@gmail.com
-#PBS -v LON,EXP
+#PBS -v LON,EXP,Y,R
 
 ###############################################################################
 #
-# Create PLX spinup particle set.
-#
-# qsub -v LON=250,EXP="hist" spinup_ps.sh
-#
+# Run PLX spinup particleset.
+# To run: qsub -v LON=250,EXP="hist",Y=6,R=10 spinup_ps.sh
+# where Y is the offset year and R is the file increment
 ###############################################################################
 
 ECHO=/bin/echo
-module use /g/data3/hh5/public/modules
-module load conda
-source /g/data/e14/as3189/conda/envs/analysis3-20.01/bin/activate
+parent=/g/data/e14/as3189/stellema/plx/
 
-# Create file of particle positions at last checkpoint.
-$ECHO "Create spinup particleset for plx $EXP & $LON."
-python3 /g/data/e14/as3189/stellema/plx/scripts/plx_spinup_particleset.py -e $EXP -x $LON -v 1
+# Run spinup particles
+$ECHO "Create spinup particleset for plx exp=$EXP & lon=$LON."
+python3 "$parent"/scripts/plx_spinup_particleset.py -e $EXP -x $LON -v 1
+
+# Submit job to create particle set restart file.
+if [ $R -lt 13 ]; then
+  qsub -v LON=$LON,EXP=$EXP,Y=$Y,R=$R "$parent"/jobs/spinup.sh
+fi

@@ -1,0 +1,206 @@
+Run plx spinup for hist at lon 165.
+[1639028531.579697] [gadi-cpu-clx-3007:2445734:0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1639028531.579757] [gadi-cpu-clx-3007:2445734:0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[1639028531.579747] [gadi-cpu-clx-3007:2445741:0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1639028531.579766] [gadi-cpu-clx-3007:2445741:0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[1639028531.579733] [gadi-cpu-clx-3007:2445749:0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1639028531.579752] [gadi-cpu-clx-3007:2445749:0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[1639028531.579700] [gadi-cpu-clx-3007:2445751:0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1639028531.579746] [gadi-cpu-clx-3007:2445751:0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[1639028531.579716] [gadi-cpu-clx-3007:2445756:0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1639028531.579736] [gadi-cpu-clx-3007:2445756:0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[1639028531.579901] [gadi-cpu-clx-3007:2445753:0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1639028531.579919] [gadi-cpu-clx-3007:2445753:0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[1639028531.579922] [gadi-cpu-clx-3007:2445738:0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1639028531.579941] [gadi-cpu-clx-3007:2445738:0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[1639028531.579941] [gadi-cpu-clx-3007:2445735:0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1639028531.579960] [gadi-cpu-clx-3007:2445735:0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[1639028531.579955] [gadi-cpu-clx-3007:2445737:0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1639028531.579973] [gadi-cpu-clx-3007:2445737:0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[1639028531.579999] [gadi-cpu-clx-3007:2445773:0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1639028531.580023] [gadi-cpu-clx-3007:2445773:0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[1639028531.580134] [gadi-cpu-clx-3007:2445772:0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1639028531.580153] [gadi-cpu-clx-3007:2445772:0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[1639028531.580193] [gadi-cpu-clx-3007:2445769:0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1639028531.580210] [gadi-cpu-clx-3007:2445769:0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[1639028531.580253] [gadi-cpu-clx-3007:2445757:0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1639028531.580271] [gadi-cpu-clx-3007:2445757:0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[1639028531.580301] [gadi-cpu-clx-3007:2445766:0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1639028531.580318] [gadi-cpu-clx-3007:2445766:0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[1639028531.580496] [gadi-cpu-clx-3007:2445742:0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1639028531.580514] [gadi-cpu-clx-3007:2445742:0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[1639028531.580538] [gadi-cpu-clx-3007:2445760:0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1639028531.580556] [gadi-cpu-clx-3007:2445760:0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[1639028531.580952] [gadi-cpu-clx-3007:2445744:0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1639028531.580972] [gadi-cpu-clx-3007:2445744:0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[1639028531.581014] [gadi-cpu-clx-3007:2445755:0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1639028531.581031] [gadi-cpu-clx-3007:2445755:0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[1639028531.581036] [gadi-cpu-clx-3007:2445739:0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1639028531.581055] [gadi-cpu-clx-3007:2445739:0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[1639028531.581076] [gadi-cpu-clx-3007:2445752:0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1639028531.581092] [gadi-cpu-clx-3007:2445752:0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[1639028531.581283] [gadi-cpu-clx-3007:2445774:0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1639028531.581302] [gadi-cpu-clx-3007:2445774:0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[1639028531.581322] [gadi-cpu-clx-3007:2445745:0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1639028531.581339] [gadi-cpu-clx-3007:2445745:0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[1639028531.581398] [gadi-cpu-clx-3007:2445759:0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1639028531.581416] [gadi-cpu-clx-3007:2445759:0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[1639028531.581614] [gadi-cpu-clx-3007:2445776:0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1639028531.581631] [gadi-cpu-clx-3007:2445776:0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[1639028531.581787] [gadi-cpu-clx-3007:2445781:0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1639028531.581806] [gadi-cpu-clx-3007:2445781:0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[1639028531.581844] [gadi-cpu-clx-3007:2445770:0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1639028531.581862] [gadi-cpu-clx-3007:2445770:0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[1639028531.581869] [gadi-cpu-clx-3007:2445778:0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1639028531.581888] [gadi-cpu-clx-3007:2445778:0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[1639028531.582038] [gadi-cpu-clx-3007:2445736:0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1639028531.582056] [gadi-cpu-clx-3007:2445736:0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[1639028531.582053] [gadi-cpu-clx-3007:2445748:0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1639028531.582071] [gadi-cpu-clx-3007:2445748:0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[1639028531.582109] [gadi-cpu-clx-3007:2445761:0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1639028531.582126] [gadi-cpu-clx-3007:2445761:0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[1639028531.582290] [gadi-cpu-clx-3007:2445747:0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1639028531.582310] [gadi-cpu-clx-3007:2445747:0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[1639028531.582594] [gadi-cpu-clx-3007:2445743:0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1639028531.582614] [gadi-cpu-clx-3007:2445743:0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[1639028531.582610] [gadi-cpu-clx-3007:2445750:0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1639028531.582627] [gadi-cpu-clx-3007:2445750:0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[1639028531.582678] [gadi-cpu-clx-3007:2445746:0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1639028531.582697] [gadi-cpu-clx-3007:2445746:0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[1639028531.582746] [gadi-cpu-clx-3007:2445754:0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1639028531.582763] [gadi-cpu-clx-3007:2445754:0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[1639028531.582774] [gadi-cpu-clx-3007:2445771:0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1639028531.582793] [gadi-cpu-clx-3007:2445771:0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[1639028531.582923] [gadi-cpu-clx-3007:2445758:0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1639028531.582942] [gadi-cpu-clx-3007:2445758:0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[1639028531.582915] [gadi-cpu-clx-3007:2445768:0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1639028531.582932] [gadi-cpu-clx-3007:2445768:0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[1639028531.582953] [gadi-cpu-clx-3007:2445764:0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1639028531.582970] [gadi-cpu-clx-3007:2445764:0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[1639028531.582986] [gadi-cpu-clx-3007:2445767:0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1639028531.583004] [gadi-cpu-clx-3007:2445767:0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[1639028531.583030] [gadi-cpu-clx-3007:2445762:0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1639028531.583047] [gadi-cpu-clx-3007:2445762:0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[1639028531.583114] [gadi-cpu-clx-3007:2445763:0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1639028531.583132] [gadi-cpu-clx-3007:2445763:0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[1639028531.583163] [gadi-cpu-clx-3007:2445740:0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1639028531.583181] [gadi-cpu-clx-3007:2445740:0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[1639028531.583190] [gadi-cpu-clx-3007:2445765:0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1639028531.583208] [gadi-cpu-clx-3007:2445765:0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[1639028531.583213] [gadi-cpu-clx-3007:2445777:0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1639028531.583231] [gadi-cpu-clx-3007:2445777:0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[1639028531.583236] [gadi-cpu-clx-3007:2445780:0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1639028531.583254] [gadi-cpu-clx-3007:2445780:0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[1639028531.583505] [gadi-cpu-clx-3007:2445775:0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1639028531.583522] [gadi-cpu-clx-3007:2445775:0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[1639028531.583560] [gadi-cpu-clx-3007:2445779:0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1639028531.583578] [gadi-cpu-clx-3007:2445779:0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[1639028535.797817] [gadi-cpu-clx-3007:2445773:0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1639028535.797830] [gadi-cpu-clx-3007:2445773:0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[1639028535.797911] [gadi-cpu-clx-3007:2445762:0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1639028535.797920] [gadi-cpu-clx-3007:2445762:0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[1639028535.798124] [gadi-cpu-clx-3007:2445780:0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1639028535.798134] [gadi-cpu-clx-3007:2445780:0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[1639028535.798183] [gadi-cpu-clx-3007:2445770:0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1639028535.798193] [gadi-cpu-clx-3007:2445770:0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[1639028535.798230] [gadi-cpu-clx-3007:2445771:0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1639028535.798240] [gadi-cpu-clx-3007:2445771:0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[1639028535.798219] [gadi-cpu-clx-3007:2445758:0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1639028535.798230] [gadi-cpu-clx-3007:2445758:0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[1639028535.798277] [gadi-cpu-clx-3007:2445741:0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1639028535.798291] [gadi-cpu-clx-3007:2445741:0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[1639028535.798371] [gadi-cpu-clx-3007:2445738:0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1639028535.798384] [gadi-cpu-clx-3007:2445738:0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[1639028535.798973] [gadi-cpu-clx-3007:2445744:0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1639028535.798988] [gadi-cpu-clx-3007:2445744:0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[1639028535.799256] [gadi-cpu-clx-3007:2445767:0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1639028535.799266] [gadi-cpu-clx-3007:2445767:0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[1639028535.799611] [gadi-cpu-clx-3007:2445760:0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1639028535.799622] [gadi-cpu-clx-3007:2445760:0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[1639028535.799613] [gadi-cpu-clx-3007:2445745:0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1639028535.799623] [gadi-cpu-clx-3007:2445745:0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[1639028535.799663] [gadi-cpu-clx-3007:2445737:0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1639028535.799676] [gadi-cpu-clx-3007:2445737:0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[1639028535.799776] [gadi-cpu-clx-3007:2445776:0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1639028535.799787] [gadi-cpu-clx-3007:2445776:0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[1639028535.799834] [gadi-cpu-clx-3007:2445734:0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1639028535.799850] [gadi-cpu-clx-3007:2445734:0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[1639028535.800143] [gadi-cpu-clx-3007:2445761:0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1639028535.800156] [gadi-cpu-clx-3007:2445761:0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[1639028535.800821] [gadi-cpu-clx-3007:2445781:0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1639028535.800835] [gadi-cpu-clx-3007:2445781:0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[1639028535.801713] [gadi-cpu-clx-3007:2445755:0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1639028535.801732] [gadi-cpu-clx-3007:2445755:0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[1639028535.802234] [gadi-cpu-clx-3007:2445768:0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1639028535.802251] [gadi-cpu-clx-3007:2445768:0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[1639028535.802413] [gadi-cpu-clx-3007:2445747:0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1639028535.802436] [gadi-cpu-clx-3007:2445747:0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[1639028535.802503] [gadi-cpu-clx-3007:2445766:0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1639028535.802520] [gadi-cpu-clx-3007:2445766:0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[1639028535.802578] [gadi-cpu-clx-3007:2445772:0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1639028535.802595] [gadi-cpu-clx-3007:2445772:0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[1639028535.802607] [gadi-cpu-clx-3007:2445757:0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1639028535.802626] [gadi-cpu-clx-3007:2445757:0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[1639028535.802640] [gadi-cpu-clx-3007:2445735:0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1639028535.802664] [gadi-cpu-clx-3007:2445735:0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[1639028535.802737] [gadi-cpu-clx-3007:2445750:0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1639028535.802759] [gadi-cpu-clx-3007:2445750:0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[1639028535.802747] [gadi-cpu-clx-3007:2445749:0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1639028535.802769] [gadi-cpu-clx-3007:2445749:0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[1639028535.802801] [gadi-cpu-clx-3007:2445736:0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1639028535.802826] [gadi-cpu-clx-3007:2445736:0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[1639028535.802806] [gadi-cpu-clx-3007:2445765:0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1639028535.802826] [gadi-cpu-clx-3007:2445765:0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[1639028535.802832] [gadi-cpu-clx-3007:2445764:0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1639028535.802849] [gadi-cpu-clx-3007:2445764:0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[1639028535.802840] [gadi-cpu-clx-3007:2445759:0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1639028535.802858] [gadi-cpu-clx-3007:2445759:0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[1639028535.802919] [gadi-cpu-clx-3007:2445743:0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1639028535.802944] [gadi-cpu-clx-3007:2445743:0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[1639028535.802948] [gadi-cpu-clx-3007:2445763:0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1639028535.802964] [gadi-cpu-clx-3007:2445763:0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[1639028535.802948] [gadi-cpu-clx-3007:2445769:0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1639028535.802965] [gadi-cpu-clx-3007:2445769:0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[1639028535.802964] [gadi-cpu-clx-3007:2445777:0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1639028535.802981] [gadi-cpu-clx-3007:2445777:0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[1639028535.803009] [gadi-cpu-clx-3007:2445778:0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1639028535.803027] [gadi-cpu-clx-3007:2445778:0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[1639028535.802997] [gadi-cpu-clx-3007:2445748:0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1639028535.803019] [gadi-cpu-clx-3007:2445748:0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[1639028535.803045] [gadi-cpu-clx-3007:2445779:0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1639028535.803062] [gadi-cpu-clx-3007:2445779:0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[1639028535.803115] [gadi-cpu-clx-3007:2445774:0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1639028535.803133] [gadi-cpu-clx-3007:2445774:0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[1639028535.803135] [gadi-cpu-clx-3007:2445753:0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1639028535.803159] [gadi-cpu-clx-3007:2445753:0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[1639028535.803204] [gadi-cpu-clx-3007:2445756:0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1639028535.803226] [gadi-cpu-clx-3007:2445756:0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[1639028535.803220] [gadi-cpu-clx-3007:2445746:0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1639028535.803243] [gadi-cpu-clx-3007:2445746:0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[1639028535.803183] [gadi-cpu-clx-3007:2445742:0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1639028535.803209] [gadi-cpu-clx-3007:2445742:0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[1639028535.803178] [gadi-cpu-clx-3007:2445740:0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1639028535.803203] [gadi-cpu-clx-3007:2445740:0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[1639028535.803229] [gadi-cpu-clx-3007:2445754:0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1639028535.803250] [gadi-cpu-clx-3007:2445754:0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[1639028535.803211] [gadi-cpu-clx-3007:2445752:0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1639028535.803232] [gadi-cpu-clx-3007:2445752:0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[1639028535.803266] [gadi-cpu-clx-3007:2445739:0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1639028535.803290] [gadi-cpu-clx-3007:2445739:0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[1639028535.803607] [gadi-cpu-clx-3007:2445751:0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1639028535.803631] [gadi-cpu-clx-3007:2445751:0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[1639028535.805391] [gadi-cpu-clx-3007:2445775:0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1639028535.805408] [gadi-cpu-clx-3007:2445775:0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m[0m
+======================================================================================
+                  Resource Usage on 2021-12-09 23:54:39:
+   Job Id:             32521341.gadi-pbs
+   Project:            e14
+   Exit Status:        0
+   Service Units:      692.53
+   NCPUs Requested:    48                     NCPUs Used: 48              
+                                           CPU Time Used: 301:19:22                                  
+   Memory Requested:   192.0GB               Memory Used: 149.82GB        
+   Walltime requested: 19:00:00            Walltime Used: 07:12:50        
+   JobFS requested:    100.0MB                JobFS used: 82.87MB         
+======================================================================================

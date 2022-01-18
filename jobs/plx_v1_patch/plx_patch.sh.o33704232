@@ -1,0 +1,26 @@
+Run plx patch for exp 1 at lon 165.
+[1641903089.592983] [gadi-cpu-clx-0546:318789:0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1641903089.593311] [gadi-cpu-clx-0546:318789:0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[1641903089.592984] [gadi-cpu-clx-0546:318790:0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1641903089.593311] [gadi-cpu-clx-0546:318790:0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[1641903089.592989] [gadi-cpu-clx-0546:318791:0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1641903089.593313] [gadi-cpu-clx-0546:318791:0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[1641903100.358458] [gadi-cpu-clx-0546:318789:0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1641903100.358475] [gadi-cpu-clx-0546:318789:0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[1641903100.359418] [gadi-cpu-clx-0546:318790:0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1641903100.359439] [gadi-cpu-clx-0546:318790:0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[1641903100.361006] [gadi-cpu-clx-0546:318791:0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1641903100.361027] [gadi-cpu-clx-0546:318791:0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[0m[0m[0m
+======================================================================================
+                  Resource Usage on 2022-01-12 03:56:59:
+   Job Id:             33704232.gadi-pbs
+   Project:            e14
+   Exit Status:        0
+   Service Units:      102.29
+   NCPUs Requested:    3                      NCPUs Used: 3               
+                                           CPU Time Used: 13:45:42                                   
+   Memory Requested:   42.0GB                Memory Used: 41.17GB         
+   Walltime requested: 48:00:00            Walltime Used: 04:52:15        
+   JobFS requested:    100.0MB                JobFS used: 8.78MB          
+======================================================================================

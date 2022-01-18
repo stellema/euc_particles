@@ -1,0 +1,22 @@
+Run plx patch for exp 1 at lon 165.
+[1639273771.446593] [gadi-cpu-clx-0500:2053484:0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1639273771.447686] [gadi-cpu-clx-0500:2053484:0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[1639273771.446592] [gadi-cpu-clx-0500:2053485:0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1639273771.447689] [gadi-cpu-clx-0500:2053485:0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[1639273774.994542] [gadi-cpu-clx-0500:2053484:0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1639273774.994552] [gadi-cpu-clx-0500:2053484:0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[1639273774.994545] [gadi-cpu-clx-0500:2053485:0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1639273774.994555] [gadi-cpu-clx-0500:2053485:0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[0m[0m
+======================================================================================
+                  Resource Usage on 2021-12-13 22:16:01:
+   Job Id:             32701686.gadi-pbs
+   Project:            e14
+   Exit Status:        0
+   Service Units:      603.43
+   NCPUs Requested:    2                      NCPUs Used: 2               
+                                           CPU Time Used: 65:22:09                                   
+   Memory Requested:   36.0GB                Memory Used: 18.61GB         
+   Walltime requested: 40:00:00            Walltime Used: 33:31:26        
+   JobFS requested:    100.0MB                JobFS used: 8.53MB          
+======================================================================================

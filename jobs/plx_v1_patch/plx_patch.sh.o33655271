@@ -1,0 +1,26 @@
+Run plx patch for exp 1 at lon 165.
+[1641781296.626301] [gadi-cpu-clx-0736:9313 :0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1641781296.626324] [gadi-cpu-clx-0736:9313 :0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[1641781296.626303] [gadi-cpu-clx-0736:9315 :0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1641781296.626341] [gadi-cpu-clx-0736:9315 :0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[1641781296.626385] [gadi-cpu-clx-0736:9314 :0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1641781296.626401] [gadi-cpu-clx-0736:9314 :0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[1641781302.692997] [gadi-cpu-clx-0736:9313 :0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1641781302.693020] [gadi-cpu-clx-0736:9313 :0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[1641781302.693030] [gadi-cpu-clx-0736:9314 :0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1641781302.693051] [gadi-cpu-clx-0736:9314 :0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[1641781302.694142] [gadi-cpu-clx-0736:9315 :0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1641781302.694164] [gadi-cpu-clx-0736:9315 :0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[0m[0m[0m
+======================================================================================
+                  Resource Usage on 2022-01-11 21:10:06:
+   Job Id:             33655271.gadi-pbs
+   Project:            e14
+   Exit Status:        0
+   Service Units:      669.90
+   NCPUs Requested:    3                      NCPUs Used: 3               
+                                           CPU Time Used: 94:07:08                                   
+   Memory Requested:   42.0GB                Memory Used: 31.46GB         
+   Walltime requested: 48:00:00            Walltime Used: 31:54:00        
+   JobFS requested:    100.0MB                JobFS used: 8.78MB          
+======================================================================================

@@ -6,7 +6,7 @@
 #PBS -l ncpus=1
 #PBS -l storage=gdata/hh5+gdata/e14
 #PBS -l wd
-#PBS -m ae
+#PBS -m e
 #PBS -M astellemas@gmail.com
 #PBS -v LON,EXP
 

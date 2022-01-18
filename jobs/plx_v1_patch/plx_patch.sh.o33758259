@@ -1,0 +1,23 @@
+Starting plx_patch.py for exp=1 at lon=250.
+[1642056227.159059] [gadi-cpu-clx-0736:95875:0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1642056227.159339] [gadi-cpu-clx-0736:95875:0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[1642056227.159054] [gadi-cpu-clx-0736:95876:0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1642056227.159340] [gadi-cpu-clx-0736:95876:0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[1642056240.073214] [gadi-cpu-clx-0736:95875:0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1642056240.073232] [gadi-cpu-clx-0736:95875:0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[1642056240.075834] [gadi-cpu-clx-0736:95876:0]          ib_md.c:1439 UCX  WARN  IB: ibv_fork_init() was disabled or failed, yet a fork() has been issued.
+[1642056240.075856] [gadi-cpu-clx-0736:95876:0]          ib_md.c:1440 UCX  WARN  IB: data corruption might occur when using registered memory.
+[0m[0mSubmitting plx_patch.sh for exp=1 at lon=250.
+
+======================================================================================
+                  Resource Usage on 2022-01-13 22:12:26:
+   Job Id:             33758259.gadi-pbs
+   Project:            e14
+   Exit Status:        1
+   Service Units:      82.50
+   NCPUs Requested:    2                      NCPUs Used: 2               
+                                           CPU Time Used: 08:34:03                                   
+   Memory Requested:   36.0GB                Memory Used: 36.0GB          
+   Walltime requested: 48:00:00            Walltime Used: 04:35:01        
+   JobFS requested:    100.0MB                JobFS used: 8.54MB          
+======================================================================================
