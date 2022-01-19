@@ -371,13 +371,18 @@ def get_new_xid(lon, v=0, exp='hist', randomise=False, xlog=None):
     return xid
 
 
-def get_next_xid(lon, v=0, exp='hist', subfolder=None, xlog=None):
+def get_next_xid(lon, v=0, exp='hist', subfolder=None, xlog=None, patch=False):
     """Increment particle file r#."""
     r = 0
     parent = cfg.data / 'v{}'.format(v)
+
     if subfolder:
         parent = parent / subfolder
+
     xid = parent / 'plx_{}_{}_v{}r00.nc'.format(exp, int(lon), v)
+
+    if patch:
+        xid = parent / xid.name.replace(*[parent.stem + s for s in ['r', 'a']])
 
     files = [s for s in xid.parent.glob(str(xid.stem[:-2]) + '*.nc')]
     r = max([int(f.stem[-2:]) for f in files]) + 1
@@ -408,6 +413,13 @@ def open_plx_data(xid, **kwargs):
     ds['trajectory'] = ds.trajectory.astype(np.float32, copy=False)
     ds.coords['traj'] = ds.trajectory.astype(np.int32, copy=False).isel(obs=0)
     ds.coords['obs'] = ds.obs.astype(np.int32, copy=False) + (601 * int(xid.stem[-2:]))
+    return ds
+
+
+def reset_particle_trajectories(ds):
+    """Set particle trajectory IDs to linear increments."""
+    delta = ds.trajectory.isel(obs=0) - ds.traj
+    ds['trajectory'] = ds.trajectory - delta
     return ds
 
 

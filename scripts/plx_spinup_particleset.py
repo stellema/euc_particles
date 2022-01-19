@@ -9,7 +9,6 @@ import math
 import numpy as np
 import xarray as xr
 import pandas as pd
-from pathlib import Path
 from datetime import datetime, timedelta
 from argparse import ArgumentParser
 from parcels import (Variable, JITParticle)
@@ -28,14 +27,14 @@ except ImportError:
 logger = mlogger('plx', parcels=True, misc=False)
 
 
-def spinup_particleset(lon=165, exp='hist', v=1, year_offset=0):
+def spinup_particleset(lon=165, exp='hist', v=1, year_offset=0, patch=False):
     """Run Lagrangian EUC particle experiment."""
     xlog = {'file': 0, 'v': v}
 
     # Create time bounds for fieldset based on experiment.
     i = 0 if exp == 'hist' else -1
     y1, y2 = cfg.years[i]
-    y1 = 2012 if cfg.home == Path('E:/') and exp == 'hist' else y1
+    y1 = 2012 if cfg.home.drive == 'C:' and exp == 'hist' else y1
     time_bnds = [datetime(y1, 1, 1), datetime(y1, 12, 31)]
 
     fieldset = ofam_fieldset(time_bnds, exp)
@@ -43,7 +42,7 @@ def spinup_particleset(lon=165, exp='hist', v=1, year_offset=0):
     pclass = zparticle(fieldset, reduced=True)
 
     # Increment run index for new output file name.
-    xid = get_next_xid(lon, v, exp, xlog=xlog)
+    xid = get_next_xid(lon, v, exp, xlog=xlog, patch=patch)
     xlog['id'] = xid.stem
 
     # Change pset file to last run.
@@ -95,15 +94,17 @@ def spinup_particleset(lon=165, exp='hist', v=1, year_offset=0):
     return
 
 
-if __name__ == "__main__" and cfg.home != Path('E:/'):
+if __name__ == "__main__" and cfg.home.drive != 'C:':
     p = ArgumentParser(description="""Run EUC Lagrangian experiment.""")
     p.add_argument('-x', '--lon', default=165, type=int, help='Particle start longitude(s).')
     p.add_argument('-e', '--exp', default='hist', type=str, help='Scenario.')
     p.add_argument('-v', '--version', default=1, type=int, help='File Index.')
     p.add_argument('-y', '--year', default=0, type=int, help='# offset years.')
+    p.add_argument('-p', '--patch', default=0, type=int, help='Patch True/False.')
 
     args = p.parse_args()
-    spinup_particleset(lon=args.lon, exp=args.exp, v=args.version, year_offset=args.year)
+    spinup_particleset(lon=args.lon, exp=args.exp, v=args.version,
+                       year_offset=args.year, patch=args.patch)
 
 elif __name__ == "__main__":
     lon = 165

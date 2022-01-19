@@ -137,7 +137,7 @@ def restart_EUC(dy=0.1, dz=25, lon=165, exp='hist', repeatdt_days=6,
     return
 
 
-if __name__ == "__main__" and cfg.home != Path('E:/'):
+if __name__ == "__main__" and cfg.home.drive != 'C:':
     p = ArgumentParser(description="""Run EUC Lagrangian experiment.""")
     p.add_argument('-dy', '--dy', default=0.1, type=float, help='Particle latitude spacing [deg].')
     p.add_argument('-dz', '--dz', default=25, type=int, help='Particle depth spacing [m].')

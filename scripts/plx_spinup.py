@@ -27,12 +27,12 @@ except ImportError:
 logger = mlogger('plx', parcels=True, misc=False)
 
 
-def spinup(lon=165, exp='hist', v=1, runtime_years=3, year_offset=0):
+def spinup(lon=165, exp='hist', v=1, runtime_years=3, year_offset=0, patch=False):
     """Spinup Lagrangian EUC particle experiment."""
     ts = datetime.now()
     xlog = {'file': 0, 'v': v}
 
-    test = True if cfg.home == Path('E:/') else False
+    test = True if cfg.home == 'C:' else False
     rank = MPI.COMM_WORLD.Get_rank() if MPI else 0
     dt_mins = 60
     outputdt_days = 2
@@ -59,7 +59,9 @@ def spinup(lon=165, exp='hist', v=1, runtime_years=3, year_offset=0):
                        lat=attrgetter('lat'), depth=attrgetter('depth'))
 
     # Increment run index for new output file name.
-    xid = get_next_xid(lon, v, exp, xlog=xlog)
+
+    xid = get_next_xid(lon, v, exp, xlog=xlog, patch=patch)
+
     filename = xid.parent / 'r_{}.nc'.format(xid.stem)
 
     # Create ParticleSet from the given ParticleFile.
@@ -133,8 +135,10 @@ if __name__ == "__main__" and cfg.home.drive != 'E:':
     p.add_argument('-r', '--run', default=3, type=int, help='Spinup years.')
     p.add_argument('-v', '--version', default=1, type=int, help='Version.')
     p.add_argument('-y', '--year', default=0, type=int, help='# offset years.')
+    p.add_argument('-p', '--patch', default=0, type=int, help='Patch True/False.')
     args = p.parse_args()
-    spinup(lon=args.lon, exp=args.exp, v=args.version, runtime_years=args.run, year_offset=args.year)
+    spinup(lon=args.lon, exp=args.exp, v=args.version, runtime_years=args.run,
+           year_offset=args.year, patch=args.patch)
 
 elif __name__ == "__main__":
     lon = 165
@@ -142,4 +146,5 @@ elif __name__ == "__main__":
     exp = 'hist'
     runtime_years = 1
     spinup_year_offset = 0
-    spinup(lon=lon, exp=exp, v=v, runtime_years=runtime_years)
+    patch = False
+    spinup(lon=lon, exp=exp, v=v, runtime_years=runtime_years, patch=patch)
