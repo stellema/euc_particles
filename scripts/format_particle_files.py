@@ -27,7 +27,7 @@ Example:
     ./format_particle_files.py -x 165 -e 0
 
 Notes:
-
+    - Requires a lot of memory (tried 64Gb, 82GB)
 Todo:
     - Create PBS job script
 
@@ -196,10 +196,13 @@ def format_particle_file(lon, exp, v=1, r=0, spinup_year=0):
 
     # Merge main & patch particle files.
     logger.debug('{}: Concat skipped particles.'.format(xid.stem))
-    ds = xr.concat([ds, ds_a], 'traj')
+    ds = xr.concat([ds, ds_a], 'traj', coords='minimal')
+    # ds = ds.chunk('auto')
 
     # Fix some stuff.
+    logger.debug('{}: Update zone.'.format(xid.stem))
     ds = update_zone_recirculation(ds, lon)
+    logger.debug('{}: Subset at source.'.format(xid.stem))
     ds = particle_source_subset(ds)
     ds['u'] *= cfg.DXDY
 
