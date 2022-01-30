@@ -88,7 +88,7 @@ def merge_particle_trajectories(xids, traj):
     # Open particle files & subset selected particles.
     logger.debug('Merge trajectories: Searching files.')
     for i, xid in enumerate(xids):
-        dx = open_plx_data(xid)
+        dx = open_plx_data(xid, chunks='auto')
         dx['traj'] = dx.trajectory.isel(obs=0)
 
         # Drop last obs (duplicate contained in next file).
@@ -113,16 +113,17 @@ def merge_particle_trajectories(xids, traj):
         dx.close()
 
     logger.debug('Merge trajectories: Concat data.')
-    ds = xr.concat(dss, 'obs')
-    
-    logger.debug('Merge trajectories: argsort.')
-    inds = np.argsort(ds.age, -1).drop(['traj', 'obs'])
+    ds = xr.concat(dss, 'obs', coords='minimal')
+    ds['u'] = ds['u'].isel(obs=0)
+        
+    logger.debug('Merge trajectories: argsort (loaded).')
+    inds = np.argsort(ds.age.load(), -1).drop(['traj', 'obs'])
     
     logger.debug('Merge trajectories: take_along_axis.')
     for var in [v for v in ds.data_vars if v not in ['u']]:
         ds[var] = (['traj', 'obs'], np.take_along_axis(ds[var].values,
                                                        inds.values, axis=-1))
-    ds['u'] = ds['u'].isel(obs=0)
+    
     ds = ds.dropna('obs', 'all')
     return ds
 
