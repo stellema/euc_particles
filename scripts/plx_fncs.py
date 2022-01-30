@@ -350,6 +350,8 @@ def pset_from_file(fieldset, pclass, filename, repeatdt=None, restart=True,
 
 
 def get_plx_id(exp, lon, v, r):
+    if type(exp) != str:
+        exp = cfg.exp[exp]
     xid = cfg.data / 'v{}/plx_{}_{}_v{}r{:02d}.nc'.format(v, exp, lon, v, r)
     return xid
 
@@ -405,21 +407,14 @@ def get_plx_id_year(exp, lon, v, y):
 def open_plx_data(xid, **kwargs):
     """Open plx dataset."""
     ds = xr.open_dataset(str(xid), mask_and_scale=True, **kwargs)
-    # engine='h5netcdf', chunks=None
-    if cfg.home.drive == 'C:':
-        # Subset to N trajectories.
-        N = 1000
-        ds = ds.isel(traj=np.linspace(0, ds.traj.size - 1, N, dtype=int)) # !!!
-    ds['trajectory'] = ds.trajectory.astype(np.float32, copy=False)
-    ds.coords['traj'] = ds.trajectory.astype(np.int32, copy=False).isel(obs=0)
-    ds.coords['obs'] = ds.obs.astype(np.int32, copy=False) + (601 * int(xid.stem[-2:]))
-    return ds
-
-
-def reset_particle_trajectories(ds):
-    """Set particle trajectory IDs to linear increments."""
-    delta = ds.trajectory.isel(obs=0) - ds.traj
-    ds['trajectory'] = ds.trajectory - delta
+    # # engine='h5netcdf', chunks=None
+    # if cfg.home.drive == 'C:':
+    #     # Subset to N trajectories.
+    #     N = 1000
+    #     ds = ds.isel(traj=np.linspace(0, ds.traj.size - 1, N, dtype=int)) # !!!
+    # ds['trajectory'] = ds.trajectory.astype(np.float32, copy=False)
+    # ds.coords['traj'] = ds.trajectory.astype(np.int32, copy=False).isel(obs=0)
+    # ds.coords['obs'] = ds.obs.astype(np.int32, copy=False) + (ds.obs.size * int(xid.stem[-2:]))
     return ds
 
 
@@ -516,5 +511,98 @@ def open_plx_source(lon, exp, v=1, y=0):
             .format(cfg.exp_abr[exp], lon, v))
 
     ds = xr.open_dataset(file)
+
+    return ds
+
+
+def get_max_particle_file_ID(exp, lon, v):
+    """Get maximum particle ID from the set of main particle files."""
+    # Maximum particle trajectory ID (to be added to particle IDs).
+    rfile = get_plx_id(exp, lon, v, 9)
+
+    if cfg.home.drive == 'C:' and not rfile.exists(): # !!! Bug while at home.
+        rfile = list(rfile.parent.glob(rfile.name.replace('r09', 'r*')))[-1]
+
+    last_id = int(xr.open_dataset(rfile).trajectory.max().item())
+    return last_id
+
+
+def remap_particle_IDs(traj, traj_dict):
+    """Re-map particle trajectory IDs to the sorted value."""
+    # Check and replace NaNs with constant.
+    c = -9999
+    # if np.isnan(traj).any():
+    if not traj_dict[c] == c:
+        traj_dict[c] = c
+    traj = traj.where(~np.isnan(traj), -9999).astype(dtype=int)
+
+    # Remap
+    u, inv = np.unique(traj, return_inverse=True)
+    traj_remap = np.array([traj_dict[x] for x in u])[inv].reshape(traj.shape)
+    # traj_remap = np.vectorize(traj_dict.get)(traj)  # TypeError
+
+    # Convert back NaN.
+    traj_remap = np.where(traj_remap != c, traj_remap, np.nan)
+    return traj_remap
+
+def get_new_particle_IDs(ds):
+    """Open dataset and return with only initial particle IDs."""
+    ds = ds.isel(obs=0, drop=True)
+    ds = ds.where(ds.age == 0., drop=True)
+    traj = ds.trajectory.values.astype(int)
+    return traj
+
+
+def merge_particle_trajectories(xids, traj):
+    """Merge select particle trajectories that are split across files.
+
+    Args:
+        xids (list of pathlib.path): Particle filenames.
+        traj (array-like): Particle IDs to merge.
+
+    Returns:
+        ds (xarray.Dataset): Merged particle dataset.
+
+    """
+    next_obs = 0  # Update 'obs' coord based on previous file.
+    dss = []  # List of Datasets with select particle data.
+
+    # Open particle files & subset selected particles.
+    for i, xid in enumerate(xids):
+        dx = open_plx_data(xid)#, chunks='auto')
+        dx['traj'] = dx.trajectory.isel(obs=0)
+
+        # Drop last obs (duplicate contained in next file).
+        if i >= 1 and len(dss) != 0:
+            dx = dx.isel(obs=slice(1, None))
+
+        # Reset obs coords (reset to zero & start from last).
+        if i >= 1:
+            dx['obs'] = dx.obs - dx.obs[0].item() + next_obs
+
+        dx['obs'] = dx.obs  # Set as coordinate (make datasets consistent).
+        dx['traj'] = dx.traj
+
+        # Subset dataset with particles (check .
+        if dx.trajectory.isin(traj).any():
+            next_obs = dx.obs.max().item() + 1 # Update 'obs' coord.
+            dx = dx.where(dx.trajectory.isin(traj), drop=True)
+
+            # Add to list of datasets to be combined.
+            if dx.traj.size >= 1:
+                dss.append(dx)
+
+    ds = xr.concat(dss, 'obs')
+
+    inds = np.argsort(ds.age, -1).drop(['traj', 'obs'])
+    for var in [v for v in ds.data_vars if v not in ['u']]:
+        ds[var] = (['traj', 'obs'], np.take_along_axis(ds[var].values,
+                                                       inds.values, axis=-1))
+    ds['u'] = ds['u'].isel(obs=0)
+    ds = ds.dropna('obs', 'all')
+    # # test
+    # print(ds.isel(traj=-1, obs=slice(595, 605)).age)
+    # for i in range(4):
+    #     ds.age[i].plot()
 
     return ds

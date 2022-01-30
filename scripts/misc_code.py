@@ -400,3 +400,79 @@ from main import ec, mc, ng
 # mod[m]['id'] in ['CMCC-CM2-SR5'] i, j switched
 
 
+def test_trajectory_ID_remap():
+    from particle_id_remap_dict import dictionary_map, remap_particle_IDs
+    from plx_fncs import get_max_particle_file_ID
+    """Create & test simple 2D trajectory data array."""
+    def create_test_trajectory_arrays():
+        """Create simple 2D trajectory data array."""
+        def shape(x, n=3):
+            return np.repeat(x, n, axis=0).reshape(x.size, n)
+
+        trajectory = np.array([1, 3, 5, 7, 9])
+
+        # Coords.
+        traj = np.arange(trajectory.size)
+        obs = np.arange(3)
+
+        # Create 2D (traj, obs) shape.
+        trajectory = shape(trajectory, obs.size)
+
+        ds = xr.Dataset(dict(trajectory=(['traj', 'obs'], trajectory)),
+                        coords=dict(traj=traj, obs=obs))
+        return ds
+
+    ds = create_test_trajectory_arrays()
+    print(ds)
+    traj_dict = dictionary_map(ds.trajectory.isel(obs=0).values,
+                                              np.arange(ds.traj.size))
+
+    traj_remap = remap_particle_IDs(ds.trajectory, traj_dict)
+    print(traj_remap)
+
+    # Test obs & traj subset.
+    traj_remap_a = remap_particle_IDs(ds.trajectory.isel(obs=slice(1, 3)), traj_dict)
+    traj_remap_b = remap_particle_IDs(ds.trajectory.isel(traj=slice(1, 3)), traj_dict)
+
+    # Test appending dict.
+    # Modify traj ID & coords (add constant).
+    c = 10
+    dc = ds + c  # Adds constant to ds.trajectory.
+    dc.coords['traj'] = dc.traj.values + c
+
+    traj_m0 = ds.trajectory.isel(obs=0).values
+    traj_m1 = dc.trajectory.isel(obs=0).values
+    traj_m = np.append(traj_m0, traj_m1)
+
+    traj_dict_m = dictionary_map(traj_m, np.arange(traj_m.size))
+    traj_remap_m = remap_particle_IDs(dc.trajectory, traj_dict_m)
+    print(traj_remap_m)
+
+    # Test save & open dict.
+    filename = cfg.data / 'test_dict.npy'
+
+    np.save(filename, traj_dict)
+
+    loaded_traj_dict = np.load(filename, allow_pickle=True).item()
+    loaded_traj_remap = remap_particle_IDs(ds.trajectory, loaded_traj_dict)
+
+    if not loaded_traj_dict == traj_dict:
+        print(loaded_traj_dict)
+
+    # test patch particles
+    v = 1
+    lon = 165
+    exp = cfg.exp_abr[0]
+
+    traj_dict = dictionary_map(lon, exp, v)
+
+
+    ds = xr.open_dataset(cfg.data / 'v1/plx_hist_165_v1a01.nc', decode_cf=True)
+
+    last_id = get_max_particle_file_ID(exp, lon, v)
+    ds['trajectory'] = (ds.trajectory + last_id + 1)#.astype(dtype=int)
+
+    # ds['trajectory'] = remap_particle_IDs(ds.trajectory, traj_dict).head()
+    remap_particle_IDs(ds.trajectory, traj_dict)
+
+    return
