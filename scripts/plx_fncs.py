@@ -18,12 +18,6 @@ OFAM variable coordinates:
     w - sw_ocean, yt_ocean, xt_ocean
     salt - st_ocean, yt_ocean, xt_ocean
     temp - st_ocean, yt_ocean, xt_ocean
-
-TODO: check unbeachW interpolation ('bgrid_w_velocity' vs 'bgrid_velocity')
-TODO: modify ubeach, land and zone for new fields
-TODO: create new OFAM3 mesh mask
-TODO: Check chunking
-TODO:
 """
 
 import math
@@ -545,6 +539,7 @@ def remap_particle_IDs(traj, traj_dict):
     traj_remap = np.where(traj_remap != c, traj_remap, np.nan)
     return traj_remap
 
+
 def get_new_particle_IDs(ds):
     """Open dataset and return with only initial particle IDs."""
     ds = ds.isel(obs=0, drop=True)
@@ -552,57 +547,3 @@ def get_new_particle_IDs(ds):
     traj = ds.trajectory.values.astype(int)
     return traj
 
-
-def merge_particle_trajectories(xids, traj):
-    """Merge select particle trajectories that are split across files.
-
-    Args:
-        xids (list of pathlib.path): Particle filenames.
-        traj (array-like): Particle IDs to merge.
-
-    Returns:
-        ds (xarray.Dataset): Merged particle dataset.
-
-    """
-    next_obs = 0  # Update 'obs' coord based on previous file.
-    dss = []  # List of Datasets with select particle data.
-
-    # Open particle files & subset selected particles.
-    for i, xid in enumerate(xids):
-        dx = open_plx_data(xid)#, chunks='auto')
-        dx['traj'] = dx.trajectory.isel(obs=0)
-
-        # Drop last obs (duplicate contained in next file).
-        if i >= 1 and len(dss) != 0:
-            dx = dx.isel(obs=slice(1, None))
-
-        # Reset obs coords (reset to zero & start from last).
-        if i >= 1:
-            dx['obs'] = dx.obs - dx.obs[0].item() + next_obs
-
-        dx['obs'] = dx.obs  # Set as coordinate (make datasets consistent).
-        dx['traj'] = dx.traj
-
-        # Subset dataset with particles (check .
-        if dx.trajectory.isin(traj).any():
-            next_obs = dx.obs.max().item() + 1 # Update 'obs' coord.
-            dx = dx.where(dx.trajectory.isin(traj), drop=True)
-
-            # Add to list of datasets to be combined.
-            if dx.traj.size >= 1:
-                dss.append(dx)
-
-    ds = xr.concat(dss, 'obs')
-
-    inds = np.argsort(ds.age, -1).drop(['traj', 'obs'])
-    for var in [v for v in ds.data_vars if v not in ['u']]:
-        ds[var] = (['traj', 'obs'], np.take_along_axis(ds[var].values,
-                                                       inds.values, axis=-1))
-    ds['u'] = ds['u'].isel(obs=0)
-    ds = ds.dropna('obs', 'all')
-    # # test
-    # print(ds.isel(traj=-1, obs=slice(595, 605)).age)
-    # for i in range(4):
-    #     ds.age[i].plot()
-
-    return ds

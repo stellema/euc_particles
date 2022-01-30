@@ -45,8 +45,7 @@ from particle_id_remap import (create_particle_ID_remap_dict,
                                patch_particle_IDs_per_release_day)
 from plx_fncs import (get_plx_id, open_plx_data, update_zone_recirculation, 
                       particle_source_subset, get_max_particle_file_ID, 
-                      remap_particle_IDs, get_new_particle_IDs, 
-                      merge_particle_trajectories)
+                      remap_particle_IDs, get_new_particle_IDs)
 
 logger = mlogger('misc', parcels=False, misc=True)
 
@@ -70,6 +69,62 @@ class ParticleFilenames:
         # Filename for python dictionary that links orignal IDs to updated.
         self.remap_dict = (cfg.data / 'v{}/remap_particle_id_dict_{}_{}.npy'
                            .format(v, cfg.exp_abr[exp], lon))
+
+
+def merge_particle_trajectories(xids, traj):
+    """Merge select particle trajectories that are split across files.
+
+    Args:
+        xids (list of pathlib.path): Particle filenames.
+        traj (array-like): Particle IDs to merge.
+
+    Returns:
+        ds (xarray.Dataset): Merged particle dataset.
+
+    """
+    next_obs = 0  # Update 'obs' coord based on previous file.
+    dss = []  # List of Datasets with select particle data.
+
+    # Open particle files & subset selected particles.
+    logger.debug('Merge trajectories: Searching files.')
+    for i, xid in enumerate(xids):
+        dx = open_plx_data(xid)
+        dx['traj'] = dx.trajectory.isel(obs=0)
+
+        # Drop last obs (duplicate contained in next file).
+        if i >= 1 and len(dss) != 0:
+            dx = dx.isel(obs=slice(1, None))
+
+        # Reset obs coords (reset to zero & start from last).
+        if i >= 1:
+            dx['obs'] = dx.obs - dx.obs[0].item() + next_obs
+
+        dx['obs'] = dx.obs  # Set as coordinate (make datasets consistent).
+        dx['traj'] = dx.traj
+
+        # Subset dataset with particles (check .
+        if dx.traj.isin(traj).any():
+            next_obs = dx.obs.max().item() + 1 # Update 'obs' coord.
+            dx = dx.where(dx.trajectory.isin(traj), drop=True)
+
+            # Add to list of datasets to be combined.
+            if dx.traj.size >= 1:
+                dss.append(dx)
+        dx.close()
+
+    logger.debug('Merge trajectories: Concat data.')
+    ds = xr.concat(dss, 'obs')
+    
+    logger.debug('Merge trajectories: argsort.')
+    inds = np.argsort(ds.age, -1).drop(['traj', 'obs'])
+    
+    logger.debug('Merge trajectories: take_along_axis.')
+    for var in [v for v in ds.data_vars if v not in ['u']]:
+        ds[var] = (['traj', 'obs'], np.take_along_axis(ds[var].values,
+                                                       inds.values, axis=-1))
+    ds['u'] = ds['u'].isel(obs=0)
+    ds = ds.dropna('obs', 'all')
+    return ds
 
 
 def format_particle_file(lon, exp, v=1, r=0, spinup_year=0):
@@ -126,6 +181,7 @@ def format_particle_file(lon, exp, v=1, r=0, spinup_year=0):
         traj = traj[:400]
     logger.debug('{}: Merge trajectory data.'.format(xid.stem))
     ds = merge_particle_trajectories(xids, traj)
+    logger.debug('{}: Merge patch trajectory data.'.format(xid.stem))
     ds_a = merge_particle_trajectories(xids_a, traj_patch)
 
     # Remap particle IDs.
