@@ -6,7 +6,7 @@ Create a formatted version of each particle file.
 Formatted files:
     - Fix particle IDs (linear & no gaps; creates .npy file)
     - Merge particles that were skiped and run seperatly
-    - Append particle trajectories split across files 
+    - Append particle trajectories split across files
     - Append spinup trajectory data (repeated first year by default)
     - Fix "EUC recirculation" zone definition
     - Remove trajectory data after it has reached it's source
@@ -21,7 +21,7 @@ Spinup Files (todo):
     - Merge the two spinup particle files
     - Format files as above
     - data/v1/spinup_*/plx*v1r*.nc --> data/plx/plx_spinup*v1_{y}.nc
-    
+
 Example:
 
     ./format_particle_files.py -x 165 -e 0
@@ -41,10 +41,10 @@ from argparse import ArgumentParser
 
 import cfg
 from tools import mlogger
-from particle_id_remap import (create_particle_ID_remap_dict, 
+from particle_id_remap import (create_particle_ID_remap_dict,
                                patch_particle_IDs_per_release_day)
-from plx_fncs import (get_plx_id, open_plx_data, update_zone_recirculation, 
-                      particle_source_subset, get_max_particle_file_ID, 
+from plx_fncs import (get_plx_id, open_plx_data, update_zone_recirculation,
+                      particle_source_subset, get_max_particle_file_ID,
                       remap_particle_IDs, get_new_particle_IDs)
 
 logger = mlogger('misc', parcels=False, misc=True)
@@ -104,7 +104,7 @@ def merge_particle_trajectories(xids, traj):
 
         # Subset dataset with particles (check .
         if dx.traj.isin(traj).any():
-            next_obs = dx.obs.max().item() + 1 # Update 'obs' coord.
+            next_obs = dx.obs.max().item() + 1  # Update 'obs' coord.
             dx = dx.where(dx.trajectory.isin(traj), drop=True)
 
             # Add to list of datasets to be combined.
@@ -115,27 +115,27 @@ def merge_particle_trajectories(xids, traj):
     logger.debug('Merge trajectories: Concat data.')
     ds = xr.concat(dss, 'obs', coords='minimal')
     ds['u'] = ds['u'].isel(obs=0)
-        
+
     logger.debug('Merge trajectories: argsort (loaded).')
     inds = np.argsort(ds.age.load(), -1).drop(['traj', 'obs'])
-    
+
     logger.debug('Merge trajectories: take_along_axis.')
     for var in [v for v in ds.data_vars if v not in ['u']]:
         ds[var] = (['traj', 'obs'], np.take_along_axis(ds[var].values,
                                                        inds.values, axis=-1))
-    
+
     ds = ds.dropna('obs', 'all')
     return ds
 
 
 def format_particle_file(lon, exp, v=1, r=0, spinup_year=0):
-    """Format particle file: merge trajectories, fix "zone" & trim trajectories.
+    """Format particle file: merge trajectories, fix zone & trim trajectories.
 
     - Fix particle IDs (main + spinup)
     - Merge patch particles (main + spinup)
     - Append split trajectories (main)
     - formatted files change subfolder from data/v1 to data/plx
-    
+
 
     Spinup Files
     - Merge spinup particle files into one
@@ -177,9 +177,9 @@ def format_particle_file(lon, exp, v=1, r=0, spinup_year=0):
 
     # Merge trajectory data across files.
     if test:
-        xids = xids[:5]
-        xids_a = xids_a[:4]
-        traj = traj[:400]
+        xids = xids[:4]
+        xids_a = xids_a[:5]
+        traj = traj[:500]
     logger.debug('{}: Merge trajectory data.'.format(xid.stem))
     ds = merge_particle_trajectories(xids, traj)
     logger.debug('{}: Merge patch trajectory data.'.format(xid.stem))
@@ -197,7 +197,7 @@ def format_particle_file(lon, exp, v=1, r=0, spinup_year=0):
     # Merge main & patch particle files.
     logger.debug('{}: Concat skipped particles.'.format(xid.stem))
     ds = xr.concat([ds, ds_a], 'traj', coords='minimal')
-    # ds = ds.chunk('auto')
+    ds = ds.chunk('auto')
 
     # Fix some stuff.
     logger.debug('{}: Update zone.'.format(xid.stem))
@@ -210,10 +210,10 @@ def format_particle_file(lon, exp, v=1, r=0, spinup_year=0):
     logger.debug('{}: Saving file ...'.format(xid.stem))
     comp = dict(zlib=True, complevel=5)
     encoding = {var: comp for var in ds.data_vars}
-    
+
     ds.attrs['history'] = str(np.datetime64('now', 's')).replace('T', ' ')
     ds.attrs['history'] += ': ./format_particle_files.py'
-    
+
     file_new = cfg.data / 'plx/{}'.format(xid.name)
     if test:
         file_new = cfg.data / 'tmp/{}'.format(xid.name)

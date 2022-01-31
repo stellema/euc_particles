@@ -470,14 +470,12 @@ def update_zone_recirculation(ds, lon):
 def particle_source_subset(ds):
     """Subset particle obs to zone reached for each trajeectory."""
     # Find obs when first non-NaN zone reached. Fill no zone found with last obs.
-    fill_value = ds.obs.max().item()
-    obs_max = ds.obs.where(ds.zone > 0.).idxmin('obs', skipna=True,
-                                                fill_value=fill_value)
+    end = ds.obs[-1].item()
+    obs_f = ds.obs.where(ds.zone > 0.).idxmin('obs', skipna=True, fill_value=end)
 
     # Subset particle data upto reaching a boundary.
-    # ds = ds.where(ds.obs <= obs_max.astype(int), drop=True)
-    mask = ds.where((ds.zone == 0.) | (ds.obs <= obs_max))
-    ds = ds.where(~np.isnan(mask), drop=True)
+    ds = ds.where(ds.obs <= obs_f, drop=True)
+
     if 'u' in ds.data_vars:
         # ds = ds.dropna('obs', 'all')
         ds['u'] = ds.u.isel(obs=0, drop=True)  # Drop added dim.
@@ -547,4 +545,3 @@ def get_new_particle_IDs(ds):
     ds = ds.where(ds.age == 0., drop=True)
     traj = ds.trajectory.values.astype(int)
     return traj
-
