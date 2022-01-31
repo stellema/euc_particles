@@ -475,10 +475,11 @@ def particle_source_subset(ds):
                                                 fill_value=fill_value)
 
     # Subset particle data upto reaching a boundary.
-    ds = ds.where(ds.obs <= obs_max.astype(int), drop=True)
-
+    # ds = ds.where(ds.obs <= obs_max.astype(int), drop=True)
+    mask = ds.where((ds.zone == 0.) | (ds.obs <= obs_max))
+    ds = ds.where(~np.isnan(mask), drop=True)
     if 'u' in ds.data_vars:
-        ds = ds.dropna('obs', 'all')
+        # ds = ds.dropna('obs', 'all')
         ds['u'] = ds.u.isel(obs=0, drop=True)  # Drop added dim.
     return ds
 

@@ -204,7 +204,8 @@ def format_particle_file(lon, exp, v=1, r=0, spinup_year=0):
     ds = update_zone_recirculation(ds, lon)
     logger.debug('{}: Subset at source.'.format(xid.stem))
     ds = particle_source_subset(ds)
-    ds['u'] *= cfg.DXDY
+    logger.debug('{}: Convert velocity.'.format(xid.stem))
+    ds['u'] = ds.u * cfg.DXDY
 
     logger.debug('{}: Saving file ...'.format(xid.stem))
     comp = dict(zlib=True, complevel=5)
