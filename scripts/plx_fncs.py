@@ -343,10 +343,13 @@ def pset_from_file(fieldset, pclass, filename, repeatdt=None, restart=True,
     return pset
 
 
-def get_plx_id(exp, lon, v, r):
+def get_plx_id(exp, lon, v, r, folder=None):
     if type(exp) != str:
         exp = cfg.exp[exp]
-    xid = cfg.data / 'v{}/plx_{}_{}_v{}r{:02d}.nc'.format(v, exp, lon, v, r)
+    if not folder:
+        folder = 'v{}'.format(v)
+    folder = cfg.data / folder
+    xid = folder / 'plx_{}_{}_v{}r{:02d}.nc'.format(exp, lon, v, r)
     return xid
 
 
@@ -391,11 +394,6 @@ def get_next_xid(lon, v=0, exp='hist', subfolder=None, xlog=None, patch=False):
 
 def get_spinup_year(exp=0, i=0):
     return cfg.years[exp][0] + i
-
-
-def get_plx_id_year(exp, lon, v, y):
-    xid = cfg.data / 'v{}y/plx_{}_{}_v{}_{}.nc'.format(v, exp, lon, v, y)
-    return xid
 
 
 def open_plx_data(xid, **kwargs):
@@ -479,22 +477,6 @@ def particle_source_subset(ds):
     if 'u' in ds.data_vars:
         # ds = ds.dropna('obs', 'all')
         ds['u'] = ds.u.isel(obs=0, drop=True)  # Drop added dim.
-    return ds
-
-
-def open_plx_spinup(lon, exp, v=1, y=0):
-    """Open spinup file merged dataset."""
-    file = (cfg.data / 'source_subset/plx_{}_{}_v{}_spinup_{}.nc'
-            .format(cfg.exp_abr[exp], lon, v, y))
-    ds = xr.open_dataset(file)
-    return ds
-
-
-def open_plx_spinup_source(lon, exp, v=1, y=0):
-    """Open spinup file source datset."""
-    file = (cfg.data / 'source_subset/plx_sources_{}_{}_v{}_spinup_{}.nc'
-            .format(cfg.exp_abr[exp], lon, v, y))
-    ds = xr.open_dataset(file)
     return ds
 
 
