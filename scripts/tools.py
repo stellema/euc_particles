@@ -420,7 +420,7 @@ def zone_field(plot=False, savefile=True):
         ds = ds.chunk()
         ds.to_netcdf(cfg.data / 'ofam_field_zone.nc')
         ds.close()
-        
+
     if plot:
         dz = d[0, 0].sel(yu_ocean=slice(-10, 10), xu_ocean=slice(120.1, 255))
         lon = dz.xu_ocean.values
@@ -465,3 +465,11 @@ def get_spinup_start(exp="hist", years=5):
           .format(cfg.exps[ix], years, dspin.days, spin_rel,
                   start.strftime('%Y-%m-%d'), spin.strftime('%Y-%m-%d')))
     return spin_rel
+
+
+def append_dataset_history(ds, msg):
+    if 'history' not in ds.attrs:
+        ds.attrs['history'] = ''
+    ds.attrs['history'] += str(np.datetime64('now', 's')).replace('T', ' ')
+    ds.attrs['history'] += msg
+    return ds

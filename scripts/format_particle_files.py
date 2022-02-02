@@ -40,7 +40,7 @@ import xarray as xr
 from argparse import ArgumentParser
 
 import cfg
-from tools import mlogger
+from tools import mlogger, append_dataset_history
 from particle_id_remap import (create_particle_ID_remap_dict,
                                patch_particle_IDs_per_release_day)
 from plx_fncs import (get_plx_id, open_plx_data, update_zone_recirculation,
@@ -211,8 +211,8 @@ def format_particle_file(lon, exp, v=1, r=0, spinup_year=0):
     comp = dict(zlib=True, complevel=5)
     encoding = {var: comp for var in ds.data_vars}
 
-    ds.attrs['history'] = str(np.datetime64('now', 's')).replace('T', ' ')
-    ds.attrs['history'] += ': ./format_particle_files.py'
+    msg = ': ./format_particle_files.py'
+    ds = append_dataset_history(ds, msg)
 
     file_new = cfg.data / 'plx/{}'.format(xid.name)
     if test:

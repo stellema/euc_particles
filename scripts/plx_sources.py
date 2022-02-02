@@ -29,7 +29,7 @@ import xarray as xr
 from argparse import ArgumentParser
 
 import cfg
-from tools import mlogger, timeit
+from tools import mlogger, timeit, append_dataset_history
 from plx_fncs import get_plx_id
 logger = mlogger('plx_sources', parcels=False, misc=False)
 
@@ -182,6 +182,9 @@ def merge_plx_source_files(lon, exp, v):
     # Merged file name.
     xid = get_plx_id(exp, lon, v, 0, 'sources')
     xid = xid.parent / xid.name.replace('r00', '')
+
+    msg = ': ./plx_sources.py'
+    ds = append_dataset_history(ds, msg)
 
     logger.debug('Saving {}...'.format(xid.stem))
     comp = dict(zlib=True, complevel=5)
