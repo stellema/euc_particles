@@ -40,7 +40,7 @@ def source_particle_ID_dict(ds, exp, lon, v, r):
     file = 'sources/id/source_particle_id_{}_{}_r{:02d}.npy'.format(cfg.exp[exp], lon, r)
     file = cfg.data / file
     if file.exists():
-        return np.load(file, allow_pickle=True)
+        return np.load(file, allow_pickle=True).item()
 
     zones = range(len(cfg.zones.list_all) + 1)
     source_traj = dict()
