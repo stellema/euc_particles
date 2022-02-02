@@ -177,7 +177,8 @@ def merge_plx_source_files(lon, exp, v):
 
     # Merge
     xids = [get_plx_id(exp, lon, v, r, 'sources') for r in rep]
-    ds = xr.open_mfdataset(xids, combine='nested')
+    ds = xr.open_mfdataset(xids, combine='nested', chunks='auto',
+                           compat='override', coords='minimal')
 
     # Merged file name.
     xid = get_plx_id(exp, lon, v, 0, 'sources')
@@ -185,6 +186,15 @@ def merge_plx_source_files(lon, exp, v):
 
     msg = ': ./plx_sources.py'
     ds = append_dataset_history(ds, msg)
+
+    for var in ['u', 'uz', 'u_total']:
+        ds[var].attrs['name'] = 'Transport'
+        ds[var].attrs['units'] = 'Sv'
+
+    ds['distance'].attrs['name'] = 'Distance'
+    ds['distance'].attrs['units'] = 'm'
+    ds['age'].attrs['name'] = 'Transit time'
+    ds['age'].attrs['units'] = 's'
 
     logger.debug('Saving {}...'.format(xid.stem))
     comp = dict(zlib=True, complevel=5)
