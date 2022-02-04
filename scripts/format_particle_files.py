@@ -28,8 +28,11 @@ Example:
 
 Notes:
     - Requires a lot of memory (tried 64Gb, 82GB)
+    - Require ~85-100GB and 6 hours
+    - Reduce dims of 'zone' to (traj,)
+
 Todo:
-    - Create PBS job script
+
 
 @author: Annette Stellema
 @email: a.stellema@unsw.edu.au
@@ -43,7 +46,7 @@ import cfg
 from tools import mlogger, append_dataset_history
 from particle_id_remap import (create_particle_ID_remap_dict,
                                patch_particle_IDs_per_release_day)
-from plx_fncs import (get_plx_id, open_plx_data, update_zone_recirculation,
+from plx_fncs import (get_plx_id, open_plx_data, update_particle_data_sources,
                       particle_source_subset, get_max_particle_file_ID,
                       remap_particle_IDs, get_new_particle_IDs)
 
@@ -52,6 +55,7 @@ logger = mlogger('misc', parcels=False, misc=True)
 
 class ParticleFilenames:
     """The particle file paths."""
+
     def __init__(self, lon, exp, v, spinup, action=None):
         """Initilise variables."""
         files = [get_plx_id(cfg.exp_abr[exp], lon, v, i) for i in range(12)]
@@ -102,7 +106,7 @@ def merge_particle_trajectories(xids, traj):
         dx['obs'] = dx.obs  # Set as coordinate (make datasets consistent).
         dx['traj'] = dx.traj
 
-        # Subset dataset with particles (check .
+        # Subset dataset with particles.
         if dx.traj.isin(traj).any():
             next_obs = dx.obs.max().item() + 1  # Update 'obs' coord.
             dx = dx.where(dx.trajectory.isin(traj), drop=True)
@@ -144,6 +148,7 @@ def format_particle_file(lon, exp, v=1, r=0, spinup_year=0):
 
     Returns:
         Formatted dataset.
+
     Todo:
         - Option to skip adding spinup paths
 
@@ -156,6 +161,10 @@ def format_particle_file(lon, exp, v=1, r=0, spinup_year=0):
 
     # New filename.
     xid = files.files[r]
+
+    if xid.exists():
+        return
+
     logger.debug('{}: Formating particle file.'.format(xid.stem))
 
     # Create/open particle_remap dictionary.
@@ -177,8 +186,8 @@ def format_particle_file(lon, exp, v=1, r=0, spinup_year=0):
 
     # Merge trajectory data across files.
     if test:
-        xids = xids[:4]
-        xids_a = xids_a[:5]
+        xids = xids[:3]
+        xids_a = xids_a[:6]
         traj = traj[:500]
     logger.debug('{}: Merge trajectory data.'.format(xid.stem))
     ds = merge_particle_trajectories(xids, traj)
@@ -199,12 +208,19 @@ def format_particle_file(lon, exp, v=1, r=0, spinup_year=0):
     ds = xr.concat([ds, ds_a], 'traj', coords='minimal')
     ds = ds.chunk('auto')
 
-    # Fix some stuff.
-    logger.debug('{}: Update zone.'.format(xid.stem))
-    ds = update_zone_recirculation(ds, lon)
+    # Update source defintion.
+    logger.debug('{}: Update source defintion.'.format(xid.stem))
+    ds = update_particle_data_sources(ds, lon)
+
+    # Drop particle observations after reaching source.
     logger.debug('{}: Subset at source.'.format(xid.stem))
     ds = particle_source_subset(ds)
-    logger.debug('{}: Convert velocity.'.format(xid.stem))
+
+    # Make zone 1D
+    ds['zone'] = ds.zone.where(ds.zone > 0.).bfill('obs')
+    ds['zone'] = ds.zone.isel(obs=0, drop=True).fillna(0)
+
+    #  Convert velocity to transport.
     ds['u'] = ds.u * cfg.DXDY
 
     logger.debug('{}: Saving file ...'.format(xid.stem))
@@ -224,17 +240,14 @@ def format_particle_file(lon, exp, v=1, r=0, spinup_year=0):
 
 if __name__ == "__main__":
     p = ArgumentParser(description="""Format Particle files.""")
-    p.add_argument('-x', '--lon', default=250, type=int, help='Longitude of particle release.')
-    p.add_argument('-e', '--exp', default=0, type=int, help='Historical=0 or RCP8.5=1.')
+    p.add_argument('-x', '--lon', default=250, type=int, help='Start longitude.')
+    p.add_argument('-e', '--exp', default=0, type=int, help='Scenario {0, 1}.')
     args = p.parse_args()
 
-    # lon, exp, v, r, spinup = 250, 0, 1, 0, 0
+    # lon, exp, v, r, spinup_year = 250, 0, 1, 0, 0
     lon, exp = args.lon, args.exp
     v = 1
     spinup_year = 0
-    files = ParticleFilenames(lon, exp, v, spinup_year)
 
     for r in range(10):
-        file = cfg.data / 'plx/{}'.format(files.files[r].name)
-        if not file.exists():
-            format_particle_file(lon, exp, v=1, r=r, spinup_year=spinup_year)
+        format_particle_file(lon, exp, v=1, r=r, spinup_year=spinup_year)
