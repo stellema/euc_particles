@@ -447,36 +447,66 @@ def get_zone_info(ds, zone):
     return traj, age
 
 
-def update_zone_recirculation(ds, lon):
-    """Change particle trajectory "zone" of EUC recirculation.
+def update_particle_data_sources(ds, lon):
+    """Update source region ID in particle data with corrected definitions.
 
-    By default, most particles are set as EUC reciculation because they pass
-    the recirculation interception point just to the west of their release.
+    Corrects where particles are tagged as reaching source:
+        - EUC recirculation (zone 4): east (not west) of release lon.
+        - South of the EUC (zone 5): at release lon (not any release lon).
+        - North of the EUC (zone 6):at release lon (not any release lon).
+
+    Args:
+        ds (xarray.Dataset): Output particle data dataset.
+        lon (int): Release longitude.
+
+    Returns:
+        ds (xarray.Dataset): Updated particle data dataset.
+
+    Notes:
+        Replace particle zone as recirculation if it is east of release lon.
+        i.e., between: (ds.lon > lon) & (ds.lon.round(1) <= lon + 0.1)
+        Round: (ds.lon.round(1) == lon + 0.1)
+
+        By default, most particles are set as EUC reciculation because they
+        pass the recirculation interception point just to the west release.
+
     """
-    ds['zone'] = ds.zone.where(ds.zone != 4)
-    # Replace trajectory zone to recirculation if they are east of release lon.
-    # Between: (ds.lon > lon) & (ds.lon.round(1) <= lon + 0.1)
-    # Round: (ds.lon.round(1) == lon + 0.1)
-    ds['zone'] = (ds.zone.dims, np.where((ds.lon.round(1) == lon + 0.1) &
-                                         (ds.lat <= 2.6) &
-                                         (ds.lat >= -2.6), 4, ds.zone.values))
-    # Fill forwards previously set NaN values.
+    # Mask all values of these zone IDs.
+    ds['zone'] = ds.zone.where((ds.zone != 4.) | (ds.zone != 5.) |
+                               (ds.zone != 6))
+
+    dims = ds.zone.dims
+    lon_mask = (ds.lon.round(1) == lon)
+    data = ds.zone.values
+
+    # Zone 4: South of EUC
+    ds['zone'] = (dims, np.where(lon_mask & (ds.lat <= 2.6) & (ds.lat >= -2.6),
+                                 4, data))
+
+    # Zone 5: South of EUC
+    ds['zone'] = (dims, np.where(lon_mask & (ds.lat < -2.6), 5, data))
+
+    # Zone 6: North of EUC
+    ds['zone'] = (dims, np.where(lon_mask & (ds.lat > 2.6), 6, data))
+
+    # Fill forwards to update following values.
     ds['zone'] = ds.zone.ffill('obs')
     return ds
 
 
 def particle_source_subset(ds):
     """Subset particle obs to zone reached for each trajeectory."""
-    # Find obs when first non-NaN zone reached. Fill no zone found with last obs.
-    end = ds.obs[-1].item()
-    obs_f = ds.obs.where(ds.zone > 0.).idxmin('obs', skipna=True, fill_value=end)
+    # Index of obs when first non-NaN/zero zone reached.
+    fill_value = ds.obs[-1].item()  # Set NaNs to last obs (zone=0; not found).
+    obs = ds.obs.where(ds.zone > 0.)
+    obs = obs.idxmin('obs', skipna=True, fill_value=fill_value)
 
     # Subset particle data upto reaching a boundary.
-    ds = ds.where(ds.obs <= obs_f, drop=True)
+    ds = ds.where(ds.obs <= obs, drop=True)
 
+    # Drop added dim.
     if 'u' in ds.data_vars:
-        # ds = ds.dropna('obs', 'all')
-        ds['u'] = ds.u.isel(obs=0, drop=True)  # Drop added dim.
+        ds['u'] = ds.u.isel(obs=0, drop=True)
     return ds
 
 
@@ -495,7 +525,7 @@ def get_max_particle_file_ID(exp, lon, v):
     # Maximum particle trajectory ID (to be added to particle IDs).
     rfile = get_plx_id(exp, lon, v, 9)
 
-    if cfg.home.drive == 'C:' and not rfile.exists(): # !!! Bug while at home.
+    if cfg.home.drive == 'C:' and not rfile.exists():
         rfile = list(rfile.parent.glob(rfile.name.replace('r09', 'r*')))[-1]
 
     last_id = int(xr.open_dataset(rfile).trajectory.max().item())
