@@ -161,8 +161,8 @@ def format_particle_file(lon, exp, v=1, r=0, spinup_year=0):
 
     # New filename.
     xid = files.files[r]
-
-    if xid.exists():
+    file_new = cfg.data / 'plx/{}'.format(xid.name)
+    if file_new.exists():
         return
 
     logger.debug('{}: Formating particle file.'.format(xid.stem))
@@ -230,7 +230,6 @@ def format_particle_file(lon, exp, v=1, r=0, spinup_year=0):
     msg = ': ./format_particle_files.py'
     ds = append_dataset_history(ds, msg)
 
-    file_new = cfg.data / 'plx/{}'.format(xid.name)
     if test:
         file_new = cfg.data / 'tmp/{}'.format(xid.name)
     ds.to_netcdf(file_new, encoding=encoding)
