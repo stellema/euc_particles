@@ -69,7 +69,7 @@ def mlogger(name, parcels=False, misc=True):
         c_handler = logging.StreamHandler()
         f_handler = logging.FileHandler(cfg.log / '{}.log'.format(name))
         c_handler.setLevel(logging.DEBUG)
-        f_handler.setLevel(logging.DEBUG)
+        f_handler.setLevel(logging.INFO)
 
         # Create formatters and add it to handlers
         c_format = logging.Formatter('%(message)s')
@@ -382,8 +382,7 @@ def create_mesh_grid():
 
 def zone_cmap():
     """Get zone colormap."""
-    zcolor = ['darkorange', 'deeppink', 'mediumspringgreen', 'deepskyblue',
-              'seagreen', 'blue', 'red', 'darkviolet', 'k', 'm', 'y']
+    zcolor = cfg.zones.colors
     zmap = colors.ListedColormap(zcolor)
     norm = colors.BoundaryNorm(np.linspace(1, 10, 11), zmap.N)
     return zmap, norm
