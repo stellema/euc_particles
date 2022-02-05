@@ -135,6 +135,7 @@ def merge_particle_trajectories(xids, traj):
     return ds
 
 
+@timeit
 def format_particle_file(lon, exp, v=1, r=0, spinup_year=0):
     """Format particle file: merge trajectories, fix zone & trim trajectories.
 
