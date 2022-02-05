@@ -8,7 +8,7 @@ Formatted files:
     - Merge particles that were skiped and run seperatly
     - Append particle trajectories split across files
     - Append spinup trajectory data (repeated first year by default)
-    - Fix "EUC recirculation" zone definition
+    - Apply updated source definitions
     - Remove trajectory data after it has reached it's source
     - Convert initial zonal velocity to transport
     - Compress netcdf files
@@ -28,7 +28,7 @@ Example:
 
 Notes:
     - Requires a lot of memory (tried 64Gb, 82GB)
-    - Require ~85-100GB and 6 hours
+    - Require ~85-100GB and 6-8 hours
     - Reduce dims of 'zone' to (traj,)
 
 Todo:
@@ -37,13 +37,14 @@ Todo:
 @author: Annette Stellema
 @email: a.stellema@unsw.edu.au
 @created: Tue Jan 25 03:57:48 2022
+
 """
 import numpy as np
 import xarray as xr
 from argparse import ArgumentParser
 
 import cfg
-from tools import mlogger, append_dataset_history
+from tools import mlogger, timeit, append_dataset_history
 from particle_id_remap import (create_particle_ID_remap_dict,
                                patch_particle_IDs_per_release_day)
 from plx_fncs import (get_plx_id, open_plx_data, update_particle_data_sources,
@@ -54,10 +55,10 @@ logger = mlogger('misc', parcels=False, misc=True)
 
 
 class ParticleFilenames:
-    """The particle file paths."""
+    """Particle file paths: main, spinup, patch & ID remap dictionary."""
 
     def __init__(self, lon, exp, v, spinup, action=None):
-        """Initilise variables."""
+        """Initilise file names."""
         files = [get_plx_id(cfg.exp_abr[exp], lon, v, i) for i in range(12)]
         patch = [f.parent / f.name.replace('v1r', 'v1a') for f in files]
         # Particle files (r0-9).
@@ -75,6 +76,7 @@ class ParticleFilenames:
                            .format(v, cfg.exp_abr[exp], lon))
 
 
+@timeit
 def merge_particle_trajectories(xids, traj):
     """Merge select particle trajectories that are split across files.
 
@@ -90,7 +92,6 @@ def merge_particle_trajectories(xids, traj):
     dss = []  # List of Datasets with select particle data.
 
     # Open particle files & subset selected particles.
-    logger.debug('Merge trajectories: Searching files.')
     for i, xid in enumerate(xids):
         dx = open_plx_data(xid, chunks='auto')
         dx['traj'] = dx.trajectory.isel(obs=0)
@@ -116,56 +117,66 @@ def merge_particle_trajectories(xids, traj):
                 dss.append(dx)
         dx.close()
 
-    logger.debug('Merge trajectories: Concat data.')
+    # Concatenate particle trajectories across the datasets.
     ds = xr.concat(dss, 'obs', coords='minimal')
-    ds['u'] = ds['u'].isel(obs=0)
 
-    logger.debug('Merge trajectories: argsort (loaded).')
-    inds = np.argsort(ds.age.load(), -1).drop(['traj', 'obs'])
+    ds['u'] = ds['u'].isel(obs=0)  # Convert u back to ID.
 
-    logger.debug('Merge trajectories: take_along_axis.')
+    # Remove NaN filled gaps along obs dimension (sort & reindex).
+    # Indexes of sorted observations.
+    dims = ['traj', 'obs']
+    inds = np.argsort(ds.age.load(), -1).drop(dims).values
+
+    # Reindex variables in linear order.
     for var in [v for v in ds.data_vars if v not in ['u']]:
-        ds[var] = (['traj', 'obs'], np.take_along_axis(ds[var].values,
-                                                       inds.values, axis=-1))
+        ds[var] = (dims, np.take_along_axis(ds[var].values, inds, axis=-1))
 
-    ds = ds.dropna('obs', 'all')
+    ds = ds.dropna('obs', 'all')  # Drop any empty obs.
     return ds
 
 
 def format_particle_file(lon, exp, v=1, r=0, spinup_year=0):
     """Format particle file: merge trajectories, fix zone & trim trajectories.
 
-    - Fix particle IDs (main + spinup)
-    - Merge patch particles (main + spinup)
-    - Append split trajectories (main)
-    - formatted files change subfolder from data/v1 to data/plx
-
-
-    Spinup Files
-    - Merge spinup particle files into one
     Args:
-        xid (pathlib.Path): Particle File name.
+        lon (int): Release Longitude {165, 190, 220, 250}.
+        exp (int): Scenario {0, 1}.
+        v (int, optional): Run version. Defaults to 1.
+        r (int, optional): File repeat number {0-9}. Defaults to 0.
+        spinup_year (int, optional): Spinup year offset. Defaults to 0.
 
     Returns:
-        Formatted dataset.
+        None.
+
+    Notes:
+        - Fix particle IDs.
+        - Merge patch particles.
+        - Append trajectories split across files.
+        - Append spinup trajectories.
+        - Update definition of source regions.
+        - Drop particle trajectories after reaching source.
+        - Convert initial velocity to transport [Sv].
+        - Reduce source ID to 1D (last found).
+        - Formatted files subfolder changed from data/v1 to data/plx.
 
     Todo:
-        - Option to skip adding spinup paths
+        - Add option to skip adding spinup paths.
 
     """
     test = True if cfg.home.drive == 'C:' else False
     # Files to search.
     files = ParticleFilenames(lon, exp, v, spinup_year)
     xids = files.files + files.spinup
-    xids_a = files.patch + files.patch_spinup
+    xids_p = files.patch + files.patch_spinup
 
     # New filename.
     xid = files.files[r]
     file_new = cfg.data / 'plx/{}'.format(xid.name)
-    if file_new.exists():
-        return
+    logger.info('{}: Formating particle file.'.format(xid.stem))
 
-    logger.debug('{}: Formating particle file.'.format(xid.stem))
+    if file_new.exists():
+        logger.debug('{}: Formatted file already exists.'.format(xid.stem))
+        return
 
     # Create/open particle_remap dictionary.
     if not files.remap_dict.exists():
@@ -181,31 +192,35 @@ def format_particle_file(lon, exp, v=1, r=0, spinup_year=0):
     traj = get_new_particle_IDs(ds)
     # Skipped particle IDs.
     traj_patch = patch_particle_IDs_per_release_day(lon, exp, v)[r]
-    last_id = get_max_particle_file_ID(exp, lon, v)
+    # Patch particle IDs in remap_dict have constant added (ensures unique).
+    last_id = get_max_particle_file_ID(exp, lon, v)  # Use original for merge.
     traj_patch = (traj_patch['trajectory'] - last_id - 1).astype(dtype=int)
 
     # Merge trajectory data across files.
     if test:
+        logger.info('{}: Test subset.'.format(xid.stem))
         xids = xids[:3]
-        xids_a = xids_a[:6]
-        traj = traj[:500]
+        xids_p = xids_p[:6]
+        traj = traj[1000:1200]
+
     logger.debug('{}: Merge trajectory data.'.format(xid.stem))
     ds = merge_particle_trajectories(xids, traj)
-    logger.debug('{}: Merge patch trajectory data.'.format(xid.stem))
-    ds_a = merge_particle_trajectories(xids_a, traj_patch)
+    dp = merge_particle_trajectories(xids_p, traj_patch)
 
-    # Remap particle IDs.
+    # Remap particle IDs & make traj a coordinate.
     logger.debug('{}: Remap particle IDs.'.format(xid.stem))
-    ds_a['trajectory'] += last_id + 1
     dims = ds.trajectory.dims
+
+    dp['trajectory'] += last_id + 1  # Add particle ID constant back.
     ds['trajectory'] = (dims, remap_particle_IDs(ds.trajectory, remap_dict))
-    ds_a['trajectory'] = (dims, remap_particle_IDs(ds_a.trajectory, remap_dict))
+    dp['trajectory'] = (dims, remap_particle_IDs(dp.trajectory, remap_dict))
+
     ds['traj'] = ds.trajectory.isel(obs=0).copy()
-    ds_a['traj'] = ds_a.trajectory.isel(obs=0).copy()
+    dp['traj'] = dp.trajectory.isel(obs=0).copy()
 
     # Merge main & patch particle files.
     logger.debug('{}: Concat skipped particles.'.format(xid.stem))
-    ds = xr.concat([ds, ds_a], 'traj', coords='minimal')
+    ds = xr.concat([ds, dp], 'traj', coords='minimal')
     ds = ds.chunk('auto')
 
     # Update source defintion.
@@ -216,7 +231,7 @@ def format_particle_file(lon, exp, v=1, r=0, spinup_year=0):
     logger.debug('{}: Subset at source.'.format(xid.stem))
     ds = particle_source_subset(ds)
 
-    # Make zone 1D
+    # Make zone 1D.
     ds['zone'] = ds.zone.where(ds.zone > 0.).bfill('obs')
     ds['zone'] = ds.zone.isel(obs=0, drop=True).fillna(0)
 
@@ -238,15 +253,11 @@ def format_particle_file(lon, exp, v=1, r=0, spinup_year=0):
 
 
 if __name__ == "__main__":
-    p = ArgumentParser(description="""Format Particle files.""")
-    p.add_argument('-x', '--lon', default=250, type=int, help='Start longitude.')
+    p = ArgumentParser(description="""Format plx particle files.""")
+    p.add_argument('-x', '--lon', default=250, type=int, help='Longitude.')
     p.add_argument('-e', '--exp', default=0, type=int, help='Scenario {0, 1}.')
     args = p.parse_args()
-
     # lon, exp, v, r, spinup_year = 250, 0, 1, 0, 0
-    lon, exp = args.lon, args.exp
-    v = 1
-    spinup_year = 0
 
     for r in range(10):
-        format_particle_file(lon, exp, v=1, r=r, spinup_year=spinup_year)
+        format_particle_file(args.lon, args.exp, v=1, r=r, spinup_year=0)
