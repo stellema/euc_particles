@@ -472,7 +472,7 @@ def update_particle_data_sources(ds, lon):
 
     """
     # Mask all values of these zone IDs.
-    ds['zone'] = ds.zone.where((ds.zone != 4.) | (ds.zone != 5.) |
+    ds['zone'] = ds.zone.where((ds.zone != 4.) & (ds.zone != 5.) &
                                (ds.zone != 6))
 
     dims = ds.zone.dims
