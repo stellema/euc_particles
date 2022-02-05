@@ -16,14 +16,18 @@ Example:
 Notes:
     - Can delete seperated files after merge.
     - Can delete all the log statements
+    - indiv files run with ~12GB but merged function requires a lot more data
+
 Todo:
+    - delete current files and re-run with age and distance
+    - Check if function works with 1D 'zone' variable.
 
 
 @author: Annette Stellema
 @email: a.stellema@unsw.edu.au
 @created: Tue Jan 25 03:57:48 2022
-"""
 
+"""
 import numpy as np
 import xarray as xr
 from argparse import ArgumentParser
@@ -31,42 +35,57 @@ from argparse import ArgumentParser
 import cfg
 from tools import mlogger, timeit, append_dataset_history
 from plx_fncs import get_plx_id
+
 logger = mlogger('plx_sources', parcels=False, misc=False)
 
 
-@timeit
 def source_particle_ID_dict(ds, exp, lon, v, r):
-    """Particle IDs sorted by source."""
-    file = 'sources/id/source_particle_id_{}_{}_r{:02d}.npy'.format(cfg.exp[exp], lon, r)
-    file = cfg.data / file
+    """Dictionary of particle IDs from each source.
+
+    Args:
+        ds (xarray.Dataset): Formatted particle dataset.
+        lon (int): Release Longitude {165, 190, 220, 250}.
+        exp (int): Scenario {0, 1}.
+        v (int, optional): Run version. Defaults to 1.
+        r (int, optional): File repeat number {0-9}. Defaults to 0.
+
+    Returns:
+        source_traj (dict of lists): Dictionary of particle IDs.
+            dict[zone] = list(traj)
+
+    """
+    # Dictionary filename (to save/open).
+    file = (cfg.data / 'sources/id/source_particle_id_{}_{}_r{:02d}.npy'
+            .format(cfg.exp[exp], lon, r))
+
+    # Return saved dictionary if available.
     if file.exists():
         return np.load(file, allow_pickle=True).item()
 
+    # Source region IDs (0-10).
     zones = range(len(cfg.zones.list_all) + 1)
     source_traj = dict()
-    for z in zones:  # Source ID
+
+    # Particle IDs that reach each source.
+    for z in zones:
         traj = ds.traj.where(ds.zone == z, drop=True)
         traj = traj.values.astype(dtype=int).tolist()  # Convert to list.
         source_traj[z] = traj
-
-    # TEST
-    ntraj = sum([len(source_traj[z]) for z in zones])
-    if ntraj != ds.traj.size:
-        print('error: ')
-
-    ds.close()
-    np.save(file, source_traj)
+    np.save(file, source_traj)  # Save dictionary as numpy file.
     return source_traj
 
 
 @timeit
-def get_source_subset(ds):
-    """Particle dataset with only end values."""
+def get_final_particle_obs(ds):
+    """Reduce particle dataset variables to first/last observation."""
+    # Select the initial release time and particle ID.
     for var in ['time', 'trajectory']:
         ds[var] = ds[var].isel(obs=0)
 
+    # Select the final value.
     for var in ['zone', 'age', 'distance', 'unbeached']:
-        ds[var] = ds[var].max('obs')
+        if 'obs' in ds[var].dims:
+            ds[var] = ds[var].max('obs')
 
     # Drop extra coords and unused 'obs'.
     ds = ds.drop(['lat', 'lon', 'z', 'obs'])
@@ -74,13 +93,12 @@ def get_source_subset(ds):
 
 
 @timeit
-def group_particles_by_time(xid, ds):
+def group_particles_by_time(ds):
     """Group particles by time.
 
     Data variables must only have one dimension: (traj) -> (time, traj).
     Select first time observation in input dataset and this will group the
     particles by release time.
-
 
     Args:
         xid (pathlib.Path): Filename (for logging).
@@ -91,99 +109,133 @@ def group_particles_by_time(xid, ds):
 
     """
     # Stack & unstack dims: (traj) -> (time, zone, traj).
-    logger.debug('Stack {}...'.format(xid.stem))
-    # ds = ds.set_index(tzt=['time', 'zone', 'traj'])
     ds = ds.set_index(tzt=['time', 'traj'])
     ds = ds.chunk('auto')
-
-    logger.debug('Unstack {}...'.format(xid.stem))
     ds = ds.unstack('tzt')
 
     # Drop traj duplicates due to unstack.
-    logger.debug('Drop duplicates {}...'.format(xid.stem))
     ds = ds.dropna('traj', 'all')
     return ds
 
 
 @timeit
-def euc_source_transport(ds, source_traj):
-    """EUC transport per time step( total and per zone).
+def sum_source_euc_transport(ds, source_traj):
+    """Calculate EUC transport per release time & source.
 
     Args:
-        ds (TYPE): Particle data (with stacked time dimension)
-        source_traj (TYPE): IDs of particles for each source
+        ds (xarray.Dataset): Particle data.
+        source_traj (dict): Dictionary of particle IDs from each source.
 
     Returns:
+        ds[uz] (xarray.DataArray): Transport from each source (rtime, source).
 
     """
-    # TODO
-    # Add transport per time (total and per zone)
-    # Total EUC transport at each release day (dims = 'time').
-    ds['u_total'] = ds.u.sum('traj')
+    # Group particle transport by time.
+    ds = ds.drop([v for v in ds.data_vars if v not in ['u', 'time']])
+    ds = group_particles_by_time(ds)
 
-    # Add new coord: zone
-    # TODO: Check any zone == 0 in dict
-    zone  = np.arange(len(cfg.zones.list_all) + 1)
-    ds.coords['zone'] = zone
-    ds['uz'] = (['time', 'zone'], np.empty((ds.time.size, ds.zone.size)))
+    # Rename stacked time coordinate (avoid duplicate 'time' variable).
+    ds = ds.rename({'time': 'rtime'})
 
-    for z in zone:
-        ds['uz'][dict(zone=z)] = ds.u.sel(traj=source_traj[z]).sum('traj')
+    # Initialise source-grouped transport variable.
+    ds['uz'] = (['time', 'source'], np.empty((ds.time.size, ds.source.size)))
 
-    return ds
+    # Sum particle transport
+    for z in ds.source.values:
+        dx = ds.sel(traj=ds.traj[ds.traj.isin(source_traj[z])])
+        ds['uz'][dict(source=z)] = dx.u.sum('traj')
+
+    return ds['uz']
 
 
 @timeit
 def plx_source_file(lon, exp, v, r):
+    """Creates netcdf file with particle source information.
+
+    Coordinates:
+        traj: particle IDs
+        source: source regions 0-10
+        rtime: particle release times
+    Data variables:
+        trajectory  (traj): Particle ID.
+        time        (traj): Release time.
+        age         (traj): Transit time.
+        zone        (traj): Source ID.
+        distance    (traj): Transit distance.
+        unbeached   (traj): Number of times particle was unbeached.
+        u           (traj): Initial transport.
+        uz          (rtime, source): EUC transport per release time & source.
+        u_total     (rtime): Total EUC transport at each release time.
+
+    """
     test = True if cfg.home.drive == 'C:' else False
+
+    # Filenames.
     xid = get_plx_id(exp, lon, v, r, 'plx')
     xid_new = get_plx_id(exp, lon, v, r, 'sources')
+
+    # Check if file already exists.
     if xid_new.exists():
         return
 
     logger.info('{}: Creating particle source file.'.format(xid.stem))
     ds = xr.open_dataset(xid, chunks='auto')
+
     if test:
         logger.info('{}: Test subset used.'.format(xid.stem))
         ds = ds.isel(traj=np.linspace(0, 5000, 150, dtype=int))
         ds = ds.isel(obs=slice(4000))
 
     logger.info('{}: Particle information at source.'.format(xid.stem))
-    ds = get_source_subset(ds)
+    ds = get_final_particle_obs(ds)
+
     logger.info('{}: Dictionary of particle IDs at source.'.format(xid.stem))
     source_traj = source_particle_ID_dict(ds, exp, lon, v, r)
-    logger.info('{}: Group particles by release time.'.format(xid.stem))
-    ds = group_particles_by_time(xid, ds)
+
     logger.info('{}: Sum EUC transport per source.'.format(xid.stem))
-    ds = euc_source_transport(ds, source_traj)
+    # Add new coord: 'source'.
+    ds.coords['source'] = np.arange(len(cfg.zones.list_all) + 1)
+
+    # Add variables: transport per release (per source & total).
+    ds['uz'] = sum_source_euc_transport(ds, source_traj)
+    ds['u_total'] = ds.uz.sum('source')
 
     # Save dataset.
     logger.info('{}: Saving...'.format(xid.stem))
     # Add compression encoding.
-    comp = dict(zlib=True, complevel=5)
-    encoding = {var: comp for var in ds.data_vars}
+    encoding = {var: dict(zlib=True, complevel=5) for var in ds.data_vars}
     ds.to_netcdf(xid_new, encoding=encoding, compute=True)
     logger.info('{}: Saved.'.format(xid.stem))
-    return
 
 
 @timeit
 def merge_plx_source_files(lon, exp, v):
-    """Create and merge source info files."""
+    """Create individual & combined particle source information datasets.
 
-    rep = np.arange(10, dtype=int)
-    for r in rep:
+    Args:
+        lon (int): Release Longitude {165, 190, 220, 250}.
+        exp (int): Scenario {0, 1}.
+        v (int, optional): Run version. Defaults to 1.
+
+    Returns:
+        None.
+
+    """
+    # Create/check individual particle source datasets.
+    reps = np.arange(10, dtype=int)
+    for r in reps:
         plx_source_file(lon, exp, v, r)
 
-    # Merge
-    xids = [get_plx_id(exp, lon, v, r, 'sources') for r in rep]
+    # Merge files.
+    xids = [get_plx_id(exp, lon, v, r, 'sources') for r in reps]
     ds = xr.open_mfdataset(xids, combine='nested', chunks='auto',
                            compat='override', coords='minimal')
 
-    # Merged file name.
+    # Filename of merged files (drops the r##).
     xid = get_plx_id(exp, lon, v, 0, 'sources')
     xid = xid.parent / xid.name.replace('r00', '')
 
+    # Add file history and attributes.
     msg = ': ./plx_sources.py'
     ds = append_dataset_history(ds, msg)
 
@@ -193,9 +245,11 @@ def merge_plx_source_files(lon, exp, v):
 
     ds['distance'].attrs['name'] = 'Distance'
     ds['distance'].attrs['units'] = 'm'
+
     ds['age'].attrs['name'] = 'Transit time'
     ds['age'].attrs['units'] = 's'
 
+    # Save dataset with compression.
     logger.debug('Saving {}...'.format(xid.stem))
     comp = dict(zlib=True, complevel=5)
     encoding = {var: comp for var in ds.data_vars}
@@ -205,12 +259,9 @@ def merge_plx_source_files(lon, exp, v):
 
 if __name__ == "__main__" and cfg.home.drive != 'C:':
     p = ArgumentParser(description="""Get plx sources and transit times.""")
-    p.add_argument('-x', '--lon', default=165, type=int, help='Start longitude.')
+    p.add_argument('-x', '--lon', default=165, type=int, help='Start lon.')
     p.add_argument('-e', '--exp', default=0, type=int, help='Scenario {0, 1}.')
     args = p.parse_args()
     merge_plx_source_files(args.lon, args.exp, v=1)
 
-# lon = 165
-# exp = 1
-# v = 1
-# r = 0
+# lon, exp, v, r = 250, 0, 1, 0
