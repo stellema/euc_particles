@@ -87,13 +87,14 @@ def get_final_particle_obs(ds):
         if 'obs' in ds[var].dims:
             ds[var] = ds[var].max('obs')
 
+    # TODO: add source depth
     # Drop extra coords and unused 'obs'.
     ds = ds.drop(['lat', 'lon', 'z', 'obs'])
     return ds
 
 
 @timeit
-def group_particles_by_time(ds):
+def group_particles_by_variable(ds, var='time'):
     """Group particles by time.
 
     Data variables must only have one dimension: (traj) -> (time, traj).
@@ -109,7 +110,7 @@ def group_particles_by_time(ds):
 
     """
     # Stack & unstack dims: (traj) -> (time, zone, traj).
-    ds = ds.set_index(tzt=['time', 'traj'])
+    ds = ds.set_index(tzt=[var, 'traj'])
     ds = ds.chunk('auto')
     ds = ds.unstack('tzt')
 
@@ -119,7 +120,7 @@ def group_particles_by_time(ds):
 
 
 @timeit
-def sum_source_euc_transport(ds, source_traj):
+def group_euc_transport(ds, source_traj):
     """Calculate EUC transport per release time & source.
 
     Args:
@@ -132,18 +133,18 @@ def sum_source_euc_transport(ds, source_traj):
     """
     # Group particle transport by time.
     ds = ds.drop([v for v in ds.data_vars if v not in ['u', 'time']])
-    ds = group_particles_by_time(ds)
-
+    ds = group_particles_by_variable(ds, 'time')
+    ds.coords['zone'] = np.arange(len(cfg.zones.list_all) + 1)
     # Rename stacked time coordinate (avoid duplicate 'time' variable).
     ds = ds.rename({'time': 'rtime'})
 
     # Initialise source-grouped transport variable.
-    ds['uz'] = (['time', 'source'], np.empty((ds.time.size, ds.source.size)))
-
-    # Sum particle transport
-    for z in ds.source.values:
+    # TODO: change 'traj'?
+    ds['uz'] = (['rtime', 'zone'], np.empty((ds.rtime.size, ds.zone.size)))
+    for z in ds.zone.values:
         dx = ds.sel(traj=ds.traj[ds.traj.isin(source_traj[z])])
-        ds['uz'][dict(source=z)] = dx.u.sum('traj')
+        # Sum particle transport.
+        ds['uz'][dict(zone=z)] = dx.u.sum('traj')
 
     return ds['uz']
 
@@ -183,8 +184,8 @@ def plx_source_file(lon, exp, v, r):
 
     if test:
         logger.info('{}: Test subset used.'.format(xid.stem))
-        ds = ds.isel(traj=np.linspace(0, 5000, 150, dtype=int))
-        ds = ds.isel(obs=slice(4000))
+        ds = ds.isel(traj=np.linspace(0, 5000, 500, dtype=int))
+        # ds = ds.isel(obs=slice(4000))
 
     logger.info('{}: Particle information at source.'.format(xid.stem))
     ds = get_final_particle_obs(ds)
@@ -193,12 +194,18 @@ def plx_source_file(lon, exp, v, r):
     source_traj = source_particle_ID_dict(ds, exp, lon, v, r)
 
     logger.info('{}: Sum EUC transport per source.'.format(xid.stem))
-    # Add new coord: 'source'.
-    ds.coords['source'] = np.arange(len(cfg.zones.list_all) + 1)
 
-    # Add variables: transport per release (per source & total).
-    ds['uz'] = sum_source_euc_transport(ds, source_traj)
-    ds['u_total'] = ds.uz.sum('source')
+    # Group variables by source.
+    # EUC transport: (traj) -> (rtime, zone). Run first bc can't stack 2D.
+    uz = group_euc_transport(ds, source_traj)
+
+    # Group variables by source: (traj) -> (zone, traj).
+    ds = group_particles_by_variable(ds, var='zone')
+
+    # Merge transport grouped by release time with source grouped variables.
+    ds.coords['zone'] = uz.zone.copy()  # Match 'zone' coord.
+    ds['uz'] = uz
+    ds['u_total'] = ds.uz.sum('zone')  # Add total transport per release.
 
     # Save dataset.
     logger.info('{}: Saving...'.format(xid.stem))
@@ -262,6 +269,6 @@ if __name__ == "__main__" and cfg.home.drive != 'C:':
     p.add_argument('-x', '--lon', default=165, type=int, help='Start lon.')
     p.add_argument('-e', '--exp', default=0, type=int, help='Scenario {0, 1}.')
     args = p.parse_args()
-    merge_plx_source_files(args.lon, args.exp, v=1)
+    # merge_plx_source_files(args.lon, args.exp, v=1)
 
-# lon, exp, v, r = 250, 0, 1, 0
+lon, exp, v, r = 250, 0, 1, 0
