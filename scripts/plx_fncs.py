@@ -477,17 +477,16 @@ def update_particle_data_sources(ds, lon):
 
     dims = ds.zone.dims
     lon_mask = (ds.lon.round(1) == lon)
-    data = ds.zone.values
 
     # Zone 4: South of EUC
     ds['zone'] = (dims, np.where(lon_mask & (ds.lat <= 2.6) & (ds.lat >= -2.6),
-                                 4, data))
+                                 4, ds.zone.values))
 
     # Zone 5: South of EUC
-    ds['zone'] = (dims, np.where(lon_mask & (ds.lat < -2.6), 5, data))
+    ds['zone'] = (dims, np.where(lon_mask & (ds.lat < -2.6), 5, ds.zone.values))
 
     # Zone 6: North of EUC
-    ds['zone'] = (dims, np.where(lon_mask & (ds.lat > 2.6), 6, data))
+    ds['zone'] = (dims, np.where(lon_mask & (ds.lat > 2.6), 6, ds.zone.values))
 
     # Fill forwards to update following values.
     ds['zone'] = ds.zone.ffill('obs')
