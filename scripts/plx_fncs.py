@@ -343,13 +343,17 @@ def pset_from_file(fieldset, pclass, filename, repeatdt=None, restart=True,
     return pset
 
 
-def get_plx_id(exp, lon, v, r, folder=None):
+def get_plx_id(exp, lon, v, r=None, folder=None):
     if type(exp) != str:
         exp = cfg.exp[exp]
     if not folder:
         folder = 'v{}'.format(v)
     folder = cfg.data / folder
-    xid = folder / 'plx_{}_{}_v{}r{:02d}.nc'.format(exp, lon, v, r)
+    if r is not None:
+        xid = 'plx_{}_{}_v{}r{:02d}.nc'.format(exp, lon, v, r)
+    else:
+        xid = 'plx_{}_{}_v{}.nc'.format(exp, lon, v)
+    xid = folder / xid
     return xid
 
 
