@@ -61,7 +61,8 @@ def add_particle_file_attributes(ds):
 def update_formatted_file_sources(lon, exp, v, r):
     """Reapply source locations found after formatting file."""
 
-    xid = get_plx_id(exp, lon, v, r, 'plx')
+    xid = get_plx_id(exp, lon, v, r, 'plx/tmp')
+    xid_new = get_plx_id(exp, lon, v, r, 'plx')
     ds_full = xr.open_dataset(xid, chunks='auto')
 
     # Check if file already updated.
@@ -106,7 +107,7 @@ def update_formatted_file_sources(lon, exp, v, r):
     ds_full = append_dataset_history(ds_full, msg)
     comp = dict(zlib=True, complevel=5)
     encoding = {var: comp for var in ds_full.data_vars}
-    ds_full.to_netcdf(xid, encoding=encoding, compute=True)
+    ds_full.to_netcdf(xid_new, encoding=encoding, compute=True)
     return
 
 
