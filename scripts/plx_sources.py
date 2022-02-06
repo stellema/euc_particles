@@ -34,9 +34,80 @@ from argparse import ArgumentParser
 
 import cfg
 from tools import mlogger, timeit, append_dataset_history
-from plx_fncs import get_plx_id
+from plx_fncs import (get_plx_id, update_particle_data_sources,
+                      get_index_of_last_obs)
 
 logger = mlogger('plx_sources', parcels=False, misc=False)
+
+
+def add_particle_file_attributes(ds):
+    """Add variable name and units to dataset."""
+    for var in ['u', 'uz', 'u_total']:
+        ds[var].attrs['name'] = 'Transport'
+        ds[var].attrs['units'] = 'Sv'
+
+    ds['distance'].attrs['name'] = 'Distance'
+    ds['distance'].attrs['units'] = 'm'
+
+    ds['age'].attrs['name'] = 'Transit time'
+    ds['age'].attrs['units'] = 's'
+
+    ds['unbeached'].attrs['name'] = 'Unbeached'
+    ds['age'].attrs['units'] = 'count'
+    return ds
+
+
+@timeit
+def update_formatted_file_sources(lon, exp, v, r):
+    """Reapply source locations found after formatting file."""
+
+    xid = get_plx_id(exp, lon, v, r, 'plx')
+    ds_full = xr.open_dataset(xid, chunks='auto')
+
+    # Check if file already updated.
+    if 'Updated source definitions' in ds_full.attrs['history']:
+        return
+
+    logger.info('{}: Updating particle source in file.'.format(xid.stem))
+    # Apply updates to ds & subset back into full only if needed.
+    ds = ds_full.copy()
+
+    # Expand variable to 2D (all zeros).
+    ds['zone'] = ds.zone.broadcast_like(ds.age).copy()
+    ds['zone'] *= 0
+
+    # Reapply source definition fix.
+    ds = update_particle_data_sources(ds, lon)
+
+    # Find which particles need to be updated.
+    # Check any zones are reached earlier than in original data.
+    obs_old = get_index_of_last_obs(ds_full, np.isnan(ds_full.age))
+    obs_new = get_index_of_last_obs(ds, ds.zone > 0.)
+
+    traj_to_replace = ds_full.traj[obs_new < obs_old].traj
+
+    # Subset the particles that need updating.
+    ds = ds.sel(traj=traj_to_replace)
+
+    # Reapply mask that cuts off data after particle reaches source.
+    ds = ds.where(ds.obs <= obs_new)
+
+    # Change zone back to 1D (last found).
+    ds['zone'] = ds.zone.max('obs')
+
+    # Replace the modified subset back into full dataset.
+    traj_to_replace = traj_to_replace.astype(dtype=int)
+    for var in ds_full.data_vars:
+        ds_full[dict(traj=traj_to_replace)][var] = ds[var]
+
+    # Re-save.
+    logger.info('{}: Saving updated file.'.format(xid.stem))
+    msg = ': Updated source definitions.'
+    ds_full = append_dataset_history(ds_full, msg)
+    comp = dict(zlib=True, complevel=5)
+    encoding = {var: comp for var in ds_full.data_vars}
+    ds_full.to_netcdf(xid, encoding=encoding, compute=True)
+    return
 
 
 def source_particle_ID_dict(ds, exp, lon, v, r):
@@ -178,6 +249,7 @@ def plx_source_file(lon, exp, v, r):
     # Check if file already exists.
     if xid_new.exists():
         return
+    update_formatted_file_sources(lon, exp, v, r)
 
     logger.info('{}: Creating particle source file.'.format(xid.stem))
     ds = xr.open_dataset(xid, chunks='auto')
@@ -244,16 +316,7 @@ def merge_plx_source_files(lon, exp, v):
     # Add file history and attributes.
     msg = ': ./plx_sources.py'
     ds = append_dataset_history(ds, msg)
-
-    for var in ['u', 'uz', 'u_total']:
-        ds[var].attrs['name'] = 'Transport'
-        ds[var].attrs['units'] = 'Sv'
-
-    ds['distance'].attrs['name'] = 'Distance'
-    ds['distance'].attrs['units'] = 'm'
-
-    ds['age'].attrs['name'] = 'Transit time'
-    ds['age'].attrs['units'] = 's'
+    ds = add_particle_file_attributes(ds)
 
     # Save dataset with compression.
     logger.debug('Saving {}...'.format(xid.stem))
@@ -261,6 +324,7 @@ def merge_plx_source_files(lon, exp, v):
     encoding = {var: comp for var in ds.data_vars}
     ds.to_netcdf(xid, encoding=encoding, compute=True)
     logger.info('Saved all {}!'.format(xid.stem))
+
 
 
 if __name__ == "__main__" and cfg.home.drive != 'C:':

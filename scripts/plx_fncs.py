@@ -473,6 +473,8 @@ def update_particle_data_sources(ds, lon):
 
         By default, most particles are set as EUC reciculation because they
         pass the recirculation interception point just to the west release.
+        To test:
+        ds.zone.where(ds.zone != 0.).bfill('obs').isel(obs=0)
 
     """
     # Mask all values of these zone IDs.
@@ -480,13 +482,19 @@ def update_particle_data_sources(ds, lon):
                                (ds.zone != 6))
 
     dims = ds.zone.dims
-    lon_mask = (ds.lon.round(1) == lon + 0.1)
 
     # Zone 4: South of EUC
-    ds['zone'] = (dims, np.where(lon_mask & (ds.lat <= 2.6) & (ds.lat >= -2.6),
+    # ds['zone'] = (dims, np.where((ds.lon.round(1) >= lon + 0.1) &
+    #                              (ds.lon.round(1) <= lon + 0.2) &
+    #                              (ds.lat <= 2.6) &
+    #                              (ds.lat >= -2.6),
+    #                              4, ds.zone.values))
+    ds['zone'] = (dims, np.where((ds.lon > lon + 0.1) &
+                                 (ds.lon < lon + 0.2) &
+                                 (ds.lat <= 2.6) &
+                                 (ds.lat >= -2.6),
                                  4, ds.zone.values))
-
-    lon_mask = (ds.lon.round(1) == lon)
+    lon_mask = (ds.lon.round(0) == lon)
     # Zone 5: South of EUC
     ds['zone'] = (dims, np.where(lon_mask & (ds.lat < -2.6), 5, ds.zone.values))
 
@@ -512,6 +520,15 @@ def particle_source_subset(ds):
     if 'u' in ds.data_vars:
         ds['u'] = ds.u.isel(obs=0, drop=True)
     return ds
+
+
+def get_index_of_last_obs(ds, mask):
+    """Subset particle obs based on mask."""
+    # Index of obs when first non-NaN/zero zone reached.
+    fill_value = ds.obs[-1].item()  # Set NaNs to last obs (i.e. zone=0).
+    obs = ds.obs.where(mask)
+    obs = obs.idxmin('obs', skipna=True, fill_value=fill_value)
+    return obs
 
 
 def open_plx_source(lon, exp, v=1, y=0):

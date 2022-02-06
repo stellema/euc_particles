@@ -469,6 +469,8 @@ def get_spinup_start(exp="hist", years=5):
 def append_dataset_history(ds, msg):
     if 'history' not in ds.attrs:
         ds.attrs['history'] = ''
+    else:
+        ds.attrs['history'] += ' '
     ds.attrs['history'] += str(np.datetime64('now', 's')).replace('T', ' ')
     ds.attrs['history'] += msg
     return ds
