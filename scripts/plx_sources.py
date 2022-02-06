@@ -229,18 +229,17 @@ def merge_plx_source_files(lon, exp, v):
 
     """
     # Create/check individual particle source datasets.
-    reps = np.arange(10, dtype=int)
+    reps = np.arange(2, dtype=int)
     for r in reps:
         plx_source_file(lon, exp, v, r)
 
     # Merge files.
     xids = [get_plx_id(exp, lon, v, r, 'sources') for r in reps]
     ds = xr.open_mfdataset(xids, combine='nested', chunks='auto',
-                           compat='override', coords='minimal')
+                           coords='minimal')
 
     # Filename of merged files (drops the r##).
-    xid = get_plx_id(exp, lon, v, 0, 'sources')
-    xid = xid.parent / xid.name.replace('r00', '')
+    xid = get_plx_id(exp, lon, v, None, 'sources')
 
     # Add file history and attributes.
     msg = ': ./plx_sources.py'
