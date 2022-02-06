@@ -229,7 +229,7 @@ def merge_plx_source_files(lon, exp, v):
 
     """
     # Create/check individual particle source datasets.
-    reps = np.arange(2, dtype=int)
+    reps = np.arange(10, dtype=int)
     for r in reps:
         plx_source_file(lon, exp, v, r)
 
