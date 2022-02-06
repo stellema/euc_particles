@@ -269,6 +269,6 @@ if __name__ == "__main__" and cfg.home.drive != 'C:':
     p.add_argument('-x', '--lon', default=165, type=int, help='Start lon.')
     p.add_argument('-e', '--exp', default=0, type=int, help='Scenario {0, 1}.')
     args = p.parse_args()
-    # merge_plx_source_files(args.lon, args.exp, v=1)
+    merge_plx_source_files(args.lon, args.exp, v=1)
 
-lon, exp, v, r = 250, 0, 1, 0
+# lon, exp, v, r = 165, 0, 1, 0
