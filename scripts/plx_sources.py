@@ -308,6 +308,38 @@ def plx_source_file(lon, exp, v, r):
 
 
 @timeit
+def merge_zones_of_lost_particles(ds):
+    """Merge dataset sources 'None' & 'Out of Bounds' zone[0] = [0 & 10].
+
+    The source region 'None' indicates (0) a particle never reached a source.
+    The source region 'Out of Bounds' (10) indicates a particle is close to the
+    field domain "edge of the world" (to understand why deleted & catch bugs).
+    Both mean the particle didn't reach a source, so combining.
+
+    Notes:
+        - Didn't run this for individual files, just the merged source file.
+
+    """
+    # Drop empty zone coordinate.
+    ds_new = ds.isel(zone=slice(-1)).copy()
+
+    z1, z2 = 0, 10
+    for var in ds.data_vars:
+        dx = ds[var]
+        if 'zone' in dx.dims:
+            if 'traj' in dx.dims:
+                dx = dx.isel(zone=z1).combine_first(dx.isel(zone=z2, drop=1))
+            elif 'rtime' in dx.dims:
+                dx = dx.isel(zone=z1) + dx.isel(zone=z2, drop=1)
+
+            # Concat merged zone[0] to zone[1-9].
+            ds_new[var] = xr.concat([dx, ds[var].isel(zone=slice(1, -1))],
+                                    dim='zone')
+
+    return ds_new
+
+
+@timeit
 def merge_plx_source_files(lon, exp, v):
     """Create individual & combined particle source information datasets.
 
@@ -336,6 +368,7 @@ def merge_plx_source_files(lon, exp, v):
     # Add file history and attributes.
     msg = ': ./plx_sources.py'
     ds = append_dataset_history(ds, msg)
+    ds = merge_zones_of_lost_particles(ds)
     ds = add_particle_file_attributes(ds)
 
     # Save dataset with compression.
@@ -344,7 +377,6 @@ def merge_plx_source_files(lon, exp, v):
     encoding = {var: comp for var in ds.data_vars}
     ds.to_netcdf(xid, encoding=encoding, compute=True)
     logger.info('Saved all {}!'.format(xid.stem))
-
 
 
 if __name__ == "__main__" and cfg.home.drive != 'C:':
