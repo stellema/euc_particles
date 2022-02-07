@@ -59,15 +59,33 @@ def add_particle_file_attributes(ds):
 
 @timeit
 def update_formatted_file_sources(lon, exp, v, r):
-    """Reapply source locations found after formatting file."""
+    """Reapply source locations found for post-formatting file.
 
+    This function only needs to run for files formatted using old version of
+    source updater.
+    The old version missed tagging particles as EUC recirculation, north/south
+    EUC because the longitude mask was too strict and missed particles that
+    passed the boundary, but the longitude when output was saved wasnt close
+    enough.
+
+    This error caused particles to be tagged as zone 10 (i.e., out of bounds)
+    because they simply left the model domain without reaching a 'source'.
+
+    Assumes:
+        - files to update in data/plx/tmp/
+        - Updated files in data/plx/ (won't run if already found here).
+
+    Todo:
+        - Fix traj indexing between old/formatted files.
+    """
     xid = get_plx_id(exp, lon, v, r, 'plx/tmp')
     xid_new = get_plx_id(exp, lon, v, r, 'plx')
-    ds_full = xr.open_dataset(xid, chunks='auto')
 
     # Check if file already updated.
-    if 'Updated source definitions' in ds_full.attrs['history']:
+    if xid_new.exists():
         return
+
+    ds_full = xr.open_dataset(xid, chunks='auto')
 
     logger.info('{}: Updating particle source in file.'.format(xid.stem))
     # Apply updates to ds & subset back into full only if needed.
@@ -85,10 +103,12 @@ def update_formatted_file_sources(lon, exp, v, r):
     obs_old = get_index_of_last_obs(ds_full, np.isnan(ds_full.age))
     obs_new = get_index_of_last_obs(ds, ds.zone > 0.)
 
+    # Traj location indexes.
     traj_to_replace = ds_full.traj[obs_new < obs_old].traj
+    traj_to_replace = ds_full.indexes['traj'].get_indexer(traj_to_replace)
 
     # Subset the particles that need updating.
-    ds = ds.sel(traj=traj_to_replace)
+    ds = ds.isel(traj=traj_to_replace)
 
     # Reapply mask that cuts off data after particle reaches source.
     ds = ds.where(ds.obs <= obs_new)
@@ -97,7 +117,6 @@ def update_formatted_file_sources(lon, exp, v, r):
     ds['zone'] = ds.zone.max('obs')
 
     # Replace the modified subset back into full dataset.
-    traj_to_replace = traj_to_replace.astype(dtype=int)
     for var in ds_full.data_vars:
         ds_full[dict(traj=traj_to_replace)][var] = ds[var]
 
@@ -333,6 +352,6 @@ if __name__ == "__main__" and cfg.home.drive != 'C:':
     p.add_argument('-x', '--lon', default=165, type=int, help='Start lon.')
     p.add_argument('-e', '--exp', default=0, type=int, help='Scenario {0, 1}.')
     args = p.parse_args()
-    merge_plx_source_files(args.lon, args.exp, v=1)
+    # merge_plx_source_files(args.lon, args.exp, v=1)
 
 # lon, exp, v, r = 165, 0, 1, 0
