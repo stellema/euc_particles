@@ -85,33 +85,43 @@ j1, j2 = -6.1, 8
 class ZoneData:
     """Pacific Ocean Zones."""
 
-    Zone = namedtuple("Zone", "name order id name_full loc")
-    vs = Zone('vs', 0, 1, 'Vitiaz Strait', [147.6, 149.6, j1, j1])
-    ss = Zone('ss', 1, 2, 'Solomon Strait', [151.6, 154.6, -5, -5])
-    mc = Zone('mc', 2, 3, 'Mindanao Current', [126.0, 128.5, j2, j2])
-    ecr = Zone('ecr', 3, 4, 'EUC recirculation', [[e1, e1, -2.6, 2.6],
-                                                  [e2, e2, -2.6, 2.6],
-                                                  [e3, e3, -2.6, 2.6],
-                                                  [e4, e4, -2.6, 2.6]])
-    ecs = Zone('ecs', 4, 5, 'South of EUC', [[e1, e1, j1, -2.6 - dx],
-                                             [e2, e2, j1, -2.6 - dx],
-                                             [e3, e3, j1, -2.6 - dx],
-                                             [e4, e4, j1, -2.6 - dx]])
-    ecn = Zone('ecn', 5, 6, 'North of EUC', [[e1, e1, 2.6 + dx, j2],
-                                             [e2, e2, 2.6 + dx, j2],
-                                             [e3, e3, 2.6 + dx, j2],
-                                             [e4, e4, 2.6 + dx, j2]])
-    idn = Zone('idn', 6, 7, 'Indonesian Seas', [[122.8, 140.4, j1, j1],
-                                                [122.8, 122.8, j1, j2]])
-    nth = Zone('nth', 7, 8, 'North Interior', [128.5 + dx, e4 + dx, j2, j2])
-    sth = Zone('sth', 8, 9, 'South Interior', [155, e4 + dx, j1, j1])
-    oob = Zone('oob', 9, 10, 'Out of Bounds', [[120, 294.9, -15, -15],
-                                               [120, 294.9, 14.9, 14.9],
-                                               [120, 120, -15, 14.9],
-                                               [294.9, 294.9, -15, 14.9]])
+    Zone = namedtuple("Zone", "name id name_full loc")
+    vs = Zone('vs', 1, 'Vitiaz Strait', [147.6, 149.6, j1, j1])
+    ss = Zone('ss', 2, 'Solomon Strait', [151.6, 154.6, -5, -5])
+    mc = Zone('mc', 3, 'Mindanao Current', [126.0, 128.5, j2, j2])
+    ecr = Zone('ecr', 4, 'EUC recirculation', [[e1, e1, -2.6, 2.6],
+                                               [e2, e2, -2.6, 2.6],
+                                               [e3, e3, -2.6, 2.6],
+                                               [e4, e4, -2.6, 2.6]])
+    ecs = Zone('ecs', 5, 'South of EUC', [[e1, e1, j1, -2.6 - dx],
+                                          [e2, e2, j1, -2.6 - dx],
+                                          [e3, e3, j1, -2.6 - dx],
+                                          [e4, e4, j1, -2.6 - dx]])
+    ecn = Zone('ecn', 6, 'North of EUC', [[e1, e1, 2.6 + dx, j2],
+                                          [e2, e2, 2.6 + dx, j2],
+                                          [e3, e3, 2.6 + dx, j2],
+                                          [e4, e4, 2.6 + dx, j2]])
+    idn = Zone('idn', 7, 'Indonesian Seas', [[122.8, 140.4, j1, j1],
+                                             [122.8, 122.8, j1, j2]])
+    nth = Zone('nth', 8, 'North Interior', [128.5 + dx, e4 + dx, j2, j2])
+    sth = Zone('sth', 9, 'South Interior', [155, e4 + dx, j1, j1])
+    oob = Zone('oob', 10, 'Out of Bounds', [[120, 294.9, -15, -15],
+                                            [120, 294.9, 14.9, 14.9],
+                                            [120, 120, -15, 14.9],
+                                            [294.9, 294.9, -15, 14.9]])
     list_all = [vs, ss, mc, ecr, ecs, ecn, idn, nth, sth, oob]
-    colors = ['darkorange', 'deeppink', 'mediumspringgreen', 'deepskyblue',
-              'seagreen', 'blue', 'red', 'darkviolet', 'k', 'y']
-
+    # colors = ['darkorange', 'deeppink', 'mediumspringgreen', 'deepskyblue',
+    #           'seagreen', 'blue', 'red', 'darkviolet', 'k', 'y']
+    # colors = ['darkorange', 'deeppink', 'blue',
+    #           'seagreen', 'mediumspringgreen','deepskyblue',
+    #           'red', 'darkviolet', 'y', 'k']
+    colors = ['darkorange', 'deeppink', 'blue', 'mediumspringgreen',
+              'seagreen', 'deepskyblue',
+              'red', 'darkviolet', 'y', 'violet']
+    inds = np.append(np.arange(1, 10, dtype=int), [0])
+    inds[6], inds[8] = inds[8], inds[6]
+    names = [z.name_full for z in list_all]
+    names[-1] = 'None'
+    names = np.array(names)[inds - 1]
 
 zones = ZoneData()

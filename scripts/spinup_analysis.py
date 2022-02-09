@@ -11,7 +11,7 @@ from argparse import ArgumentParser
 import cfg
 from tools import mlogger
 from plx_fncs import (get_plx_id, get_plx_id_year, open_plx_data,
-                      update_zone_recirculation, particle_source_subset)
+                      particle_source_subset)
 
 logger = mlogger('misc', parcels=False, misc=True)
 
