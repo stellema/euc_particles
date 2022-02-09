@@ -476,3 +476,259 @@ def test_trajectory_ID_remap():
     remap_particle_IDs(ds.trajectory, traj_dict)
 
     return
+
+
+    # ##########################################################################
+    # file = 'v{}/remap_particle_id_dict_{}_{}.npy'.format(v, cfg.exp_abr[exp], lon)
+    # remap_dict = np.load(cfg.data / file, allow_pickle=True).item()
+
+    # ds['trajectory'] = (ds.trajectory.dims,
+    #                     remap_particle_IDs(ds.trajectory, remap_dict))
+
+    # # Testing
+    # ##########################################################################
+    # from plx_sources import source_particle_ID_dict
+    # exp = 0
+    # lon = 250
+    # v = 1
+    # r = 0
+    # pids = source_particle_ID_dict(None, exp, lon, v, r)
+    # ##########################################################################
+
+
+    # ##########################################################################
+    # # Look at complete subset to where it ends far from release lon
+
+    # file = get_plx_id(exp, lon, v, r, 'plx')
+    # ds = xr.open_dataset(file)
+    # z = 5
+    # t = pids[z]
+    # t = np.array(t, dtype=int)[np.linspace(0, len(t) - 1, 200, dtype=int)]
+    # #
+    # ds = ds.sel(traj=ds.traj[ds.traj.isin(t)])
+    # # ds = ds.isel(traj=slice(150))
+    # df = ds.copy()
+
+    # #dz = ds.where(ds.zone == 5., drop=1)
+    # ds = ds.isel(obs=slice(601))
+    # omx = ds.zone.idxmax('obs')
+    # omx = omx[(omx < 601) & (omx > 1)]
+
+    # # ###### Last traj
+    # # # t_last = omx.idxmax('traj')
+    # # ##### last traj (under 601 obs)
+    # # t_last = omx[omx < 601].idxmax('traj')  # ends at 250
+    # # print(t_last)
+    # # dz = ds.sel(traj=t_last)
+
+    # # plt.plot(dz.lon, dz.lat)
+
+
+    # # sort traj by max time to reach zone
+    # omx_sort = omx.argsort()[::-1].values
+    # tomx = omx.traj[omx_sort]
+    # for i in range(len(omx)):
+    #     dz = ds.sel(traj=int(tomx[i]))
+    #     x = dz.sel(obs=int(omx[omx_sort][i])).lon
+    #     if x < 250:
+    #         print(i, int(tomx[i]), int(omx[omx_sort][i]), x.item())
+    #         plt.scatter(dz.lon, dz.lat)
+    #         break
+
+    # tx_new = int(tomx[i]) # Index to use for testing
+    # # # equv traj (original)
+    # tx = list(remap_dict.keys())[list(remap_dict.values()).index(int(tx_new))]
+    # print(tx_new, tx)  # 33776 75231 / 32927 73062 /40182 88211
+    # ##########################################################################
+    # tx = 6341 #88211 #33776# 75231 ds.traj.where(ds.trajectory.isel(obs=0) == tx, drop=1)
+    # files = [get_plx_id(exp, lon, v, r) for r in range(5)]
+    # dss = [xr.open_dataset(f) for f in files]
+    # for i in range(len(dss)):
+    #     dss[i]['traj'] = dss[i]['trajectory'].isel(obs=0)
+    # dss = [ds.sel(traj=tx) for ds in dss]
+    # dss = [ds.dropna('obs') for ds in dss]
+    # ds = xr.concat(dss, 'obs')
+    # plt.scatter(ds.lon, ds.lat)
+    # z = 5
+
+    # df = ds.copy()
+
+    # dims = ds.zone.dims
+    # ds['zone'] = ds.zone.where((ds.zone != 5.))
+    # ds['zone'] = (dims, np.where((ds.lon.round(1) == lon) & (ds.lat < -2.6), z,
+    #                              ds.zone.values))
+    # ds['zone'] = ds.zone.ffill('obs')
+
+    # # Look at difference where replaced:
+    # diff = ds.zone.where(df.zone != ds.zone, drop=1)
+    # diff.plot()
+    # ds.zone.plot()
+
+
+    # ##########################################################################
+# lon = 250
+# xid = get_plx_id(0, lon, 1, 0, 'v1')
+# ds = xr.open_dataset(xid)
+# ds['traj'] = ds.trajectory.isel(obs=0)
+# ds = ds.isel(obs=slice(0, 200))
+# traj = ds.where(ds.zone.isin([3, 4, 5, 6]), drop=1).traj
+# ds = ds.sel(traj=ds.traj[ds.traj.isin(traj)])
+# ds = ds.isel(traj=np.linspace(0, 5000, 100, dtype=int))
+# ds['zone'][dict(traj=2)] = 3
+# df = ds.copy()
+# print(ds.zone)
+# ds['zone'] = ds.zone.where((ds.zone != 4.) & (ds.zone != 5.) &
+#                            (ds.zone != 6))
+# print(ds.zone)
+
+# dims = ds.zone.dims
+# lon_mask = (ds.lon.round(1) == lon + 0.1)
+# # Zone 4: South of EUC
+# ds['zone'] = (dims, np.where(lon_mask & (ds.lat <= 2.6) & (ds.lat >= -2.6), 4, ds.zone.values))
+# print(ds.zone)
+# lon_mask = (ds.lon.round(1) == lon)
+# # Zone 5: South of EUC
+# ds['zone'] = (dims, np.where(lon_mask & (ds.lat < -2.6), 5, ds.zone.values))
+# print(ds.zone)
+# # Zone 6: North of EUC
+# ds['zone'] = (dims, np.where(lon_mask & (ds.lat > 2.6), 6, ds.zone.values))
+# print(ds.zone)
+# ds['zone'] = ds.zone.ffill('obs')
+# print(ds.zone)
+
+
+def test_oob():
+    import matplotlib.pyplot as plt
+    from plx_fncs import update_particle_data_sources
+    # Why do some OOB particles have low ages?
+
+    lon, exp, v, r = 165, 0, 1, 0
+    ds = xr.open_dataset(get_plx_id(exp, lon, v, r, 'plx'))
+    dv = xr.open_dataset(get_plx_id(exp, lon, v, r))
+    source_traj = source_particle_ID_dict(ds, exp, lon, v, r)
+
+
+    # t = 25720 # This should be EUC recirculation
+    # dx = ds.sel(traj=t)
+    # dvx = dv.isel(traj=t)
+    # # dx = ds.where(ds.zone == 10, drop=1)
+    # print(dx, dx.zone)
+    # i = 0
+    # plt.plot(dvx.lon[i], dvx.lat[i])
+    # plt.plot(dx.lon, dx.lat)
+
+    # # Test changed function
+    # t = source_traj[10]
+    # ds = dv.isel(traj=t).copy()
+    # df = update_particle_data_sources(ds.copy(), lon)
+    # # dn = alt_particle_data_sources(ds.copy(), lon)
+
+    # for da in [ds, df]:
+    #     print(da.zone.where(da.zone != 0.).bfill('obs').isel(obs=0))
+
+    # Test changing definition.
+    def get_index_of_last_obs(ds, mask):
+        """Subset particle obs to zone reached for each trajeectory."""
+        # Index of obs when first non-NaN/zero zone reached.
+        fill_value = ds.obs[-1].item()  # Set NaNs to last obs (zone=0; not found).
+        obs = ds.obs.where(mask)
+        obs = obs.idxmin('obs', skipna=True, fill_value=fill_value)
+        return obs
+
+    df = xr.open_dataset(get_plx_id(exp, lon, v, r, 'plx'), chunks='auto')
+    ds = df.copy()
+    ds['zone'] = ds.zone.broadcast_like(ds.age).copy()
+    ds['zone'] *= 0
+    ds = update_particle_data_sources(ds, lon)
+
+    # Check if zone just found was earlier than previous
+    # infer where previous zone index was found
+
+    obs_old = get_index_of_last_obs(df, np.isnan(ds.age))
+    obs_new = get_index_of_last_obs(ds, ds.zone > 0.)
+
+    traj_to_replace = df.traj[obs_new < obs_old].traj
+    ds = ds.sel(traj=traj_to_replace)
+    ds = ds.where(ds.obs <= obs_new)
+    # ds['zone'] = ds.zone.where(ds.zone != 0.).bfill('obs').isel(obs=0)
+    ds['zone'] = ds.zone.max('obs')
+
+    # # Check okay
+
+    # diff = df[dict(traj=traj_to_replace)]['zone'] != ds.zone
+    # print(ds.zone[diff])
+    # print(df[dict(traj=traj_to_replace)]['zone'][diff])
+
+    # Replace.
+    traj_to_replace = traj_to_replace.astype(dtype=int)
+    loc = dict(traj=traj_to_replace)
+    for var in df.data_vars:
+        df[loc][var] = ds[var]
+
+def test_merge_empty_zones(ds):
+    ### for testing
+    lon, exp, v, r = 165, 0, 1, 0
+    ds = xr.open_dataset(get_plx_id(exp, lon, v, r, 'sources'))
+    ds = ds.isel(zone=[0, 10])
+    ###
+
+    # ds[dict(zone=0)] = ds[dict(zone=0)] + ds[dict(zone=10)]
+    # xr.merge([ds.isel(zone=0), ds.isel(zone=1, drop=1)])
+    # xr.concat([ds.isel(zone=0), ds.isel(zone=1, drop=1)], 'traj')
+
+    # # Combine first (saves only first )
+    # dm = ds.isel(zone=0).combine_first(ds.isel(zone=1, drop=1))
+    # print('original:', ds.uz.sum('rtime').sum('zone').item(),
+    #       '\n  merged:', dm.uz.sum('rtime').item())
+
+    var, dim = 'age', 'traj'
+    dx = ds[var]
+    dm = dx.isel(zone=0, drop=1).combine_first(dx.isel(zone=1, drop=1))  # SLightly off
+    # dm = xr.merge([dx.isel(zone=i, drop=1) for i in [0, 1]]) # error
+    # dm = dm[var]
+    # dm.plot()
+    # dx.plot()
+
+    print('original:',  dx.sum(dim).sum('zone').item(),
+          '\n  merged:', dm.sum(dim).item(),
+          '\n diff', dx.sum(dim).sum('zone').item() - dm.sum(dim).item())
+
+    # Why different?
+    dm_u = np.unique(dm.where(~np.isnan(dm), drop=1))
+    dx_u = np.unique(dx.where(~np.isnan(dx), drop=1))
+    dx_u = dx_u[~np.isnan(dx_u)]
+    if not all(dx_u == dm_u):
+        print(dx_u == dm_u)
+    # Success! (for rtime sum dim)
+    var, dim = 'uz', 'rtime'
+    dx = ds[var]
+    dm = dx.isel(zone=0) + dx.isel(zone=10, drop=1)  # Success!
+    print('original:', sum([dx.isel(zone=z).sum(dim) for z in [0, 10]]),
+          '\n  merged:', dm.sum(dim).item())
+
+    # test
+    ds.uz.sum('zone').plot()
+
+    # Test function
+def combine_zones_of_lost_particles(ds):
+    """Combine no source and out of bounds."""
+
+    lon, exp, v, r = 165, 0, 1, 0 # !!!
+    ds = xr.open_dataset(get_plx_id(exp, lon, v, r, 'sources')) # !!!
+    z1, z2 = 10, 0
+    loc = dict(zone=z1)
+    for var in ds.data_vars:
+        if 'zone' in dx.dims:
+            print(var)
+            dx = ds[var]
+            if 'traj' in dx.dims:
+                ds[var][loc] = dx.isel(zone=z1).combine_first(dx.isel(zone=z2, drop=True))
+            elif 'rtime' in dx.dims:
+                ds[var][loc] = dx.isel(zone=z1) + dx.isel(zone=z2, drop=True)
+
+            # Set old dims to zero
+            ds[var][dict(zone=z2)] = np.empty(dx[dict(zone=z2)] .shape) * np.nan
+
+    # Drop empty zone coordinate.
+    ds = ds.isel(zone=slice(1, None))
+    return ds
