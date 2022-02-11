@@ -1,0 +1,14 @@
+Format particle files for plx exp=0 & lon=250.
+
+======================================================================================
+                  Resource Usage on 2022-02-06 08:00:31:
+   Job Id:             34764619.gadi-pbs
+   Project:            e14
+   Exit Status:        271 (Linux Signal 15 SIGTERM Termination)
+   Service Units:      97.46
+   NCPUs Requested:    1                      NCPUs Used: 1               
+                                           CPU Time Used: 06:58:13                                   
+   Memory Requested:   100.0GB               Memory Used: 100.0GB         
+   Walltime requested: 07:00:00            Walltime Used: 07:01:02        
+   JobFS requested:    100.0MB                JobFS used: 8.03MB          
+======================================================================================

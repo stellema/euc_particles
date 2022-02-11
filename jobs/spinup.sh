@@ -26,12 +26,13 @@ source /g/data/e14/as3189/conda/envs/analysis3-20.01/bin/activate
 
 # Run spinup particles
 if [ $R -lt 10 ]; then
-  $ECHO "Run plx spinup for $EXP at lon $LON."
+  $ECHO "Run plx spinup for $EXP at lon $LON (r=$R & year=$Y) set to run patch files."
   mpirun -np $PBS_NCPUS python3 "$parent"/scripts/plx_spinup.py -e $EXP -x $LON -v 1 -r 5 -y $Y -p 1
 
   # Submit job to create particle set restart file.
   if [ $R -lt 9 ]; then
     $R=$R + 1
+    $ECHO "Queue next particleset job exp=$EXP & lon=$LON (r=$R & year=$Y)."
     qsub -v LON=$LON,EXP=$EXP,Y=$Y,R=$R "$parent"/jobs/spinup_ps.sh
   fi
 fi

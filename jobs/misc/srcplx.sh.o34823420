@@ -1,0 +1,14 @@
+Run plx sources for exp 0 at lon 250.
+
+======================================================================================
+                  Resource Usage on 2022-02-07 18:08:48:
+   Job Id:             34823420.gadi-pbs
+   Project:            e14
+   Exit Status:        0
+   Service Units:      0.75
+   NCPUs Requested:    1                      NCPUs Used: 1               
+                                           CPU Time Used: 00:02:03                                   
+   Memory Requested:   40.0GB                Memory Used: 5.06GB          
+   Walltime requested: 03:30:00            Walltime Used: 00:02:15        
+   JobFS requested:    100.0MB                JobFS used: 8.03MB          
+======================================================================================

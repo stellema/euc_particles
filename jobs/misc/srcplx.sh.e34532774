@@ -1,0 +1,22 @@
+plx_source_file: 0:0:00.00 total: 0.00 seconds.
+plx_source_file: 0:0:00.00 total: 0.00 seconds.
+plx_source_file: 0:0:00.00 total: 0.00 seconds.
+plx_source_file: 0:0:00.00 total: 0.00 seconds.
+plx_source_file: 0:0:00.00 total: 0.00 seconds.
+plx_source_file: 0:0:00.00 total: 0.00 seconds.
+plx_source_file: 0:0:00.00 total: 0.00 seconds.
+plx_source_file: 0:0:00.00 total: 0.00 seconds.
+plx_source_file: 0:0:00.00 total: 0.00 seconds.
+plx_source_file: 0:0:00.00 total: 0.00 seconds.
+Saving plx_hist_250_v1...
+
+------------------------------------------------------------------------
+Job 34532774 has exceeded memory allocation on node gadi-cpu-clx-1440.gadi.nci.org.au
+Process "bash", pid 1659146, rss 3469312, vmem 21671936
+Process "34532774.gadi-p", pid 1659376, rss 3182592, vmem 227995648
+Process "python3", pid 1659766, rss 12879745024, vmem 15816257536
+Process "orted", pid 1659821, rss 4694016, vmem 172437504
+------------------------------------------------------------------------
+For more information visit https://opus.nci.org.au/x/SwGRAQ
+------------------------------------------------------------------------
+/local/spool/pbs/mom_priv/jobs/34532774.gadi-pbs.SC: line 25: 1659766 Killed                  python3 /g/data/e14/as3189/stellema/plx/scripts/plx_sources.py -e $EXP -x $LON

@@ -1,0 +1,15 @@
+Create spinup particleset for plx exp=hist & lon=190.
+34483857.gadi-pbs
+
+======================================================================================
+                  Resource Usage on 2022-02-01 11:31:20:
+   Job Id:             34481555.gadi-pbs
+   Project:            e14
+   Exit Status:        0
+   Service Units:      0.03
+   NCPUs Requested:    1                      NCPUs Used: 1               
+                                           CPU Time Used: 00:00:11                                   
+   Memory Requested:   5.0GB                 Memory Used: 1.15GB          
+   Walltime requested: 02:00:00            Walltime Used: 00:00:49        
+   JobFS requested:    100.0MB                JobFS used: 8.04MB          
+======================================================================================

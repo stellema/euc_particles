@@ -7,7 +7,7 @@
 #PBS -P e14
 #PBS -q normal
 #PBS -l walltime=3:30:00
-#PBS -l mem=12GB
+#PBS -l mem=40GB
 #PBS -l ncpus=1
 #PBS -l storage=gdata/hh5+gdata/e14
 #PBS -l wd
@@ -22,4 +22,4 @@ $ECHO "Run plx sources for exp $EXP at lon $LON."
 
 module use /g/data3/hh5/public/modules
 module load conda/analysis3
-python3 /g/data/e14/as3189/stellema/plx/scripts/plx_sources.py -e $EXP -x $LON
+python3 /g/data/e14/as3189/stellema/plx/scripts/create_source_files.py -e $EXP -x $LON

@@ -1,0 +1,14 @@
+Format particle files for plx exp=1 & lon=165.
+
+======================================================================================
+                  Resource Usage on 2022-01-31 16:09:20:
+   Job Id:             34460291.gadi-pbs
+   Project:            e14
+   Exit Status:        137 (Linux Signal 9 SIGKILL Kill, unblockable)
+   Service Units:      7.92
+   NCPUs Requested:    1                      NCPUs Used: 1               
+                                           CPU Time Used: 00:36:48                                   
+   Memory Requested:   89.0GB                Memory Used: 87.97GB         
+   Walltime requested: 08:00:00            Walltime Used: 00:38:28        
+   JobFS requested:    100.0MB                JobFS used: 8.03MB          
+======================================================================================

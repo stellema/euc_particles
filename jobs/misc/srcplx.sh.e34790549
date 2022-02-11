@@ -1,0 +1,13 @@
+plx_hist_165_v1r00: Updating particle source in file.
+plx_hist_165_v1r00: Saving updated file.
+
+------------------------------------------------------------------------
+Job 34790549 has exceeded memory allocation on node gadi-cpu-clx-0534.gadi.nci.org.au
+Process "bash", pid 3369680, rss 3264512, vmem 21671936
+Process "34790549.gadi-p", pid 3369736, rss 2998272, vmem 227995648
+Process "python3", pid 3370047, rss 21428064256, vmem 25860218880
+Process "orted", pid 3370099, rss 4558848, vmem 172437504
+------------------------------------------------------------------------
+For more information visit https://opus.nci.org.au/x/SwGRAQ
+------------------------------------------------------------------------
+/local/spool/pbs/mom_priv/jobs/34790549.gadi-pbs.SC: line 25: 3370047 Killed                  python3 /g/data/e14/as3189/stellema/plx/scripts/plx_sources.py -e $EXP -x $LON

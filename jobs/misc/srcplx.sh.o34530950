@@ -1,0 +1,14 @@
+Run plx sources for exp 0 at lon 165.
+
+======================================================================================
+                  Resource Usage on 2022-02-02 13:06:36:
+   Job Id:             34530950.gadi-pbs
+   Project:            e14
+   Exit Status:        137 (Linux Signal 9 SIGKILL Kill, unblockable)
+   Service Units:      6.64
+   NCPUs Requested:    1                      NCPUs Used: 1               
+                                           CPU Time Used: 01:04:57                                   
+   Memory Requested:   12.0GB                Memory Used: 12.0GB          
+   Walltime requested: 03:30:00            Walltime Used: 01:06:27        
+   JobFS requested:    100.0MB                JobFS used: 8.04MB          
+======================================================================================

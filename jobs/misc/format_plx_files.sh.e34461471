@@ -1,0 +1,25 @@
+plx_rcp_165_v1r01: Formating particle file.
+plx_rcp_165_v1r01: Get particle file IDs.
+plx_rcp_165_v1r01: Merge trajectory data.
+Merge trajectories: Searching files.
+Merge trajectories: Concat data.
+Merge trajectories: argsort (loaded).
+Merge trajectories: take_along_axis.
+plx_rcp_165_v1r01: Merge patch trajectory data.
+Merge trajectories: Searching files.
+Merge trajectories: Concat data.
+Merge trajectories: argsort (loaded).
+Merge trajectories: take_along_axis.
+plx_rcp_165_v1r01: Remap particle IDs.
+plx_rcp_165_v1r01: Concat skipped particles.
+
+------------------------------------------------------------------------
+Job 34461471 has exceeded memory allocation on node gadi-cpu-bdw-0001.gadi.nci.org.au
+Process "bash", pid 3739938, rss 3084288, vmem 21671936
+Process "34461471.gadi-p", pid 3739995, rss 2686976, vmem 227995648
+Process "python3", pid 3740306, rss 96649912320, vmem 102613123072
+Process "orted", pid 3740313, rss 3375104, vmem 172437504
+------------------------------------------------------------------------
+For more information visit https://opus.nci.org.au/x/SwGRAQ
+------------------------------------------------------------------------
+/local/spool/pbs/mom_priv/jobs/34461471.gadi-pbs.SC: line 26: 3740306 Killed                  python3 "$parent"/scripts/format_particle_files.py -e $EXP -x $LON

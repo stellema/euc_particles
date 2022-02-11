@@ -1,0 +1,40 @@
+plx_source_file: 0:0:00.00 total: 0.00 seconds.
+plx_hist_165_v1r01: Updating particle source in file.
+plx_hist_165_v1r01: Saving updated file.
+update_formatted_file_sources: 1:5:14.16 total: 3914.16 seconds.
+plx_hist_165_v1r01: Creating particle source file.
+plx_hist_165_v1r01: Particle information at source.
+get_final_particle_obs: 0:0:00.02 total: 0.02 seconds.
+plx_hist_165_v1r01: Dictionary of particle IDs at source.
+plx_hist_165_v1r01: Sum EUC transport per source.
+group_particles_by_variable: 0:3:49.33 total: 229.33 seconds.
+group_euc_transport: 0:4:07.71 total: 247.71 seconds.
+group_particles_by_variable: 0:2:02.47 total: 122.47 seconds.
+plx_hist_165_v1r01: Saving...
+plx_hist_165_v1r01: Saved.
+plx_source_file: 1:13:30.49 total: 4410.49 seconds.
+plx_hist_165_v1r02: Updating particle source in file.
+plx_hist_165_v1r02: Saving updated file.
+update_formatted_file_sources: 0:58:12.29 total: 3492.29 seconds.
+plx_hist_165_v1r02: Creating particle source file.
+plx_hist_165_v1r02: Particle information at source.
+get_final_particle_obs: 0:0:00.02 total: 0.02 seconds.
+plx_hist_165_v1r02: Dictionary of particle IDs at source.
+plx_hist_165_v1r02: Sum EUC transport per source.
+group_particles_by_variable: 0:3:41.09 total: 221.09 seconds.
+group_euc_transport: 0:4:23.60 total: 263.60 seconds.
+group_particles_by_variable: 0:2:44.47 total: 164.47 seconds.
+plx_hist_165_v1r02: Saving...
+plx_hist_165_v1r02: Saved.
+plx_source_file: 1:10:57.78 total: 4257.78 seconds.
+plx_hist_165_v1r03: Updating particle source in file.
+plx_hist_165_v1r03: Saving updated file.
+update_formatted_file_sources: 0:53:02.58 total: 3182.58 seconds.
+plx_hist_165_v1r03: Creating particle source file.
+plx_hist_165_v1r03: Particle information at source.
+get_final_particle_obs: 0:0:00.01 total: 0.01 seconds.
+plx_hist_165_v1r03: Dictionary of particle IDs at source.
+plx_hist_165_v1r03: Sum EUC transport per source.
+group_particles_by_variable: 0:6:38.47 total: 398.47 seconds.
+group_euc_transport: 0:9:24.27 total: 564.27 seconds.
+=>> PBS: job killed: walltime 12640 exceeded limit 12600

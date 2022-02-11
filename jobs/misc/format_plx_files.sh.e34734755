@@ -1,0 +1,43 @@
+plx_hist_165_v1r00: Formating particle file.
+plx_hist_165_v1r00: Get particle file IDs.
+plx_hist_165_v1r00: Merge trajectory data.
+Merge trajectories: Searching files.
+Merge trajectories: Concat data.
+Merge trajectories: argsort (loaded).
+Merge trajectories: take_along_axis.
+plx_hist_165_v1r00: Merge patch trajectory data.
+Merge trajectories: Searching files.
+Merge trajectories: Concat data.
+Merge trajectories: argsort (loaded).
+Merge trajectories: take_along_axis.
+plx_hist_165_v1r00: Remap particle IDs.
+plx_hist_165_v1r00: Concat skipped particles.
+plx_hist_165_v1r00: Update source defintion.
+plx_hist_165_v1r00: Subset at source.
+plx_hist_165_v1r00: Saving file ...
+plx_hist_165_v1r00: Saved!
+plx_hist_165_v1r01: Formating particle file.
+plx_hist_165_v1r01: Get particle file IDs.
+plx_hist_165_v1r01: Merge trajectory data.
+Merge trajectories: Searching files.
+Merge trajectories: Concat data.
+Merge trajectories: argsort (loaded).
+Merge trajectories: take_along_axis.
+plx_hist_165_v1r01: Merge patch trajectory data.
+Merge trajectories: Searching files.
+Merge trajectories: Concat data.
+Merge trajectories: argsort (loaded).
+Merge trajectories: take_along_axis.
+plx_hist_165_v1r01: Remap particle IDs.
+plx_hist_165_v1r01: Concat skipped particles.
+
+------------------------------------------------------------------------
+Job 34734755 has exceeded memory allocation on node gadi-cpu-bdw-0059.gadi.nci.org.au
+Process "bash", pid 1675371, rss 3284992, vmem 21671936
+Process "34734755.gadi-p", pid 1675430, rss 2949120, vmem 227995648
+Process "python3", pid 1675741, rss 90006671360, vmem 92967489536
+Process "orted", pid 1675746, rss 4644864, vmem 172437504
+------------------------------------------------------------------------
+For more information visit https://opus.nci.org.au/x/SwGRAQ
+------------------------------------------------------------------------
+/local/spool/pbs/mom_priv/jobs/34734755.gadi-pbs.SC: line 26: 1675741 Killed                  python3 "$parent"/scripts/format_particle_files.py -e $EXP -x $LON
