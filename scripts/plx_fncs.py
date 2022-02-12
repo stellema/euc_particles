@@ -578,3 +578,49 @@ def get_new_particle_IDs(ds):
     ds = ds.where(ds.age == 0., drop=True)
     traj = ds.trajectory.values.astype(int)
     return traj
+
+
+def combine_dataset_source_index(ds, z1, z2):
+    """Merge the values of two sources in source dataset.
+
+    Args:
+        ds (xarray.Dataset): Particle source dataset.
+        z1 (int): Source ID coordinate to merge (keep this index).
+        z2 (int): Source ID coordinate to merge.
+
+    Returns:
+        ds_new (TYPE): Reduced Dataset.
+
+    Notes:
+        - Adds the values in 'zone' position z1 and z2.
+        - IDs do not have to match positional indexes.
+
+    """
+    # Indexes of unchanged zones (concat to updated DataArray).
+    z_keep = ds.zone.where((ds.zone != z1) & (ds.zone != z2), drop=True)
+
+    # New dataset with zone z2 dropped (added zone goes to z1).
+    ds_new = ds.sel(zone=ds.zone.where(ds.zone != z2, drop=True)).copy()
+
+    # Add values in z2 and z2, then concat to ds_new.
+    for var in ds.data_vars:
+        dx = ds[var]
+        if 'zone' in dx.dims:
+
+            # Merge ragged arrays.
+            if 'traj' in dx.dims:
+                dx = dx.sel(zone=z1).combine_first(dx.sel(zone=z2, drop=1))
+
+            # Sum arrays.
+            elif 'rtime' in dx.dims:
+                dx = dx.sel(zone=z1) + dx.sel(zone=z2, drop=1)
+
+            # Sum elements.
+            elif dx.ndim == 1:
+                tmp = dx.sel(zone=z1).item() + dx.sel(zone=z2).item()
+                dx = xr.DataArray(tmp, coords=dx.sel(zone=z1).coords)
+
+            # Concat merged zone[z1] to zone[z_keep].
+            ds_new[var] = xr.concat([dx, ds[var].sel(zone=z_keep)], dim='zone')
+
+    return ds_new

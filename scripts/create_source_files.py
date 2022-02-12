@@ -35,7 +35,7 @@ from argparse import ArgumentParser
 import cfg
 from tools import mlogger, timeit, append_dataset_history
 from plx_fncs import (get_plx_id, update_particle_data_sources,
-                      get_index_of_last_obs)
+                      get_index_of_last_obs, combine_source_indexes)
 
 logger = mlogger('plx_sources', parcels=False, misc=False)
 
@@ -308,40 +308,13 @@ def plx_source_file(lon, exp, v, r):
 
 
 @timeit
-def merge_zones_of_lost_particles(ds):
-    """Merge dataset sources 'None' & 'Out of Bounds' zone[0] = [0 & 10].
+def merge_plx_source_files(lon, exp, v):
+    """Create individual & combined particle source information datasets.
 
     The source region 'None' indicates (0) a particle never reached a source.
     The source region 'Out of Bounds' (10) indicates a particle is close to the
     field domain "edge of the world" (to understand why deleted & catch bugs).
     Both mean the particle didn't reach a source, so combining.
-
-    Notes:
-        - Didn't run this for individual files, just the merged source file.
-
-    """
-    # Drop empty zone coordinate.
-    ds_new = ds.isel(zone=slice(-1)).copy()
-
-    z1, z2 = 0, 10
-    for var in ds.data_vars:
-        dx = ds[var]
-        if 'zone' in dx.dims:
-            if 'traj' in dx.dims:
-                dx = dx.isel(zone=z1).combine_first(dx.isel(zone=z2, drop=1))
-            elif 'rtime' in dx.dims:
-                dx = dx.isel(zone=z1) + dx.isel(zone=z2, drop=1)
-
-            # Concat merged zone[0] to zone[1-9].
-            ds_new[var] = xr.concat([dx, ds[var].isel(zone=slice(1, -1))],
-                                    dim='zone')
-
-    return ds_new
-
-
-@timeit
-def merge_plx_source_files(lon, exp, v):
-    """Create individual & combined particle source information datasets.
 
     Args:
         lon (int): Release Longitude {165, 190, 220, 250}.
@@ -350,6 +323,10 @@ def merge_plx_source_files(lon, exp, v):
 
     Returns:
         None.
+
+    Notes:
+        - Merge dataset sources 'None' & 'Out of Bounds' zone[0] = [0 & 10].
+        - Didn't run this for individual files, just the merged source file.
 
     """
     # Create/check individual particle source datasets.
@@ -368,7 +345,7 @@ def merge_plx_source_files(lon, exp, v):
     # Add file history and attributes.
     msg = ': ./plx_sources.py'
     ds = append_dataset_history(ds, msg)
-    ds = merge_zones_of_lost_particles(ds)
+    ds = combine_source_indexes(ds, 0, 10)
     ds = add_particle_file_attributes(ds)
 
     # Save dataset with compression.
