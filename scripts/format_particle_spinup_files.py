@@ -176,7 +176,7 @@ def plx_source_file_spinup(lon, exp, v, spinup_year):
 
     # Filenames.
     xid = cfg.data / 'plx/plx_spinup_{}_{}_v{}y{}.nc'.format(cfg.exp[exp], lon, v, spinup_year)
-    xid_new = cfg.data / 'plx/sources/{}'.format(xid.name)
+    xid_new = cfg.data / 'sources/{}'.format(xid.name)
 
     # Check if file already exists.
     if xid_new.exists():
