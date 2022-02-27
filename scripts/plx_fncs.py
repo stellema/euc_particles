@@ -558,8 +558,7 @@ def remap_particle_IDs(traj, traj_dict):
     # Check and replace NaNs with constant.
     c = -9999
     # if np.isnan(traj).any():
-    if not traj_dict[c] == c:
-        traj_dict[c] = c
+
     traj = traj.where(~np.isnan(traj), -9999).astype(dtype=int)
 
     # Remap
@@ -580,7 +579,8 @@ def get_new_particle_IDs(ds):
     return traj
 
 
-def combine_dataset_source_index(ds, z1, z2):
+
+def combine_source_indexes(ds, z1, z2):
     """Merge the values of two sources in source dataset.
 
     Args:
@@ -624,3 +624,213 @@ def combine_dataset_source_index(ds, z1, z2):
             ds_new[var] = xr.concat([dx, ds[var].sel(zone=z_keep)], dim='zone')
 
     return ds_new
+
+
+def merge_interior_sources(ds):
+    """Merge source North/South Interior with North/South of EUC."""
+    # Merge 'South of EUC' & 'South Interior': zone[5] = zone[5+9].
+    z1, z2 = 5, 9
+    ds = combine_source_indexes(ds, z1, z2)
+    # Merge 'North of EUC' & 'North Interior': zone[6] = zone[6+8].
+    z1, z2 = 6, 8
+    ds = combine_source_indexes(ds, z1, z2)
+
+    # Reset source name and colours.
+    if set(['names', 'colors']).issubset(ds.data_vars):
+        for z1, z2 in zip([5, 6], [9, 8]):
+            i1 = list(ds.zone.values).index(z1)  # Index in dataset
+            i2 = list(cfg.zones.inds).index(z2)  # Index interior in cfg.zones
+            ds['names'][i1] = cfg.zones.names[i2]
+            ds['colors'][i1] = cfg.zones.colors[i2]
+
+    return ds
+
+
+def source_dataset(lon, merge_interior=False):
+    """Get source datasets.
+
+    Args:
+        lon (int): Release Longitude {165, 190, 220, 250}.
+        merge_interior (bool, optional): Merge sources. Defaults to False.
+
+    Returns:
+        ds (xarray.Dataset):
+
+    Notes:
+        - Stack scenario dimension
+        - Add attributes
+        - Change order of source dimension
+        - merge sources
+
+
+    """
+    # Open and concat data for exah scenario.
+    ds = [xr.open_dataset(get_plx_id(i, lon, 1, None, 'sources'))
+          for i in [0, 1]]
+    ds = [ds[i].expand_dims(dict(exp=[i])) for i in [0, 1]]
+    ds = xr.concat(ds, 'exp')
+
+    # Convert age: seconds to days.
+    ds['age'] *= 1 / (60 * 60 * 24)
+    ds['age'].attrs['units'] = 'days'
+
+    # Convert distance: m to x100 km.
+    ds['distance'] *= 1 / (1e3 * 100)
+    ds['distance'].attrs['units'] = '100 km'
+
+    # Reorder zones.
+    ds = ds.isel(zone=cfg.zones.inds)
+
+    ds['names'] = ('zone', cfg.zones.names)
+    ds['colors'] = ('zone', cfg.zones.colors)
+
+    if merge_interior:
+        ds = merge_interior_sources(ds)
+    return ds
+
+
+def plot_ofam_euc():
+    import matplotlib.pyplot as plt
+    from mpl_toolkits.axes_grid1 import make_axes_locatable
+    from matplotlib.colors import LinearSegmentedColormap
+    from tools import coord_formatter
+
+    ds = xr.open_dataset(cfg.ofam /'ocean_u_1981-2012_climo.nc')
+    ds = ds.sel(yu_ocean=0., method='nearest')
+    ds = ds.sel(xu_ocean=slice(150., 280.), st_ocean=slice(2.5, 500)).u
+    ds = ds.mean('Time')
+
+    y = ds.st_ocean
+    x = ds.xu_ocean
+    v = ds
+    yt = np.arange(0, y[-1], 100)
+    xt = np.arange(160, 270, 20)
+    vmax = 1.2
+    vmin =-0.2
+
+
+    cmap = LinearSegmentedColormap.from_list('cmap', (
+    # Edit this gradient at https://eltos.github.io/gradient/#cmap=4.2:3334F9-15.5:0002CF-22.3:000000-29.8:5A078E-39.4:900CB4-52.4:A31474-68.2:9E020A-90:D36019-99.4:DEC629
+    (0.000, (0.200, 0.204, 0.976)),
+    (0.042, (0.200, 0.204, 0.976)),
+    (0.155, (0.000, 0.008, 0.812)),
+    (0.223, (0.000, 0.000, 0.000)),
+    (0.298, (0.353, 0.027, 0.557)),
+    (0.394, (0.565, 0.047, 0.706)),
+    (0.524, (0.639, 0.078, 0.455)),
+    (0.682, (0.620, 0.008, 0.039)),
+    (0.900, (0.827, 0.376, 0.098)),
+    (0.994, (0.871, 0.776, 0.161)),
+    (1.000, (0.871, 0.776, 0.161))))
+    # cmap=plt.cm.viridis
+    # cmap=plt.cm.gnuplot
+    # cmap=plt.cm.CMRmap
+    cmap=plt.cm.gnuplot2
+    # cmap=plt.cm.inferno
+    # cmap=plt.cm.plasma
+    # cmap=plt.cm.jet
+    # cmap=plt.cm.cividis
+    # cmap=plt.cm.
+    # cmap=plt.cm.gist_ncar
+    # cmap=plt.cm.nipy_spectral
+    # cmap=plt.cm.brg
+
+    cmap.set_bad('k')
+
+    fig, ax = plt.subplots(figsize=(9, 3))
+    ax.set_title('OFAM3 zonal velocity')
+    cs = ax.pcolormesh(x, y, ds, vmax=vmax, vmin=vmin, cmap=cmap)
+
+    ax.set_ylim(y[-1], y[0])
+    ax.set_yticks(yt)
+    ax.set_yticklabels(coord_formatter(yt, 'depth'))
+    ax.set_xticks(xt)
+    ax.set_xticklabels(coord_formatter(xt, 'lon'))
+
+    divider = make_axes_locatable(ax)
+    cax = divider.append_axes('right', size='3%', pad=0.1)
+    cbar = fig.colorbar(cs, cax=cax, orientation='vertical', extend='both')
+    cbar.set_label('m/s')
+
+
+
+def plot_ofam_euc_anim():
+    import matplotlib.pyplot as plt
+    from mpl_toolkits.axes_grid1 import make_axes_locatable
+    from matplotlib.colors import LinearSegmentedColormap
+    from tools import coord_formatter
+    import matplotlib.animation as animation
+
+    file =[cfg.ofam /'ocean_u_2012_{:02d}.nc'.format(t+1) for t in range(12)]
+    ds = xr.open_mfdataset(file)
+    ds = ds.sel(yu_ocean=0., method='nearest')
+    ds = ds.sel(xu_ocean=slice(150., 280.), st_ocean=slice(2.5, 500)).u
+
+    y = ds.st_ocean
+    x = ds.xu_ocean
+    v = ds
+
+    yt = np.arange(0, y[-1], 100)
+    xt = np.arange(160, 270, 20)
+    vmax = 1.2
+    vmin = -0.2#-vmax
+    # cmap=plt.cm.seismic
+    cmap = LinearSegmentedColormap.from_list('cmap', (
+    # Edit this gradient at https://eltos.github.io/gradient/#cmap=0:3A63FF-23.1:0025B3-26:000000-28.6:3A0478-37.1:5A078E-47.3:900CB4-62.3:A31474-75.8:9E020A-90:D36019-99.4:DEC629
+    (0.000, (0.227, 0.388, 1.000)),
+    (0.231, (0.000, 0.145, 0.702)),
+    (0.260, (0.000, 0.000, 0.000)),
+    (0.286, (0.227, 0.016, 0.471)),
+    (0.371, (0.353, 0.027, 0.557)),
+    (0.473, (0.565, 0.047, 0.706)),
+    (0.623, (0.639, 0.078, 0.455)),
+    (0.758, (0.620, 0.008, 0.039)),
+    (0.900, (0.827, 0.376, 0.098)),
+    (0.994, (0.871, 0.776, 0.161)),
+    (1.000, (0.871, 0.776, 0.161))))
+    cmap=plt.cm.gnuplot2
+
+    cmap.set_bad('k')
+
+    times = ds.Time
+    fig, ax = plt.subplots(figsize=(9, 3))
+
+    cs = ax.pcolormesh(x, y, v.isel(Time=0), vmax=vmax, vmin=vmin, cmap=cmap)
+
+    ax.set_ylim(y[-1], y[0])
+    ax.set_yticks(yt)
+    ax.set_yticklabels(coord_formatter(yt, 'depth'))
+    ax.set_xticks(xt)
+    ax.set_xticklabels(coord_formatter(xt, 'lon'))
+
+    divider = make_axes_locatable(ax)
+    cax = divider.append_axes('right', size='2%', pad=0.1)
+    cbar = fig.colorbar(cs, cax=cax, orientation='vertical', extend='both')
+    cbar.set_label('m/s')
+    ax.set_title('OFAM3 zonal velocity')
+
+    def animate(t):
+        cs.set_array(v.isel(Time=t).values.flatten())
+        return cs
+
+    frames = np.arange(1, len(times))
+    plt.rc('animation', html='html5')
+    anim = animation.FuncAnimation(fig, animate, frames=frames, interval=800,
+                                   blit=0, repeat=0)
+    plt.tight_layout()
+    plt.close()
+
+    # Filename.
+    i = 0
+    filename = cfg.fig/'vids/ofam_{}.mp4'.format( i)
+    while filename.exists():
+        i += 1
+        filename = cfg.fig/'vids/ofam_{}.mp4'.format(i)
+
+    # Save.
+    writer = animation.writers['ffmpeg'](fps=20)
+    anim.save(str(filename), writer=writer, dpi=200)
+    return
+
+# plot_ofam_euc()
+# plot_ofam_euc_anim()

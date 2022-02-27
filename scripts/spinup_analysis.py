@@ -3,6 +3,13 @@
 Created on Fri Nov 19 01:57:15 2021
 
 @author: a-ste
+
+
+- find which particles need spinup
+- concat particle tracjectories in spinup files
+- apply fixes
+- supset to source 
+- save
 """
 import numpy as np
 import xarray as xr

@@ -13,8 +13,9 @@ import matplotlib.pyplot as plt
 from matplotlib.ticker import PercentFormatter
 
 import cfg
-from plx_fncs import (combine_plx_datasets, plx_snapshot, drop_particles,
-                      get_plx_id, get_zone_info)
+from tools import test_signifiance
+from plx_fncs import (get_plx_id, get_zone_info, source_dataset,
+                      combine_source_indexes)
 
 
 colors = cfg.zones.colors
@@ -24,44 +25,8 @@ lons = [165, 190, 220, 250]
 plt.rcParams.update({'font.size': fsize})
 plt.rc('font', size=fsize)
 plt.rc('axes', titlesize=fsize)
-# mpl.rcParams['lines.linewidth'] = 1.6
-# fontdict = {'fontsize': mpl.rcParams['axes.titlesize'],
-#             'fontweight': mpl.rcParams['axes.titleweight'],
-#             'color': mpl.rcParams['axes.titlecolor'],
-#             'verticalalignment': 'baseline',
-#             'horizontalalignment': 'left'}
-
-def concat_source_scenarios(lon):
-    ds = [xr.open_dataset(get_plx_id(i, lon, 1, None, 'sources')) for i in [0, 1]]
-    ds = [ds[i].expand_dims(dict(exp=[i])) for i in [0, 1]]
-    ds = xr.concat(ds, 'exp')
-
-    ds['age'] *= 1 / (60 * 60 * 24)
-    ds['age'].attrs['units'] = 'days'
-    ds['distance'] *= 1 / (1e3 * 100)
-    ds['distance'].attrs['units'] = '100 km'
-    ds = ds.isel(zone=cfg.zones.inds)
-    return ds
-
-
-def plot_simple_traj_scatter(ax, ds, traj, color='k', name=None):
-    """Plot simple path scatterplot."""
-    ax.scatter(ds.sel(traj=traj).lon, ds.sel(traj=traj).lat, s=2,
-               color=color, label=name, alpha=0.2)
-    return ax
-
-
-def plot_simple_zone_traj_scatter(ds, lon):
-    """Plot simple path scatterplot at each zone."""
-    fig, ax = plt.subplots(1, figsize=(10, 10))
-    for z in cfg.zones.list_all:
-        traj = get_zone_info(ds, z.id)[0]
-        ax = plot_simple_traj_scatter(ax, ds, traj, name=z.name_full,
-                                      color=cfg.zones.colors[z.id - 1])
-        ds = drop_particles(ds, traj)
-    ax.legend(loc=(1.04, 0.5), markerscale=12)
-    plt.savefig(cfg.fig / 'particles_{}.png'.format(lon))
-
+plt.rcParams['figure.figsize'] = [10, 7]
+plt.rcParams['figure.dpi'] = 200
 
 def source_pie_chart(ds, lon):
     """Source transport percent pie (historical and RCP8.5).
@@ -70,7 +35,7 @@ def source_pie_chart(ds, lon):
         ds (xarray.Dataset): Includes variable 'uz' and dim 'exp'.
 
     """
-    dx = ds.uz.mean('rtime').isel(zone=cfg.zones.inds)
+    dx = ds.uz.mean('rtime')
 
     fig, axs = plt.subplots(1, 2, figsize=(10, 6),
                             subplot_kw=dict(aspect='equal'))
@@ -91,32 +56,64 @@ def source_pie_chart(ds, lon):
     ax.legend(wedges, names, title='Source', loc='center left',
               bbox_to_anchor=(1, 0, 0.5, 1))
     plt.tight_layout()
-    plt.savefig(cfg.fig / 'pie/plx_pie_{}.png'.format(lon))
+    plt.savefig(cfg.fig / 'sources/plx_pie_{}.png'.format(lon))
 
 
-def source_timeseries(ds, exp, lon, var):
+def source_timeseries(exp, lon, var='uz'):
     """Timeseries plot.
 
     Todo:
         - move Legend outside plot.
 
     """
+    ds = source_dataset(lon, merge_interior=1)
+    # dsm = ds.sel(exp=exp).resample(rtime="y").mean("rtime", keep_attrs=1)
+    ds = ds.sel(rtime=slice('2012-12-31'))
+    # dsm = dsm.isel(rtime=slice(32))
+    dsm = ds.sel(exp=exp).resample(rtime="1y").mean("rtime", keep_attrs=1)
+
+    # dsm = dsm.sel(zone=[z for z in ds.zone if z not in [0, 4]])
+
     # Plot timeseries of source transport.
-    name = ds[var].attrs['name']
-    units = ds[var].attrs['units']
-    t = ds.rtime
-    fig, ax = plt.subplots(1, figsize=(7, 4))
-    colours = cfg.zones.colors
-    for z in range(1, 10):
+    try:
+        name = ds[var].attrs['name']
+        units = ds[var].attrs['units']
+    except:
+        name, units= 'Transport', 'Sv'
+
+    sourceids = [1, 2, 3, 5, 6]
+    merge_straits = 0
+    anom = 1
+    label = ds.names.values
+    colours = ds.colors.values
+    xdim = dsm.rtime
+
+    fig, ax = plt.subplots(1, figsize=(7, 3))
+
+    for i, z in enumerate(sourceids):
+        if merge_straits and z == 1:
+            dz = dsm.uz.sel(zone=[1, 2]).sum('zone')
+        else:
+            dz = dsm.uz.sel(zone=z)
+
+        if anom:
+            dz = dz - dz.mean('rtime')
+            ax.axhline(0, color='grey')
+
         c = colours[z - 1]
-        label = cfg.zones.list_all[z - 1].name_full
-        ax.plot(t, ds.uz.isel(zone=z), c=c, label=label)
-    ax.set_title('{} EUC {} (lon={}E)'.format(cfg.exps[exp], name, lon))
+        ax.plot(xdim, dz, c=c, label=label[z-1])
+
+    ax.set_title('{} EUC {} at {}°E'.format(cfg.exps[exp], name.lower(), lon), loc='left')
     ax.set_ylabel('{} [{}]'.format(name, units))
-    ax.legend()
+    ax.margins(x=0)
+    lgd = ax.legend()#bbox_to_anchor=(1.01, 1), loc='upper left')
     plt.tight_layout()
-    file = 'source_{}_timeseries_{}_{}.png'.format(name, lon, cfg.exp[exp])
-    plt.savefig(cfg.fig / file)
+    file = 'source_{}_timeseries_{}_{}_{}'.format(name, lon, cfg.exp[exp],
+                                                  ''.join(map(str, sourceids)))
+    if anom:
+        file + '_anom'
+    plt.savefig(cfg.fig / (file + '.png'), bbox_extra_artists=(lgd,),
+                bbox_inches='tight')
 
 
 def source_histogram(ds, lon, var='age'):
@@ -167,43 +164,109 @@ def source_histogram(ds, lon, var='age'):
     return
 
 
-def transport_source_bar_graph():
-    x, xlabels, c = range(10), names, colors
-    width = 0.9
-    kwargs = dict(alpha=0.7)
+def transport_source_bar_graph(exp=0, merge_interior=True):
+    """Bar graph of source transport for each release longitude.
 
-    fig, axes = plt.subplots(2, 2, figsize=(12, 10), sharey='row', sharex='all')
-    plt.suptitle('EUC Sources')
+    Horizontal bar graph (sources on y-axis) with or without RCP8.5.
+    4 (2x2) subplots for each release longitude.
+
+    Args:
+        exp (str, optional): Historical or with RCP8.5. Defaults to 0.
+        merge_interior (bool, optional): DESCRIPTION. Defaults to True.
+
+    Returns:
+        None.
+
+    """
+    width = 0.9  # Bar widths.
+    kwargs = dict(alpha=0.7)  # Historical bar transparency.
+
+    fig, axes = plt.subplots(2, 2, figsize=(10, 7), sharey='row', sharex='all')
+
     for i, ax in enumerate(axes.flatten()):
         lon = lons[i]
-        # Data
-        ds = concat_source_scenarios(lon)
+        ax.set_title('{} EUC transport sources at {}°E'.format(cfg.letr[i], lon), loc='left')
+
+        # Open data.
+        ds = source_dataset(lon, merge_interior)
+
+        # Rearange source order.
+        if merge_interior:
+            inds = np.array([0, 5, 2, 1, 4, 6, 7, 3])
+            ds = ds.sel(zone=inds)
+
         dx = ds.uz.mean('rtime')
+        ticks = range(ds.zone.size)  # Source y-axis ticks.
+        xlabels, c = ds.names.values, ds.colors.values
 
-        ax.set_title('{}°E'.format(lon))
-        ax.barh(x, dx.isel(exp=0), width, color=c, **kwargs)
-        ax.barh(x, dx.isel(exp=1), width, fill=False, hatch='//',
-                label='RCP 8.5', **kwargs)
+        # Historical horizontal bar graph.
+        ax.barh(ticks, dx.isel(exp=0), width, color=c, **kwargs)
 
-        ax.set_ylim(-0.5, 9.5)
-        ax.set_yticks(x)
-        if i > 1:
+        # RCP8.5: Hatched overlay.
+        if exp > 0:
+            ax.barh(ticks, dx.isel(exp=1), width, fill=False, hatch='//',
+                    label='RCP8.5', **kwargs)
+
+        # Remove bar white space at ends of axis (-0.5 & +0.5).
+        ax.set_ylim([ticks[x] + c * 0.5 for x, c in zip([0, -1], [-1, 1])])
+        ax.set_yticks(ticks)
+
+        # Add x-axis label on bottom row.
+        if i >= 2:
             ax.set_xlabel('Transport [Sv]')
+
+        # Add y-axis ticklabels on first column.
         if i in [0, 2]:
             ax.set_yticklabels(xlabels)
-        if i in [1, 3]:
+
+        # Add RCP legend at ends of rows.
+        if exp > 0:
             ax.legend()
 
     plt.tight_layout()
-    plt.savefig(cfg.fig / 'transport_source_bar.png')
+    plt.savefig(cfg.fig / 'transport_source_bar_{}.png'.format(cfg.exps[exp]))
     return
 
 
-transport_source_bar_graph()
-# for lon in lons:
-#     ds = concat_source_scenarios(lon)
+def print_transport_sources(lon):
+    # Open data.
+    ds = source_dataset(lon, merge_interior=1)
 
-#     # print((ds.uz.mean('rtime') / ds.u_total.mean('rtime'))*100)
+    # Rearange source order.
+
+    inds = np.array([0, 5, 2, 1, 4, 6, 7, 3])
+    # ds['names'] = ('zone', cfg.zones.names)
+    ds = ds.sel(zone=inds)
+
+    total = ds.u_total.mean('rtime').isel(exp=0).item()
+    print('{:>27}={:.3f}'.format('total', total))
+    for z in ds.zone.values:
+        dx = ds.uz.sel(zone=z)
+        p = test_signifiance(dx[0], dx[1])
+        dx = dx.mean('rtime').values
+        print('{:>27}: Hist={:.3f} RCP={:.3f} diff={: .1f}% h%={:.1f}% {}'
+              .format(ds.names.sel(zone=z).item(),
+                      *dx,
+                      ((dx[1] - dx[0])/ total) * 100,
+                      (dx[0] / total) * 100, p))
+
+
+# Source bar graph.
+# transport_source_bar_graph(exp=0)
+# transport_source_bar_graph(exp=1)
+lon = 190
+exp = 0
+print_transport_sources(lon)
+# ds = source_dataset(lon, merge_interior=1)
+
+# for lon in lons:
+#     lon=220
+#     ds = source_dataset(lon, merge_interior=1)
+
+
+#     print((ds.uz.mean('rtime') / ds.u_total.mean('rtime')) * 100)
+#     dx = (ds.uz.mean('rtime') / ds.u_total.mean('rtime'))
+#     print(.isel(*100)
 
 #     ## Timeseries.
 #     # ds_m = ds.resample(time="1MS").mean("time", keep_attrs=1)
@@ -212,6 +275,6 @@ transport_source_bar_graph()
 #     # # Pie chart.
 #     source_pie_chart(ds, lon)
 
-#     # Merge hist and rcp
-#     source_histogram(ds, lon, var='age')
-#     source_histogram(ds, lon, var='distance')
+#     # # Merge hist and rcp
+#     # source_histogram(ds, lon, var='age')
+#     # source_histogram(ds, lon, var='distance')

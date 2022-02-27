@@ -40,6 +40,7 @@ loggers = {}
 exp = ['hist', 'rcp', 'diff']
 exps = ['Historical', 'RCP8.5', 'Projected change']
 exp_abr = ['hist', 'rcp', 'diff']
+letr = [i + ')' for i in list(string.ascii_lowercase)]
 
 years = [[1981, 2012], [2070, 2101]]
 var = ['u', 'v', 'w', 'salt', 'temp']
@@ -115,9 +116,21 @@ class ZoneData:
     # colors = ['darkorange', 'deeppink', 'blue',
     #           'seagreen', 'mediumspringgreen','deepskyblue',
     #           'red', 'darkviolet', 'y', 'k']
-    colors = ['darkorange', 'deeppink', 'blue', 'mediumspringgreen',
-              'seagreen', 'deepskyblue',
-              'red', 'darkviolet', 'y', 'violet']
+    # colors = ['darkorange', 'deeppink', 'blue', 'mediumspringgreen',
+    #           'seagreen', 'deepskyblue',
+    #           'red', 'darkviolet', 'y', 'violet']
+
+    colors = ['darkorange',
+              'deeppink',
+              'mediumspringgreen', # MC
+              'violet', # EUC`
+              'blue',
+              'k',
+              'darkviolet', #South interior
+              'royalblue', #North interior
+              'seagreen', #INDO
+              'y'] # None
+
     inds = np.append(np.arange(1, 10, dtype=int), [0])
     inds[6], inds[8] = inds[8], inds[6]
     names = [z.name_full for z in list_all]

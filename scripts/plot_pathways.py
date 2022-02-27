@@ -23,20 +23,103 @@ import matplotlib.colors as cm
 from matplotlib.cm import ScalarMappable
 from matplotlib.colors import Normalize
 import cfg
-from tools import coord_formatter, zone_cmap
+from tools import coord_formatter, zone_cmap, convert_longitudes
 from plx_fncs import open_plx_data, open_plx_source, get_plx_id
-from plx_sources import source_particle_ID_dict
+from create_source_files import source_particle_ID_dict
 
 cmap = copy.copy(plt.cm.get_cmap("seismic"))
 cmap.set_bad('grey')
+# plt.rcParams['figure.figsize'] = [10, 7]
+# plt.rcParams['figure.dpi'] = 200
+
+def create_map_axis(figsize=(12, 5), map_extent=None, add_ticks=True,
+                    xticks=None, yticks=None,
+                    add_gridlines=False, add_ocean=False):
+    """Create a figure and axis with cartopy.
+
+    Args:
+        figsize (tuple, optional): Figure width & height. Defaults to (12, 5).
+        map_extent (list, optional): (lon_min, lon_max, lat_min, lat_max).
+        add_ticks (bool, optional): Add lat/lon ticks. Defaults to False.
+        xticks (array-like, optional): longitude ticks. Defaults to None.
+        yticks (array-like, optional): Latitude ticks. Defaults to None.
+        add_gridlines (bool, optional): Add lat/lon grid. Defaults to False.
+        add_ocean (bool, optional): Add ocean color. Defaults to False.
+
+    Returns:
+        fig (matplotlib.figure.Figure): Figure.
+        ax (cartopy.mpl.geoaxes.GeoAxesSubplot): Axis.
+        proj (cartopy.crs.PlateCarree): Cartopy map projection.
+
+    """
+    zorder = 10  # Placement of features (reduce to move to bottom.)
+    projection = ccrs.PlateCarree(central_longitude=180)
+    proj = ccrs.PlateCarree()
+    proj._threshold /= 20.
+
+    fig = plt.figure(figsize=figsize)
+    ax = plt.axes(projection=projection)
+
+    # Set map extents: (lon_min, lon_max, lat_min, lat_max)
+    if map_extent is None:
+        map_extent = [112, 288, -9, 9]
+    ax.set_extent(map_extent, crs=proj)
+
+    ax.add_feature(cfeature.LAND, color='lightgray', zorder=zorder)
+    ax.add_feature(cfeature.COASTLINE, zorder=zorder)
+    ax.outline_patch.set_zorder(zorder + 1)  # Make edge frame on top.
+
+    if add_ocean:
+        # !! original alpha=0.9 color='lightblue'
+        ax.add_feature(cfeature.OCEAN, alpha=0.6, color='lightcyan')
+
+    if add_ticks:
+        if xticks is None:
+            # Longitude grid lines: release longitudes.
+            xticks = np.array([165, -170, -140, -110])
+            xticks = np.arange(140, 290, 40)
+
+        if yticks is None:
+            # Latitude grid lines: -10, 0, 10.
+            yticks = np.arange(-10, 13, 5)
+
+        # Draw tick marks (without labels here - 180 centre issue).
+        ax.set_xticks(xticks, crs=proj)
+        ax.set_yticks(yticks, crs=proj)
+        ax.set_xticklabels(coord_formatter(xticks, 'lon_360'))
+        ax.set_yticklabels(coord_formatter(yticks, 'lat'))
+
+        # Add lat/lon tick labels.
+        # gl = ax.gridlines(draw_labels=True, crs=proj, color='gray', lw=0)
+        # gl.xlocator = mticker.FixedLocator(convert_longitudes(xticks))
+        # gl.ylocator = mticker.FixedLocator(yticks)
+        # gl.xlabels_top = False
+        # gl.ylabels_left = True
+        # gl.xlabels_bottom = True
+        # gl.xformatter = LONGITUDE_FORMATTER
+        # gl.yformatter = LATITUDE_FORMATTER
+
+        # # Turn on/off gridlines.
+        # gl.xlines = add_gridlines
+        # gl.ylines = add_gridlines
+        fig.subplots_adjust(bottom=0.2, top=0.8)
+
+    ax.set_aspect('auto')
+
+    return fig, ax, proj
 
 
-def source_cmap():
+def plot_simple_traj_scatter(ax, ds, traj, color='k', name=None):
+    """Plot simple path scatterplot."""
+    ax.scatter(ds.sel(traj=traj).lon, ds.sel(traj=traj).lat, s=2,
+               color=color, label=name, alpha=0.2)
+    return ax
+
+
+def source_cmap(zcolor=cfg.zones.colors):
     """Get zone colormap."""
-    zcolor = cfg.zones.colors
-
     zmap = cm.ListedColormap(zcolor)
-    n  = len(zcolor)
+    n = len(zcolor)
     norm = cm.BoundaryNorm(np.linspace(1, n, n+1), zmap.N)
     # cmappable = ScalarMappable(Normalize(0,n-1), cmap=zmap)
     cmappable = ScalarMappable(norm, cmap=zmap)
@@ -59,54 +142,7 @@ def plot_land(ax):
     return ax
 
 
-def format_map():
-    fig = plt.figure(figsize=(12, 5))
-    proj = ccrs.PlateCarree(central_longitude=180)
-    proj._threshold /= 20.
-
-    ax = plt.axes(projection=proj)
-
-    # Set map extents: (lon_min, lon_max, lat_min, lat_max)
-    ax.set_extent([112, 288, -9, 9], crs=ccrs.PlateCarree())
-
-    ax.add_feature(cfeature.LAND, color='lightgray')
-    # ax.add_feature(cfeature.OCEAN, alpha=0.9, color='lightblue')
-    ax.add_feature(cfeature.COASTLINE)
-
-    # # Plot grid lines.
-    # gl = ax.gridlines(draw_labels=True, crs=ccrs.PlateCarree(), color='gray', lw=0)
-    # gl.xlabels_top = False
-    # gl.ylabels_left = True
-    # gl.xlabels_bottom = True
-    # gl.xlocator = mticker.FixedLocator([165, -170, -140, -110])
-    # gl.ylocator = mticker.FixedLocator(np.arange(-10, 13, 10))
-    # gl.xformatter = LONGITUDE_FORMATTER
-    # gl.yformatter = LATITUDE_FORMATTER
-    # fig.subplots_adjust(bottom=0.2, top=0.8)
-    ax.set_aspect('auto')
-
-    return fig, ax, ccrs.PlateCarree()
-
-
-def justify_nd(a, axis=1):
-    pushax = lambda a: np.moveaxis(a, axis, -1)
-    mask = ~np.isnan(a)
-    justified_mask = np.sort(mask,axis=axis)
-    out = a * np.nan
-    out[justified_mask] = a[mask]
-    return out
-
-
-def normal_time(ds, nsteps=100):
-    ds['n'] = np.arange(nsteps)
-    ns = ds.age.idxmax('obs')
-    # norm = (ds - ds.mean('traj')) / ds.std('traj')
-    norm = ds.interp({'obs': ds.n})
-    return norm
-
-
-def plot_pathway_lines(exp, lon, r):
-
+def plot_some_source_pathways(exp, lon, v, r):
     """Plot a subset of pathways on a map, colored by source."""
 
     def subset_array(a, N):
@@ -114,7 +150,7 @@ def plot_pathway_lines(exp, lon, r):
 
     N = 30  # Number of paths to plot( per source)
 
-    source_ids = [0, 1, 2]
+    source_ids = [0, 1, 2, 5, 7, 6, 8]
     file = get_plx_id(exp, lon, v, r, 'plx')
     ds = xr.open_dataset(file, mask_and_scale=True)
     # ds = ds.isel(traj=np.linspace(0, ds.traj.size - 1, 200, dtype=int)) # !!!
@@ -134,13 +170,14 @@ def plot_pathway_lines(exp, lon, r):
     shuffle = np.random.permutation(len(traj))
 
     # Plot particles.
-    fig, ax, proj = format_map()
+    fig, ax, proj = create_map_axis()
     for i in shuffle:
         dx = ds.sel(traj=traj[i])
         ax.plot(dx.lon, dx.lat, c[i], linewidth=0.5, zorder=10, transform=proj,
                 alpha=0.3)
-    # TODO ad legend & title.
-    ax.set_title('{} pathways to the EUC at {}E'.format(cfg.exps[exp], lon))
+
+    # TODO add legend & title.
+    ax.set_title('{} pathways to the EUC at {}°E'.format(cfg.exps[exp], lon))
 
     # Source color legend.
     labels = [z.name_full for z in cfg.zones.list_all][:-1]
@@ -151,54 +188,194 @@ def plot_pathway_lines(exp, lon, r):
 
     cbar.ax.set_xticklabels(labels, fontsize=10)
     plt.tight_layout()
-    plt.savefig(cfg.fig / 'pathway_{}_{}_r{}_n{}.png'.format(cfg.exp[exp], lon, r, 50),
-                bbox_inches='tight')
+    plt.savefig(cfg.fig / 'pathway_{}_{}_r{}_n{}.png'
+                .format(cfg.exp[exp], lon, r, N), bbox_inches='tight')
     plt.show()
+    return
 
 
-v = 1
-exp = 0
-lon = 220
-r = 0
-plot_pathway_lines(exp, lon, r)
+def plot_particle_source_map(lon, merge_interior=True, add_ocean=1, add_legend=True):
+    """EUC source boundary map for lon.
 
-# plt.hist2d(dxx.lon.dropna('t'), dxx.lat.dropna('t'), bins=100)
+    Args:
+        lon (int or str): Release longitude to plot {165, 160, 220, 250, 'all'}.
+
+    Todo:
+
+    """
+
+    def get_source_coords():
+        """Latitude and longitude points defining source regions.
+
+        Returns:
+            lons (array): Longitude coord pairs (start/end).
+            lats (array): Latitude coord pairs (start/end).
+            z_index (array): Source IDs cooresponding to coord pairs.
+
+        """
+        lons = np.zeros((19, 2))
+        lats = lons.copy()
+        z_index = np.zeros(lons.shape[0], dtype=int)
+
+        i = 0
+        for zone in cfg.zones.list_all[:-1]:
+            z = list(cfg.zones.inds).index(zone.id)
+            coords = zone.loc
+            coords = [coords] if type(coords[0]) != list else coords
+            for c in coords:
+                z_index[i] = z
+                lons[i] = c[0:2]  # Lon (west, east).
+                lats[i] = c[2:4]  # Lat (south, north).
+                i += 1
+        return lons, lats, z_index
+
+    def add_source_label(ax, z_index, labels, proj):
+        """Latitude and longitude points defining source regions."""
+
+        text = [z.name_full for z in cfg.zones.list_all]
+        for i in [0, 1, 2, 6]:
+            text[i] = text[i].replace(' ', '\n')
+
+        loc = np.zeros((len(text), 2)) * np.nan
+        loc[0] = [-8.6, 149]
+        loc[1] = [-5, 156] # SS
+        loc[2] = [8.9, 127]
+        loc[3] = [0, lon + 2]
+        loc[4] = [-5, lon + 2]
+        loc[5] = [5, lon + 2] #North euc
+        loc[6] = [3.1, 127]
+        loc[7] = [9, 175]  #North int
+        loc[8] = [-8, 175]
+
+        for i, z in enumerate(np.unique(z_index)):
+            if merge_interior and z in [4, 5]:
+                pass
+            else:
+                ax.text(loc[z][1], loc[z][0], text[z], zorder=10, transform=proj)
+        return ax
+
+    colors = cfg.zones.colors
+    labels = cfg.zones.names
+    lons, lats, z_index = get_source_coords()
+
+    if merge_interior:
+        for z1, z2 in zip([4, 5], [6, 7]):
+            labels[z1] = labels[z2]
+            colors[z1] = colors[z2]
+
+    if lon != 'all':
+        mask = np.ones(z_index.shape)
+
+        # Remove other EUC lons
+        releases = [165, 190, 220, 250]
+        x_idx = releases.index(lon)
+        for i in [3, 4, 5]:
+            mask[np.argwhere(z_index == i)] = np.nan
+            mask[np.argwhere(z_index == i)[x_idx]] = 1
+
+        z_index = z_index * mask
+        mask = np.vstack([mask, mask]).T
+        lons, lats = lons * mask, lats * mask
+
+        # Cut off interior past lon
+        lons[lons > lon] = lon
+
+        # Drop NaNs
+        mask = ~np.isnan(z_index)
+        z_index = z_index[mask].astype(dtype=int)
+        lons, lats = lons[mask], lats[mask]
+
+    map_extent = [112, 288, -12, 12]
+    yticks = np.arange(-10, 11, 5)
+    xticks = np.arange(120, 290, 20)
+    fig, ax, proj = create_map_axis(map_extent=map_extent, xticks=xticks,
+                                    yticks=yticks, add_gridlines=False,
+                                    add_ocean=add_ocean)
+
+    # Plot lines between each lat & lon pair coloured by source.
+    for i, z in enumerate(z_index):
+        ax.plot(lons[i], lats[i], colors[z], lw=4, label=labels[z],
+                zorder=10, transform=proj)
+    ax = add_source_label(ax, z_index, labels, proj)
+
+    plt.tight_layout()
+
+    # Source legend.
+    if merge_interior:
+        labels, colors = np.delete(labels, [4, 5]), np.delete(colors, [4, 5])
+        zmap, cmappable = source_cmap(zcolor=colors)
+        ticks, bounds = range(1, 9), np.arange(0.5, 8.6)
+
+    else:
+        zmap, cmappable = source_cmap()
+        ticks, bounds = range(1, 11), np.arange(0.5, 9.6)
+
+    if add_legend:
+        cbar = fig.colorbar(cmappable, ticks=ticks, boundaries=bounds,
+                            orientation='horizontal', pad=0.075)
+        cbar.ax.set_xticklabels(labels, fontsize=10)
+
+    # Save.
+    plt.savefig(cfg.fig / 'particle_source_map_{}.png'.format(lon),
+                bbox_inches='tight')
+    return fig, ax, proj
 
 
 
+def plot_example_source_pathways(exp, lon, v, r, source_id, N=30):
+    """Plot a subset of pathways on a map, colored by source.
+    source_id 0 -> VS
+    """
+    file = get_plx_id(exp, lon, v, r, 'plx')
+    ds = xr.open_dataset(file, mask_and_scale=True)
 
-# dz = normal_time(dx, nsteps=1000)
+    # Particle IDs
+    pids = source_particle_ID_dict(None, exp, lon, v, r)
 
-# # dxx = ds.isel(obs=slice(100))#.dropna('obs', 'all')
-# # dxx = dxx.stack(t=['traj', 'obs']).dropna('t', 'all')
-# # minlon, maxlon = 120, 295
-# # ddeg = 1
-# # lon_edges=np.linspace(minlon,maxlon,int((maxlon-minlon)/ddeg)+1)
-# # lat_edges=np.linspace(minlat,maxlat,int((maxlat-minlat)/ddeg)+1)
-# # d , _, _ = np.histogram2d(lats[:, t],
-# #                           lons[:, t], [lat_edges, lon_edges])
+    # BUG fix
+    ds = ds.sel(traj=pids[source_id + 1])
+    ds = ds.thin(dict(traj=int(120)))
+    traj_lost = ds.where(ds.lon > lon, drop=True).traj
+    ds = ds.sel(traj=ds.traj.where(~ds.traj.isin(traj_lost), drop=1))
 
-# # d_full = pdata.get_distribution(t=t, ddeg=ddeg).flatten()
-# # d = oceanvector(d_full, ddeg=ddeg)
-# # lon_bins_2d,lat_bins_2d = np.meshgrid(d.Lons_edges, d.Lats_edges)
+    # Subset N particle IDs per source region.
+    ds = ds.isel(traj=slice(N))
 
+    # Plot particles.
+    map_extent = [115, 287, -8, 8]
+    yticks = np.arange(-8, 8.1, 4)
+    fig, ax, proj = create_map_axis(map_extent=map_extent,yticks=yticks,
+                                    add_ocean=True)
 
-# fig, ax, proj = format_map()
+    ax.set_title('{} to the EUC at {}°E'
+                 .format(cfg.zones.names[source_id], lon), fontsize=16)
 
-# # x = dx.lon.groupby(dx.age).median()
-# # x = x.where(x <= 180, x - 360)
-# # y = dx.lat.groupby(dx.age).median()
-# x = dz.lon.median('traj')
-# x = x.where(x <= 180, x - 360)
-# y = dz.lat.median('traj')
-# ax.plot(x, y, 'k', zorder=10, transform=proj)
-# plt.show()
-
-# y1, y2 = [dz.lat.quantile(q, 'traj') for q in [0.25, 0.75]]
-# ax.fill_between(dz.lon.quantile(0.5, 'traj'), y1, y2, where=(y1 > y2), interpolate=True)
+    for i in range(N):
+        c = cfg.zones.colors[source_id]
+        c = ['indianred', 'mediumvioletred', 'forestgreen'][source_id]
+        dx = ds.isel(traj=i)
+        ax.plot(dx.lon, dx.lat, c, linewidth=0.9, zorder=10, transform=proj,
+                alpha=1)
 
 
-# plt.tight_layout()
-# # plt.savefig(cfg.fig / 'path_{}_{}_v{}_{}.png'.format(exp, lon, v, r),
-# #             bbox_inches='tight')
-# plt.show()
+    plt.tight_layout()
+    plt.savefig(cfg.fig / 'pathway_{}_{}_r{}_n{}_z{}.png'
+                .format(cfg.exp[exp], lon, r, N, source_id), bbox_inches='tight')
+    plt.show()
+    return
+
+if __name__ == "__main__":
+    exp  = 0
+    lon = 220
+    v = 1
+    r = 0
+    # Plot map.
+    # plot_some_source_pathways(exp, lon, v, r)
+    # plot_particle_source_map(lon='all', merge_interior=True)
+    # for x in [165, 190, 220, 250]:
+    #     plot_particle_source_map(lon=x, merge_interior=True)
+    plot_particle_source_map(lon, merge_interior=True, add_ocean=1, add_legend=True)
+
+    # source_id = 0
+    # for source_id in [0, 1, 2]:
+    #     plot_example_source_pathways(exp, lon, v, r, source_id, N=5)

@@ -596,7 +596,9 @@ def test_trajectory_ID_remap():
 # ds['zone'] = ds.zone.ffill('obs')
 # print(ds.zone)
 
-
+##############################################################################
+#
+##############################################################################
 def test_oob():
     import matplotlib.pyplot as plt
     from plx_fncs import update_particle_data_sources
@@ -732,3 +734,66 @@ def combine_zones_of_lost_particles(ds):
     # Drop empty zone coordinate.
     ds = ds.isel(zone=slice(1, None))
     return ds
+
+
+
+##############################################################################
+#  Normalise time for trajectory plots
+##############################################################################
+# def justify_nd(a, axis=1):
+#     """Attempt to normalise."""
+#     pushax = lambda a: np.moveaxis(a, axis, -1)
+#     mask = ~np.isnan(a)
+#     justified_mask = np.sort(mask,axis=axis)
+#     out = a * np.nan
+#     out[justified_mask] = a[mask]
+#     return out
+
+
+# def normal_time(ds, nsteps=100):
+#     """Attempt to normalise."""
+#     ds['n'] = np.arange(nsteps)
+#     ns = ds.age.idxmax('obs')
+#     # norm = (ds - ds.mean('traj')) / ds.std('traj')
+#     norm = ds.interp({'obs': ds.n})
+#     return norm
+
+# dz = normal_time(dx, nsteps=1000)
+
+# # dxx = ds.isel(obs=slice(100))#.dropna('obs', 'all')
+# # dxx = dxx.stack(t=['traj', 'obs']).dropna('t', 'all')
+# # minlon, maxlon = 120, 295
+# # ddeg = 1
+# # lon_edges=np.linspace(minlon,maxlon,int((maxlon-minlon)/ddeg)+1)
+# # lat_edges=np.linspace(minlat,maxlat,int((maxlat-minlat)/ddeg)+1)
+# # d , _, _ = np.histogram2d(lats[:, t],
+# #                           lons[:, t], [lat_edges, lon_edges])
+
+# # d_full = pdata.get_distribution(t=t, ddeg=ddeg).flatten()
+# # d = oceanvector(d_full, ddeg=ddeg)
+# # lon_bins_2d,lat_bins_2d = np.meshgrid(d.Lons_edges, d.Lats_edges)
+
+
+# fig, ax, proj = format_map()
+
+# # x = dx.lon.groupby(dx.age).median()
+# # x = x.where(x <= 180, x - 360)
+# # y = dx.lat.groupby(dx.age).median()
+# x = dz.lon.median('traj')
+# x = x.where(x <= 180, x - 360)
+# y = dz.lat.median('traj')
+# ax.plot(x, y, 'k', zorder=10, transform=proj)
+# plt.show()
+
+# y1, y2 = [dz.lat.quantile(q, 'traj') for q in [0.25, 0.75]]
+# ax.fill_between(dz.lon.quantile(0.5, 'traj'), y1, y2, where=(y1 > y2), interpolate=True)
+
+
+# plt.tight_layout()
+# # plt.savefig(cfg.fig / 'path_{}_{}_v{}_{}.png'.format(exp, lon, v, r),
+# #             bbox_inches='tight')
+# plt.show()
+
+##############################################################################
+#
+##############################################################################
