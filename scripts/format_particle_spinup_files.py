@@ -93,8 +93,8 @@ def format_spinup_file(lon, exp, v=1, r=0, spinup_year=0):
     source_traj = spinup_particle_IDs(lon, exp, v)
     inv_source_traj = np.vectorize(inv_map.get)(source_traj)
 
-    traj = traj[np.isin(traj, inv_source_traj)]
-    traj_patch = traj_patch[np.isin(traj_patch + last_id + 1, inv_source_traj)]
+    # traj = traj[np.isin(traj, inv_source_traj)]
+    # traj_patch = traj_patch[np.isin(traj_patch + last_id + 1, inv_source_traj)]
 
     # Merge trajectory data across files.
     if test:
@@ -208,7 +208,7 @@ if __name__ == "__main__":
     p.add_argument('-e', '--exp', default=0, type=int, help='Scenario {0, 1}.')
     p.add_argument('-y', '--year', default=0, type=int, help='Scenario {0, 1}.')
     args = p.parse_args()
-    lon, exp, v, r, spinup_year = 250, 0, 1, 0, 0
+    # lon, exp, v, r, spinup_year = 165, 0, 1, 0, 0
 
     format_spinup_file(args.lon, args.exp, v=1, r=r, spinup_year=args.year)
     plx_source_file_spinup(args.lon, args.exp, v=1, spinup_year=args.year)
