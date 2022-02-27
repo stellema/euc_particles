@@ -228,4 +228,4 @@ if __name__ == "__main__":
     lon, exp, v, r, spinup_year = 250, 0, 1, 0, 0
 
     format_spinup_file(args.lon, args.exp, v=1, r=r, spinup_year=args.year)
-    # plx_source_file_spinup(args.lon, args.exp, v=1, spinup_year=args.year)
+    plx_source_file_spinup(args.lon, args.exp, v=1, spinup_year=args.year)
