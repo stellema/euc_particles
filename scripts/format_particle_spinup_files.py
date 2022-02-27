@@ -55,12 +55,11 @@ def spinup_particle_IDs(lon, exp, v):
 @timeit
 def format_spinup_file(lon, exp, v=1, r=0, spinup_year=0):
     test = True if cfg.home.drive == 'C:' else False
-    test = False
+
     # Files to search.
     files = ParticleFilenames(lon, exp, v, spinup_year)
     xids = files.spinup
     xids_p = files.patch_spinup
-
 
     # New filename.
     xid = files.spinup[0]
@@ -68,7 +67,10 @@ def format_spinup_file(lon, exp, v=1, r=0, spinup_year=0):
                                                                   lon, v, spinup_year)
     logger.info('{}: Formating particle spinup file.'.format(xid.stem))
 
-
+    # Check if file already exists.
+    if file_new.exists():
+        return
+    
     # Create/open particle_remap dictionary.
     if not files.remap_dict.exists():
         remap_dict = create_particle_ID_remap_dict(lon, exp, v)
@@ -93,7 +95,6 @@ def format_spinup_file(lon, exp, v=1, r=0, spinup_year=0):
 
     traj = traj[np.isin(traj, inv_source_traj)]
     traj_patch = traj_patch[np.isin(traj_patch + last_id + 1, inv_source_traj)]
-
 
     # Merge trajectory data across files.
     if test:
@@ -153,26 +154,8 @@ def format_spinup_file(lon, exp, v=1, r=0, spinup_year=0):
 
 @timeit
 def plx_source_file_spinup(lon, exp, v, spinup_year):
-    """Creates netcdf file with particle source information.
-
-    Coordinates:
-        traj: particle IDs
-        source: source regions 0-10
-        rtime: particle release times
-    Data variables:
-        trajectory  (traj): Particle ID.
-        time        (traj): Release time.
-        age         (traj): Transit time.
-        zone        (traj): Source ID.
-        distance    (traj): Transit distance.
-        unbeached   (traj): Number of times particle was unbeached.
-        u           (traj): Initial transport.
-        uz          (rtime, source): EUC transport per release time & source.
-        u_total     (rtime): Total EUC transport at each release time.
-
-    """
+    """Creates netcdf file with particle source information."""
     test = True if cfg.home.drive == 'C:' else False
-    test = False
 
     # Filenames.
     xid = cfg.data / 'plx/plx_spinup_{}_{}_v{}y{}.nc'.format(cfg.exp[exp], lon, v, spinup_year)
@@ -188,7 +171,6 @@ def plx_source_file_spinup(lon, exp, v, spinup_year):
     if test:
         logger.info('{}: Test subset used.'.format(xid.stem))
         ds = ds.isel(traj=np.linspace(0, 5000, 500, dtype=int))
-        # ds = ds.isel(obs=slice(4000))
 
     logger.info('{}: Particle information at source.'.format(xid.stem))
     ds = get_final_particle_obs(ds)
@@ -213,6 +195,7 @@ def plx_source_file_spinup(lon, exp, v, spinup_year):
 
     # Save dataset.
     logger.info('{}: Saving...'.format(xid.stem))
+    
     # Add compression encoding.
     encoding = {var: dict(zlib=True, complevel=5) for var in ds.data_vars}
     ds.to_netcdf(xid_new, encoding=encoding, compute=True)
