@@ -123,19 +123,24 @@ def source_histogram(ds, lon, var='age'):
         - and title letters
         - fix xlabels
     """
-    def plot_hist(dx, ax, color, **kwargs):
-        dx = dx.dropna('traj', 'all')
-        nbins = 'fd'
+    
+    def plot_hist(dx, ax, bins, color, **kwargs):
+        # dx = dx
+        # dx = [dx.isel(exp=x).dropna('traj', 'all') for x in [0, 1]]
         # weights = np.ones_like(dx) / dx.size # COnvert to percentage.
         # dx = dx * weights
         weights = None
-        x, bins, _ = ax.hist(dx, nbins, histtype='bar', density=0, stacked=0,
-                             weights=weights, color=color, alpha=0.6, **kwargs)
-        # plt.xticks(np.arange(bins[0], xmax, 300))
-        ax.yaxis.set_major_formatter(PercentFormatter(dx.size))
-
+        x, bins, _ = ax.hist(dx.isel(exp=0).dropna('traj', 'all'), bins, 
+                             histtype='bar', density=1, stacked=0,
+                             weights=weights, color=color, alpha=0.6)#, **kwargs)
+        _, bins, _ = ax.hist(dx.isel(exp=1).dropna('traj', 'all'), bins, 
+                             histtype='bar', density=1, stacked=0,
+                             weights=weights, color='k', alpha=0.6, fill=False, hatch='///')        
+        # ax.yaxis.set_major_formatter(PercentFormatter(dx[0].size))
+ 
         # Cut off last 5% of xaxis (index where <95% of total counts).
         xmax = bins[sum(np.cumsum(x) < sum(x) * 0.85) + 1]
+        # plt.xticks(np.arange(bins[0], xmax, 300))
         ax.set_xlim(xmin=bins[0], xmax=xmax)
 
         return ax
@@ -144,12 +149,16 @@ def source_histogram(ds, lon, var='age'):
     dsz = ds[var]
     name, units = dsz.attrs['name'], dsz.attrs['units']
 
-    fig, axes = plt.subplots(5, 2, figsize=(9, 11))
-    for z, ax in enumerate(axes.flatten()):
-        ax.set_title(cfg.zones.names[z], loc='left', fontsize=fsize)
-        dx = dsz.isel(zone=z)
-        ax = plot_hist(dx.sel(exp=0), ax, colors[z])
-        ax = plot_hist(dx.sel(exp=1), ax, 'k', fill=False, hatch='///')
+    fig, axes = plt.subplots(4, 2, figsize=(9, 11))
+    axes = axes.flatten()
+    for i, z in enumerate(dsz.zone.values):
+        ax = axes[i]
+        ax.set_title('{} {} '.format(cfg.letr[i], ds.names[i].item()), 
+                     loc='left', fontsize=fsize)
+        dx = dsz.sel(zone=z)
+
+        ax = plot_hist(dx, ax, 'fd', ds.colors[i].item())
+
         ax.tick_params(labelsize=fsize)
         ax.set_xlabel('{} [{}]'.format(name, units), fontsize=fsize)
 
@@ -160,7 +169,7 @@ def source_histogram(ds, lon, var='age'):
     # fig.text(0.04, 0.5, 'Frequency [%]', va='center', rotation='vertical')
 
     plt.tight_layout()
-    plt.savefig(cfg.fig / 'transit/{}_histogram_{}.png'.format(var, lon))
+    plt.savefig(cfg.fig / 'sources/{}_histogram_{}.png'.format(var, lon))
     return
 
 
@@ -239,42 +248,49 @@ def print_transport_sources(lon):
     ds = ds.sel(zone=inds)
 
     total = ds.u_total.mean('rtime').isel(exp=0).item()
-    print('{:>27}={:.3f}'.format('total', total))
+    print('{:>22} {}E={:.3f}'.format('total', lon, total))
     for z in ds.zone.values:
         dx = ds.uz.sel(zone=z)
         p = test_signifiance(dx[0], dx[1])
         dx = dx.mean('rtime').values
-        print('{:>27}: Hist={:.3f} RCP={:.3f} diff={: .1f}% h%={:.1f}% {}'
+        print('{:>27}: Hist={:.3f} RCP={:.3f} diff={: .2f}({: .1f}%) h%={:.1f}% {}'
               .format(ds.names.sel(zone=z).item(),
-                      *dx,
+                      *dx,dx[1] - dx[0],
                       ((dx[1] - dx[0])/ total) * 100,
                       (dx[0] / total) * 100, p))
 
 
-# Source bar graph.
+lon = 165
+exp = 0
+
+# # Source bar graph.
 # transport_source_bar_graph(exp=0)
 # transport_source_bar_graph(exp=1)
-lon = 190
-exp = 0
-print_transport_sources(lon)
-# ds = source_dataset(lon, merge_interior=1)
 
+
+# # Plot histograms.
 # for lon in lons:
-#     lon=220
 #     ds = source_dataset(lon, merge_interior=1)
+#     inds = np.array([1, 2, 3, 7, 6, 5, 4, 0])
+#     ds = ds.sel(zone=inds)
+#     source_histogram(ds, lon, var='age')
+
+# Print values.
+for lon in lons:
+    print_transport_sources(lon)
+
+## Timeseries.
+# ds_m = ds.resample(time="1MS").mean("time", keep_attrs=1)
+# source_timeseries(ds, exp, lon, var='uz')
+
+# # Pie chart.
+# source_pie_chart(ds, lon)
 
 
-#     print((ds.uz.mean('rtime') / ds.u_total.mean('rtime')) * 100)
-#     dx = (ds.uz.mean('rtime') / ds.u_total.mean('rtime'))
-#     print(.isel(*100)
+# from plx_fncs import source_dataset
+# xid = cfg.data / 'sources/plx_spinup_{}_{}_v1y6.nc'.format(cfg.exp[exp], lon)
 
-#     ## Timeseries.
-#     # ds_m = ds.resample(time="1MS").mean("time", keep_attrs=1)
-#     # source_timeseries(ds, exp, lon, var='uz')
-
-#     # # Pie chart.
-#     source_pie_chart(ds, lon)
-
-#     # # Merge hist and rcp
-#     # source_histogram(ds, lon, var='age')
-#     # source_histogram(ds, lon, var='distance')
+# ds = source_dataset(lon, merge_interior=False).isel(exp=0)
+# dp = xr.open_dataset(xid)
+# dp = dp.isel(zone=cfg.zones.inds)
+# ds = ds.sel(traj=ds.traj[ds.traj.isin(dp.traj.values.astype(int))])
