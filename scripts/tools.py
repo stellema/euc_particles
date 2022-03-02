@@ -416,6 +416,9 @@ def format_pvalue_str(p):
 
 
 def test_signifiance(x, y):
+    def resample(ds):
+        return ds.resample(rtime="Y").mean("rtime", keep_attrs=1)
+    x, y = resample(x), resample(y)
     t, p = stats.wilcoxon(x, y)
     p = format_pvalue_str(p)
     return p
