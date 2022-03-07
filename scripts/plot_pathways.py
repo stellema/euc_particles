@@ -4,32 +4,21 @@ Created on Tue Nov 23 02:10:14 2021
 
 @author: a-ste
 
-Time normalised: use age
 """
-import math
-import cartopy
+
 import numpy as np
 import xarray as xr
-import matplotlib
 import matplotlib.pyplot as plt
-import matplotlib.ticker as mticker
-from matplotlib.markers import MarkerStyle
-import cartopy.crs as ccrs
-import cartopy.feature as cfeature
-from cartopy.mpl.gridliner import LONGITUDE_FORMATTER, LATITUDE_FORMATTER
-import matplotlib.colors as cm
-from matplotlib.cm import ScalarMappable
-from matplotlib.colors import Normalize
 
 import cfg
-from tools import coord_formatter, zone_cmap, convert_longitudes
-from plots import 
-from plx_fncs import open_plx_data, open_plx_source, get_plx_id
+from tools import coord_formatter, convert_longitudes
+from fncs import get_plx_id
+from plots import (source_cmap, zone_cmap, create_map_axis,
+                   plot_particle_source_map)
 from create_source_files import source_particle_ID_dict
 
 # plt.rcParams['figure.figsize'] = [10, 7]
 # plt.rcParams['figure.dpi'] = 200
-
 
 
 def plot_simple_traj_scatter(ax, ds, traj, color='k', name=None):
@@ -39,16 +28,6 @@ def plot_simple_traj_scatter(ax, ds, traj, color='k', name=None):
     return ax
 
 
-def source_cmap(zcolor=cfg.zones.colors):
-    """Get zone colormap."""
-    zmap = cm.ListedColormap(zcolor)
-    n = len(zcolor)
-    norm = cm.BoundaryNorm(np.linspace(1, n, n+1), zmap.N)
-    # cmappable = ScalarMappable(Normalize(0,n-1), cmap=zmap)
-    cmappable = ScalarMappable(norm, cmap=zmap)
-    return zmap, cmappable
-
-    
 def plot_some_source_pathways(exp, lon, v, r):
     """Plot a subset of pathways on a map, colored by source."""
 
@@ -60,7 +39,6 @@ def plot_some_source_pathways(exp, lon, v, r):
     source_ids = [0, 1, 2, 5, 7, 6, 8]
     file = get_plx_id(exp, lon, v, r, 'plx')
     ds = xr.open_dataset(file, mask_and_scale=True)
-    # ds = ds.isel(traj=np.linspace(0, ds.traj.size - 1, 200, dtype=int)) # !!!
 
     # Particle IDs
     pids = source_particle_ID_dict(None, exp, lon, v, r)
@@ -83,7 +61,6 @@ def plot_some_source_pathways(exp, lon, v, r):
         ax.plot(dx.lon, dx.lat, c[i], linewidth=0.5, zorder=10, transform=proj,
                 alpha=0.3)
 
-    # TODO add legend & title.
     ax.set_title('{} pathways to the EUC at {}°E'.format(cfg.exps[exp], lon))
 
     # Source color legend.
@@ -101,21 +78,14 @@ def plot_some_source_pathways(exp, lon, v, r):
     return
 
 
-
-
-
-
 def plot_example_source_pathways(exp, lon, v, r, source_id, N=30):
-    """Plot a subset of pathways on a map, colored by source.
-    source_id 0 -> VS
-    """
+    """Plot a subset of pathways on a map, colored by source."""
     file = get_plx_id(exp, lon, v, r, 'plx')
     ds = xr.open_dataset(file, mask_and_scale=True)
 
     # Particle IDs
     pids = source_particle_ID_dict(None, exp, lon, v, r)
 
-    # BUG fix
     ds = ds.sel(traj=pids[source_id + 1])
     ds = ds.thin(dict(traj=int(120)))
     traj_lost = ds.where(ds.lon > lon, drop=True).traj
@@ -127,7 +97,7 @@ def plot_example_source_pathways(exp, lon, v, r, source_id, N=30):
     # Plot particles.
     map_extent = [115, 287, -8, 8]
     yticks = np.arange(-8, 8.1, 4)
-    fig, ax, proj = create_map_axis(map_extent=map_extent,yticks=yticks,
+    fig, ax, proj = create_map_axis(map_extent=map_extent, yticks=yticks,
                                     add_ocean=True)
 
     ax.set_title('{} to the EUC at {}°E'
@@ -140,25 +110,28 @@ def plot_example_source_pathways(exp, lon, v, r, source_id, N=30):
         ax.plot(dx.lon, dx.lat, c, linewidth=0.9, zorder=10, transform=proj,
                 alpha=1)
 
-
     plt.tight_layout()
     plt.savefig(cfg.fig / 'pathway_{}_{}_r{}_n{}_z{}.png'
-                .format(cfg.exp[exp], lon, r, N, source_id), bbox_inches='tight')
+                .format(cfg.exp[exp], lon, r, N, source_id),
+                bbox_inches='tight')
     plt.show()
     return
 
+
 # if __name__ == "__main__":
-#     exp  = 0
+#     exp = 0
 #     lon = 220
 #     v = 1
 #     r = 0
-#     # Plot map.
-#     # plot_some_source_pathways(exp, lon, v, r)
-#     # plot_particle_source_map(lon='all', merge_interior=True)
-#     # for x in [165, 190, 220, 250]:
-#     #     plot_particle_source_map(lon=x, merge_interior=True)
-#     plot_particle_source_map(lon, merge_interior=True, add_ocean=1, add_legend=True)
 
-#     # source_id = 0
-#     # for source_id in [0, 1, 2]:
-#     #     plot_example_source_pathways(exp, lon, v, r, source_id, N=5)
+#     # Plot map.
+#     plot_some_source_pathways(exp, lon, v, r)
+#     plot_particle_source_map(lon='all', merge_interior=True)
+#     for x in [165, 190, 220, 250]:
+#         plot_particle_source_map(lon=x, merge_interior=True)
+#     plot_particle_source_map(lon, merge_interior=True, add_ocean=True,
+#                              add_legend=True)
+
+#     source_id = 0
+#     for source_id in [0, 1, 2]:
+#         plot_example_source_pathways(exp, lon, v, r, source_id, N=5)

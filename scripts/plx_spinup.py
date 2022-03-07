@@ -5,9 +5,7 @@ author: Annette Stellema (astellemas@gmail.com)
 
 """
 
-import numpy as np
 import pandas as pd
-from pathlib import Path
 from operator import attrgetter
 from datetime import datetime, timedelta
 from argparse import ArgumentParser
@@ -27,7 +25,8 @@ except ImportError:
 logger = mlogger('plx', parcels=True, misc=False)
 
 
-def spinup(lon=165, exp='hist', v=1, runtime_years=3, year_offset=0, patch=False):
+def spinup(lon=165, exp='hist', v=1, runtime_years=3, year_offset=0,
+           patch=False):
     """Spinup Lagrangian EUC particle experiment."""
     ts = datetime.now()
     xlog = {'file': 0, 'v': v}

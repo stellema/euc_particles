@@ -9,95 +9,47 @@ Created on Sun Mar  6 00:20:44 2022
 import cartopy
 import numpy as np
 import xarray as xr
-import matplotlib
+import matplotlib as mpl
 import matplotlib.pyplot as plt
-
-
-from matplotlib.markers import MarkerStyle
+import matplotlib.animation as animation
 import cartopy.crs as ccrs
 import cartopy.feature as cfeature
-from cartopy.mpl.gridliner import LONGITUDE_FORMATTER, LATITUDE_FORMATTER
-import matplotlib.colors as cm
-from matplotlib.cm import ScalarMappable
-from matplotlib.colors import Normalize
+from mpl_toolkits.axes_grid1 import make_axes_locatable
+
+
+# from mpl_toolkits.axes_grid1 import make_axes_locatable
+# from matplotlib.colors import LinearSegmentedColormap
+# import matplotlib.pyplot as plt
+# from matplotlib.colors import LinearSegmentedColormap
+# from matplotlib.markers import MarkerStyle
+# import matplotlib.colors as cm
+# from matplotlib.cm import ScalarMappable
+# from matplotlib.colors import Normalize
 
 import cfg
-from tools import coord_formatter, zone_cmap, convert_longitudes
+from tools import coord_formatter, convert_longitudes
 
 
-def plot_ofam_euc():
-    import matplotlib.pyplot as plt
-    from mpl_toolkits.axes_grid1 import make_axes_locatable
-    from matplotlib.colors import LinearSegmentedColormap
-    from tools import coord_formatter
-
-    ds = xr.open_dataset(cfg.ofam /'ocean_u_1981-2012_climo.nc')
-    ds = ds.sel(yu_ocean=0., method='nearest')
-    ds = ds.sel(xu_ocean=slice(150., 280.), st_ocean=slice(2.5, 500)).u
-    ds = ds.mean('Time')
-
-    y = ds.st_ocean
-    x = ds.xu_ocean
-    v = ds
-    yt = np.arange(0, y[-1], 100)
-    xt = np.arange(160, 270, 20)
-    vmax = 1.2
-    vmin =-0.2
+def zone_cmap():
+    """Get zone colormap."""
+    zcolor = cfg.zones.colors
+    zmap = mpl.colors.ListedColormap(zcolor)
+    norm = mpl.colors.BoundaryNorm(np.linspace(1, 10, 11), zmap.N)
+    return zmap, norm
 
 
-    cmap = LinearSegmentedColormap.from_list('cmap', (
-    # Edit this gradient at https://eltos.github.io/gradient/#cmap=4.2:3334F9-15.5:0002CF-22.3:000000-29.8:5A078E-39.4:900CB4-52.4:A31474-68.2:9E020A-90:D36019-99.4:DEC629
-    (0.000, (0.200, 0.204, 0.976)),
-    (0.042, (0.200, 0.204, 0.976)),
-    (0.155, (0.000, 0.008, 0.812)),
-    (0.223, (0.000, 0.000, 0.000)),
-    (0.298, (0.353, 0.027, 0.557)),
-    (0.394, (0.565, 0.047, 0.706)),
-    (0.524, (0.639, 0.078, 0.455)),
-    (0.682, (0.620, 0.008, 0.039)),
-    (0.900, (0.827, 0.376, 0.098)),
-    (0.994, (0.871, 0.776, 0.161)),
-    (1.000, (0.871, 0.776, 0.161))))
-    # cmap=plt.cm.viridis
-    # cmap=plt.cm.gnuplot
-    # cmap=plt.cm.CMRmap
-    cmap=plt.cm.gnuplot2
-    # cmap=plt.cm.inferno
-    # cmap=plt.cm.plasma
-    # cmap=plt.cm.jet
-    # cmap=plt.cm.cividis
-    # cmap=plt.cm.
-    # cmap=plt.cm.gist_ncar
-    # cmap=plt.cm.nipy_spectral
-    # cmap=plt.cm.brg
-
-    cmap.set_bad('k')
-
-    fig, ax = plt.subplots(figsize=(9, 3))
-    ax.set_title('OFAM3 zonal velocity')
-    cs = ax.pcolormesh(x, y, ds, vmax=vmax, vmin=vmin, cmap=cmap)
-
-    ax.set_ylim(y[-1], y[0])
-    ax.set_yticks(yt)
-    ax.set_yticklabels(coord_formatter(yt, 'depth'))
-    ax.set_xticks(xt)
-    ax.set_xticklabels(coord_formatter(xt, 'lon'))
-
-    divider = make_axes_locatable(ax)
-    cax = divider.append_axes('right', size='3%', pad=0.1)
-    cbar = fig.colorbar(cs, cax=cax, orientation='vertical', extend='both')
-    cbar.set_label('m/s')
-
+def source_cmap(zcolor=cfg.zones.colors):
+    """Get zone colormap."""
+    n = len(zcolor)
+    zmap = mpl.colors.ListedColormap(zcolor)
+    norm = mpl.colors.BoundaryNorm(np.linspace(1, n, n+1), zmap.N)
+    cmappable = mpl.colors.ScalarMappable(norm, cmap=zmap)
+    return zmap, cmappable
 
 
 def plot_ofam_euc_anim():
-    import matplotlib.pyplot as plt
-    from mpl_toolkits.axes_grid1 import make_axes_locatable
-    from matplotlib.colors import LinearSegmentedColormap
-    from tools import coord_formatter
-    import matplotlib.animation as animation
 
-    file =[cfg.ofam /'ocean_u_2012_{:02d}.nc'.format(t+1) for t in range(12)]
+    file = [cfg.ofam / 'ocean_u_2012_{:02d}.nc'.format(t+1) for t in range(12)]
     ds = xr.open_mfdataset(file)
     ds = ds.sel(yu_ocean=0., method='nearest')
     ds = ds.sel(xu_ocean=slice(150., 280.), st_ocean=slice(2.5, 500)).u
@@ -109,22 +61,8 @@ def plot_ofam_euc_anim():
     yt = np.arange(0, y[-1], 100)
     xt = np.arange(160, 270, 20)
     vmax = 1.2
-    vmin = -0.2#-vmax
-    # cmap=plt.cm.seismic
-    cmap = LinearSegmentedColormap.from_list('cmap', (
-    # Edit this gradient at https://eltos.github.io/gradient/#cmap=0:3A63FF-23.1:0025B3-26:000000-28.6:3A0478-37.1:5A078E-47.3:900CB4-62.3:A31474-75.8:9E020A-90:D36019-99.4:DEC629
-    (0.000, (0.227, 0.388, 1.000)),
-    (0.231, (0.000, 0.145, 0.702)),
-    (0.260, (0.000, 0.000, 0.000)),
-    (0.286, (0.227, 0.016, 0.471)),
-    (0.371, (0.353, 0.027, 0.557)),
-    (0.473, (0.565, 0.047, 0.706)),
-    (0.623, (0.639, 0.078, 0.455)),
-    (0.758, (0.620, 0.008, 0.039)),
-    (0.900, (0.827, 0.376, 0.098)),
-    (0.994, (0.871, 0.776, 0.161)),
-    (1.000, (0.871, 0.776, 0.161))))
-    cmap=plt.cm.gnuplot2
+    vmin = -0.2
+    cmap = plt.cm.gnuplot2
 
     cmap.set_bad('k')
 
@@ -158,16 +96,15 @@ def plot_ofam_euc_anim():
 
     # Filename.
     i = 0
-    filename = cfg.fig/'vids/ofam_{}.mp4'.format( i)
+    filename = cfg.fig / 'vids/ofam_{}.mp4'.format(i)
     while filename.exists():
         i += 1
-        filename = cfg.fig/'vids/ofam_{}.mp4'.format(i)
+        filename = cfg.fig / 'vids/ofam_{}.mp4'.format(i)
 
     # Save.
     writer = animation.writers['ffmpeg'](fps=20)
     anim.save(str(filename), writer=writer, dpi=200)
     return
-
 
 
 def create_map_axis(figsize=(12, 5), map_extent=None, add_ticks=True,
@@ -226,12 +163,12 @@ def create_map_axis(figsize=(12, 5), map_extent=None, add_ticks=True,
         ax.set_yticks(yticks, crs=proj)
         ax.set_xticklabels(coord_formatter(xticks, 'lon_360'))
         ax.set_yticklabels(coord_formatter(yticks, 'lat'))
-        
+
         # Minor ticks.
-        ax.xaxis.set_minor_locator(matplotlib.ticker.MultipleLocator(10))
+        ax.xaxis.set_minor_locator(mpl.ticker.MultipleLocator(10))
         ygrad = np.gradient(yticks)[0] / 2
-        ax.yaxis.set_minor_locator(matplotlib.ticker.MultipleLocator(ygrad))
-        
+        ax.yaxis.set_minor_locator(mpl.ticker.MultipleLocator(ygrad))
+
         fig.subplots_adjust(bottom=0.2, top=0.8)
 
     ax.set_aspect('auto')
@@ -241,21 +178,22 @@ def create_map_axis(figsize=(12, 5), map_extent=None, add_ticks=True,
 
 def plot_ofam3_land(ax, extent=[115, 290, -12, 12], coastlines=True):
     """Plot land from OFAM3."""
-    color = dict(land='gray', ocean='lightcyan')
-    mapcmap = matplotlib.colors.ListedColormap(color.values())
-    
-    # mask ocean and set land to 1
+    mapcmap = mpl.colors.ListedColormap(['gray', 'lightcyan'])
+
+    # OFAM3 Data.
     dv = xr.open_dataset(cfg.ofam / 'ocean_v_1981_01.nc')
     dv = dv.rename({'yu_ocean': 'lat', 'xu_ocean': 'lon'})
     dv = dv.v.isel(Time=0, st_ocean=0)
-    dv = xr.where(np.isnan(dv), 0, 1)  # land: 0, ocean: 1
-    
+
+    # Set: land=0 & ocean=1.
+    dv = xr.where(np.isnan(dv), 0, 1)
+
     dv = dv.sel(lat=slice(*extent[2:]), lon=slice(*extent[:2]))
     y, x = dv.lat, dv.lon
-    
+
     ax.contourf(x, y, dv, 2, cmap=mapcmap)
     if coastlines:
-        ax.contour(x, y, dv, levels=[0], colors='k', linewidths=0.4, 
+        ax.contour(x, y, dv, levels=[0], colors='k', linewidths=0.4,
                    antialiased=False)
 
     return ax
@@ -266,17 +204,17 @@ def ofam3_pacific_map():
     fig = plt.figure(figsize=(17, 6))
     ax = plt.axes()
     ax = plot_ofam3_land(ax)
-    
+
     y, x = np.arange(-10, 11, 5), np.arange(140, 290, 20)
     ax.set_xticks(x)
     ax.set_yticks(y)
     ax.set_xticklabels(coord_formatter(x, 'lon_360'))
     ax.set_yticklabels(coord_formatter(y, 'lat'))
-    
+
     # Minor ticks.
-    ax.xaxis.set_minor_locator(matplotlib.ticker.MultipleLocator(5))
-    ax.xaxis.set_major_locator(matplotlib.ticker.MultipleLocator(10))
-    ax.yaxis.set_minor_locator(matplotlib.ticker.MultipleLocator(2.5)) 
+    ax.xaxis.set_minor_locator(mpl.ticker.MultipleLocator(5))
+    ax.xaxis.set_major_locator(mpl.ticker.MultipleLocator(10))
+    ax.yaxis.set_minor_locator(mpl.ticker.MultipleLocator(2.5))
     fig.subplots_adjust(bottom=0.2, top=0.8)
     ax.set_aspect('auto')
     plt.tight_layout()
@@ -293,19 +231,17 @@ def pacific_map():
                                     add_ocean=True)
     ax.grid()
 
-    
     plt.tight_layout()
     plt.savefig(cfg.fig / 'pacific_map_02.png', dpi=300)
     plt.show()
 
 
-def plot_particle_source_map(lon, merge_interior=True, add_ocean=1, add_legend=True):
+def plot_particle_source_map(lon, merge_interior=True, add_ocean=True,
+                             add_legend=True):
     """EUC source boundary map for lon.
 
     Args:
-        lon (int or str): Release longitude to plot {165, 160, 220, 250, 'all'}.
-
-    Todo:
+        lon (int or str): Release longitude {165, 160, 220, 250, 'all'}.
 
     """
 
@@ -336,27 +272,25 @@ def plot_particle_source_map(lon, merge_interior=True, add_ocean=1, add_legend=T
 
     def add_source_label(ax, z_index, labels, proj):
         """Latitude and longitude points defining source regions."""
-
         text = [z.name_full for z in cfg.zones.list_all]
         for i in [0, 1, 2, 6]:
             text[i] = text[i].replace(' ', '\n')
 
         loc = np.zeros((len(text), 2)) * np.nan
         loc[0] = [-8.6, 149]
-        loc[1] = [-5, 156] # SS
+        loc[1] = [-5, 156]  # SS
         loc[2] = [8.9, 127]
         loc[3] = [0, lon + 2]
         loc[4] = [-5, lon + 2]
-        loc[5] = [5, lon + 2] #North euc
+        loc[5] = [5, lon + 2]  # North euc
         loc[6] = [3.1, 127]
-        loc[7] = [9, 175]  #North int
+        loc[7] = [9, 175]  # North int
         loc[8] = [-8, 175]
 
         for i, z in enumerate(np.unique(z_index)):
-            if merge_interior and z in [4, 5]:
-                pass
-            else:
-                ax.text(loc[z][1], loc[z][0], text[z], zorder=10, transform=proj)
+            if ~(merge_interior and z in [4, 5]):
+                ax.text(loc[z][1], loc[z][0], text[z], zorder=10,
+                        transform=proj)
         return ax
 
     colors = cfg.zones.colors

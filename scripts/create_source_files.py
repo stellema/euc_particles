@@ -34,8 +34,8 @@ from argparse import ArgumentParser
 
 import cfg
 from tools import mlogger, timeit, append_dataset_history
-from plx_fncs import (get_plx_id, update_particle_data_sources,
-                      get_index_of_last_obs, combine_source_indexes)
+from fncs import (get_plx_id, update_particle_data_sources,
+                  get_index_of_last_obs, combine_source_indexes)
 
 logger = mlogger('plx_sources', parcels=False, misc=False)
 
@@ -131,7 +131,7 @@ def update_formatted_file_sources(lon, exp, v, r):
 
 
 def source_particle_ID_dict(ds, exp, lon, v, r):
-    """Dictionary of particle IDs from each source.
+    """Create dictionary of particle IDs from each source.
 
     Args:
         ds (xarray.Dataset): Formatted particle dataset.
@@ -178,7 +178,6 @@ def get_final_particle_obs(ds):
         if 'obs' in ds[var].dims:
             ds[var] = ds[var].max('obs')
 
-    # TODO: add source depth
     # Drop extra coords and unused 'obs'.
     ds = ds.drop(['lat', 'lon', 'z', 'obs'])
     return ds
@@ -230,7 +229,6 @@ def group_euc_transport(ds, source_traj):
     ds = ds.rename({'time': 'rtime'})
 
     # Initialise source-grouped transport variable.
-    # TODO: change 'traj'?
     ds['uz'] = (['rtime', 'zone'], np.empty((ds.rtime.size, ds.zone.size)))
     for z in ds.zone.values:
         dx = ds.sel(traj=ds.traj[ds.traj.isin(source_traj[z])])
@@ -242,7 +240,7 @@ def group_euc_transport(ds, source_traj):
 
 @timeit
 def plx_source_file(lon, exp, v, r):
-    """Creates netcdf file with particle source information.
+    """Create netcdf file with particle source information.
 
     Coordinates:
         traj: particle IDs

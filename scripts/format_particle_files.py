@@ -45,11 +45,11 @@ from argparse import ArgumentParser
 
 import cfg
 from tools import mlogger, timeit, append_dataset_history
-from particle_id_remap import (create_particle_ID_remap_dict,
+from remap_particle_id import (create_particle_ID_remap_dict,
                                patch_particle_IDs_per_release_day)
-from plx_fncs import (get_plx_id, open_plx_data, update_particle_data_sources,
-                      particle_source_subset, get_max_particle_file_ID,
-                      remap_particle_IDs, get_new_particle_IDs)
+from fncs import (get_plx_id, open_plx_data, update_particle_data_sources,
+                  particle_source_subset, get_max_particle_file_ID,
+                  remap_particle_IDs, get_new_particle_IDs)
 
 logger = mlogger('misc', parcels=False, misc=True)
 

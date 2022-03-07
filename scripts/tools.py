@@ -3,13 +3,8 @@
 created: Mon May  4 17:19:44 2020
 
 author: Annette Stellema (astellemas@gmail.com)
-
-class CustomAdapter(logging.LoggerAdapter):
-    def process(self, msg, kwargs):
-        return '[%s] %s' % (self.extra['xid'], msg), kwargs
-    loggen = CustomAdapter(logger, {'xid': xid.stem})
 """
-import os
+
 import sys
 import math
 import logging
@@ -21,9 +16,8 @@ from scipy import stats
 from pathlib import Path
 from functools import wraps
 from datetime import datetime
-import matplotlib.pyplot as plt
-import matplotlib.colors as colors
-from matplotlib.offsetbox import AnchoredText
+from dataclasses import dataclass
+from collections import namedtuple
 
 import cfg
 
@@ -44,7 +38,7 @@ def mlogger(name, parcels=False, misc=True):
     loggers = cfg.loggers
     name = 'misc' if misc else name
     if Path(sys.argv[0]).stem in ['plx', 'plx_test']:
-        name = 'plx' if cfg.home != Path('E:/') else 'plx_test'
+        name = 'plx' if cfg.home != 'C:' else 'plx_test'
         parcels = True
         misc = False
 
@@ -318,6 +312,7 @@ def dz():
     ds.close()
     return z
 
+
 def convert_longitudes(lon):
     """Convert longitude 0-360 to +-180."""
     east = np.where(lon > 180)
@@ -376,7 +371,7 @@ def precision(var):
         var (DataArray): Transport dataset
 
     Returns:
-        p (list): The number of decimal places to print for historical and change
+        p (list): The number of decimal places to print
     """
     # List for the number of digits (n) and decimal place (p).
     n, p = 1, 1
@@ -446,90 +441,71 @@ def create_mesh_grid():
     return
 
 
-def zone_cmap():
-    """Get zone colormap."""
-    zcolor = cfg.zones.colors
-    zmap = colors.ListedColormap(zcolor)
-    norm = colors.BoundaryNorm(np.linspace(1, 10, 11), zmap.N)
-    return zmap, norm
-
-
 def zone_field(plot=False, savefile=True):
     """Create fieldset or plot zone definitions."""
+    dx = 0.1
+    lons = [x - dx for x in [165, 190, 220, 250]]
+    j1, j2 = -6.1, 8
+
+    @dataclass
+    class ZoneData:
+        """Pacific Ocean Zones."""
+
+        Zone = namedtuple("Zone", "name id name_full loc")
+        vs = Zone('vs', 1, 'Vitiaz Strait', [147.6, 149.6, -6.1, -6.1])
+        ss = Zone('ss', 2, 'Solomon Strait', [151.6, 154.6, -5, -5])
+        mc = Zone('mc', 3, 'Mindanao Current', [126.0, 128.5, 8, 8])
+        ecr = Zone('ecr', 4, 'EUC recirculation', [[x, x, -2.6, 2.6] for x in lons])
+        ecs = Zone('ecs', 5, 'South of EUC', [[x, x, j1, -2.6 - dx] for x in lons])
+        ecn = Zone('ecn', 6, 'North of EUC', [[x, x, 2.6 + dx, j2] for x in lons])
+        idn = Zone('idn', 7, 'Indonesian Seas', [[122.8, 140.4, j1, j1],
+                                                 [122.8, 122.8, j1, j2]])
+        nth = Zone('nth', 8, 'North Interior', [128.5 + dx, lons[3] + dx, j2, j2])
+        sth = Zone('sth', 9, 'South Interior', [155, lons[3] + dx, j1, j1])
+        oob = Zone('oob', 10, 'Out of Bounds', [[120, 294.9, -15, -15],
+                                                [120, 294.9, 14.9, 14.9],
+                                                [120, 120, -15, 14.9],
+                                                [294.9, 294.9, -15, 14.9]])
+        list_all = [vs, ss, mc, ecr, ecs, ecn, idn, nth, sth, oob]
+
+    zones = ZoneData()
+
     file = [str(cfg.ofam / 'ocean_{}_2012_01.nc'.format(v)) for v in ['u', 'w']]
+
     dr = xr.open_mfdataset(file, combine='by_coords')
     dr = dr.isel(st_ocean=slice(0, 1), Time=slice(0, 1))
     d = dr.u.where(np.isnan(dr.u), 0)
+
     d = d.rename({'st_ocean': 'sw_ocean'})
     d.coords['sw_ocean'] = np.array([5.0], dtype=np.float32)
-    for zone in cfg.zones.list_all:
+
+    for zone in zones.list_all:
         coords = zone.loc
         coords = [coords] if type(coords[0]) != list else coords
         for c in coords:
             xx = [d.xu_ocean[idx(d.xu_ocean, i)].item() for i in c[0:2]]
             yy = [d.yu_ocean[idx(d.yu_ocean, i)].item() for i in c[2:4]]
+
             d = xr.where((d.xu_ocean >= xx[0]) & (d.xu_ocean <= xx[1]) &
-                         (d.yu_ocean >= yy[0]) & (d.yu_ocean <= yy[1]), zone.id, d)
+                         (d.yu_ocean >= yy[0]) & (d.yu_ocean <= yy[1]),
+                         zone.id, d)
 
     # Correctly order array dimensions.
     d = d.transpose('Time', 'sw_ocean', 'yu_ocean', 'xu_ocean')
 
     # Create dataset.
-    if savefile:
-        ds = d.to_dataset(name='zone')
-        for v in ds.variables:
-            if v not in ['Time']:
-                ds[v] = ds[v].astype(dtype=np.float32)
+    ds = d.to_dataset(name='zone')
+    for v in ds.variables:
+        if v not in ['Time']:
+            ds[v] = ds[v].astype(dtype=np.float32)
 
-        ds.attrs['history'] = 'Created {}.'.format(datetime.now().strftime("%Y-%m-%d"))
-        ds = ds.chunk()
-        ds.to_netcdf(cfg.data / 'ofam_field_zone.nc')
-        ds.close()
+    ds.attrs['history'] = 'Created {}.'.format(
+        datetime.now().strftime("%Y-%m-%d"))
+    ds = ds.chunk()
+    ds.to_netcdf(cfg.data / 'ofam_field_zone.nc')
+    ds.close()
 
-    if plot:
-        dz = d[0, 0].sel(yu_ocean=slice(-10, 10), xu_ocean=slice(120.1, 255))
-        lon = dz.xu_ocean.values
-        lat = np.around(dz.yu_ocean.values, 2)
-
-        # Colour map.
-        zcl = cfg.ZoneData.colors
-        cmap = colors.ListedColormap(zcl)
-        cmap.set_bad('grey')
-        cmap.set_under('white')
-
-        fig, ax = plt.subplots(figsize=(16, 9))
-        cs = ax.pcolormesh(lon, lat, dz.values, cmap=cmap, edgecolors='face',
-                            shading='flat', linewidth=30, vmin=0.5)
-        xticks = np.arange(130, 255, 10)
-        ax.set_xticks(xticks)
-        ax.set_xticklabels(coord_formatter(xticks, 'lon'))
-        ax.set_yticks(lat[::20])
-        ax.set_yticklabels(coord_formatter(lat[::20], 'lat'))
-        cbar = fig.colorbar(cs, ticks=range(1, 10), orientation='horizontal',
-                            boundaries=np.arange(0.5, 9.6), pad=0.075)
-        znm = ['{}:{}'.format(i + 1, z)
-               for i, z in enumerate([z.name_full for z in cfg.zones.list_all])]
-        cbar.ax.set_xticklabels(znm[:-1], fontsize=10)
-        plt.savefig(cfg.fig / 'particle_boundaries.png')
     return
-
-
-def get_spinup_start(exp="hist", years=5):
-    ix = 0 if exp == "hist" else 1
-
-    # Fieldset start/end dates (to convert relative seconds).
-    start = datetime(cfg.years[ix][0], 1, 1)
-
-    # Date to start spinup particles.
-    spin = datetime(cfg.years[ix][0] + years, 1, 1)
-    dspin = spin - start
-
-    # Relative spinup particle start.
-    spin_rel = int(dspin.total_seconds())
-    print('{} Spinup: {}y/{}d/{}s: {} to {}'
-          .format(cfg.exps[ix], years, dspin.days, spin_rel,
-                  start.strftime('%Y-%m-%d'), spin.strftime('%Y-%m-%d')))
-    return spin_rel
 
 
 def append_dataset_history(ds, msg):

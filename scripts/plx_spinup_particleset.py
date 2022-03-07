@@ -5,18 +5,15 @@ author: Annette Stellema (astellemas@gmail.com)
 
 """
 
-import math
 import numpy as np
 import xarray as xr
 import pandas as pd
 from datetime import datetime, timedelta
 from argparse import ArgumentParser
-from parcels import (Variable, JITParticle)
 
 import cfg
 from tools import mlogger
-from plx_fncs import (ofam_fieldset, pset_from_file, zparticle, get_next_xid,
-                      get_spinup_year)
+from plx_fncs import (ofam_fieldset, pset_from_file, zparticle, get_next_xid)
 
 
 try:

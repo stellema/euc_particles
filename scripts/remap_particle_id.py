@@ -24,20 +24,19 @@ Todo:
 """
 import numpy as np
 import xarray as xr
-import matplotlib.pyplot as plt
 
 import cfg
-from plx_fncs import get_plx_id, get_max_particle_file_ID, remap_particle_IDs
+from fncs import get_plx_id, get_max_particle_file_ID
 
 
 def dictionary_map(old_array, new_array):
-    """Dictionary that maps elements of two arrays."""
+    """Create dictionary that maps elements of two arrays."""
     map_dict = {k: v for k, v in zip(old_array, new_array)}
     return map_dict
 
 
 def get_starting_particle_IDs(ds):
-    """The particle IDs with release time as a coordinate.
+    """Particle IDs with release time as a coordinate.
 
     Args:
         ds (xarrary.Dataset): 2D variables {'trajectory', 'time', 'age'}.
@@ -46,7 +45,8 @@ def get_starting_particle_IDs(ds):
         ds (xarrary.Dataset): Dataset with particle IDs 'trajectory' as a
         function of release time (coord 'traj' -> 'time').
     """
-    ds = ds.drop([v for v in ds.data_vars if v not in ['trajectory', 'time', 'age']])
+    ds = ds.drop([v for v in ds.data_vars
+                  if v not in ['trajectory', 'time', 'age']])
     ds = ds.isel(obs=0)
 
     # Remove old particles from file.
@@ -61,7 +61,7 @@ def get_starting_particle_IDs(ds):
 
 
 def patch_particle_IDs_per_release_day(lon, exp, v=1):
-    """The particle IDs of skipped particles, seperated by release time.
+    """Particle IDs of skipped particles, seperated by release time.
 
     Args:
         lon (int): Release Longitude {165, 190, 220, 250}.
@@ -150,9 +150,8 @@ def create_particle_ID_remap_dict(lon, exp, v=1):
 
     # Create dummy map for NaN values.
     traj_dict[-9999] = -9999
-    # traj_remap = remap_particle_IDs(ds.trajectory.values, traj_dict)
 
     # Save dictonary.
-    dict_filename = cfg.data / 'v{}/remap_particle_id_dict_{}_{}.npy'.format(v, cfg.exp_abr[exp], lon)
-    np.save(dict_filename, traj_dict)
+    np.save(cfg.data / 'v{}/remap_particle_id_dict_{}_{}.npy'
+            .format(v, cfg.exp_abr[exp], lon), traj_dict)
     return traj_dict

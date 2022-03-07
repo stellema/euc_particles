@@ -8,7 +8,6 @@ parcels=2.2.1=py38h32f6830_0
 
 import xarray as xr
 import numpy as np
-import pandas as pd
 from operator import attrgetter
 from datetime import datetime, timedelta
 from argparse import ArgumentParser
@@ -27,11 +26,13 @@ except ImportError:
 
 logger = mlogger('plx', parcels=True, misc=False)
 
+
 def get_missed_repeats(lon=165, exp=0):
     """Get particle release dates that are missing from particle files."""
     # Daily timesteps of data.
     y1, y2 = cfg.years[exp]
-    times = np.arange(datetime(y1, 1, 1), datetime(y2 + 1, 1, 1), dtype='datetime64[D]')
+    times = np.arange(datetime(y1, 1, 1), datetime(y2 + 1, 1, 1),
+                      dtype='datetime64[D]')
 
     # Release days (every 6th day starting from end).
     repeatdt_days = 6
@@ -40,7 +41,7 @@ def get_missed_repeats(lon=165, exp=0):
     # Usual number of runtimedays.
     runtime_subset = 1200
 
-    # Repeats per file subset. Last repeat added in next file, so need 2nd last.
+    # Repeats per file subset. Last repeat added in next file so need 2nd last.
     subset_rep_ind = int(runtime_subset / repeatdt_days)
 
     # Indexes of last release day in file (in repeat day array).
@@ -98,7 +99,6 @@ def create_euc_repeat_pset(fieldset, pclass, lon, dy, dz, times):
                                  lon=lon, lat=lat, depth=depth, time=time,
                                  lonlatdepth_dtype=np.float32)
     return pset
-
 
 
 def run_EUC_skipped(lon=165, exp=0, v=1, dy=0.1, dz=25, runtime_days=1500):
@@ -166,7 +166,7 @@ def run_EUC_skipped(lon=165, exp=0, v=1, dy=0.1, dz=25, runtime_days=1500):
         pset_start = xlog['pset_start']
         xlog['file'] = pset.size
 
-        # Check unreleased particle ages need release times reset (defaults to min).
+        # Check unreleased particle need release times reset (default to min).
         # Reduce particle times to those in avail runtime.
         time_from_restart = pset_start - runtime.total_seconds()
 

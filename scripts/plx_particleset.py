@@ -12,7 +12,6 @@ import pandas as pd
 from pathlib import Path
 from datetime import datetime, timedelta
 from argparse import ArgumentParser
-from parcels import (Variable, JITParticle)
 
 import cfg
 from tools import mlogger
@@ -93,11 +92,15 @@ def restart_EUC(dy=0.1, dz=25, lon=165, exp='hist', repeatdt_days=6,
     try:
         start = (fieldset.time_origin.time_origin + timedelta(seconds=pset_start))
     except:
-        start = (pd.Timestamp(fieldset.time_origin.time_origin) + timedelta(seconds=pset_start))
+        start = (pd.Timestamp(fieldset.time_origin.time_origin) +
+                 timedelta(seconds=pset_start))
+
     xlog['Ti'] = start.strftime('%Y-%m-%d')
     xlog['Tf'] = (start - runtime).strftime('%Y-%m-%d')
 
-    logger.info(' {}: Runtime={}d: {} to {}: Rep={}d (x{})'.format(xlog['id'], runtime.days, xlog['Ti'], xlog['Tf'], repeatdt.days, repeats))
+    logger.info(' {}: Runtime={}d: {} to {}: Rep={}d (x{})'
+                .format(xlog['id'], runtime.days, xlog['Ti'],
+                        xlog['Tf'], repeatdt.days, repeats))
 
     # Add new particles.
     psetx = pset_euc(fieldset, pclass, lon, dy, dz, repeatdt, pset_start,
@@ -109,8 +112,11 @@ def restart_EUC(dy=0.1, dz=25, lon=165, exp='hist', repeatdt_days=6,
     pset.add(psetx)
     xlog['N'] = xlog['new'] + xlog['file']
 
-    logger.info(' {}: Particles: File={} New={} West={} I={} Total={}'.format(xlog['id'], xlog['file'], xlog['new'], xlog['west'], xlog['start'], pset.size))
-    logger.info(' {}: Lon={}: Lat={}: Depth={}'.format(xlog['id'], xlog['x'], xlog['y'], xlog['z']))
+    logger.info(' {}: Particles: File={} New={} West={} I={} Total={}'
+                .format(xlog['id'], xlog['file'], xlog['new'], xlog['west'],
+                        xlog['start'], pset.size))
+    logger.info(' {}: Lon={}: Lat={}: Depth={}'.format(xlog['id'], xlog['x'],
+                                                       xlog['y'], xlog['z']))
 
     vars = {}
     for v in pclass.getPType().variables:

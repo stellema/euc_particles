@@ -8,15 +8,11 @@ author: Annette Stellema (astellemas@gmail.com)
 """
 import numpy as np
 import xarray as xr
-import matplotlib as mpl
 import matplotlib.pyplot as plt
-from matplotlib.ticker import PercentFormatter
 
 import cfg
 from tools import test_signifiance
-from plx_fncs import (get_plx_id, get_zone_info, source_dataset,
-                      combine_source_indexes)
-
+from fncs import source_dataset
 
 colors = cfg.zones.colors
 names = cfg.zones.names
@@ -27,6 +23,7 @@ plt.rc('font', size=fsize)
 plt.rc('axes', titlesize=fsize)
 plt.rcParams['figure.figsize'] = [10, 7]
 plt.rcParams['figure.dpi'] = 200
+
 
 def source_pie_chart(ds, lon):
     """Source transport percent pie (historical and RCP8.5).
@@ -60,12 +57,7 @@ def source_pie_chart(ds, lon):
 
 
 def source_timeseries(exp, lon, var='uz'):
-    """Timeseries plot.
-
-    Todo:
-        - move Legend outside plot.
-
-    """
+    """Timeseries plot."""
     ds = source_dataset(lon, merge_interior=1)
     # dsm = ds.sel(exp=exp).resample(rtime="y").mean("rtime", keep_attrs=1)
     ds = ds.sel(rtime=slice('2012-12-31'))
@@ -79,7 +71,7 @@ def source_timeseries(exp, lon, var='uz'):
         name = ds[var].attrs['name']
         units = ds[var].attrs['units']
     except:
-        name, units= 'Transport', 'Sv'
+        name, units = 'Transport', 'Sv'
 
     sourceids = [1, 2, 3, 5, 6]
     merge_straits = 0
@@ -103,10 +95,12 @@ def source_timeseries(exp, lon, var='uz'):
         c = colours[z - 1]
         ax.plot(xdim, dz, c=c, label=label[z-1])
 
-    ax.set_title('{} EUC {} at {}°E'.format(cfg.exps[exp], name.lower(), lon), loc='left')
+    ax.set_title('{} EUC {} at {}°E'.format(cfg.exps[exp], name.lower(), lon),
+                 loc='left')
     ax.set_ylabel('{} [{}]'.format(name, units))
     ax.margins(x=0)
-    lgd = ax.legend()#bbox_to_anchor=(1.01, 1), loc='upper left')
+
+    lgd = ax.legend()
     plt.tight_layout()
     file = 'source_{}_timeseries_{}_{}_{}'.format(name, lon, cfg.exp[exp],
                                                   ''.join(map(str, sourceids)))
@@ -123,26 +117,20 @@ def source_histogram(ds, lon, var='age'):
         - and title letters
         - fix xlabels
     """
-    
+
     def plot_hist(dx, ax, bins, color, **kwargs):
-        # dx = dx
-        # dx = [dx.isel(exp=x).dropna('traj', 'all') for x in [0, 1]]
-        # weights = np.ones_like(dx) / dx.size # COnvert to percentage.
-        # dx = dx * weights
         weights = None
-        x, bins, _ = ax.hist(dx.isel(exp=0).dropna('traj', 'all'), bins, 
+        x, bins, _ = ax.hist(dx.isel(exp=0).dropna('traj', 'all'), bins,
                              histtype='bar', density=1, stacked=0,
-                             weights=weights, color=color, alpha=0.6)#, **kwargs)
-        _, bins, _ = ax.hist(dx.isel(exp=1).dropna('traj', 'all'), bins, 
+                             weights=weights, color=color, alpha=0.6)
+        _, bins, _ = ax.hist(dx.isel(exp=1).dropna('traj', 'all'), bins,
                              histtype='bar', density=1, stacked=0,
-                             weights=weights, color='k', alpha=0.6, fill=False, hatch='///')        
-        # ax.yaxis.set_major_formatter(PercentFormatter(dx[0].size))
- 
+                             weights=weights, color='k', alpha=0.6, fill=False,
+                             hatch='///')
+
         # Cut off last 5% of xaxis (index where <95% of total counts).
         xmax = bins[sum(np.cumsum(x) < sum(x) * 0.85) + 1]
-        # plt.xticks(np.arange(bins[0], xmax, 300))
         ax.set_xlim(xmin=bins[0], xmax=xmax)
-
         return ax
 
     fsize = 8
@@ -153,7 +141,7 @@ def source_histogram(ds, lon, var='age'):
     axes = axes.flatten()
     for i, z in enumerate(dsz.zone.values):
         ax = axes[i]
-        ax.set_title('{} {} '.format(cfg.letr[i], ds.names[i].item()), 
+        ax.set_title('{} {} '.format(cfg.letr[i], ds.names[i].item()),
                      loc='left', fontsize=fsize)
         dx = dsz.sel(zone=z)
 
@@ -183,9 +171,6 @@ def transport_source_bar_graph(exp=0, merge_interior=True):
         exp (str, optional): Historical or with RCP8.5. Defaults to 0.
         merge_interior (bool, optional): DESCRIPTION. Defaults to True.
 
-    Returns:
-        None.
-
     """
     width = 0.9  # Bar widths.
     kwargs = dict(alpha=0.7)  # Historical bar transparency.
@@ -194,7 +179,8 @@ def transport_source_bar_graph(exp=0, merge_interior=True):
 
     for i, ax in enumerate(axes.flatten()):
         lon = lons[i]
-        ax.set_title('{} EUC transport sources at {}°E'.format(cfg.letr[i], lon), loc='left')
+        ax.set_title('{} EUC transport sources at {}°E'
+                     .format(cfg.letr[i], lon), loc='left')
 
         # Open data.
         ds = source_dataset(lon, merge_interior)
@@ -255,13 +241,13 @@ def print_transport_sources(lon):
         dx = dx.mean('rtime').values
         print('{:>27}: Hist={:.3f} RCP={:.3f} diff={: .2f}({: .1f}%) h%={:.1f}% {}'
               .format(ds.names.sel(zone=z).item(),
-                      *dx,dx[1] - dx[0],
-                      ((dx[1] - dx[0])/ total) * 100,
+                      *dx, dx[1] - dx[0],
+                      ((dx[1] - dx[0]) / total) * 100,
                       (dx[0] / total) * 100, p))
 
 
-lon = 165
-exp = 0
+# lon = 165
+# exp = 0
 
 # # Source bar graph.
 # transport_source_bar_graph(exp=0)
@@ -275,21 +261,18 @@ exp = 0
 #     ds = ds.sel(zone=inds)
 #     source_histogram(ds, lon, var='age')
 
-# Print values.
-for lon in lons:
-    print_transport_sources(lon)
+# # Print values.
+# for lon in lons:
+#     print_transport_sources(lon)
 
-## Timeseries.
+# # Timeseries.
 # ds_m = ds.resample(time="1MS").mean("time", keep_attrs=1)
 # source_timeseries(ds, exp, lon, var='uz')
 
 # # Pie chart.
 # source_pie_chart(ds, lon)
 
-
-# from plx_fncs import source_dataset
 # xid = cfg.data / 'sources/plx_spinup_{}_{}_v1y6.nc'.format(cfg.exp[exp], lon)
-
 # ds = source_dataset(lon, merge_interior=False).isel(exp=0)
 # dp = xr.open_dataset(xid)
 # dp = dp.isel(zone=cfg.zones.inds)

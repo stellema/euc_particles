@@ -22,7 +22,8 @@ logger = mlogger('particles', parcels=False, misc=False)
 def particle_info(xid, latest=True):
     if latest:
         r = int(xid.stem[-2:])
-        r = np.max([int(f.stem[-2:]) for f in xid.parent.glob(str(xid.stem[:-2]) + '*.nc')])
+        r = np.max([int(f.stem[-2:])
+                    for f in xid.parent.glob(str(xid.stem[:-2]) + '*.nc')])
         xid = xid.parent / '{}{:02d}.nc'.format(xid.stem[:-2], r)
         print(r, xid.name)
 
@@ -70,7 +71,7 @@ def particle_info(xid, latest=True):
     return
 
 
-if __name__ == "__main__" and cfg.home.drive != 'E:':
+if __name__ == "__main__" and cfg.home.drive != 'C:':
     p = ArgumentParser(description="""Run EUC Lagrangian experiment.""")
     p.add_argument('-f', '--file', default='plx_hist_190_v1r00.nc', type=str,
                    help='ParticleFile name.')
@@ -80,6 +81,7 @@ if __name__ == "__main__" and cfg.home.drive != 'E:':
     file = args.file
     xid = cfg.data / ('v1/' + file)
     particle_info(xid, latest=args.latest)
+
 elif __name__ == "__main__":
-    xid = cfg.data / 'v{}/plx_hist_190_v{}r00.nc'.format(1)
+    xid = cfg.data / 'v{}/plx_hist_190_v1r00.nc'
     particle_info(xid)

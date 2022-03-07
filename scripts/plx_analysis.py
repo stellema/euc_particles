@@ -6,54 +6,53 @@ author: Annette Stellema (astellemas@gmail.com)
 
 
 """
-import math
-import logging
 import cartopy
-import calendar
 import numpy as np
 import xarray as xr
-import pandas as pd
-from scipy import stats
-from pathlib import Path
-from functools import wraps
 import shapely.geometry as sgeom
 from argparse import ArgumentParser
-from datetime import datetime, timedelta
 import matplotlib.pyplot as plt
-import matplotlib.colors as colors
-import matplotlib.ticker as mticker
-from matplotlib.offsetbox import AnchoredText
+
 
 import cfg
 from tools import coord_formatter
-from main import (open_plx_data, get_plx_id, plx_snapshot, combine_plx_datasets)
+from fncs import combine_plx_datasets
 
 
-def create_fig_axis(land=True, projection=None, central_longitude=0, fig=None, ax=None, rows=1, cols=1, figsize=None):
-    projection = cartopy.crs.PlateCarree(central_longitude) if projection is None else projection
+def create_fig_axis(land=True, projection=None, central_longitude=0,
+                    fig=None, ax=None, rows=1, cols=1, figsize=None):
+    if projection is None:
+        projection = cartopy.crs.PlateCarree(central_longitude)
+
     if ax is None:
-        fig, ax = plt.subplots(rows, cols, subplot_kw={'projection': projection}, figsize=figsize)
+        fig, ax = plt.subplots(rows, cols, figsize=figsize,
+                               subplot_kw={'projection': projection})
+
         if rows > 1 or cols > 1:
             ax = ax.flatten()
+        xlocs = [110, 120, 160, -160, -120, -80, -60]
+        ylocs = [-20, -10, 0, 10, 20]
 
-        ax.gridlines(xlocs=[110, 120, 160, -160, -120, -80, -60],
-                     ylocs=[-20, -10, 0, 10, 20], color='grey')
+        ax.gridlines(xlocs=xlocs, ylocs=ylocs, color='grey')
+
         gl = ax.gridlines(draw_labels=True, linewidth=0.001,
-                          xlocs=[120, 160, -160, -120, -80],
-                          ylocs=[-10, 0, 10], color='grey')
+                          xlocs=xlocs[1:-1], ylocs=ylocs[1:-1], color='grey')
         gl.bottom_labels = True
         gl.top_labels = False
         gl.right_labels = False
         gl.xformatter = cartopy.mpl.gridliner.LONGITUDE_FORMATTER
         gl.yformatter = cartopy.mpl.gridliner.LONGITUDE_FORMATTER
+
     if land:
         ax.coastlines()
-        ax.add_feature(cartopy.feature.LAND, zorder=0, edgecolor='black', facecolor='grey')
+        ax.add_feature(cartopy.feature.LAND, zorder=0, edgecolor='black',
+                       facecolor='grey')
 
     return fig, ax
 
 
-def plot_transport_density(exp, lon, r_range, xids, u, x, y, ybins, xbins, t=None, how='mean'):
+def plot_transport_density(exp, lon, r_range, xids, u, x, y, ybins, xbins,
+                           t=None, how='mean'):
     """Plot time-normalised particle transport density."""
     box = sgeom.box(minx=120, maxx=xbins[-1], miny=-15, maxy=ybins[-1])
     x0, y0, x1, y1 = box.bounds
@@ -61,14 +60,19 @@ def plot_transport_density(exp, lon, r_range, xids, u, x, y, ybins, xbins, t=Non
     box_proj = cartopy.crs.PlateCarree(central_longitude=0)
 
     fig, ax = create_fig_axis(land=True, projection=proj, figsize=(12, 4))
-    cs = ax.scatter(x, y, s=10, c=u, cmap=plt.cm.viridis, #vmax=1e3,
+    cs = ax.scatter(x, y, s=10, c=u, cmap=plt.cm.viridis,
                     edgecolors='face', linewidths=2.5, transform=box_proj)
+
     cbar = fig.colorbar(cs, shrink=0.9, pad=0.02, extend='both')
     cbar.set_label('Transport [Sv]', size=10)
     ax.set_extent([x0, x1, y0, y1], crs=box_proj)
     ax.set_aspect('auto')
-    ax.set_title('Equatorial Undercurrent {} transport pathways to {}'.format(cfg.exp[iexp], *coord_formatter(lon, 'lon')))
+
+    ax.set_title('Equatorial Undercurrent {} transport pathways to {}'
+                 .format(cfg.exp[iexp], *coord_formatter(lon, 'lon')))
+
     tstr = 'all' if t is None else str(t)
+
     plt.savefig(cfg.fig/'parcels/transport_density_map_{}_{}_{}-{}_{}.png'
                 .format(how, xids[0].stem[:-2], *r_range, tstr),
                 bbox_inches='tight', pad_inches=0.2)
@@ -117,6 +121,7 @@ def latlon_groupby_func(df, dim, bins, var, func, ):
             for k0, v0 in df.groupby_bins(dim[0], bins[0], labels=labels[0])
             for k1, v1 in v0.groupby_bins(dim[1], bins[1], labels=labels[1]))
 
+
 def particle_density(iexp, lon, r, t=None, how='mean'):
     """ Sort by location."""
     t = None if t < 0 else t
@@ -129,16 +134,14 @@ def particle_density(iexp, lon, r, t=None, how='mean'):
     for v in ['z', 'zone', 'distance', 'unbeached']:
         ds = ds.drop(v)
 
-    if how == 'mean':
-        if t is None:
-            xy, du = zip(*list(latlon_groupby_func(ds, dim=['lat', 'lon'], bins=[ybins, xbins], var='u', func=np.nanmean)))
-        else:
-            xy, du = zip(*list(latlon_groupby_ifunc(ds.isel(obs=t), dim=['lat', 'lon'], bins=[ybins, xbins], var='u', func=np.nanmean)))
+    dims = ['lat', 'lon']
+
+    func = np.nanmean if how == 'mean' else sum
+
+    if t is None:
+        xy, du = zip(*list(latlon_groupby_func(ds, dims, [ybins, xbins], 'u', func=func)))
     else:
-        if t is None:
-            xy, du = zip(*list(latlon_groupby_func(ds, dim=['lat', 'lon'], bins=[ybins, xbins], var='u', func=sum)))
-        else:
-            xy, du = zip(*list(latlon_groupby_ifunc(ds.isel(obs=t), dim=['lat', 'lon'], bins=[ybins, xbins], var='u', func=sum)))
+        xy, du = zip(*list(latlon_groupby_ifunc(ds.isel(obs=t), dims, [ybins, xbins], 'u', func=func)))
 
 
     # Index key to sort latitude and longitude lists.
@@ -153,19 +156,21 @@ def particle_density(iexp, lon, r, t=None, how='mean'):
 
     plot_transport_density(iexp, lon, r_range, xids, u, x, y, ybins, xbins, t, how)
     dv = dv.load()
-    dv.to_netcdf(cfg.data/'map_{}_{}_{}-{}.nc'.format(xids[0].stem[:-2], how, *r_range))
+    dv.to_netcdf(cfg.data / 'map_{}_{}_{}-{}.nc'.format(xids[0].stem[:-2], how,
+                                                        *r_range))
 
 
-
-if __name__ == "__main__" and cfg.home.drive != 'E:':
+if __name__ == "__main__" and cfg.home.drive != 'C:':
     p = ArgumentParser(description="""Run EUC Lagrangian experiment.""")
-    p.add_argument('-x', '--lon', default=165, type=int, help='Particle start longitude(s).')
+    p.add_argument('-x', '--lon', default=165, type=int, help='Start lon.')
     p.add_argument('-e', '--exp', default=0, type=int, help='Scenario.')
-    p.add_argument('-r', '--rr', default=5, type=int, help='Scenario.')
-    p.add_argument('-t', '--time', default=-1, type=int, help='Scenario.')
-    p.add_argument('-m', '--method', default='sum', type=str, help='Scenario.')
+    p.add_argument('-r', '--rr', default=5, type=int)
+    p.add_argument('-t', '--time', default=-1, type=int)
+    p.add_argument('-m', '--method', default='sum', type=str)
     args = p.parse_args()
-    particle_density(iexp=args.exp, lon=args.lon, r=args.rr, t=args.time, how=args.method)
+
+    particle_density(iexp=args.exp, lon=args.lon, r=args.rr, t=args.time,
+                     how=args.method)
 
 elif __name__ == "__main__":
     iexp = 0

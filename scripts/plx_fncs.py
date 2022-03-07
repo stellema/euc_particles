@@ -78,7 +78,6 @@ def ofam_fieldset(time_bnds='full', exp='hist', chunks=300, add_xfields=True):
 
     Returns:
         fieldset (parcels.Fieldset)
-        time_bnds='full'; exp='hist'; chunks=True;cs=[1, 300, 300]; add_xfields=True
     """
     if time_bnds == 'full':
         if exp == 'hist':
@@ -212,7 +211,9 @@ def pset_euc(fieldset, pclass, lon, dy, dz, repeatdt, pset_start, repeats,
 
 
 def del_westward(pset):
-    inds, = np.where((pset.particle_data['u'] <= 0.) & (pset.particle_data['age'] == 0.))
+    inds, = np.where((pset.particle_data['u'] <= 0.) &
+                     (pset.particle_data['age'] == 0.))
+
     for d in pset.particle_data:
         pset.particle_data[d] = np.delete(pset.particle_data[d], inds, axis=0)
     pset.particle_data['u'] = (np.cos(pset.particle_data['lat'] * math.pi / 180,
@@ -269,7 +270,8 @@ def pset_from_file(fieldset, pclass, filename, repeatdt=None, restart=True,
     """Initialise the ParticleSet from a netcdf ParticleFile.
 
     This creates a new ParticleSet based on locations of all particles written
-    in a netcdf ParticleFile at a certain time. Particle IDs are preserved if restart=True
+    in a netcdf ParticleFile at a certain time.
+    Particle IDs are preserved if restart=True
     """
     pfile = xr.open_dataset(str(filename), decode_cf=False)
 
