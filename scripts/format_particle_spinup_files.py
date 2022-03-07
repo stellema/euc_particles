@@ -34,13 +34,16 @@ from argparse import ArgumentParser
 
 import cfg
 from tools import mlogger, timeit, append_dataset_history
-from particle_id_remap import (create_particle_ID_remap_dict,
-                               patch_particle_IDs_per_release_day)
-from plx_fncs import (get_plx_id, open_plx_data, update_particle_data_sources,
-                      particle_source_subset, get_max_particle_file_ID,
-                      remap_particle_IDs, get_new_particle_IDs)
-from format_particle_files import ParticleFilenames, merge_particle_trajectories
-from create_source_files import *
+from remap_particle_id import create_particle_ID_remap_dict
+from fncs import (open_plx_data, update_particle_data_sources,
+                  particle_source_subset, get_max_particle_file_ID,
+                  remap_particle_IDs)
+from format_particle_files import (ParticleFilenames,
+                                   merge_particle_trajectories)
+from create_source_files import (source_particle_ID_dict, group_euc_transport,
+                                 get_final_particle_obs,
+                                 group_particles_by_variable)
+
 logger = mlogger('misc', parcels=False, misc=True)
 
 
@@ -53,7 +56,16 @@ def spinup_particle_IDs(lon, exp, v):
 
 
 @timeit
-def format_spinup_file(lon, exp, v=1, r=0, spinup_year=0):
+def format_spinup_file(lon, exp, v=1, spinup_year=0):
+    """Format particle file: merge trajectories, fix zone & trim trajectories.
+
+    Args:
+        lon (int): Release Longitude {165, 190, 220, 250}.
+        exp (int): Scenario {0, 1}.
+        v (int, optional): Run version. Defaults to 1.
+        r (int, optional): File repeat number {0-9}. Defaults to 0.
+        spinup_year (int, optional): Spinup year offset. Defaults to 0.
+    """
     test = True if cfg.home.drive == 'C:' else False
 
     # Files to search.
@@ -63,21 +75,19 @@ def format_spinup_file(lon, exp, v=1, r=0, spinup_year=0):
 
     # New filename.
     xid = files.spinup[0]
-    file_new = cfg.data / 'plx/plx_spinup_{}_{}_v{}y{}.nc'.format(cfg.exp[exp],
-                                                                  lon, v, spinup_year)
+    file_new = (cfg.data / 'plx/plx_spinup_{}_{}_v{}y{}.nc'
+                .format(cfg.exp[exp], lon, v, spinup_year))
     logger.info('{}: Formating particle spinup file.'.format(xid.stem))
 
     # Check if file already exists.
     if file_new.exists():
         return
-    
+
     # Create/open particle_remap dictionary.
     if not files.remap_dict.exists():
         remap_dict = create_particle_ID_remap_dict(lon, exp, v)
     else:
         remap_dict = np.load(files.remap_dict, allow_pickle=True).item()
-
-    inv_map = {v: k for k, v in remap_dict.items()}
 
     ds = open_plx_data(xid)
     dp = open_plx_data(xids_p[0])
@@ -91,10 +101,6 @@ def format_spinup_file(lon, exp, v=1, r=0, spinup_year=0):
 
     # Particle IDs that haven't reached a source (original IDs).
     source_traj = spinup_particle_IDs(lon, exp, v)
-    inv_source_traj = np.vectorize(inv_map.get)(source_traj)
-
-    # traj = traj[np.isin(traj, inv_source_traj)]
-    # traj_patch = traj_patch[np.isin(traj_patch + last_id + 1, inv_source_traj)]
 
     # Merge trajectory data across files.
     if test:
@@ -151,14 +157,14 @@ def format_spinup_file(lon, exp, v=1, r=0, spinup_year=0):
     ds.close()
 
 
-
 @timeit
 def plx_source_file_spinup(lon, exp, v, spinup_year):
-    """Creates netcdf file with particle source information."""
+    """Create netcdf file with particle source information."""
     test = True if cfg.home.drive == 'C:' else False
 
     # Filenames.
-    xid = cfg.data / 'plx/plx_spinup_{}_{}_v{}y{}.nc'.format(cfg.exp[exp], lon, v, spinup_year)
+    xid = (cfg.data / 'plx/plx_spinup_{}_{}_v{}y{}.nc'
+           .format(cfg.exp[exp], lon, v, spinup_year))
     xid_new = cfg.data / 'sources/{}'.format(xid.name)
 
     # Check if file already exists.
@@ -195,7 +201,7 @@ def plx_source_file_spinup(lon, exp, v, spinup_year):
 
     # Save dataset.
     logger.info('{}: Saving...'.format(xid.stem))
-    
+
     # Add compression encoding.
     encoding = {var: dict(zlib=True, complevel=5) for var in ds.data_vars}
     ds.to_netcdf(xid_new, encoding=encoding, compute=True)
@@ -206,9 +212,9 @@ if __name__ == "__main__":
     p = ArgumentParser(description="""Format plx particle files.""")
     p.add_argument('-x', '--lon', default=250, type=int, help='Longitude.')
     p.add_argument('-e', '--exp', default=0, type=int, help='Scenario {0, 1}.')
-    p.add_argument('-y', '--year', default=0, type=int, help='Scenario {0, 1}.')
+    p.add_argument('-y', '--year', default=0, type=int, help='Year offset.')
     args = p.parse_args()
-    # lon, exp, v, r, spinup_year = 165, 0, 1, 0, 0
 
-    format_spinup_file(args.lon, args.exp, v=1, r=r, spinup_year=args.year)
+    # lon, exp, v, spinup_year = 165, 0, 1, 0
+    format_spinup_file(args.lon, args.exp, v=1, spinup_year=args.year)
     plx_source_file_spinup(args.lon, args.exp, v=1, spinup_year=args.year)
