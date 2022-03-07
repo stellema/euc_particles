@@ -39,22 +39,9 @@ def combine_plx_datasets(exp, lon, v, r_range=[0, 10], **kwargs):
     return xids, ds
 
 
-def plx_snapshot(ds, var, value):
-    """Return traj, obs indices of variable matching value."""
-    return np.where(np.ma.filled(ds.variables[var], np.nan) == value)
-
-
 def drop_particles(ds, traj):
     """Drop trajectoroies from dataset."""
     return ds.where(~ds.traj.isin(traj), drop=True)
-
-
-def filter_by_year(ds, year):
-    """Select trajectories based on release (sink) year."""
-    # Indexes where particles are released (age=0).
-    dx = ds.where(ds.age == 0, drop=True)
-    traj = dx.where(dx['time.year'].max(dim='obs') == year, drop=True).traj
-    return ds.sel(traj=traj)
 
 
 def get_zone_info(ds, zone):
@@ -64,7 +51,7 @@ def get_zone_info(ds, zone):
     if traj.size > 0:
         age = ds_z.age.min('obs')  # Age when first reaches zone.
     else:
-        age = ds_z.age * np.nan  # BUG?
+        age = ds_z.age * np.nan
     return traj, age
 
 
@@ -95,18 +82,18 @@ def update_particle_data_sources(ds, lon):
 
     """
     # Mask all values of these zone IDs.
-    ds['zone'] = ds.zone.where((ds.zone != 4.) & (ds.zone != 5.) &
-                               (ds.zone != 6))
+    def mask_source_id(ds, z):
+        ds['zone'] = ds.zone.where((ds.zone != z))
+        return ds
 
+    for z in [4., 5., 6., 7., 8., 9., 10.]:
+        ds = mask_source_id(ds, z)
+
+    var = 'zone'
     dims = ds.zone.dims
 
-    # Zone 4: South of EUC
-    # ds['zone'] = (dims, np.where((ds.lon.round(1) >= lon + 0.1) &
-    #                              (ds.lon.round(1) <= lon + 0.2) &
-    #                              (ds.lat <= 2.6) &
-    #                              (ds.lat >= -2.6),
-    #                              4, ds.zone.values))
-    ds['zone'] = (dims, np.where((ds.lon > lon + 0.1) &
+    # Zone 4: South Interior
+    ds[var] = (dims, np.where((ds.lon > lon + 0.1) &
                                  (ds.lon < lon + 0.2) &
                                  (ds.lat <= 2.6) &
                                  (ds.lat >= -2.6),
@@ -196,7 +183,6 @@ def get_new_particle_IDs(ds):
     return traj
 
 
-
 def combine_source_indexes(ds, z1, z2):
     """Merge the values of two sources in source dataset.
 
@@ -279,7 +265,6 @@ def source_dataset(lon, merge_interior=False):
         - Change order of source dimension
         - merge sources
 
-
     """
     # Open and concat data for exah scenario.
     ds = [xr.open_dataset(get_plx_id(i, lon, 1, None, 'sources'))
@@ -304,4 +289,3 @@ def source_dataset(lon, merge_interior=False):
     if merge_interior:
         ds = merge_interior_sources(ds)
     return ds
-
