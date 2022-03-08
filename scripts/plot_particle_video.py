@@ -22,28 +22,12 @@ GeoAxes._pcolormesh_patched = Axes.pcolormesh
 
 import cfg
 import tools
-from plx_fncs import get_plx_id
-from plot_pathways import create_map_axis, plot_particle_source_map
+from fncs import get_plx_id
+from plots import create_map_axis, plot_particle_source_map
 
 
 def init_particle_data(ds, ntraj=4, ndays=1200, method='thin'):
-    """
-
-
-    Args:
-        ds (TYPE): DESCRIPTION.
-        ntraj (TYPE, optional): DESCRIPTION. Defaults to None.
-        ndays (TYPE, optional): DESCRIPTION. Defaults to 1200.
-        method (TYPE, optional): {'thin', 'slice'}. Defaults to 'thin'.
-
-    Returns:
-        lat (TYPE): DESCRIPTION.
-        lon (TYPE): DESCRIPTION.
-        time (TYPE): DESCRIPTION.
-        plottimes (TYPE): DESCRIPTION.
-
-    """
-
+    """     """
     if isinstance(ntraj, int):
         if method == 'slice':
             ds = ds.isel(traj=slice(ntraj))
@@ -71,98 +55,61 @@ def init_particle_data(ds, ntraj=4, ndays=1200, method='thin'):
     return lat, lon, time, plottimes
 
 
-def plot_particle_movie(file, ds, movie_forward=False, plot_type='scatter',
+def plot_particle_movie(rlon, file, ds, movie_forward=False, plot_type='scatter',
                         ntraj=4, ndays=1200, method='thin'):
-    """
-
-    Args:
-        ds (TYPE): DESCRIPTION.
-        movie_forward (TYPE, optional): DESCRIPTION. Defaults to False.
-
-    Returns:
-        graph (TYPE): DESCRIPTION.
-
-    Notes:
-
-    """
-    # os.environ["HDF5_USE_FILE_LOCKING"] = "FALSE"
+    """ """
     def format_title_timer(times, t):
         msg = ''
         return '{}{}'.format(msg, str(times[t])[:10])
 
-
     lat, lon, time, plottimes = init_particle_data(ds, ntraj, ndays, method)
-    map_extent = [112, 288, -12, 12]
+    map_extent = [112, 288, -11, 12]
     yticks = np.arange(-10, 11, 5)
     xticks = np.arange(120, 290, 20)
-    # fig, ax, proj = create_map_axis(figsize=(12, 5), map_extent=map_extent,
-    #                                 xticks=xticks, yticks=yticks,
-    #                                 add_ticks=True, add_ocean=True)
-    fig, ax, proj = plot_particle_source_map(220, merge_interior=True, add_ocean=1)
+
+    fig, ax, proj = plot_particle_source_map(rlon, merge_interior=True,
+                                             add_ocean=True, add_legend=False)
 
     plt.tight_layout()
     title = plt.title(format_title_timer(plottimes, 0))
     t = 0
     b = plottimes[t] == time
     X, Y = lon[b], lat[b]
-    if plot_type == 'scatter':
-        graph = ax.scatter(X, Y, s=5, marker='o', c='k', zorder=20,
-                           transform=proj)
+    graph = ax.scatter(X, Y, c='k', s=5, marker="o", zorder=20, transform=proj)
+    plt.tight_layout()
 
-    elif plot_type == 'line':
-        graph = []
-        for p in range(lat.shape[0]):
-
-            b = plottimes[t] <= time[p]
-            X, Y = lon[p][b], lat[p][b]
-            graph.append(ax.plot(X, Y, 'k', zorder=20,
-                           transform=proj))
-
-    def animate(t, graph):
+    def animate(t):
         title.set_text(format_title_timer(plottimes, t))
+        b = plottimes[t] == time
+        X, Y = lon[b], lat[b]
+        b = plottimes[t] == time
 
-        if plot_type == 'scatter':
-            b = plottimes[t] == time
-            X, Y = lon[b], lat[b]
-            graph.set_offsets(np.c_[X, Y])
-            fig.canvas.draw()
-
-        elif plot_type == 'line':
-            for p in range(lat.shape[0]):
-                b = plottimes[t] <= time[p]
-                X, Y = lon[p][b], lat[p][b]
-                graph[p].set_data(X, Y)
+        # fig.canvas.draw()
         return graph,
-
 
     frames = np.arange(1, len(plottimes))
     plt.rc('animation', html='html5')
-    fargs = fargs=(graph,)
-
-    anim = animation.FuncAnimation(fig, animate, fargs=fargs,
-                                   frames=frames, interval=850,
-                                   blit=1, repeat=0)
+    anim = animation.FuncAnimation(fig, animate,  frames=frames,
+                                   interval=1200, blit=True, repeat=False)
     plt.tight_layout()
     plt.close()
 
     # Filename.
     i = 0
-    filename = cfg.fig/'vids/{}_{}.mp4'.format(file.stem, i)
+    filename = cfg.fig / 'vids/{}_{}.mp4'.format(file.stem, i)
     while filename.exists():
         i += 1
-        filename = cfg.fig/'vids/{}_{}.mp4'.format(file.stem, i)
+        filename = cfg.fig / 'vids/{}_{}.mp4'.format(file.stem, i)
 
     # Save.
-    writer = animation.writers['ffmpeg'](fps=20)
-    anim.save(str(filename), writer=writer)
+    writer = animation.writers['ffmpeg'](fps=18)
+    anim.save(str(filename), writer=writer, dpi=300)
 
 
-exp  = 0
-lon = 220
-v = 1
-r = 0
+lon = 250
+exp, v, r = 0, 1, 0
 file = get_plx_id(exp, lon, v, r, 'plx')
 ds = xr.open_dataset(file, mask_and_scale=True)
+rlon = lon
 ds.attrs['lon'] = lon
-plot_particle_movie(file, ds, plot_type='scatter',
-                    ntraj=50, ndays=2500, method='thin')
+plot_particle_movie(rlon, file, ds, ntraj=30, ndays=3500, method='thin')
