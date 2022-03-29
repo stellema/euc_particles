@@ -16,16 +16,6 @@ import cartopy.crs as ccrs
 import cartopy.feature as cfeature
 from mpl_toolkits.axes_grid1 import make_axes_locatable
 
-
-# from mpl_toolkits.axes_grid1 import make_axes_locatable
-# from matplotlib.colors import LinearSegmentedColormap
-# import matplotlib.pyplot as plt
-# from matplotlib.colors import LinearSegmentedColormap
-# from matplotlib.markers import MarkerStyle
-# import matplotlib.colors as cm
-# from matplotlib.cm import ScalarMappable
-# from matplotlib.colors import Normalize
-
 import cfg
 from tools import coord_formatter, convert_longitudes
 
@@ -43,7 +33,7 @@ def source_cmap(zcolor=cfg.zones.colors):
     n = len(zcolor)
     zmap = mpl.colors.ListedColormap(zcolor)
     norm = mpl.colors.BoundaryNorm(np.linspace(1, n, n+1), zmap.N)
-    cmappable = mpl.colors.ScalarMappable(norm, cmap=zmap)
+    cmappable = mpl.cm.ScalarMappable(norm, cmap=zmap)
     return zmap, cmappable
 
 
@@ -181,9 +171,9 @@ def plot_ofam3_land(ax, extent=[115, 290, -12, 12], coastlines=True):
     mapcmap = mpl.colors.ListedColormap(['gray', 'lightcyan'])
 
     # OFAM3 Data.
-    dv = xr.open_dataset(cfg.ofam / 'ocean_v_1981_01.nc')
-    dv = dv.rename({'yu_ocean': 'lat', 'xu_ocean': 'lon'})
-    dv = dv.v.isel(Time=0, st_ocean=0)
+    dv = xr.open_dataset(cfg.ofam / 'ocean_w_1981_01.nc')
+    dv = dv.rename({'yt_ocean': 'lat', 'xt_ocean': 'lon'})
+    dv = dv.w.isel(Time=0, sw_ocean=0)
 
     # Set: land=0 & ocean=1.
     dv = xr.where(np.isnan(dv), 0, 1)
@@ -273,17 +263,20 @@ def plot_particle_source_map(lon, merge_interior=True, add_ocean=True,
     def add_source_label(ax, z_index, labels, proj):
         """Latitude and longitude points defining source regions."""
         text = [z.name_full for z in cfg.zones.list_all]
-        for i in [0, 1, 2, 6]:
-            text[i] = text[i].replace(' ', '\n')
+
+        text[3] = 'EUC'
+        for i, n in zip([0, 1, 2, 6], [0, 2, 1, 4]):
+
+            text[i] = text[i].replace(' ', '\n' + n * ' ')
 
         loc = np.zeros((len(text), 2)) * np.nan
-        loc[0] = [-8.6, 149]
-        loc[1] = [-5, 156]  # SS
+        loc[0] = [-8.0, 149]
+        loc[1] = [-5.5, 155]  # SS
         loc[2] = [8.9, 127]
         loc[3] = [0, lon + 2]
         loc[4] = [-5, lon + 2]
         loc[5] = [5, lon + 2]  # North euc
-        loc[6] = [3.1, 127]
+        loc[6] = [-5.8, 124]
         loc[7] = [9, 175]  # North int
         loc[8] = [-8, 175]
 
@@ -324,12 +317,13 @@ def plot_particle_source_map(lon, merge_interior=True, add_ocean=True,
         z_index = z_index[mask].astype(dtype=int)
         lons, lats = lons[mask], lats[mask]
 
-    map_extent = [112, 288, -12, 12]
+    figsize = (12, 5) if add_legend else (15, 6)
+    map_extent = [112, 288, -11, 12]
     yticks = np.arange(-10, 11, 5)
     xticks = np.arange(120, 290, 20)
-    fig, ax, proj = create_map_axis(map_extent=map_extent, xticks=xticks,
-                                    yticks=yticks, add_gridlines=False,
-                                    add_ocean=add_ocean)
+    fig, ax, proj = create_map_axis(figsize, map_extent=map_extent,
+                                    xticks=xticks, yticks=yticks,
+                                    add_gridlines=False, add_ocean=add_ocean)
 
     # Plot lines between each lat & lon pair coloured by source.
     for i, z in enumerate(z_index):

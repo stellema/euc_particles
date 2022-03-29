@@ -1,3 +1,4 @@
+
 # -*- coding: utf-8 -*-
 """
 created: Mon May  4 16:35:39 2020
@@ -80,61 +81,57 @@ height = width / 1.718
 dx = 0.1
 e1, e2, e3, e4 = [x - dx for x in [165, 190, 220, 250]]
 j1, j2 = -6.1, 8
-
+x_west = 120.1
+lons = [165, 190, 220, 250]
+inner_lons = [[128.5, *lons, 278.5], [155, *lons, 280]]
 
 @dataclass
 class ZoneData:
     """Pacific Ocean Zones."""
 
-    Zone = namedtuple("Zone", "name id name_full loc")
-    vs = Zone('vs', 1, 'Vitiaz Strait', [147.6, 149.6, j1, j1])
-    ss = Zone('ss', 2, 'Solomon Strait', [151.6, 154.6, -5, -5])
-    mc = Zone('mc', 3, 'Mindanao Current', [126.0, 128.5, j2, j2])
-    ecr = Zone('ecr', 4, 'EUC recirculation', [[e1, e1, -2.6, 2.6],
-                                               [e2, e2, -2.6, 2.6],
-                                               [e3, e3, -2.6, 2.6],
-                                               [e4, e4, -2.6, 2.6]])
-    ecs = Zone('ecs', 5, 'South of EUC', [[e1, e1, j1, -2.6 - dx],
-                                          [e2, e2, j1, -2.6 - dx],
-                                          [e3, e3, j1, -2.6 - dx],
-                                          [e4, e4, j1, -2.6 - dx]])
-    ecn = Zone('ecn', 6, 'North of EUC', [[e1, e1, 2.6 + dx, j2],
-                                          [e2, e2, 2.6 + dx, j2],
-                                          [e3, e3, 2.6 + dx, j2],
-                                          [e4, e4, 2.6 + dx, j2]])
-    idn = Zone('idn', 7, 'Indonesian Seas', [[122.8, 140.4, j1, j1],
-                                             [122.8, 122.8, j1, j2]])
-    nth = Zone('nth', 8, 'North Interior', [128.5 + dx, e4 + dx, j2, j2])
-    sth = Zone('sth', 9, 'South Interior', [155, e4 + dx, j1, j1])
-    oob = Zone('oob', 10, 'Out of Bounds', [[120, 294.9, -15, -15],
-                                            [120, 294.9, 14.9, 14.9],
-                                            [120, 120, -15, 14.9],
-                                            [294.9, 294.9, -15, 14.9]])
-    list_all = [vs, ss, mc, ecr, ecs, ecn, idn, nth, sth, oob]
-    # colors = ['darkorange', 'deeppink', 'mediumspringgreen', 'deepskyblue',
-    #           'seagreen', 'blue', 'red', 'darkviolet', 'k', 'y']
-    # colors = ['darkorange', 'deeppink', 'blue',
-    #           'seagreen', 'mediumspringgreen','deepskyblue',
-    #           'red', 'darkviolet', 'y', 'k']
-    # colors = ['darkorange', 'deeppink', 'blue', 'mediumspringgreen',
-    #           'seagreen', 'deepskyblue',
-    #           'red', 'darkviolet', 'y', 'violet']
+    Zone = namedtuple("Zone", "id name name_full loc")
+    Zone.__new__.__defaults__ = (None,) * len(Zone._fields)
+    nz = Zone(0, 'nz', 'None')
+    vs = Zone(1, 'vs', 'Vitiaz Strait', [j1, np.nan, 147.6, 149.6])
+    ss = Zone(2, 'ss', 'Solomon Strait', [-5, np.nan, 151.6, 154.6])
+    mc = Zone(3, 'mc', 'Mindanao Current', [8, np.nan, 126.0, 128.5])
+    cs = Zone(4, 'cs', 'Celebes Sea', [[j2, np.nan, x_west, 123],
+                                       [0.5, j2, x_west, np.nan]])
+    idn = Zone(5, 'idn', 'Indonesian Seas', [[-8.7, -8.7, 122.2, 140.6],
+                                             [0.4, -8.5, x_west, np.nan]])
 
-    colors = ['darkorange',
-              'deeppink',
-              'mediumspringgreen', # MC
-              'violet', # EUC`
-              'blue',
-              'k',
-              'darkviolet', #South interior
-              'royalblue', #North interior
-              'seagreen', #INDO
-              'y'] # None
+    nth = Zone(6, 'nth', 'North Interior', [j2, np.nan, mc.loc[1], 278.5])
+    sth = Zone(10, 'sth', 'South Interior', [j1, np.nan, 155, 280])
+    _all = [nz, vs, ss, mc, idn, cs, nth, sth]
 
-    inds = np.append(np.arange(1, 10, dtype=int), [0])
-    inds[6], inds[8] = inds[8], inds[6]
-    names = [z.name_full for z in list_all]
-    names[-1] = 'None'
-    names = np.array(names)[inds - 1]
+    colors = ['y', 'darkorange', 'deeppink', 'mediumspringgreen',
+              'seagreen', 'darkviolet', 'royalblue']
+    names = [z.name_full for z in _all]
 
+# @dataclass
+# class ZoneData:
+#     """Pacific Ocean Zones."""
+
+#     Zone = namedtuple("Zone", "name id name_full loc")
+#     vs = Zone('vs', 1, 'Vitiaz Strait', [-6.1, np.nan, 147.6, 149.6])
+#     ss = Zone('ss', 2, 'Solomon Strait', [-5, np.nan, 151.6, 154.6])
+#     mc = Zone('mc', 3, 'Mindanao Current', [8, np.nan, 126.0, 128.5])
+#     ecr = Zone('ecr', 4, 'EUC recirculation', [[-2.6, 2.6, x, x] for x in lons])
+#     ecs = Zone('ecs', 5, 'South of EUC', [[-2.6 - dx, x, x, j1] for x in lons])
+#     ecn = Zone('ecn', 6, 'North of EUC', [[x, x, 2.6 + dx, j2] for x in lons])
+#     idn = Zone('idn', 7, 'Indonesian Seas', [[-7, np.nan, 122.8, 140.4],
+#                                              [-7, j2, 122.8, 122.8]])
+#     nth = Zone('nth', 8, 'North Interior', [j2, np.nan, 128.5 + dx, lons[3] + dx])
+#     sth = Zone('sth', 9, 'South Interior', [j1, np.nan, 155, lons[3] + dx])
+
+#     list_all = [vs, ss, mc, ecr, ecs, ecn, idn, nth, sth]
+#     colors = ['darkorange', 'deeppink', 'mediumspringgreen',
+#               'violet', 'blue', 'k', 'darkviolet',
+#               'royalblue', 'seagreen', 'y']
+
+#     inds = np.append(np.arange(1, 10, dtype=int), [0])
+#     inds[6], inds[8] = inds[8], inds[6]
+#     names = [z.name_full for z in list_all]
+#     names[-1] = 'None'
+#     names = np.array(names)[inds - 1]
 zones = ZoneData()

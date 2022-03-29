@@ -75,15 +75,16 @@ def plot_particle_movie(rlon, file, ds, movie_forward=False, plot_type='scatter'
     t = 0
     b = plottimes[t] == time
     X, Y = lon[b], lat[b]
-    graph = ax.scatter(X, Y, c='k', s=5, marker="o", zorder=20, transform=proj)
+    # graph = ax.scatter(X, Y, c='k', s=5, marker="o", zorder=20, transform=proj)
+    graph = ax.scatter(lon[:, t], lat[:, t], c='k', s=5, marker="o", zorder=20, transform=proj)
     plt.tight_layout()
 
     def animate(t):
         title.set_text(format_title_timer(plottimes, t))
-        b = plottimes[t] == time
-        X, Y = lon[b], lat[b]
-        b = plottimes[t] == time
-
+        # b = plottimes[t] == time
+        # X, Y = lon[b], lat[b]
+        X, Y = lon[:, t], lat[:, t]
+        graph.set_offsets(np.c_[X, Y])
         # fig.canvas.draw()
         return graph,
 
@@ -112,4 +113,4 @@ file = get_plx_id(exp, lon, v, r, 'plx')
 ds = xr.open_dataset(file, mask_and_scale=True)
 rlon = lon
 ds.attrs['lon'] = lon
-plot_particle_movie(rlon, file, ds, ntraj=30, ndays=3500, method='thin')
+plot_particle_movie(rlon, file, ds, ntraj=20, ndays=2500, method='thin')

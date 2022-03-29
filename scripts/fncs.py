@@ -35,7 +35,8 @@ def combine_plx_datasets(exp, lon, v, r_range=[0, 10], **kwargs):
     """Combine plx datasets."""
     xids = [get_plx_id(exp, lon, v, r) for r in range(*r_range)]
     dss = [open_plx_data(xid, **kwargs) for xid in xids]
-    ds = xr.combine_nested(dss, 'obs', data_vars="minimal", combine_attrs='override')
+    ds = xr.combine_nested(dss, 'obs', data_vars="minimal",
+                           combine_attrs='override')
     return xids, ds
 
 
@@ -53,6 +54,11 @@ def get_zone_info(ds, zone):
     else:
         age = ds_z.age * np.nan
     return traj, age
+
+
+def mask_source_id(ds, z):
+    ds['zone'] = ds.zone.where((ds.zone != z))
+    return ds
 
 
 def update_particle_data_sources(ds, lon):
@@ -80,30 +86,67 @@ def update_particle_data_sources(ds, lon):
         To test:
         ds.zone.where(ds.zone != 0.).bfill('obs').isel(obs=0)
 
+    # Test!
+    from format_particle_files import merge_particle_trajectories
+    lon=165
+    ds = xr.open_dataset(get_plx_id(0, 165, 1, 0))
+    ds['traj'] = ds.trajectory.isel(obs=0)
+    traj = ds.isel(traj=slice(500)).traj
+    xids = [get_plx_id(0, 165, 1, i) for i in range(10)]
+    ds = merge_particle_trajectories(xids, traj)
+    df = ds.copy()
+    df = mask_source_id(df, 4)
+    ds = update_particle_data_sources(ds, lon)
+    df = particle_source_subset(df)
+    ds = particle_source_subset(ds)
+    df.zone.max('obs').plot.hist(bins=np.arange(11),align='left')
+    ds.zone.max('obs').plot.hist(bins=np.arange(9),align='left')
     """
     # Mask all values of these zone IDs.
-    def mask_source_id(ds, z):
-        ds['zone'] = ds.zone.where((ds.zone != z))
-        return ds
 
     for z in [4., 5., 6., 7., 8., 9., 10.]:
         ds = mask_source_id(ds, z)
 
-    var = 'zone'
-    dims = ds.zone.dims
+    def replace_source_id(ds, mask, source_id):
+        """Replace masked elements with the source ID."""
+        ds['zone'] = (ds.zone.dims, np.where(mask, source_id, ds.zone.values))
+        return ds
 
-    # Zone 4: South Interior
-    ds[var] = (dims, np.where((ds.lon > lon + 0.1) &
-                                 (ds.lon < lon + 0.2) &
-                                 (ds.lat <= 2.6) &
-                                 (ds.lat >= -2.6),
-                                 4, ds.zone.values))
-    lon_mask = (ds.lon.round(0) == lon)
-    # Zone 5: South of EUC
-    ds['zone'] = (dims, np.where(lon_mask & (ds.lat < -2.6), 5, ds.zone.values))
+    # # Zone 3: MC.
+    # z = 3
+    # loc = cfg.zones.mc.loc
+    # mask = ((ds.lat >= loc[0]) & (ds.lat <= loc[0] + 2) &
+    #         (ds.lon > loc[2]) & (ds.lon <= loc[3]))
+    # ds = replace_source_id(ds, mask, z)
 
-    # Zone 6: North of EUC
-    ds['zone'] = (dims, np.where(lon_mask & (ds.lat > 2.6), 6, ds.zone.values))
+    # Zone 4: Celebes Sea
+    z = 4
+    loc = cfg.zones._all[z].loc
+    mask1 = ((ds.lat >= loc[0][0]) &
+             (ds.lon >= loc[0][2]) & (ds.lon <= loc[0][3]))
+    mask2 = ((ds.lat >= loc[1][0]) & (ds.lat <= loc[1][1]) &
+             (ds.lon.round(1) <= loc[1][2]))
+    ds = replace_source_id(ds, mask1 & mask2, z)
+
+    # Zone 5: Indonesian Seas
+    z = 5
+    loc = cfg.zones._all[z].loc[0]
+    mask1 = ((ds.lat <= loc[0]) & (ds.lon >= loc[2]) & (ds.lon <= loc[3]))
+    loc = cfg.zones._all[z].loc[1]
+    mask2 = ((ds.lat >= loc[0]) & (ds.lat <= loc[1]) & (ds.lon.round(1) <= loc[2]))
+    ds = replace_source_id(ds, mask1 & mask2, z)
+
+    # Zone 4: North Interior
+    z = 6
+    loc = cfg.zones._all[z].loc
+    mask = ((ds.lat >= loc[0]) & (ds.lon > loc[2]) & (ds.lon <= loc[3]))
+    ds = replace_source_id(ds, mask, z)
+
+    # Zone 5: South Interior
+    z = 7
+    loc = cfg.zones._all[z].loc
+    mask = ((ds.lat <= loc[0]) & (ds.lon > loc[2]) & (ds.lon <= loc[3]))
+    ds = replace_source_id(ds, mask, z)
 
     # Fill forwards to update following values.
     ds['zone'] = ds.zone.ffill('obs')
