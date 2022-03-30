@@ -23,6 +23,9 @@ import numpy as np
 import xarray as xr
 from pathlib import Path
 import matplotlib.pyplot as plt
+from tools import mlogger
+
+logger = mlogger('bgc_files')
 
 
 def check_file(file, var, dct):
@@ -72,20 +75,17 @@ for var in nvars:
     dct[var] = sub_dct
 
 # Iterate through files.
-try:
-    for var in nvars:
-        for y in yrs:
-            for m in mths:
-                file = folder / 'ocean_{}_{}_{:02d}.nc'.format(var, y, m)
-                if file.exists():
-                    check_file(file, var, dct[var])
-                else:
-                    dct[var]['no_file'].append(file.name)
-
-except Exception as e:
-    print(e)
 
 for var in nvars:
+    for y in yrs:
+        for m in mths:
+            file = folder / 'ocean_{}_{}_{:02d}.nc'.format(var, y, m)
+            if file.exists():
+                check_file(file, var, dct[var])
+            else:
+                dct[var]['no_file'].append(file.name)
+
     for key in dct[var].keys():
-        print('_' * 25, '\n', var, key)
-        print('\n'.join(map(str, dct[var][key])), '')
+        logger.info('_' * 25)
+        logger.info('{}: {}:'.format(var, key))
+        logger.info('\n'.join(map(str, dct[var][key])))
