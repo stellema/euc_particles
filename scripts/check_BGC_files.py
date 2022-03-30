@@ -26,6 +26,8 @@ import matplotlib.pyplot as plt
 from tools import mlogger
 
 logger = mlogger('bgc_files')
+cmap = plt.cm.seismic
+cmap.set_bad('grey')
 
 
 def check_file(file, var, dct):
@@ -39,8 +41,8 @@ def check_file(file, var, dct):
         return
 
     try:
-        plt.figure(figsize=(10, 8))
-        ds[var][:, 0].mean('Time').plot()
+        ds[var][:, 0].mean('Time').plot(figsize=(7, 4), cmap=cmap)
+        plt.tight_layout()
         plt.savefig(figs / (file.stem + '.png'))
         plt.close()
 
@@ -57,16 +59,16 @@ folder = Path('/g/data/e14/as3189/OFAM/trop_pac')
 figs = Path('/g/data/e14/as3189/stellema/plx/figures/bgc_file_check')
 
 nvars = ['adic', 'alk', 'caco3', 'det', 'dic', 'fe', 'no3', 'o2', 'phy', 'zoo']
-years = [[1981, 2012], [2070, 2101]]
+years = [[2000, 2012], [2087, 2101]]  # Full = [[1981, 2012], [2070, 2101]]
 yrs = np.concatenate([np.arange(y[0], y[-1] + 1) for y in years])
 mths = np.arange(1, 13)
 
-if not folder.exists():
-    folder = Path.home() / 'datasets/OFAM/trop_pac'
-    figs = Path.home() / '{}/{}'.format('projects/plx/figures', figs.stem)
-    yrs = [2012]
-    nvars = ['u', 'v']
-    mths = np.arange(1, 4)
+# if not folder.exists():
+#     folder = Path.home() / 'datasets/OFAM/trop_pac'
+#     figs = Path.home() / '{}/{}'.format('projects/plx/figures', figs.stem)
+#     yrs = [2012]
+#     nvars = ['u', 'v']
+#     mths = np.arange(1, 4)
 
 # Create nested dictionary for each var.
 sub_dct = {'no_file': [], 'open_error': [], 'plot_error': []}
@@ -75,7 +77,6 @@ for var in nvars:
     dct[var] = sub_dct
 
 # Iterate through files.
-
 for var in nvars:
     for y in yrs:
         for m in mths:
