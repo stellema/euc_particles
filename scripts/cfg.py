@@ -102,7 +102,7 @@ class ZoneData:
 
     nth = Zone(6, 'nth', 'North Interior', [j2, np.nan, mc.loc[1], 278.5])
     sth = Zone(10, 'sth', 'South Interior', [j1, np.nan, 155, 280])
-    _all = [nz, vs, ss, mc, idn, cs, nth, sth]
+    _all = [nz, vs, ss, mc, cs, idn, nth, sth]
 
     colors = ['y', 'darkorange', 'deeppink', 'mediumspringgreen',
               'seagreen', 'darkviolet', 'royalblue']

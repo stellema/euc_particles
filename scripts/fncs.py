@@ -9,6 +9,7 @@ import numpy as np
 import xarray as xr
 
 import cfg
+from cfg import zones
 
 
 def get_plx_id(exp, lon, v, r=None, folder=None):
@@ -61,6 +62,12 @@ def mask_source_id(ds, z):
     return ds
 
 
+def replace_source_id(ds, mask, source_id):
+    """Replace masked elements with the source ID."""
+    ds['zone'] = (ds.zone.dims, np.where(mask, source_id, ds.zone.values))
+    return ds
+
+
 def update_particle_data_sources(ds, lon):
     """Update source region ID in particle data with corrected definitions.
 
@@ -99,54 +106,54 @@ def update_particle_data_sources(ds, lon):
     ds = update_particle_data_sources(ds, lon)
     df = particle_source_subset(df)
     ds = particle_source_subset(ds)
-    df.zone.max('obs').plot.hist(bins=np.arange(11),align='left')
-    ds.zone.max('obs').plot.hist(bins=np.arange(9),align='left')
+    df.zone.max('obs').plot.hist(bins=np.arange(16),alpha=0.5, align='left')
+    ds.zone.max('obs').plot.hist(bins=np.arange(9),alpha=0.5,align='left')
     """
     # Mask all values of these zone IDs.
-
     for z in [4., 5., 6., 7., 8., 9., 10.]:
         ds = mask_source_id(ds, z)
 
-    def replace_source_id(ds, mask, source_id):
-        """Replace masked elements with the source ID."""
-        ds['zone'] = (ds.zone.dims, np.where(mask, source_id, ds.zone.values))
-        return ds
+    lat, lon = ds.lat, ds.lon
 
-    # # Zone 3: MC.
-    # z = 3
-    # loc = cfg.zones.mc.loc
-    # mask = ((ds.lat >= loc[0]) & (ds.lat <= loc[0] + 2) &
-    #         (ds.lon > loc[2]) & (ds.lon <= loc[3]))
-    # ds = replace_source_id(ds, mask, z)
+    # Zone 1 & 2: Vitiaz Strait & Solomon Strait.
+    for z in [1, 2]:
+        loc = zones._all[z].loc
+        mask = ((lat <= loc[0]) & (lon >= loc[2]) & (lon <= loc[3]))
+        ds = replace_source_id(ds, mask, z)
+
+    # Zone 3: MC.
+    z = 3
+    loc = zones.mc.loc
+    mask = ((lat >= loc[0]) & (lon >= loc[2]) & (lon <= loc[3]))
+    ds = replace_source_id(ds, mask, z)
 
     # Zone 4: Celebes Sea
     z = 4
-    loc = cfg.zones._all[z].loc
-    mask1 = ((ds.lat >= loc[0][0]) &
-             (ds.lon >= loc[0][2]) & (ds.lon <= loc[0][3]))
-    mask2 = ((ds.lat >= loc[1][0]) & (ds.lat <= loc[1][1]) &
-             (ds.lon.round(1) <= loc[1][2]))
+    loc = zones.cs.loc
+    mask1 = ((lat >= loc[0][0]) & (lon >= loc[0][2]) & (lon <= loc[0][3]))
+    mask2 = ((lat >= loc[1][0]) & (lat <= loc[1][1]) & (lon.round(1) <= loc[1][2]))
     ds = replace_source_id(ds, mask1 & mask2, z)
 
     # Zone 5: Indonesian Seas
     z = 5
-    loc = cfg.zones._all[z].loc[0]
-    mask1 = ((ds.lat <= loc[0]) & (ds.lon >= loc[2]) & (ds.lon <= loc[3]))
-    loc = cfg.zones._all[z].loc[1]
-    mask2 = ((ds.lat >= loc[0]) & (ds.lat <= loc[1]) & (ds.lon.round(1) <= loc[2]))
+    loc = zones.idn.loc
+    mask1 = ((lat <= loc[0][0]) & (lon >= loc[0][2]) & (lon <= loc[0][3]))
+    mask2 = ((lat >= loc[1][0]) & (lat <= loc[1][1]) & (lon.round(1) <= loc[1][2]))
     ds = replace_source_id(ds, mask1 & mask2, z)
 
-    # Zone 4: North Interior
-    z = 6
-    loc = cfg.zones._all[z].loc
-    mask = ((ds.lat >= loc[0]) & (ds.lon > loc[2]) & (ds.lon <= loc[3]))
-    ds = replace_source_id(ds, mask, z)
+    # Zone 6,7,8,9: North Interior
+    loc = zones.nth.loc
+    x = cfg.inner_lons[0]
+    for i, z in enumerate([6, 7, 8, 9]):
+        mask = ((lat >= loc[0]) & (lon > x[i]) & (lon <= x[i + 1]))
+        ds = replace_source_id(ds, mask, z)
 
-    # Zone 5: South Interior
-    z = 7
-    loc = cfg.zones._all[z].loc
-    mask = ((ds.lat <= loc[0]) & (ds.lon > loc[2]) & (ds.lon <= loc[3]))
-    ds = replace_source_id(ds, mask, z)
+    # Zone 10,11,12,13: South Interior
+    loc = zones.sth.loc
+    x = cfg.inner_lons[1]
+    for i, z in enumerate([10, 11, 12, 13]):
+        mask = ((lat <= loc[0]) & (lon > x[i]) & (lon <= x[i + 1]))
+        ds = replace_source_id(ds, mask, z)
 
     # Fill forwards to update following values.
     ds['zone'] = ds.zone.ffill('obs')
