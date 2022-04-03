@@ -116,42 +116,38 @@ def update_particle_data_sources(ds, lon):
     lat, lon = ds.lat, ds.lon
 
     # Zone 1 & 2: Vitiaz Strait & Solomon Strait.
-    for z in [1, 2]:
-        loc = zones._all[z].loc
+    for z, loc in zip([1, 2], (zones.vs.loc, zones.ss.loc)):
         mask = ((lat <= loc[0]) & (lon >= loc[2]) & (lon <= loc[3]))
         ds = replace_source_id(ds, mask, z)
 
     # Zone 3: MC.
-    z = 3
-    loc = zones.mc.loc
+    z, loc = 3, zones.mc.loc
     mask = ((lat >= loc[0]) & (lon >= loc[2]) & (lon <= loc[3]))
     ds = replace_source_id(ds, mask, z)
 
     # Zone 4: Celebes Sea
-    z = 4
-    loc = zones.cs.loc
-    mask1 = ((lat >= loc[0][0]) & (lon >= loc[0][2]) & (lon <= loc[0][3]))
-    mask2 = ((lat >= loc[1][0]) & (lat <= loc[1][1]) & (lon.round(1) <= loc[1][2]))
+    z, loc0, loc1 = 4, *zones.cs.loc
+    mask1 = ((lat >= loc0[0]) & (lon >= loc0[2]) & (lon <= loc0[3]))
+    mask2 = ((lat >= loc1[0]) & (lat <= loc1[1]) & (lon.round(1) <= loc1[2]))
     ds = replace_source_id(ds, mask1 & mask2, z)
 
     # Zone 5: Indonesian Seas
-    z = 5
-    loc = zones.idn.loc
-    mask1 = ((lat <= loc[0][0]) & (lon >= loc[0][2]) & (lon <= loc[0][3]))
-    mask2 = ((lat >= loc[1][0]) & (lat <= loc[1][1]) & (lon.round(1) <= loc[1][2]))
+    z, loc0, loc1 = 5, *zones.idn.loc
+    mask1 = ((lat <= loc0[0]) & (lon >= loc0[2]) & (lon <= loc0[3]))
+    mask2 = ((lat >= loc1[0]) & (lat <= loc1[1]) & (lon.round(1) <= loc1[2]))
     ds = replace_source_id(ds, mask1 & mask2, z)
 
-    # Zone 6,7,8,9: North Interior
-    loc = zones.nth.loc
+    # Zone 6,7,8,9, 10: North Interior
+    z, loc = 6, zones.nth.loc
     x = cfg.inner_lons[0]
-    for i, z in enumerate([6, 7, 8, 9]):
+    for i, z in enumerate(range(z, z + 5)):
         mask = ((lat >= loc[0]) & (lon > x[i]) & (lon <= x[i + 1]))
         ds = replace_source_id(ds, mask, z)
 
-    # Zone 10,11,12,13: South Interior
-    loc = zones.sth.loc
+    # Zone 11, 12, 13, 14, 15: South Interior
+    z, loc = 11, zones.sth.loc
     x = cfg.inner_lons[1]
-    for i, z in enumerate([10, 11, 12, 13]):
+    for i, z in enumerate(range(z, z + 5)):
         mask = ((lat <= loc[0]) & (lon > x[i]) & (lon <= x[i + 1]))
         ds = replace_source_id(ds, mask, z)
 
