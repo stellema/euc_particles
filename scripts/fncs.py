@@ -133,7 +133,7 @@ def update_particle_data_sources(ds, lon):
 
     # Zone 5: Indonesian Seas
     z, loc0, loc1 = 5, *zones.idn.loc
-    mask1 = ((lat <= loc0[0]) & (lon >= loc0[2]) & (lon <= loc0[3]))
+    mask1 = ((lat <= loc0[0]) & (lon.round(1) >= loc0[2]) & (lon <= loc0[3]))
     mask2 = ((lat >= loc1[0]) & (lat <= loc1[1]) & (lon.round(1) <= loc1[2]))
     ds = replace_source_id(ds, mask1 & mask2, z)
 
