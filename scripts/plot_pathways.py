@@ -64,7 +64,7 @@ def plot_some_source_pathways(exp, lon, v, r):
     ax.set_title('{} pathways to the EUC at {}°E'.format(cfg.exps[exp], lon))
 
     # Source color legend.
-    labels = [z.name_full for z in cfg.zones.list_all][:-1]
+    labels = [z.name_full for z in cfg.zones._all][:-1]
     zmap, norm = zone_cmap()
     zmap, cmappable = source_cmap()
     cbar = fig.colorbar(cmappable, ticks=range(1, 11), orientation='horizontal',

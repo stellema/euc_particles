@@ -17,7 +17,8 @@ import cartopy.feature as cfeature
 from mpl_toolkits.axes_grid1 import make_axes_locatable
 
 import cfg
-from tools import coord_formatter, convert_longitudes
+from cfg import zones
+from tools import coord_formatter, convert_longitudes, get_unique_file
 
 
 def zone_cmap():
@@ -222,7 +223,7 @@ def pacific_map():
     ax.grid()
 
     plt.tight_layout()
-    plt.savefig(cfg.fig / 'pacific_map_02.png', dpi=300)
+    plt.savefig(get_unique_file(cfg.fig / 'pacific_map.png'), dpi=300)
     plt.show()
 
 
@@ -243,18 +244,17 @@ def plot_particle_source_map(lon, merge_interior=True, add_ocean=True,
             lats (array): Latitude coord pairs (start/end).
             z_index (array): Source IDs cooresponding to coord pairs.
 
+        Todo:
+            - Seperate interior lons.
         """
-        lons = np.zeros((19, 2))
+        lons = np.zeros((9, 2))
         lats = lons.copy()
         z_index = np.zeros(lons.shape[0], dtype=int)
-
         i = 0
-        for zone in cfg.zones.list_all[:-1]:
-            z = list(cfg.zones.inds).index(zone.id)
-            coords = zone.loc
-            coords = [coords] if type(coords[0]) != list else coords
-            for c in coords:
-                z_index[i] = z
+        for iz, z in enumerate(zones._all[1:]):
+            loc = [z.loc] if type(z.loc[0]) != list else z.loc
+            for c in loc:
+                z_index[i] = iz + 1
                 lons[i] = c[0:2]  # Lon (west, east).
                 lats[i] = c[2:4]  # Lat (south, north).
                 i += 1
@@ -262,60 +262,30 @@ def plot_particle_source_map(lon, merge_interior=True, add_ocean=True,
 
     def add_source_label(ax, z_index, labels, proj):
         """Latitude and longitude points defining source regions."""
-        text = [z.name_full for z in cfg.zones.list_all]
+        text = [z.name_full for z in zones._all[1:]]
 
-        text[3] = 'EUC'
-        for i, n in zip([0, 1, 2, 6], [0, 2, 1, 4]):
-
-            text[i] = text[i].replace(' ', '\n' + n * ' ')
+        # Two line source name (manual centre align).
+        for i in range(5):
+            n = text[i].split()  # List of words.
+            n = [n[a].center(len(n[a - 1]), ' ') for a in range(len(n))]
+            text[i] = '{}\n{}'.format(*n)
 
         loc = np.zeros((len(text), 2)) * np.nan
-        loc[0] = [-8.0, 149]
+        loc[0] = [-8.0, 149]  # VS
         loc[1] = [-5.5, 155]  # SS
-        loc[2] = [8.9, 127]
-        loc[3] = [0, lon + 2]
-        loc[4] = [-5, lon + 2]
-        loc[5] = [5, lon + 2]  # North euc
-        loc[6] = [-5.8, 124]
-        loc[7] = [9, 175]  # North int
-        loc[8] = [-8, 175]
+        loc[2] = [8.9, 127]  # MC
+        loc[3] = [2.1, 122.5]  # CS
+        loc[4] = [-5.8, 124]  # IDN
+        loc[5] = [9, 175]  # North int
+        loc[6] = [-8, 175]  # South int
 
         for i, z in enumerate(np.unique(z_index)):
-            if ~(merge_interior and z in [4, 5]):
-                ax.text(loc[z][1], loc[z][0], text[z], zorder=10,
-                        transform=proj)
+            ax.text(loc[i][1], loc[i][0], text[i], zorder=10, transform=proj)
         return ax
 
     colors = cfg.zones.colors
     labels = cfg.zones.names
     lons, lats, z_index = get_source_coords()
-
-    if merge_interior:
-        for z1, z2 in zip([4, 5], [6, 7]):
-            labels[z1] = labels[z2]
-            colors[z1] = colors[z2]
-
-    if lon != 'all':
-        mask = np.ones(z_index.shape)
-
-        # Remove other EUC lons
-        releases = [165, 190, 220, 250]
-        x_idx = releases.index(lon)
-        for i in [3, 4, 5]:
-            mask[np.argwhere(z_index == i)] = np.nan
-            mask[np.argwhere(z_index == i)[x_idx]] = 1
-
-        z_index = z_index * mask
-        mask = np.vstack([mask, mask]).T
-        lons, lats = lons * mask, lats * mask
-
-        # Cut off interior past lon
-        lons[lons > lon] = lon
-
-        # Drop NaNs
-        mask = ~np.isnan(z_index)
-        z_index = z_index[mask].astype(dtype=int)
-        lons, lats = lons[mask], lats[mask]
 
     figsize = (12, 5) if add_legend else (15, 6)
     map_extent = [112, 288, -11, 12]
@@ -334,19 +304,13 @@ def plot_particle_source_map(lon, merge_interior=True, add_ocean=True,
     plt.tight_layout()
 
     # Source legend.
-    if merge_interior:
-        labels, colors = np.delete(labels, [4, 5]), np.delete(colors, [4, 5])
-        zmap, cmappable = source_cmap(zcolor=colors)
-        ticks, bounds = range(1, 9), np.arange(0.5, 8.6)
+    # zmap, cmappable = source_cmap()
+    # ticks, bounds = range(1, 11), np.arange(0.5, 9.6)
 
-    else:
-        zmap, cmappable = source_cmap()
-        ticks, bounds = range(1, 11), np.arange(0.5, 9.6)
-
-    if add_legend:
-        cbar = fig.colorbar(cmappable, ticks=ticks, boundaries=bounds,
-                            orientation='horizontal', pad=0.075)
-        cbar.ax.set_xticklabels(labels, fontsize=10)
+    # if add_legend:
+    #     cbar = fig.colorbar(cmappable, ticks=ticks, boundaries=bounds,
+    #                         orientation='horizontal', pad=0.075)
+    #     cbar.ax.set_xticklabels(labels, fontsize=10)
 
     # Save.
     plt.savefig(cfg.fig / 'particle_source_map_{}.png'.format(lon),

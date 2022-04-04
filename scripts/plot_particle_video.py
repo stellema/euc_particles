@@ -6,24 +6,20 @@ author: Annette Stellema (astellemas@gmail.com)
 
 
 """
-import os
-import sys
-import copy
 import numpy as np
 import xarray as xr
-from pathlib import Path
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
+
+import cfg
+from tools import get_unique_file
+from fncs import get_plx_id
+from plots import create_map_axis, plot_particle_source_map
 
 # Fixes AttributeError: 'GeoAxesSubplot' object has no attribute 'set_offsets'
 from matplotlib.axes import Axes
 from cartopy.mpl.geoaxes import GeoAxes
 GeoAxes._pcolormesh_patched = Axes.pcolormesh
-
-import cfg
-import tools
-from fncs import get_plx_id
-from plots import create_map_axis, plot_particle_source_map
 
 
 def init_particle_data(ds, ntraj=4, ndays=1200, method='thin'):
@@ -63,10 +59,6 @@ def plot_particle_movie(rlon, file, ds, movie_forward=False, plot_type='scatter'
         return '{}{}'.format(msg, str(times[t])[:10])
 
     lat, lon, time, plottimes = init_particle_data(ds, ntraj, ndays, method)
-    map_extent = [112, 288, -11, 12]
-    yticks = np.arange(-10, 11, 5)
-    xticks = np.arange(120, 290, 20)
-
     fig, ax, proj = plot_particle_source_map(rlon, merge_interior=True,
                                              add_ocean=True, add_legend=False)
 
@@ -75,15 +67,16 @@ def plot_particle_movie(rlon, file, ds, movie_forward=False, plot_type='scatter'
     t = 0
     b = plottimes[t] == time
     X, Y = lon[b], lat[b]
-    # graph = ax.scatter(X, Y, c='k', s=5, marker="o", zorder=20, transform=proj)
-    graph = ax.scatter(lon[:, t], lat[:, t], c='k', s=5, marker="o", zorder=20, transform=proj)
+    graph = ax.scatter(X, Y, c='k', s=5, marker="o", zorder=20, transform=proj)
+    # graph = ax.scatter(lon[:, t], lat[:, t], c='k', s=5, marker="o", zorder=20,
+    #                    transform=proj)  # Non-delay release.
     plt.tight_layout()
 
     def animate(t):
         title.set_text(format_title_timer(plottimes, t))
-        # b = plottimes[t] == time
-        # X, Y = lon[b], lat[b]
-        X, Y = lon[:, t], lat[:, t]
+        b = plottimes[t] == time
+        X, Y = lon[b], lat[b]
+        # X, Y = lon[:, t], lat[:, t]  # Non-delay release.
         graph.set_offsets(np.c_[X, Y])
         # fig.canvas.draw()
         return graph,
@@ -95,19 +88,14 @@ def plot_particle_movie(rlon, file, ds, movie_forward=False, plot_type='scatter'
     plt.tight_layout()
     plt.close()
 
-    # Filename.
-    i = 0
-    filename = cfg.fig / 'vids/{}_{}.mp4'.format(file.stem, i)
-    while filename.exists():
-        i += 1
-        filename = cfg.fig / 'vids/{}_{}.mp4'.format(file.stem, i)
+    filename = get_unique_file(cfg.fig / 'vids/{}.mp4'.format(file.stem))
 
     # Save.
     writer = animation.writers['ffmpeg'](fps=18)
-    anim.save(str(filename), writer=writer, dpi=300)
+    anim.save(str(filename), writer=writer, dpi=150)
 
 
-lon = 250
+lon = 190
 exp, v, r = 0, 1, 0
 file = get_plx_id(exp, lon, v, r, 'plx')
 ds = xr.open_dataset(file, mask_and_scale=True)
