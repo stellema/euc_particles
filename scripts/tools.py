@@ -229,6 +229,16 @@ def get_date(year, month, day='max'):
         return datetime(year, month, day)
 
 
+def get_unique_file(name):
+    """Create unique filename by appending numbers."""
+    def append_file(name, i):
+        return name.parent / '{}_{:02d}{}'.format(name.stem, i, name.suffix)
+    i = 0
+    while append_file(name, i).exists():
+        i += 1
+    return append_file(name, i)
+
+
 def roundup(x):
     """Round up."""
     return int(math.ceil(x / 10.0)) * 10
@@ -479,7 +489,7 @@ def zone_field(plot=False, savefile=True):
     d = d.rename({'st_ocean': 'sw_ocean'})
     d.coords['sw_ocean'] = np.array([5.0], dtype=np.float32)
 
-    for zone in zones.list_all:
+    for zone in zones._all:
         coords = zone.loc
         coords = [coords] if type(coords[0]) != list else coords
         for c in coords:

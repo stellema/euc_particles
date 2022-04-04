@@ -92,20 +92,19 @@ class ZoneData:
     Zone = namedtuple("Zone", "id name name_full loc")
     Zone.__new__.__defaults__ = (None,) * len(Zone._fields)
     nz = Zone(0, 'nz', 'None')
-    vs = Zone(1, 'vs', 'Vitiaz Strait', [j1, np.nan, 147.6, 149.6])
-    ss = Zone(2, 'ss', 'Solomon Strait', [-5, np.nan, 151.6, 154.6])
-    mc = Zone(3, 'mc', 'Mindanao Current', [8, np.nan, 126.0, 128.5])
-    cs = Zone(4, 'cs', 'Celebes Sea', [[j2, np.nan, x_west, 123],
-                                       [0.5, j2, x_west, np.nan]])
+    vs = Zone(1, 'vs', 'Vitiaz Strait', [j1, j1, 147.6, 149.6])
+    ss = Zone(2, 'ss', 'Solomon Strait', [-5, -5, 151.6, 154.6])
+    mc = Zone(3, 'mc', 'Mindanao Current', [8, 8, 126.0, 128.5])
+    cs = Zone(4, 'cs', 'Celebes Sea', [[j2, j2, x_west, 123],
+                                       [0.5, j2, x_west, x_west]])
     idn = Zone(5, 'idn', 'Indonesian Seas', [[-8.7, -8.7, 122.2, 140.6],
-                                             [0.4, -8.5, x_west, np.nan]])
-
-    nth = Zone(6, 'nth', 'North Interior', [j2, np.nan, mc.loc[1], 278.5])
-    sth = Zone(11, 'sth', 'South Interior', [j1, np.nan, 155, 280])
+                                             [0.4, 8.5, x_west, x_west]])
+    nth = Zone(6, 'nth', 'North Interior', [j2, j2, mc.loc[1], 278.5])
+    sth = Zone(11, 'sth', 'South Interior', [j1, j1, 155, 280])
     _all = [nz, vs, ss, mc, cs, idn, nth, sth]
 
     colors = ['y', 'darkorange', 'deeppink', 'mediumspringgreen',
-              'seagreen', 'darkviolet', 'royalblue']
+              'seagreen', 'darkviolet', 'royalblue', 'blue']
     names = [z.name_full for z in _all]
 
 # @dataclass
