@@ -81,7 +81,7 @@ height = width / 1.718
 dx = 0.1
 e1, e2, e3, e4 = [x - dx for x in [165, 190, 220, 250]]
 j1, j2 = -6.1, 8
-x_west = 120.1
+x_west = 120.2
 lons = [165, 190, 220, 250]
 inner_lons = [[128.5, *lons, 278.5], [155, *lons, 280]]
 
