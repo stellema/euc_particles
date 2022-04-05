@@ -68,7 +68,7 @@ def replace_source_id(ds, mask, source_id):
     return ds
 
 
-def update_particle_data_sources(ds, lon):
+def update_particle_data_sources(ds):
     """Update source region ID in particle data with corrected definitions.
 
     Corrects where particles are tagged as reaching source:
@@ -103,7 +103,7 @@ def update_particle_data_sources(ds, lon):
     ds = merge_particle_trajectories(xids, traj)
     df = ds.copy()
     df = mask_source_id(df, 4)
-    ds = update_particle_data_sources(ds, lon)
+    ds = update_particle_data_sources(ds)
     df = particle_source_subset(df)
     ds = particle_source_subset(ds)
     df.zone.max('obs').plot.hist(bins=np.arange(16),alpha=0.5, align='left')
@@ -126,16 +126,16 @@ def update_particle_data_sources(ds, lon):
     ds = replace_source_id(ds, mask, z)
 
     # Zone 4: Celebes Sea
-    z, loc0, loc1 = 4, *zones.cs.loc
-    mask1 = ((lat >= loc0[0]) & (lon >= loc0[2]) & (lon <= loc0[3]))
-    mask2 = ((lat >= loc1[0]) & (lat <= loc1[1]) & (lon.round(1) <= loc1[2]))
-    ds = replace_source_id(ds, mask1 & mask2, z)
+    z, loc1, loc2 = 4, *zones.cs.loc
+    mask_y = ((lat >= loc1[0]) & (lat <= loc1[1]) & (lon.round(1) <= loc1[2]))
+    mask_x = ((lat >= loc2[0]) & (lon >= loc2[2]) & (lon <= loc2[3]))
+    ds = replace_source_id(ds, mask_y | mask_x, z)
 
     # Zone 5: Indonesian Seas
-    z, loc0, loc1 = 5, *zones.idn.loc
-    mask1 = ((lat <= loc0[0]) & (lon.round(1) >= loc0[2]) & (lon <= loc0[3]))
-    mask2 = ((lat >= loc1[0]) & (lat <= loc1[1]) & (lon.round(1) <= loc1[2]))
-    ds = replace_source_id(ds, mask1 & mask2, z)
+    z, loc1, loc2 = 5, *zones.idn.loc
+    mask_y = ((lat >= loc1[0]) & (lat <= loc1[1]) & (lon.round(1) <= loc1[2]))
+    mask_x = ((lat <= loc2[0]) & (lon.round(1) >= loc2[2]) & (lon <= loc2[3]))
+    ds = replace_source_id(ds, mask_y | mask_x, z)
 
     # Zone 6,7,8,9, 10: North Interior
     z, loc = 6, zones.nth.loc
