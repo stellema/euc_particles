@@ -44,14 +44,14 @@ import xarray as xr
 from argparse import ArgumentParser
 
 import cfg
-from tools import mlogger, timeit, append_dataset_history
+from tools import mlogger, timeit, save_dataset
 from remap_particle_id import (create_particle_ID_remap_dict,
                                patch_particle_IDs_per_release_day)
 from fncs import (get_plx_id, open_plx_data, update_particle_data_sources,
                   particle_source_subset, get_max_particle_file_ID,
                   remap_particle_IDs, get_new_particle_IDs)
 
-logger = mlogger('misc', parcels=False, misc=True)
+logger = mlogger('files', parcels=False, misc=True)
 
 
 class ParticleFilenames:
@@ -202,7 +202,7 @@ def format_particle_file(lon, exp, v=1, r=0, spinup_year=0):
         logger.info('{}: Test subset.'.format(xid.stem))
         xids = xids[:3]
         xids_p = xids_p[:6]
-        traj = traj[1000:1200]
+        traj = traj[::250]  # traj[1000:1200]
 
     logger.debug('{}: Merge trajectory data.'.format(xid.stem))
     ds = merge_particle_trajectories(xids, traj)
@@ -226,7 +226,7 @@ def format_particle_file(lon, exp, v=1, r=0, spinup_year=0):
 
     # Update source defintion.
     logger.debug('{}: Update source defintion.'.format(xid.stem))
-    ds = update_particle_data_sources(ds, lon)
+    ds = update_particle_data_sources(ds)
 
     # Drop particle observations after reaching source.
     logger.debug('{}: Subset at source.'.format(xid.stem))
@@ -240,16 +240,10 @@ def format_particle_file(lon, exp, v=1, r=0, spinup_year=0):
     ds['u'] = ds.u * cfg.DXDY
 
     logger.debug('{}: Saving file ...'.format(xid.stem))
-    comp = dict(zlib=True, complevel=5)
-    encoding = {var: comp for var in ds.data_vars}
-
-    msg = ': ./format_particle_files.py'
-    ds = append_dataset_history(ds, msg)
-
     if test:
         file_new = cfg.data / 'tmp/{}'.format(xid.name)
-    ds.to_netcdf(file_new, encoding=encoding)
-    logger.debug('{}: Saved!'.format(xid.stem))
+    msg = ': ./format_particle_files.py'
+    save_dataset(ds, file_new, msg)
     ds.close()
 
 
@@ -258,7 +252,7 @@ if __name__ == "__main__":
     p.add_argument('-x', '--lon', default=250, type=int, help='Longitude.')
     p.add_argument('-e', '--exp', default=0, type=int, help='Scenario {0, 1}.')
     args = p.parse_args()
-    # lon, exp, v, r, spinup_year = 250, 0, 1, 0, 0
+    # lon, exp, v, r, spinup_year = 165, 0, 1, 0, 0
 
     for r in range(10):
         format_particle_file(args.lon, args.exp, v=1, r=r, spinup_year=0)

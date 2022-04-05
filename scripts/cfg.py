@@ -81,7 +81,7 @@ height = width / 1.718
 dx = 0.1
 e1, e2, e3, e4 = [x - dx for x in [165, 190, 220, 250]]
 j1, j2 = -6.1, 8
-x_west = 120.2
+x_west = 120.1
 lons = [165, 190, 220, 250]
 inner_lons = [[128.5, *lons, 278.5], [155, *lons, 280]]
 
@@ -95,10 +95,10 @@ class ZoneData:
     vs = Zone(1, 'vs', 'Vitiaz Strait', [j1, j1, 147.6, 149.6])
     ss = Zone(2, 'ss', 'Solomon Strait', [-5, -5, 151.6, 154.6])
     mc = Zone(3, 'mc', 'Mindanao Current', [8, 8, 126.0, 128.5])
-    cs = Zone(4, 'cs', 'Celebes Sea', [[j2, j2, x_west, 123],
-                                       [0.5, j2, x_west, x_west]])
-    idn = Zone(5, 'idn', 'Indonesian Seas', [[-8.7, -8.7, 122.2, 140.6],
-                                             [0.4, 8.5, x_west, x_west]])
+    cs = Zone(4, 'cs', 'Celebes Sea', [[0.5, j2, x_west, x_west],
+                                       [j2, j2, x_west, 123]])
+    idn = Zone(5, 'idn', 'Indonesian Seas', [[0.4, -8.5, x_west, x_west],
+                                             [-8.7, -8.7, x_west, 140.6]])
     nth = Zone(6, 'nth', 'North Interior', [j2, j2, mc.loc[1], 278.5])
     sth = Zone(11, 'sth', 'South Interior', [j1, j1, 155, 280])
     _all = [nz, vs, ss, mc, cs, idn, nth, sth]

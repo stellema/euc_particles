@@ -33,7 +33,7 @@ import xarray as xr
 from argparse import ArgumentParser
 
 import cfg
-from tools import mlogger, timeit, append_dataset_history
+from tools import mlogger, timeit, save_dataset
 from remap_particle_id import create_particle_ID_remap_dict
 from fncs import (open_plx_data, update_particle_data_sources,
                   particle_source_subset, get_max_particle_file_ID,
@@ -44,10 +44,11 @@ from create_source_files import (source_particle_ID_dict, group_euc_transport,
                                  get_final_particle_obs,
                                  group_particles_by_variable)
 
-logger = mlogger('misc', parcels=False, misc=True)
+logger = mlogger('files')
 
 
 def spinup_particle_IDs(lon, exp, v):
+    """Return particle IDs that have not reached a source."""
     traj = []
     for r in range(10):
         source_traj = source_particle_ID_dict(None, exp, lon, v, r)
@@ -130,7 +131,7 @@ def format_spinup_file(lon, exp, v=1, spinup_year=0):
     # Update source defintion.
     logger.debug('{}: Update source defintion.'.format(xid.stem))
     # ds[dict(obs=0)]['zone'] *= 0
-    ds = update_particle_data_sources(ds, lon)
+    ds = update_particle_data_sources(ds)
 
     # Drop particle observations after reaching source.
     logger.debug('{}: Subset at source.'.format(xid.stem))
@@ -143,16 +144,8 @@ def format_spinup_file(lon, exp, v=1, spinup_year=0):
     #  Convert velocity to transport.
     ds['u'] = ds.u * cfg.DXDY
 
-    logger.debug('{}: Saving file ...'.format(xid.stem))
-    comp = dict(zlib=True, complevel=5)
-    encoding = {var: comp for var in ds.data_vars}
-
     msg = ': ./format_particle_files.py'
-    ds = append_dataset_history(ds, msg)
-
-    if test:
-        file_new = cfg.data / 'tmp/{}'.format(xid.name)
-    ds.to_netcdf(file_new, encoding=encoding)
+    save_dataset(ds, file_new, msg)
     logger.debug('{}: Saved!'.format(xid.stem))
     ds.close()
 
@@ -200,11 +193,7 @@ def plx_source_file_spinup(lon, exp, v, spinup_year):
     ds['u_total'] = ds.uz.sum('zone')  # Add total transport per release.
 
     # Save dataset.
-    logger.info('{}: Saving...'.format(xid.stem))
-
-    # Add compression encoding.
-    encoding = {var: dict(zlib=True, complevel=5) for var in ds.data_vars}
-    ds.to_netcdf(xid_new, encoding=encoding, compute=True)
+    save_dataset(ds, xid_new)
     logger.info('{}: Saved.'.format(xid.stem))
 
 

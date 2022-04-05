@@ -19,9 +19,6 @@ Notes:
     - indiv files run with ~12GB but merged function requires a lot more data
 
 Todo:
-    - delete current files and re-run with age and distance
-    - Check if function works with 1D 'zone' variable.
-
 
 @author: Annette Stellema
 @email: a.stellema@unsw.edu.au
@@ -33,43 +30,19 @@ import xarray as xr
 from argparse import ArgumentParser
 
 import cfg
-from tools import mlogger, timeit, append_dataset_history
+from tools import mlogger, timeit, save_dataset
 from fncs import (get_plx_id, update_particle_data_sources,
-                  get_index_of_last_obs, combine_source_indexes)
+                  get_index_of_last_obs)
 
-logger = mlogger('plx_sources', parcels=False, misc=False)
-
-
-def add_particle_file_attributes(ds):
-    """Add variable name and units to dataset."""
-    for var in ['u', 'uz', 'u_total']:
-        ds[var].attrs['name'] = 'Transport'
-        ds[var].attrs['units'] = 'Sv'
-
-    ds['distance'].attrs['name'] = 'Distance'
-    ds['distance'].attrs['units'] = 'm'
-
-    ds['age'].attrs['name'] = 'Transit time'
-    ds['age'].attrs['units'] = 's'
-
-    ds['unbeached'].attrs['name'] = 'Unbeached'
-    ds['age'].attrs['units'] = 'count'
-    return ds
+logger = mlogger('files', parcels=False, misc=False)
 
 
 @timeit
 def update_formatted_file_sources(lon, exp, v, r):
     """Reapply source locations found for post-formatting file.
 
-    This function only needs to run for files formatted using old version of
+    This function only needs to run for files formatted using an old version of
     source updater.
-    The old version missed tagging particles as EUC recirculation, north/south
-    EUC because the longitude mask was too strict and missed particles that
-    passed the boundary, but the longitude when output was saved wasnt close
-    enough.
-
-    This error caused particles to be tagged as zone 10 (i.e., out of bounds)
-    because they simply left the model domain without reaching a 'source'.
 
     Assumes:
         - files to update in data/plx/tmp/
@@ -96,7 +69,7 @@ def update_formatted_file_sources(lon, exp, v, r):
     ds['zone'] *= 0
 
     # Reapply source definition fix.
-    ds = update_particle_data_sources(ds, lon)
+    ds = update_particle_data_sources(ds)
 
     # Find which particles need to be updated.
     # Check any zones are reached earlier than in original data.
@@ -123,10 +96,7 @@ def update_formatted_file_sources(lon, exp, v, r):
     # Re-save.
     logger.info('{}: Saving updated file.'.format(xid.stem))
     msg = ': Updated source definitions.'
-    ds_full = append_dataset_history(ds_full, msg)
-    comp = dict(zlib=True, complevel=5)
-    encoding = {var: comp for var in ds_full.data_vars}
-    ds_full.to_netcdf(xid_new, encoding=encoding, compute=True)
+    save_dataset(ds_full, xid_new, msg)
     return
 
 
@@ -246,6 +216,7 @@ def plx_source_file(lon, exp, v, r):
         traj: particle IDs
         source: source regions 0-10
         rtime: particle release times
+
     Data variables:
         trajectory  (traj): Particle ID.
         time        (traj): Release time.
@@ -267,6 +238,7 @@ def plx_source_file(lon, exp, v, r):
     # Check if file already exists.
     if xid_new.exists():
         return
+
     update_formatted_file_sources(lon, exp, v, r)
 
     logger.info('{}: Creating particle source file.'.format(xid.stem))
@@ -299,9 +271,7 @@ def plx_source_file(lon, exp, v, r):
 
     # Save dataset.
     logger.info('{}: Saving...'.format(xid.stem))
-    # Add compression encoding.
-    encoding = {var: dict(zlib=True, complevel=5) for var in ds.data_vars}
-    ds.to_netcdf(xid_new, encoding=encoding, compute=True)
+    save_dataset(ds, xid_new)
     logger.info('{}: Saved.'.format(xid.stem))
 
 
@@ -340,17 +310,10 @@ def merge_plx_source_files(lon, exp, v):
     # Filename of merged files (drops the r##).
     xid = get_plx_id(exp, lon, v, None, 'sources')
 
-    # Add file history and attributes.
-    msg = ': ./plx_sources.py'
-    ds = append_dataset_history(ds, msg)
-    ds = combine_source_indexes(ds, 0, 10)
-    ds = add_particle_file_attributes(ds)
-
     # Save dataset with compression.
     logger.debug('Saving {}...'.format(xid.stem))
-    comp = dict(zlib=True, complevel=5)
-    encoding = {var: comp for var in ds.data_vars}
-    ds.to_netcdf(xid, encoding=encoding, compute=True)
+    msg = ': ./plx_sources.py'
+    save_dataset(ds, xid, msg)
     logger.info('Saved all {}!'.format(xid.stem))
 
 
