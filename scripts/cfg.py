@@ -97,7 +97,7 @@ class ZoneData:
     mc = Zone(3, 'mc', 'Mindanao Current', [8, 8, 126.0, 128.5])
     cs = Zone(4, 'cs', 'Celebes Sea', [[0.5, j2, x_west, x_west],
                                        [j2, j2, x_west, 123]])
-    idn = Zone(5, 'idn', 'Indonesian Seas', [[0.4, -8.5, x_west, x_west],
+    idn = Zone(5, 'idn', 'Indonesian Seas', [[-8.5, 0.4, x_west, x_west],
                                              [-8.7, -8.7, x_west, 140.6]])
     nth = Zone(6, 'nth', 'North Interior', [j2, j2, mc.loc[1], 278.5])
     sth = Zone(11, 'sth', 'South Interior', [j1, j1, 155, 280])
