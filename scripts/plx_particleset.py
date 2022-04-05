@@ -24,7 +24,7 @@ try:
 except ImportError:
     MPI = None
 
-logger = mlogger('plx', parcels=True, misc=False)
+logger = mlogger('plx', parcels=True)
 
 
 def restart_EUC(dy=0.1, dz=25, lon=165, exp='hist', repeatdt_days=6,

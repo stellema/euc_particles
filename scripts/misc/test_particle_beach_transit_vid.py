@@ -26,7 +26,7 @@ from kernels import (AdvectionRK4_Land, CoastTime, BeachTest, UnBeaching,
                      UnBeachR, Age, SampleZone, recovery_kernels, Distance)
 
 warnings.filterwarnings("ignore")
-logger = mlogger('test_unbeaching', parcels=True, misc=False)
+logger = mlogger('test_unbeaching', parcels=True)
 
 
 def del_land(pset):

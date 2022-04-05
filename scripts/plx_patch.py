@@ -24,7 +24,7 @@ try:
 except ImportError:
     MPI = None
 
-logger = mlogger('plx', parcels=True, misc=False)
+logger = mlogger('plx', parcels=True)
 
 
 def get_missed_repeats(lon=165, exp=0):

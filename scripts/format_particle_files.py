@@ -51,7 +51,7 @@ from fncs import (get_plx_id, open_plx_data, update_particle_data_sources,
                   particle_source_subset, get_max_particle_file_ID,
                   remap_particle_IDs, get_new_particle_IDs)
 
-logger = mlogger('files', parcels=False, misc=True)
+logger = mlogger('files')
 
 
 class ParticleFilenames:

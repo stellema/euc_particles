@@ -34,7 +34,7 @@ from tools import mlogger, timeit, save_dataset
 from fncs import (get_plx_id, update_particle_data_sources,
                   get_index_of_last_obs)
 
-logger = mlogger('files', parcels=False, misc=False)
+logger = mlogger('files')
 
 
 @timeit
@@ -141,7 +141,8 @@ def get_final_particle_obs(ds):
     """Reduce particle dataset variables to first/last observation."""
     # Select the initial release time and particle ID.
     for var in ['time', 'trajectory']:
-        ds[var] = ds[var].isel(obs=0)
+        if 'obs' in ds[var].dims:
+            ds[var] = ds[var].isel(obs=0)
 
     # Select the final value.
     for var in ['zone', 'age', 'distance', 'unbeached']:
@@ -149,7 +150,9 @@ def get_final_particle_obs(ds):
             ds[var] = ds[var].max('obs')
 
     # Drop extra coords and unused 'obs'.
-    ds = ds.drop(['lat', 'lon', 'z', 'obs'])
+    for var in ['lat', 'lon', 'z', 'obs']:
+        if var in ds.variables:
+            ds = ds.drop(var)
     return ds
 
 

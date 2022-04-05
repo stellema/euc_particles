@@ -22,7 +22,7 @@ from collections import namedtuple
 import cfg
 
 
-def mlogger(name, parcels=False, misc=True):
+def mlogger(name, parcels=False):
     """Create a logger.
 
     Args:
@@ -36,11 +36,10 @@ def mlogger(name, parcels=False, misc=True):
     global loggers
 
     loggers = cfg.loggers
-    name = 'misc' if misc else name
+
     if Path(sys.argv[0]).stem in ['plx', 'plx_test']:
-        name = 'plx' if cfg.home != 'C:' else 'plx_test'
+        name = 'plx' if cfg.home.drive != 'C:' else 'plx_test'
         parcels = True
-        misc = False
 
     class NoWarnFilter(logging.Filter):
         def filter(self, record):

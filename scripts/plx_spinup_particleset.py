@@ -21,7 +21,7 @@ try:
 except ImportError:
     MPI = None
 
-logger = mlogger('plx', parcels=True, misc=False)
+logger = mlogger('plx', parcels=True)
 
 
 def spinup_particleset(lon=165, exp='hist', v=1, year_offset=0, patch=False):

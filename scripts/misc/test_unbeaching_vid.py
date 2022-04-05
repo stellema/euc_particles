@@ -60,7 +60,7 @@ from kernels import (AdvectionRK4_Land, BeachTest, UnBeachR, Age, DelLand,
                      SampleZone, Distance, CoastTime, recovery_kernels)
 
 warnings.filterwarnings("ignore")
-logger = mlogger('test_unbeaching', parcels=True, misc=False)
+logger = mlogger('test_unbeaching', parcels=True)
 
 test = ['CS', 'PNG', 'SS'][0]
 

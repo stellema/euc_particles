@@ -17,7 +17,7 @@ import xarray as xr
 import cfg
 from tools import mlogger
 
-logger = mlogger('misc', parcels=False, misc=True)
+logger = mlogger('misc')
 
 def get_spinup_particle_remainder(ds):
     dx = ds.zone#isel(obs=slice(1, ds.obs.size)).zone

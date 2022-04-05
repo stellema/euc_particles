@@ -16,7 +16,7 @@ from tools import mlogger
 from plot_particles import plot3D
 
 
-logger = mlogger('particles', parcels=False, misc=False)
+logger = mlogger('particles')
 
 
 def particle_info(xid, latest=True):

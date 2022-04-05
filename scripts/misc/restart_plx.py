@@ -34,7 +34,7 @@ import pathlib
 temp = pathlib.PosixPath
 pathlib.PosixPath = pathlib.WindowsPath
 
-logger = mlogger('plx', parcels=True, misc=False)
+logger = mlogger('plx', parcels=True)
 
 
 def read_from_npy(file_list, time_steps, var, maxid_written):
