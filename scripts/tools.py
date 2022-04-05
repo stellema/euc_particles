@@ -518,7 +518,26 @@ def zone_field(plot=False, savefile=True):
     return
 
 
+def add_particle_file_attributes(ds):
+    """Add variable name and units to dataset."""
+    def add_attrs(ds, var, name, units):
+        if var in ds.variables:
+            ds[var].attrs['name'] = name
+            ds[var].attrs['units'] = units
+        return ds
+
+    for var in ['u', 'uz', 'u_total']:
+        ds = add_attrs(ds, var, 'Transport', 'Sv')
+
+    ds = add_attrs(ds, 'distance', 'Distance', 'm')
+    ds = add_attrs(ds, 'age', 'Transit time', 's')
+    ds = add_attrs(ds, 'unbeached', 'Unbeached', 'Count')
+
+    return ds
+
+
 def append_dataset_history(ds, msg):
+    """Append dataset history with timestamp and message."""
     if 'history' not in ds.attrs:
         ds.attrs['history'] = ''
     else:
@@ -526,3 +545,13 @@ def append_dataset_history(ds, msg):
     ds.attrs['history'] += str(np.datetime64('now', 's')).replace('T', ' ')
     ds.attrs['history'] += msg
     return ds
+
+
+def save_dataset(ds, filename, msg=None):
+    """Save dataset with history, message and encoding."""
+    ds = add_particle_file_attributes(ds)
+    if msg is not None:
+        ds = append_dataset_history(ds, msg)
+    comp = dict(zlib=True, complevel=5)
+    encoding = {var: comp for var in ds.data_vars}
+    ds.to_netcdf(filename, encoding=encoding, compute=True)
