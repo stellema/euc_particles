@@ -124,7 +124,7 @@ def source_particle_ID_dict(ds, exp, lon, v, r):
         return np.load(file, allow_pickle=True).item()
 
     # Source region IDs (0-10).
-    zones = range(len(cfg.zones._all) + 8)
+    zones = range(len(cfg.zones._all) + 9)
     source_traj = dict()
 
     # Particle IDs that reach each source.
@@ -197,7 +197,7 @@ def group_euc_transport(ds, source_traj):
     # Group particle transport by time.
     ds = ds.drop([v for v in ds.data_vars if v not in ['u', 'time']])
     ds = group_particles_by_variable(ds, 'time')
-    ds.coords['zone'] = np.arange(len(cfg.zones._all) + 8)
+    ds.coords['zone'] = np.arange(len(cfg.zones._all) + 9)
     # Rename stacked time coordinate (avoid duplicate 'time' variable).
     ds = ds.rename({'time': 'rtime'})
 
@@ -242,7 +242,7 @@ def plx_source_file(lon, exp, v, r):
     if xid_new.exists():
         return
 
-    update_formatted_file_sources(lon, exp, v, r)
+    # update_formatted_file_sources(lon, exp, v, r)
 
     logger.info('{}: Creating particle source file.'.format(xid.stem))
     ds = xr.open_dataset(xid, chunks='auto')
