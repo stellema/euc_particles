@@ -145,7 +145,7 @@ def get_final_particle_obs(ds):
             ds[var] = ds[var].isel(obs=0)
 
     # Select the final value.
-    for var in ['zone', 'age', 'distance', 'unbeached']:
+    for var in ['zone', 'age', 'distance', 'unbeached', 'lat', 'lon', 'z']:
         if 'obs' in ds[var].dims:
             ds[var] = ds[var].max('obs')
 
