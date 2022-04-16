@@ -1,16 +1,13 @@
-
 # -*- coding: utf-8 -*-
-"""
-created: Mon May  4 16:35:39 2020
+"""Particle Lagrangian Experiment scripts.
 
-author: Annette Stellema (astellemas@gmail.com)
-
-
+@author: Annette Stellema
+@email: a.stellema@unsw.edu.au
+@created: Mon May 4 16:35:39 2020
 """
 import sys
 import string
 import warnings
-import calendar
 import numpy as np
 import xarray as xr
 from pathlib import Path
@@ -84,6 +81,8 @@ j1, j2 = -6.1, 8
 x_west = 120.1
 lons = [165, 190, 220, 250]
 inner_lons = [[128.5, *lons, 278.5], [155, *lons, 280]]
+colors = ['y', 'darkorange', 'deeppink', 'mediumspringgreen',
+          'seagreen', 'red', 'blue', 'darkviolet']
 
 @dataclass
 class ZoneData:
@@ -93,19 +92,30 @@ class ZoneData:
     Zone.__new__.__defaults__ = (None,) * len(Zone._fields)
     nz = Zone(0, 'nz', 'None')
     vs = Zone(1, 'vs', 'Vitiaz Strait', [j1, j1, 147.6, 149.6])
-    ss = Zone(2, 'ss', 'Solomon Strait', [-5, -5, 151.6, 154.6])
-    mc = Zone(3, 'mc', 'Mindanao Current', [8, 8, 126.0, 128.5])
+    ss = Zone(2, 'ss', 'Solomon Strait', [-5.1, -5.1, 152, 154.6])
+    mc = Zone(3, 'mc', 'Mindanao Current', [8, 8, 126.4, 129.1])
     cs = Zone(4, 'cs', 'Celebes Sea', [[0.5, j2, x_west, x_west],
                                        [j2, j2, x_west, 123]])
     idn = Zone(5, 'idn', 'Indonesian Seas', [[-8.5, 0.4, x_west, x_west],
                                              [-8.7, -8.7, x_west, 140.6]])
-    nth = Zone(6, 'nth', 'North Interior', [j2, j2, mc.loc[1], 278.5])
-    sth = Zone(11, 'sth', 'South Interior', [j1, j1, 155, 280])
+    nth = Zone(6, 'nth', 'North Interior', [j2, j2, 129.1, 278.5])
+    # n1 = Zone(7, 'n1', 'North Interior', [j2, j2, *inner_lons[0][2:4]])
+    # n1 = Zone(7, 'n1', 'North Interior', [j2, j2, *inner_lons[0][4:6]])
+    sth = Zone(11, 'sth', 'South Interior', [j1, j1, 155.4, 280])
     _all = [nz, vs, ss, mc, cs, idn, nth, sth]
 
-    colors = ['y', 'darkorange', 'deeppink', 'mediumspringgreen',
-              'seagreen', 'darkviolet', 'royalblue', 'blue']
+    colors = colors
     names = [z.name_full for z in _all]
+
+    inner_names = ['{} Interior ({}-{})'
+                   .format(['North', 'South'][s],
+                           *[inner_lons[s][i] for i in [x, x + 1]])
+                   for s in [0, 1] for x in range(5)]
+
+    names_all = np.concatenate([names[:-2], inner_names])
+
+    colors_all = np.concatenate([colors[:-2], *[[colors[i]] * 5
+                                                for i in [-2, -1]]])
 
 # @dataclass
 # class ZoneData:
@@ -119,15 +129,13 @@ class ZoneData:
 #     ecs = Zone('ecs', 5, 'South of EUC', [[-2.6 - dx, x, x, j1] for x in lons])
 #     ecn = Zone('ecn', 6, 'North of EUC', [[x, x, 2.6 + dx, j2] for x in lons])
 #     idn = Zone('idn', 7, 'Indonesian Seas', [[-7, np.nan, 122.8, 140.4],
-#                                              [-7, j2, 122.8, 122.8]])
+#                                               [-7, j2, 122.8, 122.8]])
 #     nth = Zone('nth', 8, 'North Interior', [j2, np.nan, 128.5 + dx, lons[3] + dx])
 #     sth = Zone('sth', 9, 'South Interior', [j1, np.nan, 155, lons[3] + dx])
 
 #     list_all = [vs, ss, mc, ecr, ecs, ecn, idn, nth, sth]
-#     colors = ['darkorange', 'deeppink', 'mediumspringgreen',
-#               'violet', 'blue', 'k', 'darkviolet',
-#               'royalblue', 'seagreen', 'y']
-
+#     colors = ['darkorange', 'deeppink', 'mediumspringgreen', 'violet', 'blue',
+#               'k', 'darkviolet', 'royalblue', 'seagreen', 'y']
 #     inds = np.append(np.arange(1, 10, dtype=int), [0])
 #     inds[6], inds[8] = inds[8], inds[6]
 #     names = [z.name_full for z in list_all]
