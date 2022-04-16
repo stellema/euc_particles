@@ -255,8 +255,8 @@ def plot_particle_source_map(lon, merge_interior=True, add_ocean=True,
             loc = [z.loc] if type(z.loc[0]) != list else z.loc
             for c in loc:
                 z_index[i] = iz + 1
-                lons[i] = c[0:2]  # Lon (west, east).
-                lats[i] = c[2:4]  # Lat (south, north).
+                lats[i] = c[0:2]  # Lon (west, east).
+                lons[i] = c[2:4]  # Lat (south, north).
                 i += 1
         return lons, lats, z_index
 
