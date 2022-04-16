@@ -110,7 +110,7 @@ def update_particle_data_sources(ds):
     ds.zone.max('obs').plot.hist(bins=np.arange(9),alpha=0.5,align='left')
     """
     # Mask all values of these zone IDs.
-    for z in [4., 5., 6., 7., 8., 9., 10.]:
+    for z in [2., 4., 5., 6., 7., 8., 9., 10.]:
         ds = mask_source_id(ds, z)
 
     lat, lon = ds.lat, ds.lon
@@ -128,7 +128,7 @@ def update_particle_data_sources(ds):
     # Zone 4: Celebes Sea
     z, loc1, loc2 = 4, *zones.cs.loc
     mask_y = ((lat >= loc1[0]) & (lat <= loc1[1]) & (lon.round(1) <= loc1[2]))
-    mask_x = ((lat >= loc2[0]) & (lon >= loc2[2]) & (lon <= loc2[3]))
+    mask_x = ((lat >= loc2[0]) & (lon.round(1) >= loc2[2]) & (lon <= loc2[3]))
     ds = replace_source_id(ds, mask_y | mask_x, z)
 
     # Zone 5: Indonesian Seas
@@ -277,25 +277,25 @@ def combine_source_indexes(ds, z1, z2):
 
 def merge_interior_sources(ds):
     """Merge source North/South Interior with North/South of EUC."""
-    # Merge 'South of EUC' & 'South Interior': zone[5] = zone[5+9].
-    z1, z2 = 5, 9
-    ds = combine_source_indexes(ds, z1, z2)
-    # Merge 'North of EUC' & 'North Interior': zone[6] = zone[6+8].
-    z1, z2 = 6, 8
-    ds = combine_source_indexes(ds, z1, z2)
+    for i in range(1, 5):
+        # Merge South interior lons: zone[6] = zone[6+7+8+9].
+        z1 = 6
+        ds = combine_source_indexes(ds, z1, z1 + i)
+        # Merge Nouth interior lons
+        z1 = 11
+        ds = combine_source_indexes(ds, z1, z1 + i)
 
     # Reset source name and colours.
     if set(['names', 'colors']).issubset(ds.data_vars):
-        for z1, z2 in zip([5, 6], [9, 8]):
-            i1 = list(ds.zone.values).index(z1)  # Index in dataset
-            i2 = list(cfg.zones.inds).index(z2)  # Index interior in cfg.zones
-            ds['names'][i1] = cfg.zones.names[i2]
-            ds['colors'][i1] = cfg.zones.colors[i2]
-
+        for z1, z2 in zip([6, 7], [6, 11]):
+            # i1 = list(ds.zone.values).index(z1)  # Index in dataset
+            ds['names'][z1] = cfg.zones.names[z1]
+            ds['colors'][z1] = cfg.zones.colors[z1]
+    ds.coords['zone'] = np.arange(ds.zone.size, dtype=int)
     return ds
 
 
-def source_dataset(lon, merge_interior=False):
+def source_dataset(lon, merge_interior=True):
     """Get source datasets.
 
     Args:
@@ -327,11 +327,13 @@ def source_dataset(lon, merge_interior=False):
     ds['distance'].attrs['units'] = '100 km'
 
     # Reorder zones.
-    ds = ds.isel(zone=cfg.zones.inds)
+    # ds = ds.isel(zone=cfg.zones.inds)
 
-    ds['names'] = ('zone', cfg.zones.names)
-    ds['colors'] = ('zone', cfg.zones.colors)
+    ds['names'] = ('zone', cfg.zones.names_all)
+    ds['colors'] = ('zone', cfg.zones.colors_all)
 
     if merge_interior:
         ds = merge_interior_sources(ds)
+        inds = np.array([1, 2, 7, 6, 3, 4, 5, 0])[::-1]
+        ds = ds.isel(zone=inds)
     return ds
