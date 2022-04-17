@@ -1,8 +1,8 @@
 #!/bin/bash
 #PBS -P e14
 #PBS -q normalbw
-#PBS -l walltime=2:00:00
-#PBS -l mem=100GB
+#PBS -l walltime=8:00:00
+#PBS -l mem=92GB
 #PBS -l ncpus=1
 #PBS -l storage=gdata/hh5+gdata/e14
 #PBS -l wd
@@ -11,7 +11,6 @@
 #PBS -v LON,EXP
 
 ###############################################################################
-#
 # Fix and save particle data files.
 # To run: qsub -v LON=250,EXP=0 format_plx_files.sh
 ###############################################################################

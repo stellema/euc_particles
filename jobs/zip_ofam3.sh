@@ -1,9 +1,9 @@
 #!/bin/bash
 #PBS -P e14
 #PBS -q normalbw
-#PBS -l walltime=3:00:00
-#PBS -l mem=1GB
-#PBS -l ncpus=3
+#PBS -l walltime=4:00:00
+#PBS -l mem=4GB
+#PBS -l ncpus=10
 #PBS -l storage=gdata/e14
 #PBS -l wd
 
@@ -11,14 +11,10 @@
 # Compress OFAM3 data files.
 ## Historical: for y in {198..201}
 ## Projection: for year in {207..201}
-## Historical: for year in 1979 1980 2013 2014
 ###############################################
 
 cd /g/data/e14/as3189/OFAM/trop_pac
-gzip --best ocean_*climo.nc &
-for var in "u" "v" "w"; do
-  for year in 1980 197 2013 2014; do
-    gzip --best ocean_"$var"_"$year"*.nc &
-  done
+for var in "adic" "alk" "caco3" "det" "dic" "fe" "no3" "o2" "phy" "zoo"; do
+  gzip ocean_"$var"_*.nc &
 done
 wait

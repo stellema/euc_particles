@@ -1,13 +1,8 @@
 #!/bin/bash
-###############################################################################
-#                                                                             #
-#                             Sort PLX by source.                             #
-#                                                                             #
-###############################################################################
 #PBS -P e14
 #PBS -q normal
-#PBS -l walltime=3:30:00
-#PBS -l mem=40GB
+#PBS -l walltime=3:00:00
+#PBS -l mem=16GB
 #PBS -l ncpus=1
 #PBS -l storage=gdata/hh5+gdata/e14
 #PBS -l wd
@@ -15,7 +10,10 @@
 #PBS -M astellemas@gmail.com
 #PBS -v LON,EXP
 
-# How to submit: qsub -v LON=250,EXP=1 srcplx.sh
+###############################################################################
+# Sort PLX particles by source.
+# To submit: qsub -v LON=250,EXP=1 srcplx.sh
+###############################################################################
 
 ECHO=/bin/echo
 $ECHO "Run plx sources for exp $EXP at lon $LON."
