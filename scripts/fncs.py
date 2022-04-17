@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Fri Feb 11 18:39:21 2022
+"""Particle data functions.
 
-@author: a-ste
+@author: Annette Stellema
+@email: a.stellema@unsw.edu.au
+@created: Fri Feb 11 18:39:21 2022
 """
 
 import numpy as np
@@ -13,6 +14,7 @@ from cfg import zones
 
 
 def get_plx_id(exp, lon, v, r=None, folder=None):
+    """Particle data filename."""
     if type(exp) != str:
         exp = cfg.exp[exp]
     if not folder:
@@ -58,6 +60,7 @@ def get_zone_info(ds, zone):
 
 
 def mask_source_id(ds, z):
+    """Mask value in dataset variable 'zone."""
     ds['zone'] = ds.zone.where((ds.zone != z))
     return ds
 
@@ -334,6 +337,6 @@ def source_dataset(lon, merge_interior=True):
 
     if merge_interior:
         ds = merge_interior_sources(ds)
-        inds = np.array([1, 2, 7, 6, 3, 4, 5, 0])[::-1]
+        inds = np.array([1, 2, 7, 6, 3, 4, 5, 0])
         ds = ds.isel(zone=inds)
     return ds
