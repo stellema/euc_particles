@@ -1,9 +1,4 @@
 #!/bin/bash
-###############################################################################
-#                                                                             #
-#          Run Particle Lagrangian Experiment at release longitude.           #
-#                                                                             #
-###############################################################################
 #PBS -P e14
 #PBS -q normal
 #PBS -l walltime=22:00:00
@@ -15,7 +10,11 @@
 #PBS -M astellemas@gmail.com
 #PBS -v LON,EXP
 
+###############################################################################
+# Run Particle Lagrangian Experiment at release longitude.
 # To run: qsub -v LON=250,EXP="hist" plx.sh
+###############################################################################
+
 module use /g/data3/hh5/public/modules
 module load conda
 source /g/data/e14/as3189/conda/envs/analysis3-20.01/bin/activate

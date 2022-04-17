@@ -6,6 +6,11 @@
 #PBS -l ncpus=1
 #PBS -l wd
 #PBS -l storage=gdata/e14
+
+###############################################################################
+# Subset lat/lon of OFAM3 "u" veocity output.
+###############################################################################
+
 module load nco
 module load cdo
 cd /g/data/e14/as3189/OFAM/trop_pac/tape/

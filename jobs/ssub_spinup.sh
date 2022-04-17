@@ -11,12 +11,10 @@
 #PBS -v LON,EXP
 
 ###############################################################################
-#
 # Create PLX spinup particle set and submit spinup job.
 #
 # N.B. Run this if after running at least one particle checkpoint.
 # qsub -v LON=250,EXP="hist" ssub_spinup.sh
-#
 ###############################################################################
 
 ECHO=/bin/echo

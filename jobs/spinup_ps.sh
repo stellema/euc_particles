@@ -11,7 +11,6 @@
 #PBS -v LON,EXP,Y,R
 
 ###############################################################################
-#
 # Run PLX spinup particleset.
 # To run: qsub -v LON=250,EXP="hist",Y=6,R=10 spinup_ps.sh
 # where Y is the offset year and R is the file increment

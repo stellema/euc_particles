@@ -9,7 +9,7 @@
 ###############################################################################
 # Run Particle Lagrangian Experiment for missing particles.
 #
-# Will self submit until 7th file exists.
+# Self submits until 7th(?) file exists.
 # To run: qsub -v LON=165,EXP=0 run_plx_patch.sh
 ###############################################################################
 

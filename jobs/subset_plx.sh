@@ -1,9 +1,4 @@
 #!/bin/bash
-###############################################################################
-#                                                                             #
-#                   Split particle files by release year.                     #
-#                                                                             #
-###############################################################################
 #PBS -P e14
 #PBS -q normalbw
 #PBS -l walltime=8:00:00
@@ -14,9 +9,13 @@
 #PBS -m ae
 #PBS -M astellemas@gmail.com
 #PBS -v LON,EXP
-ECHO=/bin/echo
 
+###############################################################################
+# Split particle files by release year.
 # Submit job: qsub -v LON=250,EXP=0 subset_plx.sh
+###############################################################################
+
+ECHO=/bin/echo
 $ECHO "Run plx subset for $EXP at lon $LON."
 module use /g/data3/hh5/public/modules
 module load conda/analysis3
