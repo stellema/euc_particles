@@ -1,15 +1,17 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Fri Nov 19 01:57:15 2021
+"""Analyse PLX spinup trajectories and forcing differences.
 
-@author: a-ste
+Todo:
+    - find which particles need spinup
+    - concat particle tracjectories in spinup files
+    - apply fixes
+    - supset to source
+    - save
 
+@author: Annette Stellema
+@email: a.stellema@unsw.edu.au
+@created: Fri Nov 19 01:57:15 2021
 
-- find which particles need spinup
-- concat particle tracjectories in spinup files
-- apply fixes
-- supset to source
-- save
 """
 import numpy as np
 import xarray as xr

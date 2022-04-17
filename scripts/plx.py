@@ -1,10 +1,13 @@
+"""PLX - Physical Lagrangian experiment.
+
+Paricles are regularily initialised within the EUC (see @pset_euc) and
+back-tracked using OFAM3 velocity fields until deleted from model domain.
+
+@author: Annette Stellema
+@email: a.stellema@unsw.edu.au
+@created: Fri Jun 12 18:45:35 2020
+
 """
-created: Fri Jun 12 18:45:35 2020.
-
-author: Annette Stellema (astellemas@gmail.com)
-
-"""
-
 import math
 import numpy as np
 import pandas as pd

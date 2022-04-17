@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
-"""
-created: Thu Sep  3 15:19:11 2020
+"""Parcels kernels for EUC particle back-tracking experiment.
 
-author: Annette Stellema (astellemas@gmail.com)
-
+@author: Annette Stellema
+@email: a.stellema@unsw.edu.au
+@created: Thu Sep 3 15:19:11 2020
 
 """
 import math
@@ -18,7 +18,6 @@ def AdvectionRK4_Land(particle, fieldset, time):
     Searches for nearest 0.1, then floor/ceils and breaks when off land.
     Loops through i,j=[0c,0f] [0c,1c] [-1f,0f] [-1f,1c] (c:ceil, f:floor)
     """
-
     particle.land = fieldset.Land[0., particle.depth, particle.lat, particle.lon]
     lat0 = particle.lat
     lon0 = particle.lon

@@ -3,7 +3,7 @@
 
 Includes data variables:
     - time: particle release times
-    - age/distance/unbeached/u (time, traj): final value at source per time release
+    - age/distance/u/etc (time, traj): final value at source per time released
     - u_total (time): total EUC transport qat each release time
     - uz (time, zone): EUC transport sum at each source and release time
 

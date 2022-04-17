@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
-"""
-created: Thu Sep  3 14:59:05 2020
+"""Modified copy of Parcels plotting module.
 
-author: Annette Stellema (astellemas@gmail.com)
-
+@author: Annette Stellema
+@email: a.stellema@unsw.edu.au
+@created: Thu Sep 3 14:59:05 2020
 
 """
 import cfg

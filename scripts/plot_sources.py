@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
-"""
-created: Wed Jul 21 12:16:50 2021
+"""Plot EUC source statistics.
 
-author: Annette Stellema (astellemas@gmail.com)
-
+@author: Annette Stellema
+@email: a.stellema@unsw.edu.au
+@created: Wed Jul 21 12:16:50 2021
 
 """
 import numpy as np
@@ -15,14 +15,16 @@ from tools import test_signifiance
 from fncs import source_dataset
 
 colors = cfg.zones.colors
+
 names = cfg.zones.names
 fsize = 10
 lons = [165, 190, 220, 250]
+# lons = [190, 250]
 plt.rcParams.update({'font.size': fsize})
 plt.rc('font', size=fsize)
 plt.rc('axes', titlesize=fsize)
 plt.rcParams['figure.figsize'] = [10, 7]
-plt.rcParams['figure.dpi'] = 200
+# plt.rcParams['figure.dpi'] = 200
 
 
 def source_pie_chart(ds, lon):
@@ -184,11 +186,8 @@ def transport_source_bar_graph(exp=0, merge_interior=True):
 
         # Open data.
         ds = source_dataset(lon, merge_interior)
-
-        # Rearange source order.
-        if merge_interior:
-            inds = np.array([0, 5, 2, 1, 4, 6, 7, 3])
-            ds = ds.sel(zone=inds)
+        # # Reverse zone order
+        # ds = ds.isel(zone=np.arange(ds.zone.size, dtype=int)[::-1])
 
         dx = ds.uz.mean('rtime')
         ticks = range(ds.zone.size)  # Source y-axis ticks.
@@ -217,9 +216,11 @@ def transport_source_bar_graph(exp=0, merge_interior=True):
         # Add RCP legend at ends of rows.
         if exp > 0:
             ax.legend()
+        ax.invert_yaxis()
 
     plt.tight_layout()
-    plt.savefig(cfg.fig / 'transport_source_bar_{}.png'.format(cfg.exps[exp]))
+    plt.savefig(cfg.fig / 'sources/transport_source_bar_{}.png'
+                .format(cfg.exps[exp]))
     return
 
 
@@ -229,9 +230,9 @@ def print_transport_sources(lon):
 
     # Rearange source order.
 
-    inds = np.array([0, 5, 2, 1, 4, 6, 7, 3])
-    # ds['names'] = ('zone', cfg.zones.names)
-    ds = ds.sel(zone=inds)
+    # inds = np.array([0, 5, 2, 1, 4, 6, 7, 3])
+    # # ds['names'] = ('zone', cfg.zones.names)
+    # ds = ds.sel(zone=inds)
 
     total = ds.u_total.mean('rtime').isel(exp=0).item()
     print('{:>22} {}E={:.3f}'.format('total', lon, total))
@@ -246,34 +247,32 @@ def print_transport_sources(lon):
                       (dx[0] / total) * 100, p))
 
 
-# lon = 165
-# exp = 0
+lon = 190
+exp = 00
 
-# # Source bar graph.
-# transport_source_bar_graph(exp=0)
-# transport_source_bar_graph(exp=1)
+# Source bar graph.
+transport_source_bar_graph(exp=0)
+transport_source_bar_graph(exp=1)
 
+# Plot histograms.
+for lon in lons:
+    ds = source_dataset(lon, merge_interior=True)
+    source_histogram(ds, lon, var='age')
 
-# # Plot histograms.
-# for lon in lons:
-#     ds = source_dataset(lon, merge_interior=1)
-#     inds = np.array([1, 2, 3, 7, 6, 5, 4, 0])
-#     ds = ds.sel(zone=inds)
-#     source_histogram(ds, lon, var='age')
+# Print values.
+for lon in lons:
+    print_transport_sources(lon)
 
-# # Print values.
-# for lon in lons:
-#     print_transport_sources(lon)
-
-# # Timeseries.
-# ds_m = ds.resample(time="1MS").mean("time", keep_attrs=1)
+# Timeseries.
+# ds_m = ds.resample(rtime="1MS").mean("rtime", keep_attrs=1)
 # source_timeseries(ds, exp, lon, var='uz')
 
-# # Pie chart.
-# source_pie_chart(ds, lon)
+# Pie chart.
+source_pie_chart(ds, lon)
 
+# # Spinup test working.
 # xid = cfg.data / 'sources/plx_spinup_{}_{}_v1y6.nc'.format(cfg.exp[exp], lon)
-# ds = source_dataset(lon, merge_interior=False).isel(exp=0)
+# ds = source_dataset(lon, merge_interior=True).isel(exp=0)
 # dp = xr.open_dataset(xid)
 # dp = dp.isel(zone=cfg.zones.inds)
 # ds = ds.sel(traj=ds.traj[ds.traj.isin(dp.traj.values.astype(int))])

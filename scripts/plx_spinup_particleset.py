@@ -1,10 +1,10 @@
+"""Create PLX ParticleSet to run particle spinup.
+
+@author: Annette Stellema
+@email: a.stellema@unsw.edu.au
+@created: Fri Jun 12 18:45:35 2020
+
 """
-created: Fri Jun 12 18:45:35 2020.
-
-author: Annette Stellema (astellemas@gmail.com)
-
-"""
-
 import numpy as np
 import xarray as xr
 import pandas as pd

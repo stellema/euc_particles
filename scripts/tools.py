@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
-"""
-created: Mon May  4 17:19:44 2020
+"""Helpful functions.
 
-author: Annette Stellema (astellemas@gmail.com)
-"""
+@author: Annette Stellema
+@email: a.stellema@unsw.edu.au
+@created: Mon May 4 17:19:44 2020
 
+"""
 import sys
 import math
 import logging

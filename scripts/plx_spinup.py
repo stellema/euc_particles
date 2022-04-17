@@ -1,10 +1,10 @@
+"""PLX modified for repeat forcing "spinup"".
+
+@author: Annette Stellema
+@email: a.stellema@unsw.edu.au
+@created: Fri Jun 12 18:45:35 2020
+
 """
-created: Fri Jun 12 18:45:35 2020.
-
-author: Annette Stellema (astellemas@gmail.com)
-
-"""
-
 import pandas as pd
 from operator import attrgetter
 from datetime import datetime, timedelta

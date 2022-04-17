@@ -1,26 +1,16 @@
 # -*- coding: utf-8 -*-
 """Create a formatted version of each particle spinup file.
 
-
 Notes:
-    - This is for repeated year forcing comparison ( run for both years)
-    - To be run after formatting main set of files
-    - Drop particles that don't need a spinup
-    - Merge the two spinup particle files
-    - Format files as above
+    - This is for repeated year forcing comparison (run for both years).
+    - Creates a formatted spinup file & source information file.
+    - Run for each longitude, experiment and forcing year.
+    - To be run after formatting main set of files & subsetting at source.
+    - Created files only contain particles that need a spinup.
+    - Merges the two spinup particle files (5year each) for main and patch.
     - data/v1/spinup_*/plx*v1r*.nc --> data/plx/plx_spinup*v1_{y}.nc
 
 Todo:
-    - find which particles need spinup
-    - Merge:
-        - remap main + patch IDs
-        - concat particle tracjectories in spinup files (main + patch)
-        - OPT: get IDs of particles needeed (i.e. drop found particles)
-    - apply fixes
-        - zone locations
-    - supset to source
-
-    - save
     - create source stat file.
 
 @author: Annette Stellema
@@ -66,6 +56,7 @@ def format_spinup_file(lon, exp, v=1, spinup_year=0):
         v (int, optional): Run version. Defaults to 1.
         r (int, optional): File repeat number {0-9}. Defaults to 0.
         spinup_year (int, optional): Spinup year offset. Defaults to 0.
+
     """
     test = True if cfg.home.drive == 'C:' else False
 
@@ -100,13 +91,18 @@ def format_spinup_file(lon, exp, v=1, spinup_year=0):
     # Patch particle IDs in remap_dict have constant added (ensures unique).
     last_id = get_max_particle_file_ID(exp, lon, v)  # Use original for merge.
 
-    # Particle IDs that haven't reached a source (original IDs).
-    source_traj = spinup_particle_IDs(lon, exp, v)
+    inv_map = {v: k for k, v in remap_dict.items()}
+    traj_z0 = spinup_particle_IDs(lon, exp, v)
+    traj_z0 = np.array([inv_map[x] for x in traj_z0])
+
+    traj = traj[np.isin(traj_z0, traj)]
+    traj_patch = traj_patch[np.isin(traj_z0, traj_patch + last_id + 1)]
 
     # Merge trajectory data across files.
     if test:
         logger.info('{}: Test subset.'.format(xid.stem))
-        traj = traj[1000:1200]
+        traj = traj[1100:1200]
+        traj_patch = traj_patch[::200]
 
     logger.debug('{}: Merge trajectory data.'.format(xid.stem))
     ds = merge_particle_trajectories(xids, traj)
@@ -144,7 +140,7 @@ def format_spinup_file(lon, exp, v=1, spinup_year=0):
     #  Convert velocity to transport.
     ds['u'] = ds.u * cfg.DXDY
 
-    msg = ': ./format_particle_files.py'
+    msg = ': ./format_particle_spinup_files.py'
     save_dataset(ds, file_new, msg)
     logger.debug('{}: Saved!'.format(xid.stem))
     ds.close()
@@ -204,6 +200,6 @@ if __name__ == "__main__":
     p.add_argument('-y', '--year', default=0, type=int, help='Year offset.')
     args = p.parse_args()
 
-    # lon, exp, v, spinup_year = 165, 0, 1, 0
+    # lon, exp, v, spinup_year = 250, 0, 1, 0
     format_spinup_file(args.lon, args.exp, v=1, spinup_year=args.year)
     plx_source_file_spinup(args.lon, args.exp, v=1, spinup_year=args.year)

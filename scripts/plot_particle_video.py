@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
-"""
-created: Tue Nov  5 16:00:08 2019
+"""Create animated scatter plot.
 
-author: Annette Stellema (astellemas@gmail.com)
-
+@author: Annette Stellema
+@email: a.stellema@unsw.edu.au
+@created: Tue Nov 5 16:00:08 2019
 
 """
 import numpy as np
@@ -14,7 +14,7 @@ import matplotlib.animation as animation
 import cfg
 from tools import get_unique_file
 from fncs import get_plx_id
-from plots import create_map_axis, plot_particle_source_map
+from plots import plot_particle_source_map
 
 # Fixes AttributeError: 'GeoAxesSubplot' object has no attribute 'set_offsets'
 from matplotlib.axes import Axes

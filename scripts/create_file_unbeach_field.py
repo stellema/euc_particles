@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
+"""OFAM3 land points and unbeaching velocity.
+
+@author: Annette Stellema
+@email: a.stellema@unsw.edu.au
+@created: Mon Jun 29 15:47:29 2020
+
 """
-created: Mon Jun 29 15:47:29 2020
-
-author: Annette Stellema (astellemas@gmail.com)
-
-Creates file that defines OFAM3 land points and unbeaching velocity.
-"""
-
 import numpy as np
 import xarray as xr
 from datetime import datetime

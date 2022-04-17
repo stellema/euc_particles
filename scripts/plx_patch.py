@@ -1,11 +1,13 @@
+"""Run PLX for missed release days (bug).
+
+Notes:
+    Requires: parcels=2.2.1=py38h32f6830_0
+
+@author: Annette Stellema
+@email: a.stellema@unsw.edu.au
+@created: Fri Jun 12 18:45:35 2020
+
 """
-created: Fri Jun 12 18:45:35 2020.
-
-author: Annette Stellema (astellemas@gmail.com)
-parcels=2.2.1=py38h32f6830_0
-
-"""
-
 import xarray as xr
 import numpy as np
 from operator import attrgetter

@@ -1,10 +1,6 @@
 # -*- coding: utf-8 -*-
 """Check BGC data files.
 
-Created on Fri Mar 25 17:52:30 2022
-
-@author: a-ste
-
 #!/bin/bash
 #PBS -P e14
 #PBS -q normalbw
@@ -17,8 +13,11 @@ module use /g/data3/hh5/public/modules
 module load conda/analysis3
 python3 "/g/data/e14/as3189/stellema/plx/scripts/check_BGC_files.py
 
-"""
+@author: Annette Stellema
+@email: a.stellema@unsw.edu.au
+@created: Fri Mar 25 17:52:30 2022
 
+"""
 import numpy as np
 import xarray as xr
 from pathlib import Path

@@ -1,9 +1,12 @@
 # -*- coding: utf-8 -*-
-"""Particle Lagrangian Experiment scripts.
+"""PLX - Physical Lagrangian experiment for Pacific Equatorial Undercurrent.
+
+PLX project main functions, classes and variable definitions.
 
 @author: Annette Stellema
 @email: a.stellema@unsw.edu.au
 @created: Mon May 4 16:35:39 2020
+
 """
 import sys
 import string

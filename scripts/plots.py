@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
+"""Plotting functions.
+
+@author: Annette Stellema
+@email: a.stellema@unsw.edu.au
+@created: Sun Mar 6 00:20:44 2022
+
 """
-Created on Sun Mar  6 00:20:44 2022
-
-@author: a-ste
-"""
-
-
-import cartopy
 import numpy as np
 import xarray as xr
 import matplotlib as mpl

@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
-"""
-created: Mon Nov 23 07:27:42 2020
+"""Particle pathway density map (unfinished).
 
-author: Annette Stellema (astellemas@gmail.com)
-
+@author: Annette Stellema
+@email: a.stellema@unsw.edu.au
+@created: Mon Nov 23 07:27:42 2020
 
 """
 import cartopy

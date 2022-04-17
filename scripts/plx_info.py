@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
-"""
-created: Tue Jul 28 23:07:33 2020
+"""Sanity check for initial PLX output.
 
-author: Annette Stellema (astellemas@gmail.com)
-
+@author: Annette Stellema
+@email: a.stellema@unsw.edu.au
+@created: Tue Jul 28 23:07:33 2020
 
 """
 import math

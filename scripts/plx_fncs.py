@@ -1,25 +1,18 @@
 # -*- coding: utf-8 -*-
+"""Functions needed to run plx experiment.
+
+Notes:
+    - OFAM3 variable coordinates:
+        u - st_ocean, yu_ocean, xu_ocean
+        w - sw_ocean, yt_ocean, xt_ocean
+        salt - st_ocean, yt_ocean, xt_ocean
+        temp - st_ocean, yt_ocean, xt_ocean
+
+@author: Annette Stellema
+@email: a.stellema@unsw.edu.au
+@created: Wed Apr 17 08:23:42 2019
+
 """
-created: Wed Apr 17 08:23:42 2019
-
-author: Annette Stellema (astellemas@gmail.com)
-
-project: OFAM - Lagrangian analysis of tropical Pacific physical
-and biogeochemical projected changes.
-
-OFAM project main functions, classes and variable definitions.
-
-This file can be imported as a module and contains the following
-functions:
-
-notes:
-OFAM variable coordinates:
-    u - st_ocean, yu_ocean, xu_ocean
-    w - sw_ocean, yt_ocean, xt_ocean
-    salt - st_ocean, yt_ocean, xt_ocean
-    temp - st_ocean, yt_ocean, xt_ocean
-"""
-
 import math
 import random
 import parcels

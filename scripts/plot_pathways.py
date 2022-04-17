@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
+"""EUC source pathway plots.
+
+@author: Annette Stellema
+@email: a.stellema@unsw.edu.au
+@created: Tue Nov 23 02:10:14 2021
+
 """
-Created on Tue Nov 23 02:10:14 2021
-
-@author: a-ste
-
-"""
-
 import numpy as np
 import xarray as xr
 import matplotlib.pyplot as plt
