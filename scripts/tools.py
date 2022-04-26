@@ -422,7 +422,9 @@ def format_pvalue_str(p):
 
 def test_signifiance(x, y):
     def resample(ds):
-        return ds.resample(rtime="Y").mean("rtime", keep_attrs=1)
+        return ds.resample(rtime="Y").mean("rtime", keep_attrs=True)
+    times = [slice('2012'), slice('2070', '2101')]
+    x, y = x.sel(rtime=times[0]), y.sel(rtime=times[1])
     x, y = resample(x), resample(y)
     t, p = stats.wilcoxon(x, y)
     p = format_pvalue_str(p)

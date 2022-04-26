@@ -279,7 +279,7 @@ def combine_source_indexes(ds, z1, z2):
 
 
 def merge_interior_sources(ds):
-    """Merge source North/South Interior with North/South of EUC."""
+    """Merge longitudes of source North/South Interior."""
     for i in range(1, 5):
         # Merge South interior lons: zone[6] = zone[6+7+8+9].
         z1 = 6
@@ -295,6 +295,60 @@ def merge_interior_sources(ds):
             ds['names'][z1] = cfg.zones.names[z1]
             ds['colors'][z1] = cfg.zones.colors[z1]
     ds.coords['zone'] = np.arange(ds.zone.size, dtype=int)
+    return ds
+
+
+def merge_hemisphere_sources(ds):
+    """Merge North/South Interior & LLWBCs (add as new zones)."""
+    ds_orig = ds.copy()
+
+    # Merge South interior & VS & SS: zone[1] = zone[1+2+7].
+    for z2 in [2, 7]:
+        ds = combine_source_indexes(ds, 1, z2)
+
+    # Merge North interior & MC: zone[3] = zone[3+6].
+    ds = combine_source_indexes(ds, 3, 6)
+
+    # Reassign source ID.
+    ds = ds.sel(zone=[3, 1])
+    ds['zone'] = np.array([1, 2]) + ds_orig.zone.max().item()
+
+    # Replace source name and colours.
+    if 'names' in ds.data_vars:
+        ds['names'] = ('zone', ['NH', 'SH'])
+
+    if 'colors' in ds.data_vars:
+        ds['colors'] = ('zone', ['blue', 'darkviolet'])
+
+    # Add new zones to original dataset.
+    ds = xr.concat([ds_orig, ds], 'zone')
+    return ds
+
+
+def merge_LLWBC_interior_sources(ds):
+    """Merge North/South Interior & LLWBCs (add as new zones)."""
+    ds_orig = ds.copy()
+
+    # Merge LLWBCs VS & SS & MC: zone[1] = zone[1+2+3].
+    for z2 in [2, 3]:
+        ds = combine_source_indexes(ds, 1, z2)
+
+    # Merge North & south interior: zone[6] = zone[6+7].
+    ds = combine_source_indexes(ds, 6, 7)
+
+    # Reassign source ID.
+    ds = ds.sel(zone=[1, 6])
+    ds['zone'] = np.array([1, 2]) + ds_orig.zone.max().item()
+
+    # Replace source name and colours.
+    if 'names' in ds.data_vars:
+        ds['names'] = ('zone', ['LLWBC', 'Interior'])
+
+    if 'colors' in ds.data_vars:
+        ds['colors'] = ('zone', ['blue', 'darkviolet'])
+
+    # Add new zones to original dataset.
+    ds = xr.concat([ds_orig, ds], 'zone')
     return ds
 
 

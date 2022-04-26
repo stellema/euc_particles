@@ -11,20 +11,18 @@ import xarray as xr
 import matplotlib.pyplot as plt
 
 import cfg
-from tools import test_signifiance
-from fncs import source_dataset
+from tools import test_signifiance, mlogger
+from fncs import (source_dataset, merge_hemisphere_sources,
+                  merge_LLWBC_interior_sources)
 
-colors = cfg.zones.colors
-
-names = cfg.zones.names
 fsize = 10
-lons = [165, 190, 220, 250]
-# lons = [190, 250]
 plt.rcParams.update({'font.size': fsize})
 plt.rc('font', size=fsize)
 plt.rc('axes', titlesize=fsize)
 plt.rcParams['figure.figsize'] = [10, 7]
 # plt.rcParams['figure.dpi'] = 200
+
+logger = mlogger('source_transport')
 
 
 def source_pie_chart(ds, lon):
@@ -34,10 +32,10 @@ def source_pie_chart(ds, lon):
         ds (xarray.Dataset): Includes variable 'uz' and dim 'exp'.
 
     """
+    names, colors = ds.names.values, ds.colors.values
     dx = ds.uz.mean('rtime')
 
-    fig, axs = plt.subplots(1, 2, figsize=(10, 6),
-                            subplot_kw=dict(aspect='equal'))
+    fig, axs = plt.subplots(1, 2, figsize=(10, 6), subplot_kw=dict(aspect='equal'))
 
     # Title.
     fig.suptitle('EUC transport at {}°E'.format(lon))
@@ -45,42 +43,37 @@ def source_pie_chart(ds, lon):
         ax.set_title(cfg.exps[i])
 
         # Plot pie chart.
-        wedges, texts, pcts = ax.pie(dx.isel(exp=i), colors=colors,
-                                     autopct='%1.0f%%',
-                                     textprops=dict(color='w'))
+        wedge, txt, pct = ax.pie(dx.isel(exp=i), colors=colors,
+                                 autopct='%1.0f%%', textprops=dict(color='w'))
 
-        plt.setp(pcts, size=10, weight='bold')  # Chart values.
-        # plt.setp(texts, size=8, color='k')  # Chart labels.
+        plt.setp(pct, size=10, weight='bold')  # Chart values.
+        # plt.setp(txt, size=8, color='k')  # Chart labels.
+
     # Legend.
-    ax.legend(wedges, names, title='Source', loc='center left',
-              bbox_to_anchor=(1, 0, 0.5, 1))
+    ax.legend(wedge, names, loc='center left', bbox_to_anchor=(1, 0, 0.5, 1))
     plt.tight_layout()
     plt.savefig(cfg.fig / 'sources/plx_pie_{}.png'.format(lon))
 
 
-def source_timeseries(exp, lon, var='uz'):
+def source_timeseries(exp, lon, var='uz', merge_straits=False, anom=True):
     """Timeseries plot."""
-    ds = source_dataset(lon, merge_interior=1)
-    # dsm = ds.sel(exp=exp).resample(rtime="y").mean("rtime", keep_attrs=1)
-    ds = ds.sel(rtime=slice('2012-12-31'))
-    # dsm = dsm.isel(rtime=slice(32))
-    dsm = ds.sel(exp=exp).resample(rtime="1y").mean("rtime", keep_attrs=1)
+    ds = source_dataset(lon, merge_interior=True)
 
-    # dsm = dsm.sel(zone=[z for z in ds.zone if z not in [0, 4]])
+    # Annual mea nbetween scenario years.
+    times = slice('2012') if exp == 0 else slice('2070', '2101')
+    ds = ds.sel(rtime=times).sel(exp=exp)
+    dsm = ds.resample(rtime="1y").mean("rtime", keep_attrs=True)
 
     # Plot timeseries of source transport.
-    try:
+    if 'name' in ds[var].attrs:
         name = ds[var].attrs['name']
         units = ds[var].attrs['units']
-    except:
+    else:
         name, units = 'Transport', 'Sv'
 
-    sourceids = [1, 2, 3, 5, 6]
-    merge_straits = 0
-    anom = 1
-    label = ds.names.values
-    colours = ds.colors.values
+    sourceids = [1, 2, 3, 6, 7]
     xdim = dsm.rtime
+    names, colours = ds.names.values, ds.colors.values
 
     fig, ax = plt.subplots(1, figsize=(7, 3))
 
@@ -94,8 +87,7 @@ def source_timeseries(exp, lon, var='uz'):
             dz = dz - dz.mean('rtime')
             ax.axhline(0, color='grey')
 
-        c = colours[z - 1]
-        ax.plot(xdim, dz, c=c, label=label[z-1])
+        ax.plot(xdim, dz, c=colours[z], label=names[z])
 
     ax.set_title('{} EUC {} at {}°E'.format(cfg.exps[exp], name.lower(), lon),
                  loc='left')
@@ -113,7 +105,7 @@ def source_timeseries(exp, lon, var='uz'):
 
 
 def source_histogram(ds, lon, var='age'):
-    """Timeseries plot.
+    """Histograms of source variables plot.
 
     Todo:
         - and title letters
@@ -180,7 +172,7 @@ def transport_source_bar_graph(exp=0, merge_interior=True):
     fig, axes = plt.subplots(2, 2, figsize=(10, 7), sharey='row', sharex='all')
 
     for i, ax in enumerate(axes.flatten()):
-        lon = lons[i]
+        lon = cfg.lons[i]
         ax.set_title('{} EUC transport sources at {}°E'
                      .format(cfg.letr[i], lon), loc='left')
 
@@ -224,54 +216,83 @@ def transport_source_bar_graph(exp=0, merge_interior=True):
     return
 
 
-def print_transport_sources(lon):
+def log_source_transport(lon):
     # Open data.
-    ds = source_dataset(lon, merge_interior=1)
+    ds = source_dataset(lon, merge_interior=True)
 
-    # Rearange source order.
+    for var in ds.data_vars:
+        if var not in ['uz', 'u_total', 'names']:
+            ds = ds.drop(var)
 
-    # inds = np.array([0, 5, 2, 1, 4, 6, 7, 3])
-    # # ds['names'] = ('zone', cfg.zones.names)
-    # ds = ds.sel(zone=inds)
+    total = ds.u_total
+    p = test_signifiance(*total)
+    total = ds.u_total.mean('rtime').values
+    total = np.concatenate([total, [total[1] - total[0]]])
 
-    total = ds.u_total.mean('rtime').isel(exp=0).item()
-    print('{:>22} {}E={:.3f}'.format('total', lon, total))
+    ds = merge_hemisphere_sources(ds)
+    ds = merge_LLWBC_interior_sources(ds)
+
+    names = ['HIST', 'PROJ', 'D', '(D%)', 'p', 'sum_H%', 'sum_P%', 'pp']
+    head = '{:>17}E: '.format(str(lon))
+    for n in names:
+        head += '{:^7}'.format(n)
+    logger.info(head)
+
+    # Total EUC Transport (HIST, PROJ, Δ,  Δ%).
+    s = '{:>18}: {:>6.2f}{:>6.2f}{: >6.2f}'.format('total', *total)
+    s += ' ({:>4.0%})'.format(total[2] / total[0])
+    s += '{:>8}'.format(p)
+    logger.info(s)
+
+    # Source Transport (HIST, PROJ, Δ,  Δ%).
     for z in ds.zone.values:
         dx = ds.uz.sel(zone=z)
         p = test_signifiance(dx[0], dx[1])
         dx = dx.mean('rtime').values
-        print('{:>27}: Hist={:.3f} RCP={:.3f} diff={: .2f}({: .1f}%) h%={:.1f}% {}'
-              .format(ds.names.sel(zone=z).item(),
-                      *dx, dx[1] - dx[0],
-                      ((dx[1] - dx[0]) / total) * 100,
-                      (dx[0] / total) * 100, p))
+        dx = np.concatenate([dx, [dx[1] - dx[0]]])
 
+        s = '{:>18}: '.format(ds.names.sel(zone=z).item())
 
-lon = 190
-exp = 00
+        # Source Transport (HIST, PROJ, Δ,  Δ%).
+        s += '{:>6.2f}{:>6.2f}{: >6.2f} ({: >4.0%})'.format(*dx, dx[2] / dx[0])
 
-# Source bar graph.
-transport_source_bar_graph(exp=0)
-transport_source_bar_graph(exp=1)
+        # Significance.
+        s += '{:>8}'.format(p)
 
-# Plot histograms.
-for lon in lons:
-    ds = source_dataset(lon, merge_interior=True)
-    source_histogram(ds, lon, var='age')
+        # Source percent of total EUC (HIST, PROJ, Δ percentage points).
+        # Source contribution percent change (i.e. makes up xpp more of total).
+        pct = [(dx[i] / total[i]) for i in [0, 1]]
+        s += '{: >7.0%}{: >7.0%}{: >7.1%}'.format(*pct, pct[1] - pct[0])
+
+        logger.info(s)
+
+    logger.info('')
+    return
+
 
 # Print values.
-for lon in lons:
-    print_transport_sources(lon)
+for lon in cfg.lons:
+    log_source_transport(lon)
 
-# Timeseries.
-# ds_m = ds.resample(rtime="1MS").mean("rtime", keep_attrs=1)
-# source_timeseries(ds, exp, lon, var='uz')
+# # Source bar graph.
+# for exp in [1, 0]:
+#     transport_source_bar_graph(exp=exp)
 
-# Pie chart.
-source_pie_chart(ds, lon)
+
+# for lon in cfg.lons:
+#     ds = source_dataset(lon, merge_interior=True)
+
+#     # # Plot histograms.
+#     # source_histogram(ds, lon, var='age')
+
+#     # # Timeseries.
+#     # source_timeseries(ds, exp=0, lon=lon, var='uz')
+
+#     # Pie chart.
+#     source_pie_chart(ds, lon)
 
 # # Spinup test working.
-# xid = cfg.data / 'sources/plx_spinup_{}_{}_v1y6.nc'.format(cfg.exp[exp], lon)
+# xid = cfg.data / 'sources/plx_spinup_{}_{}_v1y 6.nc'.format(cfg.exp[exp], lon)
 # ds = source_dataset(lon, merge_interior=True).isel(exp=0)
 # dp = xr.open_dataset(xid)
 # dp = dp.isel(zone=cfg.zones.inds)
