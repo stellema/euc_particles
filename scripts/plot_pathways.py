@@ -100,8 +100,8 @@ def plot_example_source_pathways(exp, lon, v, r, source_id, N=30):
     fig, ax, proj = create_map_axis(map_extent=map_extent, yticks=yticks,
                                     add_ocean=True)
 
-    ax.set_title('{} to the EUC at {}°E'
-                 .format(cfg.zones.names[source_id], lon), fontsize=16)
+    # ax.set_title('{} to the EUC at {}°E'
+    #              .format(cfg.zones.names[source_id], lon), fontsize=16)
 
     for i in range(N):
         c = cfg.zones.colors[source_id]
@@ -118,20 +118,20 @@ def plot_example_source_pathways(exp, lon, v, r, source_id, N=30):
     return
 
 
-# if __name__ == "__main__":
-#     exp = 0
-#     lon = 220
-#     v = 1
-#     r = 0
+if __name__ == "__main__":
+    exp = 0
+    lon = 165
+    v = 1
+    r = 0
 
-#     # Plot map.
-#     plot_some_source_pathways(exp, lon, v, r)
-#     plot_particle_source_map(lon='all', merge_interior=True)
-#     for x in [165, 190, 220, 250]:
-#         plot_particle_source_map(lon=x, merge_interior=True)
-#     plot_particle_source_map(lon, merge_interior=True, add_ocean=True,
-#                              add_legend=True)
+    # # Plot map.
+    # plot_some_source_pathways(exp, lon, v, r)
+    # plot_particle_source_map(lon='all', merge_interior=True)
+    # for x in [165, 190, 220, 250]:
+    #     plot_particle_source_map(lon=x, merge_interior=True)
+    # plot_particle_source_map(lon, merge_interior=True, add_ocean=True,
+    #                           add_legend=True)
 
-#     source_id = 0
-#     for source_id in [0, 1, 2]:
-#         plot_example_source_pathways(exp, lon, v, r, source_id, N=5)
+    source_id = 0
+    for source_id in [11, 12, 13]:
+        plot_example_source_pathways(exp, lon, v, r, source_id, N=5)

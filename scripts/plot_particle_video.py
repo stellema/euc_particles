@@ -40,9 +40,9 @@ def init_particle_data(ds, ntraj=4, ndays=1200, method='thin'):
     plottimes = np.arange(start, end, dt)
 
     ds = ds.where((ds.time <= start) & (ds.time > end), drop=True)
-    # ds = ds.where(ds.time.isin(plottimes), drop=True)
-    traj_lost = ds.where(ds.lon > ds.attrs['lon'], drop=1).traj
-    ds = ds.sel(traj=ds.traj.where(~ds.traj.isin(traj_lost), drop=1))
+    # # ds = ds.where(ds.time.isin(plottimes), drop=True)
+    # traj_lost = ds.where(ds.lon > ds.attrs['lon'], drop=1).traj
+    # ds = ds.sel(traj=ds.traj.where(~ds.traj.isin(traj_lost), drop=1))
 
     lon = np.ma.filled(ds.variables['lon'], np.nan)
     lat = np.ma.filled(ds.variables['lat'], np.nan)
@@ -67,16 +67,16 @@ def plot_particle_movie(rlon, file, ds, movie_forward=False, plot_type='scatter'
     t = 0
     b = plottimes[t] == time
     X, Y = lon[b], lat[b]
-    graph = ax.scatter(X, Y, c='k', s=5, marker="o", zorder=20, transform=proj)
-    # graph = ax.scatter(lon[:, t], lat[:, t], c='k', s=5, marker="o", zorder=20,
-    #                    transform=proj)  # Non-delay release.
+    # graph = ax.scatter(X, Y, c='k', s=5, marker="o", zorder=20, transform=proj)
+    graph = ax.scatter(lon[:, t], lat[:, t], c='k', s=5, marker="o", zorder=20,
+                        transform=proj)  # Non-delay release.
     plt.tight_layout()
 
     def animate(t):
         title.set_text(format_title_timer(plottimes, t))
         b = plottimes[t] == time
         X, Y = lon[b], lat[b]
-        # X, Y = lon[:, t], lat[:, t]  # Non-delay release.
+        X, Y = lon[:, t], lat[:, t]  # Non-delay release.
         graph.set_offsets(np.c_[X, Y])
         # fig.canvas.draw()
         return graph,
@@ -95,10 +95,10 @@ def plot_particle_movie(rlon, file, ds, movie_forward=False, plot_type='scatter'
     anim.save(str(filename), writer=writer, dpi=150)
 
 
-lon = 190
+lon = 165
 exp, v, r = 0, 1, 0
 file = get_plx_id(exp, lon, v, r, 'plx')
 ds = xr.open_dataset(file, mask_and_scale=True)
 rlon = lon
 ds.attrs['lon'] = lon
-plot_particle_movie(rlon, file, ds, ntraj=20, ndays=2500, method='thin')
+plot_particle_movie(rlon, file, ds, ntraj=5, ndays=1200, method='thin')

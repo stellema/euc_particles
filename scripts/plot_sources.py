@@ -11,9 +11,11 @@ import xarray as xr
 import matplotlib.pyplot as plt
 
 import cfg
+from cfg import ltr
 from tools import test_signifiance, mlogger
 from fncs import (source_dataset, merge_hemisphere_sources,
                   merge_LLWBC_interior_sources)
+from plots import plot_histogram
 
 fsize = 10
 plt.rcParams.update({'font.size': fsize})
@@ -35,7 +37,8 @@ def source_pie_chart(ds, lon):
     names, colors = ds.names.values, ds.colors.values
     dx = ds.uz.mean('rtime')
 
-    fig, axs = plt.subplots(1, 2, figsize=(10, 6), subplot_kw=dict(aspect='equal'))
+    fig, axs = plt.subplots(1, 2, figsize=(10, 6),
+                            subplot_kw=dict(aspect='equal'))
 
     # Title.
     fig.suptitle('EUC transport at {}°E'.format(lon))
@@ -104,57 +107,6 @@ def source_timeseries(exp, lon, var='uz', merge_straits=False, anom=True):
                 bbox_inches='tight')
 
 
-def source_histogram(ds, lon, var='age'):
-    """Histograms of source variables plot.
-
-    Todo:
-        - and title letters
-        - fix xlabels
-    """
-
-    def plot_hist(dx, ax, bins, color, **kwargs):
-        weights = None
-        x, bins, _ = ax.hist(dx.isel(exp=0).dropna('traj', 'all'), bins,
-                             histtype='bar', density=1, stacked=0,
-                             weights=weights, color=color, alpha=0.6)
-        _, bins, _ = ax.hist(dx.isel(exp=1).dropna('traj', 'all'), bins,
-                             histtype='bar', density=1, stacked=0,
-                             weights=weights, color='k', alpha=0.6, fill=False,
-                             hatch='///')
-
-        # Cut off last 5% of xaxis (index where <95% of total counts).
-        xmax = bins[sum(np.cumsum(x) < sum(x) * 0.85) + 1]
-        ax.set_xlim(xmin=bins[0], xmax=xmax)
-        return ax
-
-    fsize = 8
-    dsz = ds[var]
-    name, units = dsz.attrs['name'], dsz.attrs['units']
-
-    fig, axes = plt.subplots(4, 2, figsize=(9, 11))
-    axes = axes.flatten()
-    for i, z in enumerate(dsz.zone.values):
-        ax = axes[i]
-        ax.set_title('{} {} '.format(cfg.letr[i], ds.names[i].item()),
-                     loc='left', fontsize=fsize)
-        dx = dsz.sel(zone=z)
-
-        ax = plot_hist(dx, ax, 'fd', ds.colors[i].item())
-
-        ax.tick_params(labelsize=fsize)
-        ax.set_xlabel('{} [{}]'.format(name, units), fontsize=fsize)
-
-    # Format plots.
-    plt.suptitle('{} ({}°E)'.format(name, lon))
-
-    # ax.set_ylabel('Frequency [%]')
-    # fig.text(0.04, 0.5, 'Frequency [%]', va='center', rotation='vertical')
-
-    plt.tight_layout()
-    plt.savefig(cfg.fig / 'sources/{}_histogram_{}.png'.format(var, lon))
-    return
-
-
 def transport_source_bar_graph(exp=0, merge_interior=True):
     """Bar graph of source transport for each release longitude.
 
@@ -174,7 +126,7 @@ def transport_source_bar_graph(exp=0, merge_interior=True):
     for i, ax in enumerate(axes.flatten()):
         lon = cfg.lons[i]
         ax.set_title('{} EUC transport sources at {}°E'
-                     .format(cfg.letr[i], lon), loc='left')
+                     .format(ltr[i], lon), loc='left')
 
         # Open data.
         ds = source_dataset(lon, merge_interior)
@@ -216,82 +168,66 @@ def transport_source_bar_graph(exp=0, merge_interior=True):
     return
 
 
-def log_source_transport(lon):
-    # Open data.
-    ds = source_dataset(lon, merge_interior=True)
+def source_histogram(ds, lon):
+    """Histograms of source variables plot."""
+    zn = ds.zone.values[:-2]
 
-    for var in ds.data_vars:
-        if var not in ['uz', 'u_total', 'names']:
-            ds = ds.drop(var)
+    fig, axes = plt.subplots(zn.size, 3, figsize=(11, 14))
 
-    total = ds.u_total
-    p = test_signifiance(*total)
-    total = ds.u_total.mean('rtime').values
-    total = np.concatenate([total, [total[1] - total[0]]])
+    i = 0
+    for zi, z in enumerate(zn):
+        color = ds.colors[zi].item()
+        zname = ds.names[zi].item()
 
-    ds = merge_hemisphere_sources(ds)
-    ds = merge_LLWBC_interior_sources(ds)
+        for vi, var in enumerate(['age', 'distance', 'speed']):
+            cutoff = [0.80, 0.80, 0.95][vi]
+            name, units = ds[var].attrs['name'], ds[var].attrs['units']
+            ax = axes.flatten()[i]
+            dx = ds.sel(zone=z)
+            ax = plot_histogram(ax, dx, var, color, cutoff=cutoff)
 
-    names = ['HIST', 'PROJ', 'D', '(D%)', 'p', 'sum_H%', 'sum_P%', 'pp']
-    head = '{:>17}E: '.format(str(lon))
-    for n in names:
-        head += '{:^7}'.format(n)
-    logger.info(head)
+            ax.set_title('{} {} {}'.format(ltr[i], zname, name), loc='left')
 
-    # Total EUC Transport (HIST, PROJ, Δ,  Δ%).
-    s = '{:>18}: {:>6.2f}{:>6.2f}{: >6.2f}'.format('total', *total)
-    s += ' ({:>4.0%})'.format(total[2] / total[0])
-    s += '{:>8}'.format(p)
-    logger.info(s)
+            if i >= axes.shape[1] * (axes.shape[0] - 1):  # Last rows.
+                # ax.tick_params(labelsize=10)
+                ax.set_xlabel('{} [{}]'.format(name, units))
 
-    # Source Transport (HIST, PROJ, Δ,  Δ%).
-    for z in ds.zone.values:
-        dx = ds.uz.sel(zone=z)
-        p = test_signifiance(dx[0], dx[1])
-        dx = dx.mean('rtime').values
-        dx = np.concatenate([dx, [dx[1] - dx[0]]])
+            if i in np.arange(axes.shape[0]) * axes.shape[1]:  # First cols.
+                ax.set_ylabel('Transport [Sv]')
+            i += 1
 
-        s = '{:>18}: '.format(ds.names.sel(zone=z).item())
+    # Format plots.
+    plt.suptitle('{}°E'.format(lon))
 
-        # Source Transport (HIST, PROJ, Δ,  Δ%).
-        s += '{:>6.2f}{:>6.2f}{: >6.2f} ({: >4.0%})'.format(*dx, dx[2] / dx[0])
-
-        # Significance.
-        s += '{:>8}'.format(p)
-
-        # Source percent of total EUC (HIST, PROJ, Δ percentage points).
-        # Source contribution percent change (i.e. makes up xpp more of total).
-        pct = [(dx[i] / total[i]) for i in [0, 1]]
-        s += '{: >7.0%}{: >7.0%}{: >7.1%}'.format(*pct, pct[1] - pct[0])
-
-        logger.info(s)
-
-    logger.info('')
+    # fig.subplots_adjust(wspace=0.1, hspace=0.1)
+    plt.tight_layout()
+    plt.savefig(cfg.fig / 'sources/histogram_{}.png'.format(lon))
     return
 
 
-# Print values.
-for lon in cfg.lons:
-    log_source_transport(lon)
-
-# # Source bar graph.
-# for exp in [1, 0]:
-#     transport_source_bar_graph(exp=exp)
+# Source bar graph.
+for exp in [1, 0]:
+    transport_source_bar_graph(exp=exp)
 
 
-# for lon in cfg.lons:
+# for lon in [165]:# cfg.lons:
+# # for lon in cfg.lons:
 #     ds = source_dataset(lon, merge_interior=True)
 
-#     # # Plot histograms.
-#     # source_histogram(ds, lon, var='age')
+#     # Plot histograms.
+#     source_histogram(ds, lon, var='age')
 
-#     # # Timeseries.
-#     # source_timeseries(ds, exp=0, lon=lon, var='uz')
+#     # ds['v'] = ds.distance / ds.age
+#     # ds['v'].attrs['name'], ds['v'].attrs['units'] = 'Average Speed', '100km / day'
+#     # source_histogram(ds, lon, var='v')
 
-#     # Pie chart.
-#     source_pie_chart(ds, lon)
+#     # Timeseries.
+#     source_timeseries(ds, exp=0, lon=lon, var='uz')
 
-# # Spinup test working.
+    # Pie chart.
+    # source_pie_chart(ds, lon)
+
+# Spinup test working.
 # xid = cfg.data / 'sources/plx_spinup_{}_{}_v1y 6.nc'.format(cfg.exp[exp], lon)
 # ds = source_dataset(lon, merge_interior=True).isel(exp=0)
 # dp = xr.open_dataset(xid)
