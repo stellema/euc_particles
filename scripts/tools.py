@@ -587,7 +587,7 @@ def predrop(ds):
 def open_ofam_dataset(file):
     """Open OFAM3 dataset file and rename coordinates."""
     if isinstance(file, list):
-        ds = xr.open_mfdataset(file, chunks='auto', concat_dim='Time',
+        ds = xr.open_mfdataset(file, chunks='auto',
                                compat='override', data_vars='minimal',
                                coords='minimal', parallel=True)
     else:
