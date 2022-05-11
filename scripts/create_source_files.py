@@ -80,6 +80,12 @@ def get_final_particle_obs(ds):
         if 'obs' in ds[var].dims:
             ds[var] = ds[var].isel(obs=0)
 
+    # Select the first value.
+    if 'obs' in ds['z'].dims:
+        ds['z0'] = ds['z'].min('obs')
+        ds['z0'].attrs['name'] = 'Release depth'
+        ds['z0'].attrs['units'] = 'm'
+
     # Select the final value.
     for var in ['zone', 'age', 'distance', 'unbeached', 'lat', 'lon', 'z']:
         if 'obs' in ds[var].dims:
