@@ -41,7 +41,7 @@ loggers = {}
 exp = ['hist', 'rcp', 'diff']
 exps = ['Historical', 'RCP8.5', 'Projected change']
 exp_abr = ['hist', 'rcp', 'diff']
-letr = [i + ')' for i in list(string.ascii_lowercase)]
+ltr = [i + ')' for i in list(string.ascii_lowercase)]
 
 years = [[1981, 2012], [2070, 2101]]
 var = ['u', 'v', 'w', 'salt', 'temp']
@@ -83,9 +83,9 @@ e1, e2, e3, e4 = [x - dx for x in [165, 190, 220, 250]]
 j1, j2 = -6.1, 8
 x_west = 120.1
 lons = [165, 190, 220, 250]
-inner_lons = [[128.5, *lons, 278.5], [155, *lons, 280]]
-colors = ['y', 'darkorange', 'deeppink', 'mediumspringgreen',
-          'seagreen', 'red', 'blue', 'darkviolet']
+inner_lons = [[158, *lons, 280], [128.5, *lons, 278.5], ]
+colors = ['silver', 'darkorange', 'deeppink', 'mediumspringgreen',
+          'seagreen', 'y', 'red', 'darkviolet', 'blue']
 
 @dataclass
 class ZoneData:
@@ -96,29 +96,32 @@ class ZoneData:
     nz = Zone(0, 'nz', 'None')
     vs = Zone(1, 'vs', 'Vitiaz Strait', [j1, j1, 147.6, 149.6])
     ss = Zone(2, 'ss', 'Solomon Strait', [-5.1, -5.1, 152, 154.6])
+
     mc = Zone(3, 'mc', 'Mindanao Current', [8, 8, 126.4, 129.1])
     cs = Zone(4, 'cs', 'Celebes Sea', [[0.5, j2, x_west, x_west],
                                        [j2, j2, x_west, 123]])
     idn = Zone(5, 'idn', 'Indonesian Seas', [[-8.5, 0.4, x_west, x_west],
                                              [-8.7, -8.7, x_west, 140.6]])
-    nth = Zone(6, 'nth', 'North Interior', [j2, j2, 129.1, 278.5])
-    # n1 = Zone(7, 'n1', 'North Interior', [j2, j2, *inner_lons[0][2:4]])
-    # n1 = Zone(7, 'n1', 'North Interior', [j2, j2, *inner_lons[0][4:6]])
-    sth = Zone(11, 'sth', 'South Interior', [j1, j1, 155.4, 280])
-    _all = [nz, vs, ss, mc, cs, idn, nth, sth]
+
+    sc = Zone(6, 'sc', 'East Solomon', [j1, j1, 155.4, 158])
+    sth = Zone(7, 'sth', 'South Interior', [j1, j1, 158, 280])
+    nth = Zone(12, 'nth', 'North Interior', [j2, j2, 129.1, 278.5])
+
+    _all = [nz, vs, ss, mc, cs, idn, sc, sth, nth]
 
     colors = colors
     names = [z.name_full for z in _all]
 
-    inner_names = ['{} Interior ({}-{})'
-                   .format(['North', 'South'][s],
-                           *[inner_lons[s][i] for i in [x, x + 1]])
-                   for s in [0, 1] for x in range(5)]
+    inner_names = ['{} ({}-{})'.format(z.name_full, *inner_lons[i][x:x+2])
+                   for i, z in enumerate([nth, sth]) for x in range(5)]
 
-    names_all = np.concatenate([names[:-2], inner_names])
+    # names_all = np.concatenate([names[:-3], inner_names])
 
-    colors_all = np.concatenate([colors[:-2], *[[colors[i]] * 5
-                                                for i in [-2, -1]]])
+    # colors_all = np.concatenate([colors[:-3], *[[colors[i]] * 5
+    #                                             for i in [-3, -1]]])
+    # names_all[11] = esi.name_full
+    # colors_all[11] = colors[-2]
+
 
 # @dataclass
 # class ZoneData:
