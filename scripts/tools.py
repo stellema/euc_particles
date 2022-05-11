@@ -557,3 +557,102 @@ def save_dataset(ds, filename, msg=None):
     comp = dict(zlib=True, complevel=5)
     encoding = {var: comp for var in ds.data_vars}
     ds.to_netcdf(filename, encoding=encoding, compute=True)
+
+
+def ofam_filename(var, year, month):
+    return cfg.ofam / 'ocean_{}_{}_{:02d}.nc'.format(var, year, month)
+
+
+def ofam_cell_depth():
+    """Retur cell depth of OFAM3 vertical coordinate."""
+    dz = xr.open_dataset(ofam_filename('v', 1981, 1))
+
+    st_ocean = dz['st_ocean']  # Copy st_ocean coords
+    dz = dz.st_edges_ocean.diff(dim='st_edges_ocean')
+    dz = dz.rename({'st_edges_ocean': 'st_ocean'})
+    dz.coords['st_ocean'] = st_ocean
+    dz = dz.rename({'st_ocean': 'lev'})
+    return dz
+
+def predrop(ds):
+    """Drop variables before processing."""
+    ds = ds.drop('Time_bounds')
+    ds = ds.drop('average_DT')
+    ds = ds.drop('average_T1')
+    ds = ds.drop('average_T2')
+    ds = ds.drop('nv')
+    return ds
+
+
+def open_ofam_dataset(file):
+    """Open OFAM3 dataset file and rename coordinates."""
+    if isinstance(file, list):
+        ds = xr.open_mfdataset(file, chunks='auto', concat_dim='Time',
+                               compat='override', data_vars='minimal',
+                               coords='minimal', parallel=True)
+    else:
+        ds = xr.open_dataset(file)
+
+    ds = ds.rename({'Time': 'time', 'st_ocean': 'lev', 'yu_ocean': 'lat',
+                    'xu_ocean': 'lon'})
+
+    for var in ds.data_vars:
+        if var not in ['u', 'v', 'w']:
+            ds = ds.drop(var)
+
+    if 'nv' in ds.variables:
+        ds = ds.drop('nv')
+
+    return ds
+
+
+def subset_ofam_dataset(ds, lat, lon, depth):
+    """Open OFAM3 dataset file and rename coordinates."""
+    # Latitude and Longitudes.
+    for n, bnds in zip(['lat', 'lon'], [lat, lon]):
+        ds[n] = ds[n].round(1)
+        if isinstance(bnds, list):
+            ds = ds.sel({n: slice(*bnds)})
+        else:
+            ds = ds.sel({n: bnds})
+
+    # Depths.
+    zi = [idx(ds.lev, depth[z]) + z for z in range(2)]  # +1 for slice
+    ds = ds.isel(lev=slice(*zi))
+
+    print('Subset: ', *['{}-{}'.format(np.min(x).item(), np.max(x).item())
+                        for x in [ds.lat, ds.lon, ds.lev]])
+    return ds
+
+
+def convert_to_transport(ds, lat=None, var='v', sum_dims=True):
+    """Sum OFAM3 meridional velocity multiplied by cell depth and width.
+
+    Args:
+        ds (xr.DataArray or xr.DataSet): Contains variable v & dims renamed.
+        lat (float): Latitude when transport is calculated (arrays not tested).
+
+    Returns:
+        ds (xr.DataArray or xr.DataSet): Meridional transport.
+
+    """
+    dz = ofam_cell_depth()
+    dz = dz.sel(lev=ds.lev.values)
+    if var == 'v':
+        dims = ['lon', 'lev']
+        dxdy = cfg.LON_DEG(lat) * 0.1 / 1e6
+
+    elif var == 'u':
+        dims = ['lat', 'lev']
+        dxdy = cfg.LAT_DEG * 0.1 / 1e6
+
+    if isinstance(ds, xr.DataArray):
+        ds *= dxdy * dz
+        if sum_dims:
+            ds = ds.sum(dims)
+    else:
+        ds = ds[var] * dxdy * dz
+        if sum_dims:
+            ds[var] = ds[var].sum()
+
+    return ds
