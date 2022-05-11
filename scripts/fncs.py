@@ -140,18 +140,23 @@ def update_particle_data_sources(ds):
     mask_x = ((lat <= loc2[0]) & (lon.round(1) >= loc2[2]) & (lon <= loc2[3]))
     ds = replace_source_id(ds, mask_y | mask_x, z)
 
-    # Zone 6,7,8,9, 10: North Interior
-    z, loc = 6, zones.nth.loc
+    # Zone 6: East Solomon.
+    z, loc = 6, zones.sc.loc
+    mask = ((lat <= loc[0]) & (lon >= loc[2]) & (lon <= loc[3]))
+    ds = replace_source_id(ds, mask, z)
+
+    # Zone 7, 8, 9, 10, 11: South Interior
+    z, loc = 7, zones.sth.loc
     x = cfg.inner_lons[0]
     for i, z in enumerate(range(z, z + 5)):
-        mask = ((lat >= loc[0]) & (lon > x[i]) & (lon <= x[i + 1]))
+        mask = ((lat <= loc[0]) & (lon > x[i]) & (lon <= x[i + 1]))
         ds = replace_source_id(ds, mask, z)
 
-    # Zone 11, 12, 13, 14, 15: South Interior
-    z, loc = 11, zones.sth.loc
+    # Zone 12, 13, 14, 15, 16: North Interior
+    z, loc = 12, zones.nth.loc
     x = cfg.inner_lons[1]
     for i, z in enumerate(range(z, z + 5)):
-        mask = ((lat <= loc[0]) & (lon > x[i]) & (lon <= x[i + 1]))
+        mask = ((lat >= loc[0]) & (lon > x[i]) & (lon <= x[i + 1]))
         ds = replace_source_id(ds, mask, z)
 
     # Fill forwards to update following values.
@@ -279,21 +284,30 @@ def combine_source_indexes(ds, z1, z2):
 
 
 def merge_interior_sources(ds):
-    """Merge longitudes of source North/South Interior."""
-    for i in range(1, 5):
-        # Merge South interior lons: zone[6] = zone[6+7+8+9].
-        z1 = 6
-        ds = combine_source_indexes(ds, z1, z1 + i)
-        # Merge Nouth interior lons
-        z1 = 11
-        ds = combine_source_indexes(ds, z1, z1 + i)
+    """Merge longitudes of source North/South Interior.
+
+    Merge longitudes:
+        - North interior: zone[6] = zone[6+7+8+9+10].
+        - South interior lons: zone[8] = zone[12+13+14+15].
+    Notes:
+        - Modified to skip South interior (<165E).
+
+    """
+    nlons = [5, 4]  # Number of interior lons to merge [North, South].
+    zi = [6, 12]   # Zone indexes to merge into [North, South].
+    zf = [6, 8]  # New zone positions [North, South].
+
+    # Iteratively combine next "source" index into first (z1).
+    for i in range(2):  # [North, South].
+        for a in range(1, nlons[i]):
+            ds = combine_source_indexes(ds, zi[i], zi[i] + a)
 
     # Reset source name and colours.
     if set(['names', 'colors']).issubset(ds.data_vars):
-        for z1, z2 in zip([6, 7], [6, 11]):
-            # i1 = list(ds.zone.values).index(z1)  # Index in dataset
-            ds['names'][z1] = cfg.zones.names[z1]
-            ds['colors'][z1] = cfg.zones.colors[z1]
+        for i in zf:
+            ds['names'][i] = cfg.zones.names[i]
+            ds['colors'][i] = cfg.zones.colors[i]
+
     ds.coords['zone'] = np.arange(ds.zone.size, dtype=int)
     return ds
 
@@ -302,7 +316,7 @@ def merge_hemisphere_sources(ds):
     """Merge North/South Interior & LLWBCs (add as new zones)."""
     ds_orig = ds.copy()
 
-    # Merge South interior & VS & SS: zone[1] = zone[1+2+7].
+    # Merge South interior & VS & SS & ES: zone[1] = zone[1+2+7].
     for z2 in [2, 7]:
         ds = combine_source_indexes(ds, 1, z2)
 
@@ -352,12 +366,13 @@ def merge_LLWBC_interior_sources(ds):
     return ds
 
 
-def source_dataset(lon, merge_interior=True):
+def source_dataset(lon, merge_interior=True, east_solomon=True):
     """Get source datasets.
 
     Args:
         lon (int): Release Longitude {165, 190, 220, 250}.
-        merge_interior (bool, optional): Merge sources. Defaults to False.
+        merge_interior (bool, optional): Merge sources. Defaults to True.
+        east_solomon (bool, optional): South interior <165. Defaults to False.
 
     Returns:
         ds (xarray.Dataset):
@@ -375,6 +390,11 @@ def source_dataset(lon, merge_interior=True):
     ds = [ds[i].expand_dims(dict(exp=[i])) for i in [0, 1]]
     ds = xr.concat(ds, 'exp')
 
+    # Create 'speed' variable.
+    ds['speed'] = ds.distance / ds.age
+    ds['speed'].attrs['name'] = 'Average Speed'
+    ds['speed'].attrs['units'] = 'm/s'
+
     # Convert age: seconds to days.
     ds['age'] *= 1 / (60 * 60 * 24)
     ds['age'].attrs['units'] = 'days'
@@ -383,14 +403,13 @@ def source_dataset(lon, merge_interior=True):
     ds['distance'] *= 1 / (1e3 * 100)
     ds['distance'].attrs['units'] = '100 km'
 
-    # Reorder zones.
-    # ds = ds.isel(zone=cfg.zones.inds)
-
     ds['names'] = ('zone', cfg.zones.names_all)
     ds['colors'] = ('zone', cfg.zones.colors_all)
 
     if merge_interior:
         ds = merge_interior_sources(ds)
-        inds = np.array([1, 2, 7, 6, 3, 4, 5, 0])
+        # Reorder zones.
+        inds = np.array([1, 2, 7, 8, 6, 3, 4, 5, 0])
         ds = ds.isel(zone=inds)
+
     return ds
