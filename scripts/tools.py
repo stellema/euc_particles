@@ -625,7 +625,7 @@ def subset_ofam_dataset(ds, lat, lon, depth):
     return ds
 
 
-def convert_to_transport(ds, lat=None, var='v', sum_dims=True):
+def convert_to_transport(ds, lat=None, var='v', sum_dims=['lon', 'lev']):
     """Sum OFAM3 meridional velocity multiplied by cell depth and width.
 
     Args:
@@ -639,20 +639,18 @@ def convert_to_transport(ds, lat=None, var='v', sum_dims=True):
     dz = ofam_cell_depth()
     dz = dz.sel(lev=ds.lev.values)
     if var == 'v':
-        dims = ['lon', 'lev']
         dxdy = cfg.LON_DEG(lat) * 0.1 / 1e6
 
     elif var == 'u':
-        dims = ['lat', 'lev']
         dxdy = cfg.LAT_DEG * 0.1 / 1e6
 
     if isinstance(ds, xr.DataArray):
         ds *= dxdy * dz
         if sum_dims:
-            ds = ds.sum(dims)
+            ds = ds.sum(sum_dims)
     else:
         ds = ds[var] * dxdy * dz
         if sum_dims:
-            ds[var] = ds[var].sum()
+            ds[var] = ds[var].sum(sum_dims)
 
     return ds
