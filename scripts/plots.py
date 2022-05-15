@@ -315,3 +315,91 @@ def plot_particle_source_map(lon, merge_interior=True, add_ocean=True,
     plt.savefig(cfg.fig / 'particle_source_map_{}.png'.format(lon),
                 bbox_inches='tight')
     return fig, ax, proj
+
+
+def weighted_bins_fd(ds, weights):
+    """Weighted Freedman Diaconis Estimator bin width (number of bins).
+    Bin width:
+        h = 2 * IQR(values) / cubroot(values.size)
+
+    Number of bins:
+        nbins = (max(values) - min(values)) / h
+
+    """
+    # Sort data and weights.
+    ind = np.argsort(ds).values
+    d = ds[ind]
+    w = weights[ind]
+
+    # Interquartile range.
+    pct = 1. * w.cumsum() / w.sum() * 100  # Convert to percentiles?
+    iqr = np.interp([25, 75], pct, d)
+    iqr = np.diff(iqr)
+
+    # Freedman Diaconis Estimator (h=bin width).
+    h = 2 * iqr / np.cbrt(ds.size)
+    h = h[0]
+
+    # Input data max/min.
+    data_range = [ds.min().item(),  ds.max().item()]
+
+    # Numpy conversion from bin width to number of bins.
+    nbins = int(np.ceil(np.diff(data_range) / h)[0])
+    return h, nbins, data_range
+
+
+def plot_histogram(ax, dx, var, color, cutoff=0.85, weighted=True):
+    """Plot histogram with historical (solid) & projection (dashed).
+
+    Histogram bins weighted by transport / sum of all transport.
+    This gives the probability (not density)
+
+    Args:
+        ax (plt.AxesSubplot): Axes Subplot.
+        dx (xarray.Dataset): Dataset (hist & proj; var and 'u').
+        var (str): Data variable.
+        color (str): Bar colour.
+        xlim_percent (float, optional): Shown % of bins. Defaults to 0.75.
+        weighted (bool, optional): Weight by transport. Defaults to True.
+
+    Returns:
+        ax (plt.AxesSubplot): Axes Subplot.
+
+    """
+    kwargs = dict(histtype='bar', density=False, range=None, stacked=False,
+                  alpha=0.6, cumulative=False, color=color, fill=True,
+                  hatch=None)
+
+    dx = [dx.isel(exp=i).dropna('traj', 'all') for i in [0, 1]]
+    bins = 'fd'
+    weights = None
+
+    if weighted:
+        # weights = [dx[i].u / dx[i].u.sum().item() for i in [0, 1]]
+        weights = [dx[i].u for i in [0, 1]]
+        # weights = [dx[i].u / dx[i].uz.mean().item() for i in [0, 1]]
+
+        # Find number of bins based on combined hist/proj data range.
+        h0, _, r0 = weighted_bins_fd(dx[0][var], weights[0])
+        h1, _, r1 = weighted_bins_fd(dx[1][var], weights[1])
+
+        # Data min & max of both datasets.
+        r = [min(np.floor([r0[0], r1[0]])), max(np.ceil([r0[1], r1[1]]))]
+        kwargs['range'] = r
+
+        # Number of bins for combined data range (use smallest bin width).
+        bins = int(np.ceil(np.diff(r) / min([h0, h1])))
+
+    # Historical.
+    x, _bins, _ = ax.hist(dx[0][var], bins, weights=weights[0], **kwargs)
+
+    # RCP8.5.
+    kwargs.update(dict(color='k', fill=False, hatch='///'))
+    bins = bins if weighted else _bins
+    _, bins, _ = ax.hist(dx[1][var], bins, weights=weights[1], **kwargs)
+
+    # Cut off last 5% of xaxis (index where <95% of total counts).
+    xmax = bins[sum(np.cumsum(x) < sum(x) * cutoff)]
+    xmin = bins[max([sum((x <= 0) & (bins[1:] < xmax)) - 1, 0])]
+    ax.set_xlim(xmin=xmin, xmax=xmax)
+    return ax
