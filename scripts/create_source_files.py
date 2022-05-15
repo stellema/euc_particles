@@ -76,6 +76,12 @@ def source_particle_ID_dict(ds, exp, lon, v, r):
 def get_final_particle_obs(ds):
     """Reduce particle dataset variables to first/last observation."""
     # Select the initial release time and particle ID.
+
+    # Select the first value.
+    if 'obs' in ds['time'].dims:
+        ds['ztime'] = ds['time'].min('obs')
+        ds['ztime'].attrs['name'] = 'Time at source'
+
     for var in ['time', 'trajectory']:
         if 'obs' in ds[var].dims:
             ds[var] = ds[var].isel(obs=0)
