@@ -14,6 +14,7 @@ Todo:
 
 import numpy as np
 import xarray as xr
+from argparse import ArgumentParser
 
 import cfg
 from cfg import zones
@@ -187,8 +188,11 @@ def source_transport_percent_of_full(exp, lon, depth=1500, func=np.sum,
               (da[0] / da[1]).values * 100)
 
 
-for exp in [0, 1]:
-    df = llwbc_transport(exp)
+if __name__ == "__main__" and cfg.home.drive != 'C:':
+    p = ArgumentParser(description="""LLWBCS.""")
+    p.add_argument('-x', '--exp', default=0, type=int, help='Experiment.')
+    args = p.parse_args()
+    llwbc_transport(args.exp)
 
 
 # func = np.sum
