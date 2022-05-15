@@ -98,8 +98,9 @@ def llwbc_transport(exp=0, clim=False, sum_dims=['lon'], net=True):
     return df
 
 
-for exp in [0, 1]:
+for exp in [1]:
     df = llwbc_transport(exp, net=True)
     filename = cfg.data / 'transport_LLWBCs_{}.nc'.format(cfg.exp_abr[exp])
+    
     save_dataset(df, filename, msg=' ./eulerian_transport.py')
     logger.info('Saved: {}'.format(filename.stem))
