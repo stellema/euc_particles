@@ -79,7 +79,7 @@ def get_final_particle_obs(ds):
 
     # Select the first value.
     if 'obs' in ds['time'].dims:
-        ds['ztime'] = ds['time'].min('obs')
+        ds['ztime'] = ds['time'].min('obs', skipna=True)
         ds['ztime'].attrs['name'] = 'Time at source'
 
     for var in ['time', 'trajectory']:
@@ -88,14 +88,14 @@ def get_final_particle_obs(ds):
 
     # Select the first value.
     if 'obs' in ds['z'].dims:
-        ds['z0'] = ds['z'].min('obs')
+        ds['z0'] = ds['z'].min('obs', skipna=True)
         ds['z0'].attrs['name'] = 'Release depth'
         ds['z0'].attrs['units'] = 'm'
 
     # Select the final value.
     for var in ['zone', 'age', 'distance', 'unbeached', 'lat', 'lon', 'z']:
         if 'obs' in ds[var].dims:
-            ds[var] = ds[var].max('obs')
+            ds[var] = ds[var].max('obs', skipna=True)
 
     # Drop extra coords and unused 'obs'.
     for var in ['obs']:
