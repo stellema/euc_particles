@@ -42,6 +42,8 @@ dx.plot(col='time', col_wrap=4, vmax=0.06, yincrease=False)
 
 # Plot profile
 fig, ax = plt.subplots(1, 1, figsize=(7, 6))
-ax.pcolormesh(dx.lon, dx.lev, dx, vmax=0.06, cmap=plt.cm.seismic)
-dx.plot(col='time', col_wrap=4, vmax=0.06)
-plt.Axes.invert_yaxis()
+cs = ax.pcolormesh(dx.lon, dx.lev, dx.mean('time'), vmax=0.06, cmap=plt.cm.seismic)
+ax.invert_yaxis()
+fig.colorbar(cs)
+# dx.plot(col='time', col_wrap=4, vmax=0.06)
+# plt.Axes.invert_yaxis()

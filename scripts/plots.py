@@ -17,7 +17,30 @@ from mpl_toolkits.axes_grid1 import make_axes_locatable
 
 import cfg
 from cfg import zones
-from tools import coord_formatter, convert_longitudes, get_unique_file
+from tools import (coord_formatter, convert_longitudes, get_unique_file,
+                   ofam_filename, open_ofam_dataset)
+
+
+def update_title_time(title, t):
+    """Update title string with times[t]."""
+    if type(t) == xr.DataArray:
+        t = t.values
+    return '{} {}'.format(title, str(t)[:10])
+
+
+def get_data_source_colors(ds, sum_interior=True):
+    """Create array of colors for particles."""
+    ids = ds.zone.isel(obs=0).astype(dtype=int)
+
+    if sum_interior and any(ids > 8):
+        ids = xr.where(((ids >= 7) & (ids <= 11)), 7, ids)  # South Interior.
+        ids = xr.where(ids >= 12, 8, ids)  # South Interior.
+        colors = zones.colors[ids]
+
+    else:
+        colors = zones.colors_all[ids]
+
+    return colors
 
 
 def zone_cmap():
@@ -37,31 +60,32 @@ def source_cmap(zcolor=cfg.zones.colors):
     return zmap, cmappable
 
 
-def plot_ofam_euc_anim():
+def animate_ofam_euc():
+    """Animate OFAM3 velocity (depth vs. lon) at a constant latitude."""
+    files = [ofam_filename('u', 2012, t + 1) for t in range(12)]
+    ds = open_ofam_dataset(files)
 
-    file = [cfg.ofam / 'ocean_u_2012_{:02d}.nc'.format(t+1) for t in range(12)]
-    ds = xr.open_mfdataset(file)
-    ds = ds.sel(yu_ocean=0., method='nearest')
-    ds = ds.sel(xu_ocean=slice(150., 280.), st_ocean=slice(2.5, 500)).u
+    # Subset Data.
+    ds = ds.u
+    ds = ds.sel(lat=0., method='nearest')
+    ds = ds.sel(lon=slice(150., 280.), lev=slice(2.5, 500))
 
-    y = ds.st_ocean
-    x = ds.xu_ocean
-    v = ds
+    v, x, y = ds, ds.lon, ds.lev
+    times = ds.time
 
-    yt = np.arange(0, y[-1], 100)
-    xt = np.arange(160, 270, 20)
-    vmax = 1.2
-    vmin = -0.2
+    vmax, vmin = 1.2, -0.2
+
     cmap = plt.cm.gnuplot2
-
     cmap.set_bad('k')
 
-    times = ds.Time
+    # Plot.
     fig, ax = plt.subplots(figsize=(9, 3))
+    cs = ax.pcolormesh(x, y, v.isel(time=0), vmax=vmax, vmin=vmin, cmap=cmap)
 
-    cs = ax.pcolormesh(x, y, v.isel(Time=0), vmax=vmax, vmin=vmin, cmap=cmap)
-
+    # Axes
     ax.set_ylim(y[-1], y[0])
+    yt = np.arange(0, y[-1], 100)  # yticks.
+    xt = np.arange(160, 270, 20)  # xticks.
     ax.set_yticks(yt)
     ax.set_yticklabels(coord_formatter(yt, 'depth'))
     ax.set_xticks(xt)
@@ -74,7 +98,8 @@ def plot_ofam_euc_anim():
     ax.set_title('OFAM3 zonal velocity')
 
     def animate(t):
-        cs.set_array(v.isel(Time=t).values.flatten())
+
+        cs.set_array(v.isel(time=t).values.flatten())
         return cs
 
     frames = np.arange(1, len(times))
@@ -85,11 +110,7 @@ def plot_ofam_euc_anim():
     plt.close()
 
     # Filename.
-    i = 0
-    filename = cfg.fig / 'vids/ofam_{}.mp4'.format(i)
-    while filename.exists():
-        i += 1
-        filename = cfg.fig / 'vids/ofam_{}.mp4'.format(i)
+    filename = get_unique_file(cfg.fig / 'vids/ofam_euc.mp4')
 
     # Save.
     writer = animation.writers['ffmpeg'](fps=20)
@@ -98,8 +119,9 @@ def plot_ofam_euc_anim():
 
 
 def create_map_axis(figsize=(12, 5), map_extent=None, add_ticks=True,
-                    xticks=None, yticks=None,
-                    add_gridlines=False, add_ocean=False):
+                    xticks=None, yticks=None, add_ocean=False,
+                    land_color='lightgray', ocean_color='lightcyan',
+                    add_gridlines=False):
     """Create a figure and axis with cartopy.
 
     Args:
@@ -130,13 +152,13 @@ def create_map_axis(figsize=(12, 5), map_extent=None, add_ticks=True,
         map_extent = [112, 288, -9, 9]
     ax.set_extent(map_extent, crs=proj)
 
-    ax.add_feature(cfeature.LAND, color='lightgray', zorder=zorder)
+    ax.add_feature(cfeature.LAND, color=land_color, zorder=zorder)
     ax.add_feature(cfeature.COASTLINE, zorder=zorder)
     ax.outline_patch.set_zorder(zorder + 1)  # Make edge frame on top.
 
     if add_ocean:
         # !! original alpha=0.9 color='lightblue'
-        ax.add_feature(cfeature.OCEAN, alpha=0.6, color='lightcyan')
+        ax.add_feature(cfeature.OCEAN, alpha=0.6, color=ocean_color)
 
     if add_ticks:
         if xticks is None:
@@ -166,17 +188,18 @@ def create_map_axis(figsize=(12, 5), map_extent=None, add_ticks=True,
     return fig, ax, proj
 
 
-def plot_ofam3_land(ax, extent=[115, 290, -12, 12], coastlines=True):
+def plot_ofam3_land(ax, extent=[115, 290, -12, 12], ocean=True, coastlines=True):
     """Plot land from OFAM3."""
     mapcmap = mpl.colors.ListedColormap(['gray', 'lightcyan'])
 
     # OFAM3 Data.
-    dv = xr.open_dataset(cfg.ofam / 'ocean_w_1981_01.nc')
-    dv = dv.rename({'yt_ocean': 'lat', 'xt_ocean': 'lon'})
-    dv = dv.w.isel(Time=0, sw_ocean=0)
+    dv = open_ofam_dataset(ofam_filename('u', 2012, 1))
+    dv = dv.u
+    dv = dv.isel(time=0, lev=0)
 
     # Set: land=0 & ocean=1.
-    dv = xr.where(np.isnan(dv), 0, 1)
+    c = 1 if ocean else np.nan
+    dv = xr.where(np.isnan(dv), 0, c)
 
     dv = dv.sel(lat=slice(*extent[2:]), lon=slice(*extent[:2]))
     y, x = dv.lat, dv.lon
@@ -185,16 +208,6 @@ def plot_ofam3_land(ax, extent=[115, 290, -12, 12], coastlines=True):
     if coastlines:
         ax.contour(x, y, dv, levels=[0], colors='k', linewidths=0.4,
                    antialiased=False)
-
-    return ax
-
-
-def ofam3_pacific_map():
-    """OFAM3 map."""
-    fig = plt.figure(figsize=(17, 6))
-    ax = plt.axes()
-    ax = plot_ofam3_land(ax)
-
     y, x = np.arange(-10, 11, 5), np.arange(140, 290, 20)
     ax.set_xticks(x)
     ax.set_yticks(y)
@@ -205,11 +218,74 @@ def ofam3_pacific_map():
     ax.xaxis.set_minor_locator(mpl.ticker.MultipleLocator(5))
     ax.xaxis.set_major_locator(mpl.ticker.MultipleLocator(10))
     ax.yaxis.set_minor_locator(mpl.ticker.MultipleLocator(2.5))
-    fig.subplots_adjust(bottom=0.2, top=0.8)
+
     ax.set_aspect('auto')
+    return ax
+
+
+def ofam3_pacific_map():
+    """OFAM3 map."""
+    fig = plt.figure(figsize=(17, 6))
+    ax = plt.axes()
+    ax = plot_ofam3_land(ax)
+    fig.subplots_adjust(bottom=0.2, top=0.8)
+
     plt.tight_layout()
     plt.savefig(cfg.fig / 'OFAM3_pacific_map.png', dpi=300)
     plt.show()
+
+
+def animate_ofam_pacific(var='u', depth=150):
+    """Animate OFAM3 velocity at a constant depth."""
+    var_name = 'zonal' if var == 'u' else 'meridional'  # For title.
+    title_str = 'OFAM3 {} velocity at {}m on'.format(var_name, depth)  # Title.
+    files = [ofam_filename(var, 2012, t + 1) for t in range(12)]
+    ds = open_ofam_dataset(files)
+
+    # Subset data.
+    ds = ds[var]
+    ds = ds.sel(lev=depth, method='nearest')
+
+    v, y, x = ds, ds.lat, ds.lon
+    times = ds.time
+
+    vmax, vmin = 0.9, -0.2
+
+    cmap = plt.cm.gnuplot2
+    cmap.set_bad('k')
+
+    fig, ax, proj = create_map_axis(map_extent=[120, 288, -12, 12],
+                                    add_ocean=False, land_color='dimgrey')
+    t = 0
+    title = ax.set_title(update_title_time(title_str, times[t]))
+    cs = ax.pcolormesh(x, y, v.isel(time=t), cmap=cmap, vmax=vmax, vmin=vmin,
+                       transform=proj)
+
+    divider = make_axes_locatable(ax)
+
+    cax = divider.append_axes('right', size='2%', pad=0.1, axes_class=plt.Axes)
+    cbar = fig.colorbar(cs, cax=cax, orientation='vertical', extend='both')
+    cbar.set_label('m/s')
+
+    def animate(t):
+        title.set_text(update_title_time(title_str, times[t]))
+        cs.set_array(v.isel(time=t).values.flatten())
+        return cs
+
+    frames = np.arange(1, len(times))
+    plt.rc('animation', html='html5')
+    anim = animation.FuncAnimation(fig, animate, frames=frames, interval=800,
+                                   blit=0, repeat=0)
+    plt.tight_layout()
+    plt.close()
+
+    # Filename.
+    file = get_unique_file(cfg.fig / 'vids/ofam_{}_pacific.mp4'.format(var))
+
+    # Save.
+    writer = animation.writers['ffmpeg'](fps=20)
+    anim.save(str(file), writer=writer, dpi=200)
+    return
 
 
 def pacific_map():
@@ -226,7 +302,7 @@ def pacific_map():
     plt.show()
 
 
-def plot_particle_source_map(lon, merge_interior=True, add_ocean=True,
+def plot_particle_source_map(sum_interior=True, add_ocean=True,
                              add_legend=True):
     """EUC source boundary map for lon.
 
@@ -246,7 +322,7 @@ def plot_particle_source_map(lon, merge_interior=True, add_ocean=True,
         Todo:
             - Seperate interior lons.
         """
-        lons = np.zeros((9, 2))
+        lons = np.zeros((10, 2))
         lats = lons.copy()
         z_index = np.zeros(lons.shape[0], dtype=int)
         i = 0
@@ -259,27 +335,30 @@ def plot_particle_source_map(lon, merge_interior=True, add_ocean=True,
                 i += 1
         return lons, lats, z_index
 
-    def add_source_label(ax, z_index, labels, proj):
+    def add_source_labels(ax, z_index, labels, proj):
         """Latitude and longitude points defining source regions."""
         text = [z.name_full for z in zones._all[1:]]
+        loc = np.array([[-7.8, 149], [-4.7, 153.8], [8.9, 127],  # VS, SS, MC.
+                        [4.1, 122], [-5.8, 124], [-7.9, 159],  # CS, IDN, SC.
+                        [-7.5, 187], [9, 187]])  # South & north interior.
 
-        # Two line source name (manual centre align).
-        for i in range(5):
+        # Multiple line source name (manual centre align).
+        for i in range(6):
             n = text[i].split()  # List of words.
-            n = [n[a].center(len(n[a - 1]), ' ') for a in range(len(n))]
-            text[i] = '{}\n{}'.format(*n)
 
-        loc = np.zeros((len(text), 2)) * np.nan
-        loc[0] = [-8.0, 149]  # VS
-        loc[1] = [-5.5, 155]  # SS
-        loc[2] = [8.9, 127]  # MC
-        loc[3] = [2.1, 122.5]  # CS
-        loc[4] = [-5.8, 124]  # IDN
-        loc[5] = [9, 175]  # North int
-        loc[6] = [-8, 175]  # South int
+            if i in [5]:  # 1st line merge: East + Solomon.
+                n = [' '.join(n[:2]), n[-1]]
 
+            n = [a.center(max([len(a) for a in n]), ' ') for a in n]
+
+            if i in [1, 2, 5]:
+                n[-1] = ' ' + n[-1]
+            text[i] = '\n'.join(n)  # Add newline between words.
+
+        # Add labels to plot.
         for i, z in enumerate(np.unique(z_index)):
             ax.text(loc[i][1], loc[i][0], text[i], zorder=10, transform=proj)
+
         return ax
 
     colors = cfg.zones.colors
@@ -287,9 +366,10 @@ def plot_particle_source_map(lon, merge_interior=True, add_ocean=True,
     lons, lats, z_index = get_source_coords()
 
     figsize = (12, 5) if add_legend else (15, 6)
-    map_extent = [112, 288, -11, 12]
+    map_extent = [114, 288, -11, 11]
     yticks = np.arange(-10, 11, 5)
     xticks = np.arange(120, 290, 20)
+
     fig, ax, proj = create_map_axis(figsize, map_extent=map_extent,
                                     xticks=xticks, yticks=yticks,
                                     add_gridlines=False, add_ocean=add_ocean)
@@ -298,7 +378,8 @@ def plot_particle_source_map(lon, merge_interior=True, add_ocean=True,
     for i, z in enumerate(z_index):
         ax.plot(lons[i], lats[i], colors[z], lw=4, label=labels[z],
                 zorder=10, transform=proj)
-    ax = add_source_label(ax, z_index, labels, proj)
+
+    ax = add_source_labels(ax, z_index, labels, proj)
 
     plt.tight_layout()
 
@@ -312,13 +393,13 @@ def plot_particle_source_map(lon, merge_interior=True, add_ocean=True,
     #     cbar.ax.set_xticklabels(labels, fontsize=10)
 
     # Save.
-    plt.savefig(cfg.fig / 'particle_source_map_{}.png'.format(lon),
-                bbox_inches='tight')
+    plt.savefig(cfg.fig / 'particle_source_map.png', bbox_inches='tight')
     return fig, ax, proj
 
 
 def weighted_bins_fd(ds, weights):
     """Weighted Freedman Diaconis Estimator bin width (number of bins).
+
     Bin width:
         h = 2 * IQR(values) / cubroot(values.size)
 
@@ -366,8 +447,8 @@ def plot_histogram(ax, dx, var, color, cutoff=0.85, weighted=True):
         ax (plt.AxesSubplot): Axes Subplot.
 
     """
-    kwargs = dict(histtype='bar', density=False, range=None, stacked=False,
-                  alpha=0.6, cumulative=False, color=color, fill=True,
+    kwargs = dict(histtype='step', density=False, range=None, stacked=False,
+                  alpha=0.6, cumulative=False, color=color, fill=0,
                   hatch=None)
 
     dx = [dx.isel(exp=i).dropna('traj', 'all') for i in [0, 1]]
@@ -376,8 +457,8 @@ def plot_histogram(ax, dx, var, color, cutoff=0.85, weighted=True):
 
     if weighted:
         # weights = [dx[i].u / dx[i].u.sum().item() for i in [0, 1]]
-        weights = [dx[i].u for i in [0, 1]]
-        # weights = [dx[i].u / dx[i].uz.mean().item() for i in [0, 1]]
+        # weights = [dx[i].u for i in [0, 1]]
+        weights = [dx[i].u / dx[i].uz.mean().item() for i in [0, 1]]
 
         # Find number of bins based on combined hist/proj data range.
         h0, _, r0 = weighted_bins_fd(dx[0][var], weights[0])
@@ -394,7 +475,8 @@ def plot_histogram(ax, dx, var, color, cutoff=0.85, weighted=True):
     x, _bins, _ = ax.hist(dx[0][var], bins, weights=weights[0], **kwargs)
 
     # RCP8.5.
-    kwargs.update(dict(color='k', fill=False, hatch='///'))
+    # kwargs.update(dict(color='k', fill=False, hatch='///'))
+    kwargs.update(dict(color='k'))
     bins = bins if weighted else _bins
     _, bins, _ = ax.hist(dx[1][var], bins, weights=weights[1], **kwargs)
 

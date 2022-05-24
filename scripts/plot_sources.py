@@ -8,6 +8,7 @@
 """
 import numpy as np
 import xarray as xr
+import matplotlib as mpl
 import matplotlib.pyplot as plt
 
 import cfg
@@ -60,7 +61,7 @@ def source_pie_chart(ds, lon):
 
 def source_timeseries(exp, lon, var='uz', merge_straits=False, anom=True):
     """Timeseries plot."""
-    ds = source_dataset(lon, merge_interior=True)
+    ds = source_dataset(lon, sum_interior=True)
 
     # Annual mea nbetween scenario years.
     times = slice('2012') if exp == 0 else slice('2070', '2101')
@@ -107,7 +108,7 @@ def source_timeseries(exp, lon, var='uz', merge_straits=False, anom=True):
                 bbox_inches='tight')
 
 
-def transport_source_bar_graph(exp=0, merge_interior=True):
+def transport_source_bar_graph(exp=0, z_ids=list(range(9)), sum_interior=True):
     """Bar graph of source transport for each release longitude.
 
     Horizontal bar graph (sources on y-axis) with or without RCP8.5.
@@ -115,7 +116,7 @@ def transport_source_bar_graph(exp=0, merge_interior=True):
 
     Args:
         exp (str, optional): Historical or with RCP8.5. Defaults to 0.
-        merge_interior (bool, optional): DESCRIPTION. Defaults to True.
+        sum_interior (bool, optional): DESCRIPTION. Defaults to True.
 
     """
     width = 0.9  # Bar widths.
@@ -129,7 +130,8 @@ def transport_source_bar_graph(exp=0, merge_interior=True):
                      .format(ltr[i], lon), loc='left')
 
         # Open data.
-        ds = source_dataset(lon, merge_interior)
+        ds = source_dataset(lon, sum_interior)
+        ds = ds.isel(zone=z_ids)
         # # Reverse zone order
         # ds = ds.isel(zone=np.arange(ds.zone.size, dtype=int)[::-1])
 
@@ -161,10 +163,12 @@ def transport_source_bar_graph(exp=0, merge_interior=True):
         if exp > 0:
             ax.legend()
         ax.invert_yaxis()
+        ax.xaxis.set_major_locator(mpl.ticker.MaxNLocator(integer=True))
+        ax.xaxis.set_minor_locator(mpl.ticker.AutoMinorLocator())
 
     plt.tight_layout()
-    plt.savefig(cfg.fig / 'sources/transport_source_bar_{}.png'
-                .format(cfg.exps[exp]))
+    plt.savefig(cfg.fig / 'sources/transport_source_bar_{}{}.png'
+                .format(cfg.exps[exp], '_interior' if sum_interior else ''))
     return
 
 
@@ -208,28 +212,29 @@ def source_histogram(ds, lon):
 # Source bar graph.
 for exp in [1, 0]:
     transport_source_bar_graph(exp=exp)
+    transport_source_bar_graph(exp, list(range(7, 17)), False)
 
 
 # for lon in [165]:# cfg.lons:
 # # for lon in cfg.lons:
-#     ds = source_dataset(lon, merge_interior=True)
+#     ds = source_dataset(lon, sum_interior=True)
 
 #     # Plot histograms.
-#     source_histogram(ds, lon, var='age')
+#     source_histogram(ds, lon)
 
-#     # ds['v'] = ds.distance / ds.age
-#     # ds['v'].attrs['name'], ds['v'].attrs['units'] = 'Average Speed', '100km / day'
-#     # source_histogram(ds, lon, var='v')
+# #     # ds['v'] = ds.distance / ds.age
+# #     # ds['v'].attrs['name'], ds['v'].attrs['units'] = 'Average Speed', '100km / day'
+# #     # source_histogram(ds, lon, var='v')
 
-#     # Timeseries.
-#     source_timeseries(ds, exp=0, lon=lon, var='uz')
+# #     # Timeseries.
+# #     source_timeseries(ds, exp=0, lon=lon, var='uz')
 
-    # Pie chart.
-    # source_pie_chart(ds, lon)
+#     # Pie chart.
+#     # source_pie_chart(ds, lon)
 
 # Spinup test working.
 # xid = cfg.data / 'sources/plx_spinup_{}_{}_v1y 6.nc'.format(cfg.exp[exp], lon)
-# ds = source_dataset(lon, merge_interior=True).isel(exp=0)
+# ds = source_dataset(lon, sum_interior=True).isel(exp=0)
 # dp = xr.open_dataset(xid)
 # dp = dp.isel(zone=cfg.zones.inds)
 # ds = ds.sel(traj=ds.traj[ds.traj.isin(dp.traj.values.astype(int))])

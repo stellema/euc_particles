@@ -25,7 +25,7 @@ logger = mlogger('source_transport')
 
 def log_source_transport(lon):
     """Log source transport (hist, change, etc)  at longitude."""
-    ds = source_dataset(lon, merge_interior=True)
+    ds = source_dataset(lon, sum_interior=True)
 
     for var in ds.data_vars:
         if var not in ['uz', 'u_total', 'names']:

@@ -126,11 +126,7 @@ if __name__ == "__main__":
 
     # # Plot map.
     # plot_some_source_pathways(exp, lon, v, r)
-    # plot_particle_source_map(lon='all', merge_interior=True)
-    # for x in [165, 190, 220, 250]:
-    #     plot_particle_source_map(lon=x, merge_interior=True)
-    # plot_particle_source_map(lon, merge_interior=True, add_ocean=True,
-    #                           add_legend=True)
+    # plot_particle_source_map()
 
     source_id = 0
     for source_id in [11, 12, 13]:
