@@ -103,24 +103,22 @@ class ZoneData:
     idn = Zone(5, 'idn', 'Indonesian Seas', [[-8.5, 0.4, x_west, x_west],
                                              [-8.7, -8.7, x_west, 140.6]])
 
-    sc = Zone(6, 'sc', 'East Solomon', [j1, j1, 155.4, 158])
+    sc = Zone(6, 'sc', 'East Solomon Islands', [j1, j1, 155.4, 158])
     sth = Zone(7, 'sth', 'South Interior', [j1, j1, 158, 280])
     nth = Zone(12, 'nth', 'North Interior', [j2, j2, 129.1, 278.5])
 
     _all = [nz, vs, ss, mc, cs, idn, sc, sth, nth]
 
-    colors = colors
-    names = [z.name_full for z in _all]
+    colors = np.array(colors)
+    names = np.array([z.name_full for z in _all])
 
-    inner_names = ['{} ({}-{})'.format(z.name_full, *inner_lons[i][x:x+2])
-                   for i, z in enumerate([nth, sth]) for x in range(5)]
+    inner_names = ['{} ({}-{}°E)'.format(z.name_full, *inner_lons[i][x:x+2])
+                   for i, z in enumerate([sth, nth]) for x in range(5)]
 
-    # names_all = np.concatenate([names[:-3], inner_names])
+    names_all = np.concatenate([names[:-2], inner_names])
 
-    # colors_all = np.concatenate([colors[:-3], *[[colors[i]] * 5
-    #                                             for i in [-3, -1]]])
-    # names_all[11] = esi.name_full
-    # colors_all[11] = colors[-2]
+    colors_all = np.concatenate([colors[:-2], *[[colors[i]] * 5
+                                                for i in [-2, -1]]])
 
 
 # @dataclass

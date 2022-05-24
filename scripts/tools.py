@@ -574,6 +574,7 @@ def ofam_cell_depth():
     dz = dz.rename({'st_ocean': 'lev'})
     return dz
 
+
 def predrop(ds):
     """Drop variables before processing."""
     ds = ds.drop('Time_bounds')
@@ -587,7 +588,7 @@ def predrop(ds):
 def open_ofam_dataset(file):
     """Open OFAM3 dataset file and rename coordinates."""
     if isinstance(file, list):
-        ds = xr.open_mfdataset(file, chunks='auto',
+        ds = xr.open_mfdataset(file, chunks='auto', #decode_times=True,
                                compat='override', data_vars='minimal',
                                coords='minimal', parallel=True)
     else:
@@ -617,8 +618,9 @@ def subset_ofam_dataset(ds, lat, lon, depth):
             ds = ds.sel({n: bnds})
 
     # Depths.
-    zi = [idx(ds.lev, depth[z]) + z for z in range(2)]  # +1 for slice
-    ds = ds.isel(lev=slice(*zi))
+    if depth is not None:
+        zi = [idx(ds.lev, depth[z]) + z for z in range(2)]  # +1 for slice
+        ds = ds.isel(lev=slice(*zi))
 
     print('Subset: ', *['{}-{}'.format(np.min(x).item(), np.max(x).item())
                         for x in [ds.lat, ds.lon, ds.lev]])

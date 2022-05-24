@@ -293,12 +293,12 @@ def merge_interior_sources(ds):
         - Modified to skip South interior (<165E).
 
     """
-    nlons = [5, 4]  # Number of interior lons to merge [North, South].
-    zi = [6, 12]   # Zone indexes to merge into [North, South].
-    zf = [6, 8]  # New zone positions [North, South].
+    nlons = [5, 5]  # Number of interior lons to merge [South, North].
+    zi = [7, 12]   # Zone indexes to merge into [South, North].
+    zf = [7, 8]  # New zone positions [South, North].
 
     # Iteratively combine next "source" index into first (z1).
-    for i in range(2):  # [North, South].
+    for i in range(2):  # [South, North].
         for a in range(1, nlons[i]):
             ds = combine_source_indexes(ds, zi[i], zi[i] + a)
 
@@ -316,23 +316,23 @@ def merge_hemisphere_sources(ds):
     """Merge North/South Interior & LLWBCs (add as new zones)."""
     ds_orig = ds.copy()
 
-    # Merge South interior & VS & SS & ES: zone[1] = zone[1+2+7].
-    for z2 in [2, 7]:
+    # Merge South interior & VS & SS & SC: zone[1] = zone[1+2+6+7].
+    for z2 in [2, 6, 7]:
         ds = combine_source_indexes(ds, 1, z2)
 
     # Merge North interior & MC: zone[3] = zone[3+6].
-    ds = combine_source_indexes(ds, 3, 6)
+    ds = combine_source_indexes(ds, 3, 8)
 
     # Reassign source ID.
-    ds = ds.sel(zone=[3, 1])
+    ds = ds.sel(zone=[1, 3])
     ds['zone'] = np.array([1, 2]) + ds_orig.zone.max().item()
 
     # Replace source name and colours.
     if 'names' in ds.data_vars:
-        ds['names'] = ('zone', ['NH', 'SH'])
+        ds['names'] = ('zone', ['SH', 'NH'])
 
     if 'colors' in ds.data_vars:
-        ds['colors'] = ('zone', ['blue', 'darkviolet'])
+        ds['colors'] = ('zone', ['darkviolet', 'blue'])
 
     # Add new zones to original dataset.
     ds = xr.concat([ds_orig, ds], 'zone')
@@ -343,15 +343,15 @@ def merge_LLWBC_interior_sources(ds):
     """Merge North/South Interior & LLWBCs (add as new zones)."""
     ds_orig = ds.copy()
 
-    # Merge LLWBCs VS & SS & MC: zone[1] = zone[1+2+3].
-    for z2 in [2, 3]:
+    # Merge LLWBCs VS & SS & SC & MC: zone[1] = zone[1+2+3].
+    for z2 in [2, 3, 6]:
         ds = combine_source_indexes(ds, 1, z2)
 
     # Merge North & south interior: zone[6] = zone[6+7].
-    ds = combine_source_indexes(ds, 6, 7)
+    ds = combine_source_indexes(ds, 7, 8)
 
     # Reassign source ID.
-    ds = ds.sel(zone=[1, 6])
+    ds = ds.sel(zone=[1, 7])
     ds['zone'] = np.array([1, 2]) + ds_orig.zone.max().item()
 
     # Replace source name and colours.
@@ -366,12 +366,12 @@ def merge_LLWBC_interior_sources(ds):
     return ds
 
 
-def source_dataset(lon, merge_interior=True, east_solomon=True):
+def source_dataset(lon, sum_interior=True, east_solomon=True):
     """Get source datasets.
 
     Args:
         lon (int): Release Longitude {165, 190, 220, 250}.
-        merge_interior (bool, optional): Merge sources. Defaults to True.
+        sum_interior (bool, optional): Merge sources. Defaults to True.
         east_solomon (bool, optional): South interior <165. Defaults to False.
 
     Returns:
@@ -406,10 +406,10 @@ def source_dataset(lon, merge_interior=True, east_solomon=True):
     ds['names'] = ('zone', cfg.zones.names_all)
     ds['colors'] = ('zone', cfg.zones.colors_all)
 
-    if merge_interior:
+    if sum_interior:
         ds = merge_interior_sources(ds)
         # Reorder zones.
-        inds = np.array([1, 2, 7, 8, 6, 3, 4, 5, 0])
+        inds = np.array([1, 2, 6, 7, 8, 3, 4, 5, 0])
         ds = ds.isel(zone=inds)
 
     return ds
