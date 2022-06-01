@@ -97,7 +97,7 @@ def llwbc_transport(exp=0, clim=False, sum_dims=['lon']):
     return df
 
 
-def get_source_transport_percent(df, dx, z, func=np.sum, net=True):
+def get_source_transport_percent(df, dx, z, func=np.sum, net=False):
     """Calculate full LLWBC transport & transport that reaches the EUC.
 
     Args:
@@ -119,6 +119,7 @@ def get_source_transport_percent(df, dx, z, func=np.sum, net=True):
         var = var + '_net'
 
     # Particle transport sum for each day at source.
+
     dz = dx.sel(zone=z).dropna('time')
 
     dv = df[var]
@@ -131,7 +132,7 @@ def get_source_transport_percent(df, dx, z, func=np.sum, net=True):
 
 
 def source_transport_percent_of_full(exp, lon, depth=1500, func=np.sum,
-                                     net=True):
+                                     net=False):
     """EUC transport vs full transport of LLWBCs.
 
     Args:
@@ -150,12 +151,16 @@ def source_transport_percent_of_full(exp, lon, depth=1500, func=np.sum,
 
     # Particle transport when at LLWBC.
     ds = xr.open_dataset(get_plx_id(exp, lon, 1, None, 'sources'))
+    ds = ds.drop([v for v in ds.data_vars
+                  if v not in ['u', 'trajectory', 'time', 'ztime']])
     ds = ds.sel(zone=z_ids)
+    # ds = ds.where(~np.isnan(ds.trajectory), drop=True)
+    # ds = ds.dropna('traj', 'all')
 
     # Discard particles that reach source during spinup.
     min_time = np.datetime64(['1981-01-01', '2070-01-01'][exp])
-    if cfg.home.drive == 'C:':
-        min_time = np.datetime64(['2010-01-01', '2070-01-01'][exp])
+    # if cfg.home.drive == 'C:':
+    #     min_time = np.datetime64(['2000-01-01', '2070-01-01'][exp])
 
     traj = ds[tvar].where(ds[tvar] > min_time, drop=True).traj
     ds = ds.sel(traj=traj)
@@ -166,6 +171,7 @@ def source_transport_percent_of_full(exp, lon, depth=1500, func=np.sum,
     dx.coords['traj'] = times
     dx = dx.rename({'traj': 'time'})
     dx = dx.groupby('time').sum()  # EUC transport of source (daily sum).
+    dx = dx.where(dx != 0., np.nan)
 
     # Eulerian LLWBCs transport.
     df = llwbc_transport(exp)
@@ -185,18 +191,18 @@ def source_transport_percent_of_full(exp, lon, depth=1500, func=np.sum,
 
         print('{}: Yearly {}:'.format(z, func.__name__),
               (da[0] / da[1]).values * 100)
+    return da
 
 
-if __name__ == "__main__" and cfg.home.drive != 'C:':
-    p = ArgumentParser(description="""LLWBCS.""")
-    p.add_argument('-x', '--exp', default=0, type=int, help='Experiment.')
-    args = p.parse_args()
-    llwbc_transport(args.exp)
+# if __name__ == "__main__" and cfg.home.drive != 'C:':
+#     p = ArgumentParser(description="""LLWBCS.""")
+#     p.add_argument('-x', '--exp', default=0, type=int, help='Experiment.')
+#     args = p.parse_args()
+#     llwbc_transport(args.exp)
 
 
-# func = np.mean
-# net = False
-# exp, lon = 0, 220
-# depth = None
+func = np.mean
+exp, lon = 0, 220
+depth = 1500
 
-# source_transport_percent_of_full(exp, lon, depth, func, net)
+# da = source_transport_percent_of_full(exp, lon, depth, func)

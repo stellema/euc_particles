@@ -30,12 +30,14 @@ def update_title_time(title, t):
 
 def get_data_source_colors(ds, sum_interior=True):
     """Create array of colors for particles."""
-    ids = ds.zone.isel(obs=0).astype(dtype=int)
+    ids = ds.zone.isel(obs=0) if 'obs' in ds.zone.dims else ds.zone
+    ids = ids.astype(dtype=int)
 
-    if sum_interior and any(ids > 8):
+    if sum_interior:
         ids = xr.where(((ids >= 7) & (ids <= 11)), 7, ids)  # South Interior.
         ids = xr.where(ids >= 12, 8, ids)  # South Interior.
         colors = zones.colors[ids]
+        # colors = zones.colors[np.ix_(zones.colors, ids)]
 
     else:
         colors = zones.colors_all[ids]
@@ -98,7 +100,6 @@ def animate_ofam_euc():
     ax.set_title('OFAM3 zonal velocity')
 
     def animate(t):
-
         cs.set_array(v.isel(time=t).values.flatten())
         return cs
 
@@ -235,31 +236,52 @@ def ofam3_pacific_map():
     plt.show()
 
 
-def animate_ofam_pacific(var='u', depth=150):
+def animate_ofam_pacific(var='phy', depth=2.5):
     """Animate OFAM3 velocity at a constant depth."""
     var_name = 'zonal' if var == 'u' else 'meridional'  # For title.
     title_str = 'OFAM3 {} velocity at {}m on'.format(var_name, depth)  # Title.
     files = [ofam_filename(var, 2012, t + 1) for t in range(12)]
+
     ds = open_ofam_dataset(files)
 
     # Subset data.
     ds = ds[var]
-    ds = ds.sel(lev=depth, method='nearest')
+
+    if var in ['u', 'v', 'w']:
+        ds = ds.sel(lev=depth, method='nearest')
+        vmax, vmin = 0.9, -0.2
+        cmap = plt.cm.gnuplot2
+        cmap.set_bad('k')
+        kwargs = dict(cmap=cmap, vmax=vmax, vmin=vmin)
+    else:
+        ds = ds.isel(lev=slice(0, 6)).mean('lev')
+        vmax, vmin = 0.3, 0
+        norm=mpl.colors.PowerNorm(0.5)
+        cmap = mpl.colors.LinearSegmentedColormap.from_list('Random gradient 4178', (
+            # Edit this gradient at https://eltos.github.io/gradient/#Random%20gradient%204178=0:0A82A6-3.5:006D99-7.6:00588D-13.9:0A4183-25.9:1A277D-47.3:031977-68.1:041459-80.1:007E38-87.8:429F6B-94:51BF82-99.8:8ED186
+            (0.000, (0.039, 0.510, 0.651)),
+            (0.035, (0.000, 0.427, 0.600)),
+            (0.076, (0.000, 0.345, 0.553)),
+            (0.139, (0.039, 0.255, 0.514)),
+            (0.259, (0.102, 0.153, 0.490)),
+            (0.473, (0.012, 0.098, 0.467)),
+            (0.681, (0.016, 0.078, 0.349)),
+            (0.801, (0.000, 0.494, 0.220)),
+            (0.878, (0.259, 0.624, 0.420)),
+            (0.940, (0.318, 0.749, 0.510)),
+            (0.998, (0.557, 0.820, 0.525)),
+            (1.000, (0.557, 0.820, 0.525))))
+        cmap.set_bad('k')
+        kwargs = dict(cmap=cmap, norm=norm)
 
     v, y, x = ds, ds.lat, ds.lon
     times = ds.time
-
-    vmax, vmin = 0.9, -0.2
-
-    cmap = plt.cm.gnuplot2
-    cmap.set_bad('k')
 
     fig, ax, proj = create_map_axis(map_extent=[120, 288, -12, 12],
                                     add_ocean=False, land_color='dimgrey')
     t = 0
     title = ax.set_title(update_title_time(title_str, times[t]))
-    cs = ax.pcolormesh(x, y, v.isel(time=t), cmap=cmap, vmax=vmax, vmin=vmin,
-                       transform=proj)
+    cs = ax.pcolormesh(x, y, v.isel(time=t), transform=proj, **kwargs)
 
     divider = make_axes_locatable(ax)
 
@@ -302,25 +324,26 @@ def pacific_map():
     plt.show()
 
 
-def plot_particle_source_map(sum_interior=True, add_ocean=True,
-                             add_legend=True):
-    """EUC source boundary map for lon.
+def plot_particle_source_map(add_ocean=True, add_labels=True, savefig=True):
+    """Plot a map of particle source boundaries.
 
     Args:
-        lon (int or str): Release longitude {165, 160, 220, 250, 'all'}.
+        add_ocean (bool, optional): Ocean background colour. Defaults to True.
+        add_labels (bool, optional): Add source names. Defaults to True.
+        savefig (bool, optional): Save the figure. Defaults to True.
+
+    Returns:
+        fig, ax, proj
 
     """
-
     def get_source_coords():
-        """Latitude and longitude points defining source regions.
+        """Latitude and longitude points defining source region lines.
 
         Returns:
             lons (array): Longitude coord pairs (start/end).
             lats (array): Latitude coord pairs (start/end).
             z_index (array): Source IDs cooresponding to coord pairs.
 
-        Todo:
-            - Seperate interior lons.
         """
         lons = np.zeros((10, 2))
         lats = lons.copy()
@@ -336,37 +359,38 @@ def plot_particle_source_map(sum_interior=True, add_ocean=True,
         return lons, lats, z_index
 
     def add_source_labels(ax, z_index, labels, proj):
-        """Latitude and longitude points defining source regions."""
+        """Add source location names to map."""
+        # Source names to plot (skips 'None').
         text = [z.name_full for z in zones._all[1:]]
-        loc = np.array([[-7.8, 149], [-4.7, 153.8], [8.9, 127],  # VS, SS, MC.
-                        [4.1, 122], [-5.8, 124], [-7.9, 159],  # CS, IDN, SC.
-                        [-7.5, 187], [9, 187]])  # South & north interior.
 
-        # Multiple line source name (manual centre align).
+        # Split names into two lines & centre align (excluding interior).
         for i in range(6):
-            n = text[i].split()  # List of words.
+            n = text[i].split()  # Split name into list of words.
 
             if i in [5]:  # 1st line merge: East + Solomon.
                 n = [' '.join(n[:2]), n[-1]]
 
-            n = [a.center(max([len(a) for a in n]), ' ') for a in n]
-
+            # Centre align text.
+            n = [a.center(max([len(a) for a in n])) for a in n]
+            # Readjust alignment (add extra space at the start of second line).
             if i in [1, 2, 5]:
                 n[-1] = ' ' + n[-1]
             text[i] = '\n'.join(n)  # Add newline between words.
 
+        # Locations to plot text.
+        loc = np.array([[-7.8, 149], [-4.7, 153.8], [8.9, 127],  # VS, SS, MC.
+                        [4.1, 122], [-5.8, 124], [-7.9, 159],  # CS, IDN, SC.
+                        [-7.5, 187], [9, 187]])  # South & north interior.
+
         # Add labels to plot.
         for i, z in enumerate(np.unique(z_index)):
-            ax.text(loc[i][1], loc[i][0], text[i], zorder=10, transform=proj)
+            ax.text(loc[i][1], loc[i][0], text[i], zorder=10, transform=proj, fontsize=8)
 
         return ax
 
-    colors = cfg.zones.colors
-    labels = cfg.zones.names
-    lons, lats, z_index = get_source_coords()
-
-    figsize = (12, 5) if add_legend else (15, 6)
-    map_extent = [114, 288, -11, 11]
+    # Draw map.
+    figsize = (13, 5.8)
+    map_extent = [117, 285, -11, 11]
     yticks = np.arange(-10, 11, 5)
     xticks = np.arange(120, 290, 20)
 
@@ -375,25 +399,18 @@ def plot_particle_source_map(sum_interior=True, add_ocean=True,
                                     add_gridlines=False, add_ocean=add_ocean)
 
     # Plot lines between each lat & lon pair coloured by source.
+    lons, lats, z_index = get_source_coords()
     for i, z in enumerate(z_index):
-        ax.plot(lons[i], lats[i], colors[z], lw=4, label=labels[z],
+        ax.plot(lons[i], lats[i], zones.colors[z], lw=3, label=zones.names[z],
                 zorder=10, transform=proj)
 
-    ax = add_source_labels(ax, z_index, labels, proj)
-
+    if add_labels:
+        ax = add_source_labels(ax, z_index, zones.names, proj)
     plt.tight_layout()
 
-    # Source legend.
-    # zmap, cmappable = source_cmap()
-    # ticks, bounds = range(1, 11), np.arange(0.5, 9.6)
-
-    # if add_legend:
-    #     cbar = fig.colorbar(cmappable, ticks=ticks, boundaries=bounds,
-    #                         orientation='horizontal', pad=0.075)
-    #     cbar.ax.set_xticklabels(labels, fontsize=10)
-
     # Save.
-    plt.savefig(cfg.fig / 'particle_source_map.png', bbox_inches='tight')
+    if savefig:
+        plt.savefig(cfg.fig / 'particle_source_map.png', bbox_inches='tight', dpi=300)
     return fig, ax, proj
 
 
