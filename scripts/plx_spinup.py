@@ -25,13 +25,13 @@ except ImportError:
 logger = mlogger('plx', parcels=True)
 
 
-def spinup(lon=165, exp='hist', v=1, runtime_years=3, year_offset=0,
+def spinup(lon=165, exp='hist', v=1, runtime_years=5, year_offset=0,
            patch=False):
     """Spinup Lagrangian EUC particle experiment."""
     ts = datetime.now()
     xlog = {'file': 0, 'v': v}
 
-    test = True if cfg.home == 'C:' else False
+    test = True if cfg.home.drive == 'C:' else False
     rank = MPI.COMM_WORLD.Get_rank() if MPI else 0
     dt_mins = 60
     outputdt_days = 2
@@ -45,6 +45,7 @@ def spinup(lon=165, exp='hist', v=1, runtime_years=3, year_offset=0,
         y1 = cfg.years[i][1]
 
     time_bnds = [datetime(y1, 1, 1), datetime(y1, 12, 31)]
+    print(time_bnds)
     runtime = timedelta(days=365 * runtime_years)
     if test:
         runtime = timedelta(days=50)
@@ -127,11 +128,11 @@ def spinup(lon=165, exp='hist', v=1, runtime_years=3, year_offset=0,
     return
 
 
-if __name__ == "__main__" and cfg.home.drive != 'E:':
+if __name__ == "__main__" and cfg.home.drive != 'C:':
     p = ArgumentParser(description="""Run EUC Lagrangian spinup.""")
     p.add_argument('-x', '--lon', default=165, type=int, help='Start lon.')
     p.add_argument('-e', '--exp', default='hist', type=str, help='Scenario.')
-    p.add_argument('-r', '--run', default=3, type=int, help='Spinup years.')
+    p.add_argument('-r', '--run', default=5, type=int, help='Spinup years.')
     p.add_argument('-v', '--version', default=1, type=int, help='Version.')
     p.add_argument('-y', '--year', default=0, type=int, help='# offset years.')
     p.add_argument('-p', '--patch', default=0, type=int, help='Patch True/False.')
@@ -141,9 +142,9 @@ if __name__ == "__main__" and cfg.home.drive != 'E:':
 
 elif __name__ == "__main__":
     lon = 165
-    v = 71
+    v = 1
     exp = 'hist'
     runtime_years = 1
-    spinup_year_offset = 0
+    spinup_year_offset = 9
     patch = False
     spinup(lon=lon, exp=exp, v=v, runtime_years=runtime_years, patch=patch)
