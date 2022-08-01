@@ -27,7 +27,7 @@ logger = mlogger('files')
 
 
 @timeit
-def align(ds, length_new=100):
+def align(ds, length_new=1000):
     """Align 2D trajectories."""
     def interp_obs(dx, length_new):
         x = np.arange(dx.obs.size)
@@ -86,7 +86,6 @@ def interp_plx_files(lon, exp, v=1):
         ds = xr.open_dataset(xids[r])
         ds = ds.drop_vars([v for v in ds.data_vars
                            if v not in ['lat', 'lon', 'z', 'time']])
-        ds = ds.isel(traj=slice(10))
         ds = align(ds, length_new=1000)
 
         # Save dataset with compression.
