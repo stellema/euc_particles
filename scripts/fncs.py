@@ -9,8 +9,10 @@
 import numpy as np
 import xarray as xr
 
+
 import cfg
 from cfg import zones
+from tools import timeit
 
 
 def get_plx_id(exp, lon, v, r=None, folder=None):
@@ -400,8 +402,8 @@ def source_dataset(lon, sum_interior=True, east_solomon=True):
     ds['age'].attrs['units'] = 'days'
 
     # Convert distance: m to x100 km.
-    ds['distance'] *= 1 / (1e3 * 100)
-    ds['distance'].attrs['units'] = '100 km'
+    ds['distance'] *= 1e-6
+    ds['distance'].attrs['units'] = '1e6 m'
 
     ds['names'] = ('zone', cfg.zones.names_all)
     ds['colors'] = ('zone', cfg.zones.colors_all)
