@@ -32,7 +32,7 @@ logger = mlogger('files')
 
 
 @timeit
-def align(ds, length_new=1000):
+def align(ds, length_new=500):
     """Align 2D trajectories."""
     def interp_obs(dx, x, x_new):
         dx_new = interp.interp1d(x, dx, kind='cubic')(x_new)
@@ -86,7 +86,7 @@ def interp_plx_files(lon, exp, v=1, rep=0):
     ds = xr.open_dataset(xids[r])
     ds = ds.drop_vars([v for v in ds.data_vars
                        if v not in ['lat', 'lon', 'z', 'time']])
-    ds = align(ds, length_new=1000)
+    ds = align(ds, length_new=500)
 
     # Save dataset with compression.
     msg = ': ./create_plx_interp.py'  # For saved file history.
