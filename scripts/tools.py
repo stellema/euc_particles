@@ -658,3 +658,18 @@ def convert_to_transport(ds, lat=None, var='v', sum_dims=['lon', 'lev']):
             ds[var] = ds[var].sum(sum_dims)
 
     return ds
+
+
+def get_ofam_bathymetry():
+    """Get OFAM3 bathymetry."""
+    ds = open_ofam_dataset(ofam_filename('v', 2012, 1))
+    ds = ds.isel(time=0)
+
+    # Subset for test.
+    # ds = ds.isel(lev=slice(0, 4), lat=slice(2)).sel(lon=slice(135.8, 136.0))
+    # ds = ds.sel(lat=-6, lon=slice(122, 124))
+
+    # NaN for water; 1 for land
+    ds['z'] = xr.where(~np.isnan(ds.v), np.nan, 1)
+    ds['z'] = ds.z.idxmax('lev', skipna=True, fill_value=ds.lev.max())
+    return ds.z
