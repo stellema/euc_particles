@@ -34,21 +34,21 @@ logger = mlogger('files')
 @timeit
 def align(ds, length_new=1000):
     """Align 2D trajectories."""
-    def interp_obs(dx, length_new):
-        x = np.arange(dx.obs.size)
-        x_new = np.linspace(0, dx.obs.size - 1, num=length_new, endpoint=True)
-        d = dx.values
-        dx_new = interp.interp1d(x, d, kind='cubic')(x_new)
+    def interp_obs(dx, x, x_new):
+        dx_new = interp.interp1d(x, dx, kind='cubic')(x_new)
         return dx_new
 
     ds_new = ds.isel(obs=slice(length_new)).copy()
-    size = ds.time.idxmin('obs').values.astype(dtype=int)
+    size = ds.time.idxmin('obs').astype(dtype=int).values
 
     for i in range(ds.traj.size):
         dx = ds.isel(traj=i, obs=slice(size[i]))
-        ds_new['lat'][dict(traj=i)] = interp_obs(dx.lat, length_new)
-        ds_new['lon'][dict(traj=i)] = interp_obs(dx.lon, length_new)
-        ds_new['z'][dict(traj=i)] = interp_obs(dx.z, length_new)
+        x = np.arange(dx.obs.size)
+        x_new = np.linspace(0, dx.obs.size - 1, num=length_new, endpoint=True)
+        ds_new['lat'][dict(traj=i)] = interp_obs(dx.lat, x, x_new)
+        ds_new['lon'][dict(traj=i)] = interp_obs(dx.lon, x, x_new)
+        ds_new['z'][dict(traj=i)] = interp_obs(dx.z, x, x_new)
+        dx.close()
 
     return ds_new
 
