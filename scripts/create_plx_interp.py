@@ -23,6 +23,11 @@ import cfg
 from tools import mlogger, timeit, save_dataset
 from fncs import get_plx_id
 
+try:
+    from mpi4py import MPI
+except ImportError:
+    MPI = None
+
 logger = mlogger('files')
 
 
@@ -49,7 +54,7 @@ def align(ds, length_new=1000):
 
 
 @timeit
-def interp_plx_files(lon, exp, v=1):
+def interp_plx_files(lon, exp, v=1, rep=0):
     """Create individual & combined particle source information datasets.
 
     The source region 'None' indicates (0) a particle never reached a source.
@@ -77,33 +82,32 @@ def interp_plx_files(lon, exp, v=1):
     xids = [get_plx_id(exp, lon, v, r, 'plx') for r in reps]
     xids_new = [get_plx_id(exp, lon, v, r, 'plx_interp') for r in reps]
 
-    # Filename of merged interp files (drops the r##).
-    xid_merged = get_plx_id(exp, lon, v, None, 'plx_interp')
+    r = rep
+    ds = xr.open_dataset(xids[r])
+    ds = ds.drop_vars([v for v in ds.data_vars
+                       if v not in ['lat', 'lon', 'z', 'time']])
+    ds = align(ds, length_new=1000)
 
+    # Save dataset with compression.
     msg = ': ./create_plx_interp.py'  # For saved file history.
+    save_dataset(ds, xids_new[r], msg)
+    logger.info('Saved interpolated {}!'.format(xids_new[r].stem))
+    ds.close()
 
-    for r in reps:
-        ds = xr.open_dataset(xids[r])
-        ds = ds.drop_vars([v for v in ds.data_vars
-                           if v not in ['lat', 'lon', 'z', 'time']])
-        ds = align(ds, length_new=1000)
+    # # Merged interp.
+    # # Filename of merged interp files (drops the r##).
+    # xid_merged = get_plx_id(exp, lon, v, None, 'plx_interp')
+    # ds = xr.open_mfdataset(xids_new, combine='nested', chunks='auto',
+    #                         coords='minimal')
 
-        # Save dataset with compression.
-        save_dataset(ds, xids_new[r], msg)
-        logger.info('Saved interpolated {}!'.format(xids_new[r].stem))
-        ds.close()
-
-    # Merged interp.
-    ds = xr.open_mfdataset(xids_new, combine='nested', chunks='auto',
-                           coords='minimal')
-
-    save_dataset(ds, xid_merged, msg)
-    logger.info('Saved merged interp {}!'.format(xid_merged.stem))
+    # save_dataset(ds, xid_merged, msg)
+    # logger.info('Saved merged interp {}!'.format(xid_merged.stem))
 
 
 if __name__ == "__main__" and cfg.home.drive != 'C:':
     p = ArgumentParser(description="""Get plx sources and transit times.""")
     p.add_argument('-x', '--lon', default=165, type=int, help='Start lon.')
     p.add_argument('-e', '--exp', default=0, type=int, help='Scenario {0, 1}.')
+    p.add_argument('-r', '--rep', default=0, type=int, help='Run 0-9.')
     args = p.parse_args()
-    interp_plx_files(args.lon, args.exp, v=1)
+    interp_plx_files(args.lon, args.exp, v=1, rep=args.rep)
