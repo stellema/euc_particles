@@ -231,6 +231,22 @@ def remap_particle_IDs(traj, traj_dict):
     return traj_remap
 
 
+def subset_plx_by_source(ds, exp, lon, r, z):
+    """Subset dataset by source."""
+    reps = [r] if type(r) == int else r
+    zdict = []
+
+    for r in reps:
+        file = (cfg.data / 'sources/id/source_particle_id_{}_{}_r{:02d}.npy'
+                .format(cfg.exp[exp], lon, r))
+
+        # Saved map of source -> particle IDs.
+        zdict.append(np.load(file, allow_pickle=True).item()[z])
+
+    ds = ds.isel(traj=np.concatenate(zdict))
+    return ds
+
+
 def get_new_particle_IDs(ds):
     """Open dataset and return with only initial particle IDs."""
     ds = ds.isel(obs=0, drop=True)
@@ -415,3 +431,5 @@ def source_dataset(lon, sum_interior=True, east_solomon=True):
         ds = ds.isel(zone=inds)
 
     return ds
+
+
