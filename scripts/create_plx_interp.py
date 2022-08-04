@@ -6,8 +6,11 @@ Example:
 
 Notes:
     - Cubic interpolation to pre-defined timestep length.
+    - Bug in plx_hist_*_v1r07.nc files
 
 Todo:
+    - merge interp files
+    - save median & IQR
 
 @author: Annette Stellema
 @email: a.stellema@unsw.edu.au
@@ -40,6 +43,9 @@ def align(ds, length_new=500):
 
     ds_new = ds.isel(obs=slice(length_new)).copy()
     size = ds.time.idxmin('obs').astype(dtype=int).values
+
+    traj = size.traj.where(size > 1, drop=True)
+    ds = ds.sel(traj=traj)
 
     for i in range(ds.traj.size):
         dx = ds.isel(traj=i, obs=slice(size[i]))
@@ -75,6 +81,7 @@ def interp_plx_files(lon, exp, v=1, rep=0):
         - Didn't run this for individual files, just the merged source file.
 
     """
+
     # Create/check individual particle source datasets.
     reps = np.arange(10, dtype=int)
 
@@ -83,25 +90,28 @@ def interp_plx_files(lon, exp, v=1, rep=0):
     xids_new = [get_plx_id(exp, lon, v, r, 'plx_interp') for r in reps]
 
     r = rep
+    logger.debug('Calculating: {}'.format(xids_new[r].stem))
     ds = xr.open_dataset(xids[r])
     ds = ds.drop_vars([v for v in ds.data_vars
                        if v not in ['lat', 'lon', 'z', 'time']])
+
     ds = align(ds, length_new=500)
 
     # Save dataset with compression.
     msg = ': ./create_plx_interp.py'  # For saved file history.
     save_dataset(ds, xids_new[r], msg)
-    logger.info('Saved interpolated {}!'.format(xids_new[r].stem))
+    logger.debug('Saved interpolated {}!'.format(xids_new[r].stem))
     ds.close()
 
-    # # Merged interp.
-    # # Filename of merged interp files (drops the r##).
-    # xid_merged = get_plx_id(exp, lon, v, None, 'plx_interp')
-    # ds = xr.open_mfdataset(xids_new, combine='nested', chunks='auto',
-    #                         coords='minimal')
+    # Merged interp.
+    # Filename of merged interp files (drops the r##).
+    if all([xid.exists() for xid in xids_new]):
+        xid_merged = get_plx_id(exp, lon, v, None, 'plx_interp')
+        ds = xr.open_mfdataset(xids_new, combine='nested', chunks='auto',
+                                coords='minimal')
 
-    # save_dataset(ds, xid_merged, msg)
-    # logger.info('Saved merged interp {}!'.format(xid_merged.stem))
+        save_dataset(ds, xid_merged, msg)
+        logger.debug('Saved merged interp {}!'.format(xid_merged.stem))
 
 
 if __name__ == "__main__" and cfg.home.drive != 'C:':
