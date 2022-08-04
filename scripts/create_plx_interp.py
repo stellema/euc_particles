@@ -24,7 +24,7 @@ from argparse import ArgumentParser
 
 import cfg
 from tools import mlogger, timeit, save_dataset
-from fncs import get_plx_id
+from fncs import get_plx_id, subset_plx_by_source
 
 try:
     from mpi4py import MPI
@@ -42,10 +42,12 @@ def align(ds, length_new=500):
         return dx_new
 
     ds_new = ds.isel(obs=slice(length_new)).copy()
-    size = ds.time.idxmin('obs').astype(dtype=int).values
 
+    size = ds.time.idxmin('obs')
     traj = size.traj.where(size > 1, drop=True)
     ds = ds.sel(traj=traj)
+
+    size = ds.time.idxmin('obs').astype(dtype=int).values
 
     for i in range(ds.traj.size):
         dx = ds.isel(traj=i, obs=slice(size[i]))
@@ -103,15 +105,61 @@ def interp_plx_files(lon, exp, v=1, rep=0):
     logger.debug('Saved interpolated {}!'.format(xids_new[r].stem))
     ds.close()
 
-    # Merged interp.
-    # Filename of merged interp files (drops the r##).
-    if all([xid.exists() for xid in xids_new]):
-        xid_merged = get_plx_id(exp, lon, v, None, 'plx_interp')
-        ds = xr.open_mfdataset(xids_new, combine='nested', chunks='auto',
-                                coords='minimal')
+    # # Merged interp.
+    # # Filename of merged interp files (drops the r##).
+    # if all([xid.exists() for xid in xids_new]):
+    #     xid_merged = get_plx_id(exp, lon, v, None, 'plx_interp')
+    #     ds = xr.open_mfdataset(xids_new, combine='nested', chunks='auto',
+    #                             coords='minimal')
 
-        save_dataset(ds, xid_merged, msg)
-        logger.debug('Saved merged interp {}!'.format(xid_merged.stem))
+    #     save_dataset(ds, xid_merged, msg)
+    #     logger.debug('Saved merged interp {}!'.format(xid_merged.stem))
+
+
+def plx_interp_median(exp, lon, r=list(range(10))):
+    """Get source median & iqr of time normalised trajectories."""
+    quantiles = [0.25, 0.5, 0.75]
+    # Open data.
+    files = [get_plx_id(exp, lon, 1, i, 'plx_interp') for i in range(10)]
+    if type(r) == int:
+        ds = xr.open_dataset(files[r])
+    else:
+        ds = xr.open_mfdataset(*[files[i] for i in r], combine='nested',
+                               coords='minimal')
+
+    df = []  # List of each source.
+
+    for z in [0, 1, 2, 3, 4, 5, 6]:
+        dz = subset_plx_by_source(ds, exp, lon, r, z)
+        dz = dz.drop('time')
+        for q in quantiles:
+            dzm = dz.quantile(q, 'traj')
+            df.append(dzm.expand_dims({'zone': [z], 'q': [q]}))
+
+    # Same as before, but for merged interior.
+    for z in [7, 12]:
+        # Merge seperate interior lons.
+        df_interior_lons = []
+        for i in range(z, z + 5):
+            dz = subset_plx_by_source(ds, exp, lon, r, z)
+            dz = dz.drop('time')
+            df_interior_lons.append(dz)
+        dz = xr.concat(df_interior_lons, 'traj')
+
+        for q in quantiles:
+            dzm = dz.quantile(q, 'traj')
+            df.append(dzm.expand_dims({'zone': [z], 'q': [q]}))
+
+    # Concat quantiles for each source.
+    dff = [xr.concat(df[i*3:i*3+3], 'q') for i in range(9)]
+    # Concat sources.
+    dx = xr.concat(dff, 'zone')
+
+    # Save dataset.
+    file_new = get_plx_id(exp, lon, 1, None, 'plx_interp')
+    file_new = file_new.parent / '{}_stats.nc'.format(file_new.stem)
+    save_dataset(dx, file_new, 'plx interp median')
+    return dx
 
 
 if __name__ == "__main__" and cfg.home.drive != 'C:':
@@ -120,4 +168,10 @@ if __name__ == "__main__" and cfg.home.drive != 'C:':
     p.add_argument('-e', '--exp', default=0, type=int, help='Scenario {0, 1}.')
     p.add_argument('-r', '--rep', default=0, type=int, help='Run 0-9.')
     args = p.parse_args()
+    exp, lon = args.exp, args.lon
+
     interp_plx_files(args.lon, args.exp, v=1, rep=args.rep)
+
+    files = [get_plx_id(exp, lon, 1, r, 'plx_interp') for r in range(10)]
+    if all([f.exists() for f in files]):
+        plx_interp_median(exp, lon, r=list(range(10)))
