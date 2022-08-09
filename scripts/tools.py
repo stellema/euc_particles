@@ -13,7 +13,6 @@ import calendar
 import numpy as np
 import xarray as xr
 import pandas as pd
-from scipy import stats
 from pathlib import Path
 from functools import wraps
 from datetime import datetime
@@ -369,66 +368,7 @@ def coord_formatter(array, convert='lat'):
     return new
 
 
-def precision(var):
-    """Determine the precision to print based on the number of digits.
 
-    Values greater than ten: the precision will be zero decimal places.
-    Values less than ten but greater than one: print one decimal place.
-    Values less than one: print two decimal places.
-
-
-    Args:
-        var (DataArray): Transport dataset
-
-    Returns:
-        p (list): The number of decimal places to print
-    """
-    # List for the number of digits (n) and decimal place (p).
-    n, p = 1, 1
-
-    tmp = abs(var.item())
-    n = int(math.log10(tmp)) + 1
-    if n == 1:
-
-        p = 1 if tmp >= 1 else 2
-    elif n == 0:
-        p = 2
-    elif n == -1:
-        p = 3
-    return p
-
-
-def format_pvalue_str(p):
-    """Format significance p-value string to correct decimal places.
-
-    p values greater than 0.01 rounded to two decimal places.
-    p values between 0.01 and 0.001 rounded to three decimal places.
-    p values less than 0.001 are just given as 'p>0.001'
-    Note that 'p=' will also be included in the string.
-    """
-    if p <= 0.001:
-        sig_str = 'p<0.001'
-    elif p <= 0.01 and p >= 0.001:
-
-        sig_str = 'p=' + str(np.around(p, 3))
-    else:
-        if p < 0.05:
-            sig_str = 'p<' + str(np.around(p, 2))
-        else:
-            sig_str = 'p=' + str(np.around(p, 2))
-
-    return sig_str
-
-
-def test_signifiance(x, y):
-    def resample(ds):
-        return ds.resample(rtime="Y").mean("rtime", keep_attrs=True)
-    times = [slice('2012'), slice('2070', '2101')]
-    x, y = x.sel(rtime=times[0]), y.sel(rtime=times[1])
-    x, y = resample(x), resample(y)
-    t, p = stats.wilcoxon(x, y)
-    p = format_pvalue_str(p)
-    return p
 
 
 def create_mesh_grid():
