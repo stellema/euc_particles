@@ -18,7 +18,8 @@ from mpl_toolkits.axes_grid1 import make_axes_locatable
 import cfg
 from cfg import zones
 from tools import (coord_formatter, convert_longitudes, get_unique_file,
-                   ofam_filename, open_ofam_dataset)
+                   ofam_filename, open_ofam_dataset, get_ofam_bathymetry)
+from stats import weighted_bins_fd
 
 
 def update_title_time(title, t):
@@ -122,7 +123,7 @@ def animate_ofam_euc():
 def create_map_axis(figsize=(12, 5), map_extent=None, add_ticks=True,
                     xticks=None, yticks=None, add_ocean=False,
                     land_color='lightgray', ocean_color='lightcyan',
-                    add_gridlines=False):
+                    add_gridlines=False, add_bathymetry=False):
     """Create a figure and axis with cartopy.
 
     Args:
@@ -150,12 +151,36 @@ def create_map_axis(figsize=(12, 5), map_extent=None, add_ticks=True,
 
     # Set map extents: (lon_min, lon_max, lat_min, lat_max)
     if map_extent is None:
-        map_extent = [112, 288, -9, 9]
+        map_extent = [112, 288, -10, 10]
     ax.set_extent(map_extent, crs=proj)
 
     ax.add_feature(cfeature.LAND, color=land_color, zorder=zorder)
     ax.add_feature(cfeature.COASTLINE, zorder=zorder)
     ax.outline_patch.set_zorder(zorder + 1)  # Make edge frame on top.
+
+    if add_bathymetry:
+        add_ocean = False
+        dz = get_ofam_bathymetry()
+        dz = dz.sel(lon=slice(*map_extent[:2]), lat=slice(*map_extent[2:]))
+        levs = np.arange(0, 4600, 250, dtype=int)
+        levs[0] = 2.5
+        levs[-1] += 10
+        bath = ax.contourf(dz.lon, dz.lat, dz, levels=levs, cmap=plt.cm.Blues,
+                            norm=mpl.colors.LogNorm(vmin=dz.min(), vmax=dz.max()),
+                            transform=proj, zorder=zorder - 1)
+        # Colourbar
+        divider = make_axes_locatable(ax)
+        cax = divider.append_axes('bottom', size='6%', pad=0.4, axes_class=plt.Axes)
+
+        zticks = levs[4:-1][::4]
+        zticklabels = np.array(['{}m'.format(z) for z in zticks])
+        cbar = fig.colorbar(bath, cax=cax, orientation='horizontal',
+                            ticks=zticks)
+        cbar.set_ticklabels(zticklabels)
+        cbar.ax.tick_params(labelsize=8)
+        cbar.ax.invert_yaxis()
+
+        ax.set_aspect('auto')
 
     if add_ocean:
         # !! original alpha=0.9 color='lightblue'
@@ -324,7 +349,8 @@ def pacific_map():
     plt.show()
 
 
-def plot_particle_source_map(add_ocean=True, add_labels=True, savefig=True):
+def plot_particle_source_map(add_ocean=True, add_labels=True, savefig=True,
+                             add_bathymetry=False):
     """Plot a map of particle source boundaries.
 
     Args:
@@ -364,28 +390,23 @@ def plot_particle_source_map(add_ocean=True, add_labels=True, savefig=True):
         text = [z.name_full for z in zones._all[1:]]
 
         # Split names into two lines & centre align (excluding interior).
-        for i in range(6):
-            n = text[i].split()  # Split name into list of words.
-
-            if i in [5]:  # 1st line merge: East + Solomon.
-                n = [' '.join(n[:2]), n[-1]]
-
-            # Centre align text.
-            n = [a.center(max([len(a) for a in n])) for a in n]
-            # Readjust alignment (add extra space at the start of second line).
-            if i in [1, 2, 5]:
-                n[-1] = ' ' + n[-1]
-            text[i] = '\n'.join(n)  # Add newline between words.
+        text[2] = 'Mindanao\n  Current'
+        text[3] = 'Celebes\n  Sea'
+        text[4] = 'Indonesian\n    Seas'
+        text[5] = 'East Solomon Is.'
 
         # Locations to plot text.
-        loc = np.array([[-7.8, 149], [-4.7, 153.8], [8.9, 127],  # VS, SS, MC.
-                        [4.1, 122], [-5.8, 124], [-7.9, 159],  # CS, IDN, SC.
-                        [-7.5, 187], [9, 187]])  # South & north interior.
+        loc = np.array([[-6.3, 147.8], [-5.5, 151.5], [9.9, 127],  # VS, SS, MC.
+                        [5.5, 121.5], [-4.7, 124], [-6.2, 159],  # CS, IDN, SC.
+                        [-7, 192], [9.2, 192]])  # South & north interior.
 
         # Add labels to plot.
         for i, z in enumerate(np.unique(z_index)):
-            ax.text(loc[i][1], loc[i][0], text[i], zorder=10, transform=proj, fontsize=8)
-
+            rotate = 'horizontal'
+            rotate = -70 if i in [0, 1, 5] else rotate
+            ax.text(loc[i][1], loc[i][0], text[i], zorder=12, transform=proj,
+                    fontsize=9, rotation=rotate, weight='bold', ha='left', va='top')
+            # bbox=dict(fc='w', edgecolor='k', boxstyle='round', alpha=0.7)
         return ax
 
     # Draw map.
@@ -396,7 +417,8 @@ def plot_particle_source_map(add_ocean=True, add_labels=True, savefig=True):
 
     fig, ax, proj = create_map_axis(figsize, map_extent=map_extent,
                                     xticks=xticks, yticks=yticks,
-                                    add_gridlines=False, add_ocean=add_ocean)
+                                    add_gridlines=False, add_ocean=add_ocean,
+                                    add_bathymetry=add_bathymetry)
 
     # Plot lines between each lat & lon pair coloured by source.
     lons, lats, z_index = get_source_coords()
@@ -410,40 +432,10 @@ def plot_particle_source_map(add_ocean=True, add_labels=True, savefig=True):
 
     # Save.
     if savefig:
-        plt.savefig(cfg.fig / 'particle_source_map.png', bbox_inches='tight', dpi=300)
+        plt.savefig(cfg.fig / 'particle_source_map.png', bbox_inches='tight',
+                    dpi=300)
+
     return fig, ax, proj
-
-
-def weighted_bins_fd(ds, weights):
-    """Weighted Freedman Diaconis Estimator bin width (number of bins).
-
-    Bin width:
-        h = 2 * IQR(values) / cubroot(values.size)
-
-    Number of bins:
-        nbins = (max(values) - min(values)) / h
-
-    """
-    # Sort data and weights.
-    ind = np.argsort(ds).values
-    d = ds[ind]
-    w = weights[ind]
-
-    # Interquartile range.
-    pct = 1. * w.cumsum() / w.sum() * 100  # Convert to percentiles?
-    iqr = np.interp([25, 75], pct, d)
-    iqr = np.diff(iqr)
-
-    # Freedman Diaconis Estimator (h=bin width).
-    h = 2 * iqr / np.cbrt(ds.size)
-    h = h[0]
-
-    # Input data max/min.
-    data_range = [ds.min().item(),  ds.max().item()]
-
-    # Numpy conversion from bin width to number of bins.
-    nbins = int(np.ceil(np.diff(data_range) / h)[0])
-    return h, nbins, data_range
 
 
 def plot_histogram(ax, dx, var, color, cutoff=0.85, weighted=True):
@@ -464,9 +456,9 @@ def plot_histogram(ax, dx, var, color, cutoff=0.85, weighted=True):
         ax (plt.AxesSubplot): Axes Subplot.
 
     """
-    kwargs = dict(histtype='step', density=False, range=None, stacked=False,
-                  alpha=0.6, cumulative=False, color=color, fill=0,
-                  hatch=None)
+    kwargs = dict(histtype='stepfilled', density=0, range=None, stacked=False,
+                  alpha=0.8, cumulative=False, color=color, #fill=0,
+                  hatch=None, edgecolor=color, lw=0.8)
 
     dx = [dx.isel(exp=i).dropna('traj', 'all') for i in [0, 1]]
     bins = 'fd'
@@ -474,8 +466,8 @@ def plot_histogram(ax, dx, var, color, cutoff=0.85, weighted=True):
 
     if weighted:
         # weights = [dx[i].u / dx[i].u.sum().item() for i in [0, 1]]
-        # weights = [dx[i].u for i in [0, 1]]
-        weights = [dx[i].u / dx[i].uz.mean().item() for i in [0, 1]]
+        weights = [dx[i].u for i in [0, 1]]
+        # weights = [dx[i].u / dx[i].uz.mean().item() for i in [0, 1]]
 
         # Find number of bins based on combined hist/proj data range.
         h0, _, r0 = weighted_bins_fd(dx[0][var], weights[0])
@@ -492,9 +484,13 @@ def plot_histogram(ax, dx, var, color, cutoff=0.85, weighted=True):
     x, _bins, _ = ax.hist(dx[0][var], bins, weights=weights[0], **kwargs)
 
     # RCP8.5.
-    # kwargs.update(dict(color='k', fill=False, hatch='///'))
-    kwargs.update(dict(color='k'))
     bins = bins if weighted else _bins
+    # kwargs.update(dict(color='k', fill=False, hatch='///'))
+    kwargs.update(dict(color='k', alpha=0.3, edgecolor='k'))
+    _, bins, _ = ax.hist(dx[1][var], bins, weights=weights[1], **kwargs)
+
+    kwargs.update(dict(histtype='step', color='k', alpha=1))
+    _, bins, _ = ax.hist(dx[0][var], bins, weights=weights[0], **kwargs)
     _, bins, _ = ax.hist(dx[1][var], bins, weights=weights[1], **kwargs)
 
     # Cut off last 5% of xaxis (index where <95% of total counts).

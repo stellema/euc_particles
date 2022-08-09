@@ -29,6 +29,7 @@ plt.rc('animation', html='html5')
 logger = logging.getLogger('my-logger')
 logger.propagate = False
 
+
 def init_particle_data(ds, ntraj=4, ndays=1200, method='thin',
                        start='2012-12-31T12', zone=None):
     """Get particle trajectory data for plotting."""
@@ -85,9 +86,31 @@ def update_lines_2D(t, lines, lons, lats, times, plottimes, title, dt):
     # Iterate through each particle & plot.
     for p in P:
         # Plot line segment (current & last few positions).
+        # Delayed particle release.
         lines[p].set_data(lons[p][inds[p]], lats[p][inds[p]])
+
     return lines
 
+def update_lines_no_delay(t, lines, lons, lats, times, plottimes, title, dt):
+    """Update trajectory line segments (current & last few positions).
+
+    Simulaneous particle release:
+        lines[p].set_data(lons[p, t-dt:t], lats[p, t-dt:t])
+    """
+    title.set_text(update_title_time('', plottimes[t]))
+
+    # Find particle indexes at t & last few t (older=greater time).
+    inds = (times >= plottimes[t]) & (times < plottimes[t - dt])
+
+    # Indexes of particles/line to plot.
+    P = np.arange(lats.shape[0], dtype=int)[np.any(inds, axis=1)]
+
+    # Iterate through each particle & plot.
+    for p in P:
+        # Plot line segment (current & last few positions).
+        # Simulaneous particle release.
+        lines[p].set_data(lons[p, t-dt:t], lats[p, t-dt:t])
+    return lines
 
 def animate_particle_scatter(file, lats, lons, times, plottimes, colors,
                              delay=True):
@@ -182,16 +205,21 @@ def animate_particle_lines(file, ds, plottimes, dt=4, delay=True, forward=False)
     kwargs = dict(lw=0.4, alpha=0.4, transform=proj)
 
     # Plot first frame.
-    t = 0#frames[0]
-    lines = [ax.plot(lons[p, t], lats[p, t], c=colors[p], **kwargs)[0]
-             for p in N]
-
+    t = 0
+    if delay:
+        func = update_lines_2D
+        lines = [ax.plot(lons[p, t], lats[p, t], c=colors[p], **kwargs)[0]
+                 for p in N]
+    else:
+        func = update_lines_no_delay
+        lines = [ax.plot(lons[p, :dt], lats[p, :dt], c=colors[p], **kwargs)[0]
+                 for p in N]
     title = plt.title(update_title_time('', plottimes[t]), fontsize=16)
     plt.tight_layout()
 
     # Animate.
     fargs = (lines, lons, lats, times, plottimes, title, dt)
-    anim = animation.FuncAnimation(fig, update_lines_2D, frames=frames,
+    anim = animation.FuncAnimation(fig, func, frames=frames,
                                    blit=True, fargs=fargs, interval=800,
                                    repeat=False)
 
@@ -202,7 +230,7 @@ def animate_particle_lines(file, ds, plottimes, dt=4, delay=True, forward=False)
     return
 
 
-rlon = 220
+rlon = 165
 exp, v, r = 0, 1, 0
 file = [get_plx_id(exp, rlon, v, r, 'plx') for r in range(2)]
 ds = xr.open_mfdataset(file)
@@ -213,7 +241,7 @@ ds.attrs['lon'] = rlon
 # animate_particle_scatter(file, lats, lons, times, plottimes)
 
 ds, plottimes = init_particle_data(ds, ntraj=3, ndays=2500, zone=None)
-animate_particle_lines(file[0], ds, plottimes, forward=False)
+animate_particle_lines(file[0], ds, plottimes, forward=False, delay=False)
 
 # ds, plottimes = init_particle_data(ds, ntraj=None, ndays=1200, zone=[2])
 # animate_particle_lines(file[0], ds, plottimes, forward=False)
