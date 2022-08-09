@@ -384,7 +384,7 @@ def merge_LLWBC_interior_sources(ds):
     return ds
 
 
-def source_dataset(lon, sum_interior=True, east_solomon=True):
+def source_dataset(lon, sum_interior=True):
     """Get source datasets.
 
     Args:
@@ -414,12 +414,15 @@ def source_dataset(lon, sum_interior=True, east_solomon=True):
     ds['speed'].attrs['units'] = 'm/s'
 
     # Convert age: seconds to days.
+    ds['age'].attrs['name'] = 'Transit Time'
     ds['age'] *= 1 / (60 * 60 * 24)
     ds['age'].attrs['units'] = 'days'
 
     # Convert distance: m to x100 km.
     ds['distance'] *= 1e-6
     ds['distance'].attrs['units'] = '1e6 m'
+    ds['z'].attrs['name'] = 'EUC Depth'
+    ds['z'].attrs['units'] = 'm'
 
     ds['names'] = ('zone', cfg.zones.names_all)
     ds['colors'] = ('zone', cfg.zones.colors_all)
@@ -431,5 +434,3 @@ def source_dataset(lon, sum_interior=True, east_solomon=True):
         ds = ds.isel(zone=inds)
 
     return ds
-
-
