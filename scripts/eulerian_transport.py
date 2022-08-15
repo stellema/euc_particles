@@ -4,6 +4,11 @@
 Example:
 
 Notes:
+    - Improved LLWBC_euc / LLWBC_total % using 6 day sum and then yearly mean
+    - e.g., Total euc transport @165E: Solomon 6.4 Sv, Vitiaz 4.1 Sv, MC 2.4 Sv
+    - e.g., (0-1500m) ss 40%, vs 54% & mc 8%
+    - The SS & MC % of total seems low
+        - This is because the total transport is high (i.e., 17 Sv vs 9 Sv observed)
 
 Todo:
 
@@ -97,12 +102,12 @@ def llwbc_transport(exp=0, clim=False, sum_dims=['lon']):
     return df
 
 
-def get_source_transport_percent(df, dx, z, func=np.sum, net=False):
+def get_source_transport_percent(ds_full, ds_plx, z, func=np.sum, net=False):
     """Calculate full LLWBC transport & transport that reaches the EUC.
 
     Args:
-        df (xarray.Dataset): Full Eulerian transport at source (daily mean).
-        dx (xarray.Dataset): EUC transport of source (daily sum).
+        ds_full (xarray.Dataset): Full Eulerian transport at source (daily mean).
+        dx_plx (xarray.Dataset): EUC transport of source (daily sum).
         z (int): Source ID {1, 2, 3, 6}.
         func (function, optional): Method to group by time. Defaults to np.sum.
         net (bool, optional): Sum net eulerian transport. Defaults to True.
@@ -119,15 +124,16 @@ def get_source_transport_percent(df, dx, z, func=np.sum, net=False):
         var = var + '_net'
 
     # Particle transport sum for each day at source.
+    dx_plx = ds_plx.sel(zone=z).dropna('time')
 
-    dz = dx.sel(zone=z).dropna('time')
-
-    dv = df[var]
-    dv = np.fabs(dv)  # Convert to positive.
-    dv = dv.sel(time=dz.time)  # Select only same dates first?
+    dx_full = ds_full[var]
+    dx_full = np.fabs(dx_full)  # Convert to positive.
+    # dx_full = dx_full.sel(time=dx_plx.time)  # Select only same dates first?
 
     # Sum transport per year.
-    dv = [da.groupby('time.year').map(func, 'time') for da in [dz, dv]]
+    dx_plx = dx_plx.resample(time="6D").map(np.sum, 'time')
+    dv = [d.groupby('time.year').map(func, 'time') for d in [dx_plx, dx_full]]
+    # dv = [d.mean('time') for d in [dx_plx, dx_full]]
     return dv
 
 
@@ -146,7 +152,7 @@ def source_transport_percent_of_full(exp, lon, depth=1500, func=np.sum,
         None.
 
     """
-    z_ids = [1, 2, 3, 6]
+    z_ids = [1, 2, 3]  # [1, 2, 3, 6]
     tvar = 'ztime'  # !!! Change to 'ztime'.
 
     # Particle transport when at LLWBC.
@@ -159,10 +165,13 @@ def source_transport_percent_of_full(exp, lon, depth=1500, func=np.sum,
 
     # Discard particles that reach source during spinup.
     min_time = np.datetime64(['1981-01-01', '2070-01-01'][exp])
-    # if cfg.home.drive == 'C:':
-    #     min_time = np.datetime64(['2000-01-01', '2070-01-01'][exp])
+    max_time = np.datetime64(['2012-12-31', '2101-12-31'][exp])  # for test
+    if cfg.home.drive == 'C:':
+        min_time = np.datetime64(['1990-01-01', '2070-01-01'][exp])
+        max_time = np.datetime64(['2000-12-31', '2101-12-31'][exp])  # for test
 
-    traj = ds[tvar].where(ds[tvar] > min_time, drop=True).traj
+    traj = ds[tvar].where((ds[tvar] > min_time) & (ds[tvar] < max_time),
+                          drop=True).traj
     ds = ds.sel(traj=traj)
     times = ds[tvar].max('zone', skipna=True)  # Drop NaTs.
 
@@ -202,7 +211,20 @@ def source_transport_percent_of_full(exp, lon, depth=1500, func=np.sum,
 
 
 func = np.mean
-exp, lon = 0, 220
+exp, lon = 0, 165
 depth = 1500
 
-# da = source_transport_percent_of_full(exp, lon, depth, func)
+da = source_transport_percent_of_full(exp, lon, depth, func)
+# func=np.sum
+
+
+df = llwbc_transport(exp)
+df = df.sel(lev=slice(0, depth))
+df = df.sum('lev')
+df = df.mean('time')
+
+ds = xr.open_dataset(get_plx_id(exp, lon, 1, None, 'sources'))
+ds = ds.sel(zone=[1, 2, 3])
+ds = ds.uz.mean('rtime')
+for i, v in zip([2, 0, 1], df.data_vars):
+    print(v, df[v].item(), ds.isel(zone=i).item(), (ds.isel(zone=i) / df[v]).item() * 100)

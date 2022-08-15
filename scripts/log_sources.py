@@ -16,7 +16,8 @@ import numpy as np
 import xarray as xr
 
 import cfg
-from tools import test_signifiance, mlogger
+from tools import mlogger
+from stats import test_signifiance
 from fncs import (source_dataset, merge_hemisphere_sources,
                   merge_LLWBC_interior_sources)
 

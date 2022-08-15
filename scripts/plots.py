@@ -485,13 +485,17 @@ def plot_histogram(ax, dx, var, color, cutoff=0.85, weighted=True):
 
     # RCP8.5.
     bins = bins if weighted else _bins
-    # kwargs.update(dict(color='k', fill=False, hatch='///'))
     kwargs.update(dict(color='k', alpha=0.3, edgecolor='k'))
     _, bins, _ = ax.hist(dx[1][var], bins, weights=weights[1], **kwargs)
 
+    # Black outline (Hist * RCP).
     kwargs.update(dict(histtype='step', color='k', alpha=1))
     _, bins, _ = ax.hist(dx[0][var], bins, weights=weights[0], **kwargs)
     _, bins, _ = ax.hist(dx[1][var], bins, weights=weights[1], **kwargs)
+
+    # # Median.
+    # ax.axvline(_bins[sum(np.cumsum(x) < (sum(x)/2))], c='k')
+    # ax.axvline(np.median(dx[0][var]), c='b')
 
     # Cut off last 5% of xaxis (index where <95% of total counts).
     xmax = bins[sum(np.cumsum(x) < sum(x) * cutoff)]

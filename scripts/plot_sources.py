@@ -202,29 +202,30 @@ def transport_source_bar_graph(exp=0, z_ids=list(range(9)), sum_interior=True):
     return
 
 
-def source_histogram(ds, lon):
+def source_histogram_multi(ds, lon):
     """Histograms of source variables plot."""
-    zn = ds.zone.values[:-2]
+    zn = ds.zone.values[:-1]
     ds['names'][dict(zone=2)] = 'East Solomon Is.'
 
-    fig, axes = plt.subplots(zn.size, 4, figsize=(12, 12))
+    fig, axes = plt.subplots(4, 4, figsize=(11.5, 9))
 
     i = 0
     for zi, z in enumerate(zn):
         color = ds.colors[zi].item()
         zname = ds.names[zi].item()
 
-        for vi, var in enumerate(['age', 'distance', 'speed', 'z']):
+        for vi, var in enumerate(['age', 'distance']):
             cutoff = 0.85
             name, units = ds[var].attrs['name'], ds[var].attrs['units']
             ax = axes.flatten()[i]
             dx = ds.sel(zone=z)
             ax = plot_histogram(ax, dx, var, color, cutoff=cutoff)
 
-            ax.set_title('{}. {} {}'.format(i + 1, zname, name),
+            ax.set_title('{} {} {}'.format(ltr[i], zname, name),
                          loc='left', x=-0.08)
             ax.xaxis.set_minor_locator(mpl.ticker.AutoMinorLocator())
             ax.yaxis.set_minor_locator(mpl.ticker.AutoMinorLocator())
+            ax.xaxis.set_tick_params(pad=1)
 
             if i >= axes.shape[1] * (axes.shape[0] - 1):  # Last rows.
                 # ax.tick_params(labelsize=10)
@@ -234,22 +235,21 @@ def source_histogram(ds, lon):
                 ax.set_ylabel('Transport [Sv]')
             i += 1
 
-    fig.subplots_adjust(wspace=1, hspace=1)
-    # plt.tight_layout()
+    plt.tight_layout()
     plt.savefig(cfg.fig / 'sources/histogram_{}.png'.format(lon))
     return
 
 
-def source_depth_histogram():
-    """Histograms of source variables plot."""
-    var, name, units = 'z', 'Depth', 'm'
+def source_histogram_variable(var='z'):
+    """Histograms of single source variables."""
     cutoff = 0.95
 
-    fig, axes = plt.subplots(7, 4, figsize=(12, 14))
+    fig, axes = plt.subplots(8, 4, figsize=(11, 14))
 
     for x, lon in enumerate(cfg.lons):
         ds = source_dataset(lon)
-        zn = ds.zone.values[:-2]
+        name, units = ds[var].attrs['name'], ds[var].attrs['units']
+        zn = ds.zone.values[:-1]
 
         for zi, z in enumerate(zn):
             i = 4 * zi + x
@@ -260,7 +260,7 @@ def source_depth_histogram():
             dx = ds.sel(zone=z)
             ax = plot_histogram(ax, dx, var, color, cutoff=cutoff)
 
-            ax.set_title('{}. {} - EUC at {}°E'.format(i, zname, lon),
+            ax.set_title('{}) {} - EUC at {}°E'.format(i + 1, zname, lon),
                          loc='left', x=-0.05)
 
             if i >= axes.shape[1] * (axes.shape[0] - 1):  # Last rows.
@@ -272,7 +272,7 @@ def source_depth_histogram():
 
     fig.subplots_adjust(wspace=0.07, hspace=0.07)
     plt.tight_layout()
-    plt.savefig(cfg.fig / 'sources/depth_histogram.png')
+    plt.savefig(cfg.fig / 'sources/{}_histogram.png'.format(name))
     return
 
 
@@ -343,7 +343,6 @@ def combined_source_histogram(ds, lon):
     # Format plots.
     plt.suptitle('{}°E'.format(lon))
 
-    # fig.subplots_adjust(wspace=0.1, hspace=0.1)
     plt.tight_layout()
     plt.savefig(cfg.fig / 'sources/histogram_{}_comb.png'.format(lon))
     return
@@ -364,67 +363,45 @@ def timeseries_bar(exp=0, z_ids=list(range(9)), sum_interior=True):
     #     ax.bar(x, h, bottom=b, color=c[z], label=xlabels[z], **kwargs)
     #     b += h
     """
-    kwargs = dict(alpha=0.7, width=1)
-    z_ids=list(range(9))
     i = 2
     lon = cfg.lons[i]
     ds = source_dataset(lon, sum_interior)
-    ds = ds.isel(zone=z_ids)
+    ds = ds.isel(zone=z_ids)  # Single.
+    # ds = merge_LLWBC_interior_sources(ds).isel(zone=[-2, -1])  # Merged.
 
     dx = ds.uz.isel(exp=exp)
     dx = dx.where(dx.rtime < np.datetime64('2013-01-06'), drop=1)
     dx = dx.resample(rtime="1m").mean("rtime", keep_attrs=True)
     dx = dx.rolling(rtime=6).mean()
 
-    # All sources.
     x = dx.rtime.dt.strftime("%Y-%m")
     b = np.zeros(dx.rtime.size)
     xlabels, c = ds.names.values, ds.colors.values
-    inds = [-1, -2, 3, 4, 6, 5, 2, 0, 1]
-    # inds = np.arange(dx.zone.size)
+    inds = [-1, -2, 3, 4, 6, 5, 2, 0, 1]  # np.arange(dx.zone.size)
     xlabels, c = xlabels[inds], c[inds]
     zi = np.arange(dx.zone.size)[inds]
     # d = [dx.isel(zone=z) for z in zi]
     d = [dx.isel(zone=z) - dx.isel(zone=z).mean('rtime') for z in zi]
-    # d = [dx.isel(zone=z) / dx.sum('zone').mean('rtime') for z in zi]
-
-    # # Merged
-    # ds = source_dataset(lon, sum_interior)
-    # ds = merge_LLWBC_interior_sources(ds)
-    # ds = ds.isel(zone=[-2, -1])
-    # dx = ds.uz.isel(exp=exp)
-    # dx = dx.where(dx.rtime < np.datetime64('2013-01-06'), drop=1)
-    # dx = dx.resample(rtime="1y").mean("rtime", keep_attrs=True)
-    # x = dx.rtime.dt.strftime("%Y")
-    # b = np.zeros(dx.rtime.size)
-    # xlabels, c = ds.names.values, ds.colors.values
-    # # inds = [-1, -2, 3, 4, 6, 5, 2, 0, 1]
-    # inds = np.arange(dx.zone.size)
-    # xlabels, c = xlabels[inds], c[inds]
-    # zi = np.arange(dx.zone.size)[inds]
-    # d = [dx.isel(zone=z) for z in zi]
-    d = [dx.isel(zone=z) - dx.isel(zone=z).mean('rtime') for z in zi]
-    # d = [dx.isel(zone=z) / dx.sum('zone') for z in zi]
-    # d = [(dx - dx.mean('rtime')).isel(zone=z) / dx.sum('zone') for z in zi]
 
     fig, ax = plt.subplots(1, 1, figsize=(10, 7), sharey='row', sharex='all')
-    # steam bar.
     ax.stackplot(x, *d, colors=c, labels=xlabels,
                  baseline=['zero', 'sym', 'wiggle', 'weighted_wiggle'][2])
     ax.margins(x=0, y=0)
-    # ax.margins(x=0)
-
     lgd = ax.legend(bbox_to_anchor=(1, 1), loc='upper left')
     plt.tight_layout()
-    # ax.legend()
     ax.set_xticks(x[::46])
     ax.set_title('{} EUC sources at {}°E'.format(ltr[i], lon), loc='left')
     return
 
-for lon in [165]:
-# for lon in cfg.lons:
-    ds = source_dataset(lon, sum_interior=True)
 
-    # Plot histograms.
-    source_histogram(ds, lon)
+# for lon in [165]:
+for lon in cfg.lons:
+    ds = source_dataset(lon, sum_interior=True)
+    # source_pie_chart(ds, lon)
+    source_histogram_multi(ds, lon)
     # combined_source_histogram(ds, lon)
+
+
+# for var in ['z', 'speed', 'age', 'distance']:
+#     source_histogram_variable(var)
+

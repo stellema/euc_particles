@@ -114,7 +114,7 @@ def plot3Dx(xid, ds=None):
 
 
     N = 30
-    source_ids = [1, 2, 3, 4, 5]
+    source_ids = [1, 2, 3, 4]
     # Particle IDs
     pids = source_particle_ID_dict(None, exp, lon, v, r)
     # Get N particle IDs per source region.
@@ -147,7 +147,7 @@ def plot3Dx(xid, ds=None):
     # ax = setup(ax, xticks, yticks, zticks, xax='lon', yax='lat')
 
     plt.tight_layout(pad=0)
-    fig.savefig(cfg.fig/ 'pathways/pathway_3D_{}.png'.format(file.stem))
+    fig.savefig(cfg.fig/ 'paths/pathway_3D_{}.png'.format(file.stem))
     # plt.show()
     # plt.close()
     # ds.close()
@@ -177,7 +177,7 @@ if __name__ == "__main__":
     r = 0
 
     # # Plot map.
-    plot_some_source_pathways(exp, lon, v, r)
+    # plot_some_source_pathways(exp, lon, v, r)
     # plot_particle_source_map()
 
     # source_id = 0

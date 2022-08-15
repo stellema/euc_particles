@@ -77,6 +77,7 @@ im_ext = '.png'
 # Width and height of figures.
 width = 7.20472
 height = width / 1.718
+test = True if home.drive == 'C:' else False
 
 dx = 0.1
 e1, e2, e3, e4 = [x - dx for x in [165, 190, 220, 250]]
