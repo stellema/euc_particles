@@ -19,6 +19,8 @@ Notes:
     - indiv files run with ~12GB but merged function requires a lot more data
 
 Todo:
+    - Fix error in final and initial depth
+    - drop NaN particles???
 
 @author: Annette Stellema
 @email: a.stellema@unsw.edu.au
@@ -65,9 +67,11 @@ def source_particle_ID_dict(ds, exp, lon, v, r):
 
     # Particle IDs that reach each source.
     for z in zones:
+        # TODO: drop deleted traj
         traj = ds.traj.where(ds.zone == z, drop=True)
         traj = traj.values.astype(dtype=int).tolist()  # Convert to list.
         source_traj[z] = traj
+        
     np.save(file, source_traj)  # Save dictionary as numpy file.
     return source_traj
 
@@ -75,27 +79,25 @@ def source_particle_ID_dict(ds, exp, lon, v, r):
 @timeit
 def get_final_particle_obs(ds):
     """Reduce particle dataset variables to first/last observation."""
-    # Select the initial release time and particle ID.
 
+    # Select the lowest value.
+    ds['time0'] = ds['time'].min('obs', skipna=True, keep_attrs=True)
+    ds['time0'].attrs['long_name'] = 'Source time'
+    
+    ds['z0'] = ds['z'].isel(obs=0)
+    ds['z0'].attrs['long_name'] = 'Source depth'
+    
     # Select the first value.
-    if 'obs' in ds['time'].dims:
-        ds['ztime'] = ds['time'].min('obs', skipna=True)
-        ds['ztime'].attrs['name'] = 'Time at source'
+    for var in ['time', 'trajectory', 'z', 'lat', 'lon']:
+        ds[var] = ds[var].isel(obs=0)
 
-    for var in ['time', 'trajectory']:
+    # Select the maximum value.
+    for var in ['age', 'distance', 'unbeached']:
+        ds[var] = ds[var].max('obs', skipna=True, keep_attrs=True)
+    
+    for var in ['u', 'zone']:
         if 'obs' in ds[var].dims:
-            ds[var] = ds[var].isel(obs=0)
-
-    # Select the first value.
-    if 'obs' in ds['z'].dims:
-        ds['z0'] = ds['z'].min('obs', skipna=True)
-        ds['z0'].attrs['name'] = 'Release depth'
-        ds['z0'].attrs['units'] = 'm'
-
-    # Select the final value.
-    for var in ['zone', 'age', 'distance', 'unbeached', 'lat', 'lon', 'z']:
-        if 'obs' in ds[var].dims:
-            ds[var] = ds[var].max('obs', skipna=True)
+            ds[var] = ds[var].max('obs', skipna=True, keep_attrs=True)
 
     # Drop extra coords and unused 'obs'.
     for var in ['obs']:
@@ -154,7 +156,7 @@ def group_euc_transport(ds, source_traj):
     for z in ds.zone.values:
         dx = ds.sel(traj=ds.traj[ds.traj.isin(source_traj[z])])
         # Sum particle transport.
-        ds['uz'][dict(zone=z)] = dx.u.sum('traj')
+        ds['uz'][dict(zone=z)] = dx.u.sum('traj', keep_attrs=True)
 
     return ds['uz']
 
@@ -180,8 +182,6 @@ def plx_source_file(lon, exp, v, r):
         u_total     (rtime): Total EUC transport at each release time.
 
     """
-    test = True if cfg.home.drive == 'C:' else False
-
     # Filenames.
     xid = get_plx_id(exp, lon, v, r, 'plx')
     xid_new = get_plx_id(exp, lon, v, r, 'sources')
@@ -189,13 +189,18 @@ def plx_source_file(lon, exp, v, r):
     # Check if file already exists.
     if xid_new.exists():
         return
-
     # update_formatted_file_sources(lon, exp, v, r)
 
     logger.info('{}: Creating particle source file.'.format(xid.stem))
     ds = xr.open_dataset(xid, chunks='auto')
-
-    if test:
+    
+    # Add attributes.
+    ds_tmp = xr.open_dataset(get_plx_id(exp, lon, v, r), chunks='auto')
+    for v in ds_tmp.data_vars:
+        ds[v].attrs = ds_tmp.attrs[v]
+    ds_tmp.close()
+    
+    if cfg.test:
         logger.info('{}: Test subset used.'.format(xid.stem))
         ds = ds.isel(traj=np.linspace(0, 5000, 500, dtype=int))
         # ds = ds.isel(obs=slice(4000))
@@ -218,7 +223,7 @@ def plx_source_file(lon, exp, v, r):
     # Merge transport grouped by release time with source grouped variables.
     ds.coords['zone'] = uz.zone.copy()  # Match 'zone' coord.
     ds['uz'] = uz
-    ds['u_total'] = ds.uz.sum('zone')  # Add total transport per release.
+    ds['u_total'] = ds.uz.sum('zone', keep_attrs=True)  # Add total transport per release.
 
     # Save dataset.
     logger.info('{}: Saving...'.format(xid.stem))
@@ -255,7 +260,7 @@ def merge_plx_source_files(lon, exp, v):
 
     # Merge files.
     xids = [get_plx_id(exp, lon, v, r, 'sources') for r in reps]
-    ds = xr.open_mfdataset(xids, combine='nested', chunks='auto',
+    ds = xr.open_mfdataset(xids, combine='nested', chunks='auto', 
                            coords='minimal')
 
     # Filename of merged files (drops the r##).
@@ -268,7 +273,7 @@ def merge_plx_source_files(lon, exp, v):
     logger.info('Saved all {}!'.format(xid.stem))
 
 
-if __name__ == "__main__" and cfg.home.drive != 'C:':
+if __name__ == "__main__" and not cfg.test:
     p = ArgumentParser(description="""Get plx sources and transit times.""")
     p.add_argument('-x', '--lon', default=165, type=int, help='Start lon.')
     p.add_argument('-e', '--exp', default=0, type=int, help='Scenario {0, 1}.')
