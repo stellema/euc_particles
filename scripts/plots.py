@@ -438,7 +438,8 @@ def plot_particle_source_map(add_ocean=True, add_labels=True, savefig=True,
     return fig, ax, proj
 
 
-def plot_histogram(ax, dx, var, color, cutoff=0.85, weighted=True):
+def plot_histogram(ax, dx, var, color, cutoff=0.85, bins='fd', weighted=True, 
+                   orientation='vertical'):
     """Plot histogram with historical (solid) & projection (dashed).
 
     Histogram bins weighted by transport / sum of all transport.
@@ -457,18 +458,18 @@ def plot_histogram(ax, dx, var, color, cutoff=0.85, weighted=True):
 
     """
     kwargs = dict(histtype='stepfilled', density=0, range=None, stacked=False,
-                  alpha=0.8, cumulative=False, color=color, #fill=0,
-                  hatch=None, edgecolor=color, lw=0.8)
+                  alpha=0.8, cumulative=False, color=color, lw=0.8, #fill=0,
+                  hatch=None, edgecolor=color, orientation=orientation)
 
     dx = [dx.isel(exp=i).dropna('traj', 'all') for i in [0, 1]]
-    bins = 'fd'
+    
     weights = None
-
     if weighted:
-        # weights = [dx[i].u / dx[i].u.sum().item() for i in [0, 1]]
-        weights = [dx[i].u for i in [0, 1]]
+        # weights = [dx[i].u for i in [0, 1]]
+        weights = [dx[i].u / dx[i].u.sum().item() for i in [0, 1]]
         # weights = [dx[i].u / dx[i].uz.mean().item() for i in [0, 1]]
-
+        
+    if weighted and isinstance(bins, str):
         # Find number of bins based on combined hist/proj data range.
         h0, _, r0 = weighted_bins_fd(dx[0][var], weights[0])
         h1, _, r1 = weighted_bins_fd(dx[1][var], weights[1])
@@ -498,7 +499,8 @@ def plot_histogram(ax, dx, var, color, cutoff=0.85, weighted=True):
     # ax.axvline(np.median(dx[0][var]), c='b')
 
     # Cut off last 5% of xaxis (index where <95% of total counts).
-    xmax = bins[sum(np.cumsum(x) < sum(x) * cutoff)]
-    xmin = bins[max([sum((x <= 0) & (bins[1:] < xmax)) - 1, 0])]
-    ax.set_xlim(xmin=xmin, xmax=xmax)
+    if cutoff is not None:
+        xmax = bins[sum(np.cumsum(x) < sum(x) * cutoff)]
+        xmin = bins[max([sum((x <= 0) & (bins[1:] < xmax)) - 1, 0])]
+        ax.set_xlim(xmin=xmin, xmax=xmax)
     return ax

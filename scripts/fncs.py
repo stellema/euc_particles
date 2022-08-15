@@ -400,6 +400,8 @@ def source_dataset(lon, sum_interior=True):
         - Add attributes
         - Change order of source dimension
         - merge sources
+        - Changed ztime to time_f (source time)
+        - Changed z0 to z_f (source depth)
 
     """
     # Open and concat data for exah scenario.
@@ -421,8 +423,9 @@ def source_dataset(lon, sum_interior=True):
     # Convert distance: m to x100 km.
     ds['distance'] *= 1e-6
     ds['distance'].attrs['units'] = '1e6 m'
-    ds['z'].attrs['name'] = 'EUC Depth'
-    ds['z'].attrs['units'] = 'm'
+    
+    # ds['z0'].attrs['name'] = 'EUC Depth'
+    # ds['z0'].attrs['units'] = 'm'
 
     ds['names'] = ('zone', cfg.zones.names_all)
     ds['colors'] = ('zone', cfg.zones.colors_all)

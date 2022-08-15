@@ -36,7 +36,7 @@ ds = ds.sel(traj=ds.traj[ds.traj.isin(dp.traj.values.astype(int))])
 """
 import numpy as np
 import xarray as xr
-import seaborn as sns
+# import seaborn as sns
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 
@@ -240,17 +240,28 @@ def source_histogram_multi(ds, lon):
     return
 
 
-def source_histogram_variable(var='z'):
+def source_histogram_variable(var='z0'):
     """Histograms of single source variables."""
-    cutoff = 0.95
 
-    fig, axes = plt.subplots(8, 4, figsize=(11, 14))
+    
+    if var not in ['z0']:
+        kwargs = dict(bins='fd', cutoff=0.95, orientation='vertical')
+    else:
+        kwargs = dict(bins=np.arange(0, 375 + 20, 5), cutoff=None, 
+                      orientation='horizontal')
+
+    fig, axes = plt.subplots(5, 4, figsize=(11, 14))  # !!!
 
     for x, lon in enumerate(cfg.lons):
         ds = source_dataset(lon)
-        name, units = ds[var].attrs['name'], ds[var].attrs['units']
-        zn = ds.zone.values[:-1]
-
+        zn = ds.zone.values[:5]  # !!!
+        
+        name, units = [ds[var].attrs[a] for a in ['name', 'units']]
+        xlabel, ylabel = '{} [{}]'.format(name, units), 'Transport [Sv]'
+        
+        if kwargs['orientation'] == 'horizontal':
+            xlabel, ylabel = ylabel, xlabel 
+        
         for zi, z in enumerate(zn):
             i = 4 * zi + x
             color = ds.colors[zi].item()
@@ -258,17 +269,17 @@ def source_histogram_variable(var='z'):
 
             ax = axes.flatten()[i]
             dx = ds.sel(zone=z)
-            ax = plot_histogram(ax, dx, var, color, cutoff=cutoff)
+            ax = plot_histogram(ax, dx, var, color, **kwargs)
 
             ax.set_title('{}) {} - EUC at {}°E'.format(i + 1, zname, lon),
                          loc='left', x=-0.05)
 
-            if i >= axes.shape[1] * (axes.shape[0] - 1):  # Last rows.
+            if i >= axes.shape[1] * (axes.shape[0] - 1):  # Last row.
                 # ax.tick_params(labelsize=10)
-                ax.set_xlabel('{} [{}]'.format(name, units))
+                ax.set_xlabel(xlabel)
 
-            if i in np.arange(axes.shape[0]) * axes.shape[1]:  # First cols.
-                ax.set_ylabel('Transport [Sv]')
+            if i in np.arange(axes.shape[0]) * axes.shape[1]:  # First col.
+                ax.set_ylabel(ylabel)
 
     fig.subplots_adjust(wspace=0.07, hspace=0.07)
     plt.tight_layout()
@@ -395,13 +406,13 @@ def timeseries_bar(exp=0, z_ids=list(range(9)), sum_interior=True):
 
 
 # for lon in [165]:
-for lon in cfg.lons:
-    ds = source_dataset(lon, sum_interior=True)
-    # source_pie_chart(ds, lon)
-    source_histogram_multi(ds, lon)
-    # combined_source_histogram(ds, lon)
+# # for lon in cfg.lons:
+#     ds = source_dataset(lon, sum_interior=True)
+#     # source_pie_chart(ds, lon)
+#     # source_histogram_multi(ds, lon)
+#     # combined_source_histogram(ds, lon)
 
 
-# for var in ['z', 'speed', 'age', 'distance']:
-#     source_histogram_variable(var)
+for var in ['z0']:#, 'speed', 'age', 'distance']:
+    source_histogram_variable(var)
 
