@@ -71,7 +71,7 @@ def source_particle_ID_dict(ds, exp, lon, v, r):
         traj = ds.traj.where(ds.zone == z, drop=True)
         traj = traj.values.astype(dtype=int).tolist()  # Convert to list.
         source_traj[z] = traj
-        
+
     np.save(file, source_traj)  # Save dictionary as numpy file.
     return source_traj
 
@@ -83,10 +83,10 @@ def get_final_particle_obs(ds):
     # Select the lowest value.
     ds['time0'] = ds['time'].min('obs', skipna=True, keep_attrs=True)
     ds['time0'].attrs['long_name'] = 'Source time'
-    
+
     ds['z0'] = ds['z'].isel(obs=0)
     ds['z0'].attrs['long_name'] = 'Source depth'
-    
+
     # Select the first value.
     for var in ['time', 'trajectory', 'z', 'lat', 'lon']:
         ds[var] = ds[var].isel(obs=0)
@@ -94,7 +94,7 @@ def get_final_particle_obs(ds):
     # Select the maximum value.
     for var in ['age', 'distance', 'unbeached']:
         ds[var] = ds[var].max('obs', skipna=True, keep_attrs=True)
-    
+
     for var in ['u', 'zone']:
         if 'obs' in ds[var].dims:
             ds[var] = ds[var].max('obs', skipna=True, keep_attrs=True)
@@ -193,13 +193,13 @@ def plx_source_file(lon, exp, v, r):
 
     logger.info('{}: Creating particle source file.'.format(xid.stem))
     ds = xr.open_dataset(xid, chunks='auto')
-    
+
     # Add attributes.
     ds_tmp = xr.open_dataset(get_plx_id(exp, lon, v, r), chunks='auto')
-    for v in ds_tmp.data_vars:
-        ds[v].attrs = ds_tmp.attrs[v]
+    for var in ds.data_vars:
+        ds[var].attrs = ds_tmp[var].attrs
     ds_tmp.close()
-    
+
     if cfg.test:
         logger.info('{}: Test subset used.'.format(xid.stem))
         ds = ds.isel(traj=np.linspace(0, 5000, 500, dtype=int))
@@ -260,7 +260,7 @@ def merge_plx_source_files(lon, exp, v):
 
     # Merge files.
     xids = [get_plx_id(exp, lon, v, r, 'sources') for r in reps]
-    ds = xr.open_mfdataset(xids, combine='nested', chunks='auto', 
+    ds = xr.open_mfdataset(xids, combine='nested', chunks='auto',
                            coords='minimal')
 
     # Filename of merged files (drops the r##).
