@@ -16850,3 +16850,750 @@
 2022-02-02 05:41:04:plx_hist_250_v1a13: Rank=28: Particles=18
 2022-02-02 05:41:04:plx_hist_250_v1a13: Rank= 4: Particles=36
 2022-02-02 05:45:10:plx_hist_165_v1a13: Completed: 01:54:36: Rank=21: Particles: Start=24 Del=0 End=24
+2022-06-05 15:19:09:plx_hist_190_v1r10: Run=1825d: 1990-01-01 to 1985-01-02: Particles=360075
+2022-06-05 15:19:09:plx_hist_190_v1r10: Tmp=BEQAFAII: dt=60m: Out=2d: Land=0.975 Vmin=1e-07
+2022-06-05 16:04:45:plx_hist_165_v1r10: Run=1825d: 1990-01-01 to 1985-01-02: Particles=301733
+2022-06-05 16:04:45:plx_hist_165_v1r10: Tmp=HVCVPIER: dt=60m: Out=2d: Land=0.975 Vmin=1e-07
+2022-06-05 16:19:07:plx_hist_220_v1r10: Run=1825d: 1990-01-01 to 1985-01-02: Particles=351849
+2022-06-05 16:19:07:plx_hist_220_v1r10: Tmp=XQXISMQT: dt=60m: Out=2d: Land=0.975 Vmin=1e-07
+2022-06-05 16:19:12:plx_hist_250_v1r10: Run=1825d: 1990-01-01 to 1985-01-02: Particles=337223
+2022-06-05 16:19:12:plx_hist_250_v1r10: Tmp=ARENRJAG: dt=60m: Out=2d: Land=0.975 Vmin=1e-07
+2022-06-05 19:36:54:plx_hist_220_v1r10: Completed: 03:18:15: Rank=34: Particles: Start=3632 Del=1547 End=2085
+2022-06-05 19:46:11:plx_hist_250_v1r10: Completed: 03:27:25: Rank= 2: Particles: Start=6124 Del=3884 End=2240
+2022-06-05 19:46:58:plx_hist_220_v1r10: Completed: 03:28:19: Rank=42: Particles: Start=7286 Del=3984 End=3302
+2022-06-05 19:47:51:plx_hist_250_v1r10: Completed: 03:29:05: Rank= 7: Particles: Start=7774 Del=4556 End=3218
+2022-06-05 19:49:24:plx_hist_250_v1r10: Completed: 03:30:38: Rank=37: Particles: Start=7368 Del=487 End=6881
+2022-06-05 19:50:05:plx_hist_250_v1r10: Completed: 03:31:19: Rank=17: Particles: Start=7022 Del=405 End=6617
+2022-06-05 19:50:41:plx_hist_250_v1r10: Completed: 03:31:55: Rank=21: Particles: Start=6757 Del=552 End=6205
+2022-06-05 19:51:10:plx_hist_250_v1r10: Completed: 03:32:24: Rank=22: Particles: Start=2898 Del=1112 End=1786
+2022-06-05 19:54:35:plx_hist_165_v1r10: Completed: 03:50:18: Rank=30: Particles: Start=2879 Del=1213 End=1666
+2022-06-05 20:00:58:plx_hist_165_v1r10: Completed: 03:56:41: Rank=37: Particles: Start=6807 Del=514 End=6293
+2022-06-05 20:02:07:plx_hist_220_v1r10: Completed: 03:43:29: Rank= 6: Particles: Start=5882 Del=3680 End=2202
+2022-06-05 20:04:21:plx_hist_250_v1r10: Completed: 03:45:34: Rank=34: Particles: Start=7480 Del=3172 End=4308
+2022-06-05 20:05:44:plx_hist_220_v1r10: Completed: 03:47:06: Rank=43: Particles: Start=6324 Del=530 End=5794
+2022-06-05 20:06:19:plx_hist_220_v1r10: Completed: 03:47:41: Rank= 1: Particles: Start=6859 Del=423 End=6436
+2022-06-05 20:06:51:plx_hist_220_v1r10: Completed: 03:48:12: Rank=20: Particles: Start=5277 Del=3380 End=1897
+2022-06-05 20:08:55:plx_hist_220_v1r10: Completed: 03:50:16: Rank=35: Particles: Start=3576 Del=1411 End=2165
+2022-06-05 20:09:19:plx_hist_220_v1r10: Completed: 03:50:41: Rank=23: Particles: Start=4160 Del=2344 End=1816
+2022-06-05 20:14:24:plx_hist_165_v1r10: Completed: 04:10:07: Rank=39: Particles: Start=2608 Del=1261 End=1347
+2022-06-05 20:14:30:plx_hist_220_v1r10: Completed: 03:55:52: Rank=13: Particles: Start=5971 Del=668 End=5303
+2022-06-05 20:15:45:plx_hist_220_v1r10: Completed: 03:57:06: Rank=12: Particles: Start=7494 Del=508 End=6986
+2022-06-05 20:17:40:plx_hist_250_v1r10: Completed: 03:58:54: Rank=32: Particles: Start=6373 Del=799 End=5574
+2022-06-05 20:18:02:plx_hist_220_v1r10: Completed: 03:59:24: Rank=22: Particles: Start=7613 Del=4468 End=3145
+2022-06-05 20:20:41:plx_hist_250_v1r10: Completed: 04:01:55: Rank=31: Particles: Start=2912 Del=830 End=2082
+2022-06-05 20:24:19:plx_hist_250_v1r10: Completed: 04:05:33: Rank=35: Particles: Start=3545 Del=1345 End=2200
+2022-06-05 20:25:56:plx_hist_250_v1r10: Completed: 04:07:10: Rank=38: Particles: Start=2989 Del=919 End=2070
+2022-06-05 20:25:59:plx_hist_250_v1r10: Completed: 04:07:13: Rank=45: Particles: Start=8332 Del=2456 End=5876
+2022-06-05 20:26:37:plx_hist_190_v1r10: Completed: 05:08:09: Rank=21: Particles: Start=3271 Del=1480 End=1791
+2022-06-05 20:26:40:plx_hist_190_v1r10: Completed: 05:08:13: Rank= 4: Particles: Start=9087 Del=7904 End=1183
+2022-06-05 20:26:41:plx_hist_190_v1r10: Completed: 05:08:13: Rank=34: Particles: Start=3725 Del=1511 End=2214
+2022-06-05 20:26:42:plx_hist_190_v1r10: Completed: 05:08:14: Rank=23: Particles: Start=9334 Del=1001 End=8333
+2022-06-05 20:28:11:plx_hist_165_v1r10: Completed: 04:23:54: Rank= 5: Particles: Start=5683 Del=3527 End=2156
+2022-06-05 20:28:22:plx_hist_250_v1r10: Completed: 04:09:36: Rank=15: Particles: Start=4027 Del=2146 End=1881
+2022-06-05 20:28:24:plx_hist_165_v1r10: Completed: 04:24:07: Rank=43: Particles: Start=2199 Del=805 End=1394
+2022-06-05 20:29:58:plx_hist_190_v1r10: Completed: 05:11:30: Rank=37: Particles: Start=8217 Del=599 End=7618
+2022-06-05 20:30:58:plx_hist_190_v1r10: Completed: 05:12:31: Rank= 9: Particles: Start=6064 Del=3860 End=2204
+2022-06-05 20:32:43:plx_hist_190_v1r10: Completed: 05:14:16: Rank=10: Particles: Start=2762 Del=1333 End=1429
+2022-06-05 20:34:08:plx_hist_220_v1r10: Completed: 04:15:29: Rank=47: Particles: Start=3565 Del=1370 End=2195
+2022-06-05 20:34:08:plx_hist_220_v1r10: Completed: 04:15:30: Rank=19: Particles: Start=3186 Del=1237 End=1949
+2022-06-05 20:36:40:plx_hist_250_v1r10: Completed: 04:17:54: Rank=46: Particles: Start=5652 Del=5022 End=630
+2022-06-05 20:36:41:plx_hist_250_v1r10: Completed: 04:17:55: Rank=39: Particles: Start=3482 Del=1265 End=2217
+2022-06-05 20:36:57:plx_hist_220_v1r10: Completed: 04:18:18: Rank=41: Particles: Start=5725 Del=5108 End=617
+2022-06-05 20:37:36:plx_hist_250_v1r10: Completed: 04:18:50: Rank=14: Particles: Start=7201 Del=4090 End=3111
+2022-06-05 20:38:45:plx_hist_220_v1r10: Completed: 04:20:06: Rank=24: Particles: Start=3746 Del=1512 End=2234
+2022-06-05 20:39:01:plx_hist_250_v1r10: Completed: 04:20:14: Rank= 8: Particles: Start=6458 Del=1236 End=5222
+2022-06-05 20:39:07:plx_hist_165_v1r10: Completed: 04:34:50: Rank=45: Particles: Start=7458 Del=4305 End=3153
+2022-06-05 20:42:06:plx_hist_165_v1r10: Completed: 04:37:49: Rank=18: Particles: Start=8895 Del=4843 End=4052
+2022-06-05 20:44:33:plx_hist_165_v1r10: Completed: 04:40:16: Rank= 0: Particles: Start=7765 Del=4746 End=3019
+2022-06-05 20:44:58:plx_hist_220_v1r10: Completed: 04:26:19: Rank= 3: Particles: Start=8815 Del=3742 End=5073
+2022-06-05 20:45:07:plx_hist_165_v1r10: Completed: 04:40:50: Rank=35: Particles: Start=7206 Del=6450 End=756
+2022-06-05 20:46:24:plx_hist_220_v1r10: Completed: 04:27:46: Rank=28: Particles: Start=5975 Del=1096 End=4879
+2022-06-05 20:52:01:plx_hist_165_v1r10: Completed: 04:47:44: Rank=29: Particles: Start=2435 Del=1050 End=1385
+2022-06-05 20:56:40:plx_hist_165_v1r10: Completed: 04:52:23: Rank=10: Particles: Start=9611 Del=3847 End=5764
+2022-06-05 20:57:02:plx_hist_190_v1r10: Completed: 05:38:34: Rank=25: Particles: Start=2494 Del=850 End=1644
+2022-06-05 21:01:49:plx_hist_250_v1r10: Completed: 04:43:03: Rank=13: Particles: Start=8469 Del=2688 End=5781
+2022-06-05 21:02:33:plx_hist_190_v1r10: Completed: 05:44:05: Rank=32: Particles: Start=2112 Del=625 End=1487
+2022-06-05 21:02:39:plx_hist_250_v1r10: Completed: 04:43:53: Rank=42: Particles: Start=6624 Del=1584 End=5040
+2022-06-05 21:03:59:plx_hist_250_v1r10: Completed: 04:45:13: Rank= 4: Particles: Start=6657 Del=765 End=5892
+2022-06-05 21:04:38:plx_hist_220_v1r10: Completed: 04:45:59: Rank=30: Particles: Start=7402 Del=898 End=6504
+2022-06-05 21:06:07:plx_hist_220_v1r10: Completed: 04:47:29: Rank= 8: Particles: Start=10054 Del=2953 End=7101
+2022-06-05 21:07:28:plx_hist_165_v1r10: Completed: 05:03:11: Rank=40: Particles: Start=7388 Del=1153 End=6235
+2022-06-05 21:07:40:plx_hist_190_v1r10: Completed: 05:49:13: Rank=30: Particles: Start=6550 Del=4020 End=2530
+2022-06-05 21:09:11:plx_hist_165_v1r10: Completed: 05:04:54: Rank=26: Particles: Start=4173 Del=2286 End=1887
+2022-06-05 21:09:28:plx_hist_165_v1r10: Completed: 05:05:11: Rank=20: Particles: Start=1872 Del=517 End=1355
+2022-06-05 21:10:20:plx_hist_190_v1r10: Completed: 05:51:52: Rank=35: Particles: Start=4483 Del=1965 End=2518
+2022-06-05 21:11:05:plx_hist_250_v1r10: Completed: 04:52:19: Rank=20: Particles: Start=5525 Del=3579 End=1946
+2022-06-05 21:14:47:plx_hist_250_v1r10: Completed: 04:56:01: Rank=10: Particles: Start=6462 Del=1250 End=5212
+2022-06-05 21:15:16:plx_hist_165_v1r10: Completed: 05:10:59: Rank=38: Particles: Start=3611 Del=1392 End=2219
+2022-06-05 21:15:27:plx_hist_220_v1r10: Completed: 04:56:48: Rank=27: Particles: Start=10700 Del=3662 End=7038
+2022-06-05 21:16:42:plx_hist_220_v1r10: Completed: 04:58:04: Rank=16: Particles: Start=10043 Del=2247 End=7796
+2022-06-05 21:17:08:plx_hist_250_v1r10: Completed: 04:58:22: Rank= 0: Particles: Start=7304 Del=1400 End=5904
+2022-06-05 21:18:45:plx_hist_165_v1r10: Completed: 05:14:28: Rank= 8: Particles: Start=6540 Del=665 End=5875
+2022-06-05 21:19:21:plx_hist_165_v1r10: Completed: 05:15:04: Rank=17: Particles: Start=7965 Del=4266 End=3699
+2022-06-05 21:20:54:plx_hist_220_v1r10: Completed: 05:02:16: Rank=15: Particles: Start=6566 Del=2307 End=4259
+2022-06-05 21:20:54:plx_hist_220_v1r10: Completed: 05:02:16: Rank=21: Particles: Start=5677 Del=361 End=5316
+2022-06-05 21:22:03:plx_hist_190_v1r10: Completed: 06:03:36: Rank=29: Particles: Start=4370 Del=329 End=4041
+2022-06-05 21:22:28:plx_hist_220_v1r10: Completed: 05:03:49: Rank=37: Particles: Start=2305 Del=685 End=1620
+2022-06-05 21:23:05:plx_hist_220_v1r10: Completed: 05:04:26: Rank=31: Particles: Start=3154 Del=1047 End=2107
+2022-06-05 21:23:30:plx_hist_250_v1r10: Completed: 05:04:44: Rank=28: Particles: Start=4837 Del=1431 End=3406
+2022-06-05 21:25:16:plx_hist_250_v1r10: Completed: 05:06:30: Rank=41: Particles: Start=6086 Del=2497 End=3589
+2022-06-05 21:25:49:plx_hist_250_v1r10: Completed: 05:07:03: Rank=24: Particles: Start=6476 Del=1129 End=5347
+2022-06-05 21:29:06:plx_hist_190_v1r10: Completed: 06:10:38: Rank= 6: Particles: Start=8470 Del=4748 End=3722
+2022-06-05 21:30:07:plx_hist_250_v1r10: Completed: 05:11:21: Rank=44: Particles: Start=2508 Del=593 End=1915
+2022-06-05 21:30:20:plx_hist_165_v1r10: Completed: 05:26:03: Rank=42: Particles: Start=8658 Del=962 End=7696
+2022-06-05 21:30:37:plx_hist_220_v1r10: Completed: 05:11:58: Rank= 9: Particles: Start=7048 Del=3058 End=3990
+2022-06-05 21:31:17:plx_hist_190_v1r10: Completed: 06:12:49: Rank= 3: Particles: Start=7105 Del=1093 End=6012
+2022-06-05 21:31:29:plx_hist_220_v1r10: Completed: 05:12:51: Rank=44: Particles: Start=6174 Del=1450 End=4724
+2022-06-05 21:31:58:plx_hist_165_v1r10: Completed: 05:27:41: Rank=36: Particles: Start=4032 Del=2470 End=1562
+2022-06-05 21:32:39:plx_hist_220_v1r10: Completed: 05:14:00: Rank=18: Particles: Start=9439 Del=1769 End=7670
+2022-06-05 21:32:50:plx_hist_220_v1r10: Completed: 05:14:11: Rank=33: Particles: Start=5215 Del=3010 End=2205
+2022-06-05 21:33:10:plx_hist_165_v1r10: Completed: 05:28:53: Rank=15: Particles: Start=8208 Del=2397 End=5811
+2022-06-05 21:34:07:plx_hist_190_v1r10: Completed: 06:15:40: Rank=47: Particles: Start=10393 Del=4568 End=5825
+2022-06-05 21:34:16:plx_hist_250_v1r10: Completed: 05:15:30: Rank=33: Particles: Start=6581 Del=1050 End=5531
+2022-06-05 21:34:43:plx_hist_190_v1r10: Completed: 06:16:15: Rank=45: Particles: Start=2615 Del=1081 End=1534
+2022-06-05 21:35:09:plx_hist_250_v1r10: Completed: 05:16:23: Rank=11: Particles: Start=7975 Del=1956 End=6019
+2022-06-05 21:35:22:plx_hist_220_v1r10: Completed: 05:16:44: Rank=32: Particles: Start=5765 Del=386 End=5379
+2022-06-05 21:35:31:plx_hist_165_v1r10: Completed: 05:31:14: Rank=32: Particles: Start=2544 Del=572 End=1972
+2022-06-05 21:36:12:plx_hist_220_v1r10: Completed: 05:17:33: Rank=14: Particles: Start=4593 Del=1966 End=2627
+2022-06-05 21:36:28:plx_hist_165_v1r10: Completed: 05:32:11: Rank=44: Particles: Start=8075 Del=1741 End=6334
+2022-06-05 21:36:36:plx_hist_190_v1r10: Completed: 06:18:09: Rank=28: Particles: Start=7194 Del=1699 End=5495
+2022-06-05 21:36:40:plx_hist_250_v1r10: Completed: 05:17:54: Rank=19: Particles: Start=7132 Del=1330 End=5802
+2022-06-05 21:37:26:plx_hist_165_v1r10: Completed: 05:33:09: Rank=14: Particles: Start=8202 Del=1220 End=6982
+2022-06-05 21:37:49:plx_hist_190_v1r10: Completed: 06:19:21: Rank=16: Particles: Start=7853 Del=926 End=6927
+2022-06-05 21:42:08:plx_hist_220_v1r10: Completed: 05:23:29: Rank=10: Particles: Start=8906 Del=1549 End=7357
+2022-06-05 21:44:58:plx_hist_165_v1r10: Completed: 05:40:41: Rank=34: Particles: Start=9237 Del=1554 End=7683
+2022-06-05 21:45:01:plx_hist_165_v1r10: Completed: 05:40:44: Rank=13: Particles: Start=9151 Del=1144 End=8007
+2022-06-05 21:45:33:plx_hist_165_v1r10: Completed: 05:41:16: Rank=41: Particles: Start=6859 Del=3141 End=3718
+2022-06-05 21:46:42:plx_hist_190_v1r10: Completed: 06:28:14: Rank= 8: Particles: Start=4313 Del=352 End=3961
+2022-06-05 21:47:09:plx_hist_220_v1r10: Completed: 05:28:30: Rank=25: Particles: Start=9285 Del=1648 End=7637
+2022-06-05 21:47:55:plx_hist_190_v1r10: Completed: 06:29:27: Rank=19: Particles: Start=4634 Del=2593 End=2041
+2022-06-05 21:49:56:plx_hist_190_v1r10: Completed: 06:31:29: Rank=42: Particles: Start=10018 Del=753 End=9265
+2022-06-05 21:50:09:plx_hist_190_v1r10: Completed: 06:31:41: Rank=24: Particles: Start=7359 Del=2256 End=5103
+2022-06-05 21:50:52:plx_hist_190_v1r10: Completed: 06:32:24: Rank=22: Particles: Start=11259 Del=3653 End=7606
+2022-06-05 21:51:08:plx_hist_165_v1r10: Completed: 05:46:51: Rank= 7: Particles: Start=7567 Del=725 End=6842
+2022-06-05 21:55:42:plx_hist_220_v1r10: Completed: 05:37:04: Rank= 4: Particles: Start=9891 Del=1414 End=8477
+2022-06-05 21:56:38:plx_hist_165_v1r10: Completed: 05:52:21: Rank=23: Particles: Start=7180 Del=1023 End=6157
+2022-06-05 21:56:46:plx_hist_165_v1r10: Completed: 05:52:29: Rank=22: Particles: Start=8306 Del=2766 End=5540
+2022-06-05 21:57:57:plx_hist_165_v1r10: Completed: 05:53:40: Rank= 3: Particles: Start=7912 Del=3457 End=4455
+2022-06-05 21:59:18:plx_hist_250_v1r10: Completed: 05:40:32: Rank=40: Particles: Start=5190 Del=414 End=4776
+2022-06-05 21:59:32:plx_hist_250_v1r10: Completed: 05:40:46: Rank=29: Particles: Start=10328 Del=626 End=9702
+2022-06-05 21:59:53:plx_hist_165_v1r10: Completed: 05:55:36: Rank=24: Particles: Start=11755 Del=3491 End=8264
+2022-06-05 21:59:56:plx_hist_165_v1r10: Completed: 05:55:39: Rank= 4: Particles: Start=11363 Del=3074 End=8289
+2022-06-05 22:01:16:plx_hist_220_v1r10: Completed: 05:42:38: Rank=17: Particles: Start=10746 Del=1368 End=9378
+2022-06-05 22:02:45:plx_hist_165_v1r10: Completed: 05:58:28: Rank=27: Particles: Start=7150 Del=759 End=6391
+2022-06-05 22:05:50:plx_hist_165_v1r10: Completed: 06:01:33: Rank=21: Particles: Start=5404 Del=2751 End=2653
+2022-06-05 22:10:10:plx_hist_190_v1r10: Completed: 06:51:42: Rank=39: Particles: Start=12460 Del=1606 End=10854
+2022-06-05 22:11:47:plx_hist_190_v1r10: Completed: 06:53:20: Rank=14: Particles: Start=2971 Del=514 End=2457
+2022-06-05 22:13:39:plx_hist_220_v1r10: Completed: 05:55:01: Rank= 0: Particles: Start=7033 Del=676 End=6357
+2022-06-05 22:15:31:plx_hist_165_v1r10: Completed: 06:11:14: Rank= 6: Particles: Start=7081 Del=852 End=6229
+2022-06-05 22:16:38:plx_hist_220_v1r10: Completed: 05:57:59: Rank= 7: Particles: Start=9006 Del=596 End=8410
+2022-06-05 22:17:04:plx_hist_220_v1r10: Completed: 05:58:25: Rank=40: Particles: Start=8053 Del=758 End=7295
+2022-06-05 22:17:07:plx_hist_165_v1r10: Completed: 06:12:50: Rank=28: Particles: Start=7741 Del=879 End=6862
+2022-06-05 22:18:01:plx_hist_165_v1r10: Completed: 06:13:44: Rank= 2: Particles: Start=7265 Del=858 End=6407
+2022-06-05 22:21:53:plx_hist_190_v1r10: Completed: 07:03:25: Rank= 7: Particles: Start=12102 Del=3067 End=9035
+2022-06-05 22:23:50:plx_hist_190_v1r10: Completed: 07:05:23: Rank=33: Particles: Start=7235 Del=2952 End=4283
+2022-06-05 22:24:08:plx_hist_220_v1r10: Completed: 06:05:29: Rank= 5: Particles: Start=10466 Del=725 End=9741
+2022-06-05 22:25:34:plx_hist_190_v1r10: Completed: 07:07:07: Rank= 5: Particles: Start=7510 Del=3667 End=3843
+2022-06-05 22:28:02:plx_hist_220_v1r10: Completed: 06:09:23: Rank=26: Particles: Start=10334 Del=921 End=9413
+2022-06-05 22:28:07:plx_hist_220_v1r10: Completed: 06:09:28: Rank=29: Particles: Start=11496 Del=788 End=10708
+2022-06-05 22:28:25:plx_hist_250_v1r10: Completed: 06:09:39: Rank=30: Particles: Start=7712 Del=976 End=6736
+2022-06-05 22:28:32:plx_hist_250_v1r10: Completed: 06:09:46: Rank=27: Particles: Start=5096 Del=2535 End=2561
+2022-06-05 22:29:49:plx_hist_190_v1r10: Completed: 07:11:22: Rank=12: Particles: Start=10732 Del=1222 End=9510
+2022-06-05 22:30:36:plx_hist_250_v1r10: Completed: 06:11:50: Rank=16: Particles: Start=6116 Del=2244 End=3872
+2022-06-05 22:31:04:plx_hist_220_v1r10: Completed: 06:12:25: Rank=38: Particles: Start=8646 Del=616 End=8030
+2022-06-05 22:31:10:plx_hist_250_v1r10: Completed: 06:12:24: Rank=18: Particles: Start=7662 Del=1022 End=6640
+2022-06-05 22:31:32:plx_hist_250_v1r10: Completed: 06:12:46: Rank= 3: Particles: Start=7238 Del=1008 End=6230
+2022-06-05 22:31:32:plx_hist_250_v1r10: Completed: 06:12:46: Rank= 6: Particles: Start=10776 Del=605 End=10171
+2022-06-05 22:31:35:plx_hist_250_v1r10: Completed: 06:12:49: Rank=26: Particles: Start=11610 Del=664 End=10946
+2022-06-05 22:32:21:plx_hist_220_v1r10: Completed: 06:13:43: Rank= 2: Particles: Start=10465 Del=1070 End=9395
+2022-06-05 22:32:35:plx_hist_220_v1r10: Completed: 06:13:56: Rank=45: Particles: Start=12173 Del=1028 End=11145
+2022-06-05 22:33:39:plx_hist_250_v1r10: Completed: 06:14:53: Rank=43: Particles: Start=11083 Del=865 End=10218
+2022-06-05 22:33:48:plx_hist_250_v1r10: Completed: 06:15:02: Rank=23: Particles: Start=12966 Del=888 End=12078
+2022-06-05 22:33:59:plx_hist_190_v1r10: Completed: 07:15:32: Rank= 1: Particles: Start=12833 Del=2682 End=10151
+2022-06-05 22:34:42:plx_hist_220_v1r10: Completed: 06:16:03: Rank=39: Particles: Start=13715 Del=1411 End=12304
+2022-06-05 22:35:45:plx_hist_165_v1r10: Completed: 06:31:28: Rank=19: Particles: Start=6506 Del=657 End=5849
+2022-06-05 22:36:03:plx_hist_190_v1r10: Completed: 07:17:35: Rank=46: Particles: Start=11155 Del=1073 End=10082
+2022-06-05 22:38:41:plx_hist_165_v1r10: Completed: 06:34:24: Rank=46: Particles: Start=6419 Del=525 End=5894
+2022-06-05 22:38:52:plx_hist_165_v1r10: Completed: 06:34:35: Rank=47: Particles: Start=6339 Del=530 End=5809
+2022-06-05 22:39:10:plx_hist_250_v1r10: Completed: 06:20:24: Rank= 1: Particles: Start=14039 Del=1077 End=12962
+2022-06-05 22:39:17:plx_hist_250_v1r10: Completed: 06:20:31: Rank= 9: Particles: Start=12279 Del=1187 End=11092
+2022-06-05 22:39:24:plx_hist_190_v1r10: Completed: 07:20:57: Rank=17: Particles: Start=9192 Del=3059 End=6133
+2022-06-05 22:41:37:plx_hist_165_v1r10: Completed: 06:37:20: Rank=12: Particles: Start=4305 Del=1737 End=2568
+2022-06-05 22:41:39:plx_hist_165_v1r10: Completed: 06:37:22: Rank= 1: Particles: Start=5527 Del=481 End=5046
+2022-06-05 22:43:56:plx_hist_190_v1r10: Completed: 07:25:28: Rank=31: Particles: Start=5989 Del=312 End=5677
+2022-06-05 22:46:23:plx_hist_220_v1r10: Completed: 06:27:44: Rank=36: Particles: Start=6820 Del=3230 End=3590
+2022-06-05 22:47:05:plx_hist_165_v1r10: Completed: 06:42:48: Rank=31: Particles: Start=2271 Del=302 End=1969
+2022-06-05 22:50:15:plx_hist_165_v1r10: Completed: 06:45:58: Rank=33: Particles: Start=4331 Del=443 End=3888
+2022-06-05 22:51:25:plx_hist_220_v1r10: Completed: 06:32:46: Rank=46: Particles: Start=3168 Del=500 End=2668
+2022-06-05 22:57:18:plx_hist_190_v1r10: Completed: 07:38:50: Rank=27: Particles: Start=3921 Del=1698 End=2223
+2022-06-05 22:58:54:plx_hist_250_v1r10: Completed: 06:40:08: Rank=25: Particles: Start=5943 Del=2946 End=2997
+2022-06-05 23:00:30:plx_hist_220_v1r10: Completed: 06:41:52: Rank=11: Particles: Start=12425 Del=878 End=11547
+2022-06-05 23:06:36:plx_hist_190_v1r10: Completed: 07:48:08: Rank=18: Particles: Start=2384 Del=436 End=1948
+2022-06-05 23:10:10:plx_hist_190_v1r10: Completed: 07:51:42: Rank=43: Particles: Start=13083 Del=1379 End=11704
+2022-06-05 23:13:55:plx_hist_250_v1r10: Completed: 06:55:08: Rank=47: Particles: Start=2901 Del=337 End=2564
+2022-06-05 23:16:39:plx_hist_165_v1r10: Completed: 07:12:22: Rank=16: Particles: Start=6308 Del=3269 End=3039
+2022-06-05 23:23:13:plx_hist_190_v1r10: Completed: 08:04:46: Rank=41: Particles: Start=7070 Del=560 End=6510
+2022-06-05 23:24:48:plx_hist_165_v1r10: Completed: 07:20:31: Rank=25: Particles: Start=1853 Del=379 End=1474
+2022-06-05 23:27:18:plx_hist_250_v1r10: Completed: 07:08:32: Rank= 5: Particles: Start=9423 Del=1191 End=8232
+2022-06-05 23:27:19:plx_hist_250_v1r10: Completed: 07:08:33: Rank=36: Particles: Start=8182 Del=388 End=7794
+2022-06-05 23:27:26:plx_hist_250_v1r10: Completed: 07:08:39: Rank=12: Particles: Start=9649 Del=679 End=8970
+2022-06-05 23:29:49:plx_hist_190_v1r10: Completed: 08:11:21: Rank= 2: Particles: Start=10395 Del=758 End=9637
+2022-06-05 23:29:52:plx_hist_165_v1r10: Completed: 07:25:35: Rank= 9: Particles: Start=2535 Del=363 End=2172
+2022-06-05 23:30:17:plx_hist_190_v1r10: Completed: 08:11:50: Rank= 0: Particles: Start=8671 Del=693 End=7978
+2022-06-05 23:31:54:plx_hist_190_v1r10: Completed: 08:13:26: Rank=40: Particles: Start=10204 Del=726 End=9478
+2022-06-05 23:32:49:plx_hist_190_v1r10: Completed: 08:14:21: Rank=38: Particles: Start=10822 Del=756 End=10066
+2022-06-05 23:32:51:plx_hist_190_v1r10: Completed: 08:14:23: Rank=36: Particles: Start=9760 Del=600 End=9160
+2022-06-05 23:34:28:plx_hist_165_v1r10: Completed: 07:30:11: Rank=11: Particles: Start=6554 Del=515 End=6039
+2022-06-05 23:39:53:plx_hist_190_v1r10: Completed: 08:21:25: Rank=44: Particles: Start=5696 Del=3265 End=2431
+2022-06-05 23:43:29:plx_hist_190_v1r10: Completed: 08:25:01: Rank=15: Particles: Start=6183 Del=3449 End=2734
+2022-06-06 00:00:34:plx_hist_220_v1r10: Finished!: Timer=07:41:55
+2022-06-06 00:03:38:plx_hist_190_v1r10: Completed: 08:45:10: Rank=11: Particles: Start=12214 Del=1861 End=10353
+2022-06-06 00:26:24:plx_hist_250_v1r10: Finished!: Timer=08:07:38
+2022-06-06 00:29:22:plx_hist_190_v1r10: Completed: 09:10:54: Rank=13: Particles: Start=4683 Del=319 End=4364
+2022-06-06 00:32:16:plx_hist_190_v1r10: Completed: 09:13:48: Rank=20: Particles: Start=9788 Del=867 End=8921
+2022-06-06 00:32:31:plx_hist_190_v1r10: Completed: 09:14:03: Rank=26: Particles: Start=9340 Del=581 End=8759
+2022-06-06 00:34:06:plx_hist_165_v1r10: Finished!: Timer=08:29:49
+2022-06-06 00:34:50:Generating spinup restart file from: plx_hist_190_v1r09
+2022-06-06 00:37:12:plx_hist_190_v1r10: Run=1825d: 1990-01-01 to 1985-01-02: Particles=360075
+2022-06-06 00:37:12:plx_hist_190_v1r10: Tmp=BLEVDXNW: dt=60m: Out=2d: Land=0.975 Vmin=1e-07
+2022-06-06 00:38:22:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 00:41:37:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 00:44:09:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 00:47:17:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 00:52:58:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 00:57:16:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 00:59:13:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 01:00:09:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 01:03:29:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 01:05:49:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 01:07:19:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 01:07:41:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 01:09:34:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 01:09:37:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 01:11:58:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 01:11:58:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 01:15:49:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 01:16:59:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 01:18:10:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 01:18:56:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 01:21:09:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 01:22:40:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 01:24:36:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 01:26:05:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 01:26:41:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 01:26:51:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 01:28:55:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 01:29:00:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 01:29:47:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 01:33:11:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 01:34:12:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 01:35:40:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 01:35:50:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 01:35:59:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 01:36:54:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 01:38:28:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 01:38:46:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 01:39:28:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 01:41:29:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 01:41:29:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 01:42:11:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 01:45:06:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 01:45:15:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 01:47:46:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 01:48:59:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 01:49:21:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 01:49:23:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 01:51:45:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 01:51:54:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 01:53:45:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 01:55:29:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 01:57:20:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 01:59:45:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 02:00:18:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 02:02:00:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 02:02:02:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 02:04:11:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 02:04:45:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 02:07:34:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 02:07:45:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 02:09:08:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 02:10:04:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 02:11:35:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 02:12:25:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 02:13:30:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 02:13:50:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 02:13:50:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 02:16:19:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 02:17:29:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 02:17:57:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 02:19:49:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 02:19:51:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 02:20:38:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 02:25:46:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 02:26:38:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 02:28:00:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 02:28:02:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 02:30:22:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 02:31:58:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 02:33:18:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 02:33:20:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 02:34:18:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 02:35:49:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 02:37:09:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 02:37:44:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 02:38:28:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 02:39:48:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 02:40:51:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 02:41:33:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 02:44:46:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 02:45:01:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 02:49:25:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 02:49:25:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 02:53:50:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 02:54:08:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 02:56:08:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 02:57:00:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 02:59:45:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 03:00:28:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 03:01:15:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 03:01:39:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 03:02:27:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 03:03:10:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 03:05:01:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 03:05:14:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 03:06:16:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 03:06:58:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 03:07:42:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 03:09:17:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 03:09:46:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 03:12:24:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 03:14:17:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 03:16:23:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 03:18:12:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 03:18:44:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 03:19:46:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 03:21:32:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 03:22:19:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 03:22:21:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 03:24:49:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 03:26:41:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 03:26:41:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 03:27:21:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 03:27:49:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 03:27:51:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 03:28:59:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 03:29:47:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 03:31:22:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 03:32:03:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 03:33:19:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 03:33:51:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 03:35:00:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 03:35:12:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 03:36:55:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 03:37:34:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 03:37:42:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 03:39:05:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 03:40:29:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 03:41:14:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 03:43:20:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 03:43:22:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 03:44:11:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 03:45:45:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 03:45:49:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 03:47:09:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 03:48:47:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 03:49:12:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 03:49:45:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 03:51:01:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 03:51:01:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 03:52:31:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 03:53:09:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 03:53:22:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 03:54:17:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 03:54:56:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 03:56:45:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 03:56:49:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 03:58:45:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 04:00:22:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 04:02:37:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 04:02:43:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 04:05:21:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 04:05:28:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 04:05:54:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 04:07:13:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 04:09:07:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 04:12:02:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 04:13:30:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 04:15:11:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 04:15:43:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 04:16:32:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 04:17:31:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 04:19:36:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 04:20:08:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 04:22:22:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 04:22:22:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 04:26:59:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 04:27:20:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 04:27:34:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 04:29:56:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 04:30:15:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 04:30:49:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 04:32:31:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 04:33:13:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 04:36:21:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 04:37:23:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 04:39:22:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 04:39:27:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 04:40:13:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 04:42:22:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 04:42:56:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 04:43:17:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 04:44:31:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 04:45:54:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 04:47:06:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 04:47:56:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 04:48:22:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 04:55:06:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 04:55:12:plx_hist_190_v1r10: Completed: 04:18:31: Rank=21: Particles: Start=3271 Del=1480 End=1791
+2022-06-06 04:56:36:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 04:56:45:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 04:58:11:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 04:59:18:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 05:00:39:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 05:01:08:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 05:01:17:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 05:02:13:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 05:03:19:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 05:04:50:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 05:05:06:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 05:05:44:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 05:06:01:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 05:06:34:plx_hist_190_v1r10: Completed: 04:29:53: Rank=23: Particles: Start=9334 Del=1001 End=8333
+2022-06-06 05:06:34:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 05:07:22:plx_hist_190_v1r10: Completed: 04:30:41: Rank=34: Particles: Start=3725 Del=1511 End=2214
+2022-06-06 05:08:33:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 05:08:36:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 05:08:57:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 05:11:55:plx_hist_190_v1r10: Completed: 04:35:14: Rank= 4: Particles: Start=9087 Del=7904 End=1183
+2022-06-06 05:12:22:plx_hist_190_v1r10: Completed: 04:35:41: Rank=10: Particles: Start=2762 Del=1333 End=1429
+2022-06-06 05:13:23:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 05:14:41:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 05:14:54:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 05:15:22:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 05:16:04:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 05:16:22:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 05:17:06:plx_hist_190_v1r10: Completed: 04:40:25: Rank= 9: Particles: Start=6064 Del=3860 End=2204
+2022-06-06 05:18:49:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 05:18:51:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 05:20:37:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 05:21:34:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 05:26:51:plx_hist_190_v1r10: Completed: 04:50:10: Rank=37: Particles: Start=8217 Del=599 End=7618
+2022-06-06 05:27:32:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 05:28:59:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 05:30:35:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 05:30:52:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 05:31:30:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 05:32:47:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 05:34:35:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 05:35:44:plx_hist_190_v1r10: Completed: 04:59:03: Rank=25: Particles: Start=2494 Del=850 End=1644
+2022-06-06 05:38:19:plx_hist_190_v1r10: Completed: 05:01:38: Rank=32: Particles: Start=2112 Del=625 End=1487
+2022-06-06 05:40:06:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 05:40:11:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 05:42:23:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 05:42:53:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 05:44:09:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 05:45:39:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 05:46:27:plx_hist_190_v1r10: Completed: 05:09:47: Rank=30: Particles: Start=6550 Del=4020 End=2530
+2022-06-06 05:49:13:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 05:49:39:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 05:51:50:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 05:51:53:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 05:53:14:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 05:55:49:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 05:56:57:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 05:58:17:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 05:59:49:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 05:59:53:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 06:02:29:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 06:02:33:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 06:03:21:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 06:04:04:plx_hist_190_v1r10: Completed: 05:27:24: Rank= 6: Particles: Start=8470 Del=4748 End=3722
+2022-06-06 06:04:26:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 06:05:13:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 06:06:20:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 06:07:12:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 06:07:47:plx_hist_190_v1r10: Completed: 05:31:06: Rank=19: Particles: Start=4634 Del=2593 End=2041
+2022-06-06 06:07:48:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 06:09:29:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 06:10:22:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 06:10:37:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 06:11:14:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 06:12:50:plx_hist_190_v1r10: Completed: 05:36:10: Rank=29: Particles: Start=4370 Del=329 End=4041
+2022-06-06 06:14:55:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 06:14:55:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 06:17:42:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 06:17:42:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 06:17:43:plx_hist_190_v1r10: Completed: 05:41:02: Rank=45: Particles: Start=2615 Del=1081 End=1534
+2022-06-06 06:17:47:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 06:17:53:plx_hist_190_v1r10: Completed: 05:41:12: Rank=35: Particles: Start=4483 Del=1965 End=2518
+2022-06-06 06:19:23:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 06:21:16:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 06:23:05:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 06:23:15:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 06:23:55:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 06:25:37:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 06:26:51:plx_hist_190_v1r10: Completed: 05:50:10: Rank=27: Particles: Start=3921 Del=1698 End=2223
+2022-06-06 06:27:00:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 06:27:10:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 06:27:26:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 06:27:29:plx_hist_190_v1r10: Completed: 05:50:48: Rank=16: Particles: Start=7853 Del=926 End=6927
+2022-06-06 06:28:38:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 06:29:04:plx_hist_190_v1r10: Completed: 05:52:24: Rank=47: Particles: Start=10393 Del=4568 End=5825
+2022-06-06 06:29:33:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 06:30:12:plx_hist_190_v1r10: Completed: 05:53:32: Rank=28: Particles: Start=7194 Del=1699 End=5495
+2022-06-06 06:30:43:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 06:30:44:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 06:31:40:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 06:32:21:plx_hist_190_v1r10: Completed: 05:55:40: Rank= 3: Particles: Start=7105 Del=1093 End=6012
+2022-06-06 06:34:52:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 06:34:52:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 06:34:52:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 06:36:47:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 06:36:54:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 06:36:54:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 06:41:50:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 06:41:52:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 06:43:29:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 06:44:08:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 06:45:37:plx_hist_190_v1r10: Completed: 06:08:56: Rank=22: Particles: Start=11259 Del=3653 End=7606
+2022-06-06 06:45:58:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 06:45:58:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 06:50:43:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 06:50:43:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 06:51:05:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 06:51:36:plx_hist_190_v1r10: Completed: 06:14:56: Rank=24: Particles: Start=7359 Del=2256 End=5103
+2022-06-06 06:52:33:plx_hist_190_v1r10: Completed: 06:15:53: Rank=42: Particles: Start=10018 Del=753 End=9265
+2022-06-06 06:53:34:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 06:54:49:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 06:56:50:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 06:58:35:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 07:00:45:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 07:01:11:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 07:02:44:plx_hist_190_v1r10: Completed: 06:26:03: Rank= 8: Particles: Start=4313 Del=352 End=3961
+2022-06-06 07:04:47:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 07:04:52:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 07:07:44:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 07:09:04:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 07:10:57:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 07:11:32:plx_hist_190_v1r10: Completed: 06:34:51: Rank=33: Particles: Start=7235 Del=2952 End=4283
+2022-06-06 07:12:47:plx_hist_190_v1r10: Completed: 06:36:06: Rank= 7: Particles: Start=12102 Del=3067 End=9035
+2022-06-06 07:12:56:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 07:12:56:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 07:13:55:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 07:14:37:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 07:15:02:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 07:15:12:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 07:15:48:plx_hist_190_v1r10: Completed: 06:39:08: Rank=14: Particles: Start=2971 Del=514 End=2457
+2022-06-06 07:15:49:plx_hist_190_v1r10: Completed: 06:39:09: Rank=12: Particles: Start=10732 Del=1222 End=9510
+2022-06-06 07:16:35:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 07:17:27:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 07:17:40:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 07:17:40:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 07:18:43:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 07:19:09:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 07:20:06:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 07:21:25:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 07:21:32:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 07:21:43:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 07:22:55:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 07:23:03:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 07:25:24:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 07:25:25:plx_hist_190_v1r10: Completed: 06:48:44: Rank= 5: Particles: Start=7510 Del=3667 End=3843
+2022-06-06 07:25:30:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 07:26:50:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 07:27:33:plx_hist_190_v1r10: Completed: 06:50:52: Rank=46: Particles: Start=11155 Del=1073 End=10082
+2022-06-06 07:27:36:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 07:28:06:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 07:28:34:plx_hist_190_v1r10: Completed: 06:51:54: Rank= 1: Particles: Start=12833 Del=2682 End=10151
+2022-06-06 07:28:43:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 07:29:11:plx_hist_190_v1r10: Completed: 06:52:31: Rank=39: Particles: Start=12460 Del=1606 End=10854
+2022-06-06 07:29:52:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 07:32:24:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 07:32:58:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 07:33:45:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 07:33:50:plx_hist_190_v1r10: Completed: 06:57:09: Rank=31: Particles: Start=5989 Del=312 End=5677
+2022-06-06 07:33:52:plx_hist_190_v1r10: Completed: 06:57:11: Rank=17: Particles: Start=9192 Del=3059 End=6133
+2022-06-06 07:36:01:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 07:37:52:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 07:39:15:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 07:41:58:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 07:46:30:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 07:47:12:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 07:48:09:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 07:48:20:plx_hist_190_v1r10: Completed: 07:11:39: Rank=18: Particles: Start=2384 Del=436 End=1948
+2022-06-06 07:49:43:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 07:50:34:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 07:50:41:plx_hist_190_v1r10: Completed: 07:14:00: Rank=43: Particles: Start=13083 Del=1379 End=11704
+2022-06-06 07:51:34:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 07:51:42:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 07:52:05:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 07:54:11:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 07:54:11:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 07:56:18:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 07:56:34:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 07:57:58:plx_hist_190_v1r10: Completed: 07:21:18: Rank=41: Particles: Start=7070 Del=560 End=6510
+2022-06-06 07:58:04:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 07:59:41:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 07:59:46:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 08:00:25:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 08:02:14:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 08:02:15:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 08:02:51:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 08:03:00:plx_hist_190_v1r10: Completed: 07:26:19: Rank=20: Particles: Start=9788 Del=867 End=8921
+2022-06-06 08:03:33:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 08:04:00:plx_hist_190_v1r10: Completed: 07:27:19: Rank=44: Particles: Start=5696 Del=3265 End=2431
+2022-06-06 08:04:09:plx_hist_190_v1r10: Completed: 07:27:29: Rank=36: Particles: Start=9760 Del=600 End=9160
+2022-06-06 08:04:09:plx_hist_190_v1r10: Completed: 07:27:29: Rank=40: Particles: Start=10204 Del=726 End=9478
+2022-06-06 08:04:26:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 08:04:41:plx_hist_190_v1r10: Completed: 07:28:00: Rank= 0: Particles: Start=8671 Del=693 End=7978
+2022-06-06 08:05:00:plx_hist_190_v1r10: Completed: 07:28:19: Rank=11: Particles: Start=12214 Del=1861 End=10353
+2022-06-06 08:05:02:plx_hist_190_v1r10: Completed: 07:28:22: Rank= 2: Particles: Start=10395 Del=758 End=9637
+2022-06-06 08:05:03:plx_hist_190_v1r10: Completed: 07:28:22: Rank=38: Particles: Start=10822 Del=756 End=10066
+2022-06-06 08:05:17:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 08:06:09:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 08:06:33:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 08:07:44:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 08:07:50:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 08:09:07:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 08:09:14:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 08:09:14:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 08:10:37:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 08:11:50:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 08:12:12:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 08:12:43:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 08:21:51:plx_hist_190_v1r10: Completed: 07:45:10: Rank=15: Particles: Start=6183 Del=3449 End=2734
+2022-06-06 08:24:48:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 08:25:18:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 08:26:11:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 08:26:42:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 08:27:20:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 08:28:04:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 08:28:36:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 08:30:00:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 08:31:25:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 08:31:25:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 08:33:05:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 08:34:43:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 08:35:29:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 08:36:26:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 08:37:36:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 08:38:23:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 08:38:33:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 08:39:45:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 08:39:49:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 08:40:00:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 08:41:15:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 08:42:12:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 08:42:15:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 08:43:20:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 08:43:59:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 08:45:10:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 08:46:28:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 08:46:52:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 08:47:45:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 08:49:57:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 08:50:30:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 08:52:52:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 08:53:14:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 08:55:02:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 08:55:44:plx_hist_190_v1r10: Completed: 08:19:04: Rank=13: Particles: Start=4683 Del=319 End=4364
+2022-06-06 08:57:17:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 08:57:33:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 08:57:42:plx_hist_190_v1r10: Completed: 08:21:01: Rank=26: Particles: Start=9340 Del=581 End=8759
+2022-06-06 08:57:50:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 08:59:49:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 08:59:49:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 09:00:17:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 09:02:06:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 09:02:08:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 09:02:08:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 09:04:29:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 09:05:48:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 09:06:40:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 09:07:34:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 09:07:38:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 09:08:58:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 09:09:42:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 09:10:13:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 09:10:32:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 09:12:25:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 09:12:30:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 09:13:39:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 09:14:19:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 09:15:31:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 09:16:15:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 09:16:39:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 09:17:13:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 09:22:24:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 09:22:34:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 09:23:16:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 09:24:47:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 09:25:10:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 09:26:19:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 09:28:26:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 09:28:52:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 09:29:30:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 09:31:40:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 09:32:41:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 09:33:30:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 09:33:33:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 09:35:24:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 09:36:02:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 09:36:47:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 09:37:14:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 09:39:07:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 09:39:27:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 09:42:11:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 09:42:25:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 09:42:50:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 09:43:55:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 09:44:47:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 09:45:15:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 09:46:40:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 09:47:07:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 09:47:33:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 09:49:47:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 09:50:09:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 09:51:03:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 09:51:46:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 09:53:04:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 09:53:21:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 09:55:54:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 09:56:11:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 09:56:56:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 09:57:47:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 09:58:41:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 10:00:06:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 10:00:44:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 10:01:45:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 10:03:15:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 10:03:30:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 10:05:17:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 10:05:50:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 10:06:19:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 10:09:10:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 10:09:27:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 10:12:14:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 10:12:25:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 10:13:53:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 10:15:58:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 10:16:01:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 10:16:28:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 10:17:29:Generating spinup restart file from: plx_hist_250_v1r10
+2022-06-06 10:17:33:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 10:19:00:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 10:19:35:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 10:20:59:plx_hist_190_v1r10: Finished!: Timer=09:44:19
+2022-06-06 10:21:18:Generating spinup restart file from: plx_hist_220_v1r10
+2022-06-06 10:21:51:Generating spinup restart file from: plx_hist_165_v1r10
+2022-06-06 10:24:07:Generating spinup restart file from: plx_hist_220_v1r10
