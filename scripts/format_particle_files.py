@@ -32,7 +32,7 @@ Notes:
     - Reduce dims of 'zone' to (traj,)
 
 Todo:
-
+    - Fix r07 error
 
 @author: Annette Stellema
 @email: a.stellema@unsw.edu.au
@@ -44,7 +44,7 @@ import xarray as xr
 from argparse import ArgumentParser
 
 import cfg
-from tools import mlogger, timeit, save_dataset
+from tools import mlogger, timeit, save_dataset, idx
 from remap_particle_id import (create_particle_ID_remap_dict,
                                patch_particle_IDs_per_release_day)
 from fncs import (get_plx_id, open_plx_data, update_particle_data_sources,
@@ -109,8 +109,8 @@ def merge_particle_trajectories(xids, traj):
 
         # Subset dataset with particles.
         if dx.traj.isin(traj).any():
-            next_obs = dx.obs.max().item() + 1  # Update 'obs' coord.
             dx = dx.where(dx.trajectory.isin(traj), drop=True)
+            next_obs = dx.obs.max().item() + 1  # Update 'obs' coord.
 
             # Add to list of datasets to be combined.
             if dx.traj.size >= 1:
@@ -164,7 +164,6 @@ def format_particle_file(lon, exp, v=1, r=0, spinup_year=0):
         - Add option to skip adding spinup paths.
 
     """
-    test = True if cfg.home.drive == 'C:' else False
     # Files to search.
     files = ParticleFilenames(lon, exp, v, spinup_year)
     xids = files.files + files.spinup
@@ -198,11 +197,11 @@ def format_particle_file(lon, exp, v=1, r=0, spinup_year=0):
     traj_patch = (traj_patch['trajectory'] - last_id - 1).astype(dtype=int)
 
     # Merge trajectory data across files.
-    if test:
+    if cfg.test:
         logger.info('{}: Test subset.'.format(xid.stem))
-        xids = xids[:3]
-        xids_p = xids_p[:6]
-        traj = traj[::250]  # traj[1000:1200]
+        xids = [xids[7]]
+        # xids_p = xids_p[:6]
+        traj = traj[-50:]  # traj[1000:1200]
 
     logger.debug('{}: Merge trajectory data.'.format(xid.stem))
     ds = merge_particle_trajectories(xids, traj)
@@ -240,7 +239,7 @@ def format_particle_file(lon, exp, v=1, r=0, spinup_year=0):
     ds['u'] = ds.u * cfg.DXDY
 
     logger.debug('{}: Saving file ...'.format(xid.stem))
-    if test:
+    if cfg.test:
         file_new = cfg.data / 'tmp/{}'.format(xid.name)
     msg = ': ./format_particle_files.py'
     save_dataset(ds, file_new, msg)
@@ -254,5 +253,5 @@ if __name__ == "__main__":
     args = p.parse_args()
     # lon, exp, v, r, spinup_year = 165, 0, 1, 0, 0
 
-    for r in range(10):
-        format_particle_file(args.lon, args.exp, v=1, r=r, spinup_year=0)
+    r = 7
+    format_particle_file(args.lon, args.exp, v=1, r=r, spinup_year=0)
