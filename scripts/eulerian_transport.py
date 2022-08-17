@@ -82,6 +82,7 @@ def llwbc_transport(exp=0, clim=False, sum_dims=['lon']):
 
         # Subset boundaries.
         dx = subset_ofam_dataset(ds, lat, lon, None)
+        df[name + '_net'] = convert_to_transport(dx, lat, 'v', sum_dims=sum_dims)
 
         # Subset directonal velocity (southward for MC).
         sign = -1 if name in ['mc'] else 1
@@ -89,6 +90,7 @@ def llwbc_transport(exp=0, clim=False, sum_dims=['lon']):
 
         # Sum weighted velocity.
         df[name] = convert_to_transport(dx, lat, 'v', sum_dims=sum_dims)
+        
         df[name].attrs['name'] = zone.name_full
         df[name].attrs['units'] = 'Sv'
         df[name].attrs['bnds'] = 'lat={} & lon={}-{}'.format(lat, *lon)
@@ -97,7 +99,7 @@ def llwbc_transport(exp=0, clim=False, sum_dims=['lon']):
         df['time'] = np.arange(1, 13)
         df = df.expand_dims({'exp': [exp]})
 
-    save_dataset(df, filename, msg=' ./eulerian_transport.py')
+    save_dataset(df, filename, msg=' ./eulerian_transport.py (net and uni)')
     logger.info('Saved: {}'.format(filename.stem))
     return df
 
