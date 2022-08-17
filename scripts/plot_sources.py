@@ -236,32 +236,30 @@ def source_histogram_multi(ds, lon):
             i += 1
 
     plt.tight_layout()
-    plt.savefig(cfg.fig / 'sources/histogram_{}.png'.format(lon))
+    plt.savefig(cfg.fig / 'sources/histogram_{}.png'.format(lon), dpi=300)
     return
 
 
 def source_histogram_variable(var='z'):
     """Histograms of single source variables."""
-
-    
     if var not in ['z_f', 'z']:
-        kwargs = dict(bins='fd', cutoff=0.95, orientation='vertical')
+        kwargs = dict(bins='fd', cutoff=0.95)
     else:
-        kwargs = dict(bins=np.arange(0, 375 + 20, 5), cutoff=None, 
+        kwargs = dict(bins=np.arange(0, 500, 25), cutoff=None, 
                       orientation='horizontal')
 
-    nc = 1
-    fig, axes = plt.subplots(5, nc, figsize=(11, 14))  # !!!
+    nc, nr = 4, 7
+    fig, axes = plt.subplots(nr, nc, figsize=(11, 14))
 
-    for x, lon in enumerate(cfg.lons[:nc]):
+    for x, lon in enumerate(cfg.lons):
         ds = source_dataset(lon)
-        zn = ds.zone.values[:5]  # !!!
+        zn = ds.zone.values[:nr]
         
         name, units = [ds[var].attrs[a] for a in ['long_name', 'units']]
         xlabel, ylabel = '{} [{}]'.format(name, units), 'Transport [Sv]'
         
         if kwargs['orientation'] == 'horizontal':
-            xlabel, ylabel = ylabel, xlabel 
+            xlabel, ylabel = ylabel, xlabel
         
         for zi, z in enumerate(zn):
             i = nc * zi + x
@@ -274,17 +272,22 @@ def source_histogram_variable(var='z'):
 
             ax.set_title('{}) {} - EUC at {}°E'.format(i + 1, zname, lon),
                          loc='left', x=-0.05)
+            ax.set_ymargin(0)
 
             if i >= axes.shape[1] * (axes.shape[0] - 1):  # Last row.
-                # ax.tick_params(labelsize=10)
                 ax.set_xlabel(xlabel)
 
             if i in np.arange(axes.shape[0]) * axes.shape[1]:  # First col.
                 ax.set_ylabel(ylabel)
+                
+            if var in ['z_f', 'z']:
+                # Flip yaxis 0m at top.
+                ax.set_ylim(400, 0)
+                
 
     fig.subplots_adjust(wspace=0.07, hspace=0.07)
     plt.tight_layout()
-    plt.savefig(cfg.fig / 'sources/{}_histogram.png'.format(name))
+    plt.savefig(cfg.fig / 'sources/{}_histogram.png'.format(name), dpi=300)
     return
 
 
@@ -414,6 +417,6 @@ def timeseries_bar(exp=0, z_ids=list(range(9)), sum_interior=True):
 #     # combined_source_histogram(ds, lon)
 
 
-for var in ['z']:#, 'speed', 'age', 'distance']:
+for var in ['z']:#, 'z_f', 'speed', 'age', 'distance']:
     source_histogram_variable(var)
 
