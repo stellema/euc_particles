@@ -79,13 +79,12 @@ def source_particle_ID_dict(ds, exp, lon, v, r):
 @timeit
 def get_final_particle_obs(ds):
     """Reduce particle dataset variables to first/last observation."""
-
     # Select the lowest value.
-    ds['time0'] = ds['time'].min('obs', skipna=True, keep_attrs=True)
-    ds['time0'].attrs['long_name'] = 'Source time'
+    ds['time_f'] = ds['time'].min('obs', skipna=True, keep_attrs=True)
+    ds['time_f'].attrs['long_name'] = 'Source time'
 
-    ds['z0'] = ds['z'].isel(obs=0)
-    ds['z0'].attrs['long_name'] = 'Source depth'
+    ds['z_f'] = ds['z'].ffill('obs').isel(obs=-1)
+    ds['z_f'].attrs['long_name'] = 'Source depth'
 
     # Select the first value.
     for var in ['time', 'trajectory', 'z', 'lat', 'lon']:
