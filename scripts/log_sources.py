@@ -81,6 +81,17 @@ def log_source_transport(lon):
     return
 
 
-# Print values.
-for lon in cfg.lons:
-    log_source_transport(lon)
+# # Print values.
+# for lon in cfg.lons:
+#     log_source_transport(lon)
+    
+    
+files = [cfg.data / 'transport_LLWBCs_{}.nc'.format(cfg.exp_abr[i]) for i in range(2)]
+ds = [xr.open_dataset(f) for f in files]
+ds = [ds[i].expand_dims(dict(exp=[i])) for i in [0, 1]]
+ds = xr.concat(ds, 'exp')
+
+ds = ds.sel(lev=slice(2.5, 1000)).sum('lev').mean('time')
+ds
+ds.isel(exp=1) - ds.isel(exp=0)
+((ds.isel(exp=1) - ds.isel(exp=0)) / ds.isel(exp=0))*100

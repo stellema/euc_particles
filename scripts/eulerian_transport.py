@@ -153,12 +153,12 @@ def source_transport_percent_of_full(exp, lon, depth=1500, func=np.sum,
 
     """
     z_ids = [1, 2, 3]  # [1, 2, 3, 6]
-    tvar = 'ztime'  # !!! Change to 'ztime'.
+    tvar = 'time_f'  # !!! Change to 'ztime'.
 
     # Particle transport when at LLWBC.
     ds = xr.open_dataset(get_plx_id(exp, lon, 1, None, 'sources'))
     ds = ds.drop([v for v in ds.data_vars
-                  if v not in ['u', 'trajectory', 'time', 'ztime']])
+                  if v not in ['u', 'trajectory', 'time', 'time_f']])
     ds = ds.sel(zone=z_ids)
     # ds = ds.where(~np.isnan(ds.trajectory), drop=True)
     # ds = ds.dropna('traj', 'all')
