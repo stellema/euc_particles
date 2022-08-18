@@ -203,28 +203,28 @@ def source_transport_percent_of_full(exp, lon, depth=1500, func=np.sum,
     return da
 
 
-# if __name__ == "__main__" and cfg.home.drive != 'C:':
-#     p = ArgumentParser(description="""LLWBCS.""")
-#     p.add_argument('-x', '--exp', default=0, type=int, help='Experiment.')
-#     args = p.parse_args()
-#     llwbc_transport(args.exp)
+if __name__ == "__main__" and cfg.home.drive != 'C:':
+    p = ArgumentParser(description="""LLWBCS.""")
+    p.add_argument('-x', '--exp', default=0, type=int, help='Experiment.')
+    args = p.parse_args()
+    llwbc_transport(args.exp)
 
 
-func = np.mean
-exp, lon = 0, 165
-depth = 1500
+# func = np.mean
+# exp, lon = 0, 165
+# depth = 1500
 
-da = source_transport_percent_of_full(exp, lon, depth, func)
-# func=np.sum
+# da = source_transport_percent_of_full(exp, lon, depth, func)
+# # func=np.sum
 
 
-df = llwbc_transport(exp)
-df = df.sel(lev=slice(0, depth))
-df = df.sum('lev')
-df = df.mean('time')
+# df = llwbc_transport(exp)
+# df = df.sel(lev=slice(0, depth))
+# df = df.sum('lev')
+# df = df.mean('time')
 
-ds = xr.open_dataset(get_plx_id(exp, lon, 1, None, 'sources'))
-ds = ds.sel(zone=[1, 2, 3])
-ds = ds.uz.mean('rtime')
-for i, v in zip([2, 0, 1], df.data_vars):
-    print(v, df[v].item(), ds.isel(zone=i).item(), (ds.isel(zone=i) / df[v]).item() * 100)
+# ds = xr.open_dataset(get_plx_id(exp, lon, 1, None, 'sources'))
+# ds = ds.sel(zone=[1, 2, 3])
+# ds = ds.uz.mean('rtime')
+# for i, v in zip([2, 0, 1], df.data_vars):
+#     print(v, df[v].item(), ds.isel(zone=i).item(), (ds.isel(zone=i) / df[v]).item() * 100)
