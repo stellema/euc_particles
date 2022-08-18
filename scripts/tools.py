@@ -368,9 +368,6 @@ def coord_formatter(array, convert='lat'):
     return new
 
 
-
-
-
 def create_mesh_grid():
     """Create OFAM3 mesh mask."""
     f = [cfg.ofam / 'ocean_{}_1981_01.nc'.format(var) for var in ['u', 'w']]
@@ -500,7 +497,15 @@ def save_dataset(ds, filename, msg=None):
 
 
 def ofam_filename(var, year, month):
+    """Format OFAM3 filename."""
     return cfg.ofam / 'ocean_{}_{}_{:02d}.nc'.format(var, year, month)
+
+
+def ofam_filename_list(exp, var):
+    """Get list of monthly OFAM3 filenames for year range of exp."""
+    years = range(cfg.years[exp][0], cfg.years[exp][1] + 1)
+    months = range(1, 13)
+    return [ofam_filename(var, y, m) for y in years for m in months]
 
 
 def ofam_cell_depth():
