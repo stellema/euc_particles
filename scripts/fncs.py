@@ -408,15 +408,20 @@ def source_dataset(lon, sum_interior=True):
     ds = [xr.open_dataset(get_plx_id(i, lon, 1, None, 'sources'))
           for i in [0, 1]]
     ds = [ds[i].expand_dims(dict(exp=[i])) for i in [0, 1]]
+    for i in range(2):
+        if 'ztime' in ds[i].data_vars:
+            # ds[i] = ds[i].rename({'ztime': 'time_f'})
+            ds[i] = ds[i].rename({'ztime': 'time0'})  # !!!
+            
     ds = xr.concat(ds, 'exp')
 
     # Create 'speed' variable.
     ds['speed'] = ds.distance / ds.age
-    ds['speed'].attrs['name'] = 'Average Speed'
+    ds['speed'].attrs['long_name'] = 'Average Speed'
     ds['speed'].attrs['units'] = 'm/s'
 
     # Convert age: seconds to days.
-    ds['age'].attrs['name'] = 'Transit Time'
+    ds['age'].attrs['long_name'] = 'Transit Time'
     ds['age'] *= 1 / (60 * 60 * 24)
     ds['age'].attrs['units'] = 'days'
 
@@ -424,8 +429,11 @@ def source_dataset(lon, sum_interior=True):
     ds['distance'] *= 1e-6
     ds['distance'].attrs['units'] = '1e6 m'
     
-    # ds['z0'].attrs['name'] = 'EUC Depth'
-    # ds['z0'].attrs['units'] = 'm'
+    ds['z'].attrs['long_name'] = 'EUC Depth'
+    ds['z'].attrs['units'] = 'm'
+    
+    ds['z_f'].attrs['long_name'] = 'Source Depth'
+    ds['z_f'].attrs['units'] = 'm'
 
     ds['names'] = ('zone', cfg.zones.names_all)
     ds['colors'] = ('zone', cfg.zones.colors_all)

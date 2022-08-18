@@ -12,7 +12,7 @@ import matplotlib.pyplot as plt
 
 import cfg
 from tools import coord_formatter, convert_longitudes
-from fncs import get_plx_id, subset_plx_by_source
+from fncs import get_plx_id, subset_plx_by_source, source_dataset
 from plots import (source_cmap, zone_cmap, create_map_axis,
                    plot_particle_source_map)
 from create_source_files import source_particle_ID_dict
@@ -31,14 +31,19 @@ def subset_array(a, N):
     return np.array(a)[np.linspace(0, len(a) - 1, N, dtype=int)]
 
 
-def plot_some_source_pathways(exp, lon, v, r):
+def plot_some_source_pathways(exp, lon, v, r, add_release_lines=True):
     """Plot a subset of pathways on a map, colored by source."""
 
-    N = 30  # Number of paths to plot( per source)
+    N_total = 300  # Number of paths to plot( per source)
+    dn = source_dataset(lon).isel(exp=0)
+    dn = dn.sel(zone=np.array([1, 2, 3, 4, 5, 6, 7, 8]))
+    pct = dn.uz.mean('rtime') / dn.u_total.mean('rtime')
+    N = np.ceil(pct*100)/100 * N_total
+    N = np.ceil(N).values.astype(dtype=int)
 
     source_ids = [1, 2, 3, 4, 5, 6, 7, 12]
-    file = get_plx_id(exp, lon, v, r, 'plx')
-    ds = xr.open_dataset(file, mask_and_scale=True)
+
+    ds = xr.open_dataset(get_plx_id(exp, lon, v, r, 'plx'), mask_and_scale=True)
 
     # Particle IDs
     pids = source_particle_ID_dict(None, exp, lon, v, r)
@@ -47,12 +52,12 @@ def plot_some_source_pathways(exp, lon, v, r):
         pids[z] = np.concatenate([pids[i] for i in range(z, z + 5)])
 
     # Get N particle IDs per source region.
-    traj = np.concatenate([subset_array(pids[z], N) for z in source_ids])
+    traj = np.concatenate([subset_array(pids[z], n) for z, n in zip(source_ids, N)])
 
     # Define line colors for each source region & broadcast to ID array size.
     colors = np.array(cfg.zones.colors_all)[source_ids]
 
-    c = np.repeat(colors, N)
+    c = np.concatenate([np.repeat(colors[i], N[i]) for i in range(N.size)])
 
     # Indexes to shuffle particle pathway plotting order (less overlap bias).
     shuffle = np.random.permutation(len(traj))
@@ -63,9 +68,15 @@ def plot_some_source_pathways(exp, lon, v, r):
         dx = ds.sel(traj=traj[i])
         ax.plot(dx.lon, dx.lat, c[i], linewidth=0.5, zorder=10, transform=proj,
                 alpha=0.3)
+        
+    if add_release_lines:
+        for x in cfg.lons:
+            ax.vlines(x, -2.6, 2.6, 'k', linewidth=2, zorder=15, 
+                      transform=proj, alpha=0.8)
     plt.tight_layout()
-    plt.savefig(cfg.fig / 'pathway_{}_{}_r{}_n{}.png'
-                .format(cfg.exp[exp], lon, r, N), bbox_inches='tight')
+    plt.savefig(cfg.fig / 'pathway_{}_{}_r{}_n{}.png'.format(cfg.exp[exp], 
+                                                             lon, r, N_total), 
+                bbox_inches='tight', dpi=300)
     plt.show()
     return
 
@@ -177,7 +188,7 @@ if __name__ == "__main__":
     r = 0
 
     # # Plot map.
-    # plot_some_source_pathways(exp, lon, v, r)
+    plot_some_source_pathways(exp, lon, v, r)
     # plot_particle_source_map()
 
     # source_id = 0

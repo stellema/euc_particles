@@ -438,8 +438,8 @@ def plot_particle_source_map(add_ocean=True, add_labels=True, savefig=True,
     return fig, ax, proj
 
 
-def plot_histogram(ax, dx, var, color, cutoff=0.85, bins='fd', weighted=True, 
-                   orientation='vertical'):
+def plot_histogram(ax, dx, var, color, bins='fd', cutoff=0.85, weighted=True, 
+                   **plot_kwargs):
     """Plot histogram with historical (solid) & projection (dashed).
 
     Histogram bins weighted by transport / sum of all transport.
@@ -459,8 +459,11 @@ def plot_histogram(ax, dx, var, color, cutoff=0.85, bins='fd', weighted=True,
     """
     kwargs = dict(histtype='stepfilled', density=0, range=None, stacked=False,
                   alpha=0.8, cumulative=False, color=color, lw=0.8, #fill=0,
-                  hatch=None, edgecolor=color, orientation=orientation)
-
+                  hatch=None, edgecolor=color, orientation='vertical')
+    # Update hist kwargs based on input.
+    for k, p in plot_kwargs.items():
+        kwargs[k] = p
+        
     dx = [dx.isel(exp=i).dropna('traj', 'all') for i in [0, 1]]
     
     weights = None
