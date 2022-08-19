@@ -488,6 +488,7 @@ def append_dataset_history(ds, msg):
 
 def save_dataset(ds, filename, msg=None):
     """Save dataset with history, message and encoding."""
+    ds = ds.chunk()
     ds = add_particle_file_attributes(ds)
     if msg is not None:
         ds = append_dataset_history(ds, msg)
@@ -533,17 +534,20 @@ def predrop(ds):
 def open_ofam_dataset(file):
     """Open OFAM3 dataset file and rename coordinates."""
     if isinstance(file, list):
-        ds = xr.open_mfdataset(file, chunks='auto', #decode_times=True,
-                               compat='override', data_vars='minimal',
-                               coords='minimal', parallel=True)
+        ds = xr.open_mfdataset(file, chunks='auto', compat='override',
+                               data_vars='minimal', coords='minimal',
+                               parallel=True)  # decode_times=True
     else:
         ds = xr.open_dataset(file)
+
+    # Rename coords.
     ds = ds.rename({'Time': 'time', 'st_ocean': 'lev'})
     if 'yu_ocean' in ds.dims:
         ds = ds.rename({'yu_ocean': 'lat', 'xu_ocean': 'lon'})
     else:
         ds = ds.rename({'yt_ocean': 'lat', 'xt_ocean': 'lon'})
 
+    # Drop extra data vars and dims.
     for var in ds.data_vars:
         if var not in ['u', 'v', 'w', 'phy']:
             ds = ds.drop(var)
@@ -582,7 +586,7 @@ def convert_to_transport(ds, lat=None, var='v', sum_dims=['lon', 'lev']):
         lat (float): Latitude when transport is calculated (arrays not tested).
 
     Returns:
-        ds (xr.DataArray or xr.DataSet): Meridional transport.
+        ds (xr.DataArray or xr.DataSet): Meridional transport in Sverdrups.
 
     """
     dz = ofam_cell_depth()
