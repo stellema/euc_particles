@@ -15,6 +15,7 @@ Todo:
 @author: Annette Stellema
 @email: a.stellema@unsw.edu.au
 @created: Wed May  4 11:53:04 2022
+
 """
 import dask
 import numpy as np
@@ -50,7 +51,7 @@ def llwbc_transport_dataset(exp=0, clim=False, sum_dims=['lon']):
 
     Example:
         for exp in [0, 1]:
-            df = llwbc_transport(exp)
+            df = llwbc_transport_dataset(exp)
 
     """
     filename = cfg.data / 'transport_LLWBCs_{}.nc'.format(exp_abr[exp])
@@ -82,7 +83,7 @@ def llwbc_transport_dataset(exp=0, clim=False, sum_dims=['lon']):
 
         # Subset directonal velocity (southward for MC).
         sign = -1 if name in ['mc'] else 1
-        dx = dx.where(dx * sign >= 0)
+        dx = dx.where(dx * sign > 0.)
 
         # Sum weighted velocity.
         df[name] = convert_to_transport(dx, lat, 'v', sum_dims=sum_dims)
@@ -268,24 +269,3 @@ if __name__ == "__main__" and not cfg.test:
 
     elif args.current == 'euc':
         ds = euc_transport_dataset(args.exp)
-
-
-# cfg.test
-# func = np.mean
-# exp, lon = 0, 165
-# depth = 1500
-
-# da = source_transport_percent_of_full(exp, lon, depth, func)
-# # func=np.sum
-
-
-# df = llwbc_transport(exp)
-# df = df.sel(lev=slice(0, depth))
-# df = df.sum('lev')
-# df = df.mean('time')
-
-# ds = xr.open_dataset(get_plx_id(exp, lon, 1, None, 'sources'))
-# ds = ds.sel(zone=[1, 2, 3])
-# ds = ds.uz.mean('rtime')
-# for i, v in zip([2, 0, 1], df.data_vars):
-#     print(v, df[v].item(), ds.isel(zone=i).item(), (ds.isel(zone=i) / df[v]).item() * 100)
