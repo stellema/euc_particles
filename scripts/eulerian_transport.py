@@ -96,13 +96,14 @@ def llwbc_transport_dataset(exp=0, clim=False, sum_dims=['lon']):
         df['time'] = np.arange(1, 13)
         df = df.expand_dims({'exp': [exp]})
 
+    logger.info('Saving: {}...'.format(filename.stem))
     save_dataset(df, filename, msg=' ./eulerian_transport.py (net and uni)')
     logger.info('Saved: {}'.format(filename.stem))
     return df
 
 
 def euc_transport_dataset(exp):
-    """Save daily EUC transport sum & velocity across the Pacific.
+    """Save daily EUC transport sum across the Pacific.
 
     Args:
         exp (int): Scenario {0, 1}.
@@ -111,7 +112,7 @@ def euc_transport_dataset(exp):
         ds (xr.Dataset):
 
     Notes:
-        - Save velocity grid (-2.6 to 2.6; 2.5-420m)
+        - Doesn't save velocity grid (-2.6 to 2.6; 2.5-420m)
         - Save eastward transport sum (u > 0; -2.6 to 2.6; 25-350m)
         - EUC depth (25 - 350m):
             - Option 1 [5, 29] = 28m [25-31m] - 325m [306-350] ***
@@ -119,10 +120,10 @@ def euc_transport_dataset(exp):
 
     """
     filename = cfg.data / 'transport_EUC_{}.nc'.format(exp_abr[exp])
-    if filename.exists():
-        return xr.open_dataset(filename)
+    # if filename.exists():
+    #     return xr.open_dataset(filename)
 
-    logger.debug('Creating file: {}'.format(filename.stem))
+    logger.info('{}: Creating file.'.format(filename.stem))
 
     files = ofam_filename_list(exp, 'u')
     if cfg.test:
@@ -131,30 +132,29 @@ def euc_transport_dataset(exp):
     # Data subset boundaries.
     x = np.arange(140, 281, 1)
     y = [-2.6, 2.6]
-    z_euc = slice(25, 350)  # Slice velocity using larger depth range.
-    z = [0, 420]  # Slice velocity using larger depth range.
+    z = [25, 350]
 
     # Open data.
     ds = open_ofam_dataset(files)
 
-    # Subset velocity (saved as is).
+    # Subset velocity.
     ds = subset_ofam_dataset(ds, y, x, z)
 
     # EUC transport sum.
-    euc = ds.u.sel(lev=z_euc)  # Subset correct depth range (option 1).
-    euc = euc.where(euc >= 0)  # Mask westward velocity.
-    ds['euc'] = convert_to_transport(euc, var='u', sum_dims=['lat', 'lev'])
+    ds = ds.u.where(ds.u > 0.)  # Mask westward velocity.
 
-    ds['euc'].attrs['standard_name'] = 'euc'
-    ds['euc'].attrs['long_name'] = 'EUC Transport'
-    ds['euc'].attrs['units'] = 'Sv'
-    ds['euc'].attrs['lev_bnds'] = [int(euc.lev[i].item()) for i in [0, -1]]
-    ds['euc'].attrs['lat_bnds'] = [(euc.lat[i].item()) for i in [0, -1]]
+    df = xr.Dataset()
+    df['euc'] = convert_to_transport(ds, var='u', sum_dims=['lat', 'lev'])
+    df['euc'].attrs['standard_name'] = 'euc'
+    df['euc'].attrs['long_name'] = 'EUC Transport'
+    df['euc'].attrs['units'] = 'Sv'
+    df['euc'].attrs['lev_bnds'] = [int(ds.lev[i].item()) for i in [0, -1]]
+    df['euc'].attrs['lat_bnds'] = [(ds.lat[i].item()) for i in [0, -1]]
 
-    logger.debug('Saving: {}'.format(filename.stem))
-    save_dataset(ds, filename, msg=' ./eulerian_transport.py')
-    logger.debug('Saved: {}'.format(filename.stem))
-    return ds
+    logger.info('{}: Saving...'.format(filename.stem))
+    save_dataset(df, filename, msg=' ./eulerian_transport.py')
+    logger.info('{}: Saved.'.format(filename.stem))
+    return df
 
 
 def get_source_transport_percent(ds_full, ds_plx, z, func=np.sum, net=False):

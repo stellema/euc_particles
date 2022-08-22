@@ -62,7 +62,7 @@ def mlogger(name, parcels=False):
         c_handler = logging.StreamHandler()
         f_handler = logging.FileHandler(cfg.log / '{}.log'.format(name))
         c_handler.setLevel(logging.DEBUG)
-        f_handler.setLevel(logging.INFO)
+        f_handler.setLevel(logging.DEBUG)
 
         # Create formatters and add it to handlers
         c_format = logging.Formatter('%(message)s')
