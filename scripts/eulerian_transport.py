@@ -78,7 +78,7 @@ def llwbc_transport_dataset(exp=0, clim=False, sum_dims=['lon']):
 
         # Subset boundaries.
         dx = subset_ofam_dataset(ds, lat, lon, None)
-        df[name + '_net'] = convert_to_transport(dx, lat, 'v',
+        df[name + '_net'] = convert_to_transport(dx.copy(), lat, 'v',
                                                  sum_dims=sum_dims)
 
         # Subset directonal velocity (southward for MC).

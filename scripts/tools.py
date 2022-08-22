@@ -600,11 +600,11 @@ def convert_to_transport(ds, lat=None, var='v', sum_dims=['lon', 'lev']):
     if isinstance(ds, xr.DataArray):
         ds *= dxdy * dz
         if sum_dims:
-            ds = ds.sum(sum_dims)
+            ds = ds.sum(sum_dims, skipna=True, keep_attrs=True)
     else:
         ds = ds[var] * dxdy * dz
         if sum_dims:
-            ds[var] = ds[var].sum(sum_dims)
+            ds[var] = ds[var].sum(sum_dims, skipna=True, keep_attrs=True)
 
     return ds
 
