@@ -10,6 +10,7 @@ PLX project main functions, classes and variable definitions.
 """
 import sys
 import string
+import calendar
 import warnings
 import numpy as np
 import xarray as xr
@@ -20,7 +21,7 @@ from collections import namedtuple
 # warnings.filterwarnings("ignore", category=DeprecationWarning)
 # warnings.filterwarnings(action='ignore', message='SerializationWarning')
 # warnings.filterwarnings("ignore")
-# np.set_printoptions(suppress=True)
+np.set_printoptions(suppress=True)
 
 # Setup directories.
 if Path.home().drive == 'C:':
@@ -42,7 +43,7 @@ exp = ['hist', 'rcp', 'diff']
 exps = ['Historical', 'RCP8.5', 'Projected change']
 exp_abr = ['hist', 'rcp', 'diff']
 ltr = [i + ')' for i in list(string.ascii_lowercase)]
-
+mon = [i for i in calendar.month_abbr[1:]]  # Month abbreviations.
 years = [[1981, 2012], [2070, 2101]]
 var = ['u', 'v', 'w', 'salt', 'temp']
 deg = '\u00b0'  # Degree symbol.
@@ -104,7 +105,7 @@ class ZoneData:
     idn = Zone(5, 'idn', 'Indonesian Seas', [[-8.5, 0.4, x_west, x_west],
                                              [-8.7, -8.7, x_west, 140.6]])
 
-    sc = Zone(6, 'sc', 'East Solomon Islands', [j1, j1, 155.4, 158])
+    sc = Zone(6, 'sc', 'Solomon Islands', [j1, j1, 155.4, 158])
     sth = Zone(7, 'sth', 'South Interior', [j1, j1, 158, 280])
     nth = Zone(12, 'nth', 'North Interior', [j2, j2, 129.1, 278.5])
 

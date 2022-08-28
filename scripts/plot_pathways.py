@@ -68,14 +68,14 @@ def plot_some_source_pathways(exp, lon, v, r, add_release_lines=True):
         dx = ds.sel(traj=traj[i])
         ax.plot(dx.lon, dx.lat, c[i], linewidth=0.5, zorder=10, transform=proj,
                 alpha=0.3)
-        
+
     if add_release_lines:
         for x in cfg.lons:
-            ax.vlines(x, -2.6, 2.6, 'k', linewidth=2, zorder=15, 
+            ax.vlines(x, -2.6, 2.6, 'k', linewidth=2, zorder=15,
                       transform=proj, alpha=0.8)
     plt.tight_layout()
-    plt.savefig(cfg.fig / 'pathway_{}_{}_r{}_n{}.png'.format(cfg.exp[exp], 
-                                                             lon, r, N_total), 
+    plt.savefig(cfg.fig / 'pathway_{}_{}_r{}_n{}.png'.format(cfg.exp[exp],
+                                                             lon, r, N_total),
                 bbox_inches='tight', dpi=300)
     plt.show()
     return
@@ -113,6 +113,7 @@ def plot_example_source_pathways(exp, lon, v, r, source_id, N=30):
                 bbox_inches='tight')
     plt.show()
     return
+
 
 
 def plot3Dx(xid, ds=None):

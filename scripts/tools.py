@@ -622,3 +622,104 @@ def get_ofam_bathymetry():
     ds['z'] = xr.where(~np.isnan(ds.v), np.nan, 1)
     ds['z'] = ds.z.idxmax('lev', skipna=True, fill_value=ds.lev.max())
     return ds.z
+
+
+def find_runs(x):
+    """Find runs of consecutive items in an array."""
+    # Ensure array
+    x = np.asanyarray(x)
+    n = x.shape[0]
+
+    if x.ndim != 1:
+        raise ValueError('only 1D array supported')
+
+    # Return empty array.
+    if n == 0:
+        return np.array([]), np.array([]), np.array([])
+
+    # Find start of run of consecutive values.
+    loc_run_start = np.empty(n, dtype=bool)
+    loc_run_start[0] = True
+    loc_run_start[1:] = (x[:-1] != x[1:])
+    run_starts = np.nonzero(loc_run_start)[0]
+
+    # Run values.
+    run_values = x[loc_run_start]
+
+    # Run lengths.
+    run_lengths = np.diff(np.append(run_starts, n))
+
+    return run_values, run_starts, run_lengths
+
+
+def nino_events(sst, index='oni'):
+    """Find ENSO events from nino 3.4 SST anomaly timeseries.
+
+    Args:
+        sst (array-like): SST anomaly timeseries.
+        index (str, optional): ENSO oni or nino3.4 index. Defaults to 'oni'.
+
+    Returns:
+        nino (list): list of event start & end dates.
+        nina (list): list of event start & end dates.
+
+    """
+    if index == 'oni':
+        sst_min = 0.5
+        length_min = 5
+    else:
+        sst_min = 0.4
+        length_min = 6
+
+    dn = xr.full_like(sst, 0)
+    dn[sst >= sst_min] = 1
+    dn[sst <= -sst_min] = 2
+
+    run_values, run_starts, run_lengths = find_runs(dn)
+
+    nino = []
+    nina = []
+    for i, length in enumerate(run_lengths):
+        if length >= length_min:
+
+            # Time stamps of event start/end.
+            inds = [run_starts[i], run_starts[i] + length - 1]
+            t = [dn.Time[k].dt.strftime('%Y-%m-%d').item() for k in inds]
+
+            if run_values[i] == 1:  # El Nino.
+                nino.append(t)
+            elif run_values[i] == 2:  # La Nina.
+                nina.append(t)
+
+    return nino, nina
+
+
+def enso_u_ofam(ds, avg='mean'):
+    """ENSO event composites for a OFAM3 variable.
+
+    Args:
+        oni (array-like): SST anomaly timeseries.
+        ds (array-like): variable to average during ENSO events.
+        nino (list, optional): El Nino start/end dates. Defaults to None.
+        nina (list, optional): La Nina start/end dates. Defaults to None.
+        avg (str, optional): COmposite average method. Defaults to 'mean'.
+
+    Returns:
+        enso (xarray.Dataset): DESCRIPTION.
+
+    """
+    oni = xr.open_dataset(cfg.data / 'ofam_sst_anom_nino34_hist.nc')
+    nino, nina = nino_events(oni.oni)
+
+    coord = [('nin', ['nino', 'nina'])]
+
+    enso = xr.DataArray(np.empty((2, *ds[0].shape)).fill(np.nan), coords=coord)
+
+    for n, nin in enumerate([nino, nina]):
+        tmp = []
+        for i in range(len(nin)):
+            u = ds.sel(time=slice(nin[i][0], nin[i][1])).values
+            if len(u) != 0:
+                tmp = np.append(tmp, u)
+        enso[n] = np.nanmean(tmp)
+    return enso

@@ -109,3 +109,22 @@ def weighted_bins_fd(ds, weights):
     # Numpy conversion from bin width to number of bins.
     nbins = int(np.ceil(np.diff(data_range) / h)[0])
     return h, nbins, data_range
+
+
+
+# # Man whitney test (histogram diff) returns zero while ttest_ind p = 0.158.
+# # r sample sizes above ~20, approximation using the normal distribution is fairly good
+# binned data -mwu=value=0.00035 ttest_ind=0.158
+# Whitney U test can have inflated type I error rates even in large samples (especially if the variances of two populations are unequal and the sample sizes are different)
+# Brunner-Munzel (n <50 samples?)and the Fligner–Policello test
+# Brunner-Munzel and the Fligner–Policello test
+# Kolmogorov–Smirnov test
+from fncs import source_dataset
+z = 3
+ds = source_dataset(165, sum_interior=True)
+dx = ds.sel(zone=z)['z_f']
+dx = [dx.isel(exp=i).dropna('traj') for i in range(2)]
+
+stats.mannwhitneyu(dx[0], dx[1], use_continuity=False)
+stats.brunnermunzel(dx[0], dx[1])
+stats.ttest_ind(dx[0], dx[1], equal_var=False)

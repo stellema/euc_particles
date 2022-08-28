@@ -438,8 +438,8 @@ def plot_particle_source_map(add_ocean=True, add_labels=True, savefig=True,
     return fig, ax, proj
 
 
-def plot_histogram(ax, dx, var, color, bins='fd', cutoff=0.85, weighted=True, 
-                   **plot_kwargs):
+def plot_histogram(ax, dx, var, color, bins='fd', cutoff=0.85, weighted=True,
+                   outline=True, **plot_kwargs):
     """Plot histogram with historical (solid) & projection (dashed).
 
     Histogram bins weighted by transport / sum of all transport.
@@ -449,7 +449,7 @@ def plot_histogram(ax, dx, var, color, bins='fd', cutoff=0.85, weighted=True,
         ax (plt.AxesSubplot): Axes Subplot.
         dx (xarray.Dataset): Dataset (hist & proj; var and 'u').
         var (str): Data variable.
-        color (str): Bar colour.
+        color (list of str): Bar colour.
         xlim_percent (float, optional): Shown % of bins. Defaults to 0.75.
         weighted (bool, optional): Weight by transport. Defaults to True.
 
@@ -458,20 +458,22 @@ def plot_histogram(ax, dx, var, color, bins='fd', cutoff=0.85, weighted=True,
 
     """
     kwargs = dict(histtype='stepfilled', density=0, range=None, stacked=False,
-                  alpha=0.8, cumulative=False, color=color, lw=0.8, #fill=0,
-                  hatch=None, edgecolor=color, orientation='vertical')
+                  alpha=0.8, cumulative=False, color=color[0], lw=0.8, # fill=0,
+                  hatch=None, edgecolor=color[0], orientation='vertical')
+
     # Update hist kwargs based on input.
     for k, p in plot_kwargs.items():
         kwargs[k] = p
-        
+
     dx = [dx.isel(exp=i).dropna('traj', 'all') for i in [0, 1]]
-    
+
     weights = None
     if weighted:
         # weights = [dx[i].u for i in [0, 1]]
-        weights = [dx[i].u / dx[i].u.sum().item() for i in [0, 1]]
+        weights = [dx[i].u / 1948 for i in [0, 1]]  # sum(ds.rtime > np.datetime64('2020-01-06'))
+        # weights = [dx[i].u / dx[i].u.sum().item() for i in [0, 1]]
         # weights = [dx[i].u / dx[i].uz.mean().item() for i in [0, 1]]
-        
+
     if weighted and isinstance(bins, str):
         # Find number of bins based on combined hist/proj data range.
         h0, _, r0 = weighted_bins_fd(dx[0][var], weights[0])
@@ -488,14 +490,18 @@ def plot_histogram(ax, dx, var, color, bins='fd', cutoff=0.85, weighted=True,
     x, _bins, _ = ax.hist(dx[0][var], bins, weights=weights[0], **kwargs)
 
     # RCP8.5.
-    bins = bins if weighted else _bins
-    kwargs.update(dict(color='k', alpha=0.3, edgecolor='k'))
-    _, bins, _ = ax.hist(dx[1][var], bins, weights=weights[1], **kwargs)
 
-    # Black outline (Hist * RCP).
-    kwargs.update(dict(histtype='step', color='k', alpha=1))
-    _, bins, _ = ax.hist(dx[0][var], bins, weights=weights[0], **kwargs)
-    _, bins, _ = ax.hist(dx[1][var], bins, weights=weights[1], **kwargs)
+    bins = bins if weighted else _bins
+    kwargs.update(dict(color=color[1], alpha=0.3, edgecolor=color[1]))
+    if color[0] == color[-1]:
+        kwargs.update(dict(linestyle='--'), alpha=1, fill=0)
+    x2, bins, _ = ax.hist(dx[1][var], bins, weights=weights[1], **kwargs)
+
+    if outline:
+        # Black outline (Hist * RCP).
+        kwargs.update(dict(histtype='step', color='k', alpha=1))
+        _, bins, _ = ax.hist(dx[0][var], bins, weights=weights[0], **kwargs)
+        _, bins, _ = ax.hist(dx[1][var], bins, weights=weights[1], **kwargs)
 
     # # Median.
     # ax.axvline(_bins[sum(np.cumsum(x) < (sum(x)/2))], c='k')
@@ -504,6 +510,6 @@ def plot_histogram(ax, dx, var, color, bins='fd', cutoff=0.85, weighted=True,
     # Cut off last 5% of xaxis (index where <95% of total counts).
     if cutoff is not None:
         xmax = bins[sum(np.cumsum(x) < sum(x) * cutoff)]
-        xmin = bins[max([sum((x <= 0) & (bins[1:] < xmax)) - 1, 0])]
+        xmin = bins[max([sum(np.cumsum(x) < sum(x) * 0.01) - 1, 0])]
         ax.set_xlim(xmin=xmin, xmax=xmax)
     return ax

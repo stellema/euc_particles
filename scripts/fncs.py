@@ -9,10 +9,8 @@
 import numpy as np
 import xarray as xr
 
-
 import cfg
 from cfg import zones
-from tools import timeit
 
 
 def get_plx_id(exp, lon, v, r=None, folder=None):
@@ -384,6 +382,63 @@ def merge_LLWBC_interior_sources(ds):
     return ds
 
 
+def concat_exp_dimension(ds, add_diff=False):
+    """Concatenate list of datasets along 'exp' dimension.
+
+    Args:
+        ds (list of xarray.Dataset): List of datasets.
+
+    Returns:
+        ds (xarray.Dataset): Concatenated dataset.
+
+    """
+    if 'time' in ds[0].dims:
+        if ds[0].time.size == ds[-1].time.size:
+            for i in range(len(ds)):
+                ds[i]['time'] = ds[0]['time']
+
+    if add_diff:
+        # Calculate projected change (RCP-hist).
+        ds = [*ds, ds[1] - ds[0]]
+
+    ds = [ds[i].expand_dims(dict(exp=[i])) for i in range(len(ds))]
+    ds = xr.concat(ds, 'exp')
+    return ds
+
+
+def open_eulerian_transport(resample=False, clim=True):
+    """Open EUC & LLWBC Eulerian transport (hist, change, etc)."""
+    # LLWBCs & EUC filenames.
+    file = [cfg.data / 'transport_{}_{}.nc'.format(n, s)
+            for n in ['LLWBCs', 'EUC'] for s in cfg.exp_abr[:2]]
+    ds = [xr.open_dataset(f) for f in file]
+
+    if resample:
+        # Convert daily to monthly mean.
+        ds = [d.resample(time="1MS").mean('time') for d in ds]
+
+    # Sum LLWBC transport (37=775; 39=995m). 35-36 mc, vs full 1300
+    df = [d.drop('lat') for d in ds[:2]]
+
+    # Add EUC data variable to hist/rcp datasets.
+    for i in range(2):
+        for s in ['', '_net']:
+            df[i]['mc' + s] = df[i]['mc' + s].sel(lev=slice(550))
+            df[i]['ss' + s] = df[i]['ss' + s].sel(lev=slice(1150))
+            df[i]['vs' + s] = df[i]['vs' + s].sel(lev=slice(890))
+        df[i] = df[i].sum('lev')
+        df[i]['euc'] = ds[2 + i].euc
+
+    # Get annual mean.
+    if clim:
+        df = [d.groupby('time.month').mean('time').rename({'month': 'time'})
+              for d in df]
+
+        # Concat historical and RCP8.5.
+        df = concat_exp_dimension(df, add_diff=True)
+    return df
+
+
 def source_dataset(lon, sum_interior=True):
     """Get source datasets.
 
@@ -407,13 +462,7 @@ def source_dataset(lon, sum_interior=True):
     # Open and concat data for exah scenario.
     ds = [xr.open_dataset(get_plx_id(i, lon, 1, None, 'sources'))
           for i in [0, 1]]
-    ds = [ds[i].expand_dims(dict(exp=[i])) for i in [0, 1]]
-    for i in range(2):
-        if 'ztime' in ds[i].data_vars:
-            # ds[i] = ds[i].rename({'ztime': 'time_f'})
-            ds[i] = ds[i].rename({'ztime': 'time0'})  # !!!
-            
-    ds = xr.concat(ds, 'exp')
+    ds = concat_exp_dimension(ds)
 
     # Create 'speed' variable.
     ds['speed'] = ds.distance / ds.age
@@ -427,11 +476,12 @@ def source_dataset(lon, sum_interior=True):
 
     # Convert distance: m to x100 km.
     ds['distance'] *= 1e-6
+    ds['z'].attrs['long_name'] = 'Distance'
     ds['distance'].attrs['units'] = '1e6 m'
-    
+
     ds['z'].attrs['long_name'] = 'EUC Depth'
     ds['z'].attrs['units'] = 'm'
-    
+
     ds['z_f'].attrs['long_name'] = 'Source Depth'
     ds['z_f'].attrs['units'] = 'm'
 

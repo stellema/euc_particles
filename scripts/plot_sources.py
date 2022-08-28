@@ -198,20 +198,18 @@ def transport_source_bar_graph(exp=0, z_ids=list(range(9)), sum_interior=True):
 
     plt.tight_layout()
     plt.savefig(cfg.fig / 'sources/transport_source_bar_{}{}.png'
-                .format(cfg.exps[exp], '_interior' if sum_interior else ''))
+                .format('' if sum_interior else '_interior', cfg.exps[exp]))
     return
 
 
-def source_histogram_multi(ds, lon):
+def source_histogram_multi_var(ds, lon):
     """Histograms of source variables plot."""
     zn = ds.zone.values[:-1]
-    ds['names'][dict(zone=2)] = 'East Solomon Is.'
-
     fig, axes = plt.subplots(4, 4, figsize=(11.5, 9))
 
     i = 0
     for zi, z in enumerate(zn):
-        color = ds.colors[zi].item()
+        color = [ds.colors[zi].item(), 'k']
         zname = ds.names[zi].item()
 
         for vi, var in enumerate(['age', 'distance']):
@@ -240,13 +238,9 @@ def source_histogram_multi(ds, lon):
     return
 
 
-def source_histogram_variable(var='z'):
+def source_histogram_multi_lon(var='z'):
     """Histograms of single source variables."""
-    if var not in ['z_f', 'z']:
-        kwargs = dict(bins='fd', cutoff=0.95)
-    else:
-        kwargs = dict(bins=np.arange(0, 500, 25), cutoff=None, 
-                      orientation='horizontal')
+    kwargs = dict(bins='fd', cutoff=0.85)
 
     nc, nr = 4, 7
     fig, axes = plt.subplots(nr, nc, figsize=(11, 14))
@@ -254,40 +248,97 @@ def source_histogram_variable(var='z'):
     for x, lon in enumerate(cfg.lons):
         ds = source_dataset(lon)
         zn = ds.zone.values[:nr]
-        
+
         name, units = [ds[var].attrs[a] for a in ['long_name', 'units']]
         xlabel, ylabel = '{} [{}]'.format(name, units), 'Transport [Sv]'
-        
-        if kwargs['orientation'] == 'horizontal':
-            xlabel, ylabel = ylabel, xlabel
-        
+
         for zi, z in enumerate(zn):
             i = nc * zi + x
-            color = ds.colors[zi].item()
+            color = [ds.colors[zi].item(), 'k']
             zname = ds.names[zi].item()
 
             ax = axes.flatten()[i]
             dx = ds.sel(zone=z)
             ax = plot_histogram(ax, dx, var, color, **kwargs)
 
-            ax.set_title('{}) {} - EUC at {}°E'.format(i + 1, zname, lon),
-                         loc='left', x=-0.05)
+            ax.set_title('{}) {}'.format(i + 1, zname), loc='left')
             ax.set_ymargin(0)
+            ax.xaxis.set_minor_locator(mpl.ticker.AutoMinorLocator())
 
             if i >= axes.shape[1] * (axes.shape[0] - 1):  # Last row.
                 ax.set_xlabel(xlabel)
 
             if i in np.arange(axes.shape[0]) * axes.shape[1]:  # First col.
                 ax.set_ylabel(ylabel)
-                
-            if var in ['z_f', 'z']:
-                # Flip yaxis 0m at top.
-                ax.set_ylim(400, 0)
-                
 
-    fig.subplots_adjust(wspace=0.07, hspace=0.07)
+    # Suptitles.
+    for lon, ax in zip(cfg.lons, axes.flatten()[:4]):
+        ax.text(0.25, 1.2, "EUC at {}°E".format(lon), weight='bold',
+                transform=ax.transAxes)
+
     plt.tight_layout()
-    plt.savefig(cfg.fig / 'sources/{}_histogram.png'.format(name), dpi=300)
+    fig.subplots_adjust(wspace=0.25, hspace=0.4, top=1)
+    plt.savefig(cfg.fig / 'sources/{}_histogram.png'.format(name), dpi=300,
+                bbox_inches='tight')
+    return
+
+
+def source_histogram_depth():
+    """Histograms of single source variables."""
+    name, units = 'Depth', 'm'
+    ylabel, xlabel = '{} [{}]'.format(name, units), 'Transport [Sv]'
+    kwargs = dict(bins=np.arange(0, 500, 25), cutoff=None, fill=True,
+                  lw=1.3, orientation='horizontal', histtype='step',
+                  alpha=0.3)
+    colors = ['teal', 'darkviolet']
+
+    nc, nr = 4, 7
+    fig, axes = plt.subplots(nr, nc, figsize=(11, 14))
+    axes = axes.flatten()
+
+    for x, lon in enumerate(cfg.lons):
+        ds = source_dataset(lon)
+        zn = ds.zone.values[:nr]
+
+        for zi, z in enumerate(zn):
+            i = nc * zi + x
+
+            zname = ds.names[zi].item()
+            ax = axes[i]
+            dx = ds.sel(zone=z)
+
+            color = [colors[0]] * 2
+            ax = plot_histogram(ax, dx, 'z', color, outline=False, **kwargs)
+
+            color = [colors[1]] * 2
+            ax = plot_histogram(ax, dx, 'z_f', color, outline=False, **kwargs)
+
+            ax.set_title('{}) {}'.format(i + 1, zname), loc='left')
+            ax.set_ymargin(0)
+            # Flip yaxis 0m at top.
+            ax.set_ylim(400, 0)
+
+            if i >= nc * (nr - 1):  # Last row.
+                ax.set_xlabel(xlabel)
+
+            if i in np.arange(nr) * nc:  # First col.
+                ax.set_ylabel(ylabel)
+
+    # Suptitles.
+    for lon, ax in zip(cfg.lons, axes[:nc]):
+        ax.text(0.25, 1.2, "EUC at {}°E".format(lon), weight='bold',
+                transform=ax.transAxes)
+
+    # Legend.
+    nm = [mpl.lines.Line2D([], [], color=c, label=n, lw=5)
+          for n, c in zip(['EUC', 'Source'], colors)][::-1]
+    lgd = axes[1].legend(handles=nm, bbox_to_anchor=(1.1, 1.3), loc=8, ncol=2)
+
+    # Save.
+    plt.tight_layout()
+    fig.subplots_adjust(wspace=0.25, hspace=0.4, top=1)
+    plt.savefig(cfg.fig / 'sources/depth_histogram.png', dpi=300,
+                bbox_extra_artists=(lgd,), bbox_inches='tight')
     return
 
 
@@ -409,14 +460,18 @@ def timeseries_bar(exp=0, z_ids=list(range(9)), sum_interior=True):
     return
 
 
+# for exp in [1, 0]:
+#     transport_source_bar_graph(exp=exp)
+#     transport_source_bar_graph(exp, list(range(7, 17)), False)
+
 # for lon in [165]:
-# # for lon in cfg.lons:
-#     ds = source_dataset(lon, sum_interior=True)
-#     # source_pie_chart(ds, lon)
-#     # source_histogram_multi(ds, lon)
-#     # combined_source_histogram(ds, lon)
+for lon in cfg.lons:
+    ds = source_dataset(lon, sum_interior=True)
+    source_pie_chart(ds, lon)
+    source_histogram_multi_var(ds, lon)
+    combined_source_histogram(ds, lon)
 
+for var in ['speed', 'age', 'distance']:
+    source_histogram_multi_lon(var)
 
-for var in ['z']:#, 'z_f', 'speed', 'age', 'distance']:
-    source_histogram_variable(var)
-
+source_histogram_depth()
