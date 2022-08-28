@@ -8,11 +8,11 @@
 #PBS -l wd
 #PBS -m ae
 #PBS -M astellemas@gmail.com
-#PBS -v LON,EXP
+#PBS -v EXP,LON
 
 ###############################################################################
 # Sort PLX particles by source.
-# To submit: qsub -v LON=250,EXP=1 srcplx.sh
+# To submit: qsub -v EXP=0,LON=165 srcplx.sh
 ###############################################################################
 
 ECHO=/bin/echo
