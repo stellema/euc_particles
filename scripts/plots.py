@@ -505,7 +505,9 @@ def plot_histogram(ax, dx, var, color, bins='fd', cutoff=0.85, weighted=True,
 
     # # Median.
     # ax.axvline(_bins[sum(np.cumsum(x) < (sum(x)/2))], c='k')
-    # ax.axvline(np.median(dx[0][var]), c='b')
+    for q in [0.25, 0.5, 0.75]:
+        ax.axvline(np.quantile(dx[0][var], q), c='b')
+        ax.axvline(_bins[sum(np.cumsum(x) < (sum(x)*q))], c='r')
 
     # Cut off last 5% of xaxis (index where <95% of total counts).
     if cutoff is not None:

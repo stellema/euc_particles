@@ -75,7 +75,7 @@ def log_source_transport(lon):
         # Source percent of total EUC (HIST, PROJ, Δ percentage points).
         # Source contribution percent change (i.e. makes up xpp more of total).
         pct = [(dx[i] / total[i]) for i in [0, 1]]
-        s += '{: >7.0%}{: >7.0%}{: >7.1%}'.format(*pct, pct[1] - pct[0])
+        s += '{: >7.1%}{: >7.0%}{: >7.1%}'.format(*pct, pct[1] - pct[0])
 
         logger.info(s)
 
@@ -153,9 +153,9 @@ def log_eulerian_variability():
 
     return
 
-# # Print lagrangian source transport values.
-# for lon in cfg.lons:
-#     log_source_transport(lon)
+# Print lagrangian source transport values.
+for lon in cfg.lons:
+    log_source_transport(lon)
 
 
 

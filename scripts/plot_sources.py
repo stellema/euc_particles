@@ -460,6 +460,41 @@ def timeseries_bar(exp=0, z_ids=list(range(9)), sum_interior=True):
     return
 
 
+def source_depth_cor(ds, lon, exp):
+    """Histograms of source variables plot."""
+    from stats import format_pvalue_str
+    from scipy import stats
+    zn = ds.zone.values
+    fig, axes = plt.subplots(3, 3, figsize=(11.5, 9))
+    axes = axes.flatten()
+
+    i = 0
+    for zi, z in enumerate(zn):
+        color = ds.colors[zi].item()
+        zname = ds.names[zi].item()
+        ax = axes[i]
+        dx = ds.sel(zone=z, exp=exp).dropna('traj')
+        x, y = dx.z_f, dx.z
+        a, b = np.polyfit(x, y, 1)
+        r, p = stats.pearsonr(dx.z_f, dx.z)
+
+        ax.scatter(x, y, s=2, c=color)
+        ax.plot(x, a * x + b, c='k',
+                label='r={:.2f}, {}'.format(r, format_pvalue_str(p)))
+        ax.legend(loc='lower right')
+
+        ax.set_xlabel('Source Depth [m]')
+        ax.set_ylabel('EUC Depth [m]')
+        ax.set_title('{} {}'.format(ltr[i], zname), loc='left', x=-0.01)
+        ax.set_ylim(400, 0)
+        i += 1
+
+    plt.tight_layout()
+    plt.savefig(cfg.fig / 'sources/scatter_depth_{}_{}.png'
+                .format(cfg.exp_abr[exp], lon), dpi=300)
+    return
+
+
 # for exp in [1, 0]:
 #     transport_source_bar_graph(exp=exp)
 #     transport_source_bar_graph(exp, list(range(7, 17)), False)
@@ -467,11 +502,13 @@ def timeseries_bar(exp=0, z_ids=list(range(9)), sum_interior=True):
 # for lon in [165]:
 for lon in cfg.lons:
     ds = source_dataset(lon, sum_interior=True)
-    source_pie_chart(ds, lon)
-    source_histogram_multi_var(ds, lon)
-    combined_source_histogram(ds, lon)
+    # source_pie_chart(ds, lon)
+    # source_histogram_multi_var(ds, lon)
+    # combined_source_histogram(ds, lon)
+    source_depth_cor(ds, lon, 0)
+    source_depth_cor(ds, lon, 1)
 
-for var in ['speed', 'age', 'distance']:
-    source_histogram_multi_lon(var)
+# for var in ['speed', 'age', 'distance']:
+#     source_histogram_multi_lon(var)
 
-source_histogram_depth()
+# source_histogram_depth()
