@@ -174,3 +174,36 @@ print(dxx.where(dxx > 0).sum(['lon', 'lev']).mean('time'))
 # plt.tight_layout()
 # # plt.savefig(cfg.fig / 'EUC_particle_profile.png')
 # # # plt.savefig(cfg.fig / 'EUC_profile.png')
+
+# South China Sea
+from tools import convert_to_transport
+from fncs import concat_exp_dimension
+var = 'v'
+files = [cfg.ofam / 'clim/ocean_{}_{}-{}_climo.nc'.format(var, *cfg.years[exp])
+         for exp in range(2) for var in ['v', 'u']]
+dss = [open_ofam_dataset(file)[var] for file in files]
+
+dx = [ds.isel(lev=slice(0, 36)).sel(lat=slice(0, 15), lon=slice(120, 129)) for ds in dss]
+dx = [d.mean('time') for d in dx]
+for i in [0, 2]:
+    dx[i]['u'] = dx[i+1]['u']
+dx = [dx[0], dx[2]]
+dx = concat_exp_dimension(dx, add_diff=1)
+
+dt = dx.mean('lev')
+dt = convert_to_transport(dx, lat=10, var=var, sum_dims=['lev'])
+dt = dt.where(dt != 0.)
+
+dt = dt.isel(exp=[0, -1])
+cmap = plt.cm.seismic
+cmap.set_bad('grey')
+
+dt.plot(cmap=cmap, col='exp', col_wrap=2, figsize=(10,6))
+
+
+# dtt = dt.isel(lat=np.arange(0, dt.lat.size, 2), lon=np.arange(0, dt.lon.size, 2))
+fig, ax = plt.subplots(1, 1, figsize=(10,6))
+dtt = dt.isel(exp=2)
+plt.pcolormesh(dtt.u[::2, ::2], cmap=cmap)
+dtt = dt.isel(exp=0)
+plt.quiver(dtt.u[::2, ::2], dtt.v[::2, ::2], scale=7)

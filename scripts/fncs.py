@@ -439,6 +439,17 @@ def open_eulerian_transport(resample=False, clim=True):
     return df
 
 
+def subset_plx_EUC_definition(ds):
+    lats = ds.lat.max(['exp', 'zone'])
+    keep_traj = lats.where((lats <= 2.0) & (lats >= -2.0), drop=True).traj
+    ds = ds.sel(traj=keep_traj)
+
+    u = ds.u.sum('zone')
+    keep_traj = u.where(u > (0.1*25*0.1*cfg.LAT_DEG/1e6), drop=True).traj
+    ds = ds.sel(traj=keep_traj)
+    return ds
+
+
 def source_dataset(lon, sum_interior=True):
     """Get source datasets.
 
@@ -493,5 +504,6 @@ def source_dataset(lon, sum_interior=True):
         # Reorder zones.
         inds = np.array([1, 2, 6, 7, 8, 3, 4, 5, 0])
         ds = ds.isel(zone=inds)
-
     return ds
+
+

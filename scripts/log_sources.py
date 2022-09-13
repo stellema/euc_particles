@@ -28,16 +28,19 @@ logger = mlogger('source_transport')
 
 def log_source_transport(lon):
     """Log source transport (hist, change, etc)  at longitude."""
-    ds = source_dataset(lon, sum_interior=True)
+    ds = source_dataset(lon, sum_interior=False)
 
     for var in ds.data_vars:
-        if var not in ['uz', 'u_total', 'names']:
+        if var not in ['uz', 'u', 'time', 'u_total', 'names']:
             ds = ds.drop(var)
 
     # Total EUC transport.
     total = ds.u_total
+    # total = [sum([ds.u.sel(exp=i, zone=z).groupby(ds.time.sel(exp=i, zone=z)).sum('traj')
+    #               for z in range(9)]) for i in range(2)]
     p = test_signifiance(*total)
     total = ds.u_total.mean('rtime').values
+    # total = [d.mean('time') for d in total]
     total = np.concatenate([total, [total[1] - total[0]]])
 
     # Add extra data variables.
@@ -61,8 +64,11 @@ def log_source_transport(lon):
     for z in ds.zone.values:
         dx = ds.uz.sel(zone=z)
         p = test_signifiance(dx[0], dx[1])
-        dx = dx.mean('rtime').values
+        dx = [ds.u.sel(zone=z, exp=i)2.groupby(ds.time.sel(zone=z, exp=i)).sum('traj').mean('time')
+              for i in range(2)]
+        # dx[1]['time'] = dx[0]['time']
         dx = np.concatenate([dx, [dx[1] - dx[0]]])
+        # dx = dx.mean('time')
 
         s = '{:>18}: '.format(ds.names.sel(zone=z).item())
 
@@ -85,6 +91,7 @@ def log_source_transport(lon):
 
 def log_eulerian_transport():
     """Log eulerian transport (hist, change, etc)."""
+    logger = mlogger('eulerian_transport')
     ds = open_eulerian_transport(resample=False)
 
     # ds = ds.sel(lon=cfg.lons)
@@ -115,6 +122,7 @@ def log_eulerian_transport():
 
 def log_eulerian_variability():
     """Log eulerian transport (hist, change, etc)."""
+    logger = mlogger('eulerian_transport')
     ds = open_eulerian_transport(resample=False, clim=False)[0]
 
     # ds = ds.sel(lon=cfg.lons)

@@ -36,7 +36,7 @@ ds = ds.sel(traj=ds.traj[ds.traj.isin(dp.traj.values.astype(int))])
 """
 import numpy as np
 import xarray as xr
-# import seaborn as sns
+import seaborn as sns
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 
@@ -197,7 +197,7 @@ def transport_source_bar_graph(exp=0, z_ids=list(range(9)), sum_interior=True):
         ax.xaxis.set_minor_locator(mpl.ticker.AutoMinorLocator())
 
     plt.tight_layout()
-    plt.savefig(cfg.fig / 'sources/transport_source_bar_{}{}.png'
+    plt.savefig(cfg.fig / 'sources/transport_source_bar_{}{}trim2-2.png'
                 .format('' if sum_interior else '_interior', cfg.exps[exp]))
     return
 
@@ -217,7 +217,7 @@ def source_histogram_multi_var(ds, lon):
             name, units = ds[var].attrs['long_name'], ds[var].attrs['units']
             ax = axes.flatten()[i]
             dx = ds.sel(zone=z)
-            ax = plot_histogram(ax, dx, var, color, cutoff=cutoff)
+            ax = plot_histogram(ax, dx, var, color, cutoff=cutoff, median=True)
 
             ax.set_title('{} {} {}'.format(ltr[i], zname, name),
                          loc='left', x=-0.08)
@@ -234,32 +234,38 @@ def source_histogram_multi_var(ds, lon):
             i += 1
 
     plt.tight_layout()
-    plt.savefig(cfg.fig / 'sources/histogram_{}.png'.format(lon), dpi=300)
+    plt.savefig(cfg.fig / 'sources/histogram_{}-u01lat22.png'.format(lon), dpi=300)
     return
 
 
-def source_histogram_multi_lon(var='z'):
+def source_histogram_multi_lon(var='z', sum_interior=True):
     """Histograms of single source variables."""
     kwargs = dict(bins='fd', cutoff=0.85)
 
-    nc, nr = 4, 7
-    fig, axes = plt.subplots(nr, nc, figsize=(11, 14))
+    if sum_interior:
+        nc, nr = 4, 7
+        fig, axes = plt.subplots(nr, nc, figsize=(11, 14))
+        zn = np.array([1, 2, 6, 7, 8, 3, 4, 5, 0])[:nr]
+    else:
+        nc, nr = 4, 10
+        fig, axes = plt.subplots(nr, nc, figsize=(11, 16))
+        zn = np.arange(7, 17, dtype=int)
 
     for x, lon in enumerate(cfg.lons):
-        ds = source_dataset(lon)
-        zn = ds.zone.values[:nr]
+        ds = source_dataset(lon, sum_interior=sum_interior)
 
         name, units = [ds[var].attrs[a] for a in ['long_name', 'units']]
         xlabel, ylabel = '{} [{}]'.format(name, units), 'Transport [Sv]'
 
         for zi, z in enumerate(zn):
             i = nc * zi + x
-            color = [ds.colors[zi].item(), 'k']
-            zname = ds.names[zi].item()
+            dx = ds.sel(zone=z)
+            color = [dx.colors.item(), 'k']
+            zname = dx.names.item()
 
             ax = axes.flatten()[i]
-            dx = ds.sel(zone=z)
-            ax = plot_histogram(ax, dx, var, color, **kwargs)
+
+            ax = plot_histogram(ax, dx, var, color, median=True, **kwargs)
 
             ax.set_title('{}) {}'.format(i + 1, zname), loc='left')
             ax.set_ymargin(0)
@@ -278,7 +284,8 @@ def source_histogram_multi_lon(var='z'):
 
     plt.tight_layout()
     fig.subplots_adjust(wspace=0.25, hspace=0.4, top=1)
-    plt.savefig(cfg.fig / 'sources/{}_histogram.png'.format(name), dpi=300,
+    plt.savefig(cfg.fig / 'sources/{}_histogram{}.png'
+                .format(name, '' if sum_interior else '_interior'), dpi=300,
                 bbox_inches='tight')
     return
 
@@ -495,20 +502,97 @@ def source_depth_cor(ds, lon, exp):
     return
 
 
+def plot_KDE(ds, lon, var):
+    """Plot KDE of source var for historical (solid) and RCP(dashed)."""
+    def plot_KDE_source(ax, ds, var, z, color=None):
+        """Plot KDE of source var for historical (solid) and RCP(dashed)."""
+        for exp in range(2):
+            dx = ds.sel(zone=z).isel(exp=exp).dropna('traj', 'all')
+
+            c = dx.colors.item() if color is None else color
+            ls = ['-', ':'][exp]
+            n = dx.names.item() if exp == 0 else None
+
+            ax = sns.kdeplot(x=dx[var], ax=ax, c=c, ls=ls, weights=dx.u,
+                             label=n, bw_adjust=0.6)
+
+            # Find cutoff.
+            hist = ax.get_lines()[-1]
+            x, y = hist.get_xdata(), hist.get_ydata()
+            xlim = x[y > y.max() * 0.09]
+            ax.set_xlim(max([0, xlim[0]]), xlim[-1])
+
+            # Median & IQR.
+            for q, lw, h in zip([0.5, 0.25, 0.75], [1.7, 1.4, 1.4],
+                                [0.07, 0.03, 0.03]):
+                ax.axvline(x[sum(np.cumsum(y) < (sum(y)*q))], ymax=h,
+                           c=color, ls=ls, lw=lw)
+        return ax
+
+    fig, ax = plt.subplots(3, 1, figsize=(6, 13), squeeze=True)
+    for i in range(ax.size):
+        z_inds = [[1, 2, 6], [3, 4], [7, 8, 5]][i]
+
+        for iz, z in enumerate(z_inds):
+            c = ['m', 'b', 'g', 'y'][iz]
+            ax[i] = plot_KDE_source(ax[i], ds, var, z, color=c)
+
+        ax[i].legend()
+    plt.tight_layout()
+    plt.savefig(cfg.fig / 'sources/KDE_{}_{}.png'.format(lon, var), dpi=300)
+    return
+
+
 # for exp in [1, 0]:
 #     transport_source_bar_graph(exp=exp)
 #     transport_source_bar_graph(exp, list(range(7, 17)), False)
 
-# for lon in [165]:
-for lon in cfg.lons:
-    ds = source_dataset(lon, sum_interior=True)
-    # source_pie_chart(ds, lon)
-    # source_histogram_multi_var(ds, lon)
-    # combined_source_histogram(ds, lon)
-    source_depth_cor(ds, lon, 0)
-    source_depth_cor(ds, lon, 1)
+# # for lon in [165]:
+# for lon in cfg.lons:
+#     ds = source_dataset(lon, sum_interior=True)
+#     # source_pie_chart(ds, lon)
+#     source_histogram_multi_var(ds, lon)
+#     # combined_source_histogram(ds, lon)
+#     # source_depth_cor(ds, lon, 0)
+#     # source_depth_cor(ds, lon, 1)
 
 # for var in ['speed', 'age', 'distance']:
-#     source_histogram_multi_lon(var)
+#     source_histogram_multi_lon(var, sum_interior=False)
 
 # source_histogram_depth()
+lon = 165
+ds = source_dataset(lon, sum_interior=True)
+plot_KDE(ds, lon, var='age')
+
+# lon = 165
+# var = 'age'
+# z = 1
+# ds = source_dataset(lon, sum_interior=True)
+# ds = ds.thin(dict(traj=30))
+
+# def plot_hist_2D():
+#     def plot_hist_2D_source(ax, ds, varx, vary, z, exp):
+#         """Plot a 2D KDE of source z vars."""
+#         cmap = plt.cm.viridis
+#         dx = ds.sel(zone=z).isel(exp=exp).dropna('traj', 'all')
+
+#         ax = sns.histplot(x=dx[varx], y=dx[vary], ax=ax, palette=cmap, cbar=1)
+#         return ax
+
+#     exp = 1
+#     varx, vary = 'age', 'distance'
+#     fig, ax = plt.subplots(1, 1, figsize=(6, 7), squeeze=True)
+#     z_inds = [2]
+
+#     for i, z in enumerate(z_inds):
+#         ax = plot_hist_2D_source(ax, ds, varx, vary, z, exp)
+#         ax.set_xlim(0, 750)
+#         ax.set_ylim(1.4, 7)
+
+
+#     # TODO: savefig
+#     return
+
+# lats = ds.lat.max(['exp', 'zone'])
+# keep_traj = lats.where((lats <= 2.2) & (lats >= -2.2), drop=True).traj
+# ds = ds.sel(traj=keep_traj)
