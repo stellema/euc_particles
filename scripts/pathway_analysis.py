@@ -28,11 +28,18 @@ from stats import weighted_bins_fd
 
 
 def plot_source_trajectory_map_IQR(lon=190, exp=0, v=1, r=0, zone=1):
-    sortby = ['IQR', 'mode', 'thin', 'dist'][1]
+    sortby = ['IQR', 'mode', 'thin', 'dist', 'si'][-1]
     # Particle IDs
-    pid_dict = source_particle_ID_dict(None, exp, lon, v, r)
-    dz = source_dataset(lon, sum_interior=False).isel(exp=0)
-    dz = dz.sel(traj=dz.traj[dz.traj.isin(pid_dict[zone])]).sel(zone=zone)
+    if zone < 7:
+        pid_dict = source_particle_ID_dict(None, exp, lon, v, r)
+        pid_dict = pid_dict[zone]
+        
+    if zone >= 7:
+        pid_dict = [source_particle_ID_dict(None, exp, lon, v, r)[z] for z in range(zone, zone+5)]
+        pid_dict = np.concatenate(pid_dict)
+        
+    dz = source_dataset(lon, sum_interior=True).isel(exp=0)
+    dz = dz.sel(traj=dz.traj[dz.traj.isin(pid_dict)]).sel(zone=zone)
 
     # Select trajs in full particle data
     # ds = xr.open_dataset(get_plx_id(exp, lon, v, r, 'plx'))
@@ -135,6 +142,17 @@ def plot_source_trajectory_map_IQR(lon=190, exp=0, v=1, r=0, zone=1):
         colors = mpl.cm.ScalarMappable(norm=norm, cmap=cmap)
         colors._A = []
         # colors.set_clim(0, 250)
+
+    # South interior bimodal distance peak.
+    if sortby == 'si':
+        num_pids = 100
+        trajs = dz.traj.sortby(dz.age)
+       
+        pids = [trajs.where((dz.age.sortby(dz.age) <= t), drop=True) for t in [200, 500, 850, 1200]]
+        pids = np.concatenate([p[-num_pids:].values for p in pids])
+
+        colors = np.repeat(['mediumvioletred', 'b', 'g', 'yellow'], num_pids)
+        alpha = 0.4
     ##########################################################################
 
     # Plot particles.
@@ -170,6 +188,6 @@ def plot_source_trajectory_map_IQR(lon=190, exp=0, v=1, r=0, zone=1):
 lon = 165
 exp = 0
 v = 1
-r = 2
-zone = 1
-plot_source_trajectory_map_IQR(lon, exp, v, r, zone)
+r = 1
+zone = 7
+# plot_source_trajectory_map_IQR(lon, exp, v, r, zone)

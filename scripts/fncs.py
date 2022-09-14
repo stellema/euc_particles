@@ -487,7 +487,7 @@ def source_dataset(lon, sum_interior=True):
 
     # Convert distance: m to x100 km.
     ds['distance'] *= 1e-6
-    ds['z'].attrs['long_name'] = 'Distance'
+    ds['distance'].attrs['long_name'] = 'Distance'
     ds['distance'].attrs['units'] = '1e6 m'
 
     ds['z'].attrs['long_name'] = 'EUC Depth'

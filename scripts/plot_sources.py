@@ -467,10 +467,11 @@ def timeseries_bar(exp=0, z_ids=list(range(9)), sum_interior=True):
     return
 
 
-def source_depth_cor(ds, lon, exp):
+def source_scatter(ds, lon, exp, varx, vary):
     """Histograms of source variables plot."""
     from stats import format_pvalue_str
     from scipy import stats
+
     zn = ds.zone.values
     fig, axes = plt.subplots(3, 3, figsize=(11.5, 9))
     axes = axes.flatten()
@@ -481,24 +482,25 @@ def source_depth_cor(ds, lon, exp):
         zname = ds.names[zi].item()
         ax = axes[i]
         dx = ds.sel(zone=z, exp=exp).dropna('traj')
-        x, y = dx.z_f, dx.z
+        x, y = dx[varx], dx[vary]
         a, b = np.polyfit(x, y, 1)
-        r, p = stats.pearsonr(dx.z_f, dx.z)
+        r, p = stats.pearsonr(x, y)
 
         ax.scatter(x, y, s=2, c=color)
         ax.plot(x, a * x + b, c='k',
                 label='r={:.2f}, {}'.format(r, format_pvalue_str(p)))
-        ax.legend(loc='lower right')
+        ax.legend(loc='best')
 
-        ax.set_xlabel('Source Depth [m]')
-        ax.set_ylabel('EUC Depth [m]')
+        ax.set_xlabel('{} [{}]'.format(x.attrs['long_name'], x.attrs['units']))
+        ax.set_ylabel('{} [{}]'.format(y.attrs['long_name'], y.attrs['units']))
         ax.set_title('{} {}'.format(ltr[i], zname), loc='left', x=-0.01)
-        ax.set_ylim(400, 0)
+        if vary in ['z', 'z_f']:
+            ax.set_ylim(400, 0)
         i += 1
 
     plt.tight_layout()
-    plt.savefig(cfg.fig / 'sources/scatter_depth_{}_{}.png'
-                .format(cfg.exp_abr[exp], lon), dpi=300)
+    plt.savefig(cfg.fig / 'sources/scatter_{}_{}_{}_{}.png'
+                .format(varx, vary, lon, cfg.exp_abr[exp]), dpi=300)
     return
 
 
@@ -516,6 +518,7 @@ def plot_KDE(ds, lon, var):
             ax = sns.kdeplot(x=dx[var], ax=ax, c=c, ls=ls, weights=dx.u,
                              label=n, bw_adjust=0.6)
 
+            ax.xaxis.set_minor_locator(mpl.ticker.AutoMinorLocator())
             # Find cutoff.
             hist = ax.get_lines()[-1]
             x, y = hist.get_xdata(), hist.get_ydata()
@@ -523,76 +526,91 @@ def plot_KDE(ds, lon, var):
             ax.set_xlim(max([0, xlim[0]]), xlim[-1])
 
             # Median & IQR.
-            for q, lw, h in zip([0.5, 0.25, 0.75], [1.7, 1.4, 1.4],
-                                [0.07, 0.03, 0.03]):
+            for q, lw, h in zip([0.5, 0.25, 0.75], [1.7, 1.5, 1.5],
+                                [0.09, 0.05, 0.05]):
                 ax.axvline(x[sum(np.cumsum(y) < (sum(y)*q))], ymax=h,
                            c=color, ls=ls, lw=lw)
         return ax
-
-    fig, ax = plt.subplots(3, 1, figsize=(6, 13), squeeze=True)
-    for i in range(ax.size):
-        z_inds = [[1, 2, 6], [3, 4], [7, 8, 5]][i]
-
-        for iz, z in enumerate(z_inds):
-            c = ['m', 'b', 'g', 'y'][iz]
-            ax[i] = plot_KDE_source(ax[i], ds, var, z, color=c)
-
-        ax[i].legend()
+    
+    
+    var = [var] if isinstance(var, str) else var
+    nc = len(var)
+    fig, ax = plt.subplots(3, nc, figsize=(5*nc, 10), squeeze=0)
+    i = 0
+    for j in range(nc):
+        v = var[j]
+        for i in range(ax.size//nc):  # iterate through zones.
+            z_inds = [[1, 2, 6], [3, 4], [7, 8, 5]][i]
+            for iz, z in enumerate(z_inds):
+                c = ['m', 'b', 'g', 'y'][iz]
+                ax[i, j] = plot_KDE_source(ax[i, j], ds, v, z, color=c)
+                
+            # Plot extras.
+            ax[i, j].set_title('{}'.format(ltr[j+i*nc]), loc='left')
+            ax[i, j].legend()
+            ax[i, j].set_xlabel('{} [{}]'.format(*[ds[v].attrs[s] for s in 
+                                                   ['long_name', 'units']]))
+            
+            
     plt.tight_layout()
-    plt.savefig(cfg.fig / 'sources/KDE_{}_{}.png'.format(lon, var), dpi=300)
+    plt.savefig(cfg.fig / 'sources/KDE_{}_{}.png'.format('_'.join(var), lon), dpi=300)
     return
 
 
 # for exp in [1, 0]:
 #     transport_source_bar_graph(exp=exp)
-#     transport_source_bar_graph(exp, list(range(7, 17)), False)
+#     transport_source_bar_graph(exp, list(range(7, 17)), False)  
+    
+# source_histogram_depth()
 
-# # for lon in [165]:
-# for lon in cfg.lons:
-#     ds = source_dataset(lon, sum_interior=True)
-#     # source_pie_chart(ds, lon)
-#     source_histogram_multi_var(ds, lon)
-#     # combined_source_histogram(ds, lon)
-#     # source_depth_cor(ds, lon, 0)
-#     # source_depth_cor(ds, lon, 1)
+# for lon in [165]:
+for lon in cfg.lons:
+    ds = source_dataset(lon, sum_interior=True)
+    plot_KDE(ds, lon, var=['age', 'distance'])
+    # source_pie_chart(ds, lon)
+    # source_histogram_multi_var(ds, lon)
+    # combined_source_histogram(ds, lon)
+    # source_depth_cor(ds, lon, 0)
+    # source_depth_cor(ds, lon, 1)
+    
 
 # for var in ['speed', 'age', 'distance']:
 #     source_histogram_multi_lon(var, sum_interior=False)
 
-# source_histogram_depth()
-lon = 165
-ds = source_dataset(lon, sum_interior=True)
-plot_KDE(ds, lon, var='age')
-
+# # for lon in [165]:
+# for lon in cfg.lons:
+#     ds = source_dataset(lon, sum_interior=True)
+#     exp = 0
+#     varx, vary = 'z_f', 'z'
+#     source_scatter(ds, lon, exp, varx, vary)
+#     for vary in ['z', 'u', 'lat']:
+#         varx = 'age'
+#         source_scatter(ds, lon, exp, varx, vary)
+    
+###############################################################################
 # lon = 165
 # var = 'age'
 # z = 1
 # ds = source_dataset(lon, sum_interior=True)
 # ds = ds.thin(dict(traj=30))
-
 # def plot_hist_2D():
 #     def plot_hist_2D_source(ax, ds, varx, vary, z, exp):
 #         """Plot a 2D KDE of source z vars."""
 #         cmap = plt.cm.viridis
 #         dx = ds.sel(zone=z).isel(exp=exp).dropna('traj', 'all')
-
 #         ax = sns.histplot(x=dx[varx], y=dx[vary], ax=ax, palette=cmap, cbar=1)
 #         return ax
-
 #     exp = 1
 #     varx, vary = 'age', 'distance'
 #     fig, ax = plt.subplots(1, 1, figsize=(6, 7), squeeze=True)
 #     z_inds = [2]
-
 #     for i, z in enumerate(z_inds):
 #         ax = plot_hist_2D_source(ax, ds, varx, vary, z, exp)
 #         ax.set_xlim(0, 750)
 #         ax.set_ylim(1.4, 7)
-
-
 #     # TODO: savefig
 #     return
-
 # lats = ds.lat.max(['exp', 'zone'])
 # keep_traj = lats.where((lats <= 2.2) & (lats >= -2.2), drop=True).traj
 # ds = ds.sel(traj=keep_traj)
+
