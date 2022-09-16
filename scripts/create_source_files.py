@@ -231,12 +231,12 @@ def plx_source_file(lon, exp, v, r):
     attrs = {'u': {'long_name': 'Transport', 'standard_name': 'transport', 'units': 'Sv'},
              'u_zone': {'long_name': 'Source Transport', 'standard_name': 'transport', 'units': 'Sv'},
              'u_sum': {'long_name': 'EUC Transport', 'standard_name': 'transport', 'units': 'Sv'},
-             'age': {'long_name': 'Transit Time', 'standard_name': 'elapsed_time', 'units': 'days'},
+             'age': {'long_name': 'Transit Time', 'standard_name': 'elapsed_time', 'units': 'day'},
              'distance': {'long_name': 'Distance', 'standard_name': 'distance', 'units': 'Mm'},
              'z': {'long_name': 'EUC Depth', 'standard_name': 'depth', 'units': 'm'},
              'z_at_zone': {'long_name': 'Source Depth', 'standard_name': 'depth', 'units': 'm'},
-             'time': {'long_name': 'Time at EUC', 'standard_name': 'time'},
-             'time_at_zone': {'long_name': 'Time at source', 'standard_name': 'time'}}
+             'time': {'long_name': 'Time at EUC', 'standard_name': 'time', 'units': None},
+             'time_at_zone': {'long_name': 'Time at source', 'standard_name': 'time', 'units': None}}
 
     for var in attrs.keys():
         for k, p in attrs[var].items():
