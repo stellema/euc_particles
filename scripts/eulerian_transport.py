@@ -141,7 +141,7 @@ def euc_transport_dataset(exp):
     ds = subset_ofam_dataset(ds, y, x, z)
 
     # EUC transport sum.
-    ds = ds.u.where(ds.u > 0.)  # Mask westward velocity.
+    ds = ds.u.where(ds.u > 0.1)  # Mask westward velocity.
 
     df = xr.Dataset()
     df['euc'] = convert_to_transport(ds, var='u', sum_dims=['lat', 'lev'])
@@ -152,7 +152,7 @@ def euc_transport_dataset(exp):
     df['euc'].attrs['lat_bnds'] = [(ds.lat[i].item()) for i in [0, -1]]
 
     logger.info('{}: Saving...'.format(filename.stem))
-    save_dataset(df, filename, msg=' ./eulerian_transport.py')
+    save_dataset(df, filename, msg=' ./eulerian_transport.py (u>0.1m/s)')
     logger.info('{}: Saved.'.format(filename.stem))
     return df
 
