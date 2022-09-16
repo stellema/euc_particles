@@ -80,11 +80,9 @@ def source_particle_ID_dict(ds, exp, lon, v, r):
 def get_final_particle_obs(ds):
     """Reduce particle dataset variables to first/last observation."""
     # Select the lowest value.
-    ds['time_f'] = ds['time'].min('obs', skipna=True, keep_attrs=True)
-    ds['time_f'].attrs['long_name'] = 'Source time'
+    ds['time_at_zone'] = ds['time'].min('obs', skipna=True, keep_attrs=True)
 
-    ds['z_f'] = ds['z'].ffill('obs').isel(obs=-1)
-    ds['z_f'].attrs['long_name'] = 'Source depth'
+    ds['z_at_zone'] = ds['z'].ffill('obs').isel(obs=-1)
 
     # Select the first value.
     for var in ['time', 'trajectory', 'z', 'lat', 'lon']:
@@ -140,7 +138,7 @@ def group_euc_transport(ds, source_traj):
         source_traj (dict): Dictionary of particle IDs from each source.
 
     Returns:
-        ds[uz] (xarray.DataArray): Transport from each source (rtime, source).
+        ds[u_zone] (xarray.DataArray): Transport from source (rtime, zone).
 
     """
     # Group particle transport by time.
@@ -151,13 +149,13 @@ def group_euc_transport(ds, source_traj):
     ds = ds.rename({'time': 'rtime'})
 
     # Initialise source-grouped transport variable.
-    ds['uz'] = (['rtime', 'zone'], np.empty((ds.rtime.size, ds.zone.size)))
+    ds['u_zone'] = (['rtime', 'zone'], np.empty((ds.rtime.size, ds.zone.size)))
     for z in ds.zone.values:
         dx = ds.sel(traj=ds.traj[ds.traj.isin(source_traj[z])])
         # Sum particle transport.
-        ds['uz'][dict(zone=z)] = dx.u.sum('traj', keep_attrs=True)
+        ds['u_zone'][dict(zone=z)] = dx.u.sum('traj', keep_attrs=True)
 
-    return ds['uz']
+    return ds['u_zone']
 
 
 @timeit
@@ -170,15 +168,17 @@ def plx_source_file(lon, exp, v, r):
         rtime: particle release times
 
     Data variables:
-        trajectory  (traj): Particle ID.
-        time        (traj): Release time.
-        age         (traj): Transit time.
-        zone        (traj): Source ID.
-        distance    (traj): Transit distance.
-        unbeached   (traj): Number of times particle was unbeached.
-        u           (traj): Initial transport.
-        uz          (rtime, source): EUC transport per release time & source.
-        u_total     (rtime): Total EUC transport at each release time.
+        trajectory   (traj): Particle ID.
+        time         (traj): Release time.
+        age          (traj): Transit time.
+        zone         (traj): Source ID.
+        distance     (traj): Transit distance.
+        unbeached    (traj): Number of times particle was unbeached.
+        u            (traj): Initial transport.
+        u_zone       (rtime, zone): EUC transport / release time & source.
+        u_sum        (rtime): Total EUC transport at each release time.
+        time_at_zone (traj): Time at source.
+        z_at_zone    (traj): Depth at source.
 
     """
     # Filenames.
@@ -204,6 +204,10 @@ def plx_source_file(lon, exp, v, r):
         ds = ds.isel(traj=np.linspace(0, 5000, 500, dtype=int))
         # ds = ds.isel(obs=slice(4000))
 
+    # Drop low-velocity particles.
+    keep_traj = ds.u.where(ds.u > (0.1*25*0.1*cfg.LAT_DEG/1e6), drop=True).traj
+    ds = ds.sel(traj=keep_traj)
+
     logger.info('{}: Particle information at source.'.format(xid.stem))
     ds = get_final_particle_obs(ds)
 
@@ -214,15 +218,35 @@ def plx_source_file(lon, exp, v, r):
 
     # Group variables by source.
     # EUC transport: (traj) -> (rtime, zone). Run first bc can't stack 2D.
-    uz = group_euc_transport(ds, source_traj)
+    u_zone = group_euc_transport(ds, source_traj)
 
     # Group variables by source: (traj) -> (zone, traj).
     ds = group_particles_by_variable(ds, var='zone')
 
     # Merge transport grouped by release time with source grouped variables.
-    ds.coords['zone'] = uz.zone.copy()  # Match 'zone' coord.
-    ds['uz'] = uz
-    ds['u_total'] = ds.uz.sum('zone', keep_attrs=True)  # Add total transport per release.
+    ds.coords['zone'] = u_zone.zone.copy()  # Match 'zone' coord.
+    ds['u_zone'] = u_zone
+    ds['u_sum'] = ds.u_zone.sum('zone', keep_attrs=True)  # Add total transport per release.
+
+    attrs = {'u': {'long_name': 'Transport', 'standard_name': 'transport', 'units': 'Sv'},
+             'u_zone': {'long_name': 'Source Transport', 'standard_name': 'transport', 'units': 'Sv'},
+             'u_sum': {'long_name': 'EUC Transport', 'standard_name': 'transport', 'units': 'Sv'},
+             'age': {'long_name': 'Transit Time', 'standard_name': 'elapsed_time', 'units': 'days'},
+             'distance': {'long_name': 'Distance', 'standard_name': 'distance', 'units': 'Mm'},
+             'z': {'long_name': 'EUC Depth', 'standard_name': 'depth', 'units': 'm'},
+             'z_at_zone': {'long_name': 'Source Depth', 'standard_name': 'depth', 'units': 'm'},
+             'time': {'long_name': 'Time at EUC', 'standard_name': 'time'},
+             'time_at_zone': {'long_name': 'Time at source', 'standard_name': 'time'}}
+
+    for var in attrs.keys():
+        for k, p in attrs[var].items():
+            ds[var].attrs[k] = p
+
+    # Convert age: seconds to days.
+    ds['age'] *= 1 / (60 * 60 * 24)
+
+    # Convert distance: m to x100 km.
+    ds['distance'] *= 1e-6
 
     # Save dataset.
     logger.info('{}: Saving...'.format(xid.stem))
