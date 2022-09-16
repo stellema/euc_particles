@@ -235,8 +235,8 @@ def plx_source_file(lon, exp, v, r):
              'distance': {'long_name': 'Distance', 'standard_name': 'distance', 'units': 'Mm'},
              'z': {'long_name': 'EUC Depth', 'standard_name': 'depth', 'units': 'm'},
              'z_at_zone': {'long_name': 'Source Depth', 'standard_name': 'depth', 'units': 'm'},
-             'time': {'long_name': 'Time at EUC', 'standard_name': 'time', 'units': ''},
-             'time_at_zone': {'long_name': 'Time at source', 'standard_name': 'time', 'units': ''}}
+             'time': {'long_name': 'Time at EUC'},
+             'time_at_zone': {'long_name': 'Time at source'}}
 
     for var in attrs.keys():
         for k, p in attrs[var].items():
