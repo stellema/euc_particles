@@ -73,8 +73,7 @@ def test_signifiance(x, y):
     tdim = x.dims[0]
     def resample(ds):
         return ds.resample({tdim: "Y"}).mean(tdim, keep_attrs=True)
-    times = [slice('2012'), slice('2070', '2101')]
-    x, y = x.sel({tdim: times[0]}), y.sel({tdim: times[1]})
+    x, y = x.dropna(tdim, 'all'), y.dropna(tdim, 'all')
     x, y = resample(x), resample(y)
     t, p = stats.wilcoxon(x, y)
     p = format_pvalue_str(p)

@@ -16,7 +16,7 @@ for lon in cfg.lons:
     combined_source_histogram(ds, lon)
 
     # Timeseries.
-    source_timeseries(ds, exp=0, lon=lon, var='uz')
+    source_timeseries(ds, exp=0, lon=lon, var='u_zone')
 
     # Pie chart.
     # source_pie_chart(ds, lon)
@@ -41,7 +41,7 @@ import matplotlib as mpl
 import matplotlib.pyplot as plt
 
 import cfg
-from cfg import ltr
+from cfg import ltr, exp_abr
 from stats import test_signifiance
 from tools import mlogger
 from fncs import (source_dataset, merge_hemisphere_sources,
@@ -55,18 +55,18 @@ plt.rc('axes', titlesize=fsize)
 plt.rcParams['figure.figsize'] = [10, 7]
 # plt.rcParams['figure.dpi'] = 200
 
-logger = mlogger('source_transport')
+logger = mlogger('source_info')
 
 
 def source_pie_chart(ds, lon):
     """Source transport percent pie (historical and RCP8.5).
 
     Args:
-        ds (xarray.Dataset): Includes variable 'uz' and dim 'exp'.
+        ds (xarray.Dataset): Includes variable 'u_zone' and dim 'exp'.
 
     """
     names, colors = ds.names.values, ds.colors.values
-    dx = ds.uz.mean('rtime')
+    dx = ds.u_zone.mean('rtime')
 
     fig, axs = plt.subplots(1, 2, figsize=(10, 6),
                             subplot_kw=dict(aspect='equal'))
@@ -87,55 +87,7 @@ def source_pie_chart(ds, lon):
     ax.legend(wedge, names, loc='center left', bbox_to_anchor=(1, 0, 0.5, 1))
     plt.tight_layout()
     plt.savefig(cfg.fig / 'sources/plx_pie_{}.png'.format(lon))
-
-
-def source_timeseries(exp, lon, var='uz', merge_straits=False, anom=True):
-    """Timeseries plot."""
-    ds = source_dataset(lon, sum_interior=True)
-
-    # Annual mea nbetween scenario years.
-    times = slice('2012') if exp == 0 else slice('2070', '2101')
-    ds = ds.sel(rtime=times).sel(exp=exp)
-    dsm = ds.resample(rtime="1y").mean("rtime", keep_attrs=True)
-
-    # Plot timeseries of source transport.
-    if 'long_name' in ds[var].attrs:
-        name = ds[var].attrs['long_name']
-        units = ds[var].attrs['units']
-    else:
-        name, units = 'Transport', 'Sv'
-
-    sourceids = [1, 2, 3, 6, 7]
-    xdim = dsm.rtime
-    names, colours = ds.names.values, ds.colors.values
-
-    fig, ax = plt.subplots(1, figsize=(7, 3))
-
-    for i, z in enumerate(sourceids):
-        if merge_straits and z == 1:
-            dz = dsm.uz.sel(zone=[1, 2]).sum('zone')
-        else:
-            dz = dsm.uz.sel(zone=z)
-
-        if anom:
-            dz = dz - dz.mean('rtime')
-            ax.axhline(0, color='grey')
-
-        ax.plot(xdim, dz, c=colours[z], label=names[z])
-
-    ax.set_title('{} EUC {} at {}°E'.format(cfg.exps[exp], name.lower(), lon),
-                 loc='left')
-    ax.set_ylabel('{} [{}]'.format(name, units))
-    ax.margins(x=0)
-
-    lgd = ax.legend()
-    plt.tight_layout()
-    file = 'source_{}_timeseries_{}_{}_{}'.format(name, lon, cfg.exp[exp],
-                                                  ''.join(map(str, sourceids)))
-    if anom:
-        file + '_anom'
-    plt.savefig(cfg.fig / (file + '.png'), bbox_extra_artists=(lgd,),
-                bbox_inches='tight')
+    plt.show()
 
 
 def transport_source_bar_graph(exp=0, z_ids=list(range(9)), sum_interior=True):
@@ -165,7 +117,7 @@ def transport_source_bar_graph(exp=0, z_ids=list(range(9)), sum_interior=True):
         # # Reverse zone order
         # ds = ds.isel(zone=np.arange(ds.zone.size, dtype=int)[::-1])
 
-        dx = ds.uz.mean('rtime')
+        dx = ds.u_zone.mean('rtime')
         ticks = range(ds.zone.size)  # Source y-axis ticks.
         xlabels, c = ds.names.values, ds.colors.values
 
@@ -197,8 +149,9 @@ def transport_source_bar_graph(exp=0, z_ids=list(range(9)), sum_interior=True):
         ax.xaxis.set_minor_locator(mpl.ticker.AutoMinorLocator())
 
     plt.tight_layout()
-    plt.savefig(cfg.fig / 'sources/transport_source_bar_{}{}trim2-2.png'
-                .format('' if sum_interior else '_interior', cfg.exps[exp]))
+    plt.savefig(cfg.fig / 'sources/transport_source_bar_{}{}.png'
+                .format(exp_abr[exp], '' if sum_interior else '_interior'))
+    plt.show()
     return
 
 
@@ -234,7 +187,8 @@ def source_histogram_multi_var(ds, lon):
             i += 1
 
     plt.tight_layout()
-    plt.savefig(cfg.fig / 'sources/histogram_{}-u01lat22.png'.format(lon), dpi=300)
+    plt.savefig(cfg.fig / 'sources/histogram_{}.png'.format(lon), dpi=300)
+    plt.show()
     return
 
 
@@ -284,9 +238,10 @@ def source_histogram_multi_lon(var='z', sum_interior=True):
 
     plt.tight_layout()
     fig.subplots_adjust(wspace=0.25, hspace=0.4, top=1)
-    plt.savefig(cfg.fig / 'sources/{}_histogram{}.png'
-                .format(name, '' if sum_interior else '_interior'), dpi=300,
+    plt.savefig(cfg.fig / 'sources/histogram_{}{}.png'
+                .format(var, '' if sum_interior else '_interior'), dpi=300,
                 bbox_inches='tight')
+    plt.show()
     return
 
 
@@ -318,7 +273,7 @@ def source_histogram_depth():
             ax = plot_histogram(ax, dx, 'z', color, outline=False, **kwargs)
 
             color = [colors[1]] * 2
-            ax = plot_histogram(ax, dx, 'z_f', color, outline=False, **kwargs)
+            ax = plot_histogram(ax, dx, 'z_at_zone', color, outline=False, **kwargs)
 
             ax.set_title('{}) {}'.format(i + 1, zname), loc='left')
             ax.set_ymargin(0)
@@ -344,126 +299,9 @@ def source_histogram_depth():
     # Save.
     plt.tight_layout()
     fig.subplots_adjust(wspace=0.25, hspace=0.4, top=1)
-    plt.savefig(cfg.fig / 'sources/depth_histogram.png', dpi=300,
+    plt.savefig(cfg.fig / 'sources/histogram_depth.png', dpi=300,
                 bbox_extra_artists=(lgd,), bbox_inches='tight')
-    return
-
-
-def combined_source_histogram(ds, lon):
-    """Histograms of source variables plot."""
-
-    def plot_histogram(ax, dx, var, color, cutoff=0.85, weighted=True, name=''):
-        """Plot histogram with historical (solid) & projection (dashed)."""
-
-        kwargs = dict(histtype='step', density=False, range=tuple(cutoff),
-                      stacked=False, alpha=1, cumulative=False, color=color,
-                      edgecolor=color, hatch=None, lw=1.4, label=name)
-        dx = [dx.isel(exp=i).dropna('traj', 'all') for i in [0, 1]]
-        bins = 'fd'
-        weights = None
-        if weighted:
-            # weights = [dx[i].u / dx[i].u.sum().item() for i in [0, 1]]
-            weights = [dx[i].u for i in [0, 1]]
-            # weights = [dx[i].u / dx[i].uz.mean().item() for i in [0, 1]]
-
-            # Find number of bins based on combined hist/proj data range.
-            h0, _, r0 = weighted_bins_fd(dx[0][var], weights[0])
-            h1, _, r1 = weighted_bins_fd(dx[1][var], weights[1])
-
-            # Data min & max of both datasets.
-            r = [min(np.floor([r0[0], r1[0]])), max(np.ceil([r0[1], r1[1]]))]
-            kwargs['range'] = r
-
-            # Number of bins for combined data range (use smallest bin width).
-            bins = int(np.ceil(np.diff(r) / min([h0, h1])))
-
-        # Historical.
-        x, _bins, _ = ax.hist(dx[0][var], bins, weights=weights[0], **kwargs)
-
-        # # RCP8.5.
-        # kwargs.update(dict(ls='--'))
-        # bins = bins if weighted else _bins
-        # _, bins, _ = ax.hist(dx[1][var], bins, weights=weights[1], **kwargs)
-
-        ax.set_xlim(xmin=cutoff[0], xmax=cutoff[1])
-        return ax
-
-    zn = ds.zone.values[:-2]
-    varz = ['age', 'distance', 'speed']
-    fig, axes = plt.subplots(len(varz), 1, figsize=(10, 15))
-    i = 0
-    for vi, var in enumerate(varz):
-        ax = axes.flatten()[i]
-        cutoff = [[0, 1500], [0, 30], [0.06, 0.35]][vi]  # xaxis limits.
-        name, units = ds[var].attrs['long_name'], ds[var].attrs['units']
-        ax.set_title('{} {}'.format(ltr[i], name), loc='left')
-
-        for zi, z in enumerate(zn):
-            color = ds.colors[zi].item()
-            zname = ds.names[zi].item()
-            dx = ds.sel(zone=z)
-            ax = plot_histogram(ax, dx, var, color, cutoff=cutoff, name=zname)
-
-        # Create new legend handles but use the colors from the existing ones
-        handles, labels = ax.get_legend_handles_labels()
-        handles = [mpl.lines.Line2D([], [], c=h.get_edgecolor()) for h in handles]
-        ax.legend(handles=handles, labels=labels, loc='best')
-        ax.set_xlabel('{} [{}]'.format(name, units))
-        ax.set_ylabel('Transport [Sv]')
-        ax.xaxis.set_minor_locator(mpl.ticker.AutoMinorLocator())
-        i += 1
-
-    # Format plots.
-    plt.suptitle('{}°E'.format(lon))
-
-    plt.tight_layout()
-    plt.savefig(cfg.fig / 'sources/histogram_{}_comb.png'.format(lon))
-    return
-
-
-def timeseries_bar(exp=0, z_ids=list(range(9)), sum_interior=True):
-    """Bar graph of source transport for each release longitude.
-
-    Horizontal bar graph (sources on y-axis) with or without RCP8.5.
-    4 (2x2) subplots for each release longitude.
-
-    Args:
-        exp (str, optional): Historical or with RCP8.5. Defaults to 0.
-        sum_interior (bool, optional): DESCRIPTION. Defaults to True.
-    # # stacked bar.
-    # for z in np.arange(dx.zone.size)[::-1]:
-    #     h = dx.isel(zone=z).values
-    #     ax.bar(x, h, bottom=b, color=c[z], label=xlabels[z], **kwargs)
-    #     b += h
-    """
-    i = 2
-    lon = cfg.lons[i]
-    ds = source_dataset(lon, sum_interior)
-    ds = ds.isel(zone=z_ids)  # Single.
-    # ds = merge_LLWBC_interior_sources(ds).isel(zone=[-2, -1])  # Merged.
-
-    dx = ds.uz.isel(exp=exp)
-    dx = dx.where(dx.rtime < np.datetime64('2013-01-06'), drop=1)
-    dx = dx.resample(rtime="1m").mean("rtime", keep_attrs=True)
-    dx = dx.rolling(rtime=6).mean()
-
-    x = dx.rtime.dt.strftime("%Y-%m")
-    b = np.zeros(dx.rtime.size)
-    xlabels, c = ds.names.values, ds.colors.values
-    inds = [-1, -2, 3, 4, 6, 5, 2, 0, 1]  # np.arange(dx.zone.size)
-    xlabels, c = xlabels[inds], c[inds]
-    zi = np.arange(dx.zone.size)[inds]
-    # d = [dx.isel(zone=z) for z in zi]
-    d = [dx.isel(zone=z) - dx.isel(zone=z).mean('rtime') for z in zi]
-
-    fig, ax = plt.subplots(1, 1, figsize=(10, 7), sharey='row', sharex='all')
-    ax.stackplot(x, *d, colors=c, labels=xlabels,
-                 baseline=['zero', 'sym', 'wiggle', 'weighted_wiggle'][2])
-    ax.margins(x=0, y=0)
-    lgd = ax.legend(bbox_to_anchor=(1, 1), loc='upper left')
-    plt.tight_layout()
-    ax.set_xticks(x[::46])
-    ax.set_title('{} EUC sources at {}°E'.format(ltr[i], lon), loc='left')
+    plt.show()
     return
 
 
@@ -471,6 +309,11 @@ def source_scatter(ds, lon, exp, varx, vary):
     """Histograms of source variables plot."""
     from stats import format_pvalue_str
     from scipy import stats
+    if varx == 'u' or vary == 'u':
+        # Convert depth-integrated velocity.
+        ds['u'] = ds['u'] / (25 * 0.1 * cfg.LAT_DEG / 1e6)
+        ds['u'].attrs['long_name'] = 'Velocity'
+        ds['u'].attrs['units'] = 'm/s'
 
     zn = ds.zone.values
     fig, axes = plt.subplots(3, 3, figsize=(11.5, 9))
@@ -487,52 +330,85 @@ def source_scatter(ds, lon, exp, varx, vary):
         r, p = stats.pearsonr(x, y)
 
         ax.scatter(x, y, s=2, c=color)
-        ax.plot(x, a * x + b, c='k',
-                label='r={:.2f}, {}'.format(r, format_pvalue_str(p)))
+        ax.plot(x, a * x + b, c='k', label='r={:.2f}, {}'
+                .format(r, format_pvalue_str(p)))
         ax.legend(loc='best')
 
         ax.set_xlabel('{} [{}]'.format(x.attrs['long_name'], x.attrs['units']))
         ax.set_ylabel('{} [{}]'.format(y.attrs['long_name'], y.attrs['units']))
         ax.set_title('{} {}'.format(ltr[i], zname), loc='left', x=-0.01)
-        if vary in ['z', 'z_f']:
+        if vary in ['z', 'z_at_zone']:
             ax.set_ylim(400, 0)
+        if vary in ['u']:
+            ax.axhline(0.1, c='k')
         i += 1
 
     plt.tight_layout()
     plt.savefig(cfg.fig / 'sources/scatter_{}_{}_{}_{}.png'
                 .format(varx, vary, lon, cfg.exp_abr[exp]), dpi=300)
+    plt.show()
     return
 
 
-def plot_KDE(ds, lon, var):
+def plot_KDE_source(ax, ds, var, z, color=None):
     """Plot KDE of source var for historical (solid) and RCP(dashed)."""
-    def plot_KDE_source(ax, ds, var, z, color=None):
-        """Plot KDE of source var for historical (solid) and RCP(dashed)."""
+    for exp in range(2):
+        dx = ds.sel(zone=z).isel(exp=exp).dropna('traj', 'all')
+
+        c = dx.colors.item() if color is None else color
+        ls = ['-', ':'][exp]
+        n = dx.names.item() if exp == 0 else None
+
+        ax = sns.kdeplot(x=dx[var], ax=ax, c=c, ls=ls, weights=dx.u,
+                          label=n, bw_adjust=0.5)
+        # ax = sns.histplot(x=dx[var], ax=ax, weights=dx.u, stat='frequency',
+        #                   bins=20, element='step', alpha=0, fill=False,
+        #                   color=c, linestyle=ls, label=n,
+        #                   kde=True, kde_kws=dict(bw_adjust=0.5))
+        ax.xaxis.set_minor_locator(mpl.ticker.AutoMinorLocator())
+        # Find cutoff.
+        hist = ax.get_lines()[-1]
+        x, y = hist.get_xdata(), hist.get_ydata()
+        xlim = x[y > y.max() * 0.09]
+        xlim = x[np.cumsum(y) < (sum(y) * 0.85)]
+        ax.set_xlim(max([0, xlim[0]]), xlim[-1])
+
+        # Median & IQR.
+        for q, lw, h in zip([0.5, 0.25, 0.75], [1.7, 1.5, 1.5],
+                            [0.09, 0.05, 0.05]):
+            ax.axvline(x[sum(np.cumsum(y) < (sum(y)*q))], ymax=h,
+                       c=color, ls=ls, lw=lw)
+    return ax
+
+
+def log_KDE_source(var):
+    """log KDE of source var for historical and RCP."""
+    def log_mode(ds, var, z, lon):
+        mode = []
         for exp in range(2):
             dx = ds.sel(zone=z).isel(exp=exp).dropna('traj', 'all')
-
-            c = dx.colors.item() if color is None else color
-            ls = ['-', ':'][exp]
-            n = dx.names.item() if exp == 0 else None
-
-            ax = sns.kdeplot(x=dx[var], ax=ax, c=c, ls=ls, weights=dx.u,
-                             label=n, bw_adjust=0.6)
-
-            ax.xaxis.set_minor_locator(mpl.ticker.AutoMinorLocator())
-            # Find cutoff.
+            n = dx.names.item()
+            ax = sns.kdeplot(x=dx[var], weights=dx.u, bw_adjust=0.5)
             hist = ax.get_lines()[-1]
             x, y = hist.get_xdata(), hist.get_ydata()
-            xlim = x[y > y.max() * 0.09]
-            ax.set_xlim(max([0, xlim[0]]), xlim[-1])
+            mode.append(x[np.argmax(y)])
+        mode.append(mode[1] - mode[0])
+        s = '{} {} {:>17}'.format(var, lon, ds.names.sel(zone=z).item())
+        s += ' mode: H={:.1f} R={:.1f} D={:.1f}'.format(*mode)
+        logger.info(s)
 
-            # Median & IQR.
-            for q, lw, h in zip([0.5, 0.25, 0.75], [1.7, 1.5, 1.5],
-                                [0.09, 0.05, 0.05]):
-                ax.axvline(x[sum(np.cumsum(y) < (sum(y)*q))], ymax=h,
-                           c=color, ls=ls, lw=lw)
-        return ax
-    
-    
+        return
+
+    for j, lon in enumerate(cfg.lons):
+        ds = source_dataset(lon, sum_interior=True)
+        for z in [1, 2, 6, 3, 4, 7, 8, 5]:
+            log_mode(ds, var, z, lon)
+        logger.info('')
+
+
+
+def plot_KDE_multi_var(ds, lon, var):
+    """Plot KDE of source var for historical (solid) and RCP(dashed)."""
     var = [var] if isinstance(var, str) else var
     nc = len(var)
     fig, ax = plt.subplots(3, nc, figsize=(5*nc, 10), squeeze=0)
@@ -544,49 +420,90 @@ def plot_KDE(ds, lon, var):
             for iz, z in enumerate(z_inds):
                 c = ['m', 'b', 'g', 'y'][iz]
                 ax[i, j] = plot_KDE_source(ax[i, j], ds, v, z, color=c)
-                
+
             # Plot extras.
             ax[i, j].set_title('{}'.format(ltr[j+i*nc]), loc='left')
             ax[i, j].legend()
-            ax[i, j].set_xlabel('{} [{}]'.format(*[ds[v].attrs[s] for s in 
+            ax[i, j].set_xlabel('{} [{}]'.format(*[ds[v].attrs[s] for s in
                                                    ['long_name', 'units']]))
-            
-            
+
     plt.tight_layout()
-    plt.savefig(cfg.fig / 'sources/KDE_{}_{}.png'.format('_'.join(var), lon), dpi=300)
+    plt.savefig(cfg.fig / 'sources/KDE_{}_{}.png'.format('_'.join(var), lon),
+                dpi=300)
+    plt.show()
+    return
+
+
+def source_KDE_multi_lon(var='z', sum_interior=True):
+    """KDE of var at each longitude."""
+    nc, nr = 4, 3
+    fig, ax = plt.subplots(nr, nc, figsize=(14, 9), sharey='row')
+    for j, lon in enumerate(cfg.lons):
+        ds = source_dataset(lon, sum_interior=sum_interior)
+
+        xlabel = '{} [{}]'.format(*[ds[var].attrs[a]
+                                    for a in ['long_name', 'units']])
+
+        for i in range(ax.size//nc):  # iterate through zones.
+            z_inds = [[1, 2, 6], [3, 4], [7, 8, 5]][i]
+            for iz, z in enumerate(z_inds):
+                c = ['m', 'b', 'g', 'y'][iz]
+                ax[i, j] = plot_KDE_source(ax[i, j], ds, var, z, color=c)
+
+            # Plot extras.
+            ax[i, j].set_title('{}'.format(ltr[j+i*nc]), loc='left')
+            if j == 3:
+                ax[i, 3].legend()
+            ax[i, j].set_xlabel(xlabel)
+
+            log_KDE_source(ds, var, z, lon)
+        logger.info('')
+
+    # Suptitles.
+    for lon, ax in zip(cfg.lons, ax.flatten()[:4]):
+        ax.text(0.25, 1.1, "EUC at {}°E".format(lon), weight='bold',
+                transform=ax.transAxes)
+
+    # plt.tight_layout()
+    fig.subplots_adjust(wspace=0.1, hspace=0.25, top=1)
+    plt.savefig(cfg.fig / 'sources/KDE_{}.png'
+                .format(var, '' if sum_interior else '_interior'), dpi=300,
+                bbox_inches='tight')
+    plt.show()
+
     return
 
 
 # for exp in [1, 0]:
 #     transport_source_bar_graph(exp=exp)
-#     transport_source_bar_graph(exp, list(range(7, 17)), False)  
-    
+#     transport_source_bar_graph(exp, list(range(7, 17)), False)
+
 # source_histogram_depth()
 
 # for lon in [165]:
-for lon in cfg.lons:
-    ds = source_dataset(lon, sum_interior=True)
-    plot_KDE(ds, lon, var=['age', 'distance'])
-    # source_pie_chart(ds, lon)
-    # source_histogram_multi_var(ds, lon)
-    # combined_source_histogram(ds, lon)
-    # source_depth_cor(ds, lon, 0)
-    # source_depth_cor(ds, lon, 1)
-    
+# # for lon in cfg.lons:
+#     ds = source_dataset(lon, sum_interior=True)
+#     plot_KDE_multi_var(ds, lon, var=['age', 'distance'])
+# #     source_pie_chart(ds, lon)
+# #     source_histogram_multi_var(ds, lon)
+# #     combined_source_histogram(ds, lon)
 
-# for var in ['speed', 'age', 'distance']:
-#     source_histogram_multi_lon(var, sum_interior=False)
+
+for var in ['distance', 'age', 'speed']:
+    source_histogram_multi_lon(var, sum_interior=False)
+    source_KDE_multi_lon(var, sum_interior=True)
+    log_KDE_source(var)
 
 # # for lon in [165]:
 # for lon in cfg.lons:
 #     ds = source_dataset(lon, sum_interior=True)
 #     exp = 0
-#     varx, vary = 'z_f', 'z'
+#     varx, vary = 'z_at_zone', 'z'
 #     source_scatter(ds, lon, exp, varx, vary)
 #     for vary in ['z', 'u', 'lat']:
 #         varx = 'age'
 #         source_scatter(ds, lon, exp, varx, vary)
-    
+
 ###############################################################################
 # lon = 165
 # var = 'age'

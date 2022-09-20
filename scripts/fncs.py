@@ -382,6 +382,30 @@ def merge_LLWBC_interior_sources(ds):
     return ds
 
 
+def merge_SH_LLWBC_sources(ds):
+    """Merge North/South Interior & LLWBCs (add as new zones)."""
+    ds_orig = ds.copy()
+
+    # Merge LLWBCs VS & SS & SC & MC: zone[1] = zone[1+2+3].
+    for z2 in [2, 6]:
+        ds = combine_source_indexes(ds, 1, z2)
+
+    # Reassign source ID.
+    ds = ds.sel(zone=[1])
+    ds['zone'] = np.array([1]) + ds_orig.zone.max().item()
+
+    # Replace source name and colours.
+    if 'names' in ds.data_vars:
+        ds['names'] = ('zone', ['SH_LLWBC'])
+
+    if 'colors' in ds.data_vars:
+        ds['colors'] = ('zone', ['darkviolet'])
+
+    # Add new zones to original dataset.
+    ds = xr.concat([ds_orig, ds], 'zone')
+    return ds
+
+
 def concat_exp_dimension(ds, add_diff=False):
     """Concatenate list of datasets along 'exp' dimension.
 
@@ -392,10 +416,11 @@ def concat_exp_dimension(ds, add_diff=False):
         ds (xarray.Dataset): Concatenated dataset.
 
     """
-    if 'time' in ds[0].dims:
-        if ds[0].time.size == ds[-1].time.size:
-            for i in range(len(ds)):
-                ds[i]['time'] = ds[0]['time']
+    # for var in ['time', 'rtime']:
+    #     if var in ds[0].dims:
+    #         if ds[0][var].size == ds[-1][var].size:
+    #             for i in range(len(ds)):
+    #                 ds[i][var] = ds[0][var]
 
     if add_diff:
         # Calculate projected change (RCP-hist).
@@ -466,35 +491,23 @@ def source_dataset(lon, sum_interior=True):
         - Add attributes
         - Change order of source dimension
         - merge sources
-        - Changed ztime to time_f (source time)
+        - Changed ztime to time_at_zone (source time)
         - Changed z0 to z_f (source depth)
 
     """
     # Open and concat data for exah scenario.
     ds = [xr.open_dataset(get_plx_id(i, lon, 1, None, 'sources'))
           for i in [0, 1]]
+
     ds = concat_exp_dimension(ds)
+    # if 'u_total' in ds.data_vars:
+    #     ds = ds.rename({'u_total': 'u_sum', 'uz': 'u_zone',
+    #                     'time_f': 'time_at_zone', 'z_f': 'z_at_zone'})
 
     # Create 'speed' variable.
     ds['speed'] = ds.distance / ds.age
     ds['speed'].attrs['long_name'] = 'Average Speed'
     ds['speed'].attrs['units'] = 'm/s'
-
-    # Convert age: seconds to days.
-    ds['age'].attrs['long_name'] = 'Transit Time'
-    ds['age'] *= 1 / (60 * 60 * 24)
-    ds['age'].attrs['units'] = 'days'
-
-    # Convert distance: m to x100 km.
-    ds['distance'] *= 1e-6
-    ds['distance'].attrs['long_name'] = 'Distance'
-    ds['distance'].attrs['units'] = '1e6 m'
-
-    ds['z'].attrs['long_name'] = 'EUC Depth'
-    ds['z'].attrs['units'] = 'm'
-
-    ds['z_f'].attrs['long_name'] = 'Source Depth'
-    ds['z_f'].attrs['units'] = 'm'
 
     ds['names'] = ('zone', cfg.zones.names_all)
     ds['colors'] = ('zone', cfg.zones.colors_all)
@@ -504,6 +517,10 @@ def source_dataset(lon, sum_interior=True):
         # Reorder zones.
         inds = np.array([1, 2, 6, 7, 8, 3, 4, 5, 0])
         ds = ds.isel(zone=inds)
+
+    # lats = ds.lat.max(['exp', 'zone'])
+    # keep_traj = lats.where((lats <= 2.5) & (lats >= -2.5), drop=True).traj
+    # ds = ds.sel(traj=keep_traj)
+
+    # ds = ds.sel(traj=ds.u.where(ds.u > (0.1 * cfg.DXDY), drop=True).traj)
     return ds
-
-

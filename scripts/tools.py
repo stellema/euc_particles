@@ -465,7 +465,7 @@ def add_particle_file_attributes(ds):
             ds[var].attrs['units'] = units
         return ds
 
-    for var in ['u', 'uz', 'u_total']:
+    for var in ['u', 'u_zone', 'u_sum']:
         ds = add_attrs(ds, var, 'Transport', 'Sv')
 
     ds = add_attrs(ds, 'distance', 'Distance', 'm')

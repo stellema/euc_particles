@@ -4,8 +4,8 @@
 Includes data variables:
     - time: particle release times
     - age/distance/u/etc (time, traj): final value at source per time released
-    - u_total (time): total EUC transport qat each release time
-    - uz (time, zone): EUC transport sum at each source and release time
+    - u_sum (time): total EUC transport qat each release time
+    - u_zone (time, zone): EUC transport sum at each source and release time
 
 Particle source files (per r# & merged): data/sources/
 Particle IDs at each source (per r#): data/sources/id/
@@ -205,7 +205,7 @@ def plx_source_file(lon, exp, v, r):
         # ds = ds.isel(obs=slice(4000))
 
     # Drop low-velocity particles.
-    keep_traj = ds.u.where(ds.u > (0.1*25*0.1*cfg.LAT_DEG/1e6), drop=True).traj
+    keep_traj = ds.u.where(ds.u > (0.1 * cfg.DXDY), drop=True).traj
     ds = ds.sel(traj=keep_traj)
 
     logger.info('{}: Particle information at source.'.format(xid.stem))
