@@ -350,48 +350,6 @@ def source_scatter(ds, lon, exp, varx, vary):
     return
 
 
-def source_hist_2d(ds, lon, exp, varx, vary):
-    """Histograms of source variables plot."""
-    if varx == 'u' or vary == 'u':
-        # Convert depth-integrated velocity.
-        ds['u'] = ds['u'] / (25 * 0.1 * cfg.LAT_DEG / 1e6)
-        ds['u'].attrs['long_name'] = 'Velocity'
-        ds['u'].attrs['units'] = 'm/s'
-
-    zn = ds.zone.values
-    fig, axes = plt.subplots(3, 3, figsize=(11.5, 9))
-    axes = axes.flatten()
-
-    i = 0
-    for zi, z in enumerate(zn):
-        zname = ds.names[zi].item()
-        ax = axes[i]
-        dx = ds.sel(zone=z, exp=exp).dropna('traj')
-        x, y = dx[varx], dx[vary]
-        bins='auto'
-        if vary in ['z', 'z_at_zone']:
-            bins = (50, 14)
-        ax = sns.histplot(dx, ax=ax, x=varx, y=vary, log_scale=(0, False),
-                          cmap='plasma', bins=bins, cbar=True,
-                          norm=mpl.colors.LogNorm(), vmin=None, vmax=None)
-
-        ax.set_xlabel('{} [{}]'.format(x.attrs['long_name'], x.attrs['units']))
-        ax.set_ylabel('{} [{}]'.format(y.attrs['long_name'], y.attrs['units']))
-        ax.set_title('{} {}'.format(ltr[i], zname), loc='left', x=-0.01)
-        ax.margins(x=0, y=0)
-        if vary in ['z', 'z_at_zone']:
-            ax.set_ylim(350, 25)
-        if vary in ['u']:
-            ax.axhline(0.1, c='k')
-        i += 1
-
-    plt.tight_layout()
-    plt.savefig(cfg.fig / 'sources/2d_hist_{}_{}_{}_{}.png'
-                .format(varx, vary, lon, cfg.exp_abr[exp]), dpi=300)
-    plt.show()
-    return
-
-
 def plot_KDE_source(ax, ds, var, z, color=None):
     """Plot KDE of source var for historical (solid) and RCP(dashed)."""
     for exp in range(2):
@@ -515,38 +473,104 @@ def source_KDE_multi_lon(var='z', sum_interior=True):
     return
 
 
-# for exp in [1, 0]:
-#     transport_source_bar_graph(exp=exp)
-#     transport_source_bar_graph(exp, list(range(7, 17)), False)
+def source_hist_2d(ds, lon, exp, varx, vary, bins=('auto', 'auto'),
+                   invert_axis=(False, False), log_scale=(None, None), 
+                   log_norm=True):
+    """Histograms of source variables plot."""
+    if 'u' in [varx, vary]:
+        # Convert depth-integrated velocity.
+        ds['u'] = ds['u'] / (25 * 0.1 * cfg.LAT_DEG / 1e6)
+        ds['u'].attrs['long_name'] = 'Velocity'
+        ds['u'].attrs['units'] = 'm/s'
 
-# source_histogram_depth()
+    zn = ds.zone.values
+    fig, axes = plt.subplots(3, 3, figsize=(11.5, 9))
+    axes = axes.flatten()
 
-# for lon in [165]:
-# # for lon in cfg.lons:
-#     ds = source_dataset(lon, sum_interior=True)
-#     plot_KDE_multi_var(ds, lon, var=['age', 'distance'])
-# #     source_pie_chart(ds, lon)
-# #     source_histogram_multi_var(ds, lon)
-# #     combined_source_histogram(ds, lon)
+    i = 0
+    for zi, z in enumerate(zn):
+        zname = ds.names[zi].item()
+        ax = axes[i]
+        dx = ds.sel(zone=z, exp=exp).dropna('traj')
+        x, y = dx[varx], dx[vary]
+        
+        # Bins
+        wbins = list(bins)
+        for b in range(2):
+            if bins[b] == 'auto':
+                wbins[b] = weighted_bins_fd([x,y][b], dx.u)[1]
+                
+        # g = sns.JointGrid(dx, x=varx, y=vary)
+        # g.plot_joint(sns.histplot, ax=ax, weights=dx.u, bins=wbins, cbar=True,
+        #              cmap='plasma', norm=mpl.colors.LogNorm() if log_norm else None, 
+        #              vmin=None, vmax=None)
+        # g.plot_marginals(sns.boxplot, ax=ax)
+        
+        ax = sns.histplot(dx, ax=ax, x=varx, y=vary, log_scale=log_scale,
+                          weights=dx.u, bins=wbins, cbar=True,
+                          cmap='plasma', #stat='percent',
+                          norm=mpl.colors.LogNorm() if log_norm else None, 
+                          vmin=None, vmax=None)
+
+        ax.set_xlabel('{} [{}]'.format(x.attrs['long_name'], x.attrs['units']))
+        ax.set_ylabel('{} [{}]'.format(y.attrs['long_name'], y.attrs['units']))
+        ax.set_title('{} {}'.format(ltr[i], zname), loc='left', x=-0.01)
+
+        if vary in ['u']:
+            ax.axhline(0.1, c='k')
+            
+        ax.margins(x=0, y=0)
+        if invert_axis[0]:
+            ax.invert_xaxis()
+        if invert_axis[1]:
+            ax.invert_yaxis()
+        i += 1
+
+    plt.tight_layout()
+    plt.savefig(cfg.fig / 'sources/2d_hist_{}_{}_{}_{}.png'
+                .format(varx, vary, lon, cfg.exp_abr[exp]), dpi=300)
+    plt.show()
+    return
 
 
-# for var in ['distance', 'age', 'speed']:
-#     source_histogram_multi_lon(var, sum_interior=False)
-#     source_KDE_multi_lon(var, sum_interior=True)
-#     log_KDE_source(var)
+for exp in [1, 0]:
+    transport_source_bar_graph(exp=exp)
+    transport_source_bar_graph(exp, list(range(7, 17)), False)
+
+source_histogram_depth()
+
+for lon in [165]:
+# for lon in cfg.lons:
+    ds = source_dataset(lon, sum_interior=True)
+    plot_KDE_multi_var(ds, lon, var=['age', 'distance'])
+#     source_pie_chart(ds, lon)
+#     source_histogram_multi_var(ds, lon)
+#     combined_source_histogram(ds, lon)
+
+
+for var in ['distance', 'age', 'speed']:
+    source_histogram_multi_lon(var, sum_interior=False)
+    source_KDE_multi_lon(var, sum_interior=True)
+    log_KDE_source(var)
 
 # for lon in [165]:
 for lon in cfg.lons:
     ds = source_dataset(lon, sum_interior=True)
     exp = 0
     varx, vary = 'z_at_zone', 'z'
-    # source_scatter(ds, lon, exp, varx, vary)
-    source_hist_2d(ds, lon, exp, varx, vary)
-    for vary in ['z', 'u', 'lat']:
-        varx = 'age'
-        # source_scatter(ds, lon, exp, varx, vary)
-        source_hist_2d(ds, lon, exp, varx, vary)
+    source_hist_2d(ds, lon, exp, varx, vary, ('auto', 14), (0, 1))
+    
+    varx, vary = 'age', 'z'
+    source_hist_2d(ds, lon, exp, varx, vary, (50, 14), (0, 1))
 
+    varx, vary = 'u', 'z'
+    source_hist_2d(ds, lon, exp, varx, vary, ('auto', 14), (0, 1), log_norm=0)
+    
+    varx, vary = 'age', 'lat'
+    source_hist_2d(ds, lon, exp, varx, vary, (50, np.arange(-2.65, 2.65, .1)))
+
+    varx, vary = 'age', 'u'
+    source_hist_2d(ds, lon, exp, varx, vary)
 ###############################################################################
 # lon = 165
 # var = 'age'
