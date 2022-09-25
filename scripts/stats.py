@@ -112,6 +112,17 @@ def weighted_bins_fd(ds, weights):
     return h, nbins, data_range
 
 
+def get_min_weighted_bins(ds, weights):
+    # Find number of bins based on combined hist/proj data range.
+    h0, _, r0 = weighted_bins_fd(ds[0], weights[0])
+    h1, _, r1 = weighted_bins_fd(ds[1], weights[1])
+
+    # Data min & max of both datasets.
+    r = [min(np.floor([r0[0], r1[0]])), max(np.ceil([r0[1], r1[1]]))]
+
+    # Number of bins for combined data range (use smallest bin width).
+    bins = int(np.ceil(np.diff(r) / min([h0, h1])))
+    return bins
 
 # # Man whitney test (histogram diff) returns zero while ttest_ind p = 0.158.
 # # r sample sizes above ~20, approximation using the normal distribution is fairly good

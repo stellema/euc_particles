@@ -19,7 +19,7 @@ import cfg
 from cfg import zones
 from tools import (coord_formatter, convert_longitudes, get_unique_file,
                    ofam_filename, open_ofam_dataset, get_ofam_bathymetry)
-from stats import weighted_bins_fd
+from stats import weighted_bins_fd, get_min_weighted_bins
 
 
 def update_title_time(title, t):
@@ -118,6 +118,76 @@ def animate_ofam_euc():
     writer = animation.writers['ffmpeg'](fps=20)
     anim.save(str(filename), writer=writer, dpi=200)
     return
+
+
+def add_map_subplot(fig, ax, map_extent=None, add_ticks=True,
+                    xticks=None, yticks=None, add_ocean=False,
+                    land_color='lightgray', ocean_color='lightcyan',
+                    add_gridlines=False):
+    """Create a figure and axis with cartopy.
+
+    Args:
+        figsize (tuple, optional): Figure width & height. Defaults to (12, 5).
+        map_extent (list, optional): (lon_min, lon_max, lat_min, lat_max).
+        add_ticks (bool, optional): Add lat/lon ticks. Defaults to False.
+        xticks (array-like, optional): longitude ticks. Defaults to None.
+        yticks (array-like, optional): Latitude ticks. Defaults to None.
+        add_gridlines (bool, optional): Add lat/lon grid. Defaults to False.
+        add_ocean (bool, optional): Add ocean color. Defaults to False.
+
+    Returns:
+        fig (matplotlib.figure.Figure): Figure.
+        ax (cartopy.mpl.geoaxes.GeoAxesSubplot): Axis.
+        proj (cartopy.crs.PlateCarree): Cartopy map projection.
+
+    """
+    zorder = 10  # Placement of features (reduce to move to bottom.)
+    projection = ccrs.PlateCarree(central_longitude=180)
+    proj = ccrs.PlateCarree()
+    proj._threshold /= 20.
+
+    # Set map extents: (lon_min, lon_max, lat_min, lat_max)
+    if map_extent is None:
+        map_extent = [112, 288, -10, 10]
+    ax.set_extent(map_extent, crs=proj)
+
+    ax.add_feature(cfeature.LAND, color=land_color, zorder=zorder)
+    ax.add_feature(cfeature.COASTLINE, zorder=zorder)
+    try:
+        # Make edge frame on top.
+        ax.outline_patch.set_zorder(zorder + 1)  # Depreciated.
+    except AttributeError:
+        ax.spines['geo'].set_zorder(zorder + 1)  # Updated for Cartopy
+
+    if add_ocean:
+        ax.add_feature(cfeature.OCEAN, alpha=0.6, color=ocean_color)
+
+    if add_ticks:
+        if xticks is None:
+            # Longitude grid lines: release longitudes.
+            xticks = np.array([165, -170, -140, -110])
+            xticks = np.arange(140, 290, 40)
+
+        if yticks is None:
+            # Latitude grid lines: -10, 0, 10.
+            yticks = np.arange(-10, 13, 5)
+
+        # Draw tick marks (without labels here - 180 centre issue).
+        ax.set_xticks(xticks, crs=proj)
+        ax.set_yticks(yticks, crs=proj)
+        ax.set_xticklabels(coord_formatter(xticks, 'lon_360'))
+        ax.set_yticklabels(coord_formatter(yticks, 'lat'))
+
+        # Minor ticks.
+        ax.xaxis.set_minor_locator(mpl.ticker.MultipleLocator(10))
+        ygrad = np.gradient(yticks)[0] / 2
+        ax.yaxis.set_minor_locator(mpl.ticker.MultipleLocator(ygrad))
+
+        fig.subplots_adjust(bottom=0.2, top=0.8)
+
+    ax.set_aspect('auto')
+
+    return fig, ax, proj
 
 
 def create_map_axis(figsize=(12, 5), map_extent=None, add_ticks=True,
@@ -479,26 +549,16 @@ def plot_histogram(ax, dx, var, color, bins='fd', cutoff=0.85, weighted=True,
         # weights = [dx[i].u / dx[i].uz.mean().item() for i in [0, 1]]
 
     if weighted and isinstance(bins, str):
-        # Find number of bins based on combined hist/proj data range.
-        h0, _, r0 = weighted_bins_fd(dx[0][var], weights[0])
-        h1, _, r1 = weighted_bins_fd(dx[1][var], weights[1])
-
-        # Data min & max of both datasets.
-        r = [min(np.floor([r0[0], r1[0]])), max(np.ceil([r0[1], r1[1]]))]
-        kwargs['range'] = r
-
-        # Number of bins for combined data range (use smallest bin width).
-        bins = int(np.ceil(np.diff(r) / min([h0, h1])))
+        bins = get_min_weighted_bins([d[var] for d in dx], weights)
 
     # Historical.
     x1, bins1, _ = ax.hist(dx[0][var], bins, weights=weights[0], **kwargs)
 
     # RCP8.5.
-
     bins = bins if weighted else bins1
     kwargs.update(dict(color=color[1], alpha=0.3, edgecolor=color[1]))
     if color[0] == color[-1]:
-        kwargs.update(dict(linestyle='--'), alpha=1, fill=0)
+        kwargs.update(dict(linestyle=':'), alpha=1, fill=0)
     x2, bins2, _ = ax.hist(dx[1][var], bins, weights=weights[1], **kwargs)
 
     if outline:

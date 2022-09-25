@@ -39,10 +39,11 @@ import xarray as xr
 import seaborn as sns
 import matplotlib as mpl
 import matplotlib.pyplot as plt
+from scipy import stats
 
 import cfg
 from cfg import ltr, exp_abr
-from stats import test_signifiance
+from stats import test_signifiance, format_pvalue_str, get_min_weighted_bins
 from tools import mlogger
 from fncs import (source_dataset, merge_hemisphere_sources,
                   merge_LLWBC_interior_sources)
@@ -247,11 +248,9 @@ def source_histogram_multi_lon(var='z', sum_interior=True):
 
 def source_histogram_depth():
     """Histograms of single source variables."""
-    name, units = 'Depth', 'm'
-    ylabel, xlabel = '{} [{}]'.format(name, units), 'Transport [Sv]'
     kwargs = dict(bins=np.arange(0, 500, 25), cutoff=None, fill=True,
                   lw=1.3, orientation='horizontal', histtype='step',
-                  alpha=0.3)
+                  alpha=0.25, outline=False)
     colors = ['teal', 'darkviolet']
 
     nc, nr = 4, 7
@@ -270,21 +269,22 @@ def source_histogram_depth():
             dx = ds.sel(zone=z)
 
             color = [colors[0]] * 2
-            ax = plot_histogram(ax, dx, 'z', color, outline=False, **kwargs)
+            ax = plot_histogram(ax, dx, 'z', color, **kwargs)
 
             color = [colors[1]] * 2
-            ax = plot_histogram(ax, dx, 'z_at_zone', color, outline=False, **kwargs)
+            ax = plot_histogram(ax, dx, 'z_at_zone', color, **kwargs)
 
             ax.set_title('{}) {}'.format(i + 1, zname), loc='left')
             ax.set_ymargin(0)
             # Flip yaxis 0m at top.
-            ax.set_ylim(400, 0)
+            ax.set_ylim(425, 0)
+
+            ax.xaxis.set_minor_locator(mpl.ticker.AutoMinorLocator())
+            ax.yaxis.set_major_formatter('{x:.0f}m')
+            ax.yaxis.set_minor_locator(mpl.ticker.AutoMinorLocator(2))
 
             if i >= nc * (nr - 1):  # Last row.
-                ax.set_xlabel(xlabel)
-
-            if i in np.arange(nr) * nc:  # First col.
-                ax.set_ylabel(ylabel)
+                ax.set_xlabel('Transport [Sv]')
 
     # Suptitles.
     for lon, ax in zip(cfg.lons, axes[:nc]):
@@ -307,8 +307,7 @@ def source_histogram_depth():
 
 def source_scatter(ds, lon, exp, varx, vary):
     """Histograms of source variables plot."""
-    from stats import format_pvalue_str
-    from scipy import stats
+
     if varx == 'u' or vary == 'u':
         # Convert depth-integrated velocity.
         ds['u'] = ds['u'] / (25 * 0.1 * cfg.LAT_DEG / 1e6)
@@ -352,24 +351,30 @@ def source_scatter(ds, lon, exp, varx, vary):
 
 def plot_KDE_source(ax, ds, var, z, color=None):
     """Plot KDE of source var for historical (solid) and RCP(dashed)."""
+    ds = [ds.sel(zone=z).isel(exp=x).dropna('traj', 'all') for x in [0, 1]]
+    bins = get_min_weighted_bins([d[var] for d in ds], [d.u for d in ds])
+
     for exp in range(2):
-        dx = ds.sel(zone=z).isel(exp=exp).dropna('traj', 'all')
+        dx = ds[exp]
 
         c = dx.colors.item() if color is None else color
         ls = ['-', ':'][exp]
         n = dx.names.item() if exp == 0 else None
 
-        ax = sns.kdeplot(x=dx[var], ax=ax, c=c, ls=ls, weights=dx.u,
-                          label=n, bw_adjust=0.5)
-        # ax = sns.histplot(x=dx[var], ax=ax, weights=dx.u, stat='frequency',
-        #                   bins=20, element='step', alpha=0, fill=False,
-        #                   color=c, linestyle=ls, label=n,
-        #                   kde=True, kde_kws=dict(bw_adjust=0.5))
+        # ax = sns.kdeplot(x=dx[var], ax=ax, c=c, bins=bins, weights=dx.u,
+        #                  , ls=ls, bw_adjust=0.5)
+        ax = sns.histplot(x=dx[var], weights=dx.u, ax=ax, bins=bins,
+                          color=c,                                    element='step', alpha=0, fill=False,
+                          kde=True, kde_kws=dict(bw_adjust=0.5),
+                          line_kws=dict(color=c, linestyle=ls, label=n))
+        # stat='frequency'
+
         ax.xaxis.set_minor_locator(mpl.ticker.AutoMinorLocator())
+
         # Find cutoff.
         hist = ax.get_lines()[-1]
         x, y = hist.get_xdata(), hist.get_ydata()
-        xlim = x[y > y.max() * 0.09]
+        # xlim = x[y > y.max() * 0.09]
         xlim = x[np.cumsum(y) < (sum(y) * 0.85)]
         ax.set_xlim(max([0, xlim[0]]), xlim[-1])
 
@@ -382,9 +387,14 @@ def plot_KDE_source(ax, ds, var, z, color=None):
 
 
 def log_KDE_source(var):
-    """log KDE of source var for historical and RCP."""
+    """Log KDE of source var for historical and RCP."""
+    # todo: add significance
+    # todo: add % change
+
     def log_mode(ds, var, z, lon):
         mode = []
+        xx = []
+        yy = []
         for exp in range(2):
             dx = ds.sel(zone=z).isel(exp=exp).dropna('traj', 'all')
             n = dx.names.item()
@@ -392,9 +402,16 @@ def log_KDE_source(var):
             hist = ax.get_lines()[-1]
             x, y = hist.get_xdata(), hist.get_ydata()
             mode.append(x[np.argmax(y)])
-        mode.append(mode[1] - mode[0])
-        s = '{} {} {:>17}'.format(var, lon, ds.names.sel(zone=z).item())
-        s += ' mode: H={:.1f} R={:.1f} D={:.1f}'.format(*mode)
+            xx.append(x)
+            yy.append(y)
+
+        mode.append(mode[1] - mode[0])  # Projected change.
+        mode.append(mode[2] / mode[0])  # Percent change.
+
+        p = 1 if mode[0] > 5 else 2  # Number of significant figures.
+        s = '{} {} {:>17} mode: '.format(var, lon, ds.names.sel(zone=z).item())
+
+        s += 'H={:.{p}f} R={:.{p}f} D={:.{p}f} ({:.1%})'.format(*mode, p=p)
         logger.info(s)
 
         return
@@ -473,71 +490,91 @@ def source_KDE_multi_lon(var='z', sum_interior=True):
     return
 
 
-def source_hist_2d(ds, lon, exp, varx, vary, bins=('auto', 'auto'),
-                   invert_axis=(False, False), log_scale=(None, None), 
-                   log_norm=True):
+def source_hist_2d(exp, varx, vary, bins=('auto', 'auto'),
+                   invert_axis=(False, False), log_scale=(None, None),
+                   log_norm=False):
     """Histograms of source variables plot."""
-    if 'u' in [varx, vary]:
-        # Convert depth-integrated velocity.
-        ds['u'] = ds['u'] / (25 * 0.1 * cfg.LAT_DEG / 1e6)
-        ds['u'].attrs['long_name'] = 'Velocity'
-        ds['u'].attrs['units'] = 'm/s'
+    nr, nc = 7, 4
+    fig, axes = plt.subplots(nr, nc, figsize=(12, 13.5), sharey='row')
+    c = 0
+    for i, lon in enumerate(cfg.lons):
+        ds = source_dataset(lon)
+        zn = ds.zone.values[:nr]
 
-    zn = ds.zone.values
-    fig, axes = plt.subplots(3, 3, figsize=(11.5, 9))
-    axes = axes.flatten()
+        if 'u' in [varx, vary]:
+            # Convert depth-integrated velocity.
+            ds['u'] = ds['u'] / (25 * 0.1 * cfg.LAT_DEG / 1e6)
+            ds['u'].attrs['long_name'] = 'Velocity'
+            ds['u'].attrs['units'] = 'm/s'
 
-    i = 0
-    for zi, z in enumerate(zn):
-        zname = ds.names[zi].item()
-        ax = axes[i]
-        dx = ds.sel(zone=z, exp=exp).dropna('traj')
-        x, y = dx[varx], dx[vary]
-        
-        # Bins
-        wbins = list(bins)
-        for b in range(2):
-            if bins[b] == 'auto':
-                wbins[b] = weighted_bins_fd([x,y][b], dx.u)[1]
-                
-        # g = sns.JointGrid(dx, x=varx, y=vary)
-        # g.plot_joint(sns.histplot, ax=ax, weights=dx.u, bins=wbins, cbar=True,
-        #              cmap='plasma', norm=mpl.colors.LogNorm() if log_norm else None, 
-        #              vmin=None, vmax=None)
-        # g.plot_marginals(sns.boxplot, ax=ax)
-        
-        ax = sns.histplot(dx, ax=ax, x=varx, y=vary, log_scale=log_scale,
-                          weights=dx.u, bins=wbins, cbar=True,
-                          cmap='plasma', #stat='percent',
-                          norm=mpl.colors.LogNorm() if log_norm else None, 
-                          vmin=None, vmax=None)
+        for j, z in enumerate(zn):
+            c = nc * j + i  # Subplot number.
+            zname = ds.names[j].item()
+            ax = axes[j, i]
+            dx = ds.sel(zone=z, exp=exp).dropna('traj')
+            x, y = dx[varx], dx[vary]
 
-        ax.set_xlabel('{} [{}]'.format(x.attrs['long_name'], x.attrs['units']))
-        ax.set_ylabel('{} [{}]'.format(y.attrs['long_name'], y.attrs['units']))
-        ax.set_title('{} {}'.format(ltr[i], zname), loc='left', x=-0.01)
+            # Bins
+            wbins = list(bins)
+            for b in range(2):
+                if bins[b] == 'auto':
+                    wbins[b] = weighted_bins_fd([x, y][b], dx.u)[1]
 
-        if vary in ['u']:
-            ax.axhline(0.1, c='k')
-            
-        ax.margins(x=0, y=0)
-        if invert_axis[0]:
-            ax.invert_xaxis()
-        if invert_axis[1]:
-            ax.invert_yaxis()
-        i += 1
+            ax = sns.histplot(dx, ax=ax, x=varx, y=vary, log_scale=log_scale,
+                              weights=dx.u, bins=wbins, cbar=True,
+                              cmap='plasma',  # stat='percent'
+                              norm=mpl.colors.LogNorm() if log_norm else None,
+                              vmin=None, vmax=None)
 
-    plt.tight_layout()
-    plt.savefig(cfg.fig / 'sources/2d_hist_{}_{}_{}_{}.png'
-                .format(varx, vary, lon, cfg.exp_abr[exp]), dpi=300)
+            ax.set_title('({}) {}'.format(c + 1, zname), loc='left')
+
+            # Correlation and p-value.
+            r, p = stats.pearsonr(x, y)
+            ax.text(0.68, 0.78, 'R={:.2f}\n{}'.format(r, format_pvalue_str(p)),
+                    transform=ax.transAxes, bbox=dict(color='w', alpha=0.8),
+                    fontsize=8)
+            # Axis.
+            ax.margins(x=0, y=0)
+            ax.xaxis.set_minor_locator(mpl.ticker.AutoMinorLocator())
+            ax.yaxis.set_minor_locator(mpl.ticker.AutoMinorLocator())
+
+            if i == (nc - 1):  # Invert shared row (avoids re-inverting).
+                if invert_axis[0]:
+                    ax.invert_xaxis()
+
+                if invert_axis[1]:
+                    ax.invert_yaxis()
+
+            # Axis labels.
+            if j >= (nr - 1):  # Last row
+                ax.set_xlabel('{} [{}]'.format(x.attrs['long_name'],
+                                               x.attrs['units']))
+            else:
+                ax.set_xlabel(None)
+
+            if i in np.arange(axes.shape[0]) * axes.shape[1]:  # First col.
+                ax.set_ylabel('{} [{}]'.format(y.attrs['long_name'],
+                                               y.attrs['units']))
+
+    # Suptitles.
+    for lon, ax in zip(cfg.lons, axes.flatten()[:4]):
+        ax.text(0.25, 1.2, "EUC at {}°E".format(lon), weight='bold',
+                transform=ax.transAxes)
+
+    # plt.tight_layout()
+    fig.subplots_adjust(wspace=0.06, hspace=0.35, top=1)
+    plt.savefig(cfg.fig / 'sources/2d_hist_{}_{}_{}.png'
+                .format(varx, vary, cfg.exp_abr[exp]), bbox_inches='tight',
+                dpi=350)
     plt.show()
     return
 
 
-for exp in [1, 0]:
-    transport_source_bar_graph(exp=exp)
-    transport_source_bar_graph(exp, list(range(7, 17)), False)
+# for exp in [1, 0]:
+#     transport_source_bar_graph(exp=exp)
+#     transport_source_bar_graph(exp, list(range(7, 17)), False)
 
-source_histogram_depth()
+# source_histogram_depth()
 
 for lon in [165]:
 # for lon in cfg.lons:
@@ -548,29 +585,27 @@ for lon in [165]:
 #     combined_source_histogram(ds, lon)
 
 
-for var in ['distance', 'age', 'speed']:
-    source_histogram_multi_lon(var, sum_interior=False)
-    source_KDE_multi_lon(var, sum_interior=True)
-    log_KDE_source(var)
+# for var in ['distance', 'age', 'speed']:
+#     source_histogram_multi_lon(var, sum_interior=False)
+#     source_KDE_multi_lon(var, sum_interior=True)
+#     log_KDE_source(var)
 
-# for lon in [165]:
-for lon in cfg.lons:
-    ds = source_dataset(lon, sum_interior=True)
-    exp = 0
-    varx, vary = 'z_at_zone', 'z'
-    source_hist_2d(ds, lon, exp, varx, vary, ('auto', 14), (0, 1))
-    
-    varx, vary = 'age', 'z'
-    source_hist_2d(ds, lon, exp, varx, vary, (50, 14), (0, 1))
 
-    varx, vary = 'u', 'z'
-    source_hist_2d(ds, lon, exp, varx, vary, ('auto', 14), (0, 1), log_norm=0)
-    
-    varx, vary = 'age', 'lat'
-    source_hist_2d(ds, lon, exp, varx, vary, (50, np.arange(-2.65, 2.65, .1)))
+# exp = 0
+# varx, vary = 'z_at_zone', 'z'
+# source_hist_2d(exp, varx, vary, ('auto', 14), (False, True))
 
-    varx, vary = 'age', 'u'
-    source_hist_2d(ds, lon, exp, varx, vary)
+# varx, vary = 'age', 'z'
+# source_hist_2d(exp, varx, vary, (50, 14), (0, 1))
+
+# varx, vary = 'u', 'z'
+# source_hist_2d(exp, varx, vary, ('auto', 14), (0, 1), log_norm=0)
+
+# varx, vary = 'age', 'lat'
+# source_hist_2d(exp, varx, vary, (50, np.arange(-2.65, 2.65, .1)))
+
+# varx, vary = 'age', 'u'
+# source_hist_2d(exp, varx, vary)
 ###############################################################################
 # lon = 165
 # var = 'age'

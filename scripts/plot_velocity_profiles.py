@@ -14,14 +14,19 @@ Todo:
 """
 import numpy as np
 import xarray as xr
+import cartopy.crs as ccrs
 import matplotlib as mpl
 import matplotlib.pyplot as plt
-from  matplotlib.colors import LinearSegmentedColormap
+from matplotlib.colors import LinearSegmentedColormap
+from mpl_toolkits.axes_grid1 import make_axes_locatable
 
 import cfg
 from cfg import zones
+from plots import add_map_subplot
+from fncs import concat_exp_dimension
 from tools import (mlogger, open_ofam_dataset, convert_to_transport,
-                   subset_ofam_dataset, ofam_filename,coord_formatter)
+                   subset_ofam_dataset, ofam_filename, coord_formatter)
+
 exp = 0
 years = cfg.years[exp]
 files = cfg.ofam / 'clim/ocean_v_{}-{}_climo.nc'.format(*years)
@@ -30,7 +35,6 @@ files = cfg.ofam / 'clim/ocean_v_{}-{}_climo.nc'.format(*years)
 ds = open_ofam_dataset(files).v
 
 df = xr.Dataset()
-
 # # Source region.
 # zone = zones.sth
 # name = zone.name
@@ -50,47 +54,49 @@ df = xr.Dataset()
 # # dx.plot(col='time', col_wrap=4, vmax=0.06)
 # # plt.Axes.invert_yaxis()
 
-###########
-# Source region.
-zone = zones.ss
-name = zone.name
-bnds = zone.loc
-lat, lon, depth = bnds[0], bnds[2:], [0, 1200]
-lat=-5.4
-# Subset boundaries.
-dx = subset_ofam_dataset(ds, lat, [lon[0], lon[-1]], depth)
-# dx = dx.where(dx <= dx.mean('time').min()*0.2)
-# dx = dx.where(dx >= dx.mean('time').max()*0.1)
-# dx = dx.mean('time')
-dx = dx.isel(lon=slice(100))
-# dx.plot(col='time', col_wrap=4, vmax=0.4, yincrease=False)
 
-# Plot profile
-cmap=plt.cm.seismic
-cmap.set_bad('grey')
-fig, ax = plt.subplots(1, 1, figsize=(7, 6))
+def plot_idk():
+    # Source region.
+    zone = zones.ss
+    name = zone.name
+    bnds = zone.loc
+    lat, lon, depth = bnds[0], bnds[2:], [0, 1200]
+    lat=-5.4
+    # Subset boundaries.
+    dx = subset_ofam_dataset(ds, lat, [lon[0], lon[-1]], depth)
+    # dx = dx.where(dx <= dx.mean('time').min()*0.2)
+    # dx = dx.where(dx >= dx.mean('time').max()*0.1)
+    # dx = dx.mean('time')
+    dx = dx.isel(lon=slice(100))
+    # dx.plot(col='time', col_wrap=4, vmax=0.4, yincrease=False)
 
-# cs = ax.pcolormesh(dx.lon, dx.lev, dx.mean('time'), vmax=1, vmin=-1, cmap=cmap)
-cs = ax.contourf(dx.lon, dx.lev, dx.mean('time'), np.arange(-1, 1.05, 0.05),
-                 cmap=cmap)
-ax.invert_yaxis()
-ax.set_yticks(np.arange(depth[0], depth[-1]+50, 100))
-ax.grid()
-fig.colorbar(cs)
+    # Plot profile
+    cmap=plt.cm.seismic
+    cmap.set_bad('grey')
+    fig, ax = plt.subplots(1, 1, figsize=(7, 6))
 
-###############
-zone = zones.ss
-name = zone.name
-bnds = zone.loc
-lat, lon, depth = bnds[0], bnds[2:], [0, 1200]
-# lat=-4.8
-# Subset boundaries.
-dx = subset_ofam_dataset(ds, lat, [lon[0], lon[-1]], depth)
+    # cs = ax.pcolormesh(dx.lon, dx.lev, dx.mean('time'), vmax=1, vmin=-1, cmap=cmap)
+    cs = ax.contourf(dx.lon, dx.lev, dx.mean('time'), np.arange(-1, 1.05, 0.05),
+                     cmap=cmap)
+    ax.invert_yaxis()
+    ax.set_yticks(np.arange(depth[0], depth[-1]+50, 100))
+    ax.grid()
+    fig.colorbar(cs)
 
-dx = dx.isel(lon=slice(100))
-dxx = convert_to_transport(dx, lat=lat, var='v', sum_dims=None)
-print(dxx.where(dxx > 0).sum(['lon', 'lev']).mean('time'))
-#######################
+    ###############
+    zone = zones.ss
+    name = zone.name
+    bnds = zone.loc
+    lat, lon, depth = bnds[0], bnds[2:], [0, 1200]
+    # lat=-4.8
+    # Subset boundaries.
+    dx = subset_ofam_dataset(ds, lat, [lon[0], lon[-1]], depth)
+
+    dx = dx.isel(lon=slice(100))
+    dxx = convert_to_transport(dx, lat=lat, var='v', sum_dims=None)
+    print(dxx.where(dxx > 0).sum(['lon', 'lev']).mean('time'))
+
+
 # # EUC
 # file = ofam_filename('u', 2012, 1)
 # ds = open_ofam_dataset(file).u
@@ -175,35 +181,104 @@ print(dxx.where(dxx > 0).sum(['lon', 'lev']).mean('time'))
 # # plt.savefig(cfg.fig / 'EUC_particle_profile.png')
 # # # plt.savefig(cfg.fig / 'EUC_profile.png')
 
-# South China Sea
-from tools import convert_to_transport
-from fncs import concat_exp_dimension
-var = 'v'
-files = [cfg.ofam / 'clim/ocean_{}_{}-{}_climo.nc'.format(var, *cfg.years[exp])
-         for exp in range(2) for var in ['v', 'u']]
-dss = [open_ofam_dataset(file)[var] for file in files]
 
-dx = [ds.isel(lev=slice(0, 36)).sel(lat=slice(0, 15), lon=slice(120, 129)) for ds in dss]
-dx = [d.mean('time') for d in dx]
-for i in [0, 2]:
-    dx[i]['u'] = dx[i+1]['u']
-dx = [dx[0], dx[2]]
-dx = concat_exp_dimension(dx, add_diff=1)
+def plot_SCS(exp):
+    """South China Sea."""
+    files = [cfg.ofam / 'clim/ocean_{}_{}-{}_climo.nc'.format(v, *cfg.years[x])
+             for x in range(2) for v in ['v', 'u']]
+    dss = [open_ofam_dataset(file) for file in files]
 
-dt = dx.mean('lev')
-dt = convert_to_transport(dx, lat=10, var=var, sum_dims=['lev'])
-dt = dt.where(dt != 0.)
+    dx = [d.isel(lev=slice(0, 30)).sel(lat=slice(-5, 15),
+                                       lon=slice(120, 155)) for d in dss]
+    dx = [d.mean('time') for d in dx]
+    for i in [0, 2]:
+        dx[i]['u'] = dx[i+1]['u']
+    dx = [dx[0], dx[2]]
+    dx = concat_exp_dimension(dx, add_diff=True)
 
-dt = dt.isel(exp=[0, -1])
-cmap = plt.cm.seismic
-cmap.set_bad('grey')
+    dt = convert_to_transport(dx, lat=10, var='v', sum_dims=['lev'])
+    dt = convert_to_transport(dt, lat=None, var='u', sum_dims=['lev'])
+    dt = dt.where(dt != 0.)
 
-dt.plot(cmap=cmap, col='exp', col_wrap=2, figsize=(10,6))
+    cmap = plt.cm.seismic
+    cmap.set_bad('grey')
+
+    # dt[var].plot(cmap=cmap, col='exp', col_wrap=2, figsize=(10,6))
+
+    db = dt.isel(exp=exp)  # Colourmesh
+    dq = dt.isel(exp=exp if exp == 1 else 0)  # Quivers
+    x, y = dt.lon.values, dt.lat.values
+    ix, iy = np.arange(x.size, step=4), np.arange(y.size, step=4)  # Quiver idx
+
+    fig, ax = plt.subplots(2, 1, figsize=(14, 15), squeeze=True)
+
+    ax[0].set_title('a) Meridional depth-integrated velocity ' + cfg.exps[exp])
+    ax[1].set_title('b) Zonal depth-integrated velocity ' + cfg.exps[exp])
+
+    vmax = [1, 1, 0.4][exp]
+    cs0 = ax[0].pcolormesh(x, y, db.v, cmap=cmap, vmax=vmax, vmin=-vmax)
+
+    vmax = [1.5, 1.5, 0.5][exp]
+    cs1 = ax[1].pcolormesh(x, y, db.u, cmap=cmap, vmax=vmax, vmin=-vmax)
+
+    for i, cs in zip(range(2), [cs0, cs1]):
+        # Vectors.
+        ax[i].quiver(x[ix], y[iy], dq.u[iy, ix], dq.v[iy, ix], headlength=3.5,
+                     headwidth=3, width=0.0017, scale=25, headaxislength=3.5)
+        ax[i].axhline(0, color='k')  # Equator.
+
+        # Colour bar.
+        div = make_axes_locatable(ax[i])
+        cax = div.append_axes('right', size='2%', pad=0.1, axes_class=plt.Axes)
+        cbar = fig.colorbar(cs, cax=cax, orientation='vertical', extend='both')
+        cbar.set_label('Depth-integrated velocity (0-350m) [m2/s]')
+
+    plt.tight_layout()
+    plt.savefig(cfg.fig / 'OFAM3_SCS_{}.png'.format(cfg.exp_abr[exp]), dpi=350)
 
 
-# dtt = dt.isel(lat=np.arange(0, dt.lat.size, 2), lon=np.arange(0, dt.lon.size, 2))
-fig, ax = plt.subplots(1, 1, figsize=(10,6))
-dtt = dt.isel(exp=2)
-plt.pcolormesh(dtt.u[::2, ::2], cmap=cmap)
-dtt = dt.isel(exp=0)
-plt.quiver(dtt.u[::2, ::2], dtt.v[::2, ::2], scale=7)
+def plot_thermocline_depth_map():
+    """Thermocline."""
+    files = [cfg.ofam / 'clim/ocean_temp_{}-{}_climo.nc'.format(*y)
+             for y in cfg.years]
+
+    ds = open_ofam_dataset(files)
+    ds = ds.temp.groupby('time.year').mean('time').rename({'year': 'exp'})
+    dx = ds.differentiate('lev')
+
+    dz = dx.idxmin('lev')
+    dz = concat_exp_dimension(dz, add_diff=1)
+    x, y, v = dz.lon, dz.lat, dz
+
+    fig = plt.figure(figsize=(12, 8))
+
+    proj = ccrs.PlateCarree(central_longitude=180)
+    ax = [fig.add_subplot(211 + i, projection=proj) for i in [0, 1]]
+    args = dict(map_extent=[120, 285, -10, 10], xticks=np.arange(130, 290, 30))
+    for i in range(2):
+        fig, ax[i], proj = add_map_subplot(fig, ax[i], **args)
+
+    cs0 = ax[0].pcolormesh(x, y, v.isel(exp=0), vmax=250, transform=proj,
+                           cmap=plt.cm.viridis_r)
+
+    levels = np.arange(-120, 125, 5)
+    norm = mpl.colors.TwoSlopeNorm(vmin=levels[0], vcenter=0, vmax=levels[-1])
+
+    cs1 = ax[1].contourf(x, y, v.isel(exp=2), levels=levels, norm=norm,
+                         cmap=plt.cm.seismic_r, transform=proj, extend='both')
+
+    for i, cs in zip(range(2), [cs0, cs1]):
+        # cbar
+        div = make_axes_locatable(ax[i])
+        cax = div.append_axes('right', size='2%', pad=0.1, axes_class=plt.Axes)
+        cbar = fig.colorbar(cs, cax=cax, orientation='vertical',
+                            extend=['max', 'both'][i])
+        cbar.set_label('Depth [m]')
+        cbar.ax.invert_yaxis()
+        ax[i].grid(color='dimgrey')
+
+    ax[0].set_title('a) Historical Thermocline Depth', loc='left')
+    ax[1].set_title('b) Thermocline Depth Projected change', loc='left')
+
+    plt.tight_layout()
+    plt.savefig(cfg.fig / 'OFAM3_thermocline_depth.png', dpi=350)

@@ -549,7 +549,7 @@ def open_ofam_dataset(file):
 
     # Drop extra data vars and dims.
     for var in ds.data_vars:
-        if var not in ['u', 'v', 'w', 'phy']:
+        if var not in ['u', 'v', 'w', 'phy', 'temp']:
             ds = ds.drop(var)
 
     if 'nv' in ds.variables:
@@ -602,7 +602,7 @@ def convert_to_transport(ds, lat=None, var='v', sum_dims=['lon', 'lev']):
         if sum_dims:
             ds = ds.sum(sum_dims, skipna=True, keep_attrs=True)
     else:
-        ds = ds[var] * dxdy * dz
+        ds[var] = ds[var] * dxdy * dz
         if sum_dims:
             ds[var] = ds[var].sum(sum_dims, skipna=True, keep_attrs=True)
 
