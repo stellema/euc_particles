@@ -31,13 +31,14 @@ def subset_array(a, N):
     return np.array(a)[np.linspace(0, len(a) - 1, N, dtype=int)]
 
 
-def plot_some_source_pathways(exp, lon, v, r, add_release_lines=True):
+def plot_some_source_pathways(exp, lon, v, r, add_release_lines=True,
+                              add_quivers=1):
     """Plot a subset of pathways on a map, colored by source."""
 
     N_total = 300  # Number of paths to plot( per source)
     dn = source_dataset(lon).isel(exp=0)
     dn = dn.sel(zone=np.array([1, 2, 3, 4, 5, 6, 7, 8]))
-    pct = dn.uz.mean('rtime') / dn.u_total.mean('rtime')
+    pct = dn.u_zone.mean('rtime') / dn.u_sum.mean('rtime')
     N = np.ceil(pct*100)/100 * N_total
     N = np.ceil(N).values.astype(dtype=int)
 
@@ -73,6 +74,24 @@ def plot_some_source_pathways(exp, lon, v, r, add_release_lines=True):
         for x in cfg.lons:
             ax.vlines(x, -2.6, 2.6, 'k', linewidth=2, zorder=15,
                       transform=proj, alpha=0.8)
+
+    if add_quivers:
+        from tools import open_ofam_dataset
+        f = [cfg.ofam / 'clim/ocean_{}_{}-{}_climo.nc'.format(v, *cfg.years[0])
+             for v in ['v', 'u']]
+        ds = open_ofam_dataset(f)
+
+        dx = ds.isel(lev=slice(0, 31)).sel(lat=slice(-11, 11))
+        dx = dx.mean('lev').mean('time')
+        dx = dx.where(dx != 0.)
+
+        x, y = dx.lon.values, dx.lat.values
+        ix, iy = np.arange(x.size, step=4), np.arange(y.size, step=4)  # Quiver idx
+        ax.quiver(x[ix], y[iy], dx.u[iy, ix], dx.v[iy, ix], headlength=3.5,
+                  headwidth=3, width=0.0017, scale=25, headaxislength=3.5,
+                  transform=proj)
+
+
     plt.tight_layout()
     plt.savefig(cfg.fig / 'pathway_{}_{}_r{}_n{}.png'.format(cfg.exp[exp],
                                                              lon, r, N_total),

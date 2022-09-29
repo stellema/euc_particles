@@ -50,7 +50,7 @@ def zone_cmap():
     """Get zone colormap."""
     zcolor = cfg.zones.colors
     zmap = mpl.colors.ListedColormap(zcolor)
-    norm = mpl.colors.BoundaryNorm(np.linspace(1, 10, 11), zmap.N)
+    norm = mpl.colors.BoundaryNorm(np.linspace(1, 9, 10), zmap.N)
     return zmap, norm
 
 

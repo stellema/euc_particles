@@ -570,16 +570,75 @@ def source_hist_2d(exp, varx, vary, bins=('auto', 'auto'),
     return
 
 
+def plot_source_EUC_velocity_profile(lon, exp):
+    """Plot lat-depth velocity sum profile."""
+    ds = source_dataset(lon, sum_interior=True)
+    ds = ds.isel(exp=exp).dropna('traj', 'all')
+
+    data = []
+    for z in ds.zone.values:
+        dx = ds.sel(zone=z).dropna('traj', 'all')
+        dx = dx.set_index(xy=['traj', 'lat', 'z'])
+        dx = dx.unstack('xy')
+        data.append(dx.u.sum('traj'))
+
+    df = xr.Dataset()
+    df['u'] = xr.concat(data, 'zone')
+
+    # Plot profile (max of each source).
+    dz = df.u.idxmax('zone')
+    inds = np.unique(dz.astype(dtype=int))
+    cmap = mpl.colors.ListedColormap(ds.colors.sel(zone=inds).values)
+    norm = mpl.colors.BoundaryNorm(boundaries=inds, ncolors=inds.size)
+    fig, ax = plt.subplots()
+    cs = ax.pcolormesh(dz.lat, dz.z, dz.T, cmap=cmap, norm=norm, shading='nearest')
+    cb = fig.colorbar(cs, ax=ax)
+    cb.set_ticks(inds, labels=ds.names.sel(zone=inds).values)
+    ax.set_xlabel('Latitude')
+    ax.invert_yaxis()
+
+    # fig, ax = plt.subplots()
+    # ax = zmax.plot(x='lat', y='z', cmap=cmap, yincrease=False, ax=ax)
+    # cb = fig.axes[-1]
+    # cb.yaxis.set_ticks(np.linspace(0.5, inds.max() - 0.5, inds.size),
+    #                    labels=ds.names.sel(zone=inds).values)
+    # plt.xlabel('Latitude')
+
+    plt.savefig(cfg.fig / 'EUC_source_profile_max_{}_{}.png'
+                .format(lon, cfg.exp_abr[exp]), bbox_inches='tight', dpi=350)
+    plt.show()
+
+    # Plot profile (each source).
+    fig, axes = plt.subplots(3, 3, figsize=(10, 9), sharey='col', sharex='row')
+    for i, ax in enumerate(axes.flatten()):
+        cs = ax.pcolormesh(df.lat, df.z, df.u.isel(zone=i).T, cmap=plt.cm.plasma)
+        ax.set_title('{} {}'.format(ltr[i], ds.names.values[i]), loc='left')
+        cb = fig.colorbar(cs, ax=ax)
+        ax.invert_yaxis()
+
+        ax.xaxis.set_minor_locator(mpl.ticker.AutoMinorLocator())
+        ax.xaxis.set_major_formatter('{x:.0f}°')
+
+    for i, ax in enumerate(axes.flatten()[::3]):
+        axes.flatten()[i].set_ylabel('Depth [m]')
+
+    plt.tight_layout()
+    plt.savefig(cfg.fig / 'EUC_source_profile_{}_{}.png'
+                .format(lon, cfg.exp_abr[exp]), bbox_inches='tight', dpi=350)
+    plt.show()
+
+
 # for exp in [1, 0]:
 #     transport_source_bar_graph(exp=exp)
 #     transport_source_bar_graph(exp, list(range(7, 17)), False)
 
 # source_histogram_depth()
 
-for lon in [165]:
-# for lon in cfg.lons:
-    ds = source_dataset(lon, sum_interior=True)
-    plot_KDE_multi_var(ds, lon, var=['age', 'distance'])
+# for lon in [165]:
+for lon in cfg.lons:
+    # ds = source_dataset(lon, sum_interior=True)
+    # plot_KDE_multi_var(ds, lon, var=['age', 'distance'])
+    plot_source_EUC_velocity_profile(lon, exp=0)
 #     source_pie_chart(ds, lon)
 #     source_histogram_multi_var(ds, lon)
 #     combined_source_histogram(ds, lon)
@@ -632,4 +691,6 @@ for lon in [165]:
 # lats = ds.lat.max(['exp', 'zone'])
 # keep_traj = lats.where((lats <= 2.2) & (lats >= -2.2), drop=True).traj
 # ds = ds.sel(traj=keep_traj)
+
+#########################
 

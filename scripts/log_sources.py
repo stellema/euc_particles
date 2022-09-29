@@ -27,10 +27,10 @@ from fncs import (source_dataset, get_plx_id, merge_hemisphere_sources,
 logger = mlogger('source_transport')
 
 
-def log_source_transport(lon):
+def log_source_transport(lon, sum_interior=True):
     """Log source transport (hist, change, etc)  at longitude."""
-    test = 0
-    ds = source_dataset(lon, sum_interior=True)
+    test = False
+    ds = source_dataset(lon, sum_interior=sum_interior)
 
     for var in ds.data_vars:
         if var not in ['u_zone', 'u', 'time', 'u_sum', 'names']:
@@ -43,12 +43,12 @@ def log_source_transport(lon):
         dx = [xr.concat([d.u.sel(zone=z).groupby(d.time.sel(zone=z)).sum('traj')
                          for z in range(ds.zone.size)], dim='zone').sum('zone')
               for d in dx]
-        p = test_signifiance(*dx)
+        pv = test_signifiance(*dx)
         u_sum = [d.mean('time') for d in dx]
 
     else:
         u_sum = [ds.u_sum.isel(exp=i).dropna('rtime', 'all') for i in range(2)]
-        p = test_signifiance(*u_sum)
+        pv = test_signifiance(*u_sum)
         u_sum = [dt.mean('rtime').values for dt in u_sum]
 
     u_sum = np.concatenate([u_sum, [u_sum[1] - u_sum[0]]])
@@ -58,17 +58,20 @@ def log_source_transport(lon):
     ds = merge_LLWBC_interior_sources(ds)
     ds = merge_SH_LLWBC_sources(ds)
 
+    if not sum_interior:
+        ds = ds.sel(zone=np.arange(7, 17))
+
     # Header.
     names = ['HIST', 'sum_H%', 'D', '(D%)', 'p', 'sum_P%', 'pp']
-    head = '{:>17}E: '.format(str(lon))
+    head = '{:>18}E: '.format(str(lon))
     for n in names:
         head += '{:^7}'.format(n)
     logger.info(head)
 
     # Log total EUC Transport (HIST, PROJ, Δ,  Δ%).
-    s = '{:>18}: {:>6.2f}      {: >6.1f}'.format('total', *u_sum[::2])
-    s += ' ({:>4.1%})'.format(u_sum[2] / u_sum[0])
-    s += '{:>8}'.format(p)
+    s = '{:>18}: {:>5.2f}        {: >6.2f}'.format('total', *u_sum[::2])
+    s += ' ({:>7.1%})'.format(u_sum[2] / u_sum[0])
+    s += '{:>8}'.format(pv)
     logger.info(s)
 
     # Source Transport (HIST, HIST%, Δ,  Δ%).
@@ -76,13 +79,13 @@ def log_source_transport(lon):
         if test:
             dx = [ds.sel(exp=i, zone=z).dropna('traj', 'all') for i in [0, 1]]
             dx = [d.u.groupby(d.time).sum('traj') for d in dx]
-            p = test_signifiance(dx[0], dx[1])
+            pv = test_signifiance(dx[0], dx[1])
             dx = [d.mean('time') for d in dx]
 
         else:
             dx = ds.u_zone.sel(zone=z)
             dx = [dx.isel(exp=i).dropna('rtime', 'all') for i in range(2)]
-            p = test_signifiance(dx[0], dx[1])
+            pv = test_signifiance(dx[0], dx[1])
             dx = [dx[i].mean('rtime') for i in range(2)]
 
         dx = np.concatenate([dx, [dx[1] - dx[0]]])
@@ -93,13 +96,13 @@ def log_source_transport(lon):
         s = '{:>18}: '.format(ds.names.sel(zone=z).item())
 
         # Source Transport (HIST, HIST%, Δ,  Δ%).
-        s += '{:>6.2f} ({: >5.1%})'.format(dx[0], pct[0])
-        s += '{: >6.2f} ({: >45.1%})'.format(dx[2], dx[2] / dx[0])
+        s += '{:>5.2f} ({: >5.1%})'.format(dx[0], pct[0])
+        s += '{: >6.2f} ({: >7.1%})'.format(dx[2], dx[2] / dx[0])
 
         # Significance.
-        s += '{:>8}'.format(p)
+        s += '{:>8}'.format(pv)
 
-        s += '{: >7.0%}{: >7.1%}'.format(pct[1], pct[1] - pct[0])
+        s += '{: >4.0%}{: >7.1%}'.format(pct[1], pct[1] - pct[0])
 
         logger.info(s)
 
@@ -214,8 +217,9 @@ def log_unbeaching_stats(lon, exp=0):
 
 
 # Print lagrangian source transport values.
-# for lon in cfg.lons:
-#     log_source_transport(lon)
+for lon in cfg.lons:
+    log_source_transport(lon, sum_interior=True)
+    # log_source_transport(lon, sum_interior=False)
 
 # log_eulerian_transport()
 # ds = ds.sel(lev=slice(2.5, 1000)).sum('lev').mean('time')

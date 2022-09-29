@@ -16,6 +16,7 @@ Todo:
 """
 import numpy as np
 import xarray as xr
+import seaborn as sns
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 
@@ -27,25 +28,35 @@ from create_source_files import source_particle_ID_dict
 from stats import weighted_bins_fd
 
 
-def plot_source_trajectory_map_IQR(lon=190, exp=0, v=1, r=0, zone=1):
-    sortby = ['IQR', 'mode', 'thin', 'dist', 'si'][-1]
+def plot_source_trajectory_map_IQR(lon=190, exp=0, v=1, r=7, zone=1):
+    sortby = ['IQR', 'mode', 'postmode', 'multi', 'thin', 'dist', 'si'][2]
     # Particle IDs
     if zone < 7:
         pid_dict = source_particle_ID_dict(None, exp, lon, v, r)
         pid_dict = pid_dict[zone]
-        
+
     if zone >= 7:
         pid_dict = [source_particle_ID_dict(None, exp, lon, v, r)[z] for z in range(zone, zone+5)]
         pid_dict = np.concatenate(pid_dict)
-        
+
     dz = source_dataset(lon, sum_interior=True).isel(exp=0)
     dz = dz.sel(traj=dz.traj[dz.traj.isin(pid_dict)]).sel(zone=zone)
 
     # Select trajs in full particle data
     # ds = xr.open_dataset(get_plx_id(exp, lon, v, r, 'plx'))
+    # ds = ds.sel(traj=ds.traj.where(ds.u >= 0.1 * cfg.DXDY, drop=True))
     ds = xr.open_dataset(get_plx_id(exp, lon, v, r, 'plx_interp'))
+
     # Number of paths to plot (x3 for low/mid/high) per source.
     num_pids = 1
+
+    # get mode.
+    bins = weighted_bins_fd(dz.age, dz.u)[1]
+    hist = sns.histplot(x=dz.age, weights=dz.u, bins=bins, kde=True,
+                      kde_kws=dict(bw_adjust=0.5))
+    plt.xlim(0, 800)
+    hist = hist.get_lines()[-1]
+    x, y = hist.get_xdata(), hist.get_ydata()
 
     # Vitiaz Strait bimodal distance peak.
     if sortby == 'dist':
@@ -93,21 +104,54 @@ def plot_source_trajectory_map_IQR(lon=190, exp=0, v=1, r=0, zone=1):
 
     # MODE Age sort.
     if sortby == 'mode':
+        num_pids = 10
+
+        # Mode range (bins on either side of mode)
+        mode = [x[np.argmax(y) + i] for i in [0, 1]]
+        pids_mode = dz.traj.where((dz.age >= mode[0]) & (dz.age <= mode[-1]), drop=True)
+        pids = pids_mode.thin(traj=(pids_mode.size//num_pids + 1))
+
+        # Plot kwargs.
+        olors = plt.cm.get_cmap('nipy_spectral')(np.linspace(0, 0.85, pids.size))
+        alpha = 0.2
+        # plt.plot(x, np.cumsum(y))
+        plt.plot(x, y)
+
+        plt.xlim(100, 1500)
+        for q in [0.25, 0.5, 0.7, 0.75, 0.8, 0.85]:
+            plt.axvline(x[sum(np.cumsum(y) < sum(y) * q)])
+
+    # MODE Age sort.
+    if sortby == 'q75':
+        num_pids = 300
+
+        # # Mode range (bins on either side of mode)
+        # mode = np.mean([x[np.argmax(y) + i] for i in [0, 1]])
+        # rng = [x[(y <= np.max(y)*c) & (x > mode)].min() for c in [0.4, 0.6]]
+        # IQR
+
+        rng = [x[sum(np.cumsum(y) < sum(y) * q)] for q in [0.84, 0.86]]
+
+        pids_mode = dz.traj.where((dz.age >= rng[0]) & (dz.age <= rng[-1]), drop=True)
+        pids = pids_mode.thin(traj=(pids_mode.size//num_pids + 1))
+
+        # Plot kwargs.
+        colors = plt.cm.get_cmap('nipy_spectral')(np.linspace(0, 0.85, pids.size))
+        alpha = 0.2
+
+    # MODE Age sort.
+    if sortby == 'multi':
         num_pids = 4
 
         # Sort traj by transit time (short - > long).
         traj_sorted = dz.traj.sortby(dz.age).astype(dtype=int)
 
-        # get mode.
-        bins = weighted_bins_fd(dz.age, dz.u)[1]
-        hist, bin_edges = np.histogram(dz.age, bins, weights=dz.u)
-
         # Mode
-        mod = [bin_edges[np.argmax(hist) + i] for i in [0, 1]]
+        mod = [x[np.argmax(y) + i] for i in [0, 1]]
         pids_mod = dz.traj.where((dz.age >= mod[0]) & (dz.age < mod[-1]), drop=True)
 
         # Post mode peak (>10% of histogram max & after mode).
-        lrg = bin_edges[:-1][(hist <= np.max(hist)*0.1) & (bin_edges[:-1] > mod[-1])].min()
+        lrg = x[:-1][(y <= np.max(y)*0.1) & (x > mod[-1])].min()
         pids_lrg = dz.traj.where((dz.age >= lrg), drop=True)
 
         # Index of pids in sorted array (IQR: low / mid / high).
@@ -147,7 +191,7 @@ def plot_source_trajectory_map_IQR(lon=190, exp=0, v=1, r=0, zone=1):
     if sortby == 'si':
         num_pids = 100
         trajs = dz.traj.sortby(dz.age)
-       
+
         pids = [trajs.where((dz.age.sortby(dz.age) <= t), drop=True) for t in [200, 500, 850, 1200]]
         pids = np.concatenate([p[-num_pids:].values for p in pids])
 
@@ -188,6 +232,6 @@ def plot_source_trajectory_map_IQR(lon=190, exp=0, v=1, r=0, zone=1):
 lon = 165
 exp = 0
 v = 1
-r = 1
-zone = 7
+r = 7
+zone = 1
 # plot_source_trajectory_map_IQR(lon, exp, v, r, zone)
