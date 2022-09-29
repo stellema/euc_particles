@@ -82,7 +82,11 @@ def get_final_particle_obs(ds):
     # Select the lowest value.
     ds['time_at_zone'] = ds['time'].min('obs', skipna=True, keep_attrs=True)
 
-    ds['z_at_zone'] = ds['z'].ffill('obs').isel(obs=-1)
+    # Select the max/min value.
+    for var in ['z', 'lat', 'lon']:
+        ds[var + '_max'] = ds[var].max('obs', skipna=True, keep_attrs=True)
+        ds[var + '_min'] = ds[var].min('obs', skipna=True, keep_attrs=True)
+        ds[var + '_at_zone'] = ds[var].ffill('obs').isel(obs=-1)
 
     # Select the first value.
     for var in ['time', 'trajectory', 'z', 'lat', 'lon']:
@@ -168,17 +172,24 @@ def plx_source_file(lon, exp, v, r):
         rtime: particle release times
 
     Data variables:
-        trajectory   (traj): Particle ID.
-        time         (traj): Release time.
-        age          (traj): Transit time.
-        zone         (traj): Source ID.
-        distance     (traj): Transit distance.
-        unbeached    (traj): Number of times particle was unbeached.
-        u            (traj): Initial transport.
+        trajectory   (zone, traj): Particle ID.
+        time         (zone, traj): Release time.
+        age          (zone, traj): Transit time.
+        zone         (zone, traj): Source ID.
+        distance     (zone, traj): Transit distance.
+        unbeached    (zone, traj): Number of times particle was unbeached.
+        u            (zone, traj): Initial transport.
         u_zone       (rtime, zone): EUC transport / release time & source.
         u_sum        (rtime): Total EUC transport at each release time.
-        time_at_zone (traj): Time at source.
-        z_at_zone    (traj): Depth at source.
+        time_at_zone (zone, traj): Time at source.
+        z_at_zone    (zone, traj): Depth at source.
+
+        lat_max      (zone, traj): Max latitude.
+        lat_min      (zone, traj): Min latitude.
+        lon_max      (zone, traj): Max longitude.
+        lon_min      (zone, traj): Min longitude
+        z_max        (zone, traj): Max depth.
+        z_min        (zone, traj): Min depth.
 
     """
     # Filenames.
