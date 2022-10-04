@@ -40,6 +40,7 @@ import seaborn as sns
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 from scipy import stats
+from cartopy.mpl.gridliner import LONGITUDE_FORMATTER, LATITUDE_FORMATTER
 
 import cfg
 from cfg import ltr, exp_abr
@@ -254,7 +255,7 @@ def source_histogram_depth():
     colors = ['teal', 'darkviolet']
 
     nc, nr = 4, 7
-    fig, axes = plt.subplots(nr, nc, figsize=(11, 14))
+    fig, axes = plt.subplots(nr, nc, figsize=(11, 14), sharey='row')
     axes = axes.flatten()
 
     for x, lon in enumerate(cfg.lons):
@@ -274,22 +275,31 @@ def source_histogram_depth():
             color = [colors[1]] * 2
             ax = plot_histogram(ax, dx, 'z_at_zone', color, **kwargs)
 
-            ax.set_title('{}) {}'.format(i + 1, zname), loc='left')
             ax.set_ymargin(0)
             # Flip yaxis 0m at top.
             ax.set_ylim(425, 0)
 
             ax.xaxis.set_minor_locator(mpl.ticker.AutoMinorLocator())
-            ax.yaxis.set_major_formatter('{x:.0f}m')
             ax.yaxis.set_minor_locator(mpl.ticker.AutoMinorLocator(2))
+            # TODO: add ticks inside subplot
+            ax.tick_params(axis='y', direction='inout', pad=-22)
+
+            # TODO: add lon inside subplot
+            ax.text(0.9, 0.9, "{}°E".format(lon),# weight='bold',
+                    horizontalalignment='center', verticalalignment='center',
+                    transform=ax.transAxes)
+            if x == 0:
+                ax.set_title('{} {}'.format(ltr[i], zname), loc='left')
+
+                ax.yaxis.set_major_formatter('{x:.0f}m')
 
             if i >= nc * (nr - 1):  # Last row.
                 ax.set_xlabel('Transport [Sv]')
 
-    # Suptitles.
-    for lon, ax in zip(cfg.lons, axes[:nc]):
-        ax.text(0.25, 1.2, "EUC at {}°E".format(lon), weight='bold',
-                transform=ax.transAxes)
+    # # Suptitles.
+    # for lon, ax in zip(cfg.lons, axes[:nc]):
+    #     ax.text(0.25, 1.2, "EUC at {}°E".format(lon), weight='bold',
+    #             transform=ax.transAxes)
 
     # Legend.
     nm = [mpl.lines.Line2D([], [], color=c, label=n, lw=5)
@@ -298,7 +308,8 @@ def source_histogram_depth():
 
     # Save.
     plt.tight_layout()
-    fig.subplots_adjust(wspace=0.25, hspace=0.4, top=1)
+    # Todo: fix LHS no gap & xtixks overlap
+    fig.subplots_adjust(wspace=0, hspace=0.4, top=1)
     plt.savefig(cfg.fig / 'sources/histogram_depth.png', dpi=300,
                 bbox_extra_artists=(lgd,), bbox_inches='tight')
     plt.show()
@@ -349,40 +360,37 @@ def source_scatter(ds, lon, exp, varx, vary):
     return
 
 
-def plot_KDE_source(ax, ds, var, z, color=None):
+def plot_KDE_source(ax, ds, var, z, color=None, add_IQR=False):
     """Plot KDE of source var for historical (solid) and RCP(dashed)."""
     ds = [ds.sel(zone=z).isel(exp=x).dropna('traj', 'all') for x in [0, 1]]
-    bins = get_min_weighted_bins([d[var] for d in ds], [d.u for d in ds])
+    bins = get_min_weighted_bins([d[var] for d in ds], [d.u / 1948 for d in ds])
 
     for exp in range(2):
         dx = ds[exp]
-
         c = dx.colors.item() if color is None else color
         ls = ['-', ':'][exp]
         n = dx.names.item() if exp == 0 else None
 
         # ax = sns.kdeplot(x=dx[var], ax=ax, c=c, bins=bins, weights=dx.u,
         #                  , ls=ls, bw_adjust=0.5)
-        ax = sns.histplot(x=dx[var], weights=dx.u, ax=ax, bins=bins,
-                          color=c,                                    element='step', alpha=0, fill=False,
+        ax = sns.histplot(x=dx[var], weights=dx.u / 1948, ax=ax, bins=bins,
+                          color=c, element='step', alpha=0, fill=False,
                           kde=True, kde_kws=dict(bw_adjust=0.5),
                           line_kws=dict(color=c, linestyle=ls, label=n))
-        # stat='frequency'
-
         ax.xaxis.set_minor_locator(mpl.ticker.AutoMinorLocator())
 
-        # Find cutoff.
+        # xmax & xmin cutoff.
         hist = ax.get_lines()[-1]
         x, y = hist.get_xdata(), hist.get_ydata()
-        # xlim = x[y > y.max() * 0.09]
         xlim = x[np.cumsum(y) < (sum(y) * 0.85)]
         ax.set_xlim(max([0, xlim[0]]), xlim[-1])
 
         # Median & IQR.
-        for q, lw, h in zip([0.5, 0.25, 0.75], [1.7, 1.5, 1.5],
-                            [0.09, 0.05, 0.05]):
-            ax.axvline(x[sum(np.cumsum(y) < (sum(y)*q))], ymax=h,
-                       c=color, ls=ls, lw=lw)
+        if add_IQR:
+            for q, lw, h in zip([0.5, 0.25, 0.75], [1.7, 1.5, 1.5],
+                                [0.11, 0.07, 0.07]):
+                ax.axvline(x[sum(np.cumsum(y) < (sum(y)*q))], ymax=h,
+                            c=color, ls=ls, lw=lw)
     return ax
 
 
@@ -391,14 +399,19 @@ def log_KDE_source(var):
     # todo: add significance
     # todo: add % change
 
+
     def log_mode(ds, var, z, lon):
+        ds = [ds.sel(zone=z).isel(exp=x).dropna('traj', 'all') for x in [0, 1]]
+        bins = get_min_weighted_bins([d[var] for d in ds], [d.u / 1948 for d in ds])
         mode = []
         xx = []
         yy = []
         for exp in range(2):
-            dx = ds.sel(zone=z).isel(exp=exp).dropna('traj', 'all')
-            n = dx.names.item()
-            ax = sns.kdeplot(x=dx[var], weights=dx.u, bw_adjust=0.5)
+            n = ds[exp].names.item()
+            ax = sns.histplot(x=ds[exp][var], weights=ds[exp].u / 1948,
+                              bins=bins, color='k', element='step', alpha=0,
+                              fill=False, kde=True, kde_kws=dict(bw_adjust=0.5),
+                              line_kws=dict(color='k', linestyle='-', label=n))
             hist = ax.get_lines()[-1]
             x, y = hist.get_xdata(), hist.get_ydata()
             mode.append(x[np.argmax(y)])
@@ -423,7 +436,7 @@ def log_KDE_source(var):
         logger.info('')
 
 
-def plot_KDE_multi_var(ds, lon, var):
+def plot_KDE_multi_var(ds, lon, var, add_IQR=False):
     """Plot KDE of source var for historical (solid) and RCP(dashed)."""
     var = [var] if isinstance(var, str) else var
     nc = len(var)
@@ -435,22 +448,30 @@ def plot_KDE_multi_var(ds, lon, var):
             z_inds = [[1, 2, 6], [3, 4], [7, 8, 5]][i]
             for iz, z in enumerate(z_inds):
                 c = ['m', 'b', 'g', 'y'][iz]
-                ax[i, j] = plot_KDE_source(ax[i, j], ds, v, z, color=c)
+                ax[i, j] = plot_KDE_source(ax[i, j], ds, v, z, c, add_IQR)
 
             # Plot extras.
             ax[i, j].set_title('{}'.format(ltr[j+i*nc]), loc='left')
             ax[i, j].legend()
+            ax[i, j].set_ylabel('Transport [Sv] / day')
             ax[i, j].set_xlabel('{} [{}]'.format(*[ds[v].attrs[s] for s in
                                                    ['long_name', 'units']]))
+            # Subplot ymax (excluding histogram)
+            ymax = [max(y.get_ydata()) for y in list(ax[i, j].get_lines())]
+            ymax = max(ymax[1::5]) if add_IQR else max(ymax[1::2])
+            ymax += (ymax * 0.05)
+            if j > 0:
+                ymax = max([ymax, ax[i, j - 1].get_ybound()[-1]])
+            ax[i, j].set_ylim(0, ymax)
 
     plt.tight_layout()
     plt.savefig(cfg.fig / 'sources/KDE_{}_{}.png'.format('_'.join(var), lon),
-                dpi=300)
+                dpi=350)
     plt.show()
     return
 
 
-def source_KDE_multi_lon(var='z', sum_interior=True):
+def source_KDE_multi_lon(var='age', sum_interior=True, add_IQR=False):
     """KDE of var at each longitude."""
     nc, nr = 4, 3
     fig, ax = plt.subplots(nr, nc, figsize=(14, 9), sharey='row')
@@ -461,29 +482,35 @@ def source_KDE_multi_lon(var='z', sum_interior=True):
                                     for a in ['long_name', 'units']])
 
         for i in range(ax.size//nc):  # iterate through zones.
-            z_inds = [[1, 2, 6], [3, 4], [7, 8, 5]][i]
+            z_inds = [[1, 2, 6], [3, 4], [7, 8]][i]
             for iz, z in enumerate(z_inds):
-                c = ['m', 'b', 'g', 'y'][iz]
-                ax[i, j] = plot_KDE_source(ax[i, j], ds, var, z, color=c)
+                c = ['m', 'b', 'g', 'k'][iz]
+                ax[i, j] = plot_KDE_source(ax[i, j], ds, var, z, c, add_IQR)
 
             # Plot extras.
             ax[i, j].set_title('{}'.format(ltr[j+i*nc]), loc='left')
             if j == 3:
                 ax[i, 3].legend()
             ax[i, j].set_xlabel(xlabel)
+            ax[i, 0].set_ylabel('Transport [Sv] / Day')
 
-            log_KDE_source(ds, var, z, lon)
-        logger.info('')
+            # Subplot ymax (excluding histogram)
+            ymax = [max(y.get_ydata()) for y in list(ax[i, j].get_lines())]
+            ymax = max(ymax[1::5]) if add_IQR else max(ymax[1::2])
+            ymax += (ymax * 0.05)
+            if j > 0:
+                ymax = max([ymax, ax[i, j - 1].get_ybound()[-1]])
+            ax[i, j].set_ylim(0, ymax)
 
     # Suptitles.
-    for lon, ax in zip(cfg.lons, ax.flatten()[:4]):
-        ax.text(0.25, 1.1, "EUC at {}°E".format(lon), weight='bold',
-                transform=ax.transAxes)
+    for lon, axf in zip(cfg.lons, ax.flatten()[:4]):
+        axf.text(0.25, 1.1, "EUC at {}°E".format(lon), weight='bold',
+                transform=axf.transAxes)
 
     # plt.tight_layout()
-    fig.subplots_adjust(wspace=0.1, hspace=0.25, top=1)
+    fig.subplots_adjust(wspace=0.1, hspace=0.3, top=1)
     plt.savefig(cfg.fig / 'sources/KDE_{}.png'
-                .format(var, '' if sum_interior else '_interior'), dpi=300,
+                .format(var, '' if sum_interior else '_interior'), dpi=350,
                 bbox_inches='tight')
     plt.show()
 
@@ -585,39 +612,22 @@ def plot_source_EUC_velocity_profile(lon, exp):
     df = xr.Dataset()
     df['u'] = xr.concat(data, 'zone')
 
-    # Plot profile (max of each source).
-    dz = df.u.idxmax('zone')
-    inds = np.unique(dz.astype(dtype=int))
-    cmap = mpl.colors.ListedColormap(ds.colors.sel(zone=inds).values)
-    norm = mpl.colors.BoundaryNorm(boundaries=inds, ncolors=inds.size)
-    fig, ax = plt.subplots()
-    cs = ax.pcolormesh(dz.lat, dz.z, dz.T, cmap=cmap, norm=norm, shading='nearest')
-    cb = fig.colorbar(cs, ax=ax)
-    cb.set_ticks(inds, labels=ds.names.sel(zone=inds).values)
-    ax.set_xlabel('Latitude')
-    ax.invert_yaxis()
-
-    # fig, ax = plt.subplots()
-    # ax = zmax.plot(x='lat', y='z', cmap=cmap, yincrease=False, ax=ax)
-    # cb = fig.axes[-1]
-    # cb.yaxis.set_ticks(np.linspace(0.5, inds.max() - 0.5, inds.size),
-    #                    labels=ds.names.sel(zone=inds).values)
-    # plt.xlabel('Latitude')
-
-    plt.savefig(cfg.fig / 'EUC_source_profile_max_{}_{}.png'
-                .format(lon, cfg.exp_abr[exp]), bbox_inches='tight', dpi=350)
-    plt.show()
-
     # Plot profile (each source).
     fig, axes = plt.subplots(3, 3, figsize=(10, 9), sharey='col', sharex='row')
     for i, ax in enumerate(axes.flatten()):
-        cs = ax.pcolormesh(df.lat, df.z, df.u.isel(zone=i).T, cmap=plt.cm.plasma)
+        # 2D hist.
         ax.set_title('{} {}'.format(ltr[i], ds.names.values[i]), loc='left')
+        cs = ax.pcolormesh(df.lat, df.z, df.u.isel(zone=i).T, cmap=plt.cm.plasma)
         cb = fig.colorbar(cs, ax=ax)
-        ax.invert_yaxis()
 
+        # EUC contour.
+        # Contour where velocity is 50% of maximum EUC velocity.
+        half_max = df.u.sum('zone').max().item() * 0.6
+        ax.contour(df.lat, df.z, df.u.sum('zone').T, [half_max], colors='k', linewidths=1)
+        ax.invert_yaxis()
         ax.xaxis.set_minor_locator(mpl.ticker.AutoMinorLocator())
-        ax.xaxis.set_major_formatter('{x:.0f}°')
+        ax.xaxis.set_major_locator(mpl.ticker.MultipleLocator(1))
+        ax.xaxis.set_major_formatter(LATITUDE_FORMATTER)
 
     for i, ax in enumerate(axes.flatten()[::3]):
         axes.flatten()[i].set_ylabel('Depth [m]')
@@ -627,27 +637,52 @@ def plot_source_EUC_velocity_profile(lon, exp):
                 .format(lon, cfg.exp_abr[exp]), bbox_inches='tight', dpi=350)
     plt.show()
 
+    # # Plot profile (max of each source).
+    # dz = df.u.idxmax('zone')
+    # inds = np.unique(dz.astype(dtype=int))
+    # cmap = mpl.colors.ListedColormap(ds.colors.sel(zone=inds).values)
+    # norm = mpl.colors.BoundaryNorm(boundaries=inds, ncolors=inds.size)
+
+    # fig, ax = plt.subplots()
+    # cs = ax.pcolormesh(dz.lat, dz.z, dz.T, cmap=cmap, norm=norm, shading='nearest')
+    # cb = fig.colorbar(cs, ax=ax)
+
+    # # Axis.
+    # cb.set_ticks(inds, labels=ds.names.sel(zone=inds).values)
+    # ax.set_xlabel('Latitude')
+    # ax.invert_yaxis()
+
+    # # fig, ax = plt.subplots()
+    # # ax = zmax.plot(x='lat', y='z', cmap=cmap, yincrease=False, ax=ax)
+    # # cb = fig.axes[-1]
+    # # cb.yaxis.set_ticks(np.linspace(0.5, inds.max() - 0.5, inds.size),
+    # #                    labels=ds.names.sel(zone=inds).values)
+    # # plt.xlabel('Latitude')
+
+    # plt.savefig(cfg.fig / 'EUC_source_profile_max_{}_{}.png'
+    #             .format(lon, cfg.exp_abr[exp]), bbox_inches='tight', dpi=350)
+    # plt.show()
 
 # for exp in [1, 0]:
 #     transport_source_bar_graph(exp=exp)
 #     transport_source_bar_graph(exp, list(range(7, 17)), False)
 
-# source_histogram_depth()
+source_histogram_depth()
 
-# for lon in [165]:
-for lon in cfg.lons:
-    # ds = source_dataset(lon, sum_interior=True)
-    # plot_KDE_multi_var(ds, lon, var=['age', 'distance'])
-    plot_source_EUC_velocity_profile(lon, exp=0)
+# # for lon in [165]:
+# for lon in cfg.lons:
+#     # ds = source_dataset(lon, sum_interior=True)
+#     # plot_KDE_multi_var(ds, lon, var=['age', 'distance'])
+#     plot_source_EUC_velocity_profile(lon, exp=0)
 #     source_pie_chart(ds, lon)
 #     source_histogram_multi_var(ds, lon)
 #     combined_source_histogram(ds, lon)
 
 
-# for var in ['distance', 'age', 'speed']:
-#     source_histogram_multi_lon(var, sum_interior=False)
+# for var in ['age', 'distance', 'speed']:
+#     # source_histogram_multi_lon(var, sum_interior=False)
 #     source_KDE_multi_lon(var, sum_interior=True)
-#     log_KDE_source(var)
+#     # log_KDE_source(var)
 
 
 # exp = 0

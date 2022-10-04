@@ -508,6 +508,8 @@ def source_dataset(lon, sum_interior=True):
     ds['speed'] = ds.distance / ds.age
     ds['speed'].attrs['long_name'] = 'Average Speed'
     ds['speed'].attrs['units'] = 'm/s'
+    ds['age'].attrs['units'] = 'days'
+    ds['distance'].attrs['units'] = 'Mm'
 
     ds['names'] = ('zone', cfg.zones.names_all)
     ds['colors'] = ('zone', cfg.zones.colors_all)

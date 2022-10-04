@@ -243,7 +243,25 @@ def plot_thermocline_depth_map():
              for y in cfg.years]
 
     ds = open_ofam_dataset(files)
+    ds = ds.isel(lev=slice(0, 35)).sel(lat=slice(-10.1, 10.1))
+    # x  = ds.lev
+    # z = np.zeros(x.size*2)
+    # # z[1::2] = x
+    # # z[2::2] = x[:-1] + np.gradient(x)[:-1]/2
+    # # x = z
+    # # lev = z
+    # for i in range(2):
+    #     z = np.zeros(x.size*2)
+    #     z[1::2] = x
+    #     z[2::2] = x[:-1] + np.gradient(x)[:-1]/2
+    #     x = z
+    # lev = z[1:]
+    lev = xr.DataArray(np.arange(0, ds.lev.max(), 5), dims='lev')
+    lev.coords['lev'] = lev
+    ds = ds.interp(lev=lev)
+
     ds = ds.temp.groupby('time.year').mean('time').rename({'year': 'exp'})
+
     dx = ds.differentiate('lev')
 
     dz = dx.idxmin('lev')
