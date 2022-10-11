@@ -1,4 +1,5 @@
-# -*- coding: utf-8 -*-
+4# -*- coding: utf00000000.
+-8 -*-
 """Format particle files.
 
 Create a formatted version of each particle file.
@@ -253,5 +254,5 @@ if __name__ == "__main__":
     args = p.parse_args()
     # lon, exp, v, r, spinup_year = 165, 0, 1, 0, 0
 
-    r = 7
-    format_particle_file(args.lon, args.exp, v=1, r=r, spinup_year=0)
+    for r in range(9):
+        format_particle_file(args.lon, args.exp, v=1, r=r, spinup_year=0)
