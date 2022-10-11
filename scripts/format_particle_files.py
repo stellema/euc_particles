@@ -1,4 +1,4 @@
-# -*- coding: utf00000000.
+# -*- coding: utf-8 -*-
 """Format particle files.
 
 Create a formatted version of each particle file.
