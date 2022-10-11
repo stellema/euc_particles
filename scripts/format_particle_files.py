@@ -1,5 +1,4 @@
-4# -*- coding: utf00000000.
--8 -*-
+# -*- coding: utf00000000.
 """Format particle files.
 
 Create a formatted version of each particle file.
@@ -31,9 +30,7 @@ Notes:
     - Requires a lot of memory (tried 64Gb, 82GB)
     - Require ~85-100GB and 6-8 hours
     - Reduce dims of 'zone' to (traj,)
-
-Todo:
-    - Fix r07 error
+    - Fixed r07 error
 
 @author: Annette Stellema
 @email: a.stellema@unsw.edu.au
