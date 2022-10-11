@@ -82,12 +82,22 @@ test = True if home.drive == 'C:' else False
 
 dx = 0.1
 e1, e2, e3, e4 = [x - dx for x in [165, 190, 220, 250]]
-j1, j2 = -6.1, 8
+j1, j2 = -6.1+ dx, 8 - dx
+
 x_west = 120.1
 lons = [165, 190, 220, 250]
 inner_lons = [[158, *lons, 280], [128.5, *lons, 278.5], ]
 colors = ['silver', 'darkorange', 'deeppink', 'mediumspringgreen',
           'seagreen', 'y', 'red', 'darkviolet', 'blue']
+# VS [-6.1, -6.1, 147.6, 149]
+# SS [-5.1, -5.1, 152, 154.6]
+# SC [-6.1, -6.1, 155.4, 158]
+# MC [8, 8, 126.4, 129.1]
+# CS [[0.45, 8, 120.1, 120.1], [8, 8, 120.1, 123]]
+# IDN [[-8.5, 0.4, 120.1, 120.1], [-8.7, -8.7, 120.1, 140.6]]
+# SI [-6.1, -6.1, 158, 280]
+# NI [8, 8, 129.1, 278.5]
+
 
 @dataclass
 class ZoneData:
@@ -96,17 +106,15 @@ class ZoneData:
     Zone = namedtuple("Zone", "id name name_full loc")
     Zone.__new__.__defaults__ = (None,) * len(Zone._fields)
     nz = Zone(0, 'nz', 'None')
-    vs = Zone(1, 'vs', 'Vitiaz Strait', [j1, j1, 147.6, 149.6])
-    ss = Zone(2, 'ss', 'Solomon Strait', [-5.1, -5.1, 152, 154.6])
-
-    mc = Zone(3, 'mc', 'Mindanao Current', [8, 8, 126.4, 129.1])
-    cs = Zone(4, 'cs', 'Celebes Sea', [[0.5, j2, x_west, x_west],
-                                       [j2, j2, x_west, 123]])
+    vs = Zone(1, 'vs', 'Vitiaz Strait', [j1, j1, 147, 149.7])
+    ss = Zone(2, 'ss', 'Solomon Strait', [-5.1+dx, -5.1+dx, 151.3, 154.7])
+    mc = Zone(3, 'mc', 'Mindanao Current', [j2, j2, 125.9, 129.1])
+    cs = Zone(4, 'cs', 'Celebes Sea', [[0.45, j2, x_west, x_west],
+                                       [j2, j2, x_west, 125]])
     idn = Zone(5, 'idn', 'Indonesian Seas', [[-8.5, 0.4, x_west, x_west],
-                                             [-8.7, -8.7, x_west, 140.6]])
-
-    sc = Zone(6, 'sc', 'Solomon Islands', [j1, j1, 155.4, 158])
-    sth = Zone(7, 'sth', 'South Interior', [j1, j1, 158, 280])
+                                             [-8.7, -8.7, x_west, 142]])
+    sc = Zone(6, 'sc', 'Solomon Islands', [j1, j1, 155.2, 158])
+    sth = Zone(7, 'sth', 'South Interior', [j1, j1, 158, 283])
     nth = Zone(12, 'nth', 'North Interior', [j2, j2, 129.1, 278.5])
 
     _all = [nz, vs, ss, mc, cs, idn, sc, sth, nth]
