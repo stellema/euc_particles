@@ -27,6 +27,7 @@ Todo:
 @created: Tue Jan 25 03:57:48 2022
 
 """
+import dask
 import numpy as np
 import xarray as xr
 from argparse import ArgumentParser
@@ -34,6 +35,7 @@ from argparse import ArgumentParser
 import cfg
 from tools import mlogger, timeit, save_dataset
 from fncs import get_plx_id
+dask.config.set(**{'array.slicing.split_large_chunks': True})
 
 logger = mlogger('files')
 
