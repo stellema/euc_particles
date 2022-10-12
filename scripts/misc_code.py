@@ -47,6 +47,7 @@ handler.setFormatter(formatter)
 logger.addHandler(handler)
 logger.propagate = False
 
+qsub -I -qnormalbw -Pe14 -lwalltime=02:00:00,ncpus=1,mem=1GB,storage=gdata/e14
 """
 
 ##############################################################################
@@ -895,6 +896,279 @@ https://github.com/OceanParcels/SKIM-garbagepatchlocations/blob/master/North%20P
 # ds = update_particle_data_sources(ds)
 # df.sel(traj=t).zone.plot()
 # ds.zone.plot()
+
+##############################################################################
+# Test boundary passes.
+##############################################################################
+# import numpy as np
+# import xarray as xr
+# import matplotlib.pyplot as plt
+# from shapely.geometry import Point, LineString, MultiPoint
+# from shapely.ops import nearest_points
+# import geopandas as gp
+# from geopandas.tools import sjoin
+
+# import cfg
+# from fncs import update_particle_data_sources
+# from fncs import get_plx_id, source_dataset, particle_source_subset
+# from create_source_files import source_particle_ID_dict
+
+# exp, v, r = 0, 1, 5
+# lon = 250
+# N_total = 800
+# xlines = True
+# age = 'mode'
+
+# R = [r, r + 1]
+# z = 2
+# # Source dataset (hist & RCP for bins).
+# dss = source_dataset(lon)
+
+# # Particle IDs dict.
+# pidd = [source_particle_ID_dict(None, exp, lon, v, i) for i in R]
+# pid_dict = pidd[0].copy()
+# for i in pid_dict.keys():
+#     pid_dict[i] = np.concatenate([pid[i] for pid in pidd]).tolist()
+
+# # Find mode transit time pids.
+# # Divide by source based on percent of total.
+# dz = dss.isel(exp=exp).dropna('traj', 'all')
+# dz = dz.sel(zone=z).dropna('traj', 'all')
+# dz = dz.sel(traj=dz.traj[dz.traj.isin(pid_dict[z])])
+# traj = dz.traj.values
+
+# # Particle trajectory data.
+# ds = xr.open_mfdataset([get_plx_id(exp, lon, v, i, 'plx') for i in R],
+#                         chunks='auto', mask_and_scale=True)
+
+# dx = ds.sel(traj=traj)
+
+# trajx = dx.traj.where(dx.lat.min('obs') <= -6, drop=True).values
+
+# dxx = ds.sel(traj=trajx)#.dropna('obs', 'all')
+
+# t = int(dx.lat.min('obs').idxmin('traj').load().item())
+# dt = ds.sel(traj=t).dropna('obs').load()
+# dt.lat.plot()
+
+
+# # opt 1 [-5.1, -5.1, 152, 154.6]
+# dxx = ds.sel(traj=trajx)
+# # dxx = dxx.isel(traj=slice(20))
+# dxx['zone'][dict(obs=0)] = 0
+# dxx['u'] = dxx['u'].isel(obs=0)
+# dxx['zone'] = dxx['zone'].T
+# omax = dxx.lat.dropna('obs', 'all').obs[-1].item()
+# dxx = dxx.isel(obs=slice(omax))
+# dxx = dxx.chunk('auto')
+# du = update_particle_data_sources(dxx)
+# du = particle_source_subset(du)
+# # du['zone'] = du.zone.where(du.zone > 0.).bfill('obs')
+# # du['zone'] = du.zone.isel(obs=0, drop=True).fillna(0)
+
+
+# # df = du.isel(traj=4).load()
+# # # df.isel(traj=0, obs=slice(4150, 4163))
+# # plt.plot(df.lon[705:714], df.lat[705:714])
+# # plt.axvline(152)
+# # plt.axvline(154.6)
+# # plt.axhline(-5.1)
+
+# # multi-version of above.
+# fig, ax = plt.subplots(1, 1, figsize=(11, 8))
+# for p in du.traj.values:
+#     dh = du.sel(traj=p)
+#     # df.isel(traj=0, obs=slice(4150, 4163))
+#     ax.plot(dh.lon, dh.lat)
+# ax.axvline(152)
+# ax.axvline(154.6)
+# ax.axhline(-5.1)
+# ax.set_xlim(150, 158)
+# ax.set_ylim(-6.5, -3.5)
+
+# opt 2: Find
+# C = (zones.ss.loc[0], zones.ss.loc[2])
+# D = (zones.ss.loc[1], zones.ss.loc[3])
+# gate = LineString([C, D])
+# location = LineString([i for i in zip(df.lat,df.lon)])
+# i =  location.intersection(gate)  # nearest
+
+# # Option 3: geo
+# dg = dxx.isel(traj=[4, 14]).load()
+# gg = dg.isel(traj=0, obs=slice(705, 714))
+
+# # lines = gp.GeoDataFrame.from_file('line_layer.shp'')
+# # poly = gp.GeoDataFrame.from_file('polygon_layer.shp')
+
+# # gdf = gp.GeoDataFrame(dg, geometry=gp.points_from_xy(dg.lon, dg.lat))
+# poly = gp.points_from_xy(gg.lon, gg.lat)
+# lines = gp.points_from_xy(zones.ss.loc[-2:], zones.ss.loc[:2])
+
+# poly = gp.GeoDataFrame(gg.obs, geometry=gp.points_from_xy(gg.lon, gg.lat))
+# lines = gp.GeoDataFrame([0,1], geometry=gp.points_from_xy(zones.ss.loc[-2:], zones.ss.loc[:2]))
+
+# i = gp.sjoin(poly, lines, how="left", predicate="intersects")
+##############################################################################
+# Examine OFAM source boundaries
+##############################################################################
+# import numpy as np
+# import xarray as xr
+# import matplotlib.pyplot as plt
+
+# import cfg
+# from cfg import zones
+# from tools import ofam_filename, open_ofam_dataset
+
+# dv = open_ofam_dataset(ofam_filename('w', 2012, 1)).w
+# dv = dv.isel(time=0, lev=0)
+# ######### Vitiaz Strait ########
+# # [-6.1, -6.1, 147.6, 149]
+# loc = zones.vs.loc
+# loc[2] = 147
+# loc[3] = 149.7
+# dx = dv.sel(lon=slice(146, 151), lat=slice(-7, -5))
+# dx = xr.where(~np.isnan(dx), 1, dx)
+
+# dx.plot(figsize=(11, 8))
+# plt.axhline(loc[0], c='k')
+# plt.axvline(loc[2], c='k')
+# plt.axvline(loc[3], c='k')
+# plt.axvline(149, c='k')
+
+# ######### Solomon Strait ########
+# # [-5.1, -5.1, 152, 154.6]
+# loc = zones.ss.loc
+# loc[2] = 151.3
+# loc[3] = 154.7
+# dx = dv.sel(lon=slice(150, 156), lat=slice(-6, -4.5))
+# dx = xr.where(~np.isnan(dx), 1, dx)
+
+# dx.plot(figsize=(11, 8))
+# plt.axhline(loc[0], c='r', lw=3)
+# plt.axvline(loc[2], c='r', lw=3)
+# plt.axvline(loc[3], c='r', lw=3)
+
+# plt.axvline(152, c='k', lw=3)
+# plt.axvline(154.6, c='k', lw=3)
+
+# ######### Solomon Islands ########
+# # [-6.1, -6.1, 155.4, 158]
+# loc = zones.sc.loc
+# loc[2] = 155.2
+# dx = dv.sel(lon=slice(150, 159), lat=slice(-7, -4.5))
+# dx = xr.where(~np.isnan(dx), 1, dx)
+
+# dx.plot(figsize=(11, 8))
+# plt.axhline(loc[0], c='k')
+# plt.axvline(loc[2], c='k')
+# plt.axvline(loc[3], c='k')
+
+# ######### Mindanao Current ########
+# # [8, 8, 126.4, 129.1]
+# loc = zones.mc.loc
+# loc[2] = 125.9
+# dx = dv.sel(lon=slice(124, 132), lat=slice(6, 10))
+# dx = xr.where(~np.isnan(dx), 1, dx)
+
+# dx.plot(figsize=(11, 8))
+# plt.axhline(loc[0], c='k')
+# plt.axvline(loc[2], c='k')
+# plt.axvline(loc[3], c='k')
+
+# ######### Celebes ########
+# # [[0.45, 8, 120.1, 120.1], [8, 8, 120.1, 123]]
+# loc = zones.cs.loc[1]
+# loc[3] = 125
+# dx = dv.sel(lon=slice(loc[2]-2, loc[3]+5), lat=slice(loc[0]-2, loc[1]+2))
+# dx = xr.where(~np.isnan(dx), 1, dx)
+
+# dx.plot(figsize=(11, 8))
+# plt.axhline(loc[0], c='k')
+# plt.axvline(loc[2], c='k')
+# plt.axvline(loc[3], c='k')
+
+# ######### North interior ########
+# # [8, 8, 129.1, 278.5]
+# loc = zones.nth.loc
+# dx = dv.sel(lon=slice(270, loc[3]+5), lat=slice(loc[0]-1, loc[1]+2))
+# dx = xr.where(~np.isnan(dx), 1, dx)
+
+# dx.plot(figsize=(11, 8))
+# plt.axhline(loc[0], c='k')
+# plt.axvline(loc[2], c='k')
+# plt.axvline(loc[3], c='k')
+
+# ######### South interior ########
+# # [-6.1, -6.1, 158, 280]
+# loc = zones.sth.loc
+# loc[3] = 283
+# dx = dv.sel(lon=slice(270, loc[3]+5), lat=slice(loc[0]-3, loc[1]+1))
+# dx = xr.where(~np.isnan(dx), 1, dx)
+
+# dx.plot(figsize=(11, 8))
+# plt.axhline(loc[0], c='k')
+# plt.axvline(loc[2], c='k')
+# plt.axvline(loc[3], c='k')
+
+# ######### Indo Seas ########
+# # [[-8.5, 0.4, 120.1, 120.1], [-8.7, -8.7, 120.1, 140.6]]
+# loc = zones.idn.loc[1]
+# loc[3] = 142
+# dx = dv.sel(lon=slice(loc[2]-5, loc[3]+8), lat=slice(loc[0]-2, loc[1]+2))
+# dx = xr.where(~np.isnan(dx), 1, dx)
+
+# dx.plot(figsize=(11, 8))
+# plt.axhline(loc[0], c='k')
+# plt.axhline(loc[1], c='k')
+# plt.axvline(loc[2], c='k')
+# plt.axvline(loc[3], c='k')
+
+##############################################################################
+#
+##############################################################################
+# ######### Vitiaz Strait ########
+# # [-6.1, -6.1, 147.6, 149]
+# # [-6.1, -6.1, 147, 149.7]
+# loc = zones.vs.loc
+# loc[2] = 147
+# loc[3] = 149.7
+# ######### Solomon Strait ########
+# # [-5.1, -5.1, 152, 154.6]
+# loc = zones.ss.loc
+# loc[2] = 151.3
+# loc[3] = 154.7
+# ######### Solomon Islands ########
+# # [-6.1, -6.1, 155.4, 158]
+# # [-6.1, -6.1, 155.2, 158]
+# loc = zones.sc.loc
+# loc[2] = 155.2
+# ######### Mindanao Current ########
+# # [8, 8, 126.4, 129.1]
+# # [8, 8, 125.9, 129.1]
+# loc = zones.mc.loc
+# loc[2] = 125.9
+
+# ######### Celebes ########
+# # [[0.45, 8, 120.1, 120.1], [8, 8, 120.1, 123]]
+# # [[0.45, 8, 120.1, 120.1], [8, 8, 120.1, 125]]
+# loc = zones.cs.loc[1]
+# loc[3] = 125
+
+# ######### North interior ########
+# # [8, 8, 129.1, 278.5]
+# loc = zones.nth.loc
+
+# ######### South interior ########
+# # [-6.1, -6.1, 158, 280]
+# # [-6.1, -6.1, 158, 283]
+# loc = zones.sth.loc
+# loc[3] = 283
+
+# ######### Indo Seas ########
+# # [[-8.5, 0.4, 120.1, 120.1], [-8.7, -8.7, 120.1, 140.6]]
+# # [[-8.5, 0.4, 120.1, 120.1], [-8.7, -8.7, 120.1, 142]]
+# loc = zones.idn.loc[1]
+# loc[3] = 142
 
 ##############################################################################
 #
