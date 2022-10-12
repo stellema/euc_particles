@@ -24,7 +24,7 @@ import tools
 from tools import (get_unique_file, ofam_filename, open_ofam_dataset, timeit)
 from fncs import get_plx_id
 from plots import (plot_particle_source_map, update_title_time,
-                   create_map_axis, plot_ofam3_land, get_data_source_colors)
+                   plot_ofam3_land, get_data_source_colors)
 from plot_particle_video import init_particle_data
 
 # Fixes AttributeError: 'GeoAxesSubplot' object has no attribute 'set_offsets'

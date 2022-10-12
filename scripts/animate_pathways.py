@@ -117,9 +117,8 @@ def animate_particle_scatter(file, lats, lons, times, plottimes, colors,
     """Animate trajectories as dots."""
     # Setup figure.
     fig, ax, proj = plot_particle_source_map(add_ocean=True, add_legend=False)
-    # fig, ax, proj = create_map_axis(figsize=(12, 5),
-    #                                 map_extent=[120, 288, -12, 12],
-    #                                 add_ocean=True, land_color='dimgrey')
+    # fig, ax, proj = create_map_axis((12, 5), [120, 288, -12, 12],
+    #                                 land_color='dimgrey')
     t = 0
     b = plottimes[t] == times
 
@@ -177,8 +176,8 @@ def animate_particle_lines(file, ds, plottimes, dt=4, delay=True, forward=False)
         delay (bool, optional): Release at time or obs index. Defaults to True.
 
     Backgroup map without boundaries:
-    fig, ax, proj = create_map_axis((12, 5), map_extent=[120, 288, -12, 12],
-                                    add_ocean=True, land_color='dimgrey')
+    fig, ax, proj = create_map_axis((12, 5), extent=[120, 288, -12, 12],
+                                     land_color='dimgrey')
 
     Simulaneous release:
     lines = [ax.plot(lons[p, :dt], lats[p, :dt], c=colors[p], **kwargs)[0]

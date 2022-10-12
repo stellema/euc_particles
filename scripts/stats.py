@@ -14,6 +14,7 @@ Todo:
 """
 import math
 import numpy as np
+import seaborn as sns
 from scipy import stats
 import statsmodels.stats.weightstats as wtd
 
@@ -123,6 +124,18 @@ def get_min_weighted_bins(ds, weights):
     # Number of bins for combined data range (use smallest bin width).
     bins = int(np.ceil(np.diff(r) / min([h0, h1])))
     return bins
+
+
+def get_source_transit_mode(ds, var, exp, zone):
+    ds = [ds.isel(exp=i).sel(zone=zone).dropna('traj', 'all') for i in [0, 1]]
+    bins = get_min_weighted_bins([d[var] for d in ds], [d.u for d in ds])
+    dz = ds[exp]
+    hist = sns.histplot(x=dz[var], weights=dz.u, bins=bins, kde=True,
+                      kde_kws=dict(bw_adjust=0.5))
+    hist = hist.get_lines()[-1]
+    x, y = hist.get_xdata(), hist.get_ydata()
+    mode = [x[np.argmax(y) + i] for i in [0, 1]]
+    return mode
 
 # # Man whitney test (histogram diff) returns zero while ttest_ind p = 0.158.
 # # r sample sizes above ~20, approximation using the normal distribution is fairly good

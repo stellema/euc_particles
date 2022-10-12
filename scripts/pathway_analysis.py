@@ -23,7 +23,7 @@ import matplotlib.pyplot as plt
 import cfg
 from tools import coord_formatter, convert_longitudes, idx
 from fncs import get_plx_id, subset_plx_by_source, source_dataset
-from plots import (create_map_axis)
+from plots import create_map_axis
 from create_source_files import source_particle_ID_dict
 from stats import weighted_bins_fd
 
@@ -200,8 +200,7 @@ def plot_source_trajectory_map_IQR(lon=190, exp=0, v=1, r=7, zone=1):
     ##########################################################################
 
     # Plot particles.
-    fig, ax, proj = create_map_axis(figsize=(12, 5), add_ocean=True,
-                                    ocean_color='lightcyan')
+    fig, ax, proj = create_map_axis((12, 5), ocean_color='lightcyan')
     for i, p in enumerate(pids):
         c = colors[i]
         dx = ds.sel(traj=p)

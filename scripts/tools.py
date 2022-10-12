@@ -541,11 +541,12 @@ def open_ofam_dataset(file):
         ds = xr.open_dataset(file)
 
     # Rename coords.
-    ds = ds.rename({'Time': 'time', 'st_ocean': 'lev'})
+    names = {'Time': 'time'}
     if 'yu_ocean' in ds.dims:
-        ds = ds.rename({'yu_ocean': 'lat', 'xu_ocean': 'lon'})
+        names.update({'yu_ocean': 'lat', 'xu_ocean': 'lon', 'st_ocean': 'lev'})
     else:
-        ds = ds.rename({'yt_ocean': 'lat', 'xt_ocean': 'lon'})
+        names.update({'yt_ocean': 'lat', 'xt_ocean': 'lon', 'sw_ocean': 'lev'})
+    ds = ds.rename(names)
 
     # Drop extra data vars and dims.
     for var in ds.data_vars:
