@@ -251,5 +251,5 @@ if __name__ == "__main__":
     args = p.parse_args()
     # lon, exp, v, r, spinup_year = 165, 0, 1, 0, 0
 
-    for r in range(9):
+    for r in range(10):
         format_particle_file(args.lon, args.exp, v=1, r=r, spinup_year=0)
