@@ -45,7 +45,7 @@ from cartopy.mpl.gridliner import LONGITUDE_FORMATTER, LATITUDE_FORMATTER
 import cfg
 from cfg import ltr, exp_abr
 from stats import test_signifiance, format_pvalue_str, get_min_weighted_bins
-from tools import mlogger
+from tools import mlogger, open_ofam_dataset
 from fncs import (source_dataset, merge_hemisphere_sources,
                   merge_LLWBC_interior_sources)
 from plots import plot_histogram, weighted_bins_fd
@@ -56,8 +56,6 @@ plt.rc('font', size=fsize)
 plt.rc('axes', titlesize=fsize)
 plt.rcParams['figure.figsize'] = [10, 7]
 # plt.rcParams['figure.dpi'] = 200
-
-logger = mlogger('source_info')
 
 
 def source_pie_chart(ds, lon):
@@ -337,7 +335,7 @@ def source_scatter(ds, lon, exp, varx, vary):
         dx = ds.sel(zone=z, exp=exp).dropna('traj')
         x, y = dx[varx], dx[vary]
         a, b = np.polyfit(x, y, 1)
-        r, p = stats.pearsonr(x, y)
+        r, p = stats.spearmanr(x, y)
 
         ax.scatter(x, y, s=2, c=color)
         ax.plot(x, a * x + b, c='k', label='r={:.2f}, {}'
@@ -392,48 +390,6 @@ def plot_KDE_source(ax, ds, var, z, color=None, add_IQR=False):
                 ax.axvline(x[sum(np.cumsum(y) < (sum(y)*q))], ymax=h,
                             c=color, ls=ls, lw=lw)
     return ax
-
-
-def log_KDE_source(var):
-    """Log KDE of source var for historical and RCP."""
-    # todo: add significance
-    # todo: add % change
-
-
-    def log_mode(ds, var, z, lon):
-        ds = [ds.sel(zone=z).isel(exp=x).dropna('traj', 'all') for x in [0, 1]]
-        bins = get_min_weighted_bins([d[var] for d in ds], [d.u / 1948 for d in ds])
-        mode = []
-        xx = []
-        yy = []
-        for exp in range(2):
-            n = ds[exp].names.item()
-            ax = sns.histplot(x=ds[exp][var], weights=ds[exp].u / 1948,
-                              bins=bins, color='k', element='step', alpha=0,
-                              fill=False, kde=True, kde_kws=dict(bw_adjust=0.5),
-                              line_kws=dict(color='k', linestyle='-', label=n))
-            hist = ax.get_lines()[-1]
-            x, y = hist.get_xdata(), hist.get_ydata()
-            mode.append(x[np.argmax(y)])
-            xx.append(x)
-            yy.append(y)
-
-        mode.append(mode[1] - mode[0])  # Projected change.
-        mode.append(mode[2] / mode[0])  # Percent change.
-
-        p = 1 if mode[0] > 5 else 2  # Number of significant figures.
-        s = '{} {} {:>17} mode: '.format(var, lon, ds.names.sel(zone=z).item())
-
-        s += 'H={:.{p}f} R={:.{p}f} D={:.{p}f} ({:.1%})'.format(*mode, p=p)
-        logger.info(s)
-
-        return
-
-    for j, lon in enumerate(cfg.lons):
-        ds = source_dataset(lon, sum_interior=True)
-        for z in [1, 2, 6, 3, 4, 7, 8, 5]:
-            log_mode(ds, var, z, lon)
-        logger.info('')
 
 
 def plot_KDE_multi_var(ds, lon, var, add_IQR=False):
@@ -516,6 +472,50 @@ def source_KDE_multi_lon(var='age', sum_interior=True, add_IQR=False):
 
     return
 
+def source_KDE_multi_lon(var='age', sum_interior=True, add_IQR=False):
+    """KDE of var at each longitude."""
+    nc, nr = 4, 3
+    fig, ax = plt.subplots(nr, nc, figsize=(14, 9), sharey='row')
+    for j, lon in enumerate(cfg.lons):
+        ds = source_dataset(lon, sum_interior=sum_interior)
+
+        xlabel = '{} [{}]'.format(*[ds[var].attrs[a]
+                                    for a in ['long_name', 'units']])
+
+        for i in range(ax.size//nc):  # iterate through zones.
+            z_inds = [[1, 2, 6], [3, 4], [7, 8]][i]
+            for iz, z in enumerate(z_inds):
+                c = ['m', 'b', 'g', 'k'][iz]
+                ax[i, j] = plot_KDE_source(ax[i, j], ds, var, z, c, add_IQR)
+
+            # Plot extras.
+            ax[i, j].set_title('{}'.format(ltr[j+i*nc]), loc='left')
+            if j == 3:
+                ax[i, 3].legend()
+            ax[i, j].set_xlabel(xlabel)
+            ax[i, 0].set_ylabel('Transport [Sv] / Day')
+
+            # Subplot ymax (excluding histogram)
+            ymax = [max(y.get_ydata()) for y in list(ax[i, j].get_lines())]
+            ymax = max(ymax[1::5]) if add_IQR else max(ymax[1::2])
+            ymax += (ymax * 0.05)
+            if j > 0:
+                ymax = max([ymax, ax[i, j - 1].get_ybound()[-1]])
+            ax[i, j].set_ylim(0, ymax)
+
+    # Suptitles.
+    for lon, axf in zip(cfg.lons, ax.flatten()[:4]):
+        axf.text(0.25, 1.1, "EUC at {}°E".format(lon), weight='bold',
+                transform=axf.transAxes)
+
+    # plt.tight_layout()
+    fig.subplots_adjust(wspace=0.1, hspace=0.3, top=1)
+    plt.savefig(cfg.fig / 'sources/KDE_{}.png'
+                .format(var, '' if sum_interior else '_interior'), dpi=350,
+                bbox_inches='tight')
+    plt.show()
+
+    return
 
 def source_hist_2d(exp, varx, vary, bins=('auto', 'auto'),
                    invert_axis=(False, False), log_scale=(None, None),
@@ -556,7 +556,7 @@ def source_hist_2d(exp, varx, vary, bins=('auto', 'auto'),
             ax.set_title('({}) {}'.format(c + 1, zname), loc='left')
 
             # Correlation and p-value.
-            r, p = stats.pearsonr(x, y)
+            r, p = stats.spearmanr(x, y)
             ax.text(0.68, 0.78, 'R={:.2f}\n{}'.format(r, format_pvalue_str(p)),
                     transform=ax.transAxes, bbox=dict(color='w', alpha=0.8),
                     fontsize=8)
@@ -599,6 +599,10 @@ def source_hist_2d(exp, varx, vary, bins=('auto', 'auto'),
 
 def plot_source_EUC_velocity_profile(lon, exp):
     """Plot lat-depth velocity sum profile."""
+    file = cfg.ofam / 'clim/ocean_u_{}-{}_climo.nc'.format(*cfg.years[exp])
+    clim = open_ofam_dataset(file)
+    clim = clim.u.sel(lat=slice(-2.6, 2.6), lev=slice(2.5, 400)).mean('time')
+
     ds = source_dataset(lon, sum_interior=True)
     ds = ds.isel(exp=exp).dropna('traj', 'all')
 
@@ -622,9 +626,10 @@ def plot_source_EUC_velocity_profile(lon, exp):
 
         # EUC contour.
         # Contour where velocity is 50% of maximum EUC velocity.
-        half_max = df.u.sum('zone').max().item() * 0.6
-        ax.contour(df.lat, df.z, df.u.sum('zone').T, [half_max], colors='k', linewidths=1)
-        ax.invert_yaxis()
+        lvls = [clim.sel(lon=lon).max().item() * c for c in [0.5, 0.75, 0.99]]
+        ax.contour(clim.lat, clim.lev, clim.sel(lon=lon), lvls,
+                   colors='k', linewidths=1, linestyles='-')
+        ax.set_ylim(362.5, 12.5)
         ax.xaxis.set_minor_locator(mpl.ticker.AutoMinorLocator())
         ax.xaxis.set_major_locator(mpl.ticker.MultipleLocator(1))
         ax.xaxis.set_major_formatter(LATITUDE_FORMATTER)
@@ -637,95 +642,40 @@ def plot_source_EUC_velocity_profile(lon, exp):
                 .format(lon, cfg.exp_abr[exp]), bbox_inches='tight', dpi=350)
     plt.show()
 
-    # # Plot profile (max of each source).
-    # dz = df.u.idxmax('zone')
-    # inds = np.unique(dz.astype(dtype=int))
-    # cmap = mpl.colors.ListedColormap(ds.colors.sel(zone=inds).values)
-    # norm = mpl.colors.BoundaryNorm(boundaries=inds, ncolors=inds.size)
 
-    # fig, ax = plt.subplots()
-    # cs = ax.pcolormesh(dz.lat, dz.z, dz.T, cmap=cmap, norm=norm, shading='nearest')
-    # cb = fig.colorbar(cs, ax=ax)
+##############################################################################
+if __name__ == "__main__":
+    # for exp in [1, 0]:
+    #     transport_source_bar_graph(exp=exp)
+    #     transport_source_bar_graph(exp, list(range(7, 17)), False)
 
-    # # Axis.
-    # cb.set_ticks(inds, labels=ds.names.sel(zone=inds).values)
-    # ax.set_xlabel('Latitude')
-    # ax.invert_yaxis()
+    # source_histogram_depth()
 
-    # # fig, ax = plt.subplots()
-    # # ax = zmax.plot(x='lat', y='z', cmap=cmap, yincrease=False, ax=ax)
-    # # cb = fig.axes[-1]
-    # # cb.yaxis.set_ticks(np.linspace(0.5, inds.max() - 0.5, inds.size),
-    # #                    labels=ds.names.sel(zone=inds).values)
-    # # plt.xlabel('Latitude')
+    # # for lon in [165]:
+    for lon in cfg.lons:
+        # ds = source_dataset(lon, sum_interior=True)
+        # plot_KDE_multi_var(ds, lon, var=['age', 'distance'])
+        plot_source_EUC_velocity_profile(lon, exp=0)
+        # source_pie_chart(ds, lon)
+        # source_histogram_multi_var(ds, lon)
 
-    # plt.savefig(cfg.fig / 'EUC_source_profile_max_{}_{}.png'
-    #             .format(lon, cfg.exp_abr[exp]), bbox_inches='tight', dpi=350)
-    # plt.show()
+    #     exp = 0
+    #     for vary in ['lat', 'u', 'z']:
+    #         varx = 'age'
+    #         source_scatter(ds, lon, exp, varx, vary)
+    #     source_scatter(ds, lon, exp, 'z', 'z_at_zone')
 
-# for exp in [1, 0]:
-#     transport_source_bar_graph(exp=exp)
-#     transport_source_bar_graph(exp, list(range(7, 17)), False)
+    # for var in ['age', 'distance', 'speed']:
+    #     source_histogram_multi_lon(var, sum_interior=False)
+    #     source_KDE_multi_lon(var, sum_interior=True)
 
-source_histogram_depth()
+    # for varx, vary in zip():
+    #         source_scatter(ds, lon, exp, varx, vary)
 
-# # for lon in [165]:
-# for lon in cfg.lons:
-#     # ds = source_dataset(lon, sum_interior=True)
-#     # plot_KDE_multi_var(ds, lon, var=['age', 'distance'])
-#     plot_source_EUC_velocity_profile(lon, exp=0)
-#     source_pie_chart(ds, lon)
-#     source_histogram_multi_var(ds, lon)
-#     combined_source_histogram(ds, lon)
-
-
-# for var in ['age', 'distance', 'speed']:
-#     # source_histogram_multi_lon(var, sum_interior=False)
-#     source_KDE_multi_lon(var, sum_interior=True)
-#     # log_KDE_source(var)
-
-
-# exp = 0
-# varx, vary = 'z_at_zone', 'z'
-# source_hist_2d(exp, varx, vary, ('auto', 14), (False, True))
-
-# varx, vary = 'age', 'z'
-# source_hist_2d(exp, varx, vary, (50, 14), (0, 1))
-
-# varx, vary = 'u', 'z'
-# source_hist_2d(exp, varx, vary, ('auto', 14), (0, 1), log_norm=0)
-
-# varx, vary = 'age', 'lat'
-# source_hist_2d(exp, varx, vary, (50, np.arange(-2.65, 2.65, .1)))
-
-# varx, vary = 'age', 'u'
-# source_hist_2d(exp, varx, vary)
-###############################################################################
-# lon = 165
-# var = 'age'
-# z = 1
-# ds = source_dataset(lon, sum_interior=True)
-# ds = ds.thin(dict(traj=30))
-# def plot_hist_2D():
-#     def plot_hist_2D_source(ax, ds, varx, vary, z, exp):
-#         """Plot a 2D KDE of source z vars."""
-#         cmap = plt.cm.viridis
-#         dx = ds.sel(zone=z).isel(exp=exp).dropna('traj', 'all')
-#         ax = sns.histplot(x=dx[varx], y=dx[vary], ax=ax, palette=cmap, cbar=1)
-#         return ax
-#     exp = 1
-#     varx, vary = 'age', 'distance'
-#     fig, ax = plt.subplots(1, 1, figsize=(6, 7), squeeze=True)
-#     z_inds = [2]
-#     for i, z in enumerate(z_inds):
-#         ax = plot_hist_2D_source(ax, ds, varx, vary, z, exp)
-#         ax.set_xlim(0, 750)
-#         ax.set_ylim(1.4, 7)
-#     # TODO: savefig
-#     return
-# lats = ds.lat.max(['exp', 'zone'])
-# keep_traj = lats.where((lats <= 2.2) & (lats >= -2.2), drop=True).traj
-# ds = ds.sel(traj=keep_traj)
-
-#########################
-
+    # exp = 0
+    # source_hist_2d(exp, 'z_at_zone', 'z', ('auto', 14), (False, True))
+    # source_hist_2d(exp, 'age', 'z', (50, 14), (0, 1))
+    # source_hist_2d(exp, 'u', 'z', ('auto', 14), (0, 1), log_norm=0)
+    # source_hist_2d(exp, 'age', 'lat', (50, np.arange(-2.65, 2.65, .1)))
+    # source_hist_2d(exp, 'age', 'u')
+    # source_hist_2d(exp, 'age', 'distance')

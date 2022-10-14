@@ -120,6 +120,30 @@ def animate_ofam_euc():
     return
 
 
+def add_map_bathymetry(fig, ax, proj, map_extent, zorder):
+    """Add OFAAM3 bathymetry to cartopy map."""
+    dz = get_ofam_bathymetry()
+    dz = dz.sel(lon=slice(*map_extent[:2]), lat=slice(*map_extent[2:]))
+    levs = np.arange(0, 4600, 250, dtype=int)
+    levs[0] = 2.5
+    levs[-1] += 10
+    bath = ax.contourf(dz.lon, dz.lat, dz, levels=levs, cmap=plt.cm.Blues,
+                       norm=mpl.colors.LogNorm(vmin=dz.min(), vmax=dz.max()),
+                       transform=proj, zorder=zorder - 1)
+    # Colourbar
+    divider = make_axes_locatable(ax)
+    cx = divider.append_axes('bottom', size='6%', pad=0.4, axes_class=plt.Axes)
+    zticks = levs[4:-1][::4]
+    zticklabels = np.array(['{}m'.format(z) for z in zticks])
+    cbar = fig.colorbar(bath, cax=cx, orientation='horizontal', ticks=zticks)
+    cbar.set_ticklabels(zticklabels)
+    cbar.ax.tick_params(labelsize=8)
+    cbar.ax.invert_yaxis()
+
+    ax.set_aspect('auto')
+    return ax
+
+
 def add_map_subplot(fig, ax, map_extent=None, add_ticks=True,
                     xticks=None, yticks=None, add_ocean=False,
                     land_color='lightgray', ocean_color='lightcyan',
@@ -190,10 +214,10 @@ def add_map_subplot(fig, ax, map_extent=None, add_ticks=True,
     return fig, ax, proj
 
 
-def create_map_axis(figsize=(12, 5), map_extent=None, add_ticks=True,
-                    xticks=None, yticks=None, add_ocean=False,
-                    land_color='lightgray', ocean_color='lightcyan',
-                    add_gridlines=False, add_bathymetry=False):
+def create_map_axis(figsize=(12, 5), extent=[112, 288, -10, 10],
+                    xticks=np.arange(140, 290, 40),
+                    yticks=np.arange(-10, 13, 5),
+                    land_color='lightgray', ocean_color='lightcyan'):
     """Create a figure and axis with cartopy.
 
     Args:
@@ -202,7 +226,7 @@ def create_map_axis(figsize=(12, 5), map_extent=None, add_ticks=True,
         add_ticks (bool, optional): Add lat/lon ticks. Defaults to False.
         xticks (array-like, optional): longitude ticks. Defaults to None.
         yticks (array-like, optional): Latitude ticks. Defaults to None.
-        add_gridlines (bool, optional): Add lat/lon grid. Defaults to False.
+
         add_ocean (bool, optional): Add ocean color. Defaults to False.
 
     Returns:
@@ -220,9 +244,7 @@ def create_map_axis(figsize=(12, 5), map_extent=None, add_ticks=True,
     ax = plt.axes(projection=projection)
 
     # Set map extents: (lon_min, lon_max, lat_min, lat_max)
-    if map_extent is None:
-        map_extent = [112, 288, -10, 10]
-    ax.set_extent(map_extent, crs=proj)
+    ax.set_extent(extent, crs=proj)
 
     ax.add_feature(cfeature.LAND, color=land_color, zorder=zorder)
     ax.add_feature(cfeature.COASTLINE, zorder=zorder)
@@ -232,44 +254,11 @@ def create_map_axis(figsize=(12, 5), map_extent=None, add_ticks=True,
     except AttributeError:
         ax.spines['geo'].set_zorder(zorder + 1)  # Updated for Cartopy
 
-    if add_bathymetry:
-        add_ocean = False
-        dz = get_ofam_bathymetry()
-        dz = dz.sel(lon=slice(*map_extent[:2]), lat=slice(*map_extent[2:]))
-        levs = np.arange(0, 4600, 250, dtype=int)
-        levs[0] = 2.5
-        levs[-1] += 10
-        bath = ax.contourf(dz.lon, dz.lat, dz, levels=levs, cmap=plt.cm.Blues,
-                            norm=mpl.colors.LogNorm(vmin=dz.min(), vmax=dz.max()),
-                            transform=proj, zorder=zorder - 1)
-        # Colourbar
-        divider = make_axes_locatable(ax)
-        cax = divider.append_axes('bottom', size='6%', pad=0.4, axes_class=plt.Axes)
-
-        zticks = levs[4:-1][::4]
-        zticklabels = np.array(['{}m'.format(z) for z in zticks])
-        cbar = fig.colorbar(bath, cax=cax, orientation='horizontal',
-                            ticks=zticks)
-        cbar.set_ticklabels(zticklabels)
-        cbar.ax.tick_params(labelsize=8)
-        cbar.ax.invert_yaxis()
-
-        ax.set_aspect('auto')
-
-    if add_ocean:
+    if ocean_color is not None:
         # !! original alpha=0.9 color='lightblue'
-        ax.add_feature(cfeature.OCEAN, alpha=0.6, color=ocean_color)
+        ax.add_feature(cfeature.OCEAN, alpha=0.6, color=ocean_color, zorder=1)
 
-    if add_ticks:
-        if xticks is None:
-            # Longitude grid lines: release longitudes.
-            xticks = np.array([165, -170, -140, -110])
-            xticks = np.arange(140, 290, 40)
-
-        if yticks is None:
-            # Latitude grid lines: -10, 0, 10.
-            yticks = np.arange(-10, 13, 5)
-
+    if xticks is not None and yticks is not None:
         # Draw tick marks (without labels here - 180 centre issue).
         ax.set_xticks(xticks, crs=proj)
         ax.set_yticks(yticks, crs=proj)
@@ -277,14 +266,11 @@ def create_map_axis(figsize=(12, 5), map_extent=None, add_ticks=True,
         ax.set_yticklabels(coord_formatter(yticks, 'lat'))
 
         # Minor ticks.
-        ax.xaxis.set_minor_locator(mpl.ticker.MultipleLocator(10))
-        ygrad = np.gradient(yticks)[0] / 2
-        ax.yaxis.set_minor_locator(mpl.ticker.MultipleLocator(ygrad))
-
+        ax.xaxis.set_minor_locator(mpl.ticker.AutoMinorLocator())
+        ax.yaxis.set_minor_locator(mpl.ticker.AutoMinorLocator())
         fig.subplots_adjust(bottom=0.2, top=0.8)
 
     ax.set_aspect('auto')
-
     return fig, ax, proj
 
 
@@ -376,8 +362,8 @@ def animate_ofam_pacific(var='phy', depth=2.5):
     v, y, x = ds, ds.lat, ds.lon
     times = ds.time
 
-    fig, ax, proj = create_map_axis(map_extent=[120, 288, -12, 12],
-                                    add_ocean=False, land_color='dimgrey')
+    fig, ax, proj = create_map_axis(extent=[120, 288, -12, 12],
+                                    ocean_color=None, land_color='dimgrey')
     t = 0
     title = ax.set_title(update_title_time(title_str, times[t]))
     cs = ax.pcolormesh(x, y, v.isel(time=t), transform=proj, **kwargs)
@@ -410,12 +396,11 @@ def animate_ofam_pacific(var='phy', depth=2.5):
 
 
 def pacific_map():
-    map_extent = [115, 288, -15, 15]
+    extent = [115, 288, -15, 15]
     yticks = np.arange(-15, 16, 5)
-    xticks = np.arange(120, 290, 20)
-    fig, ax, proj = create_map_axis(map_extent=map_extent, xticks=xticks,
-                                    yticks=yticks, add_gridlines=False,
-                                    add_ocean=True)
+    xticks = np.arange(120, 290, 10)
+    fig, ax, proj = create_map_axis(extent=extent, xticks=xticks,
+                                    yticks=yticks)
     ax.grid()
 
     plt.tight_layout()
@@ -423,8 +408,7 @@ def pacific_map():
     plt.show()
 
 
-def plot_particle_source_map(add_ocean=True, add_labels=True, savefig=True,
-                             add_bathymetry=False):
+def plot_particle_source_map(add_labels=True, savefig=True, **kwargs):
     """Plot a map of particle source boundaries.
 
     Args:
@@ -464,41 +448,44 @@ def plot_particle_source_map(add_ocean=True, add_labels=True, savefig=True,
         text = [z.name_full for z in zones._all[1:]]
 
         # Split names into two lines & centre align (excluding interior).
+        text[0] = text[0][:-3]  # Strait -> Str.
+        text[1] = text[1][:-3]  # Strait -> Str.
         text[2] = 'Mindanao\n  Current'
         text[3] = 'Celebes\n  Sea'
         text[4] = 'Indonesian\n    Seas'
-        text[5] = 'East Solomon Is.'
+        text[5] = 'Solomon Is.'
 
         # Locations to plot text.
-        loc = np.array([[-6.3, 147.8], [-5.5, 151.5], [9.9, 127],  # VS, SS, MC.
-                        [5.5, 121.5], [-4.7, 124], [-6.2, 159],  # CS, IDN, SC.
-                        [-7, 192], [9.2, 192]])  # South & north interior.
+        loc = np.array([[-6.4, 147.75], [-5.6, 152], [9.2, 127],  # VS, SS, MC.
+                        [3.5, 121], [-6.3, 121], [-6.2, 157],  # CS, IDN, SC.
+                        [-6.6, 192], [8.8, 192]])  # South & north interior.
+
+        phi = np.full(loc.size, 0.)  # rotation.
+        for i in [0, 1]:
+            phi[i] = 282
+        phi[5] = 300
 
         # Add labels to plot.
         for i, z in enumerate(np.unique(z_index)):
-            rotate = 'horizontal'
-            rotate = -70 if i in [0, 1, 5] else rotate
-            ax.text(loc[i][1], loc[i][0], text[i], zorder=12, transform=proj,
-                    fontsize=9, rotation=rotate, weight='bold', ha='left', va='top')
+            ax.text(loc[i][1], loc[i][0], text[i], fontsize=8, rotation=phi[i],
+                    weight='bold', ha='left', va='top', zorder=12,
+                    transform=proj)
             # bbox=dict(fc='w', edgecolor='k', boxstyle='round', alpha=0.7)
         return ax
 
     # Draw map.
     figsize = (13, 5.8)
-    map_extent = [117, 285, -11, 11]
+    extent = [117, 285, -11, 11]
     yticks = np.arange(-10, 11, 5)
     xticks = np.arange(120, 290, 20)
-
-    fig, ax, proj = create_map_axis(figsize, map_extent=map_extent,
-                                    xticks=xticks, yticks=yticks,
-                                    add_gridlines=False, add_ocean=add_ocean,
-                                    add_bathymetry=add_bathymetry)
+    fig, ax, proj = create_map_axis(figsize, extent=extent, xticks=xticks,
+                                    yticks=yticks, **kwargs)
 
     # Plot lines between each lat & lon pair coloured by source.
     lons, lats, z_index = get_source_coords()
     for i, z in enumerate(z_index):
         ax.plot(lons[i], lats[i], zones.colors[z], lw=3, label=zones.names[z],
-                zorder=10, transform=proj)
+                zorder=8, transform=proj)
 
     if add_labels:
         ax = add_source_labels(ax, z_index, zones.names, proj)

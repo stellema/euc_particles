@@ -20,22 +20,23 @@ from plots import (source_cmap, zone_cmap, create_map_axis,
 from create_source_files import source_particle_ID_dict
 from stats import weighted_bins_fd, get_min_weighted_bins, get_source_transit_mode
 
-# plt.rcParams['figure.figsize'] = [10, 7]
-# plt.rcParams['figure.dpi'] = 200
+plt.rcParams['figure.dpi'] = 350
 
 
 def plot_simple_traj_scatter(ax, ds, traj, color='k', name=None):
-    """Plot simple path scatterplot."""
+    """Plot simple path scatter plot."""
     ax.scatter(ds.sel(traj=traj).lon, ds.sel(traj=traj).lat, s=2,
                color=color, label=name, alpha=0.2)
     return ax
 
 
 def subset_array(a, N):
+    """Subset array to N linearly arranged unique elements."""
     return np.unique(np.array(a)[np.linspace(0, len(a) - 1, N, dtype=int)])
 
 
 def add_clim_quivers(ax, proj):
+    """Add OFAM3 climaology quivers to map."""
     f = [cfg.ofam / 'clim/ocean_{}_{}-{}_climo.nc'.format(v, *cfg.years[0])
          for v in ['v', 'u']]
     ds = open_ofam_dataset(f)
@@ -67,7 +68,7 @@ def plot_source_pathways(exp, lon, v, r, N_total=300, age='mode', xlines=True):
     """
     print('Plot x={} exp{} N={} r={} age={}'.format(lon, exp, N_total, r, age))
 
-    R = [r, r + 1, r + 2]
+    R = [r, r + 1, r + 2, r + 3]
     source_ids = [1, 2, 3, 4, 5, 6, 7, 8]
 
     # Source dataset (hist & RCP for bins).
@@ -109,11 +110,12 @@ def plot_source_pathways(exp, lon, v, r, N_total=300, age='mode', xlines=True):
                 pids = dz.traj.where(mask, drop=True)
 
             elif age == 'min':
-                lim = dz.age.min('traj').item() + 2 * np.diff(mode)
+                # lim = dz.age.min('traj').item() + 2 * np.diff(mode)
+                lim = get_source_transit_mode(dss, 'age', exp, z, 0.1)
                 pids = dz.traj.where((dz.age <= lim), drop=True)
 
             elif age == 'max':
-                lim = dz.age.max('traj').item() - 2 * np.diff(mode)
+                lim = get_source_transit_mode(dss, 'age', exp, z, 0.9)
                 pids = dz.traj.where((dz.age >= lim), drop=True)
 
             # Get N particle IDs per source region.
@@ -187,7 +189,9 @@ def plot_example_source_pathways(exp, lon, v, r, source_id, N=30):
     plt.show()
     return
 
+
 def plot_source_trajectory_map_IQR(lon=190, exp=0, v=1, r=7, zone=1):
+    """Plot source pathways using a variety of methods."""
     sortby = ['IQR', 'mode', 'postmode', 'multi', 'thin', 'dist', 'si'][2]
     # Particle IDs
     if zone < 7:
@@ -199,19 +203,20 @@ def plot_source_trajectory_map_IQR(lon=190, exp=0, v=1, r=7, zone=1):
                     for z in range(zone, zone+5)]
         pid_dict = np.concatenate(pid_dict)
 
-    dz = source_dataset(lon, sum_interior=True).isel(exp=0)
+    dz = source_dataset(lon, sum_interior=True)
+    dz = [dz.isel(exp=i).sel(zone=zone).dropna('traj', 'all') for i in [0, 1]]
+    bins = get_min_weighted_bins([d.age for d in dz], [d.u / 1948 for d in dz])
+
+    dz = dz[0]
     dz = dz.sel(traj=dz.traj[dz.traj.isin(pid_dict)]).sel(zone=zone)
 
     # Select trajs in full particle data
-    # ds = xr.open_dataset(get_plx_id(exp, lon, v, r, 'plx'))
-    # ds = ds.sel(traj=ds.traj.where(ds.u >= 0.1 * cfg.DXDY, drop=True))
-    ds = xr.open_dataset(get_plx_id(exp, lon, v, r, 'plx_interp'))
+    ds = xr.open_dataset(get_plx_id(exp, lon, v, r, 'plx'))
 
     # Number of paths to plot (x3 for low/mid/high) per source.
     num_pids = 1
 
     # get mode.
-    bins = weighted_bins_fd(dz.age, dz.u)[1]
     hist = sns.histplot(x=dz.age, weights=dz.u, bins=bins, kde=True,
                       kde_kws=dict(bw_adjust=0.5))
     plt.xlim(0, 800)
@@ -224,14 +229,7 @@ def plot_source_trajectory_map_IQR(lon=190, exp=0, v=1, r=7, zone=1):
         # Distance = 6-6.5/5.5-6.5/6.2 & 7-7.5
         pids1 = dz.traj.where((dz.distance >= 6.15) & (dz.distance < 6.2), drop=True)
         pids2 = dz.traj.where((dz.distance >= 7.15) & (dz.distance < 7.2), drop=True)
-
         pids1, pids2 = pids1[:num_pids], pids2[:num_pids]
-
-        # ## Analysis
-        # dymax = [ds.sel(traj=pids).lat.max('obs') for pids in [pids1, pids2]]
-        # pids1 = dz.traj.where((dz.distance >= 6) & (dz.distance < 7), drop=True)
-        # dy = ds.sel(traj=pids1).lat.max('obs')
-
         pids = np.concatenate([pids1, pids2])
         if sortby == 'dist1':
             pids = pids1
@@ -265,39 +263,30 @@ def plot_source_trajectory_map_IQR(lon=190, exp=0, v=1, r=7, zone=1):
     # MODE Age sort.
     if sortby == 'mode':
         num_pids = 10
-
         # Mode range (bins on either side of mode)
         mode = [x[np.argmax(y) + i] for i in [0, 1]]
-        pids_mode = dz.traj.where((dz.age >= mode[0]) & (dz.age <= mode[-1]), drop=True)
+        pids_mode = dz.traj.where((dz.age >= mode[0]) &
+                                  (dz.age <= mode[-1]), drop=True)
         pids = pids_mode.thin(traj=(pids_mode.size//num_pids + 1))
 
         # Plot kwargs.
-        olors = plt.cm.get_cmap('nipy_spectral')(np.linspace(0, 0.85, pids.size))
         alpha = 0.2
-        # plt.plot(x, np.cumsum(y))
-        plt.plot(x, y)
-
-        plt.xlim(100, 1500)
-        for q in [0.25, 0.5, 0.7, 0.75, 0.8, 0.85]:
-            plt.axvline(x[sum(np.cumsum(y) < sum(y) * q)])
+        c_inds = np.linspace(0, 0.85, pids.size)
+        colors = plt.cm.get_cmap('nipy_spectral')(c_inds)
 
     # MODE Age sort.
     if sortby == 'q75':
         num_pids = 300
-
-        # # Mode range (bins on either side of mode)
-        # mode = np.mean([x[np.argmax(y) + i] for i in [0, 1]])
-        # rng = [x[(y <= np.max(y)*c) & (x > mode)].min() for c in [0.4, 0.6]]
-        # IQR
-
         rng = [x[sum(np.cumsum(y) < sum(y) * q)] for q in [0.84, 0.86]]
 
-        pids_mode = dz.traj.where((dz.age >= rng[0]) & (dz.age <= rng[-1]), drop=True)
+        pids_mode = dz.traj.where((dz.age >= rng[0]) & (dz.age <= rng[-1]),
+                                  drop=True)
         pids = pids_mode.thin(traj=(pids_mode.size//num_pids + 1))
 
         # Plot kwargs.
-        colors = plt.cm.get_cmap('nipy_spectral')(np.linspace(0, 0.85, pids.size))
         alpha = 0.2
+        c_inds = np.linspace(0, 0.85, pids.size)
+        colors = plt.cm.get_cmap('nipy_spectral')(c_inds)
 
     # MODE Age sort.
     if sortby == 'multi':
@@ -327,8 +316,6 @@ def plot_source_trajectory_map_IQR(lon=190, exp=0, v=1, r=7, zone=1):
                   'seagreen', 'darkgreen', 'limegreen', 'springgreen',
                   'b', 'navy', 'royalblue', 'deepskyblue',
                   'darkviolet', 'm', 'indigo', 'mediumpurple']
-        # colors = ['red', 'k', 'seagreen', 'b', 'darkviolet']
-        # colors = np.repeat(colors, num_pids)
         alpha = np.repeat([0.3, 1, 0.7, 0.3, 0.3], num_pids)
 
     # thin: Age sort
@@ -352,7 +339,8 @@ def plot_source_trajectory_map_IQR(lon=190, exp=0, v=1, r=7, zone=1):
         num_pids = 100
         trajs = dz.traj.sortby(dz.age)
 
-        pids = [trajs.where((dz.age.sortby(dz.age) <= t), drop=True) for t in [200, 500, 850, 1200]]
+        pids = [trajs.where((dz.age.sortby(dz.age) <= t), drop=True)
+                for t in [200, 500, 850, 1200]]
         pids = np.concatenate([p[-num_pids:].values for p in pids])
 
         colors = np.repeat(['mediumvioletred', 'b', 'g', 'yellow'], num_pids)
@@ -452,9 +440,9 @@ def add_pathways_to_map(ds, exp, lon, r, z):
 
 
 if __name__ == "__main__":
-    exp, v, r = 0, 1, 5
+    exp, v, r = 0, 1, 6
     lon = 250
-    N_total = 600
+    N_total = 1000
     xlines = True
     age = 'min'
     plot_source_pathways(exp, lon, v, r, N_total, age, xlines=True)
@@ -472,4 +460,3 @@ if __name__ == "__main__":
     # exp, v, r = 0, 1, 7
     # zone = 1
     # plot_source_trajectory_map_IQR(lon, exp, v, r, zone)
-

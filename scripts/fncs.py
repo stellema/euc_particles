@@ -500,9 +500,6 @@ def source_dataset(lon, sum_interior=True):
           for i in [0, 1]]
 
     ds = concat_exp_dimension(ds)
-    # if 'u_total' in ds.data_vars:
-    #     ds = ds.rename({'u_total': 'u_sum', 'uz': 'u_zone',
-    #                     'time_f': 'time_at_zone', 'z_f': 'z_at_zone'})
 
     # Create 'speed' variable.
     ds['speed'] = ds.distance / ds.age

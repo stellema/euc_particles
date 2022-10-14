@@ -14,11 +14,12 @@ Todo:
 """
 import numpy as np
 import xarray as xr
+import seaborn as sns
 
 import cfg
 from cfg import exp_abr
 from tools import mlogger, enso_u_ofam
-from stats import test_signifiance
+from stats import test_signifiance, get_min_weighted_bins
 from fncs import (source_dataset, get_plx_id, merge_hemisphere_sources,
                   merge_LLWBC_interior_sources, concat_exp_dimension,
                   open_eulerian_transport, merge_interior_sources,
@@ -216,10 +217,56 @@ def log_unbeaching_stats(lon, exp=0):
     return
 
 
+def log_KDE_source(var):
+    """Log KDE of source var for historical and RCP."""
+    logger = mlogger('source_info')
+    # todo: add significance
+    # todo: add % change
+
+    def log_mode(ds, var, z, lon):
+        ds = [ds.sel(zone=z).isel(exp=x).dropna('traj', 'all') for x in [0, 1]]
+        bins = get_min_weighted_bins([d[var] for d in ds], [d.u / 1948 for d in ds])
+        mode = []
+        xx = []
+        yy = []
+        for exp in range(2):
+            n = ds[exp].names.item()
+            ax = sns.histplot(x=ds[exp][var], weights=ds[exp].u / 1948,
+                              bins=bins, color='k', element='step', alpha=0,
+                              fill=False, kde=True, kde_kws=dict(bw_adjust=0.5),
+                              line_kws=dict(color='k', linestyle='-', label=n))
+            hist = ax.get_lines()[-1]
+            x, y = hist.get_xdata(), hist.get_ydata()
+            mode.append(x[np.argmax(y)])
+            xx.append(x)
+            yy.append(y)
+
+        mode.append(mode[1] - mode[0])  # Projected change.
+        mode.append(mode[2] / mode[0])  # Percent change.
+
+        p = 1 if mode[0] > 5 else 2  # Number of significant figures.
+        s = '{} {} {:>17} mode: '.format(var, lon, n)
+
+        s += 'H={:.{p}f} R={:.{p}f} D={:.{p}f} ({:.1%})'.format(*mode, p=p)
+        logger.info(s)
+
+        return
+
+    for j, lon in enumerate(cfg.lons):
+        ds = source_dataset(lon, sum_interior=True)
+        for z in [1, 2, 6, 3, 4, 7, 8, 5]:
+            log_mode(ds, var, z, lon)
+        logger.info('')
+    logger = mlogger('source_transport')
+
+
 # Print lagrangian source transport values.
 for lon in cfg.lons:
     log_source_transport(lon, sum_interior=True)
     # log_source_transport(lon, sum_interior=False)
+
+for var in ['age', 'distance', 'speed']:
+    log_KDE_source(var)
 
 # log_eulerian_transport()
 # ds = ds.sel(lev=slice(2.5, 1000)).sum('lev').mean('time')
