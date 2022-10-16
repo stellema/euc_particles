@@ -172,6 +172,6 @@ if __name__ == "__main__" and cfg.home.drive != 'C:':
 
     interp_plx_files(args.lon, args.exp, v=1, rep=args.rep)
 
-    files = [get_plx_id(exp, lon, 1, r, 'plx_interp') for r in range(10)]
-    if all([f.exists() for f in files]):
-        plx_interp_median(exp, lon, r=list(range(10)))
+    # files = [get_plx_id(exp, lon, 1, r, 'plx_interp') for r in range(10)]
+    # if all([f.exists() for f in files]):
+    #     plx_interp_median(exp, lon, r=list(range(10)))
