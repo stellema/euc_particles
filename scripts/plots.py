@@ -214,10 +214,11 @@ def add_map_subplot(fig, ax, map_extent=None, add_ticks=True,
     return fig, ax, proj
 
 
-def create_map_axis(figsize=(12, 5), extent=[112, 288, -10, 10],
+def create_map_axis(figsize=(12, 5), extent=[115, 285, -10, 10],
                     xticks=np.arange(140, 290, 40),
                     yticks=np.arange(-10, 13, 5),
-                    land_color='lightgray', ocean_color='lightcyan'):
+                    land_color=cfeature.COLORS['land_alt1'],
+                    ocean_color='azure'):
     """Create a figure and axis with cartopy.
 
     Args:
@@ -246,17 +247,20 @@ def create_map_axis(figsize=(12, 5), extent=[112, 288, -10, 10],
     # Set map extents: (lon_min, lon_max, lat_min, lat_max)
     ax.set_extent(extent, crs=proj)
 
-    ax.add_feature(cfeature.LAND, color=land_color, zorder=zorder)
-    ax.add_feature(cfeature.COASTLINE, zorder=zorder)
+    # Features.
+    land = cfeature.NaturalEarthFeature('physical', 'land', '10m', ec='k',
+                                        fc=cfeature.COLORS['land'])
+    if land_color is not None:
+        ax.add_feature(land, fc=land_color, lw=0.4, zorder=zorder)
+
+    if ocean_color is not None:
+        ax.add_feature(cfeature.OCEAN, color=ocean_color, zorder=zorder - 1)
+
     try:
         # Make edge frame on top.
         ax.outline_patch.set_zorder(zorder + 1)  # Depreciated.
     except AttributeError:
         ax.spines['geo'].set_zorder(zorder + 1)  # Updated for Cartopy
-
-    if ocean_color is not None:
-        # !! original alpha=0.9 color='lightblue'
-        ax.add_feature(cfeature.OCEAN, alpha=0.6, color=ocean_color, zorder=1)
 
     if xticks is not None and yticks is not None:
         # Draw tick marks (without labels here - 180 centre issue).
@@ -519,7 +523,7 @@ def plot_histogram(ax, dx, var, color, bins='fd', cutoff=0.85, weighted=True,
 
     """
     kwargs = dict(histtype='stepfilled', density=0, range=None, stacked=False,
-                  alpha=0.8, cumulative=False, color=color[0], lw=0.8, # fill=0,
+                  alpha=0.6, cumulative=False, color=color[0], lw=0.8,
                   hatch=None, edgecolor=color[0], orientation='vertical')
 
     # Update hist kwargs based on input.
@@ -530,8 +534,8 @@ def plot_histogram(ax, dx, var, color, bins='fd', cutoff=0.85, weighted=True,
 
     weights = None
     if weighted:
+        weights = [dx[i].u / 1948 for i in [0, 1]]
         # weights = [dx[i].u for i in [0, 1]]
-        weights = [dx[i].u / 1948 for i in [0, 1]]  # sum(ds.rtime > np.datetime64('2020-01-06'))
         # weights = [dx[i].u / dx[i].u.sum().item() for i in [0, 1]]
         # weights = [dx[i].u / dx[i].uz.mean().item() for i in [0, 1]]
 
@@ -539,35 +543,33 @@ def plot_histogram(ax, dx, var, color, bins='fd', cutoff=0.85, weighted=True,
         bins = get_min_weighted_bins([d[var] for d in dx], weights)
 
     # Historical.
-    x1, bins1, _ = ax.hist(dx[0][var], bins, weights=weights[0], **kwargs)
+    y1, x1, _ = ax.hist(dx[0][var], bins, weights=weights[0], **kwargs)
 
     # RCP8.5.
-    bins = bins if weighted else bins1
+    bins = bins if weighted else y1
     kwargs.update(dict(color=color[1], alpha=0.3, edgecolor=color[1]))
     if color[0] == color[-1]:
         kwargs.update(dict(linestyle=':'), alpha=1, fill=0)
-    x2, bins2, _ = ax.hist(dx[1][var], bins, weights=weights[1], **kwargs)
+    y2, x2, _ = ax.hist(dx[1][var], bins, weights=weights[1], **kwargs)
 
     if outline:
-        # Black outline (Hist * RCP).
+        # Black outline (Hist & RCP).
         kwargs.update(dict(histtype='step', color='k', alpha=1))
-        _, bins, _ = ax.hist(dx[0][var], bins, weights=weights[0], **kwargs)
-        _, bins, _ = ax.hist(dx[1][var], bins, weights=weights[1], **kwargs)
+        _ = ax.hist(dx[0][var], bins, weights=weights[0], **kwargs)
+        _ = ax.hist(dx[1][var], bins, weights=weights[1], **kwargs)
 
     # Median & IQR.
     if median:
         for q, ls in zip([0.25, 0.5, 0.75], ['--', '-', '--']):
-            # ax.axvline(np.quantile(dx[0][var], q), c='k')
             # Historical
-            ax.axvline(bins1[sum(np.cumsum(x1) < (sum(x1)*q))], c=color[0],
-                       ls=ls)
-            # RCP
-            ax.axvline(bins2[sum(np.cumsum(x2) < (sum(x2)*q))], c='k', ls=ls,
-                       alpha=0.9)
+            ax.axvline(x1[sum(np.cumsum(y1) < (sum(y1)*q))], c=color[0], ls=ls)
+            # RCP8.5
+            ax.axvline(x2[sum(np.cumsum(y2) < (sum(y2)*q))], c='k', ls=ls,
+                       alpha=0.8)
 
     # Cut off last 5% of xaxis (index where <95% of total counts).
     if cutoff is not None:
-        xmax = bins1[sum(np.cumsum(x1) < sum(x1) * cutoff)]
-        xmin = bins1[max([sum(np.cumsum(x1) < sum(x1) * 0.01) - 1, 0])]
+        xmax = x1[sum(np.cumsum(y1) < sum(y1) * cutoff)]
+        xmin = x1[max([sum(np.cumsum(y1) < sum(y1) * 0.01) - 1, 0])]
         ax.set_xlim(xmin=xmin, xmax=xmax)
     return ax

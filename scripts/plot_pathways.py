@@ -13,14 +13,12 @@ import matplotlib as mpl
 import matplotlib.pyplot as plt
 
 import cfg
-from tools import coord_formatter, convert_longitudes, idx, open_ofam_dataset
+from tools import convert_longitudes, idx, open_ofam_dataset, timeit
 from fncs import get_plx_id, source_dataset
 from plots import (source_cmap, zone_cmap, create_map_axis,
                    plot_particle_source_map)
 from create_source_files import source_particle_ID_dict
 from stats import weighted_bins_fd, get_min_weighted_bins, get_source_transit_mode
-
-plt.rcParams['figure.dpi'] = 350
 
 
 def plot_simple_traj_scatter(ax, ds, traj, color='k', name=None):
@@ -152,6 +150,80 @@ def plot_source_pathways(exp, lon, v, r, N_total=300, age='mode', xlines=True):
     file = 'paths/pathway_{}_exp{}_{}_r{}_n{}.png'.format(lon, exp, age, r,
                                                           N_total)
     plt.savefig(cfg.fig / file, bbox_inches='tight', dpi=350)
+    plt.show()
+    return
+
+
+@timeit
+def plot_source_pathways_cmap(lon=165, exp=0, v=1, r=1, zone=1, N=1000):
+    """Plot N source pathways colored by age."""
+    print('Plot x={} exp{} N={} r={} z={}'.format(lon, exp, N, r, zone))
+    R = [r]  # range(10)
+
+    # Particle IDs dict.
+    pidd = [source_particle_ID_dict(None, exp, lon, v, i) for i in R]
+    pid_dict = pidd[0].copy()
+    for z in pid_dict.keys():
+        pid_dict[z] = np.concatenate([pid[z] for pid in pidd]).tolist()
+    if zone >= 7:
+        pid_dict = np.concatenate([pid_dict[z] for z in range(zone, zone+5)])
+    else:
+        pid_dict = pid_dict[zone]
+
+    # Source Dataset.
+    dz = source_dataset(lon, sum_interior=True)
+    dz = dz.isel(exp=exp).sel(zone=zone).dropna('traj', 'all')
+    dz = dz.sortby('age')
+
+    # Particle trajectory data.
+    ds = xr.open_mfdataset([get_plx_id(exp, lon, v, i, 'plx_interp')
+                            for i in R], chunks='auto', mask_and_scale=True)
+
+    # Thin
+    dxx = dz.sel(traj=dz.traj[dz.traj.isin(pid_dict)])
+    thinby = dxx.traj.size // N
+    pids = dxx.traj.sortby(dxx.age).thin(dict(traj=thinby)).astype(dtype=int)
+
+    # Plot kwargs.
+    cmap = plt.cm.get_cmap('gnuplot2_r')
+    cmap = plt.cm.get_cmap('jet_r')
+    bounds = dxx.sel(traj=pids).age.values
+    norm = mpl.colors.PowerNorm(1./2, vmin=bounds.min(), vmax=bounds.max())
+
+    shuffle = np.random.permutation(len(pids))
+    # shuffle = np.concatenate([shuffle, [0]])
+
+    # Plot particles.
+    fig, ax, proj = create_map_axis((12, 5), [116, 285, -8, 8],
+                                    yticks=np.arange(-6, 9, 3))
+    for i, p in enumerate(pids):
+        dx = ds.sel(traj=p)
+        c = cmap(norm(dz.sel(traj=p).age.item()))
+        zorder = shuffle[i] if p != 0 else len(pids)
+
+        ax.plot(dx.lon, dx.lat, c=c, linewidth=0.3, alpha=0.2,
+                zorder=zorder+11, transform=proj)
+
+    # Title.
+    ax.set_title('{}'.format(cfg.zones.names[zone]), loc='left')
+    # Colour bar.
+    cax = fig.add_axes([0.91, 0.15, 0.01, 0.6])  # left, bottom, width, height
+    cbar = plt.colorbar(mpl.cm.ScalarMappable(norm=norm, cmap=cmap), cax=cax,
+                        orientation='vertical')
+    cbar.ax.tick_params(labelsize=8)
+    # ticks = cbar.ax.get_yticks()
+    # for i in range(4):
+    #     ticks = np.insert(ticks, 1, np.diff(ticks)[0] / 2)
+    # ticks = np.insert(ticks[1:-1], 0, bounds.min())
+    # ticks = np.delete(ticks, [-2, -4])
+    # cbar.ax.set_yticks(ticks)
+    ax.text(286, 7.4, 'Transit time\n    [days]', zorder=12, transform=proj,
+            fontsize=8)
+
+    # Save figure.
+    fig.subplots_adjust(wspace=0.25, hspace=0.4, bottom=0.15)
+    plt.savefig(cfg.fig / 'paths/cmap_{}_r{}_z{}_n{}.png'
+                .format(lon, r, zone, N), bbox_inches='tight', dpi=350)
     plt.show()
     return
 
@@ -308,7 +380,7 @@ def plot_source_trajectory_map_IQR(lon=190, exp=0, v=1, r=7, zone=1):
         pids = [traj_sorted[i:i + num_pids] for i in pid_inds]
 
         pids = np.concatenate([p[:num_pids] for p in
-                               [pids[0], pids_mod, pids[1], pids_lrg, pids[2]]])
+                                [pids[0], pids_mod, pids[1], pids_lrg, pids[2]]])
 
         # Plot kwargs.
         colors = ['darkred', 'red', 'brown', 'salmon',
@@ -440,12 +512,18 @@ def add_pathways_to_map(ds, exp, lon, r, z):
 
 
 if __name__ == "__main__":
-    exp, v, r = 0, 1, 6
-    lon = 250
-    N_total = 1000
-    xlines = True
-    age = 'min'
-    plot_source_pathways(exp, lon, v, r, N_total, age, xlines=True)
+    # exp, v, r = 0, 1, 5
+    # lon = 250
+    # N_total = 1000
+    # xlines = True
+    # age = 'mode'
+    # plot_source_pathways(exp, lon, v, r, N_total, age, xlines=True)
+
+    exp, v, r = 0, 1, 0
+    lon = 190
+    N = 2001
+    zone = 3
+    plot_source_pathways_cmap(lon, exp, v, r, zone, N)
 
     # # Plot map.
     # plot_some_source_pathways(exp, lon, v, r)
