@@ -509,6 +509,14 @@ def ofam_filename_list(exp, var):
     return [ofam_filename(var, y, m) for y in years for m in months]
 
 
+def get_ofam_euc_clim(exp):
+    """Get OFAM3 zonal velocity climatology subset at EUC."""
+    file = cfg.ofam / 'clim/ocean_u_{}-{}_climo.nc'.format(*cfg.years[exp])
+    clim = open_ofam_dataset(file)
+    clim = clim.u.sel(lat=slice(-2.6, 2.6), lev=slice(2.5, 400)).mean('time')
+    return clim
+
+
 def ofam_cell_depth():
     """Retur cell depth of OFAM3 vertical coordinate."""
     dz = xr.open_dataset(ofam_filename('v', 1981, 1))

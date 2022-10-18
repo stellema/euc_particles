@@ -26,11 +26,6 @@ import cfg
 from tools import mlogger, timeit, save_dataset
 from fncs import get_plx_id, subset_plx_by_source
 
-try:
-    from mpi4py import MPI
-except ImportError:
-    MPI = None
-
 logger = mlogger('files')
 
 
@@ -83,7 +78,6 @@ def interp_plx_files(lon, exp, v=1, rep=0):
         - Didn't run this for individual files, just the merged source file.
 
     """
-
     # Create/check individual particle source datasets.
     reps = np.arange(10, dtype=int)
 

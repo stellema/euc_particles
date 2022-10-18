@@ -60,13 +60,12 @@ def format_pvalue_str(p):
     if p <= 0.001:
         sig_str = 'p<0.001'
     elif p <= 0.01 and p >= 0.001:
-
         sig_str = 'p=' + str(np.around(p, 3))
     else:
-        if p < 0.05:
-            sig_str = 'p<' + str(np.around(p, 2))
+        if p <= 0.05:
+            sig_str = 'p<' + str(np.around(p, 3))
         else:
-            sig_str = 'p=' + str(np.around(p, 2))
+            sig_str = 'p=' + str(np.around(p, 3))
 
     return sig_str
 

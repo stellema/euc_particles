@@ -8,6 +8,13 @@ Todo:
     - supset to source
     - save
 
+    Spinup test working.
+    xid = cfg.data / 'sources/plx_spinup_{}_{}_v1y 6.nc'.format(cfg.exp[exp], lon)
+    ds = source_dataset(lon, sum_interior=True).isel(exp=0)
+    dp = xr.open_dataset(xid)
+    dp = dp.isel(zone=cfg.zones.inds)
+    ds = ds.sel(traj=ds.traj[ds.traj.isin(dp.traj.values.astype(int))])
+
 @author: Annette Stellema
 @email: a.stellema@unsw.edu.au
 @created: Fri Nov 19 01:57:15 2021
