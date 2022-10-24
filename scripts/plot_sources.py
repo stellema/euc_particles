@@ -557,16 +557,16 @@ def plot_source_EUC_velocity_profile(lon, exp):
         ax.yaxis.set_major_formatter('{x:.0f}m')
 
     plt.tight_layout()
-    plt.savefig(cfg.fig / 'EUC_source_profile_{}_{}.png'
+    plt.savefig(cfg.fig / 'sources/EUC_source_profile_{}_{}.png'
                 .format(lon, cfg.exp_abr[exp]), bbox_inches='tight', dpi=350)
     plt.show()
 
 
 ##############################################################################
 if __name__ == "__main__":
-    for exp in [1, 0]:
-        transport_source_bar_graph(exp=exp)
-        transport_source_bar_graph(exp, list(range(7, 17)), False)
+    # for exp in [1, 0]:
+    #     transport_source_bar_graph(exp=exp)
+    #     transport_source_bar_graph(exp, list(range(7, 17)), False)
 
     # for lon in [165]:
     for lon in cfg.lons:
@@ -583,18 +583,20 @@ if __name__ == "__main__":
         # source_scatter(ds, lon, exp, 'z', 'z_at_zone')
 
     for var in ['age', 'distance', 'speed']:
+        source_histogram_multi_lon(var, sum_interior=True)
         source_histogram_multi_lon(var, sum_interior=False)
         source_KDE_multi_lon(var, sum_interior=True)
 
     for varx, vary in zip():
-        source_scatter(ds, lon, exp, varx, vary)
+        for exp in [1, 0]:
+            source_scatter(ds, lon, exp, varx, vary)
 
-    source_histogram_depth()
+    # source_histogram_depth()
 
     exp = 0
-    source_hist_2d(exp, 'z_at_zone', 'z', ('auto', 14), (False, True))
-    source_hist_2d(exp, 'age', 'z', (50, 14), (0, 1))
-    source_hist_2d(exp, 'u', 'z', ('auto', 14), (0, 1), log_norm=0)
-    source_hist_2d(exp, 'age', 'lat', (50, np.arange(-2.65, 2.65, .1)))
-    source_hist_2d(exp, 'age', 'u')
+    # source_hist_2d(exp, 'z_at_zone', 'z', ('auto', 14), (False, True))
+    # source_hist_2d(exp, 'age', 'z', (50, 14), (0, 1))
+    # source_hist_2d(exp, 'u', 'z', ('auto', 14), (0, 1), log_norm=0)
+    # source_hist_2d(exp, 'age', 'lat', (50, np.arange(-2.65, 2.65, .1)))
+    # source_hist_2d(exp, 'age', 'u')
     source_hist_2d(exp, 'age', 'distance')

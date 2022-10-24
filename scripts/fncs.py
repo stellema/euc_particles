@@ -431,7 +431,7 @@ def concat_exp_dimension(ds, add_diff=False):
     return ds
 
 
-def open_eulerian_transport(resample=False, clim=True):
+def open_eulerian_transport(resample=False, clim=True, full_depth=False):
     """Open EUC & LLWBC Eulerian transport (hist, change, etc)."""
     # LLWBCs & EUC filenames.
     file = [cfg.data / 'transport_{}_{}.nc'.format(n, s)
@@ -444,13 +444,15 @@ def open_eulerian_transport(resample=False, clim=True):
 
     # Sum LLWBC transport (37=775; 39=995m). 35-36 mc, vs full 1300
     df = [d.drop('lat') for d in ds[:2]]
+    names = ['vs', 'ss', 'mc']
+    depth = {'vs': 890, 'ss': 1150, 'mc': 550}
 
     # Add EUC data variable to hist/rcp datasets.
     for i in range(2):
         for s in ['', '_net']:
-            df[i]['mc' + s] = df[i]['mc' + s].sel(lev=slice(550))
-            df[i]['ss' + s] = df[i]['ss' + s].sel(lev=slice(1150))
-            df[i]['vs' + s] = df[i]['vs' + s].sel(lev=slice(890))
+            if not full_depth:
+                for n in names:
+                    df[i][n + s] = df[i][n + s].sel(lev=slice(depth[n]))
         df[i] = df[i].sum('lev')
         df[i]['euc'] = ds[2 + i].euc
 
@@ -506,7 +508,9 @@ def source_dataset(lon, sum_interior=True):
     ds['speed'].attrs['long_name'] = 'Average Speed'
     ds['speed'].attrs['units'] = 'm/s'
     ds['age'].attrs['units'] = 'days'
-    ds['distance'].attrs['units'] = 'Mm'
+    ds['distance'].attrs['units'] = '1000 km'
+    # ds['distance'] = ds['distance'] / 1e3
+    # ds['distance'].attrs['units'] = 'km'
 
     ds['names'] = ('zone', cfg.zones.names_all)
     ds['colors'] = ('zone', cfg.zones.colors_all)

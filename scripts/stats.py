@@ -157,64 +157,45 @@ if __name__ == "__main__":
     from tools import idx
     import matplotlib.pyplot as plt
 
-    z = 3
+    z = 1
     var = 'age'
-    ds = source_dataset(165, sum_interior=True)
+    lon = 190
+    ds = source_dataset(lon, sum_interior=True)
     dx = [ds.sel(zone=z).isel(exp=i).dropna('traj') for i in range(2)]
-    dxx = [dx[i][var] for i in range(2)]
+    dv = [dx[i][var].sortby(dx[i][var]) for i in range(2)]
+    weights = [d.u / 1948 for d in dx]
+    bins = get_min_weighted_bins(dv, weights)
 
-    bins = 'fd'
-    color=['r', 'r']
-    kwargs = dict(histtype='stepfilled', density=0, range=None, stacked=False, alpha=0.4)
-    weights = [dx[i].u  for i in [0, 1]]  # sum(ds.rtime > np.datetime64('2020-01-06'))
-    h0, _, r0 = weighted_bins_fd(dx[0][var], weights[0])
-    h1, _, r1 = weighted_bins_fd(dx[1][var], weights[1])
-    r = [min(np.floor([r0[0], r1[0]])), max(np.ceil([r0[1], r1[1]]))]
-    kwargs['range'] = r
-    bins = int(np.ceil(np.diff(r) / min([h0, h1])))
+    xx, yy = [], []
 
-    fig, ax = plt.subplots(1, 1, figsize=(11, 4))
-    x1, bins1, _ = ax.hist(dx[0][var], bins, weights=weights[0], color='b', **kwargs)
-    x2, bins2, _ = ax.hist(dx[1][var], bins, weights=weights[1], color='k', **kwargs)
-    for q in [0.1, 0.25, 0.5, 0.75, 0.9]:
-        # ax.axvline(np.quantile(dx[0][var], q), c='b')
-        ax.axvline(bins1[sum(np.cumsum(x1) < (sum(x1)*q))], c='b')
-        ax.axvline(bins2[sum(np.cumsum(x2) < (sum(x2)*q))], c='k')
-    ax.set_xlim(0, 1000)
-
-    stats.mannwhitneyu(*dxx, use_continuity=False)
-    stats.mannwhitneyu(*dxx)
-    stats.brunnermunzel(*dxx)
-    stats.ttest_ind(*dxx, equal_var=False)
-    stats.ks_2samp(*dxx)
-    stats.epps_singleton_2samp(*dxx)
-    wtd.ttest_ind(*dxx, weights=tuple(weights), usevar='unequal')
-
-    stats.ttest_ind(x1, x2)
-    stats.ttest_ind(x1, x2, equal_var=False)
-    stats.mannwhitneyu(x1, x2)
-    stats.wilcoxon(x1, x2)
-    stats.wilcoxon(x1, x2, zero_method='pratt')
-    stats.wilcoxon(x1, x2, zero_method='zsplit')
+    for exp in range(2):
+        n = dx[exp].names.item()
+        fig, ax = plt.subplots(figsize=(7, 9))
+        ax = sns.histplot(x=dv[exp], weights=weights[exp], bins=bins, ax=ax,
+                          kde=True, kde_kws=dict(bw_adjust=0.5))
+        ax.set_xlim(0, 2000)
+        # hist = ax.get_lines()[-1]
+        # xx.append(hist.get_xdata())
+        # yy.append(hist.get_ydata())
+        yy.append(np.array([h.get_height() for h in ax.patches]))
+        plt.clf()
 
 
-    x, y = dxx
-    for func in [np.mean, np.median]:
-        fx, fy = func(x).item(), func(y).item()
-        print('{:} {:.2f}, {:.2f}, {:.2f} {:.1%}'.format(func.__name__[:4], fx, fy, fy-fx, (fy-fx)/fx))
+    stats.mannwhitneyu(*dv, use_continuity=False)
 
-    for q in [0.25, 0.5, 0.75]:
-        fx, fy = [np.quantile(v, q).item() for v in [x,y]]
-        print('qq{:} {:.2f}, {:.2f}, {:.2f} {:.1%}'.format(int(q*100), fx, fy, fy-fx, (fy-fx)/fx))
+    stats.brunnermunzel(*dv)
+    stats.ttest_ind(*dv, equal_var=False)
+    stats.ks_2samp(*dv)
+    stats.ks_2samp(*dv, alternative='less')
+    stats.epps_singleton_2samp(*dv)
+    wtd.ttest_ind(*dv, weights=tuple(weights), usevar='unequal')
 
-    for q in [0.25, 0.5, 0.75]:
-        fx, fy = [b[sum(np.cumsum(v) < (sum(v)*q))] for v, b in zip([x1,x2], [bins1, bins2])]
-        print('qb{:} {:.2f}, {:.2f}, {:.2f} {:.1%}'.format(int(q*100), fx, fy, fy-fx, (fy-fx)/fx))
+    stats.ttest_ind(*yy)
+    stats.ttest_ind(*yy, equal_var=False)
+    stats.mannwhitneyu(*yy)
+    stats.wilcoxon(*yy)
+    stats.wilcoxon(*yy, zero_method='pratt')
+    stats.wilcoxon(*yy, zero_method='zsplit')
 
-    # fx, fy = [stats.mode(v, keepdims=False)[0]for v in [x,y]]
-    fx, fy = [stats.mode(v)[0][0] for v in [x,y]]
-    print('{} {:.2f}, {:.2f}, {:.2f} {:.1%}'.format('mode', fx, fy, fy-fx, (fy-fx)/fx))
-    fx, fy = bins1[idx(x1, np.max(x1))], bins2[idx(x2, np.max(x2))]
-    print('{} {:.2f}, {:.2f}, {:.2f} {:.1%}'.format('hmax', fx, fy, fy-fx, (fy-fx)/fx))
-    fx, fy = [np.average(v[var], weights=v.u).item() for v in dx]
-    print('{} {:.2f}, {:.2f}, {:.2f} {:.1%}'.format('wavg', fx, fy, fy-fx, (fy-fx)/fx))
+
+    stats.mannwhitneyu(*dv)
