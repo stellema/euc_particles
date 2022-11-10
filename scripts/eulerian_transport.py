@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
-"""Eulerian Transport of the EUC, LLWBCs & interior.
+"""OFAM3 Eulerian transport or velocity of the EUC, LLWBCs & interior datasets.
 
 Example:
+    ./eulerian_transport.py -x 0 -c 'llwbc' -v velocity
 
 Notes:
     - Improved LLWBC_euc / LLWBC_total % using 6 day sum and then yearly mean
@@ -9,6 +10,22 @@ Notes:
     - e.g., (0-1500m) ss 40%, vs 54% & mc 8%
     - The SS & MC % of total seems low
         - This is because the total transport is high (i.e., 17 Sv vs 9 Sv observed)
+
+
+    - EUC (transport):
+        - plx: transport(day) saved daily
+        - vld: daily transport, monthly climo (ofam_EUC_transportx.nc; H&RCP; u>0)
+        - vld: monthly resample, interpolate depths, calc transport
+            (ofam_EUC_int_transport.nc; H only; u>0)
+        - vld: daily transport? (ofam_EUC_int_transport_static_hist.nc; H&RCP; u>0)
+    - LLWBCs (transport):
+        - plx: transport(day, z) saved daily (transport_LLWBCs_hist.nc)
+        - vld: resample month, transport(month, z) & velocity(month, x, z)
+            (e.g., ofam_transport_mc.nc)
+    - LLWBCs (velocity):
+        - plx: NA
+
+    - change to "calculated daily before time averages"
 
 Todo:
 
@@ -33,28 +50,29 @@ logger = mlogger('eulerian_transport')
 
 
 @timeit
-def llwbc_transport_dataset(exp=0, clim=False, sum_dims=['lon']):
+def llwbc_transport_dataset(exp=0, clim=False, sum_dims=['lon'], var='transport'):
     """Get LLWBC eulerian transport.
 
     Args:
         exp (int, optional): Scenario index {0, 1}. Defaults to 0.
         clim (bool, optional): Use mean not daily files. Defaults to False.
         sum_dims (list, optional): Dimensions to sum over. Defaults to ['lon'].
+        var (str, optional): Variable to calculate {'transport', 'velocity'}.
 
     Returns:
         ds (xarray.Dataset): Dataset of LLWBCs transport.
 
     Notes:
-        - Transport based on daily files takes ~4 hours.
+        - Transport/velocity based on daily files takes ~4 hours.
         - Current files sum lon with net=True
-        - Function modified to save both net and non-net.
+        - Function modified to save both net and non-net transport.
+        - Function modified for transport or velocity.
 
     Example:
-        for exp in [0, 1]:
-            df = llwbc_transport_dataset(exp)
+        df = llwbc_transport_dataset(0, var='transport')
 
     """
-    filename = cfg.data / 'transport_LLWBCs_{}.nc'.format(exp_abr[exp])
+    filename = cfg.data / '{}_LLWBCs_{}.nc'.format(var, exp_abr[exp])
 
     if filename.exists():
         ds = xr.open_dataset(filename)
@@ -67,9 +85,9 @@ def llwbc_transport_dataset(exp=0, clim=False, sum_dims=['lon']):
 
     ds = open_ofam_dataset(files).v
 
-    df = xr.Dataset()
+    df = xr.Dataset()  # Transports/velocities.
 
-    for zone in [zones.mc, zones.vs, zones.ss, zones.sc]:
+    for zone in [zones.mc, zones.vs, zones.ss, zones.sc, zones.sgc, zones.ssx]:
         logger.info('{}: Calculating: {}'.format(filename.stem, zone.name))
         # Source region.
         name = zone.name
@@ -77,19 +95,28 @@ def llwbc_transport_dataset(exp=0, clim=False, sum_dims=['lon']):
         lat, lon = bnds[0], bnds[2:]
 
         # Subset boundaries.
-        dx = subset_ofam_dataset(ds, lat, lon, None)
-        df[name + '_net'] = convert_to_transport(dx.copy(), lat, 'v',
-                                                 sum_dims=sum_dims)
+        dx = subset_ofam_dataset(ds, lat, lon, None).dropna('lon', 'all')
 
-        # Subset directonal velocity (southward for MC).
-        sign = -1 if name in ['mc'] else 1
-        dx = dx.where(dx * sign > 0.)
+        if var == 'transport':
+            # Net transport.
+            df[name + '_net'] = convert_to_transport(dx.copy(), lat, 'v',
+                                                     sum_dims=sum_dims)
 
-        # Sum weighted velocity.
-        df[name] = convert_to_transport(dx, lat, 'v', sum_dims=sum_dims)
+            # Directional transport.
+            # Subset directonal velocity (southward for MC).
+            sign = -1 if name in ['mc'] else 1
+            dx = dx.where(dx * sign > 0.)
+
+            # Sum weighted velocity.
+            df[name] = convert_to_transport(dx, lat, 'v', sum_dims=sum_dims)
+            df[name].attrs['units'] = 'Sv'
+            df[name + '_net'].attrs['units'] = 'Sv'
+
+        elif var == 'velocity':
+            df[name] = dx.dropna('lev', 'all').mean('lon', skipna=True, keep_attrs=True)
+            df[name].attrs['units'] = 'm/s'
 
         df[name].attrs['name'] = zone.name_full
-        df[name].attrs['units'] = 'Sv'
         df[name].attrs['bnds'] = 'lat={} & lon={}-{}'.format(lat, *lon)
 
     if clim:
@@ -102,14 +129,15 @@ def llwbc_transport_dataset(exp=0, clim=False, sum_dims=['lon']):
     return df
 
 
-def euc_transport_dataset(exp):
-    """Save daily EUC transport sum across the Pacific.
+def euc_transport_dataset(exp, var='transport'):
+    """Save or get  daily EUC transport sum or equatorial velocity across the Pacific.
 
     Args:
         exp (int): Scenario {0, 1}.
+        var (str, optional): Variable to calculate {'transport', 'velocity'}.
 
     Returns:
-        ds (xr.Dataset):
+        ds (xarray.Dataset): Dataset of EUC transport or equatorial velocity.
 
     Notes:
         - Doesn't save velocity grid (-2.6 to 2.6; 2.5-420m)
@@ -119,9 +147,9 @@ def euc_transport_dataset(exp):
             - Option 2 [4, 30] = 22m [15-25m] - 372m [350-400m]
 
     """
-    filename = cfg.data / 'transport_EUC_{}.nc'.format(exp_abr[exp])
-    # if filename.exists():
-    #     return xr.open_dataset(filename)
+    filename = cfg.data / '{}_EUC_{}.nc'.format(var, exp_abr[exp])
+    if filename.exists():
+        return xr.open_dataset(filename)
 
     logger.info('{}: Creating file.'.format(filename.stem))
 
@@ -138,16 +166,24 @@ def euc_transport_dataset(exp):
     ds = open_ofam_dataset(files)
 
     # Subset velocity.
-    ds = subset_ofam_dataset(ds, y, x, z)
-
-    # EUC transport sum.
-    ds = ds.u.where(ds.u > 0.1)  # Mask westward velocity.
+    ds = subset_ofam_dataset(ds, y, x, z).u
 
     df = xr.Dataset()
-    df['euc'] = convert_to_transport(ds, var='u', sum_dims=['lat', 'lev'])
+
+    # EUC transport sum.
+    if var == 'transport':
+        ds = ds.where(ds > 0.1)  # Mask westward velocity.
+        df['euc'] = convert_to_transport(ds, var='u', sum_dims=['lat', 'lev'])
+        df['euc'].attrs['long_name'] = 'EUC Transport'
+        df['euc'].attrs['units'] = 'Sv'
+
+    # EUC velocity at the equator.
+    elif var == 'velocity':
+        df['euc'] = ds.sel(lat=0, method='nearest')
+        df['euc'].attrs['long_name'] = 'EUC equatorial velocity'
+        df['euc'].attrs['units'] = 'm/s'
+
     df['euc'].attrs['standard_name'] = 'euc'
-    df['euc'].attrs['long_name'] = 'EUC Transport'
-    df['euc'].attrs['units'] = 'Sv'
     df['euc'].attrs['lev_bnds'] = [int(ds.lev[i].item()) for i in [0, -1]]
     df['euc'].attrs['lat_bnds'] = [(ds.lat[i].item()) for i in [0, -1]]
 
@@ -262,10 +298,11 @@ if __name__ == "__main__" and not cfg.test:
     p = ArgumentParser(description="""LLWBCS.""")
     p.add_argument('-x', '--exp', default=0, type=int, help='Experiment.')
     p.add_argument('-c', '--current', default='llwbc', type=str)
+    p.add_argument('-v', '--var', default='transport', type=str)
     args = p.parse_args()
 
     if args.current == 'llwbc':
-        ds = llwbc_transport_dataset(args.exp)
+        ds = llwbc_transport_dataset(args.exp, var=args.var)
 
     elif args.current == 'euc':
-        ds = euc_transport_dataset(args.exp)
+        ds = euc_transport_dataset(args.exp, var=args.var)
