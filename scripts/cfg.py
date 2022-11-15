@@ -118,7 +118,7 @@ class ZoneData:
     nth = Zone(12, 'nth', 'North Interior', [j2, j2, 129.1, 278.5])
 
     sgc = Zone(99, 'sgc', 'St Georges Channel', [-4.6, -4.6, 152.3, 152.7])
-    ssx = Zone(99, 'ss', 'Solomon Strait', [-4.8, -4.8, 153, 154.7])
+    ssx = Zone(99, 'ssx', 'Solomon Strait', [-4.8, -4.8, 153, 154.7])
 
     _all = [nz, vs, ss, mc, cs, idn, sc, sth, nth]
 
