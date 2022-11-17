@@ -2,7 +2,8 @@
 """OFAM3 Eulerian transport or velocity of the EUC, LLWBCs & interior datasets.
 
 Example:
-    ./eulerian_transport.py -x 0 -c 'llwbc' -v velocity
+    python3 ./eulerian_transport.py -x 0 -c 'llwbc' -v velocity
+    python3 ./eulerian_transport.py -x 0 -c 'euc' -v transport (~04:30:00 & 18GB)
 
 Notes:
     - Improved LLWBC_euc / LLWBC_total % using 6 day sum and then yearly mean
@@ -67,6 +68,7 @@ def llwbc_transport_dataset(exp=0, clim=False, sum_dims=['lon'], var='transport'
         - Current files sum lon with net=True
         - Function modified to save both net and non-net transport.
         - Function modified for transport or velocity.
+        - Velocity dataset will skip sgc and sc.
 
     Example:
         df = llwbc_transport_dataset(0, var='transport')
@@ -112,7 +114,7 @@ def llwbc_transport_dataset(exp=0, clim=False, sum_dims=['lon'], var='transport'
             df[name].attrs['units'] = 'Sv'
             df[name + '_net'].attrs['units'] = 'Sv'
 
-        elif var == 'velocity':
+        elif var == 'velocity' and zone not in [zones.sgc, zones.sc]:
             df[name] = dx.dropna('lev', 'all').mean('lon', skipna=True, keep_attrs=True)
             df[name].attrs['units'] = 'm/s'
 
