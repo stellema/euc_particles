@@ -12,6 +12,7 @@ Todo:
 @created: Tue May  3 23:21:39 2022
 
 """
+import scipy
 import numpy as np
 import xarray as xr
 import seaborn as sns
@@ -25,8 +26,6 @@ from fncs import (source_dataset, get_plx_id, merge_hemisphere_sources,
                   merge_LLWBC_interior_sources, concat_exp_dimension,
                   open_eulerian_transport, merge_interior_sources,
                   merge_SH_LLWBC_sources)
-
-
 
 
 def log_source_transport(lon, sum_interior=True):
@@ -110,13 +109,17 @@ def log_source_transport(lon, sum_interior=True):
         logger.info(s)
 
     logger.info('')
-    return
 
 
-def log_eulerian_transport(full_depth=False):
-    """Log eulerian transport (hist, change, etc)."""
+def log_eulerian_transport(iqr=False, full_depth=False):
+    """Log eulerian transport (hist, change, etc).
+    Todo:
+        - ds = ds.quantile([0.25, 0.5, 0.75], 'time')
+    """
     logger = mlogger('eulerian_transport')
-    ds = open_eulerian_transport(resample=False, full_depth=full_depth)
+    ds = open_eulerian_transport(resample=True, clim=False, full_depth=full_depth)
+    if iqr:
+        ds = ds.quantile([0.5, 0.25, 0.75], 'time')
 
     # ds = ds.sel(lon=cfg.lons)
     for i, x in enumerate(cfg.lons):
@@ -124,30 +127,55 @@ def log_eulerian_transport(full_depth=False):
         ds[name] = ds.euc.sel(lon=x)
     ds = ds.drop('euc')
 
+    if full_depth:
+        logger.info('full depth transport')
+
+    if not iqr:
+        logger.info('Mean (clim=False)')
+
     # Header.
     names = ['HIST', 'PROJ', 'D', '(D%)']
     head = ' ' * 9
     for n in names:
-        head += '{:>5}: '.format(n)
+        if n == 'HIST':
+            space = 5
+        else:
+            space = 21 if iqr else 12
+        head += '{:>{sp}}: '.format(n, sp=space)
     logger.info(head)
 
     # Source Transport (HIST, PROJ, Δ,  Δ%).
     for vn in list(ds.data_vars):
         # Annual.
         # Log Transport (HIST, PROJ, Δ,  Δ%).
-        dx = ds[vn].mean('time').values
         s = '{:>7}: '.format(vn)
-        # Source Transport (HIST, PROJ, Δ,  Δ%).
-        s += '{:>7.2f}{:>7.2f}{: >7.2f} ({: >4.1%})'.format(*dx, dx[2] / dx[0])
-        logger.info(s)
+        if not iqr:
+            std = np.std(ds[vn], axis=1)
+            dx = ds[vn].mean('time').values
+            for i in range(3):
+                # Source Transport (HIST, PROJ, Δ,  Δ%).
+                s += '{:>7.2f} ({:>5.2f})'.format(dx[i], std[i])
+            s += ' {: >7.1%}'.format(dx[2] / dx[0])
+        else:
+            dx = ds[vn].T.values
 
-    return
+            # Source Transport (HIST (IQR-IQR), PROJ, Δ(IQR-IQR),  Δ%).
+            for i in range(3):
+                if i == 2:
+                    dx[2] = dx[1] - dx[0]
+
+                if np.fabs(dx[i, 1]) > np.fabs(dx[i, 2]):  # Sort IQR order.
+                    dx[i, 1], dx[i, 2] = dx[i, 2], dx[i, 1]
+                s += '{:>7.2f} ({:>6.2f}-{:>6.2f})'.format(*dx[i])
+
+            s += '{:>8.1%} ({:>6.1%}-{:>6.1%})'.format(*(dx[2] / dx[0]))
+        logger.info(s)
 
 
 def log_eulerian_variability():
     """Log eulerian transport (hist, change, etc)."""
     logger = mlogger('eulerian_transport')
-    ds = open_eulerian_transport(resample=False, clim=False)[0]
+    ds = open_eulerian_transport(resample=False, clim=False, full_depth=False)[0]
 
     for i, x in enumerate(cfg.lons):
         name = 'euc_' + str(x)
@@ -175,8 +203,6 @@ def log_eulerian_variability():
         s += 'El Nino: {: .{p}f} Sv La Nina: {: .{p}f} Sv'.format(*enso, p=1)
 
         logger.info(s)
-
-    return
 
 
 def log_unbeaching_stats(lon, exp=0):
@@ -217,7 +243,6 @@ def log_unbeaching_stats(lon, exp=0):
 
     logger.info('{}: Total unbeached: {:.2f} Sv ({:.1%}%) per year'
                 .format(lon, u_ub.mean().item(), (u_ub / u).mean().item()))
-    return
 
 
 def log_KDE_source(var):
@@ -230,11 +255,11 @@ def log_KDE_source(var):
         d = []
         for exp in range(2):
             mode = get_source_transit_mode(ds, var, exp, z)
-            d.append([np.mean(mode), *mode]) # [mean(mode), mode_bin, mode_bin]
+            d.append([np.mean(mode), *mode])  # [mean(mode), mode_bin, mode_bin]
 
         d.append([d[1][i] - d[0][i] for i in range(3)])  # Δ
         d.append([(d[2][i] / d[0][i]) * 100 for i in range(3)])  # Δ/h
-        d = [m[i] for m in d for i in range(3 )]
+        d = [m[i] for m in d for i in range(3)]
 
         p = 1 if mode[0] > 1 else 3  # Number of significant figures.
         n = ds.sel(zone=z).isel(exp=0).names.item()
@@ -244,8 +269,6 @@ def log_KDE_source(var):
             s += '{}={:.{p}f} {:.{p}f}-{:.{p}f} '.format(*mode, p=p)
         logger.info(s)
 
-        return
-
     for j, lon in enumerate(cfg.lons):
         ds = source_dataset(lon, sum_interior=True)
         for z in [1, 2, 6, 3, 4, 7, 8, 5]:
@@ -253,7 +276,7 @@ def log_KDE_source(var):
         logger.info('')
 
 
-# Print lagrangian source transport values.
+# # Print lagrangian source transport values.
 # for lon in cfg.lons:
 #     log_source_transport(lon, sum_interior=True)
 #     # log_source_transport(lon, sum_interior=False)
@@ -261,7 +284,8 @@ def log_KDE_source(var):
 # for var in ['age', 'distance', 'speed']:
 #     log_KDE_source(var)
 
-# log_eulerian_transport()
+# for i in [False, True]:
+#     log_eulerian_transport(iqr=False, full_depth=i)
 
 #################################################################
 # ds = ds.sel(lev=slice(2.5, 1000)).sum('lev').mean('time')
