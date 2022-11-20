@@ -51,6 +51,7 @@ def add_clim_quivers(ax, proj):
     return ax
 
 
+@timeit
 def plot_source_pathways(exp, lon, v, r, N_total=300, age='mode', xlines=True):
     """Plot a subset of pathways on a map, colored by source.
 
@@ -512,18 +513,18 @@ def add_pathways_to_map(ds, exp, lon, r, z):
 
 
 if __name__ == "__main__":
-    # exp, v, r = 0, 1, 5
-    # lon = 250
-    # N_total = 1000
-    # xlines = True
-    # age = 'mode'
-    # plot_source_pathways(exp, lon, v, r, N_total, age, xlines=True)
-
-    exp, v, r = 0, 1, 0
+    exp, v, r = 0, 1, 5
     lon = 190
-    N = 2001
-    zone = 3
-    plot_source_pathways_cmap(lon, exp, v, r, zone, N)
+    N_total = 1200
+    xlines = True
+    age = 'mode'
+    plot_source_pathways(exp, lon, v, r, N_total, age, xlines=True)
+
+    # exp, v, r = 0, 1, 0
+    # lon = 190
+    # N = 2001
+    # zone = 3
+    # plot_source_pathways_cmap(lon, exp, v, r, zone, N)
 
     # # Plot map.
     # plot_some_source_pathways(exp, lon, v, r)

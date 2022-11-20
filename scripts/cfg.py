@@ -9,6 +9,7 @@ PLX project main functions, classes and variable definitions.
 
 """
 import sys
+import dask
 import string
 import calendar
 import warnings
@@ -22,6 +23,7 @@ from collections import namedtuple
 # warnings.filterwarnings(action='ignore', message='SerializationWarning')
 # warnings.filterwarnings("ignore")
 np.set_printoptions(suppress=True)
+dask.config.set({"array.slicing.split_large_chunks": True})
 
 # Setup directories.
 if Path.home().drive == 'C:':
