@@ -416,11 +416,12 @@ def concat_exp_dimension(ds, add_diff=False):
         ds (xarray.Dataset): Concatenated dataset.
 
     """
-    # for var in ['time', 'rtime']:
-    #     if var in ds[0].dims:
-    #         if ds[0][var].size == ds[-1][var].size:
-    #             for i in range(len(ds)):
-    #                 ds[i][var] = ds[0][var]
+    if add_diff:
+        for var in ['time', 'rtime']:
+            if var in ds[0].dims:
+                if ds[0][var].size == ds[-1][var].size:
+                    for i in range(len(ds)):
+                        ds[i][var] = ds[0][var]
 
     if add_diff:
         # Calculate projected change (RCP-hist).
@@ -431,36 +432,61 @@ def concat_exp_dimension(ds, add_diff=False):
     return ds
 
 
-def open_eulerian_transport(resample=False, clim=True, full_depth=False):
-    """Open EUC & LLWBC Eulerian transport (hist, change, etc)."""
+def open_eulerian_transport(var='transport', resample=False, clim=True, full_depth=False):
+    """Open EUC & LLWBC Eulerian transport (hist, change, etc)
+
+    Args:
+        var (str, optional): Variable 'transport' or 'velocity'. Defaults to 'transport'.
+        resample (bool, optional): Monthly mean. Defaults to False.
+        clim (bool, optional): Monthly climatology. Defaults to True.
+        full_depth (bool, optional): Full depth or default LLWBC depth. Defaults to False.
+
+    Returns:
+        df (xarray.Dataset): Dataset of EUC & LLWBC transport/velocity (exp, time).
+
+    Notes:
+        - Returns list of datasets [historical, RCP] if resample and climm are false.
+
+    """
+    depth = {'vs': 890, 'ss': 1150, 'mc': 550, 'sc': 500, 'sgc': 1400}
+    names = list(depth.keys())
+
     # LLWBCs & EUC filenames.
-    file = [cfg.data / 'transport_{}_{}.nc'.format(n, s)
-            for n in ['LLWBCs', 'EUC'] for s in cfg.exp_abr[:2]]
-    ds = [xr.open_dataset(f) for f in file]
+    file = [cfg.data / '{}_{}_{}.nc'.format(var, n, cfg.exp_abr[s])
+            for n in ['LLWBCs', 'EUC'] for s in [0, 1]]
+
+    df = [xr.open_dataset(f) for f in file[:2]]  # LLWBCs [hist, RCP].
+    ds_euc = [xr.open_dataset(f) for f in file[2:]]  # EUC [hist, RCP].
+
+    # Sum LLWBC transport.
+    df = [d.drop('lat') for d in df]
+    df[0] = df[0].drop('ssx').drop('ssx_net')  # BUG: missing in rcp file.
+
+    # Subset LLWBC depths.
+    if not full_depth:
+        for i in range(2):
+            for n in names:
+                name_extra_str = ['', '_net'] if var == 'transport' else ['']
+                for s in name_extra_str:
+                    df[i][n + s] = df[i][n + s].sel(lev=slice(depth[n]))
+
+    for i in range(2):
+        # Add EUC data variable to hist/rcp datasets.
+        df[i]['euc'] = ds_euc[i].euc
+
+        # Depth-integrate transport.
+        if var == 'transport':
+            df[i] = df[i].sum('lev')
 
     if resample:
         # Convert daily to monthly mean.
-        ds = [d.resample(time="1MS").mean('time') for d in ds]
-
-    # Sum LLWBC transport (37=775; 39=995m). 35-36 mc, vs full 1300
-    df = [d.drop('lat') for d in ds[:2]]
-    names = ['vs', 'ss', 'mc']
-    depth = {'vs': 890, 'ss': 1150, 'mc': 550}
-
-    # Add EUC data variable to hist/rcp datasets.
-    for i in range(2):
-        for s in ['', '_net']:
-            if not full_depth:
-                for n in names:
-                    df[i][n + s] = df[i][n + s].sel(lev=slice(depth[n]))
-        df[i] = df[i].sum('lev')
-        df[i]['euc'] = ds[2 + i].euc
+        df = [d.resample(time="1MS").mean('time') for d in df]
 
     # Get annual mean.
     if clim:
-        df = [d.groupby('time.month').mean('time').rename({'month': 'time'})
-              for d in df]
+        df = [d.groupby('time.month').mean('time').rename({'month': 'time'}) for d in df]
 
+    if clim or resample:
         # Concat historical and RCP8.5.
         df = concat_exp_dimension(df, add_diff=True)
     return df
