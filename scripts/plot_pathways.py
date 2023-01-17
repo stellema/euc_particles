@@ -52,7 +52,7 @@ def add_clim_quivers(ax, proj):
 
 
 @timeit
-def plot_source_pathways(exp, lon, v, r, N_total=300, age='mode', xlines=True):
+def plot_source_pathways(exp, lon, v, r, N_total=300, age='mode', add_lon_lines=False):
     """Plot a subset of pathways on a map, colored by source.
 
     Args:
@@ -62,7 +62,7 @@ def plot_source_pathways(exp, lon, v, r, N_total=300, age='mode', xlines=True):
         r (int): File number.
         N_total (int, optional): Number of pathways to plot. Defaults to 300.
         age (str, optional): Particle age {'mode', 'min', 'any', 'max'}.
-        xlines (bool, optional): Plot EUC release lines. Defaults to True.
+        xlines (list, optional): Plot EUC lines at lon. Defaults to False.
 
     """
     print('Plot x={} exp{} N={} r={} age={}'.format(lon, exp, N_total, r, age))
@@ -85,6 +85,7 @@ def plot_source_pathways(exp, lon, v, r, N_total=300, age='mode', xlines=True):
     pid_dict = pidd[0].copy()
     for z in pid_dict.keys():
         pid_dict[z] = np.concatenate([pid[z] for pid in pidd]).tolist()
+
     # Merge interior pids.
     for z in [7, 12]:
         pid_dict[z] = np.concatenate([pid_dict[i] for i in range(z, z + 5)])
@@ -136,30 +137,40 @@ def plot_source_pathways(exp, lon, v, r, N_total=300, age='mode', xlines=True):
     shuffle = np.random.permutation(len(traj))
 
     # Plot particles.
-    fig, ax, proj = plot_particle_source_map(savefig=False)
+    fig, ax, proj = plot_particle_source_map(add_lon_lines=add_lon_lines, savefig=False)
     for i in shuffle:
         dx = ds.sel(traj=traj[i])
-        ax.plot(dx.lon, dx.lat, c[i], linewidth=0.4, alpha=0.2, zorder=10,
-                transform=proj)
-
-    if xlines:
-        for x in cfg.lons:
-            ax.vlines(x, -2.6, 2.6, 'k', linewidth=2, alpha=0.8, zorder=15,
-                      transform=proj)
+        ax.plot(dx.lon, dx.lat, c[i], lw=0.4, alpha=0.2, zorder=10, transform=proj)
 
     plt.tight_layout()
-    file = 'paths/pathway_{}_exp{}_{}_r{}_n{}.png'.format(lon, exp, age, r,
-                                                          N_total)
+    file = 'paths/pathway_{}_exp{}_{}_r{}_n{}.png'.format(lon, exp, age, r, N_total)
     plt.savefig(cfg.fig / file, bbox_inches='tight', dpi=350)
     plt.show()
     return
 
 
-@timeit
-def plot_source_pathways_cmap(lon=165, exp=0, v=1, r=1, zone=1, N=1000):
-    """Plot N source pathways colored by age."""
-    print('Plot x={} exp{} N={} r={} z={}'.format(lon, exp, N, r, zone))
-    R = [r]  # range(10)
+def get_n_source_pathways(lon, exp=0, v=1, r=1, zone=1, N=1000):
+    """Subset particle data by source (selects approx N particles).
+
+    Args:
+        lon (int): Release longitude.
+        exp (int, optional): Experiment integer. Defaults to 0.
+        v (int, optional): Version. Defaults to 1.
+        r (int, optional): File repeat. Defaults to 1.
+        zone (int, optional): Source ID. Defaults to 1.
+        N (int, optional): Number of particles to subset. Defaults to 1000.
+
+    Returns:
+        pids (xarray.DataArray): Particle IDs.
+        dx (xarray.DataSet): Subset particle data (lat, lon, depth).
+        dz (xarray.DataArray): Soure Particle information.
+
+    Notes:
+        - r input doesnt really do anything.
+
+    """
+    print('x={} exp{} N={} r={} z={}'.format(lon, exp, N, r, zone))
+    R = range(4)
 
     # Particle IDs dict.
     pidd = [source_particle_ID_dict(None, exp, lon, v, i) for i in R]
@@ -177,54 +188,88 @@ def plot_source_pathways_cmap(lon=165, exp=0, v=1, r=1, zone=1, N=1000):
     dz = dz.sortby('age')
 
     # Particle trajectory data.
-    ds = xr.open_mfdataset([get_plx_id(exp, lon, v, i, 'plx_interp')
-                            for i in R], chunks='auto', mask_and_scale=True)
+    ds = xr.open_mfdataset([get_plx_id(exp, lon, v, i, 'plx_interp') for i in R],
+                           chunks='auto', mask_and_scale=True)
 
-    # Thin
-    dxx = dz.sel(traj=dz.traj[dz.traj.isin(pid_dict)])
-    thinby = dxx.traj.size // N
-    pids = dxx.traj.sortby(dxx.age).thin(dict(traj=thinby)).astype(dtype=int)
+    # Subset number of particles (use thin to get N particles).
+    dz = dz.sel(traj=dz.traj[dz.traj.isin(pid_dict)])
+
+    if N is not None:
+        thinby = dz.traj.size // N
+        pids = dz.traj.sortby(dz.age).thin(dict(traj=thinby)).astype(dtype=int)
+    else:
+        pids = dz.traj.sortby(dz.age).astype(dtype=int)
+
+    # Subset particle data.
+    dx = ds.sel(traj=sorted(pids))
+    dz = dz.sel(traj=sorted(pids))
+
+    return pids, dx, dz
+
+@timeit
+def plot_source_pathways_cmap(lon=165, exp=0, v=1, r=1, zone=1, N=1000,
+                              add_lon_lines=False, sort=True):
+    """Plot N source pathways colored by age.
+
+    Args:
+        lon (int): Release longitude.
+        exp (int, optional): Experiment integer. Defaults to 0.
+        v (int, optional): Version. Defaults to 1.
+        r (int, optional): File repeat. Defaults to 1.
+        zone (int, optional): Source ID. Defaults to 1.
+        N (int, optional): Number of particles to subset. Defaults to 1000.
+        add_lon_lines (list, optional): Black release line(s). Defaults to False.
+        sort (bool, optional): Fast particles on top (not shuffled). Defaults to True.
+
+    """
+    pids, ds, dz = get_n_source_pathways(lon, exp, v, r, zone, N)
 
     # Plot kwargs.
-    cmap = plt.cm.get_cmap('gnuplot2_r')
-    cmap = plt.cm.get_cmap('jet_r')
-    bounds = dxx.sel(traj=pids).age.values
-    norm = mpl.colors.PowerNorm(1./2, vmin=bounds.min(), vmax=bounds.max())
+    cmap = plt.cm.get_cmap('nipy_spectral_r')
+    bounds = sorted(dz.age.values)
+    # norm = mpl.colors.PowerNorm(1./2, vmin=bounds.min(), vmax=bounds.max())
+    norm = mpl.colors.LogNorm(vmin=bounds.min(), vmax=bounds.max())
 
-    shuffle = np.random.permutation(len(pids))
-    # shuffle = np.concatenate([shuffle, [0]])
+    if sort:
+        # Fasted particles on top layer.
+        zorder = np.arange(len(pids), dtype=int)[::-1] + 11
+    else:
+        # Random Order.
+        zorder = np.random.permutation(len(pids)) + 11
+        zorder[0] = len(pids) + 11  # Put fastest particle on top.
 
     # Plot particles.
-    fig, ax, proj = create_map_axis((12, 5), [116, 285, -8, 8],
-                                    yticks=np.arange(-6, 9, 3))
+    fig, ax, proj = create_map_axis((12, 5), [116, 285, -8, 8], yticks=np.arange(-6, 9, 3))
+
+    # Sort pathway line layer by transiot time (i.e., short paths on top).
     for i, p in enumerate(pids):
         dx = ds.sel(traj=p)
         c = cmap(norm(dz.sel(traj=p).age.item()))
-        zorder = shuffle[i] if p != 0 else len(pids)
-
-        ax.plot(dx.lon, dx.lat, c=c, linewidth=0.3, alpha=0.2,
-                zorder=zorder+11, transform=proj)
+        ax.plot(dx.lon, dx.lat, c=c, lw=0.3, alpha=0.2, zorder=zorder[i], transform=proj)
 
     # Title.
     ax.set_title('{}'.format(cfg.zones.names[zone]), loc='left')
+
     # Colour bar.
-    cax = fig.add_axes([0.91, 0.15, 0.01, 0.6])  # left, bottom, width, height
+    cax = fig.add_axes([0.91, 0.15, 0.01, 0.6])  # [left, bottom, width, height].
+    formatter = mpl.ticker.LogFormatter(10, labelOnlyBase=False)
     cbar = plt.colorbar(mpl.cm.ScalarMappable(norm=norm, cmap=cmap), cax=cax,
-                        orientation='vertical')
+                        orientation='vertical', format=formatter)
     cbar.ax.tick_params(labelsize=8)
+    ax.text(286, 7.4, 'Transit time\n    [days]', zorder=12, transform=proj, fontsize=8)
+
     # ticks = cbar.ax.get_yticks()
     # for i in range(4):
     #     ticks = np.insert(ticks, 1, np.diff(ticks)[0] / 2)
     # ticks = np.insert(ticks[1:-1], 0, bounds.min())
     # ticks = np.delete(ticks, [-2, -4])
     # cbar.ax.set_yticks(ticks)
-    ax.text(286, 7.4, 'Transit time\n    [days]', zorder=12, transform=proj,
-            fontsize=8)
 
     # Save figure.
     fig.subplots_adjust(wspace=0.25, hspace=0.4, bottom=0.15)
-    plt.savefig(cfg.fig / 'paths/cmap_{}_r{}_z{}_n{}.png'
-                .format(lon, r, zone, N), bbox_inches='tight', dpi=350)
+
+    plt.savefig(cfg.fig / 'paths/cmap_{}_r{}_z{}_n{}_{}.png'
+                .format(lon, r, zone, N, cmap.name), bbox_inches='tight', dpi=350)
     plt.show()
     return
 
@@ -507,24 +552,46 @@ def add_pathways_to_map(ds, exp, lon, r, z):
                     transform=proj)
 
     plt.tight_layout()
-    plt.savefig(cfg.fig / 'particle_map_pathway_{}_{}_r{}_51.png'
+    plt.savefig(cfg.fig / 'particle_map_pathway_{}_{}_r{}.png'
                 .format(cfg.exp[exp], lon, r), bbox_inches='tight')
     return dx
 
 
-if __name__ == "__main__":
-    exp, v, r = 0, 1, 5
-    lon = 190
-    N_total = 1200
-    xlines = True
-    age = 'mode'
-    plot_source_pathways(exp, lon, v, r, N_total, age, xlines=True)
+def plot_2d_density_map(lon, exp, v, r, zone, N=1000):
+    import seaborn as sns
+    pids, ds, dz = get_n_source_pathways(lon, exp, v, r, zone, N=None)
 
-    # exp, v, r = 0, 1, 0
-    # lon = 190
-    # N = 2001
-    # zone = 3
-    # plot_source_pathways_cmap(lon, exp, v, r, zone, N)
+    lats = ds.lat.values.flatten()
+    lons = ds.lon.values.flatten()
+    u = np.repeat(dz.u.values, ds.obs.size)
+
+    fig, ax, proj = create_map_axis((12, 5), [121, 285, -7, 8], yticks=np.arange(-6, 9, 3))
+    # cs = ax.hexbin(lons, lats, C=u, bins=1500, vmin=0, cmap=plt.cm.gnuplot2, transform=proj)
+    # cs = ax.hist2d(lons, lats, weights=u, bins=1500, vmin=0, cmap=plt.cm.gnuplot2, transform=proj)
+    sns.histplot(x=lons, y=lats, ax=ax, weights=u, bins=100, vmin=0, cmap=plt.cm.gnuplot2, transform=proj, cbar=True, cbar_kws=dict(shrink=.75))
+
+    # h, xb, yb = plt.hist2d(lons, lats, weights=u, bins=500, vmin=0, cmap=plt.cm.gnuplot2)
+    # h, xb, yb = np.histogram2d(lons, lats, weights=u, bins=500)
+    cs = sns.histplot(x=lons, y=lats, weights=u, ax=ax, bins=1500, vmin=0, cmap=plt.cm.gnuplot2, transform=proj)
+
+    # Colour bar.
+    cax = fig.add_axes([0.91, 0.2, 0.01, 0.6])  # [left, bottom, width, height].
+    cbar = plt.colorbar(cs, cax=cax, orientation='vertical', label='Number of particles')
+
+
+if __name__ == "__main__":
+    # exp, v, r = 0, 1, 5
+    # lon = 165
+    # age, N_total = 'mode', 1500
+    # # age, N_total = 'min', 1500
+    # # age, N_total = 'max', 500
+    # plot_source_pathways(exp, lon, v, r, N_total, age)
+
+    exp, v, r = 0, 1, 2
+    lon = 250
+    N = 2000
+    zone = 1
+    plot_source_pathways_cmap(lon, exp, v, r, zone, N)
 
     # # Plot map.
     # plot_some_source_pathways(exp, lon, v, r)

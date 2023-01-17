@@ -34,6 +34,21 @@ def open_plx_data(xid, **kwargs):
     return ds
 
 
+def count_plx_particles():
+    """Open plx dataset."""
+    c = []
+    lon = 165
+    v = 1
+    for lon in cfg.lons:
+        for exp in range(2):
+            xid = get_plx_id(exp, lon, v=1, r=None, folder='sources')
+            ds = xr.open_dataset(str(xid), mask_and_scale=True)
+            c.append(ds.traj.size)
+            ds.close()
+    return ds
+
+
+
 def combine_plx_datasets(exp, lon, v, r_range=[0, 10], **kwargs):
     """Combine plx datasets."""
     xids = [get_plx_id(exp, lon, v, r) for r in range(*r_range)]

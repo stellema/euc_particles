@@ -17,6 +17,7 @@ from tools import (get_unique_file, timeit)
 from fncs import get_plx_id, get_index_of_last_obs
 from plots import (plot_particle_source_map, update_title_time, create_map_axis,
                    get_data_source_colors)
+from create_source_files import source_particle_ID_dict
 
 # Fixes AttributeError: 'GeoAxesSubplot' object has no attribute 'set_offsets'
 from matplotlib.axes import Axes
@@ -29,7 +30,8 @@ logger.propagate = False
 
 
 @timeit
-def init_particle_data(ds, ntraj, ndays, method='thin', start=None, zone=None):
+def init_particle_data(ds, ntraj, ndays, method='thin', start=None, zone=None,
+                       partial_paths=True):
     """Subset dataset by number of particles, observations and start date.
 
     Args:
@@ -39,6 +41,7 @@ def init_particle_data(ds, ntraj, ndays, method='thin', start=None, zone=None):
         method (str, optional): Subset method ('slice', 'thin'). Defaults to 'thin'.
         start (str, optional): Start date. Defaults to '2012-12-31T12'.
         zone (None or list, optional): Subset by a source id. Defaults to None.
+        partial_paths (bool, optional): Only return completed paths. Defaults to False.
 
     Returns:
         ds (xarray.Dataset): Subset plx dataset.
@@ -55,6 +58,7 @@ def init_particle_data(ds, ntraj, ndays, method='thin', start=None, zone=None):
 
     """
     # Update dataset attrs with subset info.
+    ds.attrs['zone'] = zone
     ds.attrs['ntraj'] = ntraj
     ds.attrs['ndays'] = ndays
     ds.attrs['file'] = '{}_p{}_t{}'.format(ds.attrs['file'], ntraj, ndays)
@@ -62,23 +66,7 @@ def init_particle_data(ds, ntraj, ndays, method='thin', start=None, zone=None):
     # Drop unnecessary data variables.
     ds = ds.drop({'age', 'distance', 'unbeached'})
 
-    # Subset particles by source.
-    if zone is not None:
-        print('Zone')
-        for z in list(zone):
-            traj = ds.zone.where(ds.zone == z, drop=True).traj
-            ds = ds.where(ds.traj.isin(traj), drop=True)
-        if 'obs' in ds['zone'].dims:
-            ds['zone'] = ds.zone.isel(obs=0)
-
-    # Subset the amount of particles.
-    if isinstance(ntraj, int):
-        if method == 'slice':
-            ds = ds.isel(traj=slice(ntraj))
-        elif method == 'thin':
-            ds = ds.thin(dict(traj=int(ntraj)))
-
-    # Subset time coordinate.
+    # Time coordinate.
     if start is None:
         start = ds.time.isel(obs=0, traj=0).values
     else:
@@ -86,6 +74,33 @@ def init_particle_data(ds, ntraj, ndays, method='thin', start=None, zone=None):
     days = ds.obs.size - 1 if ndays is None else ndays
     runtime = np.timedelta64(days, 'D')  # Time span to animate.
     end = start - runtime
+
+    # Subset particles by source.
+    if zone is not None:
+        print('Zone')
+        pids_all = []
+        pids = [source_particle_ID_dict(ds, ds.attrs['exp'], ds.attrs['lon'], 1, R)
+                for R in range(ds.attrs['r'], 10)]
+        for z in list(zone):
+            pids_all.append(np.concatenate([p[z] for p in pids]))
+        ds = ds.where(ds.traj.isin(np.concatenate(pids_all)), drop=True)
+        if 'obs' in ds['zone'].dims:
+            ds['zone'] = ds.zone.isel(obs=0)
+
+    if not partial_paths:
+        # want trajectories that wil have finished before animation ends.
+        # exclude partciles with non-nan positions earlier than animation end
+        # find time of last position & exclude if time is before cutoff
+        dt = ds.time.to_pandas().min(axis=1)
+        traj_keep = ds.traj[(dt > end).values]
+        ds = ds.sel(traj=traj_keep)
+
+    # Subset the amount of particles.
+    if isinstance(ntraj, int):
+        if method == 'slice':
+            ds = ds.isel(traj=slice(ntraj))
+        elif method == 'thin':
+            ds = ds.thin(dict(traj=int(ntraj)))
 
     # Subset times from start to  subset (slow).
     if ndays is not None:
@@ -236,33 +251,25 @@ def animate_particle_lines(ds, plottimes, dt=4, delay=True, forward=False):
 
     # Particle line colours.
     colors = get_data_source_colors(ds)
-    # if all(colors == colors[0]):
-    #     colors = np.full_like(colors, 'k')
+    if all(colors == colors[0]):
+        # Make all lines black.
+        colors = np.full_like(colors, 'b')
 
     # Index of plottimes to animate as frames (accounting for trailing positions).
     frames = np.arange(dt, len(plottimes) - dt)
 
     # Reverse frames for forward-tracked particles.
     if forward:
-        # # want trajectories that wil have finished before animation ends.
-        # # exclude partciles with non-nan positions earlier than animation end
-        # end = ds.time.isel(obs=0, traj=0).values + np.timedelta64(ds.attrs['ndays'], 'D')
-        # mask = (np.isnan(ds.lat)) & (ds.time == end)
-
-        # mask = xr.where((np.isnan(ds.lat)) & (ds.time == end), ds.trajectory, -99)
-        # dmask = mask.where(mask != -99, drop=1)
-        # # get index where last timestep is
-        # obs = get_index_of_last_obs(ds, ~np.isnan(ds.lat))
-        # obs = obs.load()
-
         # lons = np.flip(lons, axis=1)
         # lats = np.flip(lats, axis=1)
         # times = np.flip(times, axis=1)
         frames = frames[::-1]
         dt *= -1
 
-    # Setup figure.
-    fig, ax, proj = plot_particle_source_map(savefig=False, add_lon_lines=False)
+    # Setup figure.    figsize = (13, 5.8)
+    fig, ax, proj = create_map_axis((13, 5.8), extent=[117, 285, -11, 11],
+                                    yticks=np.arange(-10, 11, 5), xticks=np.arange(120, 290, 20))
+    # fig, ax, proj = plot_particle_source_map(savefig=False, add_lon_lines=False)
 
     kwargs = dict(lw=0.45, alpha=0.5, transform=proj)
 
@@ -294,6 +301,8 @@ exp, v, r = 0, 1, 6
 file = [get_plx_id(exp, rlon, v, r, 'plx') for r in range(r, r+2)]
 ds = xr.open_mfdataset(file)
 ds.attrs['lon'] = rlon
+ds.attrs['exp'] = exp
+ds.attrs['r'] = r
 ds.attrs['file'] = file[0].stem
 
 # # Default plot: (ndays=2400 ntraj=3).
@@ -301,8 +310,8 @@ ds.attrs['file'] = file[0].stem
 # animate_particle_lines(ds, plottimes, delay=True, forward=False)
 
 
-ds, plottimes = init_particle_data(ds, ntraj=2, ndays=2500, zone=[1])
-animate_particle_lines(ds, plottimes, delay=True, forward=False)
+ds, plottimes = init_particle_data(ds, ntraj=1, ndays=2500, zone=[1, 2, 3], partial_paths=False)
+animate_particle_lines(ds, plottimes, dt=4, delay=True, forward=False)
 
 # ds, plottimes = init_particle_data(ds, ntraj=None, ndays=3600, zone=None)
 # animate_particle_scatter(ds, plottimes, delay=True)
