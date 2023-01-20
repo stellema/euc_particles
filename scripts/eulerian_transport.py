@@ -113,13 +113,15 @@ def llwbc_transport_dataset(exp=0, clim=False, sum_dims=['lon'], var='transport'
             df[name] = convert_to_transport(dx, lat, 'v', sum_dims=sum_dims)
             df[name].attrs['units'] = 'Sv'
             df[name + '_net'].attrs['units'] = 'Sv'
+            df[name].attrs['name'] = zone.name_full
+            df[name].attrs['bnds'] = 'lat={} & lon={}-{}'.format(lat, *lon)
 
         elif var == 'velocity' and zone not in [zones.sgc, zones.sc]:
             df[name] = dx.dropna('lev', 'all').mean('lon', skipna=True, keep_attrs=True)
             df[name].attrs['units'] = 'm/s'
 
-        df[name].attrs['name'] = zone.name_full
-        df[name].attrs['bnds'] = 'lat={} & lon={}-{}'.format(lat, *lon)
+            df[name].attrs['name'] = zone.name_full
+            df[name].attrs['bnds'] = 'lat={} & lon={}-{}'.format(lat, *lon)
 
     if clim:
         df['time'] = np.arange(1, 13)
