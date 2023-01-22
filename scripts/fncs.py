@@ -8,6 +8,7 @@
 """
 import numpy as np
 import xarray as xr
+import pandas as pd
 
 import cfg
 from cfg import zones
@@ -38,7 +39,6 @@ def count_plx_particles():
     """Open plx dataset."""
     c = []
     lon = 165
-    v = 1
     for lon in cfg.lons:
         for exp in range(2):
             xid = get_plx_id(exp, lon, v=1, r=None, folder='sources')
@@ -46,7 +46,6 @@ def count_plx_particles():
             c.append(ds.traj.size)
             ds.close()
     return ds
-
 
 
 def combine_plx_datasets(exp, lon, v, r_range=[0, 10], **kwargs):
@@ -447,8 +446,9 @@ def concat_exp_dimension(ds, add_diff=False):
     return ds
 
 
-def open_eulerian_transport(var='transport', resample=False, clim=True, full_depth=False):
-    """Open EUC & LLWBC Eulerian transport (hist, change, etc)
+def open_eulerian_dataset(var='transport', exp=0, resample=False, clim=True,
+                          full_depth=False):
+    """Open EUC & LLWBC Eulerian transport (hist, change, etc).
 
     Args:
         var (str, optional): Variable 'transport' or 'velocity'. Defaults to 'transport'.
@@ -467,43 +467,41 @@ def open_eulerian_transport(var='transport', resample=False, clim=True, full_dep
     names = list(depth.keys())
 
     # LLWBCs & EUC filenames.
-    file = [cfg.data / '{}_{}_{}.nc'.format(var, n, cfg.exp_abr[s])
-            for n in ['LLWBCs', 'EUC'] for s in [0, 1]]
+    file = [cfg.data / '{}_{}_{}.nc'.format(var, n, cfg.exp_abr[exp])
+            for n in ['LLWBCs', 'EUC']]
 
-    df = [xr.open_dataset(f) for f in file[:2]]  # LLWBCs [hist, RCP].
-    ds_euc = [xr.open_dataset(f) for f in file[2:]]  # EUC [hist, RCP].
+    df = xr.open_dataset(file[0])  # LLWBCs [hist, RCP].
+    ds_euc = xr.open_dataset(file[1])  # EUC [hist, RCP].
 
     # Sum LLWBC transport.
-    df = [d.drop('lat') for d in df]
-    df[0] = df[0].drop('ssx').drop('ssx_net')  # BUG: missing in rcp file.
+    df = df.drop('lat')
+
+    for n in ['ssx', 'ssx_net']:
+        if n in df.data_vars:
+            df = df.drop(n) # BUG: missing in rcp file.
 
     # Subset LLWBC depths.
     if not full_depth:
-        for i in range(2):
-            for n in names:
-                name_extra_str = ['', '_net'] if var == 'transport' else ['']
-                for s in name_extra_str:
-                    df[i][n + s] = df[i][n + s].sel(lev=slice(depth[n]))
+        for n in [n for n in names if n in df.data_vars]:
+            name_extra_str = ['', '_net'] if var == 'transport' else ['']
+            for s in name_extra_str:
+                df[n + s] = df[n + s].sel(lev=slice(depth[n]))
 
-    for i in range(2):
-        # Add EUC data variable to hist/rcp datasets.
-        df[i]['euc'] = ds_euc[i].euc
+    # Add EUC data variable to hist/rcp datasets.
+    df['euc'] = ds_euc.euc
 
-        # Depth-integrate transport.
-        if var == 'transport':
-            df[i] = df[i].sum('lev')
+    # Depth-integrate transport.
+    if var == 'transport':
+        df = df.sum('lev')
 
     if resample:
         # Convert daily to monthly mean.
-        df = [d.resample(time="1MS").mean('time') for d in df]
+        df = df.resample(time='1MS').mean('time')
 
     # Get annual mean.
     if clim:
-        df = [d.groupby('time.month').mean('time').rename({'month': 'time'}) for d in df]
-
-    if clim or resample:
-        # Concat historical and RCP8.5.
-        df = concat_exp_dimension(df, add_diff=True)
+        df = df.groupby('time.month').mean('time').rename({'month': 'time'})
+    # df = concat_exp_dimension(df, add_diff=True)
     return df
 
 
@@ -541,7 +539,6 @@ def source_dataset(lon, sum_interior=True):
     # Open and concat data for exah scenario.
     ds = [xr.open_dataset(get_plx_id(i, lon, 1, None, 'sources'))
           for i in [0, 1]]
-
     ds = concat_exp_dimension(ds)
 
     # Create 'speed' variable.
@@ -567,4 +564,69 @@ def source_dataset(lon, sum_interior=True):
     # ds = ds.sel(traj=keep_traj)
 
     # ds = ds.sel(traj=ds.u.where(ds.u > (0.1 * cfg.DXDY), drop=True).traj)
+    return ds
+
+
+def source_dataset_mod(lon, sum_interior=True):
+    """Get source datasets.
+
+    Args:
+        lon (int): Release Longitude {165, 190, 220, 250}.
+        sum_interior (bool, optional): Merge sources. Defaults to True.
+        east_solomon (bool, optional): South interior <165. Defaults to False.
+
+    Returns:
+        ds (xarray.Dataset):
+
+    Notes:
+        - Stack scenario dimension
+        - Add attributes
+        - Change order of source dimension
+        - merge sources
+        - Changed ztime to time_at_zone (source time)
+        - Changed z0 to z_f (source depth)
+
+    """
+    # Open and concat data for exah scenario.
+    ds = [xr.open_dataset(get_plx_id(i, lon, 1, None, 'sources'))
+          for i in [0, 1]]
+    for i in range(2):
+        ds[i]['names'] = ('zone', cfg.zones.names_all)
+        ds[i]['colors'] = ('zone', cfg.zones.colors_all)
+
+    if sum_interior:
+        for i in range(2):
+            ds[i] = merge_interior_sources(ds[i])
+            # Reorder zones.
+            inds = np.array([1, 2, 6, 7, 8, 3, 4, 5, 0])
+            ds[i] = ds[i].isel(zone=inds)
+
+    for i in range(2):
+        times = ds[i].time_at_zone.values[pd.notnull(ds[i].time_at_zone)]
+        p = ds[i].traj[times >= np.datetime64(['2000-01-01', '2089-01-01'][i])]
+        ds[i] = ds[i].sel(traj=sorted(p))
+
+    for i in range(2):
+        # Recalculate source sums.
+        uzone = xr.concat([ds[i].u.sel(zone=z).groupby(ds[i].time.sel(zone=z)).sum('traj')
+                        for z in range(ds[i].zone.size)], dim='zone')
+
+        usum = ds[i].u.groupby(ds[i].time).sum()
+
+        ds[i]['u_zone'] = uzone.to_dataset(name='u_zone').rename({'time':'rtime'}).u_zone
+        ds[i]['u_sum'] = usum.to_dataset(name='u_sum').rename({'time':'rtime'}).u_sum
+
+    ds = concat_exp_dimension(ds)
+
+    # Create 'speed' variable.
+    ds['speed'] = ds.distance / ds.age
+    ds['speed'].attrs['long_name'] = 'Average Speed'
+    ds['speed'].attrs['units'] = 'm/s'
+    ds['age'].attrs['units'] = 'days'
+    ds['distance'].attrs['units'] = '1000 km'
+    # ds['distance'] = ds['distance'] / 1e3
+    # ds['distance'].attrs['units'] = 'km'
+
+    ds['colors'] = ds.colors.isel(exp=0)
+    ds['names'] = ds.names.isel(exp=0)
     return ds
