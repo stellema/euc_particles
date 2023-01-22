@@ -720,15 +720,23 @@ def enso_u_ofam(ds, avg='mean'):
     oni = xr.open_dataset(cfg.data / 'ofam_sst_anom_nino34_hist.nc')
     nino, nina = nino_events(oni.oni)
 
-    coord = [('nin', ['nino', 'nina'])]
+    coords = dict(nin=['nino', 'nina'])
+    dims = ['nin']
+    for d in ds.isel(time=0).dims:
+        dims.append(d)
+        coords[d] = ds.coords[d].values
 
-    enso = xr.DataArray(np.empty((2, *ds[0].shape)).fill(np.nan), coords=coord)
+    enso = xr.DataArray(np.full((2, *ds.isel(time=0).shape), np.nan), coords=coords, dims=dims)
 
     for n, nin in enumerate([nino, nina]):
-        tmp = []
+
+        counter = 0
         for i in range(len(nin)):
-            u = ds.sel(time=slice(nin[i][0], nin[i][1])).values
+            u = ds.sel(time=slice(nin[i][0], nin[i][1]))
             if len(u) != 0:
-                tmp = np.append(tmp, u)
-        enso[n] = np.nanmean(tmp)
+                if counter == 0:
+                    merged = u
+                else:
+                    merged = xr.merge([merged, u])
+        enso[n] = merged.mean('time')
     return enso
