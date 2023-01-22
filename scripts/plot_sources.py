@@ -562,6 +562,51 @@ def plot_source_EUC_velocity_profile(lon, exp):
     plt.show()
 
 
+def source_timeseries(exp, lon, var='u_zone', merge_straits=False, anom=True):
+    """Timeseries plot."""
+    def plot_sources(ax, ds, xdim, ls='-'):
+        for i, z in enumerate(sourceids):
+            if merge_straits and z == 1:
+                dz = ds[var].sel(zone=[1, 2, 6]).sum('zone')
+            else:
+                dz = ds[var].sel(zone=z)
+
+            if anom:
+                dz = dz - dz.mean('rtime')
+                ax.axhline(0, color='grey')
+
+            ax.plot(xdim, dz, c=ds.colors.values[0, z], label=ds.names.values[0, z], ls=ls)
+        return ax
+
+    ds = source_dataset(lon, sum_interior=True)
+
+    # Annual mea nbetween scenario years.
+    dss = [ds.sel(exp=i).dropna('traj', 'all').dropna('rtime', 'all') for i in range(2)]
+    dsm = [d[var].resample(rtime="1y").mean("rtime", keep_attrs=True) for d in dss]
+
+    # Plot timeseries of source transport.
+    sourceids = [1, 2, 3, 7, 8]
+
+    fig, ax = plt.subplots(1, figsize=(7, 3))
+    xdim = dsm[0].rtime
+    ax = plot_sources(ax, dsm[0], xdim, '-')
+    ax = plot_sources(ax, dsm[1], xdim, '--')
+    ax.set_title('{} EUC transport at {}°E'.format(cfg.exps[exp], lon), loc='left')
+    ax.set_ylabel('{} [{}]'.format(ds[var].attrs['long_name'], ds[var].attrs['units']))
+    ax.margins(x=0)
+
+    lgd = ax.legend()
+    plt.tight_layout()
+    file = 'source_{}_timeseries_{}_{}_{}'.format(ds[var].attrs['standard_name'], lon,
+                                                  cfg.exp[exp], ''.join(map(str, sourceids)))
+    if anom:
+        file + '_anom'
+    plt.savefig(cfg.fig / (file + '.png'), bbox_extra_artists=(lgd,),
+                bbox_inches='tight')
+    plt.show()
+    return
+
+
 ##############################################################################
 if __name__ == "__main__":
     # for exp in [1, 0]:
@@ -572,9 +617,9 @@ if __name__ == "__main__":
     for lon in cfg.lons:
         ds = source_dataset(lon, sum_interior=True)
         plot_KDE_multi_var(ds, lon, var=['age', 'distance'])
-        plot_source_EUC_velocity_profile(lon, exp=0)
+        # plot_source_EUC_velocity_profile(lon, exp=0)
         source_pie_chart(ds, lon)
-        source_histogram_multi_var(ds, lon)
+        # source_histogram_multi_var(d s, lon)
 
         # exp = 0
         # for vary in ['lat', 'u', 'z']:
@@ -582,21 +627,21 @@ if __name__ == "__main__":
         #     source_scatter(ds, lon, exp, varx, vary)
         # source_scatter(ds, lon, exp, 'z', 'z_at_zone')
 
-    for var in ['age', 'distance', 'speed']:
-        source_histogram_multi_lon(var, sum_interior=True)
-        source_histogram_multi_lon(var, sum_interior=False)
-        source_KDE_multi_lon(var, sum_interior=True)
+    # for var in ['age', 'distance', 'speed']:
+    #     source_histogram_multi_lon(var, sum_interior=True)
+    #     source_histogram_multi_lon(var, sum_interior=False)
+    #     source_KDE_multi_lon(var, sum_interior=True)
 
-    for varx, vary in zip():
-        for exp in [1, 0]:
-            source_scatter(ds, lon, exp, varx, vary)
+    # for varx, vary in zip():
+    #     for exp in [1, 0]:
+    #         source_scatter(ds, lon, exp, varx, vary)
 
-    # source_histogram_depth()
+    # # source_histogram_depth()
 
-    exp = 0
-    # source_hist_2d(exp, 'z_at_zone', 'z', ('auto', 14), (False, True))
-    # source_hist_2d(exp, 'age', 'z', (50, 14), (0, 1))
-    # source_hist_2d(exp, 'u', 'z', ('auto', 14), (0, 1), log_norm=0)
-    # source_hist_2d(exp, 'age', 'lat', (50, np.arange(-2.65, 2.65, .1)))
-    # source_hist_2d(exp, 'age', 'u')
-    source_hist_2d(exp, 'age', 'distance')
+    # exp = 0
+    # # source_hist_2d(exp, 'z_at_zone', 'z', ('auto', 14), (False, True))
+    # # source_hist_2d(exp, 'age', 'z', (50, 14), (0, 1))
+    # # source_hist_2d(exp, 'u', 'z', ('auto', 14), (0, 1), log_norm=0)
+    # # source_hist_2d(exp, 'age', 'lat', (50, np.arange(-2.65, 2.65, .1)))
+    # # source_hist_2d(exp, 'age', 'u')
+    # source_hist_2d(exp, 'age', 'distance')
