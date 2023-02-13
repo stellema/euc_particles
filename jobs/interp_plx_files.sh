@@ -1,8 +1,8 @@
 #!/bin/bash
 #PBS -P e14
 #PBS -q normalbw
-#PBS -l walltime=10:00:00
-#PBS -l mem=18GB
+#PBS -l walltime=16:00:00
+#PBS -l mem=16GB
 #PBS -l ncpus=1
 #PBS -l storage=gdata/hh5+gdata/e14
 #PBS -l wd
@@ -11,7 +11,7 @@
 #PBS -v LON,EXP,R
 
 ###############################################################################
-# Fix and save particle data files.
+# Interpolate and save particle data files (20GB & 4+ Hours).
 # To run: qsub -v LON=165,EXP=0,R=0 interp_plx_files.sh
 ###############################################################################
 
