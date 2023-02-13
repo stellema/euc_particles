@@ -693,7 +693,7 @@ def source_timeseries(exp, lon, anom=False, felx_subset=False, merge_llwbcs=Fals
     plt.tight_layout()
 
     file = 'timeseries/source_timeseries_{}_{}_{}'.format(lon, cfg.exp[exp],
-                                                          ''.join(map(str, sourceids)))
+                                                          '-'.join(map(str, sourceids)))
     file = file + '_felx' if felx_subset else file
     # file = file + '_5year' if felx_subset else file
     file = file + '.png' if not anom else file + '_anom.png'
