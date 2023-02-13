@@ -365,7 +365,7 @@ def merge_hemisphere_sources(ds):
         ds['colors'] = ('zone', ['darkviolet', 'blue'])
 
     # Add new zones to original dataset.
-    ds = xr.merge([ds_orig, ds])
+    ds = xr.concat([ds_orig, ds], 'zone')
     return ds
 
 
@@ -392,38 +392,31 @@ def merge_LLWBC_interior_sources(ds):
         ds['colors'] = ('zone', ['blue', 'darkviolet'])
 
     # Add new zones to original dataset.
-    ds = xr.merge([ds_orig, ds])
+    ds = xr.concat([ds_orig, ds], 'zone')
     return ds
 
 
-def merge_LLWBC_sources(ds):
-    """Merge NH_LLWBCs (MC, Celebes) and SH_LLWBCs (VS, SS, SICU) (add as new zones)."""
+def merge_SH_LLWBC_sources(ds):
+    """Merge North/South Interior & LLWBCs (add as new zones)."""
     ds_orig = ds.copy()
 
-    # Merge SH_LLWBCs VS & SS & SC: zone[1] = zone[1+2+6].
+    # Merge LLWBCs VS & SS & SC & MC: zone[1] = zone[1+2+3].
     for z2 in [2, 6]:
         ds = combine_source_indexes(ds, 1, z2)
-    # Merge SH_LLWBCs SS & SC: zone[2] = zone[2+6].
-    ds = combine_source_indexes(ds_orig, 2, 6)
-    # Merge NH_LLWBCs MC & CS: zone[3] = zone[3+4].
-    ds = combine_source_indexes(ds, 3, 4)
-
-    # Merge OTHERSs IDN & None: zone[0] = zone[0+5].
-    ds = combine_source_indexes(ds, 0, 5)
 
     # Reassign source ID.
-    ds = ds.sel(zone=[1, 3, 2, 0])
-    ds['zone'] = np.array([1, 2, 3, 4]) + ds_orig.zone.max().item()
+    ds = ds.sel(zone=[1])
+    ds['zone'] = np.array([1]) + ds_orig.zone.max().item()
 
     # Replace source name and colours.
     if 'names' in ds.data_vars:
-        ds['names'] = ('zone', ['VS, SS & SICU', 'SS & SICU', 'MC & Celebes Sea', 'IDN Seas & None'])
+        ds['names'] = ('zone', ['SH_LLWBC'])
 
     if 'colors' in ds.data_vars:
-        ds['colors'] = ('zone', ['deeppink', 'deeppink', 'mediumspringgreen', 'y'])
+        ds['colors'] = ('zone', ['darkviolet'])
 
     # Add new zones to original dataset.
-    ds = xr.merge([ds_orig, ds])
+    ds = xr.concat([ds_orig, ds], 'zone')
     return ds
 
 
@@ -597,7 +590,6 @@ def source_dataset_mod(lon, sum_interior=True):
     # Open and concat data for exah scenario.
     ds = [xr.open_dataset(get_plx_id(i, lon, 1, None, 'sources'))
           for i in [0, 1]]
-
     for i in range(2):
         ds[i]['names'] = ('zone', cfg.zones.names_all)
         ds[i]['colors'] = ('zone', cfg.zones.colors_all)
@@ -609,31 +601,20 @@ def source_dataset_mod(lon, sum_interior=True):
             inds = np.array([1, 2, 6, 7, 8, 3, 4, 5, 0])
             ds[i] = ds[i].isel(zone=inds)
 
-    # Filter Felx time subset (inc. spinup).
     for i in range(2):
-        # Drop any particles that haven't finished in the time subset or 10yr spinup.
         times = ds[i].time_at_zone.values[pd.notnull(ds[i].time_at_zone)]
-        p = ds[i].traj[times >= np.datetime64(['1990-01-01', '2079-01-01'][i])]
-        ds[i] = ds[i].sel(traj=sorted(p))
-
-        # Drop particles that start before the actual time subset.
-        times = ds[i].time.values[pd.notnull(ds[i].time_at_zone)]
         p = ds[i].traj[times >= np.datetime64(['2000-01-01', '2089-01-01'][i])]
         ds[i] = ds[i].sel(traj=sorted(p))
 
-    # Recalculate transport sums as a function of time.
     for i in range(2):
-        # Make copy of original.
-        ds[i]['u_sum_full'] = ds[i]['u_sum'].copy()
-        ds[i]['u_zone_full'] = ds[i]['u_zone'].copy()
-
         # Recalculate source sums.
-        usum = ds[i].u.groupby(ds[i].time).sum()
         uzone = xr.concat([ds[i].u.sel(zone=z).groupby(ds[i].time.sel(zone=z)).sum('traj')
-                           for z in range(ds[i].zone.size)], dim='zone')
+                        for z in range(ds[i].zone.size)], dim='zone')
 
-        for v, dx in zip(['u_zone', 'u_sum'], [uzone, usum]):
-            ds[i][v] = dx.to_dataset(name=v).rename({'time': 'rtime'})[v]
+        usum = ds[i].u.groupby(ds[i].time).sum()
+
+        ds[i]['u_zone'] = uzone.to_dataset(name='u_zone').rename({'time':'rtime'}).u_zone
+        ds[i]['u_sum'] = usum.to_dataset(name='u_sum').rename({'time':'rtime'}).u_sum
 
     ds = concat_exp_dimension(ds)
 
@@ -643,6 +624,8 @@ def source_dataset_mod(lon, sum_interior=True):
     ds['speed'].attrs['units'] = 'm/s'
     ds['age'].attrs['units'] = 'days'
     ds['distance'].attrs['units'] = '1000 km'
+    # ds['distance'] = ds['distance'] / 1e3
+    # ds['distance'].attrs['units'] = 'km'
 
     ds['colors'] = ds.colors.isel(exp=0)
     ds['names'] = ds.names.isel(exp=0)

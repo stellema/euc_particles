@@ -25,14 +25,14 @@ from stats import (test_signifiance, get_min_weighted_bins,
 from fncs import (source_dataset, get_plx_id, merge_hemisphere_sources,
                   merge_LLWBC_interior_sources, concat_exp_dimension,
                   open_eulerian_dataset, merge_interior_sources,
-                  merge_LLWBC_sources, source_dataset_mod)
+                  merge_SH_LLWBC_sources)
 
 
 def log_source_transport(lon, sum_interior=True):
     """Log source transport (hist, change, etc)  at longitude."""
     logger = mlogger('source_transport')
     test = False
-    ds = source_dataset_mod(lon, sum_interior=sum_interior)
+    ds = source_dataset(lon, sum_interior=sum_interior)
 
     for var in ds.data_vars:
         if var not in ['u_zone', 'u', 'time', 'u_sum', 'names']:
@@ -58,7 +58,7 @@ def log_source_transport(lon, sum_interior=True):
     # Add extra data variables.
     ds = merge_hemisphere_sources(ds)
     ds = merge_LLWBC_interior_sources(ds)
-    ds = merge_LLWBC_sources(ds)
+    ds = merge_SH_LLWBC_sources(ds)
 
     if not sum_interior:
         ds = ds.sel(zone=np.arange(7, 17))
@@ -267,7 +267,7 @@ def log_KDE_source(var):
 # log_eulerian_transport(full_depth=False)
 # log_eulerian_transport(full_depth=True)
 # log_eulerian_variability(full_depth=False)
-# log_eulerian_variability(full_depth=True)
+log_eulerian_variability(full_depth=True)
 #################################################################
 # ds = ds.sel(lev=slice(2.5, 1000)).sum('lev').mean('time')
 # ds
