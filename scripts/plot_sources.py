@@ -24,7 +24,7 @@ import cfg
 from cfg import ltr, exp_abr
 from stats import format_pvalue_str, get_min_weighted_bins, weighted_bins_fd
 from tools import get_ofam_euc_clim
-from fncs import source_dataset
+from fncs import source_dataset, source_dataset_mod, merge_LLWBC_sources
 from plots import plot_histogram
 
 fsize = 10
@@ -562,70 +562,168 @@ def plot_source_EUC_velocity_profile(lon, exp):
     plt.show()
 
 
-def source_timeseries(exp, lon, var='u_zone', merge_straits=False, anom=True):
-    """Timeseries plot."""
-    def plot_sources(ax, ds, xdim, ls='-'):
+def source_timeseries(exp, lon, anom=False, felx_subset=False, merge_llwbcs=False):
+    """Timeseries plot of EUC sources (historical & RCP8.5).
+
+    EUC Full transport in top subplot & sources in bottom.
+
+    Args:
+        exp (int): Plot historical & RCP8.5 (exp=0) or projected change (exp=2).
+        lon (int): Release Longitude (165, 190, 220, 250).
+        anom (bool, optional): Plot transport or climatological anomaly. Defaults to False.
+        felx_subset (bool, optional): Plot source based on felx particle subset. Defaults to False.
+        merge_llwbcs (bool, optional): Plot merged LLWBCs or individual sources. Defaults to False.
+
+    """
+    def resample(ds, var, freq='1y', func=xr.DataArray.mean, **kwargs):
+        """Resample DataArray along particle release time coordinate.
+
+        Args:
+            ds (xarray.Dataset): Particle data dataset.
+            var (str): Datavariable name to resample.
+            freq (str, optional): Time frequency to resample. Defaults to '1y'.
+            func (function, optional): Function to reduce resampled. Defaults to xr.DataArray.mean.
+            **kwargs (dict): Keyword arguments for func.
+
+        Returns:
+            ds_resample (xarray.DataArray): Resampled variable DataArray.
+
+        """
+        ds_resample = ds[var].resample(rtime=freq)
+        ds_resample = ds_resample.apply(func, **kwargs)
+        return ds_resample
+
+    def plot_sources(ax, ds, var, exp, xdim, ls):
+        """Cycle through source IDs to plot timeseries.
+
+        Args:
+            ax (matplotlib.AxesSubplot): Plot axes.
+            ds (xarray.Dataset): Particle data dataset.
+            var (str): Data variable name to resample.
+            exp (int): Scenario integer.
+            xdim (array-like): z-axis dimension.
+            ls (str): Linestyle.
+
+        Returns:
+            ax (matplotlib.AxesSubplot): Plot axes.
+
+        """
         for i, z in enumerate(sourceids):
-            if merge_straits and z == 1:
-                dz = ds[var].sel(zone=[1, 2, 6]).sum('zone')
-            else:
-                dz = ds[var].sel(zone=z)
-
+            dz = ds.sel(zone=z)
             if anom:
-                dz = dz - dz.mean('rtime')
+                dz[var] = dz[var] - dz[var].mean('rtime')
                 ax.axhline(0, color='grey')
-
-            ax.plot(xdim, dz, c=ds.colors.values[0, z], label=ds.names.values[0, z], ls=ls)
+            label = dz.names.item() if exp != 1 else None
+            ax.plot(xdim, dz[var], c=dz.colors.item(), label=label, ls=ls)
         return ax
 
-    ds = source_dataset(lon, sum_interior=True)
+    # Define source IDs.
+    if merge_llwbcs:
+        sourceids = [1, 10, 11, 7, 8, 12]  # Merged sources.
+    else:
+        sourceids = [1, 2, 6, 3, 4, 7, 8]  # Individual sources.
 
-    # Annual mea nbetween scenario years.
+    # Open & format particle data set.
+    if not felx_subset:
+        ds_orig = source_dataset(lon, sum_interior=True)
+    else:
+        ds_orig = source_dataset_mod(lon, sum_interior=True)
+
+    ds = merge_LLWBC_sources(ds_orig)
+    ds = ds.drop([v for v in ds.data_vars
+                  if v not in ['u_zone', 'u_sum', 'u_sum_full', 'names', 'colors']])
+
+    # Set same 'rtime' values for historical and RCP8.5.
     dss = [ds.sel(exp=i).dropna('traj', 'all').dropna('rtime', 'all') for i in range(2)]
-    dsm = [d[var].resample(rtime="1y").mean("rtime", keep_attrs=True) for d in dss]
+    dss[1]['rtime'] = np.subtract(dss[1]['rtime'],  np.timedelta64(89, 'Y'), casting='unsafe')
+    ds = xr.concat(dss, 'exp')
+
+    # Resample rtime for variables: Annual mean between scenario years.
+    dsr = resample(ds, 'u_zone', dim='rtime', keep_attrs=True).to_dataset()
+    dsr['u_sum'] = resample(ds, 'u_sum', dim='rtime', keep_attrs=True)
+    if felx_subset:
+        dsr['u_sum_full'] = resample(ds, 'u_sum_full', dim='rtime', keep_attrs=True)
+
+    for v in ['colors', 'names']:
+        dsr[v] = ds[v].isel(exp=0)
+
+    # Calculate projected change.
+    diff = dsr.drop(['colors', 'names'])
+    diff = (diff.isel(exp=1) - diff.isel(exp=0)).expand_dims(exp=[2])
+    dsr = xr.merge([dsr, diff])
+
+    xdim = dsr.rtime
 
     # Plot timeseries of source transport.
-    sourceids = [1, 2, 3, 7, 8]
+    fig, ax = plt.subplots(2, 1, figsize=(11, 7))
+    ax = ax.flatten()
 
-    fig, ax = plt.subplots(1, figsize=(7, 3))
-    xdim = dsm[0].rtime
-    ax = plot_sources(ax, dsm[0], xdim, '-')
-    ax = plot_sources(ax, dsm[1], xdim, '--')
-    ax.set_title('{} EUC transport at {}°E'.format(cfg.exps[exp], lon), loc='left')
-    ax.set_ylabel('{} [{}]'.format(ds[var].attrs['long_name'], ds[var].attrs['units']))
-    ax.margins(x=0)
+    # Plot full EUC.
+    if exp != 2:
+        ax[0].set_title('a) EUC transport at {}°E'.format(lon), loc='left')
+        ax[1].set_title('b) EUC source transport at {}°E'.format(lon), loc='left')
+        var = 'u_sum'
+        for s, label, ls in zip([0, 1], cfg.exps, ['-', '--']):
+            dz = dsr.isel(exp=s)
+            if anom:
+                dz[var] = dz[var] - dz[var].mean('rtime')
 
-    lgd = ax.legend()
+            ax[0].plot(xdim, dz[var], c='k', label=label, ls=ls)
+            ax[1] = plot_sources(ax[1], dsr.isel(exp=s), 'u_zone', s, xdim, ls)
+            if felx_subset:
+                ax[0].plot(xdim, dz.u_sum_full, c='b', label=label + ' (original)', ls=ls)
+
+    elif exp == 2:
+        s = 2
+        ax[0].set_title('a) EUC transport projected change at {}°E'.format(lon), loc='left')
+        ax[1].set_title('b) EUC source transport projected change at {}°E'.format(lon), loc='left')
+        ax[0].plot(xdim, dsr.isel(exp=s).u_sum, c='k', label=cfg.exps[s], ls='-')
+        ax[1] = plot_sources(ax[1], dsr.isel(exp=s), 'u_zone', s, xdim, ls='-')
+        for i in range(2):
+            ax[i].axhline(y=0, c='grey', lw=0.5)
+
+    for i in range(2):
+        ax[i].set_xlim(dsr.u_sum.dropna('rtime', 'all').rtime[0], xdim[-1])
+        ax[i].margins(x=0)
+        ax[i].set_ylabel('Transport [Sv]')
+        ax[i].xaxis.set_minor_locator(mpl.ticker.AutoMinorLocator())
+
+    ax[0].legend()
+    lgd = ax[1].legend(loc='center left', bbox_to_anchor=(1, 0.5), ncols=1)
     plt.tight_layout()
-    file = 'source_{}_timeseries_{}_{}_{}'.format(ds[var].attrs['standard_name'], lon,
-                                                  cfg.exp[exp], ''.join(map(str, sourceids)))
-    if anom:
-        file + '_anom'
-    plt.savefig(cfg.fig / (file + '.png'), bbox_extra_artists=(lgd,),
-                bbox_inches='tight')
+
+    file = 'timeseries/source_timeseries_{}_{}_{}'.format(lon, cfg.exp[exp],
+                                                          '-'.join(map(str, sourceids)))
+    file = file + '_felx' if felx_subset else file
+    # file = file + '_5year' if felx_subset else file
+    file = file + '.png' if not anom else file + '_anom.png'
+
+    plt.savefig(cfg.fig / file, bbox_extra_artists=(lgd,), bbox_inches='tight')
     plt.show()
-    return
 
 
 ##############################################################################
 if __name__ == "__main__":
+    exp = 0
     # for exp in [1, 0]:
     #     transport_source_bar_graph(exp=exp)
     #     transport_source_bar_graph(exp, list(range(7, 17)), False)
 
-    # for lon in [165]:
-    for lon in cfg.lons:
-        ds = source_dataset(lon, sum_interior=True)
-        plot_KDE_multi_var(ds, lon, var=['age', 'distance'])
-        # plot_source_EUC_velocity_profile(lon, exp=0)
-        source_pie_chart(ds, lon)
-        # source_histogram_multi_var(d s, lon)
+    # # for lon in [165]:
+    # for lon in cfg.lons:
+    #     ds = source_dataset(lon, sum_interior=True)
+    #     plot_KDE_multi_var(ds, lon, var=['age', 'distance'])
+    #     # plot_source_EUC_velocity_profile(lon, exp=0)
+    #     source_pie_chart(ds, lon)
+    #     # source_histogram_multi_var(d s, lon)
+    #     source_timeseries(0, lon, anom=False, felx_subset=False)
+    #     source_timeseries(2, lon, anom=False, felx_subset=False)
 
-        # exp = 0
-        # for vary in ['lat', 'u', 'z']:
-        #     varx = 'age'
-        #     source_scatter(ds, lon, exp, varx, vary)
-        # source_scatter(ds, lon, exp, 'z', 'z_at_zone')
+    #     # exp = 0
+    #     # for vary in ['lat', 'u', 'z']:
+    #     #     varx = 'age'
+    #     #     source_scatter(ds, lon, exp, varx, vary)
+    #     # source_scatter(ds, lon, exp, 'z', 'z_at_zone')
 
     # for var in ['age', 'distance', 'speed']:
     #     source_histogram_multi_lon(var, sum_interior=True)
@@ -645,3 +743,8 @@ if __name__ == "__main__":
     # # source_hist_2d(exp, 'age', 'lat', (50, np.arange(-2.65, 2.65, .1)))
     # # source_hist_2d(exp, 'age', 'u')
     # source_hist_2d(exp, 'age', 'distance')
+
+    # for lon in cfg.lons:
+    #     ds = source_dataset_mod(lon, sum_interior=True)
+    #     plot_KDE_multi_var(ds, lon, var=['age', 'distance'])
+    #     source_pie_chart(ds, lon)

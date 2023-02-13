@@ -19,11 +19,13 @@ from pathlib import Path
 from dataclasses import dataclass
 from collections import namedtuple
 
-# warnings.filterwarnings("ignore", category=DeprecationWarning)
+# warnings.filterwarnings('ignore', category=DeprecationWarning)
 # warnings.filterwarnings(action='ignore', message='SerializationWarning')
-# warnings.filterwarnings("ignore")
+warnings.filterwarnings(action='ignore', category=RuntimeWarning)
+# warnings.filterwarnings('ignore')
 np.set_printoptions(suppress=True)
 dask.config.set({"array.slicing.split_large_chunks": True})
+
 
 # Setup directories.
 if Path.home().drive == 'C:':
@@ -119,7 +121,9 @@ class ZoneData:
     sth = Zone(7, 'sth', 'South Interior', [j1, j1, 158, 283])
     nth = Zone(12, 'nth', 'North Interior', [j2, j2, 129.1, 278.5])
 
+    # Source variations (for Eulerian transport validation).
     sgc = Zone(99, 'sgc', 'St Georges Channel', [-4.6, -4.6, 152.3, 152.7])
+    # Actual Solomon Strait (doesn't include St Georges Channel).
     ssx = Zone(99, 'ssx', 'Solomon Strait', [-4.8, -4.8, 153, 154.7])
 
     _all = [nz, vs, ss, mc, cs, idn, sc, sth, nth]
