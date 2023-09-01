@@ -602,8 +602,12 @@ def source_dataset_mod(lon, sum_interior=True):
             ds[i] = ds[i].isel(zone=inds)
 
     for i in range(2):
-        times = ds[i].time_at_zone.values[pd.notnull(ds[i].time_at_zone)]
+        times = ds[i].time.values[pd.notnull(ds[i].time)]
         p = ds[i].traj[times >= np.datetime64(['2000-01-01', '2089-01-01'][i])]
+        ds[i] = ds[i].sel(traj=sorted(p))
+
+        # EUC definition
+        p = ds[i].u.where((ds[i].u / cfg.DXDY) > 0.1, drop=True).traj
         ds[i] = ds[i].sel(traj=sorted(p))
 
     for i in range(2):

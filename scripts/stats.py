@@ -17,7 +17,7 @@ import numpy as np
 import seaborn as sns
 from scipy import stats
 import matplotlib.pyplot as plt
-import statsmodels.stats.weightstats as wtd
+# import statsmodels.stats.weightstats as wtd
 
 
 def precision(var):
@@ -70,14 +70,15 @@ def format_pvalue_str(p):
     return sig_str
 
 
-def test_signifiance(x, y):
+def test_signifiance(x, y, format_string=True):
     tdim = x.dims[0]
     def resample(ds):
         return ds.resample({tdim: "Y"}).mean(tdim, keep_attrs=True)
     x, y = x.dropna(tdim, 'all'), y.dropna(tdim, 'all')
     x, y = resample(x), resample(y)
     t, p = stats.wilcoxon(x, y)
-    p = format_pvalue_str(p)
+    if format_string:
+        p = format_pvalue_str(p)
     return p
 
 

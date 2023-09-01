@@ -144,7 +144,7 @@ def plot_source_pathways(exp, lon, v, r, N_total=300, age='mode', add_lon_lines=
 
     plt.tight_layout()
     file = 'paths/pathway_{}_exp{}_{}_r{}_n{}.png'.format(lon, exp, age, r, N_total)
-    plt.savefig(cfg.fig / file, bbox_inches='tight', dpi=350)
+    plt.savefig(cfg.fig / file, bbox_inches='tight', dpi=300)
     plt.show()
     return
 
@@ -269,7 +269,7 @@ def plot_source_pathways_cmap(lon=165, exp=0, v=1, r=1, zone=1, N=1000,
     fig.subplots_adjust(wspace=0.25, hspace=0.4, bottom=0.15)
 
     plt.savefig(cfg.fig / 'paths/cmap_{}_r{}_z{}_n{}_{}.png'
-                .format(lon, r, zone, N, cmap.name), bbox_inches='tight', dpi=350)
+                .format(lon, r, zone, N, cmap.name), bbox_inches='tight', dpi=300)
     plt.show()
     return
 
@@ -489,7 +489,7 @@ def plot_source_trajectory_map_IQR(lon=190, exp=0, v=1, r=7, zone=1):
     fig.subplots_adjust(wspace=0.25, hspace=0.4, bottom=0.15)
     plt.savefig(cfg.fig / 'paths/dt_{}_{}_r{}_z{}_n{}.png'
                 .format(lon, sortby, r, zone, num_pids),
-                bbox_inches='tight', dpi=350)
+                bbox_inches='tight', dpi=300)
     plt.show()
     return
 
@@ -580,18 +580,18 @@ def plot_2d_density_map(lon, exp, v, r, zone, N=1000):
 
 
 if __name__ == "__main__":
-    # exp, v, r = 0, 1, 5
-    # lon = 165
-    # age, N_total = 'mode', 1500
-    # # age, N_total = 'min', 1500
-    # # age, N_total = 'max', 500
-    # plot_source_pathways(exp, lon, v, r, N_total, age)
+    exp, v, r = 0, 1, 5
+    lon = 165
+    # age, N_total = 'mode', 1000
+    age, N_total = 'min', 1000
+    # age, N_total = 'max', 500
+    plot_source_pathways(exp, lon, v, r, N_total, age)
 
-    exp, v, r = 0, 1, 2
-    lon = 250
-    N = 2000
-    zone = 1
-    plot_source_pathways_cmap(lon, exp, v, r, zone, N)
+    # exp, v, r = 0, 1, 2
+    # lon = 250
+    # N = 2000
+    # zone = 1
+    # plot_source_pathways_cmap(lon, exp, v, r, zone, N)
 
     # # Plot map.
     # plot_some_source_pathways(exp, lon, v, r)

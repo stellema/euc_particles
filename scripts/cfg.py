@@ -29,7 +29,7 @@ dask.config.set({"array.slicing.split_large_chunks": True})
 if Path.home().drive == 'C:':
     home = Path.home()
     repo = home / 'Projects/plx/'
-    ofam = home / 'datasets/OFAM/trop_pac'
+    ofam = Path('D:/datasets/OFAM/trop_pac')
 else:
     home = Path('/g/data/e14/as3189')
     repo = home / 'stellema/plx'

@@ -51,7 +51,7 @@ def plot_llwbc_variability():
     for j, v in zip(range(len(dvars)), dvars):  # Columns.
         # Plot velocity depth profiles in 1st column.
         i = 0
-        ax[i, j].set_title('{} {} Velocity'.format(cfg.ltr[c], names[i]), loc='left')
+        ax[i, j].set_title('{} {} Velocity'.format(cfg.ltr[c], names[j]), loc='left')
         # Plot mean velocity vs depth profile with IQR.
         ax[i, j].plot(dv_clim[v], dv_clim[v].lev, 'k', label='Mean')
 
@@ -72,7 +72,7 @@ def plot_llwbc_variability():
 
         # Monthly transport (2nd column).
         i = 1
-        ax[i, j].set_title('{} {} Transport'.format(cfg.ltr[c], names[i]), loc='left')
+        ax[i, j].set_title('{} {} Transport'.format(cfg.ltr[c], names[j]), loc='left')
         dx = ds[v].groupby('time.month')
         x = np.arange(12)
         # Shade IQR.

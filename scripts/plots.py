@@ -29,7 +29,7 @@ def update_title_time(title, t):
     return '{} {}'.format(title, str(t)[:10])
 
 
-def get_data_source_colors(ds, sum_interior=True):
+def get_data_source_colors(ds, sum_interior=True, color_list=zones.colors):
     """Create array of colors for particles."""
     ids = ds.zone.isel(obs=0) if 'obs' in ds.zone.dims else ds.zone
     ids = ids.astype(dtype=int)
@@ -37,7 +37,7 @@ def get_data_source_colors(ds, sum_interior=True):
     if sum_interior:
         ids = xr.where(((ids >= 7) & (ids <= 11)), 7, ids)  # South Interior.
         ids = xr.where(ids >= 12, 8, ids)  # South Interior.
-        colors = zones.colors[ids]
+        colors = color_list[ids]
         # colors = zones.colors[np.ix_(zones.colors, ids)]
 
     else:
@@ -278,7 +278,7 @@ def create_map_axis(figsize=(12, 5), extent=[115, 285, -10, 10],
     return fig, ax, proj
 
 
-def plot_particle_source_map(add_labels=True, savefig=True, 
+def plot_particle_source_map(add_labels=True, savefig=True,
                              add_lon_lines=cfg.lons, **kwargs):
     """Plot a map of particle source boundaries.
 
@@ -357,11 +357,11 @@ def plot_particle_source_map(add_labels=True, savefig=True,
     for i, z in enumerate(z_index):
         ax.plot(lons[i], lats[i], zones.colors[z], lw=3, label=zones.names[z],
                 zorder=10, transform=proj)  # zorder above ocean & below land
-        
+
     if add_lon_lines is not False:
         for i, x in enumerate(add_lon_lines):
-            ax.plot([x, x], [-2.6, 2.6], 'k', lw=2, zorder=10, transform=proj)  
-            
+            ax.plot([x, x], [-2.6, 2.6], 'k', lw=2, zorder=10, transform=proj)
+
     for i, z in enumerate(z_index):
         ax.plot(lons[i], lats[i], zones.colors[z], lw=3, label=zones.names[z],
                 zorder=10, transform=proj)  # zorder above ocean & below land

@@ -14,7 +14,7 @@ import matplotlib.animation as animation
 
 import cfg
 from tools import (get_unique_file, timeit)
-from fncs import get_plx_id, get_index_of_last_obs
+from fncs import get_plx_id
 from plots import (plot_particle_source_map, update_title_time, create_map_axis,
                    get_data_source_colors)
 from create_source_files import source_particle_ID_dict
@@ -23,6 +23,7 @@ from create_source_files import source_particle_ID_dict
 from matplotlib.axes import Axes
 from cartopy.mpl.geoaxes import GeoAxes
 GeoAxes._pcolormesh_patched = Axes.pcolormesh
+
 
 plt.rc('animation', html='html5')
 logger = logging.getLogger('my-logger')
@@ -104,11 +105,12 @@ def init_particle_data(ds, ntraj, ndays, method='thin', start=None, zone=None,
 
     # Subset times from start to  subset (slow).
     if ndays is not None:
+        ds['time'] = ds['time'].compute()
         ds = ds.where((ds.time <= start) & (ds.time > end), drop=True)
 
     # Create array of timesteps to plot.
     dt = 2  # Days between frames (output saved every two days in files).
-    dt = -np.timedelta64(int(dt*24*3600*1e9), 'ns')
+    dt = -np.timedelta64(int(dt * 24 * 3600 * 1e9), 'ns')
     plottimes = np.arange(start, end, dt)
     return ds, plottimes
 
@@ -154,7 +156,7 @@ def update_lines_no_delay(t, lines, lons, lats, times, plottimes, title, dt):
     for p in P:
         # Plot line segment (current & last few positions).
         # Simulaneous particle release.
-        lines[p].set_data(lons[p, t-dt:t], lats[p, t-dt:t])
+        lines[p].set_data(lons[p, t - dt:t], lats[p, t - dt:t])
     return lines
 
 
@@ -212,7 +214,7 @@ def animate_particle_scatter(ds, plottimes, delay=True):
 
     frames = np.arange(1, len(plottimes))
 
-    anim = animation.FuncAnimation(fig, animate,  frames=frames, interval=1200,
+    anim = animation.FuncAnimation(fig, animate, frames=frames, interval=1200,
                                    blit=True, repeat=False)
 
     # Save.
@@ -222,7 +224,8 @@ def animate_particle_scatter(ds, plottimes, delay=True):
 
 
 @timeit
-def animate_particle_lines(ds, plottimes, dt=4, delay=True, forward=False):
+def animate_particle_lines(ds, plottimes, dt=4, delay=True, forward=False, source_map=False,
+                           dark=False):
     """Animate trajectories as line segments (current & last few positions).
 
     Args:
@@ -241,6 +244,7 @@ def animate_particle_lines(ds, plottimes, dt=4, delay=True, forward=False):
                      for p in N]
         - bug saving files with zone
     """
+
     # Number of particles.
     N = range(ds.traj.size)
 
@@ -249,8 +253,23 @@ def animate_particle_lines(ds, plottimes, dt=4, delay=True, forward=False):
     lats = np.ma.filled(ds.variables['lat'], np.nan)
     times = np.ma.filled(ds.variables['time'], np.nan)
 
+    # Map and particle line colours.
+    if dark:
+        land_color = 'darkslategrey'
+        ocean_color = 'midnightblue'
+        # c2, c1, c3 = 'dodgerblue', 'white', 'blue'  # Interior (c1) & LLWBCs (c2)
+        # color_list = np.array([c1, c2, c2, c2, c2, c3, c2, c1, c1])
+        c2, c1, c3 = 'dodgerblue', 'lightcyan', 'blue'  # Interior (c1) & LLWBCs (c2)
+        color_list = np.array([c3, c2, 'deepskyblue', 'cyan', 'cyan', 'mediumspringgreen', c2, c1, c1])
+        kwargs = dict(lw=0.5, alpha=0.6)
+    else:
+        land_color = np.array([0.859375, 0.859375, 0.859375])
+        ocean_color = 'azure'
+        color_list = cfg.zones.colors
+        kwargs = dict(lw=0.3, alpha=0.5)
+
     # Particle line colours.
-    colors = get_data_source_colors(ds)
+    colors = get_data_source_colors(ds, color_list=color_list)
     if all(colors == colors[0]):
         # Make all lines black.
         colors = np.full_like(colors, 'b')
@@ -265,13 +284,20 @@ def animate_particle_lines(ds, plottimes, dt=4, delay=True, forward=False):
         # times = np.flip(times, axis=1)
         frames = frames[::-1]
         dt *= -1
+    map_kwargs = dict(figsize=(13, 5.8), extent=[117, 285, -11, 11], yticks=np.arange(-10, 11, 5),
+                      xticks=np.arange(120, 290, 20), ocean_color=ocean_color,
+                      land_color=land_color)
+    map_kwargs = dict(figsize=(13, 5.4), extent=[117, 285, -6, 8], yticks=np.arange(-6, 9, 2),
+                      xticks=np.arange(120, 290, 20), ocean_color=ocean_color,
+                      land_color=land_color)
 
-    # Setup figure.    figsize = (13, 5.8)
-    fig, ax, proj = create_map_axis((13, 5.8), extent=[117, 285, -11, 11],
-                                    yticks=np.arange(-10, 11, 5), xticks=np.arange(120, 290, 20))
-    # fig, ax, proj = plot_particle_source_map(savefig=False, add_lon_lines=False)
+    # Setup figure.
+    if source_map:
+        fig, ax, proj = plot_particle_source_map(savefig=False, add_lon_lines=False)
+    else:
+        fig, ax, proj = create_map_axis(**map_kwargs)
 
-    kwargs = dict(lw=0.45, alpha=0.5, transform=proj)
+    kwargs['transform'] = proj
 
     # Plot first frame.
     t = 0
@@ -282,8 +308,16 @@ def animate_particle_lines(ds, plottimes, dt=4, delay=True, forward=False):
         func = update_lines_no_delay
         lines = [ax.plot(lons[p, :dt], lats[p, :dt], c=colors[p], **kwargs)[0] for p in N]
 
-    title = plt.title(update_title_time('', plottimes[t]), fontsize=16)
     plt.tight_layout()
+
+    if dark:
+        fig.subplots_adjust(left=0, bottom=0, right=1, top=1, wspace=0, hspace=0)
+        ax.tick_params(which='both', direction='in')
+        title = plt.title(update_title_time('', plottimes[t]), fontsize=11, y=1.0, pad=-14, color='w')
+
+        plt.savefig(cfg.fig / 'test.png', dpi=300)
+    else:
+        title = plt.title(update_title_time('', plottimes[t]), fontsize=16)
 
     # Animate.
     fargs = (lines, lons, lats, times, plottimes, title, dt)
@@ -297,21 +331,30 @@ def animate_particle_lines(ds, plottimes, dt=4, delay=True, forward=False):
 
 
 rlon = 250
-exp, v, r = 0, 1, 6
-file = [get_plx_id(exp, rlon, v, r, 'plx') for r in range(r, r+2)]
+exp, v, r = 0, 1, 0
+file = [get_plx_id(exp, rlon, v, r, 'plx') for r in range(r, r + 2)]
 ds = xr.open_mfdataset(file)
 ds.attrs['lon'] = rlon
 ds.attrs['exp'] = exp
 ds.attrs['r'] = r
 ds.attrs['file'] = file[0].stem
+# r=0; 2500days =
 
-# # Default plot: (ndays=2400 ntraj=3).
+# # Default plot: (ndays=2400 ntraj=3; ndays=2500, ntraj=2 [1min 43sec]).
+# # ndays=2500, ntraj=2 (1min 43sec; runtime=17 hours)
 # ds, plottimes = init_particle_data(ds, ntraj=2, ndays=2500, zone=None)
-# animate_particle_lines(ds, plottimes, delay=True, forward=False)
+# animate_particle_lines(ds, plottimes, delay=True, forward=False, source_map=False)
 
+# # ndays=2900, ntraj=None (2min; runtime=27:22:23.61 total: 98543.61 seconds)
+# ds, plottimes = init_particle_data(ds, ntraj=None, ndays=2900, zone=None)
+# animate_particle_lines(ds, plottimes, delay=True, forward=False, source_map=True, alt_colors=False)
 
-ds, plottimes = init_particle_data(ds, ntraj=1, ndays=2500, zone=[1, 2, 3], partial_paths=False)
-animate_particle_lines(ds, plottimes, dt=4, delay=True, forward=False)
+# Test new colors
+ds, plottimes = init_particle_data(ds, ntraj=None, ndays=2500, zone=None)
+animate_particle_lines(ds, plottimes, delay=True, forward=False, source_map=False, dark=True)
+
+# ds, plottimes = init_particle_data(ds, ntraj=1, ndays=2500, zone=[1, 2, 3], partial_paths=False)
+# animate_particle_lines(ds, plottimes, dt=4, delay=True, forward=False)
 
 # ds, plottimes = init_particle_data(ds, ntraj=None, ndays=3600, zone=None)
 # animate_particle_scatter(ds, plottimes, delay=True)

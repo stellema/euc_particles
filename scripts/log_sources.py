@@ -15,14 +15,13 @@ Todo:
 import scipy
 import numpy as np
 import xarray as xr
-import seaborn as sns
+# import seaborn as sns
 
 import cfg
 from cfg import exp_abr
 from tools import mlogger, enso_u_ofam
-from stats import (test_signifiance, get_min_weighted_bins,
-                   get_source_transit_mode)
-from fncs import (source_dataset, get_plx_id, merge_hemisphere_sources,
+from stats import test_signifiance #, get_min_weighted_bins, get_source_transit_mode
+from fncs import (source_dataset, source_dataset_mod, get_plx_id, merge_hemisphere_sources,
                   merge_LLWBC_interior_sources, concat_exp_dimension,
                   open_eulerian_dataset, merge_interior_sources,
                   merge_SH_LLWBC_sources)
@@ -255,10 +254,10 @@ def log_KDE_source(var):
         logger.info('')
 
 
-# # Print lagrangian source transport values.
-# for lon in cfg.lons:
-#     log_source_transport(lon, sum_interior=True)
-#     # log_source_transport(lon, sum_interior=False)
+# Print lagrangian source transport values.
+for lon in cfg.lons:
+    log_source_transport(lon, sum_interior=True)
+    # log_source_transport(lon, sum_interior=False)
 
 # for var in ['age', 'distance', 'speed']:
 #     log_KDE_source(var)
@@ -267,7 +266,7 @@ def log_KDE_source(var):
 # log_eulerian_transport(full_depth=False)
 # log_eulerian_transport(full_depth=True)
 # log_eulerian_variability(full_depth=False)
-log_eulerian_variability(full_depth=True)
+# log_eulerian_variability(full_depth=True)
 #################################################################
 # ds = ds.sel(lev=slice(2.5, 1000)).sum('lev').mean('time')
 # ds
